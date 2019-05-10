@@ -156,9 +156,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="GDL.IDAS.WebApi.Client.nuspec" />
-    <None Include="GDL.IDAS.WebApi.Client_Debug.nuspec">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
     <None Include="pack_debug.cmd" />
     <None Include="Resources\ic_vpn_key_black_48dp.png" />
