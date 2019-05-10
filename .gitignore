@@ -2,4 +2,10 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Gandalan.IDAS.WebApi.Client/bin
+packages
+.vs
+*.DotSettings
+*.vspscc
+*.user
+bin/
+obj/

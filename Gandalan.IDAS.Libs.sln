@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gandalan.IDAS.WebApi.Client", "Gandalan.IDAS.WebApi.Client\Gandalan.IDAS.WebApi.Client.csproj", "{1A42A4DC-7434-4154-B595-05231CA70EED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gandalan.IDAS.WebApi.Data", "Gandalan.IDAS.WebApi.Data\Gandalan.IDAS.WebApi.Data.csproj", "{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug NET40|Any CPU = Debug NET40|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Staging|Any CPU = Staging|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A42A4DC-7434-4154-B595-05231CA70EED}.Debug NET40|Any CPU.ActiveCfg = Debug NET40|Any CPU
+		{1A42A4DC-7434-4154-B595-05231CA70EED}.Debug NET40|Any CPU.Build.0 = Debug NET40|Any CPU
+		{1A42A4DC-7434-4154-B595-05231CA70EED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A42A4DC-7434-4154-B595-05231CA70EED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A42A4DC-7434-4154-B595-05231CA70EED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A42A4DC-7434-4154-B595-05231CA70EED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A42A4DC-7434-4154-B595-05231CA70EED}.Staging|Any CPU.ActiveCfg = Staging|Any CPU
+		{1A42A4DC-7434-4154-B595-05231CA70EED}.Staging|Any CPU.Build.0 = Staging|Any CPU
+		{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}.Debug NET40|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}.Debug NET40|Any CPU.Build.0 = Debug|Any CPU
+		{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}.Staging|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}.Staging|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74BD7AE9-5E45-4BCE-8044-A7A711227883}
+	EndGlobalSection
+EndGlobal

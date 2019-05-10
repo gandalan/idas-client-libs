@@ -1,0 +1,146 @@
+﻿using System;
+using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.Client.Settings;
+using Gandalan.IDAS.WebApi.DTO;
+
+namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
+{
+    public class VorgangWebRoutinen : WebRoutinenBase
+    {
+        public VorgangWebRoutinen(WebApiSettings settings) : base(settings)
+        {
+        }
+
+        public VorgangListItemDTO[] LadeVorgangsListe(int jahr)
+        {
+            if (Login())
+            {
+                return Get<VorgangListItemDTO[]>("Vorgang/?jahr=" + jahr);
+            }
+            return null;
+        }
+
+        public VorgangListItemDTO[] LadeVorgangsListe(string status, int jahr)
+        {
+            if (Login())
+            {
+                return Get<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}");
+            }
+            return null;
+        }
+                
+        public VorgangListItemDTO[] LadeVorgangsListe(Guid kundeGuid)
+        {
+            if (Login())
+            {
+                return Get<VorgangListItemDTO[]>($"Vorgang/?kundeGuid={kundeGuid}");
+            }
+            return null;
+        }
+
+        public void SendeVorgaenge(VorgangDTO[] list)
+        {
+            foreach (VorgangDTO v in list)
+                SendeVorgang(v);
+        }
+
+        public VorgangDTO SendeVorgang(VorgangDTO vorgang)
+        {
+            if (Login())
+            {
+                return Put<VorgangDTO>("Vorgang", vorgang);
+            }
+            return null;
+        }
+
+        public VorgangDTO LadeVorgang(Guid vorgangGuid, bool mitKunde)
+        {
+            if (Login())
+            {
+                return Get<VorgangDTO>("Vorgang/" + vorgangGuid.ToString() + "?includeKunde=" + mitKunde.ToString());
+            }
+            return null;
+        }
+
+        public VorgangStatusDTO GetStatus(Guid vorgangGuid)
+        {
+            if (Login())
+            {
+                return Get<VorgangStatusDTO>("VorgangStatus/" + vorgangGuid.ToString());
+            }
+            return null;
+        }
+
+        public VorgangStatusDTO SetStatus(Guid vorgangGuid, string statusCode)
+        {
+            if (Login())
+            {
+                VorgangStatusDTO set = new VorgangStatusDTO()
+                {
+                    VorgangGuid = vorgangGuid,
+                    NeuerStatus = statusCode
+                };
+                return Put<VorgangStatusDTO>("VorgangStatus", set);
+            }
+            return null;
+        }
+
+        public void ArchiviereVorgang(Guid vorgangGuid)
+        {
+            if (Login())
+            {
+                Post("Archivierung/?vguid=" + vorgangGuid.ToString(), null);
+            }
+        }
+
+        public void AendereBelegArt(Guid belegGuid, string neueBelegArt)
+        {
+            if (Login())
+            {
+                Post("BelegArt/?bguid=" + belegGuid.ToString() + "&neueBelegArt=" + neueBelegArt, null);
+            }
+        }
+
+
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr)
+        {
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(jahr); });
+        }
+
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr)
+        {
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr); });
+        }
+
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(Guid kundeGuid)
+        {
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(kundeGuid); });
+        }
+
+        public async void SendeVorgaengeAsync(VorgangDTO[] list)
+        {
+            foreach (VorgangDTO v in list)
+                await SendeVorgangAsync(v);
+        }
+
+        public async Task<VorgangDTO> SendeVorgangAsync(VorgangDTO vorgang)
+        {
+            return await Task<VorgangDTO>.Run(() => { return SendeVorgang(vorgang); });
+        }
+
+        public async Task<VorgangDTO> LadeVorgangAsync(Guid vorgangGuid, bool mitKunde)
+        {
+            return await Task<VorgangDTO>.Run(() => { return LadeVorgang(vorgangGuid, mitKunde); });
+        }
+
+        public async Task AendereBelegArtAsync(Guid belegGuid, string neueBelegArt)
+        {
+            await Task.Run(() => { AendereBelegArt(belegGuid, neueBelegArt); });
+        }
+        
+        public async Task ArchiviereVorgangAsync(Guid vorgangGuid)
+        {
+            await Task.Run(() => { ArchiviereVorgang(vorgangGuid); });
+        }
+    }
+}
