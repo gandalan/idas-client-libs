@@ -1,200 +1,45 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1A42A4DC-7434-4154-B595-05231CA70EED}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gandalan.IDAS.WebApi.Client</RootNamespace>
-    <AssemblyName>GDL.IDAS.WebApi.Client</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET46</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\GDL.IDAS.WebApi.Client.xml</DocumentationFile>
-    <RegisterForComInterop>false</RegisterForComInterop>
-    <NoWarn>CS1591</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NET46</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Release\GDL.IDAS.WebApi.Client.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
-    <OutputPath>bin\Staging\</OutputPath>
-    <DefineConstants>NET46</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug NET40|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug NET40\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
-    <NoWarn>CS1591</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\Gandalan.IDAS.WebApi.Data\Gandalan.IDAS.WebApi.Data.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="..\AssemblyProjectInfo.cs">
-      <Link>AssemblyProjectInfo.cs</Link>
-    </Compile>
-    <Compile Include="BusinessRoutinen\KonfigSatzInfoWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\DataPrintWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\ResetCacheVariantenListenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\TemplateWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\ProduzentenFarbGruppenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\AnpassungVorlagenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\ApiUnauthorizedException.cs" />
-    <Compile Include="BusinessRoutinen\AnpassungenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\ReportSampleDatasWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\ReportDefaultsWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\ReportsWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\SchnitteWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\NewsletterWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\FarbKuerzelGruppenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\MaterialBearbeitungenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\TypedWebRoutinenBase.cs" />
-    <Compile Include="BusinessRoutinen\BenutzerVariantenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\KonfigSatzWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\UIFeldInfoWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\WarenGruppeWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\OberflaechenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\FarbKuerzelWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\FarbGruppenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\MandantenAdminWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\ProduktGruppenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\UIScriptWebRoutinen.cs" />
-    <Compile Include="EventArgs\ApiErrorArgs.cs" />
-    <Compile Include="BusinessRoutinen\AppWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\ArtikelWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\ProduktionWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\KomponentenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\BauteileWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\ContractWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\MaterialWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\KonturenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\FarbenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\IBOS1ImportRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\PrintWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\KontaktWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\IBOS1Routinen.cs" />
-    <Compile Include="BusinessRoutinen\UpdateInfoWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\VariantenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\FileWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\SettingsWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\UIWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\SonderfarbWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\WertelistenWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\ProduktFamilienWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\VorgangWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\BenutzerWebRoutinen.cs" />
-    <Compile Include="BusinessRoutinen\MandantenWebRoutinen.cs" />
-    <Compile Include="Discovery\MailslotRoutinen.cs" />
-    <Compile Include="Discovery\NetworkMessage.cs" />
-    <Compile Include="Discovery\ServerDiscovery.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Settings\ConnectHub.cs" />
-    <Compile Include="Settings\HubResponse.cs" />
-    <Compile Include="Settings\SavedAuthToken.cs" />
-    <Compile Include="Settings\WebApiSettings.cs" />
-    <Compile Include="Settings\WebApiFileConfig.cs" />
-    <Compile Include="BusinessRoutinen\WebRoutinenBase.cs" />
+    <Folder Include="BusinessRoutinen\" />
+    <Folder Include="Discovery\" />
+    <Folder Include="DTOs\Anpassungen\" />
+    <Folder Include="DTOs\API\" />
+    <Folder Include="DTOs\Artikel\" />
+    <Folder Include="DTOs\BackgroundJobs\" />
+    <Folder Include="DTOs\Belege\" />
+    <Folder Include="DTOs\Benutzer\" />
+    <Folder Include="DTOs\Contracts\" />
+    <Folder Include="DTOs\Druck\" />
+    <Folder Include="DTOs\Farben\" />
+    <Folder Include="DTOs\Jobs\" />
+    <Folder Include="DTOs\Kunden\Web\Gandalan.IDAS.WebApi.Data\DTOs\Kunden\" />
+    <Folder Include="DTOs\Mandanten\" />
+    <Folder Include="DTOs\ProduktGruppen\" />
+    <Folder Include="DTOs\Reports\" />
+    <Folder Include="DTOs\Scripts\" />
+    <Folder Include="DTOs\Settings\" />
+    <Folder Include="DTOs\Technik\" />
+    <Folder Include="DTOs\Templates\" />
+    <Folder Include="DTOs\UI\" />
+    <Folder Include="DTOs\UniDEx\" />
+    <Folder Include="DTOs\Update\" />
+    <Folder Include="EventArgs\" />
+    <Folder Include="Settings\" />
+    <Folder Include="Util\" />
+    <Folder Include="Visitor\" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="App.config" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="GDL.IDAS.WebApi.Client.nuspec" />
-    <None Include="packages.config" />
-    <None Include="pack_debug.cmd" />
-    <None Include="Resources\ic_vpn_key_black_48dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ic_vpn_key_black_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Gandalan.IDAS.Jobs\Gandalan.IDAS.Jobs.csproj">
-      <Project>{6B3C1416-C0F2-4491-9E0B-428E2B51CCB9}</Project>
-      <Name>Gandalan.IDAS.Jobs</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Gandalan.IDAS.Logging\Gandalan.IDAS.Logging.csproj">
-      <Project>{969937D6-131E-41B7-B52A-7099B18E4428}</Project>
-      <Name>Gandalan.IDAS.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Gandalan.IDAS.WebApi.Data\Gandalan.IDAS.WebApi.Data.csproj">
-      <Project>{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}</Project>
-      <Name>Gandalan.IDAS.WebApi.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Gandalan.IDAS.Web\Gandalan.IDAS.Web.csproj">
-      <Project>{7CF4E323-0204-47F1-BED5-8F84281ED638}</Project>
-      <Name>Gandalan.IDAS.Web</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\DataSources\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>if /i "%25COMPUTERNAME:~0,6%25" neq "LAPTOP" goto ende
-xcopy /y /i "$(TargetDir)*.*" c:\projects\LocalLibs\
-:ende</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

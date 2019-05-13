@@ -12,44 +12,6 @@ namespace Gandalan.IDAS.WebApi.Client.Discovery
     {
         public static string WebAPIBaseURL { get; private set; }
 
-
-        public static async Task<bool> ExecuteMailslot(int timeout = 3000)
-        {
-            DateTime startTime = DateTime.Now;
-            try
-            {
-                bool responseReceived = false;
-                MailslotClient senden = new MailslotClient("IDAS_Middleware_Server", "*");
-                MailslotServer empfangen = new MailslotServer("IDAS_Middleware_Client");
-
-                await Task.Run(() =>
-                {
-                    while (!responseReceived && DateTime.Now < startTime.AddMilliseconds(timeout))
-                    {
-                        senden.SendMessage($"{Dns.GetHostName()}", "*", "discover");
-                        NetworkMessage response = empfangen.GetNextMessage();
-                        if (response != null)
-                        {
-                            processMessage(response);
-                            if (!string.IsNullOrEmpty(WebAPIBaseURL))
-                            {
-                                responseReceived = true;
-                            }
-                        }
-                        Thread.Sleep(500);
-                    }
-                });
-
-                senden.Dispose();
-                empfangen.Dispose();
-                return responseReceived;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
         public static async Task<bool> ExecuteUDP(int timeout = 3000)
         {
             bool responseReceived = false;

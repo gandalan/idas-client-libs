@@ -56,7 +56,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 
         public async Task<bool> Discover()
         {
-            if (await ServerDiscovery.ExecuteUDP() || await ServerDiscovery.ExecuteMailslot())
+            if (await ServerDiscovery.ExecuteUDP())
             {
                 Url = ServerDiscovery.WebAPIBaseURL;
                 return true;
