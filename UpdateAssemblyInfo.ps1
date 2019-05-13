@@ -7,7 +7,7 @@ Write-Host $Env:Release_ReleaseName
 $NewVersion = [regex]::matches($Env:Release_ReleaseName,$VersionRegex)
 
 Write-Host "Updating version of the application to the build version: " $NewVersion
-$file = ".\AssemblyProjectInfo.cs" 
+$file = ".\_gandalan_idas-client-libs\AssemblyProjectInfo.cs" 
 $filecontent = Get-Content($file)
 attrib $file -r
 
