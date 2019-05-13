@@ -3,8 +3,8 @@
 # Use a regular expression to get "minor, major, fix, revision" from the BUILD_BUILDNUMBER environment variable
 # the build process will automatically set the value of the environment variable to the correct build number 
 $VersionRegex = "\d+\.\d+\.\*+|\d+\.\d+.\d+\.\d+|\d+\.\d+.\d+"
-Write-Host $Env:Release_ReleaseName
-$NewVersion = [regex]::matches($Env:Release_ReleaseName,$VersionRegex)
+Write-Host $Env:Build_BuildNumber
+$NewVersion = [regex]::matches($Env:Build_BuildNumber,$VersionRegex)
 Write-Host "Updating version of the application to the build version: " $NewVersion
 
 #AssemblyProjectInfo:
@@ -17,7 +17,7 @@ $filecontent -replace $VersionRegex, $NewVersion | Out-File $file
 
 #GDL.IDAS.WebApi.Client.nuspec
 $VersionRegex = "\d+\.\d+.\d+\.\d+"
-$NewVersion = [regex]::matches($Env:Release_ReleaseName,$VersionRegex)
+$NewVersion = [regex]::matches($Env:Build_BuildNumber,$VersionRegex)
 $file = ".\Gandalan.IDAS.WebApi.Client\GDL.IDAS.WebApi.Client.nuspec" 
 $filecontent = Get-Content($file)
 attrib $file -r
@@ -27,7 +27,7 @@ $filecontent -replace $VersionRegex, $NewVersion | Out-File $file
 
 #GDL.IDAS.WebApi.Data.nuspec
 $VersionRegex = "\d+\.\d+.\d+\.\d+"
-$NewVersion = [regex]::matches($Env:Release_ReleaseName,$VersionRegex)
+$NewVersion = [regex]::matches($Env:Build_BuildNumber,$VersionRegex)
 $file = ".\Gandalan.IDAS.WebApi.Data\GDL.IDAS.WebApi.Data.nuspec" 
 $filecontent = Get-Content($file)
 attrib $file -r
