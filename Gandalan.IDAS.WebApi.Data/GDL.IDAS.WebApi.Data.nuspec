@@ -14,7 +14,7 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="bin\Release\netstandard2.0\GDL.IDAS.WebApi.Data.dll" target="lib\netstandard2.0\GDL.IDAS.WebApi.Data.dll" />
-        <file src="bin\Release\netstandard2.0\GDL.IDAS.WebApi.Data.XML" target="lib\netstandard2.0\GDL.IDAS.WebApi.Data.XML" />
+        <file src="Gandalan.IDAS.WebApi.Data\bin\Release\netstandard2.0\GDL.IDAS.WebApi.Data.dll" target="lib\netstandard2.0\GDL.IDAS.WebApi.Data.dll" />
+        <file src="Gandalan.IDAS.WebApi.Data\bin\Release\netstandard2.0\GDL.IDAS.WebApi.Data.XML" target="lib\netstandard2.0\GDL.IDAS.WebApi.Data.XML" />
     </files>
 </package>
