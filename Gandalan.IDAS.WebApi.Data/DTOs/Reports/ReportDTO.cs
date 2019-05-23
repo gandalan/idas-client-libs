@@ -11,6 +11,7 @@ namespace Gandalan.IDAS.WebApi.DTO.DTOs.Reports
         public Guid ReportGuid { get; set; }
         public string ReportFile { get; set; }
         public string ReportName { get; set; }
+        public ReportTypeDTO ReportType { get; set; }
 
         public ReportDatenTypDTO ReportDatenTyp { get; set; }
 
