@@ -16,31 +16,8 @@
   <ItemGroup>
     <Folder Include="BusinessRoutinen\" />
     <Folder Include="Discovery\" />
-    <Folder Include="DTOs\Anpassungen\" />
-    <Folder Include="DTOs\API\" />
-    <Folder Include="DTOs\Artikel\" />
-    <Folder Include="DTOs\BackgroundJobs\" />
-    <Folder Include="DTOs\Belege\" />
-    <Folder Include="DTOs\Benutzer\" />
-    <Folder Include="DTOs\Contracts\" />
-    <Folder Include="DTOs\Druck\" />
-    <Folder Include="DTOs\Farben\" />
-    <Folder Include="DTOs\Jobs\" />
-    <Folder Include="DTOs\Kunden\Web\Gandalan.IDAS.WebApi.Data\DTOs\Kunden\" />
-    <Folder Include="DTOs\Mandanten\" />
-    <Folder Include="DTOs\ProduktGruppen\" />
-    <Folder Include="DTOs\Reports\" />
-    <Folder Include="DTOs\Scripts\" />
-    <Folder Include="DTOs\Settings\" />
-    <Folder Include="DTOs\Technik\" />
-    <Folder Include="DTOs\Templates\" />
-    <Folder Include="DTOs\UI\" />
-    <Folder Include="DTOs\UniDEx\" />
-    <Folder Include="DTOs\Update\" />
     <Folder Include="EventArgs\" />
     <Folder Include="Settings\" />
-    <Folder Include="Util\" />
-    <Folder Include="Visitor\" />
   </ItemGroup>
 
   <ItemGroup>
