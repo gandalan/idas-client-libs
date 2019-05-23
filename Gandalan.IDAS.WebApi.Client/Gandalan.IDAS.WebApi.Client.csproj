@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BusinessRoutinen\" />
     <Folder Include="Discovery\" />
     <Folder Include="EventArgs\" />
     <Folder Include="Settings\" />
