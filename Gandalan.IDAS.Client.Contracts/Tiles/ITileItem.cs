@@ -1,10 +1,9 @@
-﻿using System;
+﻿using System.Drawing;
 using System.Threading.Tasks;
-using System.Windows.Media;
 
 namespace Gandalan.Client.Common.Tiles
 {
-	public interface ITileItem
+    public interface ITileItem
 	{
 		string Icon { get; set; }
 		string HeadLine { get; set; }
@@ -12,7 +11,7 @@ namespace Gandalan.Client.Common.Tiles
 		string Name { get; set; }
 		object Control { get; set; }
         string Group { get; set; }
-        SolidColorBrush StateColor { get; set; }
+        Color StateColor { get; set; }
 
         Task Load();
     }

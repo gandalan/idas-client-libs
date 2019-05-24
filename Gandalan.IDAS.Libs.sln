@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.WebApi.Data",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.WebApi.Client", "Gandalan.IDAS.WebApi.Client\Gandalan.IDAS.WebApi.Client.csproj", "{A35EA672-7E79-4D68-BEEF-A34866ED6E80}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.Client.Contracts", "Gandalan.IDAS.Client.Contracts\Gandalan.IDAS.Client.Contracts.csproj", "{8E99D70D-CDE2-4287-8D04-6AF1F9D31592}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E99D70D-CDE2-4287-8D04-6AF1F9D31592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E99D70D-CDE2-4287-8D04-6AF1F9D31592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E99D70D-CDE2-4287-8D04-6AF1F9D31592}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E99D70D-CDE2-4287-8D04-6AF1F9D31592}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

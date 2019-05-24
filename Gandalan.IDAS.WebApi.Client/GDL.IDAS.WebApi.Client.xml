@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GDL.IDAS.WebApi.Client</name>
+    </assembly>
+    <members>
+        <member name="M:Gandalan.IDAS.WebApi.Client.WebRoutinenBase.Login">
+            <summary>
+            Meldet mit den aktuellen Credentials am Endpunkt /api/Login/Authenticate an. Wenn ein AuthToken vorhanden ist, wird 
+            zunächst versucht, dieses zu verwenden und ggf. zu updaten. Wenn das fehlschlägt, erfolgt eine Anmeldung mit Username/
+            Passwort aus den Settings.
+            </summary>
+            <returns>Status des Logins</returns>
+        </member>
+    </members>
+</doc>
