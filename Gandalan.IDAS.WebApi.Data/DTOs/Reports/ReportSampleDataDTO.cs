@@ -13,6 +13,7 @@ namespace Gandalan.IDAS.WebApi.DTO.DTOs.Reports
         public string Beschreibung { get; set; }
 
         public ReportDatenTypDTO ReportDatenTyp { get; set; }
+        public ReportTypeDTO ReportType { get; set; }
 
         public long Version { get; set; }
         public DateTime ChangedDate { get; set; }
