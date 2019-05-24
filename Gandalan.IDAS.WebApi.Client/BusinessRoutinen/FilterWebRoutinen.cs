@@ -26,6 +26,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return null;
         }
+        public FilterItemDTO[] GetFilterItemsByContext(string context)
+        {
+            if (Login())
+            {
+                return Get<FilterItemDTO[]>("Filter?context=" + context);
+            }
+            return null;
+        }
+
         public string Save(FilterItemDTO dto)
         {
             if (Login())
