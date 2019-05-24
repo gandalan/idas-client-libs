@@ -5,6 +5,10 @@
     <AssemblyName>GDL.IDAS.Client.Contracts</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\projects\Repos\idas-client-libs\Gandalan.IDAS.Client.Contracts\GDL.IDAS.Client.Contracts.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Gandalan.IDAS.WebApi.Data\Gandalan.IDAS.WebApi.Data.csproj" />
   </ItemGroup>
