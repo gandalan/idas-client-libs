@@ -8,7 +8,7 @@ namespace Gandalan.IDAS.Jobs.Contracts
 {
     public interface IDataPrintJob : IBackgroundJob<IDataPrintJobData>
     {
-
+        bool CanHandle(Guid reportGuid, long mandantId);
     }
 
     public interface IDataPrintJobData : IJobData
@@ -20,6 +20,7 @@ namespace Gandalan.IDAS.Jobs.Contracts
         string ResultAsBase64String { get; set; }
         string DruckerName { get; set; }
         bool AdvancedPrint { get; set; }
+        long MandantId { get; set; }
     }
 
 
@@ -35,6 +36,7 @@ namespace Gandalan.IDAS.Jobs.Contracts
         public string ResultAsBase64String { get; set; }
         public string DruckerName { get; set; }
         public bool AdvancedPrint { get; set; }
+        public long MandantId { get; set; }
 
         public DataPrintJobData(Object daten, Guid reportGuid)
         {
