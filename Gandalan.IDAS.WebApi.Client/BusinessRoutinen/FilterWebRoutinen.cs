@@ -59,6 +59,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             return await Task.Run(() => GetFilterItem(id));
         }
+        public async Task<FilterItemDTO[]> GetFilterItemsByContextAsync(string context)
+        {
+            return await Task.Run(() => GetFilterItemsByContext(context));
+        }
         public async Task SaveAsync(FilterItemDTO dto)
         {
             await Task.Run(() => Save(dto));
