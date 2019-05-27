@@ -1,0 +1,1094 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GDL.IDAS.WebApi.Data</name>
+    </assembly>
+    <members>
+        <member name="P:Gandalan.IDAS.Web.GDLWebClient.Timeout">
+            <summary>
+            Timeout in ms, Default: 60.000ms
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.Web.RESTRoutinen">
+            <summary>
+            Klasse für den HTTP-Datentransfer per REST an unsere WebAPIs. Ermöglicht das Senden 
+            und Empfangen von Objekten. Die Übermittlung erfolgt mit JSON serialisierten Objekten.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Web.RESTRoutinen.BaseUrl">
+            <summary>
+            Stammadresse der Web-API. Die Resource-Parameter der einzelnen Übertragungsmethoden 
+            werden angehängt. Beispiel: http://192.168.217.10/neurosAPI/api/
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Web.RESTRoutinen.Proxy">
+            <summary>
+            Proxy-Informationen (optional)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Web.RESTRoutinen.AdditionalHeaders">
+            <summary>
+            Liste der zusätzlich zu übermittelnden Header. Werden bei jeder Anfrage mitgeschickt, 
+            z.B. für Authentifizierungs-Header
+            </summary>
+        </member>
+        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.Get``1(System.String,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Holt ein Objekt per HTTP GET 
+            </summary>
+            <typeparam name="T">Typsierungsparameter</typeparam>
+            <param name="url">Relative URL, bezogen auf die BaseUrl</param>
+            <param name="settings"></param>
+            <returns>Objektinstanz</returns>
+        </member>
+        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.Post``1(System.String,System.Object,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Sendet ein Objekt per HTTP POST an die angegebene URL, i.d.R. um es zu speichern 
+            </summary>
+            <typeparam name="T">Typisierungsparameter</typeparam>
+            <param name="url">Relative URL, bezogen auf die BaseUrl</param>
+            <param name="data">zu sendendes Objekt</param>
+            <param name="settings"></param>
+            <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
+        </member>
+        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.Put``1(System.String,System.Object,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Sendet ein Objekt per HTTP PUT an die angegebene URL, i.d.R. um es anzulegen
+            </summary>
+            <typeparam name="T">Typisierungsparameter</typeparam>
+            <param name="url">Relative URL, bezogen auf die BaseUrl</param>
+            <param name="data">zu sendendes Objekt</param>
+            <param name="settings"></param>
+            <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
+        </member>
+        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.Delete(System.String)">
+            <summary>
+            Löscht ein Objekt per HTTP DELETE an die angegebene URL
+            </summary>
+            <param name="url">Relative URL, bezogen auf die BaseUrl</param>
+            <returns>Antwort des Servers als String</returns>
+        </member>
+        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.Delete``1(System.String,System.Object,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Löscht ein Objekt per HTTP DELETE an die angegebene URL
+            </summary>
+            <param name="url">Relative URL, bezogen auf die BaseUrl</param>
+            <param name="data"></param>
+            <param name="settings"></param>
+            <returns>Antwort des Servers als String</returns>
+        </member>
+        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.Delete``1(System.String,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Löscht ein Objekt per HTTP DELETE an die angegebene URL
+            </summary>
+            <param name="url">Relative URL, bezogen auf die BaseUrl</param>
+            <param name="settings"></param>
+            <returns>Antwort des Servers als String</returns>
+        </member>
+        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.createWebClient">
+            <summary>
+            Erstellt und konfiguriert eine neue WebClient-Instanz 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Gandalan.IDAS.Jobs.Contracts.IBackgroundJob`1">
+            <summary>
+            Definiert einen Hintergrundjob, der unabhängig von der 
+            eigentlichen Anwendung ausgeführt wird
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.KatalogArtikelArt">
+            <summary>
+            Informativ: Artikel-Arten
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KatalogArtikelDTO.Art">
+            <summary>
+            Einer der Werte aus der KatalogArtikelArt-Enum
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KatalogArtikelDTO.ProfilLaengeMM">
+            <summary>
+            Für Art = ProfilArtikel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KatalogArtikelDTO.Preis">
+            <summary>
+            Preis des Artikels (pro VE?)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KatalogArtikelDTO.ErsatzArtikel">
+            <summary>
+            Mögliche Ersatzartikel für diesen Artikel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KatalogArtikelDTO.FrontendLogik">
+            <summary>
+            Internes Feld - mappt den Machine/UI-Bezeichner auf die Frontend-Anzeige
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KatalogArtikelDTO.VarianteGuid">
+            <summary>
+            Für Art = FertigElementArtikel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegPositionDTO.LaufendeNummer">
+            <summary>
+            Die fortlaufende Nummer für jede Position innerhalb des Beleges.
+            Über diese Nummer wird auch die Ausgabenreihenfolge bestimmt.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegPositionDTO.PositionsNummer">
+            <summary>
+            Die sichtbare PositionsNummer, sie kann auch leer sein, z.Bsp. bei Titeln, Text-  oder alternativen Positionen.
+            Sie sollte nicht mehr als max. 4 Zeichen lang sein, damit die Pos.-Splate auf dem Beleg nicht zu breit wird.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegSaldoDTO.Text">
+            <summary>
+            Text für die Anzeige
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegSaldoDTO.Betrag">
+            <summary>
+            Der eigentlich Saldenwert.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegSaldoDTO.Wert">
+            <summary>
+            Der Wert, den der Anwender eingegeben hat, z.B. 5%
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegSaldoDTO.Typ">
+            <summary>
+            Zulässige Werte: "Abschlag", "Zuschlag", "Betrag"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegSaldoDTO.Art">
+            <summary>
+            Zulässige Werte: "Prozentual", "Absolut"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegSaldoDTO.Name">
+            <summary>
+            Zulässige Werte: "Saldo", "StandardSaldo", "Warenwert", "Mehrwertsteuer",
+            "Gesamtbetrag", "Endbetrag", "Farbe"  
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegStatusDTO.VorgangGuid">
+            <summary>
+            Eindeutige GUID
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegStatusDTO.VorgangsNummer">
+            <summary>
+            Sichtbare Vorgangsnummer/zur Info für Kunden usw.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegStatusDTO.AktuellerStatus">
+            <summary>
+            Statuscode
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegStatusDTO.AenderungsDatum">
+            <summary>
+            Datum der letzten Änderung des Vorgangs        
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.VorgangGuid">
+            <summary>
+            Eindeutige GUID des Vorgangs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.BelegGuid">
+            <summary>
+            Eindeutige GUID des Bestellscheins
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.VorgangsNummer">
+            <summary>
+            Sichtbare Vorgangsnummer/zur Info für Kunden usw.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.ErstellDatum">
+            <summary>
+            Erstelldatum des Vorgangs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.AenderungsDatum">
+            <summary>
+            Datum der letzten Änderung
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.Kundenname">
+            <summary>
+            Name des Kunden für Anzeige
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.URL">
+            <summary>
+            Adresse des detaillierten Beleg-Objektes (gSQL)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangDTO.VorgangGuid">
+            <summary>
+            Eindeutige GUID
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangDTO.VorgangsNummer">
+            <summary>
+            Sichtbare Vorgangsnummer/zur Info für Kunden usw.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangDTO.KundenNummer">
+            <summary>
+            Kundennummer (aus Kontakt-Objekt)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangDTO.IstEndkunde">
+            <summary>
+            End- oder Firmenkunde (aus Kontakt-Objekt)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangDTO.Kommission">
+            <summary>
+            Standard-Kommission des Vorgangs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangDTO.ErstellDatum">
+            <summary>
+            Erstelldatum des Vorgangs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangDTO.AenderungsDatum">
+            <summary>
+            Letztes Änderungsdatum des Vorgangs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangDTO.Belege">
+            <summary>
+            Liste und Daten der Belege zu diesem Vorgang
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangDTO.Positionen">
+            <summary>
+            Liste und Daten der Postionen in diesem Vorgang
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangDTO.Besitzer">
+            <summary>
+            Ersteller-/Besitzerbenutzer des Vorgangs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangDTO.Kunde">
+            <summary>
+            Kontakt für diese Vorgang (Dummy-Kontakt, falls noch nicht erfasst)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.VorgangGuid">
+            <summary>
+            Eindeutige GUID
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.VorgangsNummer">
+            <summary>
+            Sichtbare Vorgangsnummer/zur Info für Kunden usw.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.OriginalVorgangsNummer">
+            <summary>
+            Vorgangsnummer vom Originalbeleg
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.ErstellDatum">
+            <summary>
+            Erstelldatum des Vorgangs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.AenderungsDatum">
+            <summary>
+            Datum der letzten Änderung
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.AktuelleBelegArt">
+            <summary>
+            Art des aktuellsten Belegs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.Kommission">
+            <summary>
+            Eingegebene Kommission des Händlers
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.AktuelleBelegNummer">
+            <summary>
+            Aktuelle Belegnummer
+            </summary>        
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.AktuelleBelegGuid">
+            <summary>
+            Die GUID des aktuellen Beleges.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.Kundenname">
+            <summary>
+            Name des Kunden für Anzeige
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.URL">
+            <summary>
+            Adresse des detaillierten Vorgangs-Objektes
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangStatusDTO.VorgangGuid">
+            <summary>
+            Eindeutige GUID
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangStatusDTO.VorgangsNummer">
+            <summary>
+            Sichtbare Vorgangsnummer/zur Info für Kunden usw.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangStatusDTO.AktuellerStatus">
+            <summary>
+            Statuscode
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangStatusDTO.AenderungsDatum">
+            <summary>
+            Datum der letzten Änderung des Vorgangs        
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.UserAuthTokenDTO">
+            <summary>
+            Informationen über eine erfolgreiche Anmeldung am System. 
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.UserAuthTokenDTO.AppToken">
+            <summary>
+            Token der Anwendung, die den Zugriff initiiert. Regelt Login- und 
+            Zugriffsberechtigungen des Anwenders innerhalb der API.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.UserAuthTokenDTO.Expires">
+            <summary>
+            Ablaufdatum, ab dem das Token ungültig wird. Die Anwendung muss 
+            sich dann erneut einloggen
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.UserAuthTokenDTO.Token">
+            <summary>
+            Das erzeugte Token, das für weitere Requests an die API mitgesendet 
+            werden muss
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.UserAuthTokenDTO.Benutzer">
+            <summary>
+            Benutzerobjekt, ggf. inkl. Rollen und Berechtigungen des Users
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.UserAuthTokenDTO.MandantGuid">
+            <summary>
+            Mandant, unter dem der Benutzer angemeldet wurde
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.UserAuthTokenDTO.Mandant">
+            <summary>
+            Mandanten-Objekt des Benutzers
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.FarbKuerzelGruppeDTO.FarbKuerzelGruppeGuid">
+            <summary>
+            Eindeutiger Bezeichner einer FarbKuerzelGruppe
+            Wenn Guid.Empty wird Guid vom Server vergeben
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.JobParameterDTO.Richtung">
+            <summary>
+            E=Eingabe, A=Ausgabe
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Art">
+            <summary>
+            Art der Adresse - "Anschrift", "Email", "Telefon" (nur relevant bei Adressen aus IBOS)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Titel">
+            <summary>
+            Akad. Titel/Adelstitel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Anrede">
+            <summary>
+            Namensanrede, z.B. "Herr"/"Frau"/"Firma"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Nachname">
+            <summary>
+            Für natürliche Personen: Nachname
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Vorname">
+            <summary>
+            Für natürliche Personen: Vorname(n)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Firmenname">
+            <summary>
+            Für juristische Personen/Körperschaften: exakte Firmierung mit Zusatz der Gesellschaftsform, z.B. "Fensterbau Maier GmbH &amp; Co. KG"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.AdressZusatz1">
+            <summary>
+            Adresszusatz, z.B. "c/o" (belegbezogen)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.AdressZusatz2">
+            <summary>
+            Adresszusatz, z.B. "c/o" (belegbezogen)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Strasse">
+            <summary>
+            Postalische Straße
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Hausnummer">
+            <summary>
+            Postalische Hausnummer, ggf. mit Suffix/Prafix z.B. "16a" oder "77 (Hinterhaus)"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Postfach">
+            <summary>
+            Postfach (ersetzt Straße/Hausnummer in der Ausgabe)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Postleitzahl">
+            <summary>
+            Postalische Postleitzahl bezogen auf die Straßen- oder Postfachadresse
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Ort">
+            <summary>
+            Postalische Ortsangabe
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Ortsteil">
+            <summary>
+            Nicht-postalische Angabe zum Ortsteil
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Land">
+            <summary>
+            Land als Textkürzel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.IstInland">
+            <summary>
+            Bezogen auf den Versender die Angabe, ob die hier ausgefertigte Adresse eine Inlandsadresse ist
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Mailadresse">
+            <summary>
+            E-Mail-Adresse
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Landesvorwahl">
+            <summary>
+            Telefon: Ländervorwahl (kanonisch [+49] oder landesspezifisch [0049])
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Vorwahl">
+            <summary>
+            Ortskennzahl mit führender "0" in Deutschland
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Telefonnummer">
+            <summary>
+            Anschlussrufnummer
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Durchwahl">
+            <summary>
+            Durchwahlzusatz
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Webadresse">
+            <summary>
+            Internet-/Web-URL mit Protokoll-Präfix (https://...)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Verwendungszweck">
+            <summary>
+            Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)        
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Prioritaet">
+            <summary>
+            Priorisierung der Adresse
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.ApplicationSpecificProperties">
+            <summary>
+            Intern
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.KontaktGuid">
+            <summary>
+            Eindeutige GUID
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Nachname">
+            <summary>
+            Nachname (für Endkunden)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Vorname">
+            <summary>
+            Vorname(n) (für Endkunden)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Firmenname">
+            <summary>
+            Firmierung (für jur. Personen)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.KundenNummer">
+            <summary>
+            Kundennummer (alphanummerisch)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Erstkontakt">
+            <summary>
+            Datum des ersten Kontakts
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.LetzterKontakt">
+            <summary>
+            Datum des letzten Kontakts
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.IstEndkunde">
+            <summary>
+            Endkunde oder Firmenkunde
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Kommentar">
+            <summary>
+            allg. Informationen
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.IstKunde">
+            <summary>
+            Status Kontakt oder Interessent
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.IstGesperrt">
+            <summary>
+            Gesperrt/Wird nicht beliefert
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.IstSelbstabholer">
+            <summary>
+            Holt Ware normalerweise ab
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Personen">
+            <summary>
+            Zugeordnete Personen
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Zusatzanschriften">
+            <summary>
+            Zugeordnete Standard-Adressen
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Anrede">
+            <summary>
+            Namensanrede, z.B. "Herr"/"Frau"/"Firma"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.AdressZusatz1">
+            <summary>
+            Adresszusatz, z.B. "c/o" (belegbezogen)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.AdressZusatz2">
+            <summary>
+            Adresszusatz, z.B. "c/o" (belegbezogen)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Strasse">
+            <summary>
+            Postalische Straße
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Hausnummer">
+            <summary>
+            Postalische Hausnummer, ggf. mit Suffix/Prafix z.B. "16a" oder "77 (Hinterhaus)"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Postfach">
+            <summary>
+            Postfach (ersetzt Straße/Hausnummer in der Ausgabe)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Postleitzahl">
+            <summary>
+            Postalische Postleitzahl bezogen auf die Straßen- oder Postfachadresse
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Ort">
+            <summary>
+            Postalische Ortsangabe
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Ortsteil">
+            <summary>
+            Nicht-postalische Angabe zum Ortsteil
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Land">
+            <summary>
+            Land als Textkürzel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Mailadresse">
+            <summary>
+            E-Mail-Adresse
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Landesvorwahl">
+            <summary>
+            Telefon: Ländervorwahl (kanonisch [+49] oder landesspezifisch [0049])
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Vorwahl">
+            <summary>
+            Ortskennzahl mit führender "0" in Deutschland
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Telefonnummer">
+            <summary>
+            Anschlussrufnummer
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Durchwahl">
+            <summary>
+            Durchwahlzusatz
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Webadresse">
+            <summary>
+            Internet-/Web-URL mit Protokoll-Präfix (https://...)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.ApplicationSpecificProperties">
+            <summary>
+            Intern
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.Nachname">
+            <summary>
+            Nachname (für Endkunden)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.Vorname">
+            <summary>
+            Vorname(n) (für Endkunden)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.Firmenname">
+            <summary>
+            Firmierung (für jur. Personen)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.KundenNummer">
+            <summary>
+            Kundennummer (alphanummerisch)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.Strasse">
+            <summary>
+            Strasse
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.Land">
+            <summary>
+            Land
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.Plz">
+            <summary>
+            Postleitzahl
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.Ort">
+            <summary>
+            Stadt / Ort
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.Telefon">
+            <summary>
+            Telefon (Zentrale)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.Email">
+            <summary>
+            E-Mail (Zentrale)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.IstEndkunde">
+            <summary>
+            Endkunde oder Firmenkunde
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.PersonDTO.PersonGuid">
+            <summary>
+            Eindeutige GUID
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.PersonDTO.Nachname">
+            <summary>
+            Nachname der Person
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.PersonDTO.Vorname">
+            <summary>
+            Vorname/Rufname der Person
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.PersonDTO.WeitereVornamen">
+            <summary>
+            evtl. weitere Vornamen
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.PersonDTO.Geburtstag">
+            <summary>
+            Geburtstag
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Titel">
+            <summary>
+            Akad. Titel/Adelstitel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Anrede">
+            <summary>
+            Namensanrede, z.B. "Herr"/"Frau"/"Firma"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Nachname">
+            <summary>
+            Für natürliche Personen: Nachname
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Vorname">
+            <summary>
+            Für natürliche Personen: Vorname(n)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Firmenname">
+            <summary>
+            Für juristische Personen/Körperschaften: exakte Firmierung mit Zusatz der Gesellschaftsform, z.B. "Fensterbau Maier GmbH &amp; Co. KG"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.AdressZusatz1">
+            <summary>
+            Adresszusatz, z.B. "c/o" (belegbezogen)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.AdressZusatz2">
+            <summary>
+            Adresszusatz, z.B. "c/o" (belegbezogen)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Strasse">
+            <summary>
+            Postalische Straße
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Hausnummer">
+            <summary>
+            Postalische Hausnummer, ggf. mit Suffix/Prafix z.B. "16a" oder "77 (Hinterhaus)"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Postfach">
+            <summary>
+            Postfach (ersetzt Straße/Hausnummer in der Ausgabe)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Postleitzahl">
+            <summary>
+            Postalische Postleitzahl bezogen auf die Straßen- oder Postfachadresse
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Ort">
+            <summary>
+            Postalische Ortsangabe
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Ortsteil">
+            <summary>
+            Nicht-postalische Angabe zum Ortsteil
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Land">
+            <summary>
+            Land als Textkürzel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.IstInland">
+            <summary>
+            Bezogen auf den Versender die Angabe, ob die hier ausgefertigte Adresse eine Inlandsadresse ist
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Mailadresse">
+            <summary>
+            E-Mail-Adresse
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Landesvorwahl">
+            <summary>
+            Telefon: Ländervorwahl (kanonisch [+49] oder landesspezifisch [0049])
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Vorwahl">
+            <summary>
+            Ortskennzahl mit führender "0" in Deutschland
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Telefonnummer">
+            <summary>
+            Anschlussrufnummer
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Durchwahl">
+            <summary>
+            Durchwahlzusatz
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Webadresse">
+            <summary>
+            Internet-/Web-URL mit Protokoll-Präfix (https://...)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Verwendungszweck">
+            <summary>
+            Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)        
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.ApplicationSpecificProperties">
+            <summary>
+            Intern
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Titel">
+            <summary>
+            Akad. Titel/Adelstitel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Anrede">
+            <summary>
+            Namensanrede, z.B. "Herr"/"Frau"/"Firma"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Nachname">
+            <summary>
+            Für natürliche Personen: Nachname
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Vorname">
+            <summary>
+            Für natürliche Personen: Vorname(n)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Firmenname">
+            <summary>
+            Für juristische Personen/Körperschaften: exakte Firmierung mit Zusatz der Gesellschaftsform, z.B. "Fensterbau Maier GmbH &amp; Co. KG"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.AdressZusatz1">
+            <summary>
+            Adresszusatz, z.B. "c/o" (belegbezogen)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.AdressZusatz2">
+            <summary>
+            Adresszusatz, z.B. "c/o" (belegbezogen)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Strasse">
+            <summary>
+            Postalische Straße
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Hausnummer">
+            <summary>
+            Postalische Hausnummer, ggf. mit Suffix/Prafix z.B. "16a" oder "77 (Hinterhaus)"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Postfach">
+            <summary>
+            Postfach (ersetzt Straße/Hausnummer in der Ausgabe)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Postleitzahl">
+            <summary>
+            Postalische Postleitzahl bezogen auf die Straßen- oder Postfachadresse
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Ort">
+            <summary>
+            Postalische Ortsangabe
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Ortsteil">
+            <summary>
+            Nicht-postalische Angabe zum Ortsteil
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Land">
+            <summary>
+            Land als Textkürzel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Verwendungszweck">
+            <summary>
+            Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)        
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Prioritaet">
+            <summary>
+            Priorisierung der Adresse
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.ApplicationSpecificProperties">
+            <summary>
+            Intern
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.TemplateGuid">
+            <summary>
+            Eindeutige GUID
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.Titel">
+            <summary>
+            Titel des Templates
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.Beschreibung">
+            <summary>
+            Beschreibung
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.Typ">
+            <summary>
+            Legt den Typ eines Templates fest
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.JsonDaten">
+            <summary>
+            Enthält serialisierte Daten für ein Objekt als "Vorlage"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.ChangedDate">
+            <summary>
+            ChangedDate (letzte Änderung)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.Benutzer">
+            <summary>
+            Benutzer der das Template erstellt hat
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Kennzeichen">
+            <summary>
+            Eindeutiges Kennzeichen des Items (aus GUID)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.KatalogNummer">
+            <summary>
+            Neher-Katalognummer des Artikels
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Bezeichnung">
+            <summary>
+            Artikelbezeichnung
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Einheit">
+            <summary>
+            Einheit des Artikels (lfm=Laufmeter, Stk=Stück, qm=Quadratmeter)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Laufmeter">
+            <summary>
+            Laufmeter des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+            sich aus mit Stückzahl!)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.FarbBezeichnung">
+            <summary>
+            FarbBezeichnung (Bezeichnung der Farbe)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.FarbKuerzel">
+            <summary>
+            FarbeKuerzel (Neher-Kürzel oder Sonderfarbton)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.FarbCode">
+            <summary>
+            FarbeCode der Farbe
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Stueckzahl">
+            <summary>
+            Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+            sich aus mit Laufmeter!)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.IstZuschnitt">
+            <summary>
+            Kennzeichen für Zuschnittartikel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionDTO.Kennzeichen">
+            <summary>
+            Eindeutiges Kennzeichen der Bearbeitung (aus GUID)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionDTO.ZielKennzeichen">
+            <summary>
+            Ziel der Bearbeitung
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionDTO.BearbeitungsName">
+            <summary>
+            Artikelbezeichnung
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionDTO.X">
+            <summary>
+            Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+            sich aus mit Laufmeter!)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionDTO.Y">
+            <summary>
+            Laufmeter des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+            sich aus mit Stückzahl!)
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.Data.Visitor.IVisitor">
+            <summary>
+            Einfaches Visitor-Pattern. Wir implementieren aber hier noch eine Variante der Visit-Methode, die 
+            ein dynamic akzeptiert, weil wir in ExpandoObject und anderen dynamic-Klassen nicht IVisitable implementieren
+            können (sind sealed)
+            </summary>
+        </member>
+    </members>
+</doc>
