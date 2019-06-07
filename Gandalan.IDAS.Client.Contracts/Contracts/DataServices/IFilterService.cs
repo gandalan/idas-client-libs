@@ -13,7 +13,7 @@ namespace Gandalan.Client.Common.Contracts.DataServices
         Task<FilterItemDTO[]> GetAllAsync();
         Task<FilterItemDTO> GetFilterItemAsync(Guid id);
         Task<FilterItemDTO[]> GetFilterItemsByContextAsync(string context);
-        Task SaveAsync(Guid? guid, string context, string title, string serializedFilterSetting, long reihenfolge);
+        Task SaveAsync(FilterItemDTO dto);
         Task DeleteAsync(Guid id);
     }
 }
