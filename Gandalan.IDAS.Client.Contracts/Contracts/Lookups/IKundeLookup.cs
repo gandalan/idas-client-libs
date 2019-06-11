@@ -14,7 +14,7 @@ namespace Gandalan.Client.Common.Contracts
 
     public interface IKundeLookupResult
     {
-        KontaktDTO Kunde { get; }
+        KontaktListItemDTO Kunde { get; }
         bool IsValid { get; }
     }
 
@@ -27,14 +27,14 @@ namespace Gandalan.Client.Common.Contracts
     {
         public static IKundeLookupResult Empty => new KundeLookupResult();
 
-        public KontaktDTO Kunde { get; }
+        public KontaktListItemDTO Kunde { get; }
         public bool IsValid { get; set; }
 
         public KundeLookupResult()
         {
         }
 
-        public KundeLookupResult(KontaktDTO kunde)
+        public KundeLookupResult(KontaktListItemDTO kunde)
         {
             Kunde = kunde;
             IsValid = true;
