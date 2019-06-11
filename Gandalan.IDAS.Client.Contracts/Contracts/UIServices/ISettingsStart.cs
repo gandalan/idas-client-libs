@@ -10,20 +10,4 @@ namespace Gandalan.Client.Common.Contracts.UIServices
     {
         Task Show();
     }
-
-
-    public class ISettingsStartDefault : ISettingsStart
-    {
-        private readonly IUserNotify _notify;
-
-        public ISettingsStartDefault(IUserNotify notify)
-        {
-            _notify = notify;
-        }
-
-        public async Task Show()
-        {
-            _notify.ShowMessage("Einstellungen können nicht angezeigt werden.", UserNotifyMessageType.Error);
-        }
-    }
 }
