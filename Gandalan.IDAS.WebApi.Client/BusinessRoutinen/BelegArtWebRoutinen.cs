@@ -2,10 +2,8 @@
 // Middleware//Gandalan.IDAS.WebApi.Client//BelegArtWebRoutinen.cs
 // Created: 13.06.2019 Konstantin Tümmler
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System;
 using Gandalan.IDAS.WebApi.Client.Settings;
-using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -16,7 +14,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             //Settings.Url = Settings.Url.Replace("/api/", "/BelegArt/");
         }
 
-        public void BelegKopieren(Guid bguid, string neueBelegArt, bool saldenKopieren = false)
+        public string BelegKopieren(Guid bguid, string neueBelegArt, bool saldenKopieren = false)
         {
             if (Login())
             {
