@@ -10,19 +10,4 @@ namespace Gandalan.Client.Common.Contracts.UIServices
     {
         void DisplayUebersicht();
     }
-
-    public class UebersichtDisplayImplDefault : IUebersichtDisplay
-    {
-        private readonly IUserNotify _notify;
-
-        public UebersichtDisplayImplDefault(IUserNotify notify)
-        {
-            _notify = notify;
-        }
-
-        public void DisplayUebersicht()
-        {
-            _notify.ShowMessage("Produktionsübersicht kann nicht angezeigt werden.", UserNotifyMessageType.Error);
-        }
-    }
 }

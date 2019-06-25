@@ -11,15 +11,4 @@ namespace Gandalan.Client.Common.AppServices
     {
         void LoadUpdateCheck();
     }
-
-    public class ApplicationUpdateCheckServiceImplDefault : IApplicationUpdateCheckService
-    {
-        public ApplicationUpdateCheckServiceImplDefault()
-        {
-        }
-
-        public void LoadUpdateCheck()
-        {
-        }
-    }
 }

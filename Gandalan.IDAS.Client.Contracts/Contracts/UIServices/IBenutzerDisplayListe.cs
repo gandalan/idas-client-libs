@@ -10,19 +10,4 @@ namespace Gandalan.Client.Common.Contracts.UIServices
     {
         void DisplayBenutzerListe(Guid mandant);
     }
-
-    public class BenutzerDisplayListeImplDefault : IBenutzerDisplayListe
-    {
-        private readonly IUserNotify _notify;
-
-        public BenutzerDisplayListeImplDefault(IUserNotify notify)
-        {
-            _notify = notify;
-        }
-
-        public void DisplayBenutzerListe(Guid mandant)
-        {
-            _notify.ShowMessage("Benutzer Übersicht kann nicht angezeigt werden.", UserNotifyMessageType.Error);
-        }
-    }
 }
