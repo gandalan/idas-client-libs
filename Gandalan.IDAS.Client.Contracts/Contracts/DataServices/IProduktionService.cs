@@ -1,4 +1,5 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
+﻿using Gandalan.IDAS.WebApi.Data.DTOs.PositionsDaten;
+using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ namespace Gandalan.Client.Common.Contracts.DataServices
 {
     public class ProduktionsDaten : INotifyPropertyChanged
     {
+        public PositionsDatenDTO PositionsDaten { get; set; }
         public List<MaterialbedarfDTO> Material { get; set; }
         virtual public List<MaterialbedarfDTO> Materialbedarf => Material == null ? new List<MaterialbedarfDTO>() : Material.Where(m => m.IstZuschnitt == false).ToList();
         virtual public List<MaterialbedarfDTO> Saegeliste => Material == null ? new List<MaterialbedarfDTO>() : Material.Where(m => m.IstZuschnitt == true).ToList();
