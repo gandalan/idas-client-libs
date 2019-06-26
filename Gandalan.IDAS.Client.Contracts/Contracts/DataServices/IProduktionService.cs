@@ -13,8 +13,6 @@ namespace Gandalan.Client.Common.Contracts.DataServices
     {
         public PositionsDatenDTO PositionsDaten { get; set; }
         public List<MaterialbedarfDTO> Material { get; set; }
-        virtual public List<MaterialbedarfDTO> Materialbedarf => Material == null ? new List<MaterialbedarfDTO>() : Material.Where(m => m.IstZuschnitt == false).ToList();
-        virtual public List<MaterialbedarfDTO> Saegeliste => Material == null ? new List<MaterialbedarfDTO>() : Material.Where(m => m.IstZuschnitt == true).ToList();
         public List<EtikettDTO> Etiketten { get; set; }
         public List<ProduktionDTO> Bearbeitungen { get; set; }
 
