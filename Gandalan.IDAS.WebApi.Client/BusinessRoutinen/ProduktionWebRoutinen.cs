@@ -24,12 +24,12 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
         
-        public List<ProduktionDTO> GetProduktion(Guid belegPositionsGuid)
+        public List<BearbeitungDTO> GetProduktion(Guid belegPositionsGuid)
         {
             //throw new Exception("TODO: DTOs definieren, Endpunkt MaterialBedarf aufrufen!");
             if (Login())
             {
-                return Get<List<ProduktionDTO>>("Produktion/?posguid=" + belegPositionsGuid.ToString());
+                return Get<List<BearbeitungDTO>>("Produktion/?posguid=" + belegPositionsGuid.ToString());
             }
             return null;
         }
@@ -44,9 +44,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
 
-        public async Task<List<ProduktionDTO>> GetProduktionAsync(Guid belegPositionsGuid)
+        public async Task<List<BearbeitungDTO>> GetProduktionAsync(Guid belegPositionsGuid)
         {
-            return await Task<List<ProduktionDTO>>.Run(() => { return GetProduktion(belegPositionsGuid); });
+            return await Task<List<BearbeitungDTO>>.Run(() => { return GetProduktion(belegPositionsGuid); });
         }
 
         public async Task<List<MaterialbedarfDTO>> GetMaterialBedarfAsync(Guid belegPositionsGuid)

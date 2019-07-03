@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
-    public class ProduktionDTO
+    public class BearbeitungDTO
     {
         /// <summary>
         /// Eindeutiges Kennzeichen der Bearbeitung (aus GUID)

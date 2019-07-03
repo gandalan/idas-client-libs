@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Gandalan.IDAS.WebApi.Data\Gandalan.IDAS.WebApi.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contracts\DataServices\Models\" />
+  </ItemGroup>
+
 </Project>
