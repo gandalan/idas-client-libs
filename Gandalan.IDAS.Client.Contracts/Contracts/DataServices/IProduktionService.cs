@@ -1,5 +1,4 @@
-﻿using Gandalan.IDAS.WebApi.Data.DTOs.PositionsDaten;
-using Gandalan.IDAS.WebApi.DTO;
+﻿using Gandalan.IDAS.WebApi.DTO;
 using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Client.Contracts.DataServices
