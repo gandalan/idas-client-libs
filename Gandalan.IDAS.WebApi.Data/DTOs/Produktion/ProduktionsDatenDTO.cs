@@ -10,6 +10,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public List<MaterialbedarfDTO> Material { get; set; }
         public List<EtikettDTO> Etiketten { get; set; }
         public List<BearbeitungDTO> Bearbeitungen { get; set; }
+        public PositionsDatenDTO PositionsDaten { get; set; }
 
         public List<MaterialbedarfDTO> GetMaterialbedarf()
         {
