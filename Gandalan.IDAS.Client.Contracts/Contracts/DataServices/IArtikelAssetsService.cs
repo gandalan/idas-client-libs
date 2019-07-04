@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.Client.Common.Contracts.DataServices
+namespace Gandalan.IDAS.Client.Contracts.DataServices
 {
     public interface IArtikelAssetsService
     {        

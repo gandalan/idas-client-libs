@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Common.Contracts.DataServices
+namespace Gandalan.IDAS.Client.Contracts.DataServices
 {
     public interface IVariantenService
     {

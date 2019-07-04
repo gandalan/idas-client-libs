@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Client.Contracts.DataServices
 {
-    public interface IScriptService
+    public interface IMaterialBeschaffungService
     {
-        Task<Dictionary<string, string>> GetAllAsync();
+        
+        bool CanHandle(string artikelNummer);
     }
 }

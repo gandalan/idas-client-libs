@@ -969,6 +969,146 @@
             Intern
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BearbeitungDTO.Kennzeichen">
+            <summary>
+            Eindeutiges Kennzeichen der Bearbeitung (aus GUID)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BearbeitungDTO.ZielKennzeichen">
+            <summary>
+            Ziel der Bearbeitung
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BearbeitungDTO.BearbeitungsName">
+            <summary>
+            Artikelbezeichnung
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BearbeitungDTO.X">
+            <summary>
+            Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+            sich aus mit Laufmeter!)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BearbeitungDTO.Y">
+            <summary>
+            Laufmeter des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+            sich aus mit Stückzahl!)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Kennzeichen">
+            <summary>
+            Eindeutiges Kennzeichen des Items (aus GUID)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.KatalogNummer">
+            <summary>
+            Neher-Katalognummer des Artikels
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Bezeichnung">
+            <summary>
+            Artikelbezeichnung
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Einheit">
+            <summary>
+            Einheit des Artikels (lfm=Laufmeter, Stk=Stück, qm=Quadratmeter)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Stueckzahl">
+            <summary>
+            Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+            sich aus mit Laufmeter!)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Laufmeter">
+            <summary>
+            Laufmeter des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+            sich aus mit Stückzahl!)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.FarbBezeichnung">
+            <summary>
+            FarbBezeichnung (Bezeichnung der Farbe)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.FarbKuerzel">
+            <summary>
+            FarbeKuerzel (Neher-Kürzel oder Sonderfarbton)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.FarbCode">
+            <summary>
+            FarbeCode der Farbe
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.IstZuschnitt">
+            <summary>
+            Kennzeichen für Zuschnittartikel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Stueckzahl">
+            <summary>
+            Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+            sich aus mit Laufmeter!)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.FarbBezeichnung">
+            <summary>
+            Handelsbezeichnung, zB "verkehrsweiss"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.FarbCode">
+            <summary>
+            Skalenfarbcode, z.B. "RAL 9016"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.OberflaechenBezeichnung">
+            <summary>
+            Bezeichnung der Oberfläche, z.B. "matt"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.PulverNummer">
+            <summary>
+            Wenn bekannt/vorhanden, die Pulvernummer beim Beschichter
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.Unbekannt">
+            <summary>
+            Undefinierter Zustand
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.Erstellt">
+            <summary>
+            Der Job wurde erstellt
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.Angefragt">
+            <summary>
+            Artikel wurde ans Lager übermittelt
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.Reserviert">
+            <summary>
+            Bereitstellung durch Lager erfolgt demnächst
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.NachschubBestellt">
+            <summary>
+            Artikel nicht am Lager, Nachbestellung durch Lager erfolgt
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.NachschubImZulauf">
+            <summary>
+            Artikel nicht am Lager, Nachbestellung wird zeitnah aber geliefert
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.Bereitgestellt">
+            <summary>
+            Artikel sind vollständig für die Produktion vorhanden
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.TemplateGuid">
             <summary>
             Eindeutige GUID
@@ -1002,85 +1142,6 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.Benutzer">
             <summary>
             Benutzer der das Template erstellt hat
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Kennzeichen">
-            <summary>
-            Eindeutiges Kennzeichen des Items (aus GUID)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.KatalogNummer">
-            <summary>
-            Neher-Katalognummer des Artikels
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Bezeichnung">
-            <summary>
-            Artikelbezeichnung
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Einheit">
-            <summary>
-            Einheit des Artikels (lfm=Laufmeter, Stk=Stück, qm=Quadratmeter)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Laufmeter">
-            <summary>
-            Laufmeter des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
-            sich aus mit Stückzahl!)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.FarbBezeichnung">
-            <summary>
-            FarbBezeichnung (Bezeichnung der Farbe)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.FarbKuerzel">
-            <summary>
-            FarbeKuerzel (Neher-Kürzel oder Sonderfarbton)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.FarbCode">
-            <summary>
-            FarbeCode der Farbe
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Stueckzahl">
-            <summary>
-            Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
-            sich aus mit Laufmeter!)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.IstZuschnitt">
-            <summary>
-            Kennzeichen für Zuschnittartikel
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionDTO.Kennzeichen">
-            <summary>
-            Eindeutiges Kennzeichen der Bearbeitung (aus GUID)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionDTO.ZielKennzeichen">
-            <summary>
-            Ziel der Bearbeitung
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionDTO.BearbeitungsName">
-            <summary>
-            Artikelbezeichnung
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionDTO.X">
-            <summary>
-            Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
-            sich aus mit Laufmeter!)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionDTO.Y">
-            <summary>
-            Laufmeter des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
-            sich aus mit Stückzahl!)
             </summary>
         </member>
         <member name="T:Gandalan.IDAS.WebApi.Data.Visitor.IVisitor">

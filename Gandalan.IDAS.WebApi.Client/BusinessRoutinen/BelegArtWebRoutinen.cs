@@ -3,7 +3,9 @@
 // Created: 13.06.2019 Konstantin Tümmler
 
 using System;
+using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.Client.Settings;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -14,13 +16,18 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             //Settings.Url = Settings.Url.Replace("/api/", "/BelegArt/");
         }
 
-        public string BelegKopieren(Guid bguid, string neueBelegArt, bool saldenKopieren = false)
+        public VorgangDTO BelegKopieren(Guid bguid, string neueBelegArt, bool saldenKopieren = false)
         {
             if (Login())
             {
-                return Post($"BelegArt?bguid={bguid}&saldenKopieren={saldenKopieren}&neueBelegArt={neueBelegArt}", new {});
+                return Post<VorgangDTO>($"BelegArt?bguid={bguid}&saldenKopieren={saldenKopieren}&neueBelegArt={neueBelegArt}", new {});
             }
             return null;
+        }
+
+        public async Task<VorgangDTO> BelegKopierenAsync(Guid bguid, string neueBelegArt, bool saldenKopieren = false)
+        {
+            return await Task<VorgangDTO>.Run(() => { return BelegKopieren(bguid, neueBelegArt, saldenKopieren); });
         }
     }
 }

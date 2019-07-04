@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.DTO;
 using Gandalan.IDAS.WebApi.DTO.DTOs.Reports;
 
-namespace Gandalan.Client.Common.Contracts.DataServices
+namespace Gandalan.IDAS.Client.Contracts.DataServices
 {
     public interface ITemplateService
 	{
