@@ -1,6 +1,6 @@
 ﻿namespace Gandalan.IDAS.WebApi.DTO
 {
-    public enum MaterialBeschaffungsJobStatusDTO
+    public enum MaterialBeschaffungsJobStatiDTO
     {
         /// <summary>
         /// Undefinierter Zustand

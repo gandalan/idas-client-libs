@@ -11,7 +11,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public DateTime Erstellt { get; set; }
         public string Ersteller { get; set; }
 
-        public MaterialBeschaffungsJobStatusDTO Status { get; set; }
+        public MaterialBeschaffungsJobStatiDTO AktuellerStatus { get; set; }
 
         public string KatalogNummer { get; set; }
         public string Bezeichnung { get; set; }
