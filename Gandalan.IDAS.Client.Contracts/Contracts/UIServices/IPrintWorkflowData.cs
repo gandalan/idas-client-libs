@@ -11,15 +11,17 @@ namespace Gandalan.Client.Common.Contracts.UIServices
     {
         ReportDatenTypDTO ReportTyp { get; set; }
         object Daten { get; set; }
+        bool IsList { get; set; }
         bool PrintSelectedData { get; set; }
-        bool ShowPrintSelectedData { get; set; }        
+        bool ShowPrintSelectedData { get; set; }
     }
 
     public class PrintWorkflowData : IPrintWorkflowData
     {
         public ReportDatenTypDTO ReportTyp { get; set; }
         public object Daten { get; set; }
+        public bool IsList { get; set; }
         public bool PrintSelectedData { get; set; }
-        public bool ShowPrintSelectedData { get; set; } = true;        
+        public bool ShowPrintSelectedData { get; set; } = true;
     }
 }
