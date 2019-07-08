@@ -1074,39 +1074,94 @@
             Wenn bekannt/vorhanden, die Pulvernummer beim Beschichter
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.Unbekannt">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatiDTO.Unbekannt">
             <summary>
             Undefinierter Zustand
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.Erstellt">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatiDTO.Erstellt">
             <summary>
             Der Job wurde erstellt
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.Angefragt">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatiDTO.Angefragt">
             <summary>
             Artikel wurde ans Lager übermittelt
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.Reserviert">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatiDTO.Reserviert">
             <summary>
             Bereitstellung durch Lager erfolgt demnächst
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.NachschubBestellt">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatiDTO.NachschubBestellt">
             <summary>
             Artikel nicht am Lager, Nachbestellung durch Lager erfolgt
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.NachschubImZulauf">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatiDTO.NachschubImZulauf">
             <summary>
             Artikel nicht am Lager, Nachbestellung wird zeitnah aber geliefert
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatusDTO.Bereitgestellt">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatiDTO.Bereitgestellt">
             <summary>
             Artikel sind vollständig für die Produktion vorhanden
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.Unbekannt">
+            <summary>
+            Undefinierter Zustand
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.FuerAVBereitgestellt">
+            <summary>
+            Bereitstellung der Position für AV erfolgte
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.AVBerechnet">
+            <summary>
+            Materialberechnung erfolgt
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.AVAbgeschlossen">
+            <summary>
+            Korrekturen am Material durchgeführt
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.SerieZugeordnet">
+            <summary>
+            In einer Serie eingeordnet
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.InProduktion">
+            <summary>
+            Wird gerade produziert
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.ProduktionAbgeschlossen">
+            <summary>
+            Produktion ist fertig
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.VersandVorbereitung">
+            <summary>
+            Versand wird vorbereitet
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.VersandAbgeschlossen">
+            <summary>
+            Versand durchgeführt
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.ProduktionUnterbrochen">
+            <summary>
+            Unterbrechung
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.Fehler">
+            <summary>
+            Fehler
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.TemplateGuid">

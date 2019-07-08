@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Common.Tiles
+namespace Gandalan.Client.Contracts.Tiles
 {
     public interface ITileItem
 	{

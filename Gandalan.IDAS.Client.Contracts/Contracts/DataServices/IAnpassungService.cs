@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Gandalan.IDAS.Client.Contracts.DataServices
+namespace Gandalan.Client.Contracts.DataServices
 {
     public interface IAnpassungService
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Common.Contracts.Lookups
+namespace Gandalan.Client.Contracts.Lookups
 {
     public interface IFeldEditor<T,U> : ILookupDialog<T, U>
     {

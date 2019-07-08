@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.DTO.DTOs.Reports;
 
-namespace Gandalan.Client.Common.Contracts.UIServices
+namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IPrintWorkflowData
     {

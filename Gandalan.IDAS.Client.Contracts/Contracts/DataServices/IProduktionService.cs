@@ -1,7 +1,7 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
 using System.Threading.Tasks;
 
-namespace Gandalan.IDAS.Client.Contracts.DataServices
+namespace Gandalan.Client.Contracts.DataServices
 {
 
     public interface IProduktionService

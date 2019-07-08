@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Common.Contracts.DataServices
+namespace Gandalan.Client.Contracts.DataServices
 {
     public interface IBelegArtService
     {

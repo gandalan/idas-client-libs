@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gandalan.IDAS.Client.Contracts
+namespace Gandalan.Client.Contracts
 {
     public interface ISearchProvider
     {

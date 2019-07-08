@@ -1,7 +1,7 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 
-namespace Gandalan.Client.Common.Contracts
+namespace Gandalan.Client.Contracts
 {
     public interface IKundeLookup : ILookupDialog<IKundeLookupResult, IKundeLookupParams>
     {

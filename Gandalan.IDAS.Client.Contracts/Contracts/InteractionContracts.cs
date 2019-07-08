@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace Gandalan.IDAS.Client.Contracts
+namespace Gandalan.Client.Contracts
 {
     public interface IInteractivePanel : INotifyPropertyChanged
     {

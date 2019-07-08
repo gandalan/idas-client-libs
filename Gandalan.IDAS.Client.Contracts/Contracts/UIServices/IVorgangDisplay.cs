@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Common.Contracts.UIServices
+namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IVorgangDisplay
     {

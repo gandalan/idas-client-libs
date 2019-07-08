@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gandalan.Client.Common.AppServices
+namespace Gandalan.Client.Contracts.AppServices
 {
     public interface IApplicationConfig
     {

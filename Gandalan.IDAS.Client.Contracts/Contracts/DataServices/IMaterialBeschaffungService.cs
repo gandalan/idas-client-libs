@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gandalan.IDAS.Client.Contracts.DataServices
+namespace Gandalan.Client.Contracts.DataServices
 {
     public interface IMaterialBeschaffungService
     {

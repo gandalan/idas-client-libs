@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gandalan.IDAS.Client.Contracts
+namespace Gandalan.Client.Contracts
 {
     public interface IObjectStore<T> where T : new()
     {

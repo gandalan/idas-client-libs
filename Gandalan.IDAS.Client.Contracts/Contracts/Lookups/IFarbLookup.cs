@@ -1,8 +1,8 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
-using Gandalan.Client.Common.Contracts.Lookups;
+using Gandalan.Client.Contracts.Lookups;
 
-namespace Gandalan.Client.Common.Contracts
+namespace Gandalan.Client.Contracts
 {
     public interface IFarbLookup : IFeldEditor<IFarbLookupResult, IFarbLookupParams>
     {
