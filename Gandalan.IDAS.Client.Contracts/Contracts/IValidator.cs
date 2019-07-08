@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Common.Contracts
+namespace Gandalan.IDAS.Client.Contracts
 {
     public interface IValidator
     {
