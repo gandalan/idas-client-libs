@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Common.Cache
+namespace Gandalan.Client.Contracts.Cache
 {
     public interface ICache
     {

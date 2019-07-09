@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Common.AppServices
+namespace Gandalan.Client.Contracts.AppServices
 {
     public enum PermissionLevel
     {

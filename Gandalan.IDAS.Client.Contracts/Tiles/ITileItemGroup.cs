@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Gandalan.Client.Common.Tiles
+namespace Gandalan.Client.Contracts.Tiles
 {
 	public interface ITileItemGroup
 	{

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Common.Contracts.DataServices
+namespace Gandalan.Client.Contracts.DataServices
 {
     public interface IScriptService
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Gandalan.Client.Common.Contracts.UIServices
+namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IOverlayNotify
     {

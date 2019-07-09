@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Common.Contracts.UIServices
+namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IBenutzerEditor
     {

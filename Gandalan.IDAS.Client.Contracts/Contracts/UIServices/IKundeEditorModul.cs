@@ -1,4 +1,4 @@
-﻿namespace Gandalan.Client.Common.Contracts.UIServices
+﻿namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IKundeEditorModul
     {
