@@ -7,6 +7,10 @@ Write-Host $Env:Build_BuildNumber
 $NewVersion = [regex]::matches($Env:Build_BuildNumber, $VersionRegex)
 Write-Host "Updating version of the application to the build version: " $NewVersion
 
+##vso[task.setvariable variable=BUILDNUMBER]$NewVersion
+
+Write-Host "##vso[task.setvariable variable=BUILDNUMBER]$NewVersion"
+
 #AssemblyProjectInfo:
 $file = ".\AssemblyProjectInfo.cs" 
 $filecontent = Get-Content($file)
