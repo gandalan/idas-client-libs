@@ -3,6 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>GDL.IDAS.Client.Contracts</AssemblyName>
+
+    <Version Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.0.1</Version>
+    <Version Condition=" '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</Version>
+    <AssemblyVersion Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.0.1</AssemblyVersion>
+    <AssemblyVersion Condition=" '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</AssemblyVersion>
+    <FileVersion Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.0.1</FileVersion>
+    <FileVersion Condition=" '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</FileVersion>
+    
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
