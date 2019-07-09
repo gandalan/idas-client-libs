@@ -4,10 +4,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>GDL.IDAS.Client.Contracts</AssemblyName>
 
-    <AssemblyVersion Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.0.1</AssemblyVersion>
-    <AssemblyVersion Condition=" '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</AssemblyVersion>
-    <FileVersion Condition=" '$(BUILD_BUILDNUMBER)' == '' ">0.0.1</FileVersion>
-    <FileVersion Condition=" '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</FileVersion>
+    <AssemblyVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</AssemblyVersion>
+    <AssemblyVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</AssemblyVersion>
+    <FileVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</FileVersion>
+    <FileVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</FileVersion>
     
   </PropertyGroup>
 
