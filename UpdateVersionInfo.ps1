@@ -9,7 +9,7 @@ Write-Host "Updating version of the application to the build version: " $NewVers
 
 ##vso[task.setvariable variable=BUILDNUMBER]$NewVersion
 
-Write-Host ##vso[task.setvariable variable=BUILDNUMBER]$NewVersion""
+Write-Host "##vso[task.setvariable variable=BUILDNUMBER]$NewVersion"
 
 #AssemblyProjectInfo:
 $file = ".\AssemblyProjectInfo.cs" 
