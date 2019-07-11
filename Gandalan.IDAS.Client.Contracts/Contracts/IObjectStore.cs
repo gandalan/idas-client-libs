@@ -8,7 +8,7 @@ namespace Gandalan.Client.Contracts
     {
         IList<T> GetAll();
         IList<T> Get(Func<T, bool> filter);
-        T Put(T item);
+        void Put(T item);
         void Remove(T item);
     }
 }
