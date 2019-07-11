@@ -13,6 +13,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool StaendigeSerie { get; set; }
         public bool ProduktionFreigegeben { get; set; }
         public bool UnterlagenGedruckt { get; set; }
-        public IList<Guid> Elemente { get; set; } = new List<Guid>();
+        public IList<BelegPositionAVDTO> Elemente { get; set; } = new List<BelegPositionAVDTO>();
     }
 }
