@@ -7,6 +7,7 @@ namespace Gandalan.IDAS.WebApi.DTO
     public class BelegPositionAVDTO
     {
         public Guid BelegPositionAVGuid { get; set; }
+        public Guid SerieGuid { get; set; }
         public Guid BelegPositionGuid { get; set; }
         public DateTime Bereitgestellt { get; set; }
         public DateTime? Berechnet { get; set; }
