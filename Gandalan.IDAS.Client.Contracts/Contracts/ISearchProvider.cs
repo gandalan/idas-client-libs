@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts
@@ -9,12 +7,12 @@ namespace Gandalan.Client.Contracts
     public interface ISearchProvider
     {
         string Prefix { get; }
-
-        IEnumerable<ISearchResult> Search(string term);
+        Task<IEnumerable<ISearchResult>> Search(string term);
     }
 
     public interface ISearchResult
     {
+        Guid ItemGuid { get; }
         string Title { get; }
         string Description { get; }
         DateTime ItemVersion { get; }
