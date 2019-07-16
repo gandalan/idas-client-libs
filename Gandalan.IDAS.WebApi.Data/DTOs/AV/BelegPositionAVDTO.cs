@@ -30,6 +30,8 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public BelegPositionAVDTO(BelegPositionDTO position, string kunde, string kommission = null)
         {
+            if (BelegPositionAVGuid.Equals(Guid.Empty))
+                BelegPositionAVGuid = Guid.NewGuid();
             BelegPositionGuid = position.BelegPositionGuid;
             Bereitgestellt = DateTime.UtcNow;
             Berechnet = null;
