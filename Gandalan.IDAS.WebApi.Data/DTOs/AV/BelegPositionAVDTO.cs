@@ -17,6 +17,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Variante { get; set; }
         public string Kommission { get; set; }
         public string Kunde { get; set; }
+        public string Pcode { get; set; }
 
         public BelegPositionDTO Position { get; set; }
         public ProduktionsDatenDTO ProduktionsDaten { get; set; }
