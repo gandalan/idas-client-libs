@@ -1,13 +1,13 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
     public class ProduktionsDatenDTO
     {
-        public GuidConverter ProduktionsDatenGuid { get; set; }
+        public Guid ProduktionsDatenGuid { get; set; }
         public List<MaterialbedarfDTO> Material { get; set; }
         public List<EtikettDTO> Etiketten { get; set; }
         public List<BearbeitungDTO> Bearbeitungen { get; set; }
