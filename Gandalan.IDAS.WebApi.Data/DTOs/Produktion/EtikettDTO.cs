@@ -8,6 +8,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 {
     public class EtikettDTO
     {
+        public Guid EtikettGuid { get; set; }
         public string Kuerzel { get; set; }
         public string Text { get; set; }
         public Guid ZielKennzeichen { get; set; }
