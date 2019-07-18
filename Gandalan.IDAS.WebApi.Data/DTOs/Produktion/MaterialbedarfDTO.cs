@@ -8,6 +8,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 {
     public class MaterialbedarfDTO
     {
+        public Guid MaterialBedarfGuid { get; set; }
         /// <summary>
         /// Eindeutiges Kennzeichen des Items (aus GUID)
         /// </summary>
