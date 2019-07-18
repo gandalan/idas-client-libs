@@ -8,6 +8,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 {
     public class BearbeitungDTO
     {
+        public Guid BearbeitungGuid { get; set; }
         /// <summary>
         /// Eindeutiges Kennzeichen der Bearbeitung (aus GUID)
         /// </summary>
