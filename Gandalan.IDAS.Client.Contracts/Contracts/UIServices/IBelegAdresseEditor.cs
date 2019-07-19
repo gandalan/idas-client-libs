@@ -6,7 +6,7 @@ namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IBelegAdresseEditor
     {
-        Task EditAdresse(BeleganschriftDTO dto);
+        Task<BeleganschriftDTO> EditAdresse(BeleganschriftDTO dto);
 
     }
 }
