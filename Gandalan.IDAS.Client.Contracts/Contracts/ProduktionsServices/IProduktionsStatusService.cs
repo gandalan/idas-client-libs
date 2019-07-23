@@ -1,12 +1,13 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
+using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
     public interface IProduktionsStatusService
     {
-        void UpdateStatus(Guid positionsGuid, ProduktionsStatusHistorieDTO info);
-        void UpdateStatus(Guid positionsGuid, SerieDTO serie);
-        ProduktionsStatusDTO GetStatus(Guid positionsGuid);
+        Task UpdateStatus(Guid positionsGuid, ProduktionsStatusHistorieDTO info);
+        Task UpdateStatus(Guid positionsGuid, SerieDTO serie);
+        Task<ProduktionsStatusDTO> GetStatus(Guid positionsGuid);
     }
 }
