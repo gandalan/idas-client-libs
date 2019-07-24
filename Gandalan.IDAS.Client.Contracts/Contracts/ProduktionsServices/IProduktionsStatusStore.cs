@@ -2,14 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.Client.Contracts;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
-    public interface IProduktionsStatusStore
+    public interface IProduktionsStatusStore : IStore<ProduktionsStatusDTO>
     {
-        Task<IList<ProduktionsStatusDTO>> GetAll();
-        Task<ProduktionsStatusDTO> Get(Guid positionsGuid);
-        Task Save(ProduktionsStatusDTO status);
-        Task Remove(Guid positionsGuid);
     }
 }

@@ -1,13 +1,11 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
-    public interface IAVSerienStore
+    public interface IAVSerienStore : IStore<SerieDTO>
     {
-        IList<SerieDTO> GetAll();
-        void SaveSerie(SerieDTO serie);
-        void AddElement(SerieDTO serie, BelegPositionAVDTO element);
-        void RemoveElement(SerieDTO serie, BelegPositionAVDTO element);
     }
 }

@@ -8,6 +8,5 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
     {
         Task UpdateStatus(Guid positionsGuid, ProduktionsStatusHistorieDTO info);
         Task UpdateStatus(Guid positionsGuid, SerieDTO serie);
-        Task<ProduktionsStatusDTO> GetStatus(Guid positionsGuid);
     }
 }
