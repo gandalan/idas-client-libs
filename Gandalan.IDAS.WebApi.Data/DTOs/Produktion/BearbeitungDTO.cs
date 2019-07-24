@@ -35,5 +35,24 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal ProfilLaenge { get; set; }
         public decimal ProfilBreite { get; set; }
         public string KatalogNummer { get; set; }
+        public string StammdatenDateiFuerBearbeitung { get; set; }
+        public string Spannsituation { get; set; }
+        public string SpannSituationAlternativ { get; set; }
+        public string StartXRegel { get; set; }
+        public string FraesBild { get; set; }
+        public string TextHP { get; set; }
+        public string TextNP { get; set; }
+        public decimal LLBreite { get; set; }
+        public decimal LLBreiteAmBildschirm { get; set; }
+        public decimal LLHoehe { get; set; }
+        public decimal DurchmesserBohrung { get; set; }
+        public decimal LochAbstand { get; set; }
+        public decimal LochAbstandAmBildschirm { get; set; }
+        public decimal Winkel { get; set; }
+        public bool ManuellGeloescht { get; set; }
+        public bool Passiv { get; set; }
+        public bool NichtFreigegeben { get; set; }
+        public bool MassXEditierbar { get; set; }
+        public bool GroesseEditierbar { get; set; }
     }
 }
