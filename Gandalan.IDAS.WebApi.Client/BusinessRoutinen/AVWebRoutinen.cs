@@ -103,7 +103,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<string> DeleteBelegPositionenAVAsync(Guid guid)
         {
-            return await Task.Run(() => DeleteBelegPositionenAV(position));
+            return await Task.Run(() => DeleteBelegPositionenAV(guid));
         }
                        
         public async Task<SerieDTO[]> GetAllSerienAsync()
