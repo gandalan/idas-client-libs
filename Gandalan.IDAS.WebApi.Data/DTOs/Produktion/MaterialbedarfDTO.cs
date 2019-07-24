@@ -67,5 +67,18 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool MaterialBearbeitungBeschichten { get; set; }
         public bool MaterialBearbeitungBohren { get; set; }
         public bool MaterialBearbeitungEloxieren { get; set; }
+
+        public bool AufPackListe { get; set; }
+        public string CADKennung { get; set; }
+        public string EtikettenSonderS { get; set; }
+        public string IndiSonderInfo1 { get; set; }
+        public string IndiSonderInfo2 { get; set; }
+        public string IndiSonderInfo3 { get; set; }
+        public string PIText { get; set; }
+        public bool SchraegElement { get; set; }
+        public string SonderFormInfo { get; set; }
+        public string ZusatzEtikettText { get; set; }
+        public bool AufMaterialListe { get; set; }
+        public bool NurLieferscheinAnzeige { get; set; }
     }
 }
