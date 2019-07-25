@@ -21,6 +21,6 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public ProduktionsStatiDTO AktuellerStatus { get; set; }
 
-        public List<ProduktionsStatusHistorieDTO> Historie { get; set; }
+        public List<ProduktionsStatusHistorieDTO> Historie { get; set; } = new List<ProduktionsStatusHistorieDTO>();
     }
 }

@@ -42,6 +42,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string PulverNummer { get; set; }
         
-        public List<MaterialBeschaffungsJobHistorieDTO> Historie { get; set; }
+        public List<MaterialBeschaffungsJobHistorieDTO> Historie { get; set; } = new List<MaterialBeschaffungsJobHistorieDTO>();
     }
 }
