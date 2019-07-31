@@ -67,20 +67,20 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return "Not logged in";
         }
 
-        public string DeleteBelegPositionenAV(BelegPositionAVDTO position)
+        public string DeleteBelegPositionenAV(Guid guid)
         {
             if (Login())
             {
-                return Delete($"BelegPositionenAV/{position.BelegPositionAVGuid}");
+                return Delete($"BelegPositionenAV/{guid}");
             }
             return "Not logged in";
         }
 
-        public string DeleteSerie(SerieDTO serie)
+        public string DeleteSerie(Guid guid)
         {
             if (Login())
             {
-                return Delete($"Serie/{serie.SerieGuid}");
+                return Delete($"Serie/{guid}");
             }
             return "Not logged in";
         }
@@ -101,9 +101,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await Task.Run(() => SaveBelegPositionenAV(position));
         }
 
-        public async Task<string> DeleteBelegPositionenAVAsync(BelegPositionAVDTO position)
+        public async Task<string> DeleteBelegPositionenAVAsync(Guid guid)
         {
-            return await Task.Run(() => DeleteBelegPositionenAV(position));
+            return await Task.Run(() => DeleteBelegPositionenAV(guid));
         }
                        
         public async Task<SerieDTO[]> GetAllSerienAsync()
@@ -121,9 +121,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await Task.Run(() => SaveSerie(serie));
         }
 
-        public async Task<string> DeleteSerieAsync(SerieDTO serie)
+        public async Task<string> DeleteSerieAsync(Guid guid)
         {
-            return await Task.Run(() => DeleteSerie(serie));
+            return await Task.Run(() => DeleteSerie(guid));
         }
     }
 }

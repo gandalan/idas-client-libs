@@ -6,6 +6,11 @@ namespace Gandalan.IDAS.WebApi.DTO
 {
     public class ProduktionsStatusDTO
     {
+        public ProduktionsStatusDTO()
+        {
+            Erstellt = DateTime.UtcNow;
+        }
+
         public Guid ProduktionsStatusGuid { get; set; }
         public Guid BelegPositionGuid { get; set; }
         public DateTime Erstellt { get; set; }
@@ -16,6 +21,6 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public ProduktionsStatiDTO AktuellerStatus { get; set; }
 
-        public List<ProduktionsStatusHistorieDTO> Historie { get; set; }
+        public List<ProduktionsStatusHistorieDTO> Historie { get; set; } = new List<ProduktionsStatusHistorieDTO>();
     }
 }

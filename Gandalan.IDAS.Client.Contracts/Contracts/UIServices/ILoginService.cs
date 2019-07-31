@@ -9,6 +9,8 @@ namespace Gandalan.Client.Contracts.UIServices
     public interface ILoginService
     {
         bool Login();
+        Task<bool> LoginAsync();
         bool VerifySavedAuthToken();
+        Task<bool> VerifySavedAuthTokenAsync();
     }
 }

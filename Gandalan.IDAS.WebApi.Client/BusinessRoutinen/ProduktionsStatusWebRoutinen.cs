@@ -31,12 +31,12 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return "Not logged in";
         }
 
-        public async Task<ProduktionsStatusDTO> GetSerieAsync(Guid guid)
+        public async Task<ProduktionsStatusDTO> GetProduktionsStatusAsync(Guid guid)
         {
             return await Task.Run(() => GetProduktionsStatus(guid));
         }
 
-        public async Task<string> SaveSerieAsync(ProduktionsStatusDTO status)
+        public async Task<string> SaveProduktionsStatusAsync(ProduktionsStatusDTO status)
         {
             return await Task.Run(() => SaveProduktionsStatus(status));
         }
