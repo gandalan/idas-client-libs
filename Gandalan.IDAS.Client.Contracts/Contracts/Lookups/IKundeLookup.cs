@@ -1,5 +1,6 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
+using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts
 {
@@ -9,7 +10,7 @@ namespace Gandalan.Client.Contracts
 
     public interface IKundeLookupParams
     {
-        KontaktListItemDTO[] KundenListe { get; }
+        Task<KontaktListItemDTO[]> KundenListe { get; }
     }
 
     public interface IKundeLookupResult
@@ -20,7 +21,7 @@ namespace Gandalan.Client.Contracts
 
     public class KundeLookupParams : IKundeLookupParams
     {
-        public KontaktListItemDTO[] KundenListe { get; set; }
+        public Task<KontaktListItemDTO[]> KundenListe { get; set; }
     }
 
     public class KundeLookupResult : IKundeLookupResult
