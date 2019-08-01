@@ -8,6 +8,6 @@ namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IUIWorkflow<T>
     {
-        void Handle(T data);
+        Task<bool> Handle(T data);
     }
 }
