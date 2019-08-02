@@ -19,5 +19,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public DateTime FarbKuerzel { get; set; }
         public DateTime Oberflaechen { get; set; }
         public DateTime FarbGruppen { get; set; }
+
+        public DateTime Kontakte { get; set; }
+        public DateTime Vorgaenge { get; set; }
     }
 }
