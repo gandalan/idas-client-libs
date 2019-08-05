@@ -28,7 +28,16 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return null;
         }
-                
+
+        public VorgangListItemDTO[] LadeVorgangsListe(string status, int jahr, DateTime changedSince)
+        {
+            if (Login())
+            {
+                return Get<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}");
+            }
+            return null;
+        }
+
         public VorgangListItemDTO[] LadeVorgangsListe(Guid kundeGuid)
         {
             if (Login())
@@ -110,6 +119,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr)
         {
             return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr); });
+        }
+
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr, DateTime changedSince)
+        {
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr, changedSince); });
         }
 
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(Guid kundeGuid)
