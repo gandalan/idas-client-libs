@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.Client;
 using Gandalan.IDAS.WebApi.Client.Settings;
-using Gandalan.IDAS.WebApi.Data.DTOs.Update;
 using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
