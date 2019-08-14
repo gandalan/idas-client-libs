@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts
@@ -7,6 +8,8 @@ namespace Gandalan.Client.Contracts
     {
         string Caption { get; }    
         bool IsLoading { get; }
+        Task OnLoadAsync(object sender, EventArgs e);
+        Task OnUnLoadAsync(object sender, EventArgs e);
     }
 
     public interface IEditorPanel : IInteractivePanel

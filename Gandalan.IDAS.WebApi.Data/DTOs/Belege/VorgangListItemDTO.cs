@@ -49,6 +49,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string Kundenname { get; set; }
         /// <summary>
+        /// Guide des Kunden für Filter
+        /// </summary>
+        public Guid KundeGuid { get; set; }
+        /// <summary>
         /// Adresse des detaillierten Vorgangs-Objektes
         /// </summary>
         public string URL { get; set; }
