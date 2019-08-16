@@ -8,7 +8,11 @@ namespace Gandalan.IDAS.WebApi.DTO
     {
         public Guid BelegPositionAVGuid { get; set; }
         public Guid SerieGuid { get; set; }
+
         public Guid BelegPositionGuid { get; set; }
+        public Guid VorgangGuid { get; set; }
+        public Guid BelegGuid { get; set; }
+
         public DateTime Bereitgestellt { get; set; }
         public DateTime? Berechnet { get; set; }
         public bool IstBerechnet { get; set; }
