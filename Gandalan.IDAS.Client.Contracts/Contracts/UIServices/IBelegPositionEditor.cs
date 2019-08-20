@@ -6,8 +6,8 @@ namespace Gandalan.Client.Contracts.UIServices
     public interface IBelegPositionEditor
     {
         Task AddPosition(BelegPositionDTO position, VorgangDTO vorgang);
-        Task EditPosition(BelegPositionDTO position, VorgangDTO vorgang);
-        Task<IBelegPositionEditorControl> GetControl(BelegPositionDTO belegPosition, VorgangDTO vorgang);
+        Task EditPosition(BelegPositionDTO position);
+        Task<IBelegPositionEditorControl> GetControl(BelegPositionDTO belegPosition);
     }
 
     public interface IBelegPositionEditorControl
@@ -27,7 +27,7 @@ namespace Gandalan.Client.Contracts.UIServices
         decimal Menge { get; set; }
         decimal Rabatt { get; set; }
 
-        Task Load(BelegPositionDTO position, VorgangDTO vorgang);
+        Task Load(BelegPositionDTO position);
         void UpdateBelegPosition();
     }
 

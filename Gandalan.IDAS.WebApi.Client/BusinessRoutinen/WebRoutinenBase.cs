@@ -120,6 +120,11 @@ namespace Gandalan.IDAS.WebApi.Client
             catch (ApiException apiex)
             {
                 Status = apiex.Message;
+                if (Status.ToLower().Contains("<title>"))
+                {
+                    Status = internalStripHtml(Status);
+                }
+
                 if (apiex.InnerException != null)
                     Status += " - " + apiex.InnerException.Message;
                 AuthToken = null;
@@ -460,6 +465,18 @@ namespace Gandalan.IDAS.WebApi.Client
         public async Task<bool> LoginAsync()
         {
             return await Task.Run(() => Login());
+        }
+
+        private string internalStripHtml(string htmlString)
+        {
+            var result = htmlString;
+            if (result.ToLower().Contains("<title>") && result.ToLower().Contains("<title>"))
+            {
+                var start = result.IndexOf("<title>") + 7;
+                var end = result.IndexOf("</title>");
+                result = $"Interner Serverfehler (\"{result.Substring(start, end - start)}\"). Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.";
+            }
+            return result;
         }
     }
 }
