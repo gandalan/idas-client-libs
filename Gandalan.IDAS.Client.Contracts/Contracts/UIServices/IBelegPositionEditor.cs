@@ -5,7 +5,7 @@ namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IBelegPositionEditor
     {
-        Task AddPosition(BelegPositionDTO position, VorgangDTO vorgang);
+        Task AddPosition(BelegPositionDTO position);
         Task EditPosition(BelegPositionDTO position);
         Task<IBelegPositionEditorControl> GetControl(BelegPositionDTO belegPosition);
     }
