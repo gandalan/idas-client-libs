@@ -23,6 +23,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public ProduktionsDatenDTO ProduktionsDaten { get; set; }
         public bool IstGedruckt { get; set; }
 
+        public DateTime ChangedDate { get; set; }
+
         public BelegPositionAVDTO()
         {
             if (BelegPositionAVGuid.Equals(Guid.Empty))
@@ -42,7 +44,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             Variante = position.Variante;
             Position = position;
             Kunde = kunde;
-            Kommission = string.IsNullOrEmpty(kommission) ? position.PositionsKommission : kommission;
+            Kommission = string.IsNullOrEmpty(kommission) ? position.PositionsKommission : kommission;            
         }
     }
 }
