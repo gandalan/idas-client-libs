@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.Client.Contracts.UIServices
@@ -7,7 +8,9 @@ namespace Gandalan.Client.Contracts.UIServices
     {
         Task AddPosition(BelegPositionDTO position);
         Task EditPosition(BelegPositionDTO position);
+        Task EditPosition(Guid positionGuid);
         Task<IBelegPositionEditorControl> GetControl(BelegPositionDTO belegPosition);
+        Task<IBelegPositionEditorControl> GetControl(Guid belegPositionGuid);
     }
 
     public interface IBelegPositionEditorControl
