@@ -1,5 +1,6 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts
@@ -11,6 +12,7 @@ namespace Gandalan.Client.Contracts
     public interface ISaldoLookupParams
     {
         BelegSaldoDTO BelegSaldo { get; }
+        List<BelegSaldoDTO> BelegSalden { get; }
     }
 
     public interface ISaldoLookupResult
@@ -22,6 +24,7 @@ namespace Gandalan.Client.Contracts
     public class SaldoLookupParams : ISaldoLookupParams
     {
         public BelegSaldoDTO BelegSaldo { get; set; }
+        public List<BelegSaldoDTO> BelegSalden { get; set; }
     }
 
     public class SaldoLookupResult : ISaldoLookupResult
