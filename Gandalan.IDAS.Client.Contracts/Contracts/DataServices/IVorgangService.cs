@@ -10,6 +10,7 @@ namespace Gandalan.Client.Contracts.DataServices
         Task<VorgangListItemDTO[]> GetAllAsync(Guid kunde);
         Task<VorgangListItemDTO[]> GetAllAsync(string statusFilter, int jahr);
         Task<VorgangListItemDTO[]> GetAllAsync(string statusFilter, int jahr, DateTime changedSince);
+        Task<VorgangListItemDTO[]> GetAllAsync(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "");
 
         Task<VorgangDTO> SaveAsync(VorgangDTO vorgang);
         Task<VorgangDTO> LoadVorgangAsync(Guid guid);
