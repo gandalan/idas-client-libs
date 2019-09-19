@@ -10,6 +10,7 @@ namespace Gandalan.Client.Contracts
         bool IsLoading { get; }
         Task OnLoadAsync(object sender, EventArgs e);
         Task OnUnLoadAsync(object sender, EventArgs e);
+        Task CleanupToDispose();
     }
 
     public interface IEditorPanel : IInteractivePanel

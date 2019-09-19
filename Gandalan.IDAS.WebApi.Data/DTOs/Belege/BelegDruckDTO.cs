@@ -74,6 +74,9 @@ namespace Gandalan.IDAS.WebApi.DTO
 
                 bool preiseAnzeigen = beleg.BelegArt != "Lieferschein" && beleg.BelegArt != "Bestellschein";
 
+                if (beleg.PositionsObjekte.Any(p => p.IstSonderfarbPosition && p.Farbzuschlag == -1))
+                    preiseAnzeigen = false;
+
                 foreach (BelegPositionDTO dto in beleg.PositionsObjekte)
                 {
                     if (!dto.IstAktiv && !dto.IstAlternativPosition) continue;
@@ -201,6 +204,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.IstAktiv = position.IstAktiv;
                 this.Menge = position.Menge;
                 this.MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.ZuschnittLaenge")) != null ? "St" : position.MengenEinheit;
+                if (this.MengenEinheit.Equals("st")) this.MengenEinheit = "St";
                 this.Text = position.Text;
                 this.AngebotsText = position.AngebotsText;
                 if (preiseAnzeigen)
