@@ -10,6 +10,7 @@ namespace Gandalan.Client.Contracts.DataServices
     public interface IArtikelService
     {
         Task<WarenGruppeDTO[]> GetAllAsync();
+        Task<WarenGruppeDTO[]> GetAllWarenGruppenAsync();
         Task<string> SaveAsync(KatalogArtikelDTO artikel);
         Task<KatalogArtikelDTO> LoadAsync(Guid guid);
         Task<KatalogArtikelDTO> GetArtikel(string artikelNummer);        

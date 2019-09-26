@@ -13,6 +13,7 @@ namespace Gandalan.Client.Contracts.DataServices
         Task<VarianteDTO> LoadAsync(Guid guid);
         Task SaveAsync(VarianteDTO variante);
         Task<ProduktFamilieDTO> GetProduktFamilie(Guid guid);
+        Task<ProduktGruppeDTO[]> GetAllProduktGruppenAsync();
         Task<ProduktGruppeDTO> GetProduktGruppe(Guid guid);
         Task<VarianteDTOListe> GetVariantenListe(DateTime stichtag);
         Task<ProduktFamilieDTO> GetProduktfamilieZuWarenGruppe(Guid warenGruppeGuid);
