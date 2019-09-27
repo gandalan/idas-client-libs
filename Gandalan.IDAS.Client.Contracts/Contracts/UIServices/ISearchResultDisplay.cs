@@ -4,6 +4,7 @@ namespace Gandalan.Client.Contracts.UIServices
 {
     public interface ISearchResultDisplay
     {
-        void DisplaySearchResult(string searchText);        
+        void ShowSearchResultControl();
+        void DisplaySearchResult(string searchText);                    
     }
 }
