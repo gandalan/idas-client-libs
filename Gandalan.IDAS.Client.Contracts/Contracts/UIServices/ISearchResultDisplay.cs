@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.UIServices
 {
     public interface ISearchResultDisplay
     {
-        void ShowSearchResultControl();
-        void DisplaySearchResult(string searchText);                    
+        Task ShowSearchResultControl();
+        Task DisplaySearchResult(string searchText);                    
     }
 }
