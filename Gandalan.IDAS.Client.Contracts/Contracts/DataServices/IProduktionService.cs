@@ -6,7 +6,7 @@ namespace Gandalan.Client.Contracts.DataServices
 
     public interface IProduktionService
     {
-        Task<ProduktionsDatenDTO> GetDaten(BelegPositionDTO belegPosition, IArtikelAssetsService artikelAssetsService);
+        Task<ProduktionsDatenDTO> GetDaten(BelegPositionDTO belegPosition);
         bool CanHandle(string variantenName);
     }
 }
