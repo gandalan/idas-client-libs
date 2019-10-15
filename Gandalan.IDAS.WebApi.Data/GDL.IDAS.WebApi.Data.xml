@@ -335,6 +335,11 @@
             Name des Kunden für Anzeige
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.KundeGuid">
+            <summary>
+            Guide des Kunden für Filter
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.URL">
             <summary>
             Adresse des detaillierten Vorgangs-Objektes
