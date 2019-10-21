@@ -46,6 +46,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstSonderfarbPosition { get; set; }
         public decimal Farbzuschlag { get; set; }
         public string AngebotsText { get; set; }
+        public DateTime? ProduktionsDatum { get; set; }
+        public DateTime? LieferDatum { get; set; }
 
         public BelegPositionDTO()
         {

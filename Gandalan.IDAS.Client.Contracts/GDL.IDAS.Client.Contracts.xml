@@ -4,5 +4,21 @@
         <name>GDL.IDAS.Client.Contracts</name>
     </assembly>
     <members>
+        <member name="T:Gandalan.Client.Contracts.DataServices.IMailService">
+            <summary>
+            Implementiert einen Service zum Versenden von E-Mails, optional mit Anhang
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.Client.Contracts.Contracts.UIServices.IFeedbackService">
+            <summary>
+            Service for collection end user feedback, for instance via the 
+            "smiley" button in the top right corner of an app
+            </summary>
+        </member>
+        <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.UIServices.IFeedbackService.CollectUserFeedback">
+            <summary>
+            i.e. opens a dialog window, takes screenhots, emails them etc.
+            </summary>
+        </member>
     </members>
 </doc>

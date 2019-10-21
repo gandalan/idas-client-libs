@@ -204,14 +204,14 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.IstAktiv = position.IstAktiv;
                 this.Menge = position.Menge;
                 this.MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.ZuschnittLaenge")) != null ? "St" : position.MengenEinheit;
-                if (this.MengenEinheit.Equals("st")) this.MengenEinheit = "St";
+                if (this.MengenEinheit == null || this.MengenEinheit.Equals("st") ) this.MengenEinheit = "St";
                 this.Text = position.Text;
                 this.AngebotsText = position.AngebotsText;
                 if (preiseAnzeigen)
                 {
                     this.Farbzuschlag = position.Farbzuschlag.ToString(culture);
                     this.EinzelpreisOhneFarbzuschlag = position.Einzelpreis.ToString(culture);
-                    this.Rabatt = position.Rabatt.ToString(culture);
+                    this.Rabatt = position.Rabatt.Equals(0m) ? String.Empty : position.Rabatt.ToString(culture);
                     this.Gesamtpreis = position.Gesamtpreis.ToString(culture);
                     this.Einzelpreis = (position.Einzelpreis + position.Farbzuschlag).ToString(culture);
                 }
