@@ -15,10 +15,5 @@ namespace Gandalan.Client.Contracts.DataServices
         Task<WerteListeDTO> GetWerteListe(string name, Guid varianteGuid, DateTime erstellDatum);
         Task<KatalogArtikelDTO> GetArtikel(string artikelNummer);
         Task<WerteListeDTO> GetArtikelFarbWerteListe(KatalogArtikelDTO artikel);
-        Task<OberflaecheDTO[]> GetOberflaechen();
-        Task<FarbeDTO[]> GetFarben();
-        Task<FarbGruppeDTO[]> GetFarbGruppen();
-        Task<FarbKuerzelDTO[]> GetFarbKuerzel(ProduktFamilieDTO produktFamilie);
-        Task<FarbKuerzelDTO[]> GetFarbKuerzel(KatalogArtikelDTO artikel);
     }
 }
