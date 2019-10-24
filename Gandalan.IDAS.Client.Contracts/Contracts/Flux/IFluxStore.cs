@@ -10,6 +10,7 @@ namespace Gandalan.IDAS.Client.Contracts.Flux
         event EventHandler<IFluxAction> DataChanged;
         Task Handle(Flux.IFluxAction action);
         Task Initialize();
+        Task Clean();
     }
     
     public interface IFluxStore<T> : IFluxStore
