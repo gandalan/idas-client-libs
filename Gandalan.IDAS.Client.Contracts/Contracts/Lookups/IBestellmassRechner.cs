@@ -1,6 +1,7 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using Gandalan.Client.Contracts.Lookups;
+using System.Collections.Generic;
 
 namespace Gandalan.Client.Contracts
 {
@@ -10,19 +11,26 @@ namespace Gandalan.Client.Contracts
 
     public interface IBestellmassRechnerResult
     {
-        int BerechnetesHoehenMass { get; }
-        int BerechnetesBreitenMass { get; }
+        List<BestellmassRechnerResultItem> Results { get; }
     }
 
     public class BestellmassRechnerResult : IBestellmassRechnerResult
-    {        
-        public int BerechnetesHoehenMass { get; set; }
-        public int BerechnetesBreitenMass { get; set; }
+    {
+        public List<BestellmassRechnerResultItem> Results { get; set; }
 
-        public BestellmassRechnerResult(int berechnetesLichtesHoehenMass, int berechnetesLichtesBreitenMass)
+        public BestellmassRechnerResult(List<BestellmassRechnerResultItem> items)
         {
-            BerechnetesHoehenMass = berechnetesLichtesHoehenMass;
-            BerechnetesBreitenMass = berechnetesLichtesBreitenMass;
+            Results = new List<BestellmassRechnerResultItem>();
+            foreach (var item in items)
+            {
+                Results.Add(item);
+            }
         }
+    }
+
+    public class BestellmassRechnerResultItem
+    {
+        public string KonfigName { get; set; }
+        public int BerechnetesMass { get; set; }
     }
 }
