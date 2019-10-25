@@ -19,7 +19,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Post<byte[]>("Print/?bguid=" + belegGuid.ToString(), null);
+                return PostData("Print/?bguid=" + belegGuid.ToString(), null);
 
                 //byte[] daten = null;
                 //IgnoreOnErrorOccured = true;
@@ -43,7 +43,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Post<byte[]>("Print/?bguid=" + belegGuid.ToString() + "&fileFormat=XPS", null);
+                return PostData("Print/?bguid=" + belegGuid.ToString() + "&fileFormat=XPS", null);
                 //byte[] daten = null;
                 //for (int i = 0; i < 10; i++)
                 //{
