@@ -15,11 +15,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             this.Settings.Url = this.Settings.Url.Replace("/api/", "/ibos-api/");
         }
 
-        public BestellungListItemDTO[] LadeBestellungen()
+        public BestellungListItemDTO[] LadeBestellungen(int jahr = -1)
         {
             if (Login())
             {
-                return Get<BestellungListItemDTO[]>("Bestellungen/");
+                return Get<BestellungListItemDTO[]>($"Bestellungen?jahr={jahr}");
             }
             return null;
         }
@@ -39,9 +39,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await Task<string>.Run(() => { return GetgSQLBeleg(belegGuid); });
         }
 
-        public async Task<BestellungListItemDTO[]> LadeBestellungenAsync()
+        public async Task<BestellungListItemDTO[]> LadeBestellungenAsync(int jahr = -1)
         {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeBestellungen(); });
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeBestellungen(jahr); });
         }
     }
 }
