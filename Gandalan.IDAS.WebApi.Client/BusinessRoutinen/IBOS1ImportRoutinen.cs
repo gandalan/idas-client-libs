@@ -24,6 +24,14 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public void ResetBestellungen(DateTime resetAb)
+        {
+            if (Login())
+            {
+                Get($"BestellungenReset?resetAb={resetAb.ToString("yyyy-MM-ddTHH:mm:ss")}");
+            }
+        }
+
         public string GetgSQLBeleg(Guid belegGuid)
         {
             if (Login())
@@ -42,6 +50,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<BestellungListItemDTO[]> LadeBestellungenAsync(int jahr = -1)
         {
             return await Task<VorgangListItemDTO[]>.Run(() => { return LadeBestellungen(jahr); });
+        }
+
+        public async Task ResetBestellungenAsync(DateTime resetAb)
+        {
+            await Task.Run(() => { ResetBestellungen(resetAb); });
         }
     }
 }
