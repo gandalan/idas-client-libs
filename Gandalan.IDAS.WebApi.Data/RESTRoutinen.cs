@@ -45,6 +45,10 @@ namespace Gandalan.IDAS.Web
         /// </summary>
         public List<string> AdditionalHeaders { get; private set; }
         public ICredentials Credentials { get; set; }
+        /// <summary>
+        /// User-Agent Header. Wird bei jeder Anfrage mitgeschickt.
+        /// </summary>
+        public string UserAgent { get; set; }
         #endregion
 
         #region public Methods
@@ -260,6 +264,8 @@ namespace Gandalan.IDAS.Web
                 client.Credentials = this.Credentials;
             client.BaseAddress = BaseUrl;
             client.Timeout = 120000;
+            if (!string.IsNullOrEmpty(UserAgent))
+                client.Headers.Add("user-agent", UserAgent);
             AdditionalHeaders.ForEach(h => client.Headers.Add(h));
 
             if (Proxy != null)
