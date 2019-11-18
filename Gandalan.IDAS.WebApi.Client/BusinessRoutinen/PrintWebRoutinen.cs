@@ -19,22 +19,22 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                Post("Print/?bguid=" + belegGuid.ToString(), null);
+                return PostData("Print/?bguid=" + belegGuid.ToString(), new byte[0]);
 
-                byte[] daten = null;
-                IgnoreOnErrorOccured = true;
-                for (int i = 0; i < 10; i++)
-                {
-                    Thread.Sleep(2000);
-                    try
-                    {
-                        daten = GetData("Print/?bguid=" + belegGuid.ToString());
-                    }
-                    catch {}
-                    if (daten != null) break;
-                }
-                IgnoreOnErrorOccured = true;
-                return daten;
+                //byte[] daten = null;
+                //IgnoreOnErrorOccured = true;
+                //for (int i = 0; i < 10; i++)
+                //{
+                //    Thread.Sleep(2000);
+                //    try
+                //    {
+                //        daten = GetData("Print/?bguid=" + belegGuid.ToString());
+                //    }
+                //    catch {}
+                //    if (daten != null) break;
+                //}
+                //IgnoreOnErrorOccured = true;
+                //return daten;
             }
             return null;
         }
@@ -43,19 +43,19 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                Post("Print/?bguid=" + belegGuid.ToString() + "&fileFormat=XPS", null);
-                byte[] daten = null;
-                for (int i = 0; i < 10; i++)
-                {
-                    try
-                    {
-                        Thread.Sleep(2000);
-                        daten = GetData("Print/?bguid=" + belegGuid.ToString());
-                    }
-                    catch {}
-                }
+                return PostData("Print/?bguid=" + belegGuid.ToString() + "&fileFormat=XPS", new byte[0]);
+                //byte[] daten = null;
+                //for (int i = 0; i < 10; i++)
+                //{
+                //    try
+                //    {
+                //        Thread.Sleep(2000);
+                //        daten = GetData("Print/?bguid=" + belegGuid.ToString());
+                //    }
+                //    catch {}
+                //}
 
-                return daten;
+                //return daten;
             }
             return null;
         }

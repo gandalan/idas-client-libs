@@ -50,7 +50,9 @@ namespace Gandalan.IDAS.WebApi.Client
                     Mandant = settings.Mandant,
                     Passwort = settings.Passwort,
                     Url = settings.Url,
-                    UserName = settings.UserName
+                    UserName = settings.UserName,
+                    InstallationId = settings.InstallationId,
+                    UserAgent = settings.UserAgent
                 };
             }
 
@@ -160,6 +162,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     {
                         cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
                     }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
 
                     return cl.Post<T>(uri, data, settings);
                 }
@@ -186,6 +192,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     {
                         cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
                     }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
 
                     return cl.Post(uri, data, settings);
                 }
@@ -212,6 +222,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     {
                         cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
                     }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
 
                     return cl.PostData(uri, data);
                 }
@@ -238,6 +252,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     {
                         cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
                     }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
 
                     return cl.Get(uri);
                 }
@@ -264,6 +282,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     {
                         cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
                     }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
 
                     return cl.GetData(uri);
                 }
@@ -290,6 +312,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     {
                         cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
                     }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
 
                     return cl.Get<T>(uri, settings);
                 }
@@ -316,6 +342,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     {
                         cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
                     }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
 
                     return cl.Put<T>(uri, data, settings);
                 }
@@ -342,6 +372,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     {
                         cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
                     }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
 
                     return cl.Put(uri, data, settings);
                 }
@@ -368,6 +402,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     {
                         cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
                     }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
 
                     return cl.PutData(uri, data);
                 }
@@ -394,6 +432,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     {
                         cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
                     }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
 
                     return cl.Delete<T>(uri, data, settings);
                 }
@@ -420,6 +462,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     {
                         cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
                     }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
 
                     return cl.Delete<T>(uri, settings);
                 }
@@ -446,6 +492,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     {
                         cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
                     }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
 
                     return cl.Delete(uri);
                 }

@@ -2,6 +2,7 @@
 using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,20 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<ProduktionsStatusDTO>("ProduktionsStatus/" + guid.ToString());
+                try
+                {
+                    return Get<ProduktionsStatusDTO>("ProduktionsStatus/" + guid.ToString());
+                }
+                catch (WebException wex)
+                {
+                    if (wex.Response is HttpWebResponse)
+                    {
+                        HttpStatusCode code = (wex.Response as HttpWebResponse).StatusCode;
+                        if (code == HttpStatusCode.NotFound)
+                            return null;
+                    }
+                    throw;
+                }   
             }
             return null;
         }
