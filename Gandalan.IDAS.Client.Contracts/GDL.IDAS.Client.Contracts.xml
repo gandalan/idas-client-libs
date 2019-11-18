@@ -9,6 +9,46 @@
             Implementiert einen Service zum Versenden von E-Mails, optional mit Anhang
             </summary>
         </member>
+        <member name="T:Gandalan.Client.Contracts.ProduktionsServices.IEtikettenDruck">
+            <summary>
+            Druckt Produktionsetiketten zu einem Vorgang anhand dessen AV-/Materialbedarfsdaten
+            </summary>
+        </member>
+        <member name="T:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter">
+            <summary>
+            Stellt eine Schnittstelle zu einem (physikalischen) Label-Drucker dar
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.Print(System.Object)">
+            <summary>
+            Druckt die angegebenen Daten auf dem Gerät aus
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="P:Gandalan.Client.Contracts.ProduktionsServices.ISaegeDatenGenerator.Modell">
+            <summary>
+            Information zur Säge (Hersteller, Modellnummer usw.)
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ISaegeDatenGenerator.GenerateContent(System.Collections.Generic.IList{Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO})">
+            <summary>
+            Erzeugt die Sägedaten.
+            </summary>
+            <param name="material"></param>
+            <returns>Modellabhängige Daten zur Übermittlung an die Maschine</returns>
+        </member>
+        <member name="T:Gandalan.Client.Contracts.ProduktionsServices.ISaegeDatenSender">
+            <summary>
+            Sendet eine Sägeliste an die Maschine
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ISaegeDatenSender.GenerateAndSend(Gandalan.Client.Contracts.ProduktionsServices.ISaegeDatenGenerator,System.Collections.Generic.IList{Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO})">
+            <summary>
+            Erstellt Sägeliste (per ISaegeDatenGenerator) und sendet diese an die Säge.
+            </summary>
+            <param name="saegeDatenGenerator">Generator zur Erzeugung der maschinenspezifischen Daten</param>
+            <param name="schnittListe">list der zu sägenden MaterialBedarfDTOs</param>
+        </member>
         <member name="T:Gandalan.IDAS.Client.Contracts.Contracts.UIServices.IFeedbackService">
             <summary>
             Service for collection end user feedback, for instance via the 
