@@ -16,6 +16,7 @@ namespace Gandalan.IDAS.Jobs.Contracts
         Guid BelegGuid { get; set; }
         string FileFormat { get; set; }
         byte[] Result { get; set; }
+        bool SavePDF { get; set; }
     }
 
 }
