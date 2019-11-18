@@ -17,6 +17,7 @@ namespace Gandalan.IDAS.Jobs.Contracts
         string FileFormat { get; set; }
         byte[] Result { get; set; }
         bool SavePDF { get; set; }
+        string DefaultPrinter { get; set; }
     }
 
 }
