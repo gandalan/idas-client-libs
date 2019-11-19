@@ -22,6 +22,6 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// </summary>
         /// <param name="data"></param>
         /// <param name="template">Inhalt des genutzten Templates</param>
-        void PrintCustom(object data, string template)
+        void PrintCustom(object data, string template);
     }
 }
