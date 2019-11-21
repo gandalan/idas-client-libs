@@ -5,11 +5,30 @@ using System.Windows.Input;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.Vorgaenge
 {
-    public interface IBelegItemCommand : ICommand
+    public abstract class IBelegItemCommand : ICommand
     {
-        void CanExecute(IBelegAuswahlItem parameter);
-        void Execute(IBelegAuswahlItem parameter);
-        string Caption { get; }
-        string Tooltip { get; }
+
+        public abstract event EventHandler CanExecuteChanged;       
+        
+        public abstract bool CanExecute(IBelegAuswahlItem parameter);
+        public bool CanExecute(object parameter)
+        {
+            var pos = parameter as IBelegAuswahlItem;
+            if (pos == null)
+                return false;
+            return CanExecute(pos);
+        }
+
+        public abstract void Execute(IBelegAuswahlItem parameter);
+        public void Execute(object parameter)
+        {
+            var pos = parameter as IBelegAuswahlItem;
+            if (pos == null)
+                throw new ArgumentNullException("Parameter muss eine Belegposition sein");
+            Execute(pos);
+        }
+
+        public string Caption { get; set; } = "?";
+        public string Tooltip { get; set; } = "";
     }
 }
