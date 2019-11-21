@@ -6,7 +6,7 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Salden
 {
     public class StandardSaldoDTO
     {
-        public Guid BelegSaldoGuid { get; set; }
+        public Guid StandardSaldoGuid { get; set; }
         /// <summary>
         /// Der Wert, den der Anwender eingegeben hat, z.B. 5%
         /// </summary>
