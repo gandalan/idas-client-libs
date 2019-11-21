@@ -14,6 +14,8 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         NachSaege = 4,
 
+        NachSLK = 8,
+
         Abgeschlossen = 1024
     }
 }
