@@ -15,5 +15,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Vorgaenge
         IList<BelegSaldoDTO> Salden { get; }
         IList<BelegPositionDTO> Positionen { get; }
         bool IstKopiert { get; }
+
     }
 }
