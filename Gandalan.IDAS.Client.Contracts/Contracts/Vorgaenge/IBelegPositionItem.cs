@@ -9,7 +9,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Vorgaenge
     {
         VorgangDTO Vorgang { get; }
         BelegDTO Beleg { get; }
-        BelegPositionDTO belegPosition { get; }
+        BelegPositionDTO BelegPosition { get; }
         string PositionsNummer { get; }
         int LaufendeNummer { get; }
         string Variante { get; }
