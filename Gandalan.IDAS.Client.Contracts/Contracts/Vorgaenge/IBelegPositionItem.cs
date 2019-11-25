@@ -22,7 +22,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Vorgaenge
         string PCode { get; }
         string Serie { get; }
         DateTime StatusDatum { get; }
-        bool isDeleted { get; }
+        bool IsDeleted { get; set; }
         bool IstAktiv { get; }
         bool IstAlternativ { get; }
 
