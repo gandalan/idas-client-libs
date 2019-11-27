@@ -7,24 +7,24 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Vorgaenge
 {
     public interface IBelegPositionItem
     {
-        VorgangDTO Vorgang { get; }
-        BelegDTO Beleg { get; }
-        BelegPositionDTO BelegPosition { get; }
-        string PositionsNummer { get; }
-        int LaufendeNummer { get; }
-        string Variante { get; }
-        decimal Einzelpreis { get; }
-        decimal Menge { get; }
-        decimal Gesamtpreis { get; }
-        string Text { get; }
-        string AnzeigeText { get; }
-        string Status { get; }
-        string PCode { get; }
-        string Serie { get; }
-        DateTime StatusDatum { get; }
+        VorgangDTO Vorgang { get; set; }
+        BelegDTO Beleg { get; set; }
+        BelegPositionDTO BelegPosition { get; set; }
+        string PositionsNummer { get; set; }
+        int LaufendeNummer { get; set; }
+        string Variante { get; set; }
+        decimal Einzelpreis { get; set; }
+        decimal Menge { get; set; }
+        decimal Gesamtpreis { get; set; }
+        string Text { get; set; }
+        string AnzeigeText { get; set; }
+        string Status { get; set; }
+        string PCode { get; set; }
+        string Serie { get; set; }
+        DateTime StatusDatum { get; set; }
         bool IsDeleted { get; set; }
-        bool IstAktiv { get; }
-        bool IstAlternativ { get; }
+        bool IstAktiv { get; set; }
+        bool IstAlternativ { get; set; }
 
         void Load(BelegPositionDTO belegPositionDTO, VorgangDTO vorgangDTO, BelegDTO belegDTO, string pcode, string serie);
         void SetStatus();

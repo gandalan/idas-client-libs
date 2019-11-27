@@ -29,6 +29,5 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Vorgaenge
 
         public string Caption { get; set; } = "?";
         public string Tooltip { get; set; } = "";
-        public bool IstAktiv { get; set; }
     }
 }
