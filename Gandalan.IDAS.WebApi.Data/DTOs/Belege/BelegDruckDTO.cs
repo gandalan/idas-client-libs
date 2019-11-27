@@ -203,8 +203,8 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.IstAlternativPosition = position.IstAlternativPosition;
                 this.IstAktiv = position.IstAktiv;
                 this.Menge = position.Menge;
-                this.MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.ZuschnittLaenge")) != null ? "St" : position.MengenEinheit;
-                if (this.MengenEinheit == null || this.MengenEinheit.Equals("st") ) this.MengenEinheit = "St";
+                this.MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.ZuschnittLaenge")) != null ? "Stk." : position.MengenEinheit;
+                if (this.MengenEinheit == null || this.MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase) ) this.MengenEinheit = "Stk.";
                 this.Text = position.Text;
                 this.AngebotsText = position.AngebotsText;
                 if (preiseAnzeigen)
