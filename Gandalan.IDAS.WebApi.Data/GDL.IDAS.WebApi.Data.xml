@@ -32,6 +32,11 @@
             z.B. für Authentifizierungs-Header
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.Web.RESTRoutinen.UserAgent">
+            <summary>
+            User-Agent Header. Wird bei jeder Anfrage mitgeschickt.
+            </summary>
+        </member>
         <member name="M:Gandalan.IDAS.Web.RESTRoutinen.Get``1(System.String,Newtonsoft.Json.JsonSerializerSettings)">
             <summary>
             Holt ein Objekt per HTTP GET 
@@ -974,6 +979,26 @@
             Intern
             </summary>
         </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.AblageDTO">
+            <summary>
+            DTO für die IBOS3 Ablageverwaltung
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.AblageFachDTO">
+            <summary>
+            DTO für die IBOS3 Ablageverwaltung
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AblageFachDTO.ProduktGruppenGuids">
+            <summary>
+            GUIDs der ProduktGrupptenDTOs, die im Ablagefach abgelegt werden können
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AblageFachDTO.MaterialBedarfGuids">
+            <summary>
+            GUIDs der aktuell im Ablagefach abgelegten MaterialbedarfDTOs
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.BearbeitungDTO.Kennzeichen">
             <summary>
             Eindeutiges Kennzeichen der Bearbeitung (aus GUID)
@@ -1202,6 +1227,32 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.Benutzer">
             <summary>
             Benutzer der das Template erstellt hat
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Salden.StandardSaldoDTO.Wert">
+            <summary>
+            Der Wert, den der Anwender eingegeben hat, z.B. 5%
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Salden.StandardSaldoDTO.Typ">
+            <summary>
+            Zulässige Werte: "Abschlag", "Zuschlag", "Betrag"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Salden.StandardSaldoDTO.Art">
+            <summary>
+            Zulässige Werte: "Prozentual", "Absolut"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Salden.StandardSaldoDTO.Name">
+            <summary>
+            Zulässige Werte: "Saldo", "StandardSaldo", "Warenwert", "Mehrwertsteuer",
+            "Gesamtbetrag", "Endbetrag", "Farbe"  
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Salden.StandardSaldoDTO.Text">
+            <summary>
+            Text für die Anzeige
             </summary>
         </member>
         <member name="T:Gandalan.IDAS.WebApi.Data.Visitor.IVisitor">

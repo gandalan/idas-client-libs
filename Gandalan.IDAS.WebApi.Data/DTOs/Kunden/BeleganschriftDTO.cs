@@ -118,14 +118,10 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string GetText()
-        {
-            return $"{Firmenname} {Vorname} {Nachname}".Trim();
-        }
-
         public override string ToString()
         {
-            return $"{GetText()}\r\n{Strasse} {Hausnummer}\r\n{Postleitzahl} {Ort}\r\n{Land}".Trim();
+            var text = string.IsNullOrEmpty(Firmenname) ? $"{Titel} {Vorname} {Nachname}".Trim() : Firmenname;
+            return $"{Anrede}\r\n{text}\r\n{Strasse} {Hausnummer}\r\n{Postleitzahl} {Ort}\r\n{Land}".Trim();
         }
     }
 }
