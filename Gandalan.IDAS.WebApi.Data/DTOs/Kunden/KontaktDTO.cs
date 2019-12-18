@@ -159,7 +159,19 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public override string ToString()
         {
-            return $"{Firmenname} {Vorname} {Nachname}".Trim();
+            return AnzeigeName;
+        }
+
+        /// <summary>
+        /// Erzeugt einen Text aus den Namensfeldern für die Anzeige in 
+        /// Überschriften, Anschriftenfeldern usw. 
+        /// </summary>
+        public string AnzeigeName 
+        { 
+            get
+            {
+                return string.IsNullOrEmpty(Firmenname) ? $"{Anrede} {Titel} {Vorname} {Nachname}".Trim() : Firmenname;
+            } 
         }
     }
 }
