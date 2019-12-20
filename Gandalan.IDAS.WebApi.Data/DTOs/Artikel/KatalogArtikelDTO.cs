@@ -49,6 +49,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal VEMenge { get; set; }
         public decimal VEPreis { get; set; }
 
+        public int MengeGrossVE { get; set; }
+        public int MengeGrossVE2 { get; set; }
+        public int MeldeSchwelleGrossVEs { get; set; }
+
         public string Status { get; set; }
         public DateTime? GueltigAb { get; set; }
         public DateTime? GueltigBis { get; set; }
