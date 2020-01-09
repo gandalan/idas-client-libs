@@ -33,6 +33,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string Firmenname { get; set; }
         /// <summary>
+        /// Zusätzliche Information zur Firma
+        /// </summary>
+        public string Zusatz { get; set; }        
+        /// <summary>
         /// Adresszusatz, z.B. "c/o" (belegbezogen)
         /// </summary>
         public string AdressZusatz1 { get; set; }
@@ -120,7 +124,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public string GetText()
         {
-            return $"{Firmenname} {Vorname} {Nachname}".Trim();
+            return $"{Firmenname} {Zusatz} {Vorname} {Nachname}".Trim();
         }
 
         public override string ToString()
