@@ -101,7 +101,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string Webadresse { get; set; }
         /// <summary>
-        /// Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)        
+        /// Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)
         /// </summary>
         public string Verwendungszweck { get; set; }
         /// <summary>
@@ -130,7 +130,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public override string ToString()
         {
             var text = string.IsNullOrEmpty(Firmenname) ? $"{Titel} {Vorname} {Nachname}".Trim() : Firmenname;
-            return $"{Anrede}\r\n{text}\r\n{Strasse} {Hausnummer}\r\n{Postleitzahl} {Ort}\r\n{Land}".Trim();
+            return $"{Anrede}\r\n{text}\r\n{Zusatz}\r\n{Strasse} {Hausnummer}\r\n{Postleitzahl} {Ort}\r\n{Land}".Trim();
         }
     }
 }
