@@ -130,7 +130,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public override string ToString()
         {
             var text = string.IsNullOrEmpty(Firmenname) ? $"{Titel} {Vorname} {Nachname}".Trim() : Firmenname;
-            return $"{Anrede}\r\n{text}\r\n{Zusatz}\r\n{Strasse} {Hausnummer}\r\n{Postleitzahl} {Ort}\r\n{Land}".Trim();
+            var zusatz = !string.IsNullOrEmpty(Zusatz) ? $"{Zusatz}\r\n" : "";
+            return $"{Anrede}\r\n{text}\r\n{zusatz}{Strasse} {Hausnummer}\r\n{Postleitzahl} {Ort}\r\n{Land}".Trim();
         }
     }
 }
