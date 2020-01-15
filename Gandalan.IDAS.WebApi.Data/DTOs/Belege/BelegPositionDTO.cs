@@ -29,6 +29,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string PositionsKommission { get; set; }        
         public bool IstAlternativPosition { get; set; }
         public bool IstAktiv { get; set; }
+        public bool IstFehlerhaft { get; set; }
         public decimal Menge { get; set; }
         public decimal Listenpreis { get; set; }
         public decimal Einzelpreis { get; set; }
