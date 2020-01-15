@@ -139,8 +139,9 @@ namespace Gandalan.IDAS.WebApi.DTO
             {
                 this.Anrede = beleganschrift.Anrede;
                 this.Nachname = beleganschrift.Nachname;
-                this.Vorname = beleganschrift.Vorname;
+                this.Vorname = beleganschrift.Vorname;                
                 this.Firmenname = beleganschrift.Firmenname;
+                this.Zusatz = beleganschrift.Zusatz;
                 this.AdressZusatz1 = beleganschrift.AdressZusatz1;
                 this.Strasse = beleganschrift.Strasse;
                 this.Hausnummer = beleganschrift.Hausnummer;
@@ -155,6 +156,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Nachname { get; set; }
         public string Vorname { get; set; }
         public string Firmenname { get; set; }
+        public string Zusatz { get; set; }
         public string AdressZusatz1 { get; set; }
         public string Strasse { get; set; }
         public string Hausnummer { get; set; }
