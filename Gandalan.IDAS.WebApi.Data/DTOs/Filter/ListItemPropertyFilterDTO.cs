@@ -1,6 +1,6 @@
 ﻿namespace Gandalan.IDAS.WebApi.Data.DTOs.Filter
 {
-    public class FilterListItemPropertyDTO
+    public class ListItemPropertyFilterDTO
     {
         public string PropertyName { get; set; }
         public bool IsChecked { get; set; }
