@@ -33,6 +33,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string Firmenname { get; set; }
         /// <summary>
+        /// Zusätzliche Information zur Firma
+        /// </summary>
+        public string Zusatz { get; set; }        
+        /// <summary>
         /// Adresszusatz, z.B. "c/o" (belegbezogen)
         /// </summary>
         public string AdressZusatz1 { get; set; }
@@ -97,7 +101,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string Webadresse { get; set; }
         /// <summary>
-        /// Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)        
+        /// Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)
         /// </summary>
         public string Verwendungszweck { get; set; }
         /// <summary>
@@ -118,10 +122,16 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public string GetText()
+        {
+            return $"{Firmenname} {Vorname} {Nachname}".Trim();
+        }
+
         public override string ToString()
         {
             var text = string.IsNullOrEmpty(Firmenname) ? $"{Titel} {Vorname} {Nachname}".Trim() : Firmenname;
-            return $"{Anrede}\r\n{text}\r\n{Strasse} {Hausnummer}\r\n{Postleitzahl} {Ort}\r\n{Land}".Trim();
+            var zusatz = !string.IsNullOrEmpty(Zusatz) ? $"{Zusatz}\r\n" : "";
+            return $"{Anrede}\r\n{text}\r\n{zusatz}{Strasse} {Hausnummer}\r\n{Postleitzahl} {Ort}\r\n{Land}".Trim();
         }
     }
 }
