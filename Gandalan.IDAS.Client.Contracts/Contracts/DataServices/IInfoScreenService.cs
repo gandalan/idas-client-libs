@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace Gandalan.Client.Contracts.DataServices
 {
     /// <summary>
-    /// Interface für die Datenzugriffsebene der Ablageverwaltung
+    /// Interface für die Datenzugriffsebene der InfoScreens
     /// </summary>
     public interface IInfoScreenService
     {

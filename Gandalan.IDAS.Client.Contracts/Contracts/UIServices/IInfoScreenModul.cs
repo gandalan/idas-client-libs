@@ -7,6 +7,9 @@ using System.Windows;
 
 namespace Gandalan.Client.Contracts.UIServices
 {
+    /// <summary>
+    /// Interface für die Implementierung eines eigenen InfoScreen Moduls
+    /// </summary>
     public interface IInfoScreenModul
     {
         string Name { get; }
