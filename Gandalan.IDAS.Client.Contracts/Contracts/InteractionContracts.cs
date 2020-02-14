@@ -19,6 +19,8 @@ namespace Gandalan.Client.Contracts
         bool Cancel();
         bool Pause();
         bool PausePossible { get; }
+        bool SavePossible { get; }
+        bool CancelPossible { get; }
     }
 
     public interface IDisplayPanel : IInteractivePanel
