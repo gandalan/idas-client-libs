@@ -6,7 +6,7 @@ using System.ComponentModel;
 namespace Gandalan.IDAS.WebApi.DTO
 {
     /// <summary>
-    /// DTO für die IBOS3 Ablageverwaltung
+    /// DTO für Konfiguration der InfoScreens
     /// </summary>
     public class InfoScreenConfigDTO
     {
@@ -25,9 +25,12 @@ namespace Gandalan.IDAS.WebApi.DTO
         public List<InfoScreenRowDTO> Rows { get; set; }
     }
 
-    public class InfoScreenRowDTO : INotifyPropertyChanged
+    /// <summary>
+    /// DTO für die Zeilen in der InfoScreen Konfiguration
+    /// </summary>
+    public class InfoScreenRowDTO 
     {
-        public InfoScreenModulSettingsDTO[] InfoScreenModule = new InfoScreenModulSettingsDTO[2];
+        public InfoScreenModulSettingsDTO[] InfoScreenModule { get; set; } = new InfoScreenModulSettingsDTO[2];
 
         [JsonIgnore]
         public Guid GuidModulCol1
@@ -61,8 +64,6 @@ namespace Gandalan.IDAS.WebApi.DTO
             }
         }
         public int RowNum { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 
 

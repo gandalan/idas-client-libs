@@ -6,7 +6,7 @@ using System.ComponentModel;
 namespace Gandalan.IDAS.WebApi.DTO
 {
     /// <summary>
-    /// DTO für die IBOS3 Ablageverwaltung
+    /// DTO für die Dateninitialisierung der InfoScreens. Es wird festgelegt, mit welchen Daten der InfoScreen initialisiert wird und welche Datentyp als Basis für den Screen genutzt wird.
     /// </summary>
     public class InfoScreenInitTypeDTO
     {
