@@ -10,5 +10,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public DateTime Vorgaenge { get; set; }
         public DateTime Serien { get; set; }
         public DateTime BelegPositionenAV { get; set; }
+        public DateTime Settings { get; set; }
     }
 }
