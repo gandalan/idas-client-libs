@@ -13,12 +13,15 @@ namespace Gandalan.Client.Contracts.UIServices
     public interface IInfoScreenModul
     {
         string Name { get; }
+
         Guid ModuleGuid { get; }
 
+        //Legt fest ob das Modul mit Daten initialisiert werden muss, oder nicht
         bool NeedsInit { get; set; }
 
+        //Liefert das UIElement zurück
         object GetControl();
-
+        
         void ApplySettings(InfoScreenModulSettingsDTO settings);
 
         void ShowSettingsDialog(InfoScreenModulSettingsDTO settings, List<InfoScreenInitTypeDTO> availableTypes);
