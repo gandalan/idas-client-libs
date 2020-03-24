@@ -14,6 +14,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool ProduktionFreigegeben { get; set; }
         public bool UnterlagenGedruckt { get; set; }
         public IList<Guid> AVBelegPositionen { get; set; } = new List<Guid>();
+        public decimal Kapazitaet { get; set; }
         public DateTime ChangedDate { get; set; }
     }
 }
