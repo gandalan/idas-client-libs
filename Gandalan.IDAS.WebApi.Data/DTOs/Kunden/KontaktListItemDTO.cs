@@ -51,6 +51,10 @@ namespace Gandalan.IDAS.WebApi.DTO
 		/// </summary>
 		public bool IstEndkunde { get; set; }
         public bool IstKunde { get; set; }
+        /// <summary>
+		/// Kunde gesperrt?
+		/// </summary>
+        public bool IstGesperrt { get; set; }
         public string URL { get; set; }
         public DateTime ChangedDate { get; set; }
 
@@ -66,13 +70,12 @@ namespace Gandalan.IDAS.WebApi.DTO
             newkontakt.IstKunde = this.IstKunde;
             newkontakt.URL = this.URL;
             newkontakt.Email = this.Email;
-
+            newkontakt.IstGesperrt = this.IstGesperrt;
 	        newkontakt.Strasse = this.Strasse;
 	        newkontakt.Land = this.Land;
 	        newkontakt.Plz = this.Plz;
 	        newkontakt.Ort = this.Ort;
 	        newkontakt.Telefon = this.Telefon;
-
         }
     }
 }
