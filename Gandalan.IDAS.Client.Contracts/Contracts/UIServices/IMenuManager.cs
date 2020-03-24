@@ -6,9 +6,9 @@ namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IMenuManager
     {
-        void AddNavigationItem(INavigationItem data);
-        List<INavigationGroup> GetNavigationGroups();
-        event EventHandler NavigationItemsChanged;
+        void AddMenuItem(INavigationItem data);
+        List<INavigationGroup> GetMenuItems();
+        event EventHandler MenuItemsChanged;
 
         void SetGroupOrder(string groupName, int order);
     }
