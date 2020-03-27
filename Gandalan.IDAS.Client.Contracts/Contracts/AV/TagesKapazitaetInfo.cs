@@ -6,7 +6,7 @@ namespace Gandalan.IDAS.Client.Contracts.AV
 {
     public class TagesKapazitaetInfo
     {
-        decimal GesamtKapazitaet { get; set; }
-        decimal BenoetigteKapazitaet { get; set; }
+        public decimal GesamtKapazitaet { get; set; }
+        public decimal BenoetigteKapazitaet { get; set; }
     }
 }
