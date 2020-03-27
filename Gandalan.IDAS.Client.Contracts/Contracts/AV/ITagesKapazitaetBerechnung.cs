@@ -7,6 +7,6 @@ namespace Gandalan.IDAS.Client.Contracts.AV
 {
     public interface ITagesKapazitaetBerechnung
     {
-        TagesKapazitaetInfo GetKapazitaetsBedarf(DateTime datum);
+        TagesKapazitaetInfo GetKapazitaetsBedarf(DateTime datum, bool includeStaendigeSerien = true);
     }
 }
