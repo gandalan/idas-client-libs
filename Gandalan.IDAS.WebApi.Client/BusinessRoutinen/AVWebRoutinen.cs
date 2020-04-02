@@ -67,6 +67,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return "Not logged in";
         }
 
+        public string SaveBelegPositionenAV(List<BelegPositionAVDTO> positionen)
+        {
+            if (Login())
+            {
+                return Put<string>("BelegPositionenAVBulk", positionen);
+            }
+            return "Not logged in";
+        }
+
         public string SaveSerie(SerieDTO serie)
         {
             if (Login())
@@ -113,6 +122,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<string> SaveBelegPositionenAVAsync(BelegPositionAVDTO position)
         {
             return await Task.Run(() => SaveBelegPositionenAV(position));
+        }
+
+        public async Task<string> SaveBelegPositionenAVAsync(List<BelegPositionAVDTO> positionen)
+        {
+            return await Task.Run(() => SaveBelegPositionenAV(positionen));
         }
 
         public async Task<string> DeleteBelegPositionenAVAsync(Guid guid)
