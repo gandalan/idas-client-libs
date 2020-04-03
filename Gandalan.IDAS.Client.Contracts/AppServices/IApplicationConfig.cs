@@ -9,5 +9,6 @@ namespace Gandalan.Client.Contracts.AppServices
         string TargetEnvironment { get; }
         Guid InstallationId { get; }
         string LocalDataDir { get; }
+        bool DeveloperModeEnabled { get; }
     }
 }
