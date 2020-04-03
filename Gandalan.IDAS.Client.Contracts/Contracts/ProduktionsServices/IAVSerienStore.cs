@@ -7,5 +7,6 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
 {
     public interface IAVSerienStore : IStore<SerieDTO>
     {
+        Task<IList<SerieDTO>> GetAllAsync(DateTime changedSince);
     }
 }
