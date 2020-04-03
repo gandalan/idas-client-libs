@@ -40,6 +40,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public SerieDTO[] GetAllSerien(DateTime changedSince)
+        {
+            if (Login())
+            {
+                return Get<SerieDTO[]>($"Serie/?changedSince={changedSince.ToString("yyyy - MM - ddTHH:mm: ss")}");
+            }
+            return null;
+        }
+
         public BelegPositionAVDTO GetBelegPositionenAV(Guid guid)
         {
             if (Login())
@@ -133,10 +142,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             return await Task.Run(() => DeleteBelegPositionenAV(guid));
         }
-                       
+
         public async Task<SerieDTO[]> GetAllSerienAsync()
         {
             return await Task.Run(() => GetAllSerien());
+        }
+
+        public async Task<SerieDTO[]> GetAllSerienAsync(DateTime changedSince)
+        {
+            return await Task.Run(() => GetAllSerien(changedSince));
         }
 
         public async Task<SerieDTO> GetSerieAsync(Guid guid)
