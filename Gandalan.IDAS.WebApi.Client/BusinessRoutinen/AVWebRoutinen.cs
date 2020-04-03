@@ -26,7 +26,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("yyyy - MM - ddTHH:mm: ss")}");
+                return Get<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}");
             }
             return null;
         }
@@ -44,7 +44,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<SerieDTO[]>($"Serie/?changedSince={changedSince.ToString("yyyy - MM - ddTHH:mm: ss")}");
+                return Get<SerieDTO[]>($"Serie/?changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}");
             }
             return null;
         }
