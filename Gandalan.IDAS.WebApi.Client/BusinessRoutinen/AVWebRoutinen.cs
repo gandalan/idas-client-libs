@@ -26,7 +26,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("yyyy - MM - ddTHH:mm: ss")}");
+                return Get<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}");
             }
             return null;
         }
@@ -36,6 +36,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             if (Login())
             {
                 return Get<SerieDTO[]>("Serie");
+            }
+            return null;
+        }
+
+        public SerieDTO[] GetAllSerien(DateTime changedSince)
+        {
+            if (Login())
+            {
+                return Get<SerieDTO[]>($"Serie/?changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}");
             }
             return null;
         }
@@ -63,6 +72,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             if (Login())
             {
                 return Put<string>("BelegPositionenAV", position);
+            }
+            return "Not logged in";
+        }
+
+        public string SaveBelegPositionenAV(List<BelegPositionAVDTO> positionen)
+        {
+            if (Login())
+            {
+                return Put<string>("BelegPositionenAVBulk", positionen);
             }
             return "Not logged in";
         }
@@ -115,14 +133,24 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await Task.Run(() => SaveBelegPositionenAV(position));
         }
 
+        public async Task<string> SaveBelegPositionenAVAsync(List<BelegPositionAVDTO> positionen)
+        {
+            return await Task.Run(() => SaveBelegPositionenAV(positionen));
+        }
+
         public async Task<string> DeleteBelegPositionenAVAsync(Guid guid)
         {
             return await Task.Run(() => DeleteBelegPositionenAV(guid));
         }
-                       
+
         public async Task<SerieDTO[]> GetAllSerienAsync()
         {
             return await Task.Run(() => GetAllSerien());
+        }
+
+        public async Task<SerieDTO[]> GetAllSerienAsync(DateTime changedSince)
+        {
+            return await Task.Run(() => GetAllSerien(changedSince));
         }
 
         public async Task<SerieDTO> GetSerieAsync(Guid guid)

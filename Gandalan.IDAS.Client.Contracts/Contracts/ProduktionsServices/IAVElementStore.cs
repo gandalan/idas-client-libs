@@ -8,5 +8,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
     public interface IAVElementStore : IStore<BelegPositionAVDTO>
     {
         Task<IList<BelegPositionAVDTO>> GetAllAsync(DateTime changedSince);
+
+        Task AddOrUpdateAsync(List<BelegPositionAVDTO> data);
     }
 }
