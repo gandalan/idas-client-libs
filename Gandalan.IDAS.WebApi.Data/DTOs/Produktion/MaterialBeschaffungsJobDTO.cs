@@ -8,6 +8,7 @@ namespace Gandalan.IDAS.WebApi.DTO
     {
         public Guid MaterialBeschaffungsJobGuid { get; set; }
         public Guid BelegPositionGuid { get; set; }
+        public Guid BelegGuid { get; set; }
         public DateTime Erstellt { get; set; }
         public string Ersteller { get; set; }
 
