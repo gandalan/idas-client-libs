@@ -9,6 +9,7 @@ namespace Gandalan.Client.Contracts.DataServices
     {
         void RegisterJob(MaterialBeschaffungsJobDTO beschaffungsJobs);
         IList<MaterialBeschaffungsJobDTO> GetJobs(Guid belegpositionsGuid);
+        IList<MaterialBeschaffungsJobDTO> GetJobs(string pCode);
         bool CanHandle(MaterialBeschaffungsJobDTO job);
     }
 }
