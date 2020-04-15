@@ -9,12 +9,15 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid MaterialBeschaffungsJobGuid { get; set; }
         public Guid BelegPositionGuid { get; set; }
         public Guid BelegGuid { get; set; }
+        public Guid VorgangGuid { get; set; }
         public DateTime Erstellt { get; set; }
         public string Ersteller { get; set; }
 
         public MaterialBeschaffungsJobStatiDTO AktuellerStatus { get; set; }
 
         public string KatalogNummer { get; set; }
+        public string VorgangNummer { get; set; }
+        public string Kommission { get; set; }
         public string Bezeichnung { get; set; }
         public Guid Kennzeichen { get; set; }
         public string InternerName { get; set; }
@@ -29,7 +32,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Handelsbezeichnung, zB "verkehrsweiss"
         /// </summary>
-        public string FarbBezeichnung { get; set; } 
+        public string FarbBezeichnung { get; set; }
         /// <summary>
         /// Skalenfarbcode, z.B. "RAL 9016"
         /// </summary>
@@ -42,7 +45,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Wenn bekannt/vorhanden, die Pulvernummer beim Beschichter
         /// </summary>
         public string PulverNummer { get; set; }
-        
+
         public List<MaterialBeschaffungsJobHistorieDTO> Historie { get; set; } = new List<MaterialBeschaffungsJobHistorieDTO>();
     }
 }
