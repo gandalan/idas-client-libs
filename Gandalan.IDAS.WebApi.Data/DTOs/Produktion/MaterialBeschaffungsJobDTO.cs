@@ -79,6 +79,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public decimal Stueckzahl { get; set; }
         /// <summary>
+        /// Einheit des Artikels (lfm=Laufmeter, Stk=Stück, qm=Quadratmeter)
+        /// </summary>
+        public string Einheit { get; set; }
+        /// <summary>
         /// Zuschnittlänge des Artikels, falls erforderlich
         /// </summary>
         public decimal ZuschnittLaenge { get; set; }
