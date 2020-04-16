@@ -1,4 +1,4 @@
-﻿using Gandalan.Plugins.Common.Contracts;
+﻿using Gandalan.Client.Contracts.Navigation;
 using System;
 using System.Collections.Generic;
 
