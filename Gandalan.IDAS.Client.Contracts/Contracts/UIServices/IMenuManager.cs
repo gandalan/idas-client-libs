@@ -1,6 +1,6 @@
-﻿using Gandalan.Plugins.Common.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Gandalan.Client.Contracts.Menu;
 
 namespace Gandalan.Client.Contracts.UIServices
 {

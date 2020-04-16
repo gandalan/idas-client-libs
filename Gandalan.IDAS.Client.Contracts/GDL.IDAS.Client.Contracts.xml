@@ -4,10 +4,147 @@
         <name>GDL.IDAS.Client.Contracts</name>
     </assembly>
     <members>
+        <member name="T:Gandalan.Client.Contracts.DataServices.IAblageService">
+            <summary>
+            Interface für die Datenzugriffsebene der Ablageverwaltung
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.DataServices.IAblageService.GetAllAsync">
+            <summary>
+            Ruft alle AblageDTOs ab
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.DataServices.IAblageService.AddOrUpdateAsync(Gandalan.IDAS.WebApi.DTO.AblageDTO)">
+            <summary>
+            Legt ein neues AblageDTO an, oder aktualisiert es, sofern bereits vorhanden
+            </summary>
+            <param name="ablageDTO">AblageDTO, das angelegt/aktualisiert werden soll</param>        
+        </member>
+        <member name="M:Gandalan.Client.Contracts.DataServices.IAblageService.DeleteAsync(Gandalan.IDAS.WebApi.DTO.AblageDTO)">
+            <summary>
+            Entfernt das übergebene AblageDTO
+            </summary>
+            <param name="ablageDTO">AblageDTO, das entfernt werden soll</param>
+        </member>
+        <member name="T:Gandalan.Client.Contracts.DataServices.IInfoScreenService">
+            <summary>
+            Interface für die Datenzugriffsebene der InfoScreens
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.DataServices.IInfoScreenService.GetAllAsync">
+            <summary>
+            Ruft alle InfoScreenConfigDTOs ab
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.DataServices.IInfoScreenService.AddOrUpdateAsync(Gandalan.IDAS.WebApi.DTO.InfoScreenConfigDTO)">
+            <summary>
+            Legt ein neues InfoScreenConfigDTO an, oder aktualisiert es, sofern bereits vorhanden
+            </summary>
+            <param name="infoScreenConfigDTO">InfoScreenConfigDTO, das angelegt/aktualisiert werden soll</param>        
+        </member>
+        <member name="M:Gandalan.Client.Contracts.DataServices.IInfoScreenService.DeleteAsync(Gandalan.IDAS.WebApi.DTO.InfoScreenConfigDTO)">
+            <summary>
+            Entfernt das übergebene InfoScreenConfigDTO
+            </summary>
+            <param name="infoScreenConfigDTO">InfoScreenConfigDTO, das entfernt werden soll</param>
+        </member>
         <member name="T:Gandalan.Client.Contracts.DataServices.IMailService">
             <summary>
             Implementiert einen Service zum Versenden von E-Mails, optional mit Anhang
             </summary>
+        </member>
+        <member name="T:Gandalan.Client.Contracts.DataServices.ISaegemassKorrekturService">
+            <summary>
+            Interface für die Datenzugriffsebene der Sägemaßkorrekturen
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.DataServices.ISaegemassKorrekturService.GetAllAsync">
+            <summary>
+            Ruft alle SaegemassKorrekturDTOs ab
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.DataServices.ISaegemassKorrekturService.AddOrUpdateAsync(Gandalan.IDAS.WebApi.DTO.SaegemassKorrekturDTO)">
+            <summary>
+            Legt eine neue SaegemassKorrekturDTO an, oder aktualisiert es, sofern bereits vorhanden
+            </summary>
+            <param name="saegemassKorrekturDTO">SaegemassKorrekturDTO, das angelegt/aktualisiert werden soll</param>        
+        </member>
+        <member name="M:Gandalan.Client.Contracts.DataServices.ISaegemassKorrekturService.DeleteAsync(Gandalan.IDAS.WebApi.DTO.SaegemassKorrekturDTO)">
+            <summary>
+            Entfernt das übergebene SaegemassKorrekturDTO
+            </summary>
+            <param name="saegemassKorrekturDTO">SaegemassKorrekturDTO, das entfernt werden soll</param>
+        </member>
+        <member name="T:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager">
+            <summary>
+            Interface für die Implementierung einer Klasse zum Zugriff auf die Ablagen
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.GetAblage(Gandalan.IDAS.WebApi.DTO.AblageFachDTO)">
+            <summary>
+            Ruft das AblageDTO zum übergebenen AblageFach ab.
+            </summary>
+            <param name="ablageFach">AblageFachDTO</param>
+            <returns>AblageDTO</returns>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.GetEmptyAblageFach(System.String,Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO)">
+            <summary>
+            Ruft ein freies Ablagefach am übergebenen Standort ab,
+            das den/die übergebenen Materialtypen aufnehmen kann.
+            </summary>
+            <param name="standort">Standort der Ablage</param>
+            <param name="material">Material, das abgelegt werden soll</param>
+            <returns>AblageFachDTO</returns>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.SearchAblageFach(Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO)">
+            <summary>
+            Sucht das Ablagefach für ein übergebenes MaterialbedarfDTO. Liefert ein Ablagefach zurück, sofern
+            bereits ein MaterialbedarfDTO der gleichen Position in einem Fach abgelegt ist. Wird kein Fach gefunden, wird null zurückgeliefert.
+            </summary>
+            <param name="material">MaterialbedarfDTO</param>
+            <returns>AbalgeFachDTO, sofern bereits ein MaterialbedarfDTO der gleichen Position in einem Fach lagert</returns>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.PutMaterial(Gandalan.IDAS.WebApi.DTO.AblageFachDTO,System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO})">
+            <summary>
+            Legt Material in einem Ablagefach ab
+            </summary>
+            <param name="ablageFach">AblageFachDTO, in dem das Material abgelegt werden soll</param>
+            <param name="materialListe">Liste von MaterialbedarfDTOs, die abgelegt werden sollen</param>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.RemoveMaterial(System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO})">
+            <summary>
+            Entfernt übergebene MaterialbedarfDTOs aus ihren Fächern
+            </summary>
+            <param name="materialListe">Liste von MaterialbedarfDTOs, die aus ihren Fächern entfernt werden sollen</param>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.GetCurrentOrNewAblageFach(System.String,Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO)">
+            <summary>
+            Kombination aus GetEmptyAblageFach und SearchAblageFach.
+            </summary>
+            <param name="standort">Standort der Ablage</param>
+            <param name="material"></param>
+            <returns>Material, das abgelegt werden soll</returns>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.GetAblageListe(System.String)">
+            <summary>
+            Liefert alle registrierten Ablagen zu einem Standort
+            </summary>
+            <param name="standort">Standort für den die Ablagen geliefert werden.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.ChangeAblageStandort(System.Guid,System.String)">
+            <summary>
+            Ändert den Standort einer Ablage
+            </summary>
+            <param name="ablageGuid">Ablage</param>
+            <param name="standort">Neuer Ablagestandort</param>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.MoveMaterial(Gandalan.IDAS.WebApi.DTO.AblageFachDTO,Gandalan.IDAS.WebApi.DTO.AblageFachDTO)">
+            <summary>
+            Verschiebt das Material von einem Ablagefach in ein anderes.
+            </summary>
+            <param name="sourceFach">Ablagefach in dem sich das Material befindet</param>
+            <param name="targetFach">Ablagefach in das das Material verschoben werden soll</param>
         </member>
         <member name="T:Gandalan.Client.Contracts.ProduktionsServices.IEtikettenDruck">
             <summary>
@@ -21,9 +158,18 @@
         </member>
         <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.Print(System.Object)">
             <summary>
-            Druckt die angegebenen Daten auf dem Gerät aus
+            Druckt die angegebenen Daten auf dem Gerät aus.
+            Es wird das in den Settings konfigurierte Template File genutzt.
             </summary>
             <param name="data"></param>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.PrintCustom(System.Object,System.String)">
+            <summary>
+            Druckt die angegebenen Daten auf dem Gerät aus.
+            Es wird der übergebene Template Text genutzt.
+            </summary>
+            <param name="data"></param>
+            <param name="template">Inhalt des genutzten Templates</param>
         </member>
         <member name="P:Gandalan.Client.Contracts.ProduktionsServices.ISaegeDatenGenerator.Modell">
             <summary>
@@ -48,6 +194,18 @@
             </summary>
             <param name="saegeDatenGenerator">Generator zur Erzeugung der maschinenspezifischen Daten</param>
             <param name="schnittListe">list der zu sägenden MaterialBedarfDTOs</param>
+        </member>
+        <member name="T:Gandalan.Client.Contracts.UIServices.IInfoScreenDataInitiator">
+            <summary>
+            Interface für die Implementierung von Initiatoren für die InfoScreens. 
+            Der Initator liefert die Notwendigen Daten an die InfoScreen Module
+            Standard Initiatoren: PCodeInitiator, ScanInitiator, ScanPCodeInitiator
+            </summary>
+        </member>
+        <member name="T:Gandalan.Client.Contracts.UIServices.IInfoScreenModul">
+            <summary>
+            Interface für die Implementierung eines eigenen InfoScreen Moduls
+            </summary>
         </member>
         <member name="T:Gandalan.IDAS.Client.Contracts.Contracts.UIServices.IFeedbackService">
             <summary>

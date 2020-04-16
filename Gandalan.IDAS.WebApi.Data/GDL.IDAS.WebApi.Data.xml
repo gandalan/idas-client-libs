@@ -449,6 +449,11 @@
             Für juristische Personen/Körperschaften: exakte Firmierung mit Zusatz der Gesellschaftsform, z.B. "Fensterbau Maier GmbH &amp; Co. KG"
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Zusatz">
+            <summary>
+            Zusätzliche Information zur Firma
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.AdressZusatz1">
             <summary>
             Adresszusatz, z.B. "c/o" (belegbezogen)
@@ -531,7 +536,7 @@
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Verwendungszweck">
             <summary>
-            Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)        
+            Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Prioritaet">
@@ -699,6 +704,12 @@
             Intern
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.AnzeigeName">
+            <summary>
+            Erzeugt einen Text aus den Namensfeldern für die Anzeige in 
+            Überschriften, Anschriftenfeldern usw. 
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.Nachname">
             <summary>
             Nachname (für Endkunden)
@@ -752,6 +763,11 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.IstEndkunde">
             <summary>
             Endkunde oder Firmenkunde
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.IstGesperrt">
+            <summary>
+            Kunde gesperrt?
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.PersonDTO.PersonGuid">
@@ -1078,10 +1094,95 @@
             Kennzeichen für Zuschnittartikel
             </summary>
         </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO">
+            <summary>
+            Jobinformation zur Materialbeschaffung
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.MaterialBeschaffungsJobGuid">
+            <summary>
+            Eindeutige ID des Jobs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Besitzer">
+            <summary>
+            Besitzer (IMaterialBeschaffungService-Name) des Vorgangs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.BelegPositionGuid">
+            <summary>
+            Original-BelegPositionGuid
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.BelegGuid">
+            <summary>
+            Original-BelegsGuid
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.PCode">
+            <summary>
+            PCode (Produktionscode) für das zugehörige Fertigelement
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.VorgangGuid">
+            <summary>
+            Original-VorgangGuid
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Erstellt">
+            <summary>
+            Erstellzeitstempel des Jobs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Ersteller">
+            <summary>
+            Anwender, der den Job erstellt hat
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.AktuellerStatus">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.KatalogNummer">
+            <summary>
+            Neher-Katalognummer (ohne Farbangabe!)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.VorgangNummer">
+            <summary>
+            Info zum Original-Vorgangs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Kommission">
+            <summary>
+            Info zur Original-Kommission
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Bezeichnung">
+            <summary>
+            Bezeichnung des Artikels
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Kennzeichen">
+            <summary>
+            Kennzeichen des Artikels in der Original-Materialliste
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.InternerName">
+            <summary>
+            Internetr Name des Artikels in der Original-Materialliste
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Stueckzahl">
             <summary>
             Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
             sich aus mit Laufmeter!)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Laenge">
+            <summary>
+            Zuschnittlänge des Artikels, falls erforderlich
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.FarbBezeichnung">
@@ -1102,6 +1203,11 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.PulverNummer">
             <summary>
             Wenn bekannt/vorhanden, die Pulvernummer beim Beschichter
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Historie">
+            <summary>
+            Historie des Jobs
             </summary>
         </member>
         <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatiDTO.Unbekannt">
@@ -1138,6 +1244,48 @@
             <summary>
             Artikel sind vollständig für die Produktion vorhanden
             </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.ProduktionsDatenDTO">
+            <summary>
+            Produktionsdaten für ein Fertigelement
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionsDatenDTO.ProduktionsDatenGuid">
+            <summary>
+            Eindeutige ID
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionsDatenDTO.Material">
+            <summary>
+            Gesamtliste des benötigten Materials (immer für Stückzahl 1)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionsDatenDTO.Etiketten">
+            <summary>
+            Produktionsetiketten
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionsDatenDTO.Bearbeitungen">
+            <summary>
+            CNC-Bearbeitungen
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ProduktionsDatenDTO.PositionsDaten">
+            <summary>
+            Daten der Original-Belegposition
+            </summary>
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.DTO.ProduktionsDatenDTO.GetMaterialbedarf">
+            <summary>
+            Gibt Artikel aus dem Materialbedarf zurück, die KEINE Zuschnitte sind
+            </summary>
+            <returns>Materialliste</returns>
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.DTO.ProduktionsDatenDTO.GetSaegeliste">
+            <summary>
+            Gibt NUR Artikel aus dem Materialbedarf zurück, die Zuschnitte sind
+            </summary>
+            <returns></returns>
         </member>
         <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.Unbekannt">
             <summary>
@@ -1194,6 +1342,11 @@
             Fehler
             </summary>
         </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.SaegemassKorrekturDTO">
+            <summary>
+            DTO für die Verwaltung der Sägemaßkorrekturen
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.TemplateGuid">
             <summary>
             Eindeutige GUID
@@ -1227,6 +1380,29 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.Benutzer">
             <summary>
             Benutzer der das Template erstellt hat
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.InfoScreenConfigDTO">
+            <summary>
+            DTO für Konfiguration der InfoScreens
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.InfoScreenInitTypeDTO">
+            <summary>
+            DTO für die Dateninitialisierung der InfoScreens.
+            Es wird festgelegt, mit welchen Daten der InfoScreen initialisiert wird und welcher Datentyp als Basis für den Screen genutzt wird.
+            Wird in den IInfoScreenDataInitiator Implementierungen genutzt
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.InfoScreenModulSettingsDTO">
+            <summary>
+            DTO zur Ablage der Einstellungen einzelner InfoScreen Module innerhalb eines InfoScreens.
+            Modulspezifische Einstellungen werden in den ApplicationSpecificProperties abgelegt.
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.InfoScreenRowDTO">
+            <summary>
+            DTO für die Zeilen in der InfoScreen Konfiguration
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Salden.StandardSaldoDTO.Wert">

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gandalan.Plugins.Common.Contracts
+namespace Gandalan.Client.Contracts.Navigation
 {
     public interface INavigationGroup
     {
