@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.Tiles
 {
-    public interface ITileItem
+	public interface ITileItem
 	{
 		string Icon { get; set; }
 		string HeadLine { get; set; }
