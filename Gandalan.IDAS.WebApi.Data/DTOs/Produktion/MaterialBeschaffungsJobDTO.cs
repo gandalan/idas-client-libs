@@ -13,6 +13,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid VorgangGuid { get; set; }
         public DateTime Erstellt { get; set; }
         public string Ersteller { get; set; }
+        public DateTime ProduktionsDatum { get; set; }
 
         public MaterialBeschaffungsJobStatiDTO AktuellerStatus { get; set; }
 
