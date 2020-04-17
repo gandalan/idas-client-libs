@@ -50,6 +50,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public MaterialBeschaffungsJobStatiDTO AktuellerStatus { get; set; }
         /// <summary>
+        /// Datum der Produktion
+        /// </summary>
+        public DateTime ProduktionsDatum { get; set; }
+        /// <summary>
         /// Neher-Katalognummer (ohne Farbangabe!)
         /// </summary>
         public string KatalogNummer { get; set; }
