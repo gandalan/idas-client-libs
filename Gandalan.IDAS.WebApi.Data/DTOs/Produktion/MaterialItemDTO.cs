@@ -5,18 +5,19 @@ using System.Text;
 namespace Gandalan.IDAS.WebApi.DTO
 {
     /// <summary>
-    /// Jobinformation zur Materialbeschaffung
+    /// Die MaterialItems sind die, die später als Job bei den Providern bestellt werden. Diese werden aus dem MaterialBedarfDTO generiert und können vom Benutzer angepasst werden.
+    /// Diese Items werden zur Nachvollziehbarkeit des Statuses und verbindung vom Job zur Position in der Datenbank persisitiert.
     /// </summary>
-    public class MaterialBeschaffungsJobDTO
+    public class MaterialItemDTO
     {
         /// <summary>
-        /// Eindeutige ID des Jobs
-        /// </summary>
-        public Guid MaterialBeschaffungsJobGuid { get; set; }
-        /// <summary>
-        /// Eindeutige ID des MaterialItems aus dem dieser Job erstellt wurde.
+        /// Eindeutige ID dieses Items
         /// </summary>
         public Guid MaterialItemGuid { get; set; }
+        /// <summary>
+        /// Eindeutige ID des erstelten Jobs
+        /// </summary>
+        public Guid MaterialBeschaffungsJobGuid { get; set; }
         /// <summary>
         /// Besitzer (IMaterialBeschaffungService-Name) des Vorgangs
         /// </summary>
@@ -106,9 +107,5 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// FarbeKuerzel (Neher-Kürzel oder Sonderfarbton)
         /// </summary>
         public string FarbKuerzel { get; set; }
-        /// <summary>
-        /// Historie des Jobs
-        /// </summary>
-        public List<MaterialBeschaffungsJobHistorieDTO> Historie { get; set; } = new List<MaterialBeschaffungsJobHistorieDTO>();
     }
 }
