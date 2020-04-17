@@ -52,7 +52,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Datum der Produktion
         /// </summary>
-        public DateTime ProduktionsDatum { get; set; }
+        public DateTime? ProduktionsDatum { get; set; }
         /// <summary>
         /// Neher-Katalognummer (ohne Farbangabe!)
         /// </summary>
