@@ -49,6 +49,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string AngebotsText { get; set; }
         public DateTime? ProduktionsDatum { get; set; }
         public DateTime? LieferDatum { get; set; }
+        public DateTime? ProduktionsAuftragErstellt {get;set;}
 
         public BelegPositionDTO()
         {
