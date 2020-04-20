@@ -22,5 +22,11 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// </summary>
         /// <param name="materialListe">Liste der MaterialbedarfDTOs, zu denen die Etiketten gedruckt werden sollen</param>
         void PrintEtiketten(List<MaterialbedarfDTO> materialListe);
+
+        /// <summary>
+        /// Druckt die angegebenen EtikettDTOs aus
+        /// </summary>
+        /// <param name="etikettListe">Liste mit EtikettDTOs, die gedruckt werden soll</param>
+        void PrintEtiketten(List<EtikettDTO> etikettListe);
     }
 }
