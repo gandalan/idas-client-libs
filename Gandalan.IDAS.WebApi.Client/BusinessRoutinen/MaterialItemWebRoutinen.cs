@@ -48,6 +48,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return "Not logged in";
         }
 
+        public string SaveMaterialItemBulk(List<MaterialItemDTO> item)
+        {
+            if (Login())
+            {
+                return Put<string>("MaterialItemBulk", item);
+            }
+            return "Not logged in";
+        }
+
         public string DeleteMaterialItem(Guid guid)
         {
             if (Login())
@@ -55,6 +64,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 return Delete($"MaterialItem/{guid}");
             }
             return "Not logged in";
+        }
+
+        public List<Guid> DeleteMaterialItemBulk(List<Guid> guid)
+        {
+            if (Login())
+            {
+                return Delete<List<Guid>>($"MaterialItemBulk", guid);
+            }
+            return null;
         }
 
         public async Task<MaterialItemDTO[]> GetAllMaterialItemAsync(string pcode = null)
@@ -69,9 +87,17 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             return await Task.Run(() => SaveMaterialItem(item));
         }
+        public async Task<string> SaveMaterialItemBulkAsync(List<MaterialItemDTO> item)
+        {
+            return await Task.Run(() => SaveMaterialItemBulk(item));
+        }
         public async Task<string> DeleteMaterialItemAsync(Guid guid)
         {
             return await Task.Run(() => DeleteMaterialItem(guid));
+        }
+        public async Task<List<Guid>> DeleteMaterialItemBulkAsync(List<Guid> guid)
+        {
+            return await Task.Run(() => DeleteMaterialItemBulk(guid));
         }
     }
 }
