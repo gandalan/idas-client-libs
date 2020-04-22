@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices
 {
     public interface IMaterialListeDisplay
     {
-        void Execute(BelegPositionAVDTO dto);
-        void Execute(List<BelegPositionAVDTO> dto);
+        Task<bool> Execute(BelegPositionAVDTO dto);
+        Task<bool> Execute(List<BelegPositionAVDTO> dto);
     }
 }
