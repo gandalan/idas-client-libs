@@ -9,6 +9,6 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
     {
         Task<IList<BelegPositionAVDTO>> GetAllAsync(DateTime changedSince);
 
-        Task AddOrUpdateAsync(List<BelegPositionAVDTO> data);
+        Task<IList<BelegPositionAVDTO>> AddOrUpdateAsync(List<BelegPositionAVDTO> data);
     }
 }
