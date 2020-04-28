@@ -1,5 +1,4 @@
-﻿using System;
-using Gandalan.IDAS.WebApi.DTO;
+﻿using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
