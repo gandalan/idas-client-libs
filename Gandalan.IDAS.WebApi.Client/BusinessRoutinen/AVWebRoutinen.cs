@@ -107,7 +107,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Delete<string>($"BelegPositionenAV", guids);
+                return Delete<string>($"BelegPositionenAVBulk", guids);
             }
             return "Not logged in";
         }
