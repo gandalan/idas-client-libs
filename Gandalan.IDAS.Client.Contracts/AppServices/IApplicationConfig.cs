@@ -11,5 +11,6 @@ namespace Gandalan.Client.Contracts.AppServices
         string LocalDataDir { get; }
         bool DeveloperModeEnabled { get; }
         string ApplicationName { get; }
+        string IconPath { get; }
     }
 }
