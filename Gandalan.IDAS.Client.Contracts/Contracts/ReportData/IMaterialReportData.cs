@@ -11,4 +11,13 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
         string Serienname { get; set; }
         DateTime DruckDatum { get; set; }
     }
+
+    public class MaterialReportData : IMaterialReportData
+    {
+        public string OrderedProperty { get; set; }
+        public string OrderedPropertyValue { get; set; }
+        public List<IMaterialReportDataItem> Data { get; set; } = new List<IMaterialReportDataItem>();
+        public string Serienname { get; set; }
+        public DateTime DruckDatum { get; set; }
+    }
 }

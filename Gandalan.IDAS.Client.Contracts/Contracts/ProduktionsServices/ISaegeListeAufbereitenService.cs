@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
-    public interface ISaegeListeDruckService {
-        Task Print(IEnumerable<IMaterialReportData> reports);
+    public interface ISaegeListeAufbereitenService {
+        Task<IEnumerable<IMaterialReportData>> SortAndGroup(string groupedProperty, IEnumerable<IMaterialReportDataListItem> items);
     }
 }

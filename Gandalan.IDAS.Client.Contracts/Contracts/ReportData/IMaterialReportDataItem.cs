@@ -14,4 +14,18 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
         Dictionary<string, int> FarbeRGB { get; set; }
         List<IMaterialReportDataListItem> Material { get; set; }
     }
+
+    public class MaterialReportDataItem : IMaterialReportDataItem
+    {
+        public string ZuschnittWinkel { get; set; }
+        public string KatalogNummer { get; set; }
+        public string FarbCode { get; set; }
+        public string FarbKuerzel { get; set; } = "Kuerzel";
+        public string FarbBezeichnung { get; set; } = "Farbbezeichnung";
+        public byte[] Image { get; set; }
+        public string Filename { get; set; }
+        //public Color Farbe { get; set; } = "50, 220, 180";
+        public Dictionary<string, int> FarbeRGB { get; set; } = new Dictionary<string, int>();
+        public List<IMaterialReportDataListItem> Material { get; set; } = new List<IMaterialReportDataListItem>();
+    }
 }
