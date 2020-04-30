@@ -29,8 +29,8 @@
         public string PositionsNummer { get; set; }
         public float ZuschnittLaenge { get; set; }
         public string FachNummer { get; set; } = "$Fnr$";
-        string ZuschnittWinkel { get; set; }
-        string KatalogNummer { get; set; }
-        string FarbCode { get; set; }
+        public string ZuschnittWinkel { get; set; }
+        public string KatalogNummer { get; set; }
+        public string FarbCode { get; set; }
     }
 }
