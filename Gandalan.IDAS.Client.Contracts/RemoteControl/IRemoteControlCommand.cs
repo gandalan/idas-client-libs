@@ -9,6 +9,6 @@ namespace Gandalan.Client.Contracts.RemoteControl
     public interface IRemoteControlCommand
     {
         string Uri { get; }
-        object Execute(object parameters);
+        object Execute(Dictionary<string, string> parameters);
     }
 }

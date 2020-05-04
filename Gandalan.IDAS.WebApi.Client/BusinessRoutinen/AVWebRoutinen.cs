@@ -76,13 +76,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return "Not logged in";
         }
 
-        public string SaveBelegPositionenAV(List<BelegPositionAVDTO> positionen)
+        public List<BelegPositionAVDTO> SaveBelegPositionenAV(List<BelegPositionAVDTO> positionen)
         {
             if (Login())
             {
-                return Put<string>("BelegPositionenAVBulk", positionen);
+                return Put<List<BelegPositionAVDTO>>("BelegPositionenAVBulk", positionen);
             }
-            return "Not logged in";
+            return null;
         }
 
         public string SaveSerie(SerieDTO serie)
@@ -99,6 +99,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             if (Login())
             {
                 return Delete($"BelegPositionenAV/{guid}");
+            }
+            return "Not logged in";
+        }
+
+        public string DeleteBelegPositionenAV(List<Guid> guids)
+        {
+            if (Login())
+            {
+                return Delete<string>($"BelegPositionenAVBulk", guids);
             }
             return "Not logged in";
         }
@@ -133,7 +142,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await Task.Run(() => SaveBelegPositionenAV(position));
         }
 
-        public async Task<string> SaveBelegPositionenAVAsync(List<BelegPositionAVDTO> positionen)
+        public async Task<List<BelegPositionAVDTO>> SaveBelegPositionenAVAsync(List<BelegPositionAVDTO> positionen)
         {
             return await Task.Run(() => SaveBelegPositionenAV(positionen));
         }
@@ -141,6 +150,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<string> DeleteBelegPositionenAVAsync(Guid guid)
         {
             return await Task.Run(() => DeleteBelegPositionenAV(guid));
+        }
+
+        public async Task<string> DeleteBelegPositionenAVAsync(List<Guid> guids)
+        {
+            return await Task.Run(() => DeleteBelegPositionenAV(guids));
         }
 
         public async Task<SerieDTO[]> GetAllSerienAsync()
