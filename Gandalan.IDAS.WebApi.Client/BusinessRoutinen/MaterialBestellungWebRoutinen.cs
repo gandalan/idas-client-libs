@@ -7,9 +7,9 @@ using System;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
-    public class MaterialBestellungRoutinen : WebRoutinenBase
+    public class MaterialBestellungWebRoutinen : WebRoutinenBase
     {
-        public MaterialBestellungRoutinen(WebApiSettings settings) : base(settings)
+        public MaterialBestellungWebRoutinen(WebApiSettings settings) : base(settings)
         {            
         }
 
