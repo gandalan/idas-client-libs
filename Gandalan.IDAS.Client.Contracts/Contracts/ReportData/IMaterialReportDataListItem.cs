@@ -17,6 +17,8 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
         string ZuschnittWinkel { get; set; }
         string KatalogNummer { get; set; }
         string FarbCode { get; set; }
+        string FarbBezeichnung { get; set; }
+        string FarbKuerzel { get; set; }
     }
 
     public class MaterialReportDataListItem : IMaterialReportDataListItem
@@ -34,5 +36,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
         public string ZuschnittWinkel { get; set; }
         public string KatalogNummer { get; set; }
         public string FarbCode { get; set; }
+        public string FarbBezeichnung { get; set; }
+        public string FarbKuerzel { get; set; }
     }
 }
