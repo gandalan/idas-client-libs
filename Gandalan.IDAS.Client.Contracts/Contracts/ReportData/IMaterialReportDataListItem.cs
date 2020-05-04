@@ -1,4 +1,6 @@
-﻿namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
+﻿using System.Collections.Generic;
+
+namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
 {
     public interface IMaterialReportDataListItem
     {
