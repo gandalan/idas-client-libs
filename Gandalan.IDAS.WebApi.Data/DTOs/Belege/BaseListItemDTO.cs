@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Dynamic;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -9,9 +11,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public Guid VorgangGuid { get; set; }
         /// <summary>
-        /// Eindeutige GUID des Bestellscheins
+        /// Eindeutige GUID des Belegs
         /// </summary>
         public Guid BelegGuid { get; set; }
+        public string BelegArt { get; set; }
         /// <summary>
         /// Sichtbare Vorgangsnummer/zur Info für Kunden usw.
         /// </summary>

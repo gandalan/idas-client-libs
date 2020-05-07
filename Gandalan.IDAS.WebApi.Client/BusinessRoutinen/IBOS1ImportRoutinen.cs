@@ -56,7 +56,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-
         public async Task<string> GetgSQLBelegAsync(Guid belegGuid)
         {
             return await Task<string>.Run(() => { return GetgSQLBeleg(belegGuid); });
