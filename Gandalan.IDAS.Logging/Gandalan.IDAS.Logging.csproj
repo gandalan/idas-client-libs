@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\Projects\idas-client-libs\Gandalan.IDAS.Logging\GDL.IDAS.Crypto.xml</DocumentationFile>
+    <DocumentationFile>C:\Projects\idas-client-libs\Gandalan.IDAS.Logging\GDL.IDAS.Logging.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

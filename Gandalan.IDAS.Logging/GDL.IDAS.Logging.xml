@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>GDL.IDAS.Crypto</name>
+        <name>GDL.IDAS.Logging</name>
     </assembly>
     <members>
     </members>
