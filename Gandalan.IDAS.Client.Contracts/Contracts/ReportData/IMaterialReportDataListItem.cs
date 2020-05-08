@@ -1,4 +1,6 @@
-﻿namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
+﻿using System.Collections.Generic;
+
+namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
 {
     public interface IMaterialReportDataListItem
     {
@@ -12,6 +14,11 @@
         string PositionsNummer { get; set; }
         float ZuschnittLaenge { get; set; }
         string FachNummer { get; set; }
+        string ZuschnittWinkel { get; set; }
+        string KatalogNummer { get; set; }
+        string FarbCode { get; set; }
+        string FarbBezeichnung { get; set; }
+        string FarbKuerzel { get; set; }
     }
 
     public class MaterialReportDataListItem : IMaterialReportDataListItem
@@ -26,5 +33,10 @@
         public string PositionsNummer { get; set; }
         public float ZuschnittLaenge { get; set; }
         public string FachNummer { get; set; } = "$Fnr$";
+        public string ZuschnittWinkel { get; set; }
+        public string KatalogNummer { get; set; }
+        public string FarbCode { get; set; }
+        public string FarbBezeichnung { get; set; }
+        public string FarbKuerzel { get; set; }
     }
 }
