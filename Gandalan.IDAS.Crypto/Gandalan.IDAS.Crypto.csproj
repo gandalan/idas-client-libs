@@ -11,6 +11,10 @@
     
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Projects\idas-client-libs\Gandalan.IDAS.Crypto\GDL.IDAS.Crypto.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="BCrypt.Net" Version="0.1.0" />
   </ItemGroup>
