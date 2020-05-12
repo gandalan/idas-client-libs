@@ -26,7 +26,7 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             if (Login())
             {
-                return Put("BelegNummern/" + currentYear, setting);
+                return Put($"BelegNummern?currentYear={currentYear}", setting);
             }
             return null;
         }
