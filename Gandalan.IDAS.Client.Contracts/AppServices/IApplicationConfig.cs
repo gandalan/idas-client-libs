@@ -12,5 +12,6 @@ namespace Gandalan.Client.Contracts.AppServices
         bool DeveloperModeEnabled { get; }
         string ApplicationName { get; }
         string IconPath { get; }
+        string SplashPath { get; }
     }
 }
