@@ -12,8 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client
         public MaterialBestellungWebRoutinen(WebApiSettings settings) : base(settings)
         {            
         }
-
-
+        
         public string ErzeugeVorgangBeiBeschichter(VorgangDTO vorgang, Guid mGuid, string produzentenKundenNummer)
         {
             if (Login())
