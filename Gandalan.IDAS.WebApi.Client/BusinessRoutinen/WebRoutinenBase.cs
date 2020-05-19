@@ -520,11 +520,12 @@ namespace Gandalan.IDAS.WebApi.Client
         private string internalStripHtml(string htmlString)
         {
             var result = htmlString;
-            if (result.ToLower().Contains("<title>") && result.ToLower().Contains("<title>"))
+            if (result.ToLower().Contains("<title>") && result.ToLower().Contains("</title>"))
             {
                 var start = result.IndexOf("<title>") + 7;
                 var end = result.IndexOf("</title>");
-                result = $"Interner Serverfehler (\"{result.Substring(start, end - start)}\"). Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.";
+                if (end > start)
+                    result = $"Interner Serverfehler (\"{result.Substring(start, end - start)}\"). Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.";
             }
             return result;
         }
