@@ -7,10 +7,22 @@ using System.Threading.Tasks;
 namespace Gandalan.Client.Contracts
 {
     /// <summary>
+    /// Internal use only
+    /// </summary>
+    public interface IApplicationEventHandler
+    {
+        /// <summary>
+        /// Handles a certain event that is dispatched to this instance
+        /// </summary>
+        /// <param name="theEvent"></param>
+        void HandleEvent(IApplicationEvent theEvent);
+    }
+
+    /// <summary>
     /// Register an event handler for a certain type of application event
     /// </summary>
     /// <typeparam name="TEvent">what kind of event do we want to be informed of</typeparam>
-    public interface IApplicationEventHandler<TEvent> where TEvent : IApplicationEvent
+    public interface IApplicationEventHandler<TEvent> : IApplicationEvent where TEvent : IApplicationEvent 
     {
         /// <summary>
         /// Handles a certain event that is dispatched to this instance

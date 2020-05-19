@@ -137,6 +137,41 @@
             Für Art = FertigElementArtikel
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BaseListItemDTO.VorgangGuid">
+            <summary>
+            Eindeutige GUID des Vorgangs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BaseListItemDTO.BelegGuid">
+            <summary>
+            Eindeutige GUID des Bestellscheins
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BaseListItemDTO.VorgangsNummer">
+            <summary>
+            Sichtbare Vorgangsnummer/zur Info für Kunden usw.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BaseListItemDTO.ErstellDatum">
+            <summary>
+            Erstelldatum des Vorgangs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BaseListItemDTO.AenderungsDatum">
+            <summary>
+            Datum der letzten Änderung
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BaseListItemDTO.Kundenname">
+            <summary>
+            Name des Kunden für Anzeige
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BaseListItemDTO.URL">
+            <summary>
+            Adresse des detaillierten Beleg-Objektes (gSQL)
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.BelegPositionDTO.LaufendeNummer">
             <summary>
             Die fortlaufende Nummer für jede Position innerhalb des Beleges.
@@ -198,41 +233,6 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.BelegStatusDTO.AenderungsDatum">
             <summary>
             Datum der letzten Änderung des Vorgangs        
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.VorgangGuid">
-            <summary>
-            Eindeutige GUID des Vorgangs
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.BelegGuid">
-            <summary>
-            Eindeutige GUID des Bestellscheins
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.VorgangsNummer">
-            <summary>
-            Sichtbare Vorgangsnummer/zur Info für Kunden usw.
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.ErstellDatum">
-            <summary>
-            Erstelldatum des Vorgangs
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.AenderungsDatum">
-            <summary>
-            Datum der letzten Änderung
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.Kundenname">
-            <summary>
-            Name des Kunden für Anzeige
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.BestellungListItemDTO.URL">
-            <summary>
-            Adresse des detaillierten Beleg-Objektes (gSQL)
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangDTO.VorgangGuid">
@@ -1104,6 +1104,11 @@
             Eindeutige ID des Jobs
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.MaterialItemGuid">
+            <summary>
+            Eindeutige ID des MaterialItems aus dem dieser Job erstellt wurde.
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Besitzer">
             <summary>
             Besitzer (IMaterialBeschaffungService-Name) des Vorgangs
@@ -1144,6 +1149,11 @@
             Status
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.ProduktionsDatum">
+            <summary>
+            Datum der Produktion
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.KatalogNummer">
             <summary>
             Neher-Katalognummer (ohne Farbangabe!)
@@ -1180,9 +1190,19 @@
             sich aus mit Laufmeter!)
             </summary>
         </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Laenge">
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Einheit">
+            <summary>
+            Einheit des Artikels (lfm=Laufmeter, Stk=Stück, qm=Quadratmeter)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.ZuschnittLaenge">
             <summary>
             Zuschnittlänge des Artikels, falls erforderlich
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.ZuschnittWinkel">
+            <summary>
+            Zuschnittwinkel des Artikels, falls erforderlich
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.FarbBezeichnung">
@@ -1200,9 +1220,9 @@
             Bezeichnung der Oberfläche, z.B. "matt"
             </summary>
         </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.PulverNummer">
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.FarbKuerzel">
             <summary>
-            Wenn bekannt/vorhanden, die Pulvernummer beim Beschichter
+            FarbeKuerzel (Neher-Kürzel oder Sonderfarbton)
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Historie">
@@ -1243,6 +1263,133 @@
         <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatiDTO.Bereitgestellt">
             <summary>
             Artikel sind vollständig für die Produktion vorhanden
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO">
+            <summary>
+            Die MaterialItems sind die, die später als Job bei den Providern bestellt werden. Diese werden aus dem MaterialBedarfDTO generiert und können vom Benutzer angepasst werden.
+            Diese Items werden zur Nachvollziehbarkeit des Statuses und verbindung vom Job zur Position in der Datenbank persisitiert.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.MaterialItemGuid">
+            <summary>
+            Eindeutige ID dieses Items
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.MaterialBeschaffungsJobGuid">
+            <summary>
+            Eindeutige ID des erstelten Jobs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.Besitzer">
+            <summary>
+            Besitzer (IMaterialBeschaffungService-Name) des Vorgangs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.BelegPositionGuid">
+            <summary>
+            Original-BelegPositionGuid
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.BelegGuid">
+            <summary>
+            Original-BelegsGuid
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.PCode">
+            <summary>
+            PCode (Produktionscode) für das zugehörige Fertigelement
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.VorgangGuid">
+            <summary>
+            Original-VorgangGuid
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.Erstellt">
+            <summary>
+            Erstellzeitstempel des Jobs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.Ersteller">
+            <summary>
+            Anwender, der den Job erstellt hat
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.AktuellerStatus">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.KatalogNummer">
+            <summary>
+            Neher-Katalognummer (ohne Farbangabe!)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.VorgangNummer">
+            <summary>
+            Info zum Original-Vorgangs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.Kommission">
+            <summary>
+            Info zur Original-Kommission
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.Bezeichnung">
+            <summary>
+            Bezeichnung des Artikels
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.Kennzeichen">
+            <summary>
+            Kennzeichen des Artikels in der Original-Materialliste
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.InternerName">
+            <summary>
+            Internetr Name des Artikels in der Original-Materialliste
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.Stueckzahl">
+            <summary>
+            Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+            sich aus mit Laufmeter!)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.Einheit">
+            <summary>
+            Einheit des Artikels (lfm=Laufmeter, Stk=Stück, qm=Quadratmeter)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.ZuschnittLaenge">
+            <summary>
+            Zuschnittlänge des Artikels, falls erforderlich
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.ZuschnittWinkel">
+            <summary>
+            Zuschnittwinkel des Artikels, falls erforderlich
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.FarbBezeichnung">
+            <summary>
+            Handelsbezeichnung, zB "verkehrsweiss"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.FarbCode">
+            <summary>
+            Skalenfarbcode, z.B. "RAL 9016"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.OberflaechenBezeichnung">
+            <summary>
+            Bezeichnung der Oberfläche, z.B. "matt"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.FarbKuerzel">
+            <summary>
+            FarbeKuerzel (Neher-Kürzel oder Sonderfarbton)
             </summary>
         </member>
         <member name="T:Gandalan.IDAS.WebApi.DTO.ProduktionsDatenDTO">
@@ -1347,6 +1494,36 @@
             DTO für die Verwaltung der Sägemaßkorrekturen
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.SaegemassKorrekturDTO.KatalogNummer">
+            <summary>
+            Katalognummer des Profils, für das die Sägemaßkorrektur gilt
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.SaegemassKorrekturDTO.Korrektur90Grad">
+            <summary>
+            Korrekturmaß bei 90° Schnitt (in mm)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.SaegemassKorrekturDTO.Korrektur45Grad">
+            <summary>
+            Korrekturmaß bei 45° Schnitt (in mm)
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.SaegemassKorrekturSatzDTO">
+            <summary>
+            DTO für die Verwaltung der Sägemaßkorrekturen
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.SaegemassKorrekturSatzDTO.Bezeichnung">
+            <summary>
+            Bezeichnung des Sägemaßkorrektursatzes
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.SaegemassKorrekturSatzDTO.SaegemassKorrekturen">
+            <summary>
+            Liste mit profilbezogenen Sägemaßkorrekturen
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.TemplateDTO.TemplateGuid">
             <summary>
             Eindeutige GUID
@@ -1403,6 +1580,26 @@
         <member name="T:Gandalan.IDAS.WebApi.DTO.InfoScreenRowDTO">
             <summary>
             DTO für die Zeilen in der InfoScreen Konfiguration
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.Data.DTOs.Produktion.SaegeKonfigurationDTO">
+            <summary>
+            DTO für die Konfiguration von Sägen in IBOS3
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Produktion.SaegeKonfigurationDTO.Bezeichnung">
+            <summary>
+            Bezeichnung der Säge
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Produktion.SaegeKonfigurationDTO.Modell">
+            <summary>
+            Modellbezeichnung des ISaegeDatenGenerator, der genutzt werden soll
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Produktion.SaegeKonfigurationDTO.KorrekturSatz">
+            <summary>
+            Bezeichnung des SaegemassKorrekturSatzDTO, das genutzt werden soll
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Salden.StandardSaldoDTO.Wert">
