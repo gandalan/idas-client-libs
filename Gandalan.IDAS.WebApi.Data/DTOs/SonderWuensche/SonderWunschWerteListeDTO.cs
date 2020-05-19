@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Data.DTOs.SonderWuensche
 {
-    public class SonderWunschWerteListe
+    public class SonderWunschWerteListeDTO
     {
         public string Liste { get; set; }
         public string[] Werte { get; set; }

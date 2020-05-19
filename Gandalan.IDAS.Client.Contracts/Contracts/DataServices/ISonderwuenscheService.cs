@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
     public interface ISonderWuenscheService
     {
         Task<VarianteSonderWunschDTO[]> GetAllSonderWuenscheAsync();
-        Task<VarianteSonderWunschDTO[]> GetAllSonderWuenscheWerteListenAsync();
+        Task<SonderWunschWerteListeDTO[]> GetAllSonderWuenscheWerteListenAsync();
         Task<VarianteSonderWunschDTO> GetAllSonderWuenscheFromVariante(string variantenName);
     }
 }
