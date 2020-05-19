@@ -1,21 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
-        <id>GDL.IDAS.WebApi.Client</id>
-        <title>Gandalan.IDAS.WebApi.Client</title>
+        <id>GDL.IDAS.Crypto</id>
+        <title>Gandalan.IDAS.Crypto</title>
         <version>BUILDVERSION</version>
         <authors>Gandalan GmbH &amp; Co. KG</authors>
         <owners>Gandalan GmbH &amp; Co. KG</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Gandalan.IDAS.WebApi.Client</description>
+        <description>Gandalan.IDAS.Crypto</description>
         <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2020</copyright>
         <dependencies>
-          <dependency id="GDL.IDAS.WebApi.Data" version="BUILDVERSION" />
-          <dependency id="Newtonsoft.Json" version="12.0.3" />
+          <dependency id="BCrypt.Net" version="0.1.0" />
         </dependencies>
     </metadata>
     <files>
-        <file src="bin\Release\net472\GDL.IDAS.WebApi.Client.dll" target="lib\net472\GDL.IDAS.WebApi.Client.dll" />
-        <file src="bin\Release\net472\GDL.IDAS.WebApi.Client.XML" target="lib\net472\GDL.IDAS.WebApi.Client.XML" />
+        <file src="bin\Release\net472\GDL.IDAS.Crypto.dll" target="lib\net472\GDL.IDAS.Crypto.dll" />
+        <file src="bin\Release\net472\GDL.IDAS.Crypto.XML" target="lib\net472\GDL.IDAS.Crypto.XML" />
     </files>
 </package>

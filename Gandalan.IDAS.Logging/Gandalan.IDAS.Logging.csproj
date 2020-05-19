@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <AssemblyName>GDL.IDAS.Client.Contracts</AssemblyName>
+    <AssemblyName>GDL.IDAS.Logging</AssemblyName>
 
     <AssemblyVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</AssemblyVersion>
     <AssemblyVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</AssemblyVersion>
@@ -12,11 +12,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\projects\Repos\idas-client-libs\Gandalan.IDAS.Client.Contracts\GDL.IDAS.Client.Contracts.xml</DocumentationFile>
+    <DocumentationFile>C:\Projects\idas-client-libs\Gandalan.IDAS.Logging\GDL.IDAS.Logging.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Gandalan.IDAS.WebApi.Data\Gandalan.IDAS.WebApi.Data.csproj" />
+    <PackageReference Include="BCrypt.Net" Version="0.1.0" />
   </ItemGroup>
-
 </Project>
