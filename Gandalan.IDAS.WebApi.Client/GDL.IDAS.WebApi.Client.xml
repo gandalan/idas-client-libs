@@ -4,6 +4,25 @@
         <name>GDL.IDAS.WebApi.Client</name>
     </assembly>
     <members>
+        <member name="T:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.DataFileWebRoutinen">
+            <summary>
+            Stellt Methoden zur Verfügung um beliebige Dateien auf dem Server zu speichern abzufragen und zu löschen.
+            Der FileName kann auch Pfade enthalten um der Ablage eine Struktur zu geben.
+            Die Dateien werden in einem Mandantenspezifischen Speicher abgelegt.
+            </summary>
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialItemWebRoutinen.GetAllMaterialItem(System.String)">
+            <summary>
+            Liefert alle MaterialItems (optional alle zu einem PCode)
+            </summary>
+            <returns>Liste von MaterialItemDTO</returns>  
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialItemWebRoutinen.GetMaterialItems(System.Guid)">
+            <summary>
+            Liefert ein MaterialItem (als Guid ist möglich: MaterialItemGuid, MaterialBeschaffungsJobGuid, BelegPositionGuid)
+            </summary>
+            <returns>MaterialItemDTO</returns>
+        </member>
         <member name="M:Gandalan.IDAS.WebApi.Client.WebRoutinenBase.Login">
             <summary>
             Meldet mit den aktuellen Credentials am Endpunkt /api/Login/Authenticate an. Wenn ein AuthToken vorhanden ist, wird 

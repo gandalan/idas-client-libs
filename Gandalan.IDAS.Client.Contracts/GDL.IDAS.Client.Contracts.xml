@@ -53,27 +53,44 @@
             Implementiert einen Service zum Versenden von E-Mails, optional mit Anhang
             </summary>
         </member>
-        <member name="T:Gandalan.Client.Contracts.DataServices.ISaegemassKorrekturService">
+        <member name="T:Gandalan.Client.Contracts.IApplicationEventHandler">
             <summary>
-            Interface für die Datenzugriffsebene der Sägemaßkorrekturen
+            Internal use only
             </summary>
         </member>
-        <member name="M:Gandalan.Client.Contracts.DataServices.ISaegemassKorrekturService.GetAllAsync">
+        <member name="M:Gandalan.Client.Contracts.IApplicationEventHandler.HandleEvent(Gandalan.Client.Contracts.IApplicationEvent)">
             <summary>
-            Ruft alle SaegemassKorrekturDTOs ab
+            Handles a certain event that is dispatched to this instance
+            </summary>
+            <param name="theEvent"></param>
+        </member>
+        <member name="T:Gandalan.Client.Contracts.IApplicationEventHandler`1">
+            <summary>
+            Register an event handler for a certain type of application event
+            </summary>
+            <typeparam name="TEvent">what kind of event do we want to be informed of</typeparam>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.IApplicationEventHandler`1.HandleEvent(`0)">
+            <summary>
+            Handles a certain event that is dispatched to this instance
+            </summary>
+            <param name="theEvent"></param>
+        </member>
+        <member name="T:Gandalan.Client.Contracts.IApplicationEvent">
+            <summary>
+            Decoration interface for application events
             </summary>
         </member>
-        <member name="M:Gandalan.Client.Contracts.DataServices.ISaegemassKorrekturService.AddOrUpdateAsync(Gandalan.IDAS.WebApi.DTO.SaegemassKorrekturDTO)">
+        <member name="T:Gandalan.Client.Contracts.IApplicationEventDispatcher">
             <summary>
-            Legt eine neue SaegemassKorrekturDTO an, oder aktualisiert es, sofern bereits vorhanden
+            Handles dispatching of application specifc global events
             </summary>
-            <param name="saegemassKorrekturDTO">SaegemassKorrekturDTO, das angelegt/aktualisiert werden soll</param>        
         </member>
-        <member name="M:Gandalan.Client.Contracts.DataServices.ISaegemassKorrekturService.DeleteAsync(Gandalan.IDAS.WebApi.DTO.SaegemassKorrekturDTO)">
+        <member name="M:Gandalan.Client.Contracts.IApplicationEventDispatcher.Dispatch(Gandalan.Client.Contracts.IApplicationEvent)">
             <summary>
-            Entfernt das übergebene SaegemassKorrekturDTO
+            Passes the event to all registered handlers for this event
             </summary>
-            <param name="saegemassKorrekturDTO">SaegemassKorrekturDTO, das entfernt werden soll</param>
+            <param name="theEvent">event to dispatch</param>
         </member>
         <member name="T:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager">
             <summary>
@@ -146,30 +163,84 @@
             <param name="sourceFach">Ablagefach in dem sich das Material befindet</param>
             <param name="targetFach">Ablagefach in das das Material verschoben werden soll</param>
         </member>
-        <member name="T:Gandalan.Client.Contracts.ProduktionsServices.IEtikettenDruck">
+        <member name="T:Gandalan.Client.Contracts.ProduktionsServices.IEtikettenDruckService">
             <summary>
             Druckt Produktionsetiketten zu einem Vorgang anhand dessen AV-/Materialbedarfsdaten
             </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IEtikettenDruckService.PrintEtiketten(Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO,Gandalan.IDAS.WebApi.DTO.BelegPositionAVDTO,System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO})">
+            <summary>
+            Druckt die Etiketten zu den MaterialbedarfDTOs einer BelegPositionAVDTO
+            </summary>
+            <param name="vorgang">VorgangListItemDTO der zu druckenden Etiketten</param>
+            <param name="belegPosition">BelegPositionAVDTO der zu druckenden Etiketten</param>
+            <param name="materialListe">Liste der MaterialbedarfDTOs, zu denen die Etiketten gedruckt werden sollen</param>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IEtikettenDruckService.PrintEtiketten(System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO})">
+            <summary>
+            Druckt die Etiketten zu einer Liste von MaterialbedarfDTOs (auch Vorgangs-/Positionsübergreifend)
+            </summary>
+            <param name="materialListe">Liste der MaterialbedarfDTOs, zu denen die Etiketten gedruckt werden sollen</param>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IEtikettenDruckService.PrintEtiketten(System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.EtikettDTO})">
+            <summary>
+            Druckt die angegebenen EtikettDTOs aus
+            </summary>
+            <param name="etikettListe">Liste mit EtikettDTOs, die gedruckt werden soll</param>
         </member>
         <member name="T:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter">
             <summary>
             Stellt eine Schnittstelle zu einem (physikalischen) Label-Drucker dar
             </summary>
         </member>
+        <member name="P:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.Bezeichnung">
+            <summary>
+            Bezeichnung der Druckerimplementation
+            </summary>
+        </member>
+        <member name="P:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.Guid">
+            <summary>
+            GUID der Druckerimplementation. Anhand der Guid wird die Implementierung identifiziert.
+            </summary>
+        </member>
+        <member name="P:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.Einzeldruck">
+            <summary>
+            Gibt an, wie der Drucker angesteuert werden soll.
+            true: Jedes Etikett wird einzeln geschickt
+            false: Alle zu druckenden Etiketten werden in einer Liste übermittelt
+            </summary>
+        </member>
         <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.Print(System.Object)">
             <summary>
             Druckt die angegebenen Daten auf dem Gerät aus.
             Es wird das in den Settings konfigurierte Template File genutzt.
+            Wird aufgerufen, wenn Einzeldruck = true
             </summary>
-            <param name="data"></param>
+            <param name="data">Datenobjekt für einzelnes Etikett</param>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.Print(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+            Druckt die angegebenen Daten auf dem Gerät aus.
+            Es wird das in den Settings konfigurierte Template File genutzt.
+            Wird aufgerufen, wenn Einzeldruck = false
+            </summary>
+            <param name="data">Liste mit Datenobjekten für zu druckende Etiketten</param>
         </member>
         <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.PrintCustom(System.Object,System.String)">
             <summary>
             Druckt die angegebenen Daten auf dem Gerät aus.
             Es wird der übergebene Template Text genutzt.
+            (Wird aktuell nur vom EPL Printer unterstützt)
             </summary>
             <param name="data"></param>
             <param name="template">Inhalt des genutzten Templates</param>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.GetSettingsControl">
+            <summary>
+            Liefert das SettingsControl für den Drucker zurück.
+            Wird vom LabelPrinterSettingsViewModel genutzt.
+            </summary>
+            <returns>Settings Control</returns>
         </member>
         <member name="P:Gandalan.Client.Contracts.ProduktionsServices.ISaegeDatenGenerator.Modell">
             <summary>
@@ -195,6 +266,23 @@
             <param name="saegeDatenGenerator">Generator zur Erzeugung der maschinenspezifischen Daten</param>
             <param name="schnittListe">list der zu sägenden MaterialBedarfDTOs</param>
         </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ISaegeListeAufbereitenService.SortAndGroup(System.String,System.Collections.Generic.IEnumerable{Gandalan.IDAS.Client.Contracts.Contracts.ReportData.IMaterialReportDataListItem})">
+            <summary>
+            Sortiert und Gruppiert die Eingangsdaten und bereitet sie für den Sägelistendruck vor
+            </summary>
+            <param name="groupedProperty">Property, nachdem groupiert werden soll (Level 1)</param>
+            <param name="items">Items die aufbereitet werden sollen</param>
+            <returns></returns>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ISaegeListeAufbereitenService.SortAndGroup(System.String,System.Collections.Generic.IEnumerable{Gandalan.IDAS.Client.Contracts.Contracts.ReportData.IMaterialReportDataListItem},System.String)">
+            <summary>
+            Sortiert und Gruppiert die Eingangsdaten und bereitet sie für den Sägelistendruck vor
+            </summary>
+            <param name="groupedProperty">Property, nachdem groupiert werden soll (Level 1)</param>
+            <param name="items">Items die aufbereitet werden sollen</param>
+            <param name="secondLevelGroup">Property, nachdem groupiert werden soll (Level 2)</param>
+            <returns></returns>
+        </member>
         <member name="T:Gandalan.Client.Contracts.UIServices.IInfoScreenDataInitiator">
             <summary>
             Interface für die Implementierung von Initiatoren für die InfoScreens. 
@@ -206,6 +294,36 @@
             <summary>
             Interface für die Implementierung eines eigenen InfoScreen Moduls
             </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService">
+            <summary>
+            Abrufen von profilabhängigen Sägemaßkorrekturen
+            </summary>
+        </member>
+        <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService.GetKorrekturmass(System.String,Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO)">
+            <summary>
+            Ruft das (summierte) Korrekturmaß für ein MaterialbedarfDTO, abhängig von Winkel links/rechts, ab.
+            </summary>
+            <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
+            <param name="material">MaterialbedarfDTO, für das das Korrekturmaß abgerufen werden soll</param>
+            <returns></returns>
+        </member>
+        <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService.GetKorrekturmass(System.String,System.String,System.Int32)">
+            <summary>
+            Ruft das Korrekturmaß für ein Profil beim angegebenen Winkel ab
+            </summary>
+            <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
+            <param name="katalogNummer">Katalognummer des Profils</param>
+            <param name="winkel">Winkel, für den das Korrekturmaß abgerufen werden soll</param>
+            <returns></returns>
+        </member>
+        <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService.GetZuschnittKorrigiert(System.String,Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO)">
+            <summary>
+            Liefert das korrigierte Zuschnittsmaß für ein MaterialbedarfDTO (ZuschnittLaenge + Korrekturmaß)
+            </summary>
+            <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
+            <param name="material">MaterialbedarfDTO, für das die korrigierte Zuschnittslänge abgerufen werden soll</param>
+            <returns></returns>
         </member>
         <member name="T:Gandalan.IDAS.Client.Contracts.Contracts.UIServices.IFeedbackService">
             <summary>
