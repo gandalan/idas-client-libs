@@ -12,12 +12,12 @@ namespace Gandalan.IDAS.WebApi.DTO
     /// </summary>
     public class LagerbestandDTO
     {
-        public Guid Guid { get; set; }
+        public Guid LagerbestandGuid { get; set; }
         public Guid KatalogArtikelGuid { get; set; }
 
         public string KatalogNummer { get; set; }
 
-        public Guid FarbeGuid { get; set; }
+        public Guid FarbGuid { get; set; }
 
         public string FarbKuerzel { get; set; }
         public decimal Lagerbestand { get; set; }
