@@ -24,28 +24,12 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public decimal Mindestbestand { get; set; }
 
-        [JsonIgnore]
-        public decimal Reserviert
-        {
-            get
-            {
-                if (Einheit == "lfm")
-                {
-                    return Math.Ceiling(MaterialBeschaffungsJobs.Sum(x => x.Stueckzahl * x.ZuschnittLaenge * decimal.Parse("1.1") / 1000));
-                }
-                else
-                {
-                    return MaterialBeschaffungsJobs.Sum(x => x.Stueckzahl);
-                }
-            }
-        }
+        public decimal Reserviert { get; set; }
 
         public decimal Maximalbestand { get; set; }
 
         public string Einheit { get; set; }
 
         public DateTime ChangedDate { get; set; }
-
-        public IList<MaterialBeschaffungsJobDTO> MaterialBeschaffungsJobs { get; set; } = new List<MaterialBeschaffungsJobDTO>();
     }
 }
