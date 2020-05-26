@@ -12,40 +12,24 @@ namespace Gandalan.IDAS.WebApi.DTO
     /// </summary>
     public class LagerbestandDTO
     {
-        public Guid Guid { get; set; }
+        public Guid LagerbestandGuid { get; set; }
         public Guid KatalogArtikelGuid { get; set; }
 
         public string KatalogNummer { get; set; }
 
-        public Guid FarbeGuid { get; set; }
+        public Guid FarbGuid { get; set; }
 
         public string FarbKuerzel { get; set; }
         public decimal Lagerbestand { get; set; }
 
         public decimal Mindestbestand { get; set; }
 
-        [JsonIgnore]
-        public decimal Reserviert
-        {
-            get
-            {
-                if (Einheit == "lfm")
-                {
-                    return Math.Ceiling(MaterialBeschaffungsJobs.Sum(x => x.Stueckzahl * x.ZuschnittLaenge * decimal.Parse("1.1") / 1000));
-                }
-                else
-                {
-                    return MaterialBeschaffungsJobs.Sum(x => x.Stueckzahl);
-                }
-            }
-        }
+        public decimal Reserviert { get; set; }
 
         public decimal Maximalbestand { get; set; }
 
         public string Einheit { get; set; }
 
         public DateTime ChangedDate { get; set; }
-
-        public IList<MaterialBeschaffungsJobDTO> MaterialBeschaffungsJobs { get; set; } = new List<MaterialBeschaffungsJobDTO>();
     }
 }

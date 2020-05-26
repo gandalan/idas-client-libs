@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -10,7 +11,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid AblageGuid { get; set; }
         public DateTime ChangedDate { get; set; }
 
-        public AblageFachDTO[] AblageFaecher { get; set; }
+        public IList<AblageFachDTO> AblageFaecher { get; set; }
 
         public string Standort { get; set; }
 
