@@ -16,5 +16,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public string Bezeichnung { get; set; }
 
+        public string Kuerzel { get; set; }
+
     }
 }
