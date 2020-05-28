@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -9,6 +10,7 @@ namespace Gandalan.IDAS.WebApi.DTO
     {
         public Guid AblageFachGuid { get; set; }
 
+        [JsonIgnore]
         public bool Belegt
         {
             get
