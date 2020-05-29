@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
-    public interface IAblageStore : IStore<AblageFachDTO>
+    public interface IAblageStore : IStore<AblageDTO>
     {
-        Task<IList<AblageFachDTO>> GetAllAsync(DateTime changedSince);
+        Task<IList<AblageDTO>> GetAllAsync(DateTime changedSince);
     }
 }
