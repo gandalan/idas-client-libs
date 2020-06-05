@@ -11,6 +11,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool Freigabe_BestellFix { get; set; }
         public bool Freigabe_ARTOS { get; set; }
 
+        public int MengeGrossVE { get; set; }
+        public int MengeGrossVE2 { get; set; }
+        public int MeldeSchwelleGrossVEs { get; set; }
+
         public DateTime? GueltigAb { get; set; }
         public DateTime? GueltigBis { get; set; }
         public long Version { get; set; }
