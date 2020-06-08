@@ -30,6 +30,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstAlternativPosition { get; set; }
         public bool IstAktiv { get; set; }
         public bool IstFehlerhaft { get; set; }
+        public bool IstFehlerhaftSFOhnePreis { get; set; }
         public decimal Menge { get; set; }
         public decimal Listenpreis { get; set; }
         public decimal Einzelpreis { get; set; }

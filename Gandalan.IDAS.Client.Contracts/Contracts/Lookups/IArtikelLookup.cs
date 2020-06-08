@@ -1,7 +1,7 @@
 using Gandalan.Client.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IBOS3.Module.Lookups.Artikel
+namespace Gandalan.Client.Contracts
 {
     public interface IArtikelLookup : ILookupDialog<IArtikelLookupResult, IArtikelLookupParams>
     {
