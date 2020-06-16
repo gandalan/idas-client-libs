@@ -80,6 +80,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string ZusatzEtikettText { get; set; }
         public bool AufMaterialListe { get; set; }
         public bool NurLieferscheinAnzeige { get; set; }
+        public bool FromSonderWunsch { get; set; }
 
         public MaterialbedarfStatiDTO AktuellerStatus { get; set; }
     }

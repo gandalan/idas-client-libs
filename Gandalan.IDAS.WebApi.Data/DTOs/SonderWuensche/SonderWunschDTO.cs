@@ -12,5 +12,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.SonderWuensche
         public string[] Listenwerte { get; set; }
         public decimal Laenge { get; set; }
         public string Farbe { get; set; }
+        public float Aufpreis { get; set; }
     }
 }
