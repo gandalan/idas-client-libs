@@ -11,5 +11,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
     {
         Task<List<IndiPropertyListDTO>> GetAll();
         Task<IndiPropertyListDTO> GetIndiPropertyList(string propertyListTitle);
+        Task SaveAll(List<IndiPropertyListDTO> list);
     }
 }
