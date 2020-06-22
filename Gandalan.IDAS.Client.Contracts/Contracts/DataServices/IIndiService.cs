@@ -9,7 +9,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
 {
     public interface IIndiService
     {
-        Task<IndiPropertyListDTO> GetAll();
-        Task<IndiPropertyDTO> GetIndiProperty(string propertyTitle);
+        Task<List<IndiPropertyListDTO>> GetAll();
+        Task<IndiPropertyListDTO> GetIndiPropertyList(string propertyListTitle);
     }
 }
