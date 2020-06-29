@@ -37,7 +37,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <returns>Materialliste</returns>
         public List<MaterialbedarfDTO> GetMaterialbedarf()
         {
-            return Material == null ? new List<MaterialbedarfDTO>() : Material.Where(m => m.IstZuschnitt == false).ToList();
+            return Material == null ? new List<MaterialbedarfDTO>() : Material.Where(m => m.IstZuschnitt == false || m.ZuschnittLaenge == 0).ToList();
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <returns></returns>
         public List<MaterialbedarfDTO> GetSaegeliste()
         {
-            return Material == null ? new List<MaterialbedarfDTO>() : Material.Where(m => m.IstZuschnitt == true).ToList();
+            return Material == null ? new List<MaterialbedarfDTO>() : Material.Where(m => m.IstZuschnitt == true && m.ZuschnittLaenge > 0).ToList();
         }
     }
 }
