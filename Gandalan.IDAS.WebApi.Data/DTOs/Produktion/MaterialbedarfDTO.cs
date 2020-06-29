@@ -83,7 +83,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool FromSonderWunsch { get; set; }
 
         public bool IstBeschichtbar { get; set; }
-
+        public KatalogArtikelArt KatalogArtikelArt { get; set; }
         public MaterialbedarfStatiDTO AktuellerStatus { get; set; }
     }
 }

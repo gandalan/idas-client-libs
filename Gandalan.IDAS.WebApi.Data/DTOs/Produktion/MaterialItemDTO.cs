@@ -111,5 +111,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// FarbeKuerzel (Neher-Kürzel oder Sonderfarbton)
         /// </summary>
         public string FarbKuerzel { get; set; }
+        /// <summary>
+        /// Art aus dem KatalogArtikel
+        /// </summary>
+        public KatalogArtikelArt KatalogArtikelArt { get; set; }
     }
 }

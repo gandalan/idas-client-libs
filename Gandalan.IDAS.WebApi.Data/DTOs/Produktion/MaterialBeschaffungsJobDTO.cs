@@ -119,6 +119,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string FarbKuerzel { get; set; }
         /// <summary>
+        /// Art aus dem KatalogArtikel
+        /// </summary>
+        public KatalogArtikelArt KatalogArtikelArt { get; set; }
+        /// <summary>
         /// Historie des Jobs
         /// </summary>
         public List<MaterialBeschaffungsJobHistorieDTO> Historie { get; set; } = new List<MaterialBeschaffungsJobHistorieDTO>();
