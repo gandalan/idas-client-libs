@@ -17,6 +17,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public DateTime? Berechnet { get; set; }
         public bool IstBerechnet { get; set; }
         public bool IstProduziert { get; set; }
+        public bool IstGeloescht { get; set; }
         public MaterialBeschaffungsJobStatiDTO Materialbeschaffungsstatus { get; set; }
         public bool HatSonderwuensche { get; set; }
         public string Variante { get; set; }
@@ -49,7 +50,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             Variante = position.Variante;
             Position = position;
             Kunde = kunde;
-            Kommission = string.IsNullOrEmpty(kommission) ? position.PositionsKommission : kommission;            
+            Kommission = string.IsNullOrEmpty(kommission) ? position.PositionsKommission : kommission;
         }
     }
 }
