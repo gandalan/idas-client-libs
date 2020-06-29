@@ -35,6 +35,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string PCode { get; set; }
         /// <summary>
+        /// Erweiterter PCode zur eindeutigen Materialidentifizerung (Task 4269)
+        /// </summary>
+        public string MaterialPCode { get; set; }
+        /// <summary>
         /// Original-VorgangGuid
         /// </summary>
         public Guid VorgangGuid { get; set; }
