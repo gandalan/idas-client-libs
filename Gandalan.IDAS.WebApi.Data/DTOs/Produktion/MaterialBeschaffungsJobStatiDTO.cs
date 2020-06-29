@@ -29,6 +29,10 @@
         /// <summary>
         /// Artikel sind vollständig für die Produktion vorhanden
         /// </summary>
-        Bereitgestellt = 32
+        Bereitgestellt = 32,
+        /// <summary>
+        /// Artikelbeschaffung soll abgebrochen werden
+        /// </summary>
+        Abgebrochen = 64
     }
 }
