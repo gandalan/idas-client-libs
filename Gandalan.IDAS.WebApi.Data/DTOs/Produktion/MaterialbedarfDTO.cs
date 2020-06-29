@@ -54,7 +54,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string FarbCode { get; set; }
 
         /// <summary>
-        /// Kennzeichen für Zuschnittartikel
+        /// Kennzeichen für Zuschnittartikel 
         /// </summary>
         public bool IstZuschnitt { get; set; }
         public float ZuschnittLaenge { get; set; }
@@ -80,7 +80,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string ZusatzEtikettText { get; set; }
         public bool AufMaterialListe { get; set; }
         public bool NurLieferscheinAnzeige { get; set; }
+        public bool FromSonderWunsch { get; set; }
 
+        public bool IstBeschichtbar { get; set; }
+        public KatalogArtikelArt KatalogArtikelArt { get; set; }
         public MaterialbedarfStatiDTO AktuellerStatus { get; set; }
     }
 }

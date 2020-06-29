@@ -46,12 +46,11 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
 
         /// <summary>
         /// Druckt die angegebenen Daten auf dem Gerät aus.
-        /// Es wird der übergebene Template Text genutzt.
-        /// (Wird aktuell nur vom EPL Printer unterstützt)
+        /// Es wird das übergebene Template genutzt.
         /// </summary>
         /// <param name="data"></param>
-        /// <param name="template">Inhalt des genutzten Templates</param>
-        void PrintCustom(object data, string template);
+        /// <param name="template">Druck Template (muss zum ausgewählten Drucker passen)</param>
+        void PrintCustom(object data, object template);
 
         /// <summary>
         /// Liefert das SettingsControl für den Drucker zurück.

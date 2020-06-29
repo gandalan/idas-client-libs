@@ -8,6 +8,8 @@ namespace Gandalan.Client.Contracts.UIServices
 {
     public interface ILoginService
     {
+        bool SaveDefaultEnvironment { get; }
+
         bool Login();
         Task<bool> LoginAsync();
         bool VerifySavedAuthToken();
