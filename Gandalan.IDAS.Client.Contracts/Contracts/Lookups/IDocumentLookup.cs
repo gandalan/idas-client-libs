@@ -1,30 +1,30 @@
 using Gandalan.Client.Contracts;
 using System.Collections.Generic;
 
-namespace Gandalan.IBOS3.Module.Lookups.Artikel
+namespace Gandalan.IBOS3.Module.Lookups.Document
 {
-    public interface IDokumenteLookup : ILookupDialog<IDocumentsLookupResult, IDocodumentsLookupParams>
+    public interface IDoCumentLookup : ILookupDialog<IDocumentLookupResult, IDocumentLookupParams>
     {
     }
 
     public interface IDocument { }
 
-    public interface IDocodumentsLookupParams
+    public interface IDocumentLookupParams
     {
         IList<IDocument> Documents { get; }
     }
 
-    public interface IDocumentsLookupResult
+    public interface IDocumentLookupResult
     {
         IDocument Document { get; }
     }
 
-    public class DocodumentsLookupParams : IDocodumentsLookupParams
+    public class DocumentsLookupParams : IDocumentLookupParams
     {
         public IList<IDocument> Documents { get; set; }
     }
 
-    public class DocumentsLookupResult : IDocumentsLookupResult
+    public class DocumentsLookupResult : IDocumentLookupResult
     {
         public DocumentsLookupResult(IDocument doc)
         {
