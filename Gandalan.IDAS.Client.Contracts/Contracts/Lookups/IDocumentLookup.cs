@@ -19,19 +19,19 @@ namespace Gandalan.IBOS3.Module.Lookups.Document
         IDocument Document { get; }
     }
 
-    public class DocumentsLookupParams : IDocumentLookupParams
+    public class DocumentLookupParams : IDocumentLookupParams
     {
         public IList<IDocument> Documents { get; set; }
     }
 
-    public class DocumentsLookupResult : IDocumentLookupResult
+    public class DocumentLookupResult : IDocumentLookupResult
     {
-        public DocumentsLookupResult(IDocument doc)
+        public DocumentLookupResult(IDocument doc)
         {
             Document = doc;
         }
 
-        public static DocumentsLookupResult Empty { get; }
+        public static DocumentLookupResult Empty { get; }
 
         public IDocument Document { get; set; }
         public bool IsValid => Document != null;
