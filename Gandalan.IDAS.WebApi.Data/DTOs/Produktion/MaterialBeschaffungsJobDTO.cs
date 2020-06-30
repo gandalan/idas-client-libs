@@ -14,6 +14,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public Guid MaterialBeschaffungsJobGuid { get; set; }
         /// <summary>
+        /// Eindeutige ID des ablösenden MaterialBeschaffungsJobDTO, falls es eines gibt
+        /// </summary>
+        public Guid FolgeJobGuid { get; set; }
+        /// <summary>
         /// Eindeutige ID des MaterialItems aus dem dieser Job erstellt wurde.
         /// </summary>
         public Guid MaterialItemGuid { get; set; }

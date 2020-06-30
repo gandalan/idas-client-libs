@@ -33,6 +33,10 @@
         /// <summary>
         /// Artikelbeschaffung soll abgebrochen werden
         /// </summary>
-        Abgebrochen = 64
+        Abgebrochen = 64,
+        /// <summary>
+        /// MaterialbeschaffungsJob wurde durch FolgeJob abgelöst
+        /// </summary>
+        Abgelöst = 128
     }
 }
