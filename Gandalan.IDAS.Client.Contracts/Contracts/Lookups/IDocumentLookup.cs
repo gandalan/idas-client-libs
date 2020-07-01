@@ -1,13 +1,21 @@
 using Gandalan.Client.Contracts;
+using System;
 using System.Collections.Generic;
 
 namespace Gandalan.IBOS3.Module.Lookups.Document
 {
-    public interface IDoCumentLookup : ILookupDialog<IDocumentLookupResult, IDocumentLookupParams>
+    public interface IDocumentLookup : ILookupDialog<IDocumentLookupResult, IDocumentLookupParams>
     {
     }
 
-    public interface IDocument { }
+    public interface IDocument
+    {
+        string Type { get; set; }
+        Guid AssetGuid { get; set; }
+        DateTime LastChange { get; set; }
+        int Filesize { get; set; }
+        string MimeType { get; set; }
+    }
 
     public interface IDocumentLookupParams
     {
