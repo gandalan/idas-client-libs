@@ -72,6 +72,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                         environment = new WebApiSettings
                         {
                             Url = response.IDAS,
+                            CMSUrl = response.CMS,
                             FriendlyName = env,
                             AppToken = appToken
                         };

@@ -27,6 +27,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public Guid InstallationId { get; set; }
         [JsonIgnore]
         public string UserAgent { get; set; }
+        public string CMSUrl { get; internal set; }
 
         public WebApiSettings(Guid appToken, string env)
         {
@@ -54,6 +55,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             this.FriendlyName = settings.FriendlyName;
             this.Mandant = settings.Mandant;
             this.Url = settings.Url;
+            this.CMSUrl = settings.CMSUrl;
             this.Passwort = settings.Passwort;
             this.UserName = settings.UserName;
             this.InstallationId = settings.InstallationId;
