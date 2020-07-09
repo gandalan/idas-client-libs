@@ -22,7 +22,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
     public class IndiFarbDatenDTO 
     {
-        public string FarbKuerzel { get; }
+        public string FarbKuerzel { get; set; }
         public bool BestellMengeAufVERunden { get; set; }
         public decimal SonderPreis { get; set; }
         public bool IsInventurpflichtig { get; set; }
