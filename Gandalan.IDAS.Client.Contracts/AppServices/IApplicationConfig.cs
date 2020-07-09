@@ -12,8 +12,8 @@ namespace Gandalan.Client.Contracts.AppServices
         Guid InstallationId { get; }
         string DataDir { get; }
         string AddOnDir { get; }
-        string CacheDir { get; set; }
-        string SettingsDir { get; set; }
+        string CacheDir { get; }
+        string SettingsDir { get; }
         bool DeveloperModeEnabled { get; }
         string ApplicationName { get; }
         string IconPath { get; }
