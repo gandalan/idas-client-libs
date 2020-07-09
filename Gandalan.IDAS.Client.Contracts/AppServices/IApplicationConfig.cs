@@ -8,8 +8,12 @@ namespace Gandalan.Client.Contracts.AppServices
         string UpdateUrl { get; }
         string TargetEnvironment { get; set; }
         string AppConfigDirectory { get; set; }
+        string CurrentUser { get; set; }
         Guid InstallationId { get; }
-        string LocalDataDir { get; }
+        string DataDir { get; }
+        string AddOnDir { get; }
+        string CacheDir { get; set; }
+        string SettingsDir { get; set; }
         bool DeveloperModeEnabled { get; }
         string ApplicationName { get; }
         string IconPath { get; }
