@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.DataServices
 {
-    public interface IChangeInfoIChangeServiceService
+    public interface IChangeService
     {
         Task<ChangeDTO[]> GetAll(string typeName, DateTime changedSince);
     }
