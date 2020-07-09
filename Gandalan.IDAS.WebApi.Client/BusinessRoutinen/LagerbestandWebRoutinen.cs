@@ -37,6 +37,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return null;
         }
+
+        public LagerbestandDTO Lagerbuchung(LagerbuchungDTO buchung)
+        {
+            if(Login())
+            {
+                return Put<LagerbestandDTO>("Lagerbuchung", buchung);
+            }
+            return null;
+        }
                 
         public string Save(LagerbestandDTO dto)
         {
