@@ -10,6 +10,6 @@ namespace Gandalan.Client.Contracts.DataServices
 {
     public interface IChangeService
     {
-        Task<ChangeDTO[]> GetAll(string typeName, DateTime? changedSince);
+        Task<ChangeDTO[]> GetAll(string typeName, DateTime changedSince);
     }
 }
