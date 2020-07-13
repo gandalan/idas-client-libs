@@ -12,6 +12,8 @@ namespace Gandalan.Client.Contracts.DataServices
         Task<T> Load<T>() where T : new();
         Task Save(object settingsObject);
 
+        bool IstReady();
+
         /*
 Task SaveSettings();
 Task LoadSettings();

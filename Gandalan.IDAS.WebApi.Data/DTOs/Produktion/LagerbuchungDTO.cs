@@ -17,5 +17,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid FarbGuid { get; set; }
 
         public float Betrag { get; set; }
+        public bool IstReservierung { get; set; }
     }
 }
