@@ -27,6 +27,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal Reserviert { get; set; }
 
         public decimal Maximalbestand { get; set; }
+        public decimal EisernerBestand { get; set; }
 
         public string Einheit { get; set; }
 
