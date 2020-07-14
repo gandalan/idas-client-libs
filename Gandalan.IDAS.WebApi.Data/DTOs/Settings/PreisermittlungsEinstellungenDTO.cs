@@ -13,6 +13,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public double WaehrungsFaktor { get; set; }
         public double SteuerSatz { get; set; }
         public string EndpreisRundungsModus { get; set; }
+        public string SonderfarbZuschlaege { get; set; }
         public bool BruttoPreisErmitteln { get; set; }
         public Dictionary<Guid, List<AufpreisAnpassungDTO>> AufpreisAnpassungen { get; set; }
         public Dictionary<Guid, decimal> PreisfaktorAnpassungen { get; set; }
