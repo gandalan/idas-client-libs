@@ -28,5 +28,19 @@ namespace Gandalan.IDAS.WebApi.Client
             return await Task.Run(() => ErzeugeVorgangBeiBeschichter(vorgang, mGuid, produzentenKundenNummer));
         }
 
+        public string UpdateStatusBeimProduzenten(List<string> pCodes, Guid mGuid, string status)
+        {
+            if(Login())
+            {
+                return Post($"MaterialBestellungStatus?mGuid={mGuid}&status={status}", pCodes);
+            }
+            return null;
+        }
+
+        public async Task<string> UpdateStatusBeimProduzentenAsync(List<string> pCodes, Guid mGuid, string status)
+        {
+            return await Task.Run(() => UpdateStatusBeimProduzenten(pCodes, mGuid, status));
+        }
+
     }
 }
