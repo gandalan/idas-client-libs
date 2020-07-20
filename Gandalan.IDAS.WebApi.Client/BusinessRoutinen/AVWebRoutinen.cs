@@ -49,11 +49,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public BelegPositionAVDTO GetBelegPositionenAV(Guid guid)
+        public List<BelegPositionAVDTO> GetBelegPositionenAV(Guid guid)
         {
             if (Login())
             {
-                return Get<BelegPositionAVDTO>("BelegPositionenAV/" + guid.ToString());
+                return Get<List<BelegPositionAVDTO>>("BelegPositionenAV/" + guid.ToString());
             }
             return null;
         }
@@ -132,7 +132,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await Task.Run(() => GetAllBelegPositionenAV(changedSince));
         }
 
-        public async Task<BelegPositionAVDTO> GetBelegPositionenAVAsync(Guid guid)
+        public async Task<List<BelegPositionAVDTO>> GetBelegPositionenAVAsync(Guid guid)
         {
             return await Task.Run(() => GetBelegPositionenAV(guid));
         }
