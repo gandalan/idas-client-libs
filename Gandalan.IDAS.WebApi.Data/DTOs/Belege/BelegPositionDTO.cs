@@ -9,6 +9,7 @@ namespace Gandalan.IDAS.WebApi.DTO
     public class BelegPositionDTO : IDTOWithApplicationSpecificProperties
     {
         public Guid BelegPositionGuid { get; set; }
+        public Guid NachfolgeBelegPositionGuid { get; set; }
         public DateTime ErfassungsDatum { get; set; }        
 
         /// <summary>
