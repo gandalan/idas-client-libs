@@ -19,5 +19,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Text { get; set; }
         public string AngebotsText { get; set; }
         public DateTime ErfassungsDatum { get; set; }
+        public float BmBreite { get; set; }
+        public float BmHoehe { get; set; }
+        public string Farbe { get; set; }
+        public string Gewebe { get; set; }
     }
 }
