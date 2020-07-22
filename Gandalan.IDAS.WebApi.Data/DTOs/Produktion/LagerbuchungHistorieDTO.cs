@@ -15,11 +15,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid LagerbestandGuid { get; set; }
         public Guid KatalogArtikelGuid { get; set; }
         public Guid FarbGuid { get; set; }
-        public decimal MengeBestand { get; set; }
-        public decimal MengeReservierung { get; set; }
-        public decimal MengeMindestbestand { get; set; }
-        public decimal MengeEisernerBestand { get; set; }
-        public decimal MengeMaximalbestand { get; set; }
+        public decimal Betrag { get; set; }
+        public bool IstReservierung { get; set; }
         public string Einheit { get; set; }
         public string User { get; set; }
         public DateTime ChangedDate { get; set; }

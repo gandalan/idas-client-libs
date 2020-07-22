@@ -13,10 +13,11 @@ namespace Gandalan.IDAS.WebApi.DTO
     public class LagerbuchungDTO
     {
         public Guid KatalogArtikelGuid { get; set; }
-
         public Guid FarbGuid { get; set; }
-
         public float Betrag { get; set; }
         public bool IstReservierung { get; set; }
+        public string Einheit { get; set; }
+        public string User { get; set; }
+        public DateTime ChangedDate { get; set; }
     }
 }
