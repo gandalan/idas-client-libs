@@ -66,12 +66,12 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
         // neue methode für lagerhistorie abholen
-        public List<LagerbuchungHistorieDTO> GetLagerhistorie(DateTime vonDatum, DateTime bisDatum)
+        public List<LagerbuchungDTO> GetLagerhistorie(DateTime vonDatum, DateTime bisDatum)
         {
             // DateTime[] vonBisDatum = { vonDatum, bisDatum };
 
             if (Login())
-                return Get<List<LagerbuchungHistorieDTO>>("Lagerhistorie");
+                return Get<List<LagerbuchungDTO>>("Lagerhistorie");
 
             return null;
         }
