@@ -11,6 +11,46 @@
             Die Dateien werden in einem Mandantenspezifischen Speicher abgelegt.
             </summary>
         </member>
+        <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialBeschaffungsJobWebRoutinen.GetAllMaterialBeschaffungsJob(System.String)">
+            <summary>
+            Liefert alle MaterialItems (optional alle zu einem PCode)
+            </summary>
+            <returns>Liste von MaterialItemDTO</returns>  
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialBeschaffungsJobWebRoutinen.GetMaterialBeschaffungsJob(System.Guid)">
+            <summary>
+            Liefert ein MaterialItem (als Guid ist möglich: MaterialItemGuid, MaterialBeschaffungsJobGuid, BelegPositionGuid)
+            </summary>
+            <returns>MaterialItemDTO</returns>
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialBeschaffungsJobWebRoutinen.SaveMaterialBeschaffungsJob(Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO)">
+            <summary>
+            Zum speichern eines neuen Jobs werden spezielle Berechtigungen gebraucht.
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialBeschaffungsJobWebRoutinen.SaveMaterialBeschaffungsJobBulk(System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO})">
+            <summary>
+            Zum speichern eines neuen Jobs werden spezielle Berechtigungen gebraucht.
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialBeschaffungsJobWebRoutinen.SaveMaterialBeschaffungsJobAsync(Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO)">
+            <summary>
+            Zum speichern eines neuen Jobs werden spezielle Berechtigungen gebraucht.
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialBeschaffungsJobWebRoutinen.SaveMaterialBeschaffungsJobBulkAsync(System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO})">
+            <summary>
+            Zum speichern eines neuen Jobs werden spezielle Berechtigungen gebraucht.
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
         <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialItemWebRoutinen.GetAllMaterialItem(System.String)">
             <summary>
             Liefert alle MaterialItems (optional alle zu einem PCode)
@@ -30,6 +70,26 @@
             Passwort aus den Settings.
             </summary>
             <returns>Status des Logins</returns>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Client.Settings.WebApiSettings.CMSUrl">
+            <summary>
+            CMS für Variantenspez. Dokumente
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Client.Settings.WebApiSettings.LatexReportUrl">
+            <summary>
+            Latex-Reports 
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Client.Settings.WebApiSettings.I2Url">
+            <summary>
+            IBOS2-Varianten Produktionsberechnung 
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Client.Settings.WebApiSettings.I1Url">
+            <summary>
+            IBOS1-Varianten Produktionsberechnung 
+            </summary>
         </member>
     </members>
 </doc>

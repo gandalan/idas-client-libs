@@ -4,6 +4,34 @@
         <name>GDL.IDAS.Client.Contracts</name>
     </assembly>
     <members>
+        <member name="T:Gandalan.Client.Contracts.AppServices.IApplicationUpdateService">
+            <summary>
+            Check for application updates 
+            </summary>
+        </member>
+        <member name="P:Gandalan.Client.Contracts.AppServices.IApplicationUpdateService.Progress">
+            <summary>
+            Progress in percent
+            </summary>
+        </member>
+        <member name="P:Gandalan.Client.Contracts.AppServices.IApplicationUpdateService.StatusText">
+            <summary>
+            Info for user
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.AppServices.IApplicationUpdateService.HasUpdates">
+            <summary>
+            Wether or not there are updates available. Should return
+            as quick as possible and not display progress
+            </summary>
+            <returns>status bool</returns>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.AppServices.IApplicationUpdateService.UpdateApplication">
+            <summary>
+            Performs the actual update (with progress indicator)
+            </summary>
+            <returns>void</returns>
+        </member>
         <member name="T:Gandalan.Client.Contracts.DataServices.IAblageService">
             <summary>
             Interface für die Datenzugriffsebene der Ablageverwaltung
@@ -48,21 +76,38 @@
             </summary>
             <param name="infoScreenConfigDTO">InfoScreenConfigDTO, das entfernt werden soll</param>
         </member>
+        <member name="T:Gandalan.Client.Contracts.DataServices.ILagerbestandService">
+            <summary>
+            Interface für die Datenzugriffsebene der Bestandsverwaltung
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.DataServices.ILagerbestandService.GetAllAsync">
+            <summary>
+            Ruft alle LagerbestandDTOs ab
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.DataServices.ILagerbestandService.AddOrUpdateAsync(Gandalan.IDAS.WebApi.DTO.LagerbestandDTO)">
+            <summary>
+            Legt ein neues LagerbestandDTO an, oder aktualisiert es, sofern bereits vorhanden
+            </summary>
+            <param name="lagerbestandDTO">LagerbestandDTO, das angelegt/aktualisiert werden soll</param>        
+        </member>
+        <member name="M:Gandalan.Client.Contracts.DataServices.ILagerbestandService.AddOrUpdateAsync(System.Collections.Generic.IList{Gandalan.IDAS.WebApi.DTO.LagerbestandDTO})">
+            <summary>
+            Legt eine Liste neuer LagerbestandDTOs an, oder aktualisiert sie, sofern bereits vorhanden
+            </summary>
+            <param name="lagerbestandDTOs">Liste der LagerbestandDTOs, die angelegt/aktualisiert werden sollen</param>        
+        </member>
+        <member name="M:Gandalan.Client.Contracts.DataServices.ILagerbestandService.DeleteAsync(Gandalan.IDAS.WebApi.DTO.LagerbestandDTO)">
+            <summary>
+            Entfernt das übergebene LagerbestandDTO
+            </summary>
+            <param name="lagerbestandDTO">LagerbestandDTO, das entfernt werden soll</param>
+        </member>
         <member name="T:Gandalan.Client.Contracts.DataServices.IMailService">
             <summary>
             Implementiert einen Service zum Versenden von E-Mails, optional mit Anhang
             </summary>
-        </member>
-        <member name="T:Gandalan.Client.Contracts.IApplicationEventHandler">
-            <summary>
-            Internal use only
-            </summary>
-        </member>
-        <member name="M:Gandalan.Client.Contracts.IApplicationEventHandler.HandleEvent(Gandalan.Client.Contracts.IApplicationEvent)">
-            <summary>
-            Handles a certain event that is dispatched to this instance
-            </summary>
-            <param name="theEvent"></param>
         </member>
         <member name="T:Gandalan.Client.Contracts.IApplicationEventHandler`1">
             <summary>
@@ -226,14 +271,13 @@
             </summary>
             <param name="data">Liste mit Datenobjekten für zu druckende Etiketten</param>
         </member>
-        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.PrintCustom(System.Object,System.String)">
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.PrintCustom(System.Object,System.Object)">
             <summary>
             Druckt die angegebenen Daten auf dem Gerät aus.
-            Es wird der übergebene Template Text genutzt.
-            (Wird aktuell nur vom EPL Printer unterstützt)
+            Es wird das übergebene Template genutzt.
             </summary>
             <param name="data"></param>
-            <param name="template">Inhalt des genutzten Templates</param>
+            <param name="template">Druck Template (muss zum ausgewählten Drucker passen)</param>
         </member>
         <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.GetSettingsControl">
             <summary>
@@ -282,6 +326,68 @@
             <param name="items">Items die aufbereitet werden sollen</param>
             <param name="secondLevelGroup">Property, nachdem groupiert werden soll (Level 2)</param>
             <returns></returns>
+        </member>
+        <member name="T:Gandalan.Client.Contracts.ProduktionsServices.ISchnittOptimierung">
+            <summary>
+            Contract für die Schnitt-Optimierung, d.h. möglichst optimale Verteilung 
+            von Teilstücken auf Rohmaterial
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ISchnittOptimierung.Optimize(System.Int32,System.Int32[],System.Int32)">
+            <summary>
+            Berechnet eine möglichst optimale Verteilung von Teilstücken auf eine 
+            möglichst geringe Anzahl von Rohmaterial-Teilen. Alle Längenangaben in mm!
+            </summary>
+            <param name="rohmaterialLaenge">Maximal zu belegende Länge. Endabschnitte müssen vom Aufrufer bereits abgezogen sein.</param>
+            <param name="teilstueckLaengen">Liste aller gewünschten Teilstücke</param>
+            <param name="zugabe">Sägezugabe zwischen den Teilstücken (nicht am Anfang/Ende)</param>
+            <returns></returns>
+        </member>
+        <member name="T:Gandalan.Client.Contracts.ProduktionsServices.ZuschnittStangenInfo">
+            <summary>
+            Info über eine Stange mit Teilstücken
+            </summary>
+        </member>
+        <member name="P:Gandalan.Client.Contracts.ProduktionsServices.ZuschnittStangenInfo.BelegungInMM">
+            <summary>
+            Wie viele MM sind belegt?
+            </summary>
+        </member>
+        <member name="P:Gandalan.Client.Contracts.ProduktionsServices.ZuschnittStangenInfo.BelegungInProzent">
+            <summary>
+            Wie viele Prozent sind belegt?
+            </summary>
+        </member>
+        <member name="P:Gandalan.Client.Contracts.ProduktionsServices.ZuschnittStangenInfo.VerschnittInProzent">
+            <summary>
+            Wie viele Prozent sind Verschnitt?
+            </summary>
+        </member>
+        <member name="P:Gandalan.Client.Contracts.ProduktionsServices.ZuschnittStangenInfo.Laengen">
+            <summary>
+            Welche Längen in welcher Reihenfolge liegen auf der Stange?
+            </summary>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ZuschnittStangenInfo.#ctor(System.Int32,System.Int32)">
+            <summary>
+            "Eröffnet" eine neue Stange mit der angegebenen Gesamtlänge und 
+            dem Zugabe-Parameter für Teilstückzwischenräume
+            </summary>
+            <param name="laenge"></param>
+            <param name="zugabe"></param>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ZuschnittStangenInfo.CanAdd(System.Int32)">
+            <summary>
+            Prüft, ob ein Teilstück mit der angegebenen Länge noch Platz hat
+            </summary>
+            <param name="laenge"></param>
+            <returns>true/false</returns>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ZuschnittStangenInfo.Add(System.Int32)">
+            <summary>
+            Fügt ein Teilstück an.
+            </summary>
+            <param name="laenge">Länge des Teilstücks</param>
         </member>
         <member name="T:Gandalan.Client.Contracts.UIServices.IInfoScreenDataInitiator">
             <summary>
