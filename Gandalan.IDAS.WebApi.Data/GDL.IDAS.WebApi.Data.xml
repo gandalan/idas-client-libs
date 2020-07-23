@@ -1042,6 +1042,21 @@
             sich aus mit Stückzahl!)
             </summary>
         </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.LagerbestandDTO">
+            <summary>
+            DTO für die Lagerverwaltung
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.LagerbuchungDTO">
+            <summary>
+            DTO für eine Lagerbuchung
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.LagerbuchungHistorieDTO">
+            <summary>
+            DTO für die Lagerbuchungshistorie
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Kennzeichen">
             <summary>
             Eindeutiges Kennzeichen des Items (aus GUID)
@@ -1091,7 +1106,7 @@
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.IstZuschnitt">
             <summary>
-            Kennzeichen für Zuschnittartikel
+            Kennzeichen für Zuschnittartikel 
             </summary>
         </member>
         <member name="T:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO">
@@ -1102,6 +1117,11 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.MaterialBeschaffungsJobGuid">
             <summary>
             Eindeutige ID des Jobs
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.FolgeJobGuid">
+            <summary>
+            Eindeutige ID des ablösenden MaterialBeschaffungsJobDTO, falls es eines gibt
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.MaterialItemGuid">
@@ -1129,6 +1149,11 @@
             PCode (Produktionscode) für das zugehörige Fertigelement
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.MaterialPCode">
+            <summary>
+            Erweiterter PCode zur eindeutigen Materialidentifizerung (Task 4269)
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.VorgangGuid">
             <summary>
             Original-VorgangGuid
@@ -1147,6 +1172,11 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.AktuellerStatus">
             <summary>
             Status
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.LieferantStatus">
+            <summary>
+            Status beim Lieferanten (Task 4271)
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.ProduktionsDatum">
@@ -1225,6 +1255,11 @@
             FarbeKuerzel (Neher-Kürzel oder Sonderfarbton)
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.KatalogArtikelArt">
+            <summary>
+            Art aus dem KatalogArtikel
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.Historie">
             <summary>
             Historie des Jobs
@@ -1265,6 +1300,16 @@
             Artikel sind vollständig für die Produktion vorhanden
             </summary>
         </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatiDTO.Abgebrochen">
+            <summary>
+            Artikelbeschaffung soll abgebrochen werden
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobStatiDTO.Abgelöst">
+            <summary>
+            MaterialbeschaffungsJob wurde durch FolgeJob abgelöst
+            </summary>
+        </member>
         <member name="T:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO">
             <summary>
             Die MaterialItems sind die, die später als Job bei den Providern bestellt werden. Diese werden aus dem MaterialBedarfDTO generiert und können vom Benutzer angepasst werden.
@@ -1299,6 +1344,11 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.PCode">
             <summary>
             PCode (Produktionscode) für das zugehörige Fertigelement
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.MaterialPCode">
+            <summary>
+            Erweiterter PCode zur eindeutigen Materialidentifizerung (Task 4269)
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.VorgangGuid">
@@ -1390,6 +1440,11 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.FarbKuerzel">
             <summary>
             FarbeKuerzel (Neher-Kürzel oder Sonderfarbton)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.KatalogArtikelArt">
+            <summary>
+            Art aus dem KatalogArtikel
             </summary>
         </member>
         <member name="T:Gandalan.IDAS.WebApi.DTO.ProduktionsDatenDTO">
