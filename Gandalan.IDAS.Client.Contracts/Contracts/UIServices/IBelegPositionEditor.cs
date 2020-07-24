@@ -30,7 +30,7 @@ namespace Gandalan.Client.Contracts.UIServices
         decimal Menge { get; set; }
         decimal Rabatt { get; set; }
 
-        Task Load(BelegPositionDTO position);
+        Task Load();
         void UpdateBelegPosition();
     }
 
