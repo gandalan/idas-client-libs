@@ -20,7 +20,7 @@ namespace Gandalan.Client.Contracts.UIServices
 
     public interface IBelegPositionEditorViewModel
     {
-        BelegPositionDTO Position { get; }
+        BelegPositionDTO Position { get; set; }
 
         // Diese Felder müssen aus dem Editor-Viewmodel mal noch raus, weil kaufmännisch... refa!
         decimal AufAbSchlag { get; set; }
