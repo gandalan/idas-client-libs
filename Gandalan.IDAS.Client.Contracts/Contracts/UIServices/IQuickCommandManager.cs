@@ -9,5 +9,7 @@ namespace Gandalan.Client.Contracts.UIServices
         void AddQuickCommand(IQuickCommand command);
         List<IQuickCommand> GetAllCommands();
         event EventHandler QuickCommandsChanged;
+
+        object Context { get; set; }
     }
 }
