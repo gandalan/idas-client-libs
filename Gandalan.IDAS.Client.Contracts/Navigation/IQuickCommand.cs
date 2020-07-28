@@ -10,6 +10,7 @@ namespace Gandalan.Client.Contracts.Navigation
         object Icon { get; }
         int Order { get; }
 
-        Func<Task> Execute { get; } 
+        Task ExecuteAsync(object parameter); 
+
     }
 }

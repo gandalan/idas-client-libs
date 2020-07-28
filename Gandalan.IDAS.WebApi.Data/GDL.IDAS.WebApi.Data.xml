@@ -419,6 +419,121 @@
             E=Eingabe, A=Ausgabe
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Titel">
+            <summary>
+            Akad. Titel/Adelstitel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Anrede">
+            <summary>
+            Namensanrede, z.B. "Herr"/"Frau"/"Firma"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Nachname">
+            <summary>
+            Für natürliche Personen: Nachname
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Vorname">
+            <summary>
+            Für natürliche Personen: Vorname(n)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Firmenname">
+            <summary>
+            Für juristische Personen/Körperschaften: exakte Firmierung mit Zusatz der Gesellschaftsform, z.B. "Fensterbau Maier GmbH &amp; Co. KG"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.AdressZusatz1">
+            <summary>
+            Adresszusatz, z.B. "c/o" (belegbezogen)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.AdressZusatz2">
+            <summary>
+            Adresszusatz, z.B. "c/o" (belegbezogen)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Strasse">
+            <summary>
+            Postalische Straße
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Hausnummer">
+            <summary>
+            Postalische Hausnummer, ggf. mit Suffix/Prafix z.B. "16a" oder "77 (Hinterhaus)"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Postfach">
+            <summary>
+            Postfach (ersetzt Straße/Hausnummer in der Ausgabe)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Postleitzahl">
+            <summary>
+            Postalische Postleitzahl bezogen auf die Straßen- oder Postfachadresse
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Ort">
+            <summary>
+            Postalische Ortsangabe
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Ortsteil">
+            <summary>
+            Nicht-postalische Angabe zum Ortsteil
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Land">
+            <summary>
+            Land als Textkürzel
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.IstInland">
+            <summary>
+            Bezogen auf den Versender die Angabe, ob die hier ausgefertigte Adresse eine Inlandsadresse ist
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Mailadresse">
+            <summary>
+            E-Mail-Adresse
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Landesvorwahl">
+            <summary>
+            Telefon: Ländervorwahl (kanonisch [+49] oder landesspezifisch [0049])
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Vorwahl">
+            <summary>
+            Ortskennzahl mit führender "0" in Deutschland
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Telefonnummer">
+            <summary>
+            Anschlussrufnummer
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Durchwahl">
+            <summary>
+            Durchwahlzusatz
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Webadresse">
+            <summary>
+            Internet-/Web-URL mit Protokoll-Präfix (https://...)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Verwendungszweck">
+            <summary>
+            Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)        
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.ApplicationSpecificProperties">
+            <summary>
+            Intern
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.Art">
             <summary>
             Art der Adresse - "Anschrift", "Email", "Telefon" (nur relevant bei Adressen aus IBOS)
@@ -793,121 +908,6 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.PersonDTO.Geburtstag">
             <summary>
             Geburtstag
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Titel">
-            <summary>
-            Akad. Titel/Adelstitel
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Anrede">
-            <summary>
-            Namensanrede, z.B. "Herr"/"Frau"/"Firma"
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Nachname">
-            <summary>
-            Für natürliche Personen: Nachname
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Vorname">
-            <summary>
-            Für natürliche Personen: Vorname(n)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Firmenname">
-            <summary>
-            Für juristische Personen/Körperschaften: exakte Firmierung mit Zusatz der Gesellschaftsform, z.B. "Fensterbau Maier GmbH &amp; Co. KG"
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.AdressZusatz1">
-            <summary>
-            Adresszusatz, z.B. "c/o" (belegbezogen)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.AdressZusatz2">
-            <summary>
-            Adresszusatz, z.B. "c/o" (belegbezogen)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Strasse">
-            <summary>
-            Postalische Straße
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Hausnummer">
-            <summary>
-            Postalische Hausnummer, ggf. mit Suffix/Prafix z.B. "16a" oder "77 (Hinterhaus)"
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Postfach">
-            <summary>
-            Postfach (ersetzt Straße/Hausnummer in der Ausgabe)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Postleitzahl">
-            <summary>
-            Postalische Postleitzahl bezogen auf die Straßen- oder Postfachadresse
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Ort">
-            <summary>
-            Postalische Ortsangabe
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Ortsteil">
-            <summary>
-            Nicht-postalische Angabe zum Ortsteil
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Land">
-            <summary>
-            Land als Textkürzel
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.IstInland">
-            <summary>
-            Bezogen auf den Versender die Angabe, ob die hier ausgefertigte Adresse eine Inlandsadresse ist
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Mailadresse">
-            <summary>
-            E-Mail-Adresse
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Landesvorwahl">
-            <summary>
-            Telefon: Ländervorwahl (kanonisch [+49] oder landesspezifisch [0049])
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Vorwahl">
-            <summary>
-            Ortskennzahl mit führender "0" in Deutschland
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Telefonnummer">
-            <summary>
-            Anschlussrufnummer
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Durchwahl">
-            <summary>
-            Durchwahlzusatz
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Webadresse">
-            <summary>
-            Internet-/Web-URL mit Protokoll-Präfix (https://...)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Verwendungszweck">
-            <summary>
-            Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)        
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.ApplicationSpecificProperties">
-            <summary>
-            Intern
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Titel">
