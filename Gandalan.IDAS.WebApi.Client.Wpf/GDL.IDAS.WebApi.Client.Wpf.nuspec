@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>GDL.IDAS.WebApi.Client.Wpf</id>
+        <title>Gandalan.IDAS.WebApi.Client.Wpf</title>
+        <version>BUILDVERSION</version>
+        <authors>Gandalan GmbH &amp; Co. KG</authors>
+        <owners>Gandalan GmbH &amp; Co. KG</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Gandalan.IDAS.WebApi.Client.Wpf</description>
+        <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2020</copyright>
+        <dependencies>
+          <dependency id="Newtonsoft.Json" version="12.0.3" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\net472\GDL.IDAS.WebApi.Client.Wpf.dll" target="lib\net472\GDL.IDAS.WebApi.Client.Wpf.dll" />
+        <file src="bin\Release\net472\GDL.IDAS.WebApi.Client.Wpf.XML" target="lib\net472\GDL.IDAS.WebApi.Client.Wpf.XML" />
+    </files>
+</package>
