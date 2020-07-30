@@ -26,20 +26,66 @@ namespace Gandalan.Controls.WPF.Dialogs
         private LoginWindowViewModel_v2 _viewModel;
         private string _statusText;
 
+        public LoginWindow_v2()
+        {
+            InitializeComponent();
+        }
+
         public LoginWindow_v2(WebApiSettings webApiSettings) 
         {
-            _webApiSettings = webApiSettings;
-            _viewModel = new LoginWindowViewModel_v2(_webApiSettings);
-            /* Ausskommentiert zum Testen:
-            foreach (var window in Application.Current.Windows)
-                if (window is Window wpfWindow && wpfWindow.IsVisible)
-                {
-                    Owner = wpfWindow;
-                    break;
-                }
-            */
-            InitializeComponent();
-            DataContext = _viewModel;
+            try
+            {
+                _webApiSettings = webApiSettings;
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("Could not set _webApiSettings!");
+                return;
+            }
+            
+            try
+            {
+                _viewModel = new LoginWindowViewModel_v2(_webApiSettings);
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("Could not set _viewModel!");
+                return;
+            }
+
+            try
+            {
+                foreach (var window in Application.Current.Windows)
+                    if (window is Window wpfWindow && wpfWindow.IsVisible)
+                    {
+                        Owner = wpfWindow;
+                        break;
+                    }
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("Could not set Owner!");
+                return;
+            }
+
+            try
+            {
+                InitializeComponent();
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("Could not InitializseComponent!");
+            }
+            
+            try
+            {
+                DataContext = _viewModel;
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("Could not set DataContext!");
+                return;
+            }
         }
 
         private void switchToLoginFields(object sender, RoutedEventArgs e)
