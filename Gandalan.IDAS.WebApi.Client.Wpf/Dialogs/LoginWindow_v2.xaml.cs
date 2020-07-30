@@ -29,16 +29,7 @@ namespace Gandalan.Controls.WPF.Dialogs
         public LoginWindow_v2(WebApiSettings webApiSettings) 
         {
             _webApiSettings = webApiSettings;
-
-            try
-            {
-                _viewModel = new LoginWindowViewModel_v2(_webApiSettings);
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show("Could not set _viewModel!");
-                return;
-            }
+            _viewModel = new LoginWindowViewModel_v2(_webApiSettings);
 
             foreach (var window in Application.Current.Windows)
                 if (window is Window wpfWindow && wpfWindow.IsVisible)
