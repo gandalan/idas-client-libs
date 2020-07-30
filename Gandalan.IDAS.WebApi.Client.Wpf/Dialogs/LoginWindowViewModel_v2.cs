@@ -53,5 +53,12 @@ namespace Gandalan.Controls.WPF.Dialogs
             ShowServerSelection = true;
 #endif
         }
+
+        public LoginWindowViewModel_v2()
+        {
+#if DEBUG
+            ShowServerSelection = true;
+#endif
+        }
     }
 }

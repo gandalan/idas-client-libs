@@ -47,10 +47,17 @@ namespace Gandalan.Controls.WPF.Dialogs
             DataContext = _viewModel;
         }
 
-        public void Show(WebApiSettings webApiSettings)
+        public WebApiSettings Show(WebApiSettings webApiSettings)
         {
             _webApiSettings = webApiSettings;
+            _viewModel = new LoginWindowViewModel_v2();
+            _viewModel.UserName = _webApiSettings.UserName;
+            _viewModel.Passwort = _webApiSettings.Passwort;
+            passwordBox.Password = _webApiSettings.Passwort;
+
             ShowDialog();
+
+            return _webApiSettings;
         }
 
         private void switchToLoginFields(object sender, RoutedEventArgs e)
