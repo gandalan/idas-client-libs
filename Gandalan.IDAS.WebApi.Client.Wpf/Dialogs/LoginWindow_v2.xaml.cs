@@ -26,23 +26,10 @@ namespace Gandalan.Controls.WPF.Dialogs
         private LoginWindowViewModel_v2 _viewModel;
         private string _statusText;
 
-        public LoginWindow_v2()
-        {
-            InitializeComponent();
-        }
-
         public LoginWindow_v2(WebApiSettings webApiSettings) 
         {
-            try
-            {
-                _webApiSettings = webApiSettings;
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show("Could not set _webApiSettings!");
-                return;
-            }
-            
+            _webApiSettings = webApiSettings;
+
             try
             {
                 _viewModel = new LoginWindowViewModel_v2(_webApiSettings);
@@ -53,39 +40,15 @@ namespace Gandalan.Controls.WPF.Dialogs
                 return;
             }
 
-            try
-            {
-                foreach (var window in Application.Current.Windows)
-                    if (window is Window wpfWindow && wpfWindow.IsVisible)
-                    {
-                        Owner = wpfWindow;
-                        break;
-                    }
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show("Could not set Owner!");
-                return;
-            }
+            foreach (var window in Application.Current.Windows)
+                if (window is Window wpfWindow && wpfWindow.IsVisible)
+                {
+                    Owner = wpfWindow;
+                    break;
+                }
 
-            try
-            {
-                InitializeComponent();
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show("Could not InitializseComponent!");
-            }
-            
-            try
-            {
-                DataContext = _viewModel;
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show("Could not set DataContext!");
-                return;
-            }
+            InitializeComponent();
+            DataContext = _viewModel;
         }
 
         private void switchToLoginFields(object sender, RoutedEventArgs e)

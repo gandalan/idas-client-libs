@@ -12,10 +12,6 @@
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
             <controls:BoolInvertConverter x:Key="InvertBool" />
-
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/StandardStyles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -45,7 +41,7 @@
             </ItemsControl>
         </StackPanel>
         <StackPanel Visibility="{Binding ShowLoginFields, Converter={StaticResource BoolToVis}}" Margin="40,0,40,40">
-            <Grid Resources="{StaticResource InputGrid}">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="2*"/>
@@ -63,28 +59,28 @@
 
                 <Label Visibility="{Binding ShowServerSelection, Converter={StaticResource BoolToVis}}" Grid.Column="0" Grid.Row="1" Content="Environment:" VerticalAlignment="Center"></Label>
                 <DockPanel  Grid.Column="1" Grid.Row="1" Visibility="{Binding ShowServerSelection, Converter={StaticResource BoolToVis}}" >
-                    <CheckBox IsChecked="{Binding EnvAlsDefault, Mode=TwoWay}" DockPanel.Dock="Right" Content="Als Standard setzen" VerticalAlignment="Center"/>
-                    <ComboBox SelectedItem="{Binding ServerEnvironment, Mode=TwoWay}" ItemsSource="{Binding AlleEnvironments}" DisplayMemberPath="FriendlyName" IsSynchronizedWithCurrentItem="True" />
+                    <CheckBox IsChecked="{Binding EnvAlsDefault, Mode=TwoWay}" DockPanel.Dock="Right" Content="Als Standard setzen" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="5,5,10,5" Padding="2"/>
+                    <ComboBox SelectedItem="{Binding ServerEnvironment, Mode=TwoWay}" ItemsSource="{Binding AlleEnvironments}" DisplayMemberPath="FriendlyName" IsSynchronizedWithCurrentItem="True" Margin="5" Padding="5"/>
                 </DockPanel>
 
                 <Label Grid.Column="0" Grid.Row="2" Content="Benutzername:" VerticalAlignment="Center" ></Label>
-                <TextBox Name="userNameTextBox" Grid.Column="1" Grid.Row="2" Text="{Binding UserName}" />
+                <TextBox Name="userNameTextBox" Grid.Column="1" Grid.Row="2" Text="{Binding UserName}" Margin="5" Padding="5"/>
 
                 <Label Grid.Column="0" Grid.Row="3" Content="Passwort:" VerticalAlignment="Center"></Label>
-                <PasswordBox x:Name="passwordBox" Grid.Column="1" Grid.Row="3" />
+                <PasswordBox x:Name="passwordBox" Grid.Column="1" Grid.Row="3" Margin="5" Padding="5"/>
 
-                <CheckBox x:Name="checkBoxAuthToken" IsChecked="{Binding SaveCredentials}" Grid.Column="1" Grid.Row="4" Content="Anmeldung merken"/>
+                <CheckBox x:Name="checkBoxAuthToken" IsChecked="{Binding SaveCredentials}" Grid.Column="1" Grid.Row="4" Content="Anmeldung merken" VerticalContentAlignment="Center" Margin="5,5,10,5" Padding="2"/>
 
                 <StackPanel Grid.Column="1" Grid.Row="5"  Orientation="Horizontal" Margin="0,10,0,0">
-                    <Button Content="Anmelden"  IsDefault="True" Click="anmeldenButtonClick" />
-                    <Button Content="Abbrechen" IsCancel="True" Click="abbrechenButton_Click" />
+                    <Button Content="Anmelden"  IsDefault="True" Click="anmeldenButtonClick"  Margin="5" Padding="5"/>
+                    <Button Content="Abbrechen" IsCancel="True" Click="abbrechenButton_Click"  Margin="5" Padding="5"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Grid.Row="6"  Orientation="Horizontal" Margin="0,0,0,0">
-                    <Button BorderThickness="0" Background="Transparent" Padding="0" Click="pwResetButton_Click">
+                    <Button BorderThickness="0" Background="Transparent" Padding="0" Click="pwResetButton_Click" Margin="5">
                         <TextBlock><Run TextDecorations="Underline" Foreground="Blue">Passwort vergessen</Run></TextBlock>
                     </Button>
-                    <Button BorderThickness="0" Background="Transparent" Padding="0" Click="einrichtenButton_Click">
+                    <Button BorderThickness="0" Background="Transparent" Padding="0" Click="einrichtenButton_Click" Margin="5">
                         <TextBlock><Run TextDecorations="Underline" Foreground="Blue">Produzent einrichten...</Run></TextBlock>
                     </Button>
                 </StackPanel>
