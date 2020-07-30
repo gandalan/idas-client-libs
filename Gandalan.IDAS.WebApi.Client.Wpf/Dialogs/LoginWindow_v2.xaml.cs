@@ -50,6 +50,7 @@ namespace Gandalan.Controls.WPF.Dialogs
         public void Show(WebApiSettings webApiSettings)
         {
             _webApiSettings = webApiSettings;
+            ShowDialog();
         }
 
         private void switchToLoginFields(object sender, RoutedEventArgs e)
