@@ -27,6 +27,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public Guid BelegPositionGuid { get; set; }
         /// <summary>
+        /// Original-BelegPositionAVGuid
+        /// </summary>
+        public Guid BelegPositionAVGuid { get; set; }
+        /// <summary>
         /// Original-BelegsGuid
         /// </summary>
         public Guid BelegGuid { get; set; }
