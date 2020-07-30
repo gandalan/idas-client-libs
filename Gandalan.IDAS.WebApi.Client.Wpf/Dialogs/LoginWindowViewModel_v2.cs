@@ -44,41 +44,10 @@ namespace Gandalan.Controls.WPF.Dialogs
         
         public LoginWindowViewModel_v2(WebApiSettings webApiSettings)
         {
-            try
-            {
-                AlleEnvironments = webApiSettings.GetAll();
-            }
-            catch
-            {
-                MessageBox.Show("Could not set AlleEnvironments!");
-            }
-
-            try
-            {
-                LoggedInEnvironments = AlleEnvironments.Where(e => e.AuthToken != null && e.AuthToken.Token != Guid.Empty);
-            }
-            catch
-            {
-                MessageBox.Show("Could not set LoggedInEnvironments!");
-            }
-            
-            try
-            {
-                ShowLoggedInEnvironments = LoggedInEnvironments.Any();
-            }
-            catch
-            {
-                MessageBox.Show("Could not set ShowLoggedInEnvironments!");
-            }
-
-            try
-            {
-                ServerEnvironment = AlleEnvironments.FirstOrDefault(e => e.FriendlyName.Equals(webApiSettings.FriendlyName, StringComparison.InvariantCultureIgnoreCase));
-            }
-            catch
-            {
-                MessageBox.Show("Could not set ServerEnvironment!");
-            }
+            AlleEnvironments = webApiSettings.GetAll();
+            LoggedInEnvironments = AlleEnvironments.Where(e => e.AuthToken != null && e.AuthToken.Token != Guid.Empty);
+            ShowLoggedInEnvironments = LoggedInEnvironments.Any();
+            ServerEnvironment = AlleEnvironments.FirstOrDefault(e => e.FriendlyName.Equals(webApiSettings.FriendlyName, StringComparison.InvariantCultureIgnoreCase));
 
 #if DEBUG
             ShowServerSelection = true;

@@ -22,11 +22,16 @@ namespace Gandalan.Controls.WPF.Dialogs
     /// </summary>
     public partial class LoginWindow_v2 : Window
     {
-        private readonly WebApiSettings _webApiSettings;
+        private WebApiSettings _webApiSettings;
         private LoginWindowViewModel_v2 _viewModel;
         private string _statusText;
 
-        public LoginWindow_v2(WebApiSettings webApiSettings) 
+        public LoginWindow_v2()
+        {
+            InitializeComponent();
+        }
+
+        public LoginWindow_v2(WebApiSettings webApiSettings)
         {
             _webApiSettings = webApiSettings;
             _viewModel = new LoginWindowViewModel_v2(_webApiSettings);
@@ -40,6 +45,11 @@ namespace Gandalan.Controls.WPF.Dialogs
 
             InitializeComponent();
             DataContext = _viewModel;
+        }
+
+        public void Show(WebApiSettings webApiSettings)
+        {
+            _webApiSettings = webApiSettings;
         }
 
         private void switchToLoginFields(object sender, RoutedEventArgs e)
