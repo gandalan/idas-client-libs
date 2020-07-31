@@ -51,16 +51,8 @@ namespace Gandalan.Controls.WPF.Dialogs
         {
             _webApiSettings = webApiSettings;
             _viewModel = new LoginWindowViewModel_v2();
-            // _viewModel.UserName = _webApiSettings.UserName;
-            // _viewModel.Passwort = _webApiSettings.Passwort;
-
-            userNameTextBox.Text = _webApiSettings.UserName;
-            passwordBox.Password = _webApiSettings.Passwort;
-
+            
             ShowDialog();
-
-            _webApiSettings.UserName = userNameTextBox.Text;
-             _webApiSettings.Passwort = passwordBox.Password;
 
             return _webApiSettings;
         }

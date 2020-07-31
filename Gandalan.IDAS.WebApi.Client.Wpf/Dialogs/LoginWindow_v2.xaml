@@ -17,7 +17,7 @@
 
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal" Margin="40,30,40,40">
-            <Image Source="/Assets/Neher/Logo.png" Height="70"></Image>
+            <Image Source="/Assets/Neher/Logo.png" Height="70"/>
             <Label FontSize="20" VerticalAlignment="Center" Padding="20,0,0,0">Neher Cloud - Anmeldung</Label>
         </StackPanel>
         <Grid Margin="0,0,0,20">
