@@ -20,6 +20,7 @@ namespace Gandalan.Client.Contracts.UIServices
 
     public interface IBelegPositionEditorViewModel
     {
+        Guid BelegPositionGuidToLoad { get; set; }
         BelegPositionDTO Position { get; set; }
 
         // Diese Felder müssen aus dem Editor-Viewmodel mal noch raus, weil kaufmännisch... refa!
