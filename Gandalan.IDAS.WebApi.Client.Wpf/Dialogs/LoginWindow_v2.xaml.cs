@@ -35,14 +35,16 @@ namespace Gandalan.Controls.WPF.Dialogs
         {
             _webApiSettings = webApiSettings;
             _viewModel = new LoginWindowViewModel_v2(_webApiSettings);
+            if (Application.Current != null && Application.Current.Windows != null)
+            {
+                foreach (var window in Application.Current.Windows)
+                    if (window is Window wpfWindow && wpfWindow.IsVisible)
+                    {
+                        Owner = wpfWindow;
+                        break;
+                    }
 
-            foreach (var window in Application.Current.Windows)
-                if (window is Window wpfWindow && wpfWindow.IsVisible)
-                {
-                    Owner = wpfWindow;
-                    break;
-                }
-
+            }
             InitializeComponent();
             DataContext = _viewModel;
         }
