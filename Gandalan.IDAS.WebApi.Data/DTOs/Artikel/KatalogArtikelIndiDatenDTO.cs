@@ -17,7 +17,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool BestellMengeAufVERunden { get; set; }
         public string KundenArtikelNummer { get; set; }
         public IList<IndiFarbDatenDTO> FarbDaten { get; set; }
-
         public DateTime ChangedDate { get; set; }
     }
 
