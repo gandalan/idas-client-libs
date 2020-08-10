@@ -9,6 +9,9 @@ namespace Gandalan.IDAS.Client.Contracts.Flux
     {
         void AddTransientEventHandler(EventHandler<IFluxAction> eventHandler);
         void AddPersistentEventHandler(EventHandler<IFluxAction> eventHandler);
+        void RemoveTransientEventHandler(EventHandler<IFluxAction> eventHandler);
+        void RemovePersistentEventHandler(EventHandler<IFluxAction> eventHandler);
+
         void ClearTransientEventHandlers();
 
         /// <summary>
