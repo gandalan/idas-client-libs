@@ -108,6 +108,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string FarbCode { get; set; }
         /// <summary>
+        /// Kennzeichen ob das MaterialItem Beschichtbar ist.
+        /// </summary>
+        public bool IstBeschichtbar { get; set; }
+        /// <summary>
         /// Bezeichnung der Oberfläche, z.B. "matt"
         /// </summary>
         public string OberflaechenBezeichnung { get; set; }

@@ -123,6 +123,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string FarbKuerzel { get; set; }
         /// <summary>
+        /// Kennzeichen ob das MaterialItem Beschichtbar ist.
+        /// </summary>
+        public bool IstBeschichtbar { get; set; }
+        /// <summary>
         /// Art aus dem KatalogArtikel
         /// </summary>
         public KatalogArtikelArt KatalogArtikelArt { get; set; }
