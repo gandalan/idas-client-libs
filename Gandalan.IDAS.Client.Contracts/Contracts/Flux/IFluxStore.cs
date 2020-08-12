@@ -7,12 +7,10 @@ namespace Gandalan.IDAS.Client.Contracts.Flux
 {
     public interface IFluxStore
     {
-        void AddTransientEventHandler(EventHandler<IFluxAction> eventHandler);
-        void AddPersistentEventHandler(EventHandler<IFluxAction> eventHandler);
-        void RemoveTransientEventHandler(EventHandler<IFluxAction> eventHandler);
-        void RemovePersistentEventHandler(EventHandler<IFluxAction> eventHandler);
-
-        void ClearTransientEventHandlers();
+        void AddTransientEventHandler(IFluxConsumer eventHandler);
+        void AddPersistentEventHandler(IFluxConsumer eventHandler);
+        void RemoveTransientEventHandler(IFluxConsumer eventHandler);
+        void RemovePersistentEventHandler(IFluxConsumer eventHandler);
 
         /// <summary>
         /// Obsoleted - use AddPersistentEventHandler
@@ -20,7 +18,7 @@ namespace Gandalan.IDAS.Client.Contracts.Flux
         [Obsolete("use AddPersistentEventHandler")]
         event EventHandler<IFluxAction> DataChanged;
 
-        Task Handle(Flux.IFluxAction action);
+        Task Handle(IFluxAction action);
         Task Initialize();
         Task Clean();
     }
