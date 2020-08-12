@@ -11,6 +11,6 @@ namespace Gandalan.IDAS.Client.Contracts.Flux
     {
         void RegisterWithStores();
         void UnregisterFromStores();
-        Task Handle(IFluxAction action);
+        Task Handle(IFluxStore sender, IFluxAction action);
     }
 }
