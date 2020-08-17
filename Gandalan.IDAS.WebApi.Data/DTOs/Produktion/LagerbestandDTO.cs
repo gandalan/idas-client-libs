@@ -23,6 +23,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal Maximalbestand { get; set; }
         public decimal EisernerBestand { get; set; }
         public string Einheit { get; set; }
+        public string Lagerplatz { get; set; }
+        public string Charge { get; set; }
+        public string Seriennummer { get; set; }
         public DateTime ChangedDate { get; set; }
     }
 }
