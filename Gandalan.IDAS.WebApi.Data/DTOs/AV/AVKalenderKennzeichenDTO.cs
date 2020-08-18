@@ -10,6 +10,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         
         public DateTime Datum { get; set; }
         public string TagesKennzeichen { get; set; }
+        public string TagesKennzeichenFarbe { get; set; }
         public string WochenKennzeichen { get; set; }
 
         public long Version { get; set; }
