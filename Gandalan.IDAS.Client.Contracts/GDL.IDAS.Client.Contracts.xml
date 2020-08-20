@@ -442,5 +442,10 @@
             i.e. opens a dialog window, takes screenhots, emails them etc.
             </summary>
         </member>
+        <member name="E:Gandalan.IDAS.Client.Contracts.Flux.IFluxStore.DataChanged">
+            <summary>
+            Obsoleted - use AddPersistentEventHandler
+            </summary>
+        </member>
     </members>
 </doc>

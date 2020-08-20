@@ -1052,11 +1052,6 @@
             DTO für eine Lagerbuchung
             </summary>
         </member>
-        <member name="T:Gandalan.IDAS.WebApi.DTO.LagerbuchungHistorieDTO">
-            <summary>
-            DTO für die Lagerbuchungshistorie
-            </summary>
-        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.Kennzeichen">
             <summary>
             Eindeutiges Kennzeichen des Items (aus GUID)
@@ -1255,6 +1250,11 @@
             FarbeKuerzel (Neher-Kürzel oder Sonderfarbton)
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.IstBeschichtbar">
+            <summary>
+            Kennzeichen ob das MaterialItem Beschichtbar ist.
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO.KatalogArtikelArt">
             <summary>
             Art aus dem KatalogArtikel
@@ -1334,6 +1334,11 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.BelegPositionGuid">
             <summary>
             Original-BelegPositionGuid
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.BelegPositionAVGuid">
+            <summary>
+            Original-BelegPositionAVGuid
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.BelegGuid">
@@ -1430,6 +1435,11 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.FarbCode">
             <summary>
             Skalenfarbcode, z.B. "RAL 9016"
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.IstBeschichtbar">
+            <summary>
+            Kennzeichen ob das MaterialItem Beschichtbar ist.
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialItemDTO.OberflaechenBezeichnung">
