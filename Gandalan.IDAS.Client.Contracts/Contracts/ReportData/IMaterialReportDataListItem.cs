@@ -2,7 +2,7 @@
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
 {
-    public interface IMaterialReportDataListItem
+    public interface IMaterialReportItem
     {
         decimal Stueckzahl { get; set; }
         string SameLengthCount { get; set; }
@@ -21,7 +21,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
         string FarbKuerzel { get; set; }
     }
 
-    public class MaterialReportDataListItem : IMaterialReportDataListItem
+    public class MaterialReportItem : IMaterialReportItem
     {
         public decimal Stueckzahl { get; set; }
         public string SameLengthCount { get; set; } = "";

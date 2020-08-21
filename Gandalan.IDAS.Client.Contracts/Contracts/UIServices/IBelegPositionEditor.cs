@@ -9,8 +9,6 @@ namespace Gandalan.Client.Contracts.UIServices
         Task AddPosition(BelegPositionDTO position);
         Task EditPosition(BelegPositionDTO position);
         Task EditPosition(Guid positionGuid);
-        Task<IBelegPositionEditorControl> GetControl(BelegPositionDTO belegPosition);
-        Task<IBelegPositionEditorControl> GetControl(Guid belegPositionGuid);
     }
 
     public interface IBelegPositionEditorControl
@@ -20,9 +18,6 @@ namespace Gandalan.Client.Contracts.UIServices
 
     public interface IBelegPositionEditorViewModel
     {
-        Guid BelegPositionGuidToLoad { get; set; }
-        BelegPositionDTO Position { get; set; }
-
         // Diese Felder müssen aus dem Editor-Viewmodel mal noch raus, weil kaufmännisch... refa!
         decimal AufAbSchlag { get; set; }
         decimal Einzelpreis { get; set; }
@@ -31,7 +26,9 @@ namespace Gandalan.Client.Contracts.UIServices
         decimal Menge { get; set; }
         decimal Rabatt { get; set; }
 
-        Task Load();
+        Task LoadPositionByGuid(Guid positionGuid);
+        Task LoadPosition(BelegPositionDTO position);
+
         void UpdateBelegPosition();
     }
 

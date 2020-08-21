@@ -7,7 +7,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
     {
         string OrderedProperty { get; set; }
         string OrderedPropertyValue { get; set; }
-        List<IMaterialReportDataItem> Data { get; set; }
+        List<IMaterialReportGroupData> Data { get; set; }
         string Serienname { get; set; }
         DateTime DruckDatum { get; set; }
     }
@@ -16,7 +16,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
     {
         public string OrderedProperty { get; set; }
         public string OrderedPropertyValue { get; set; }
-        public List<IMaterialReportDataItem> Data { get; set; } = new List<IMaterialReportDataItem>();
+        public List<IMaterialReportGroupData> Data { get; set; } = new List<IMaterialReportGroupData>();
         public string Serienname { get; set; }
         public DateTime DruckDatum { get; set; }
     }
