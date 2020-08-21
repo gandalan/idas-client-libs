@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.UIServices
 {
-    public interface IBewegungsdatenDisplay
+    public interface IBestandsverwaltungDisplay
     {
-        void DisplayBewegungsdaten();
-        void DisplayBewegungsdaten(string pfad);
+        void DisplayBestandsverwaltung();
+        void DisplayBestandsverwaltung(string pfad);
     }
 }
