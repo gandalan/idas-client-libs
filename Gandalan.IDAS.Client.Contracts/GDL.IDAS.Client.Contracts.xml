@@ -310,7 +310,7 @@
             <param name="saegeDatenGenerator">Generator zur Erzeugung der maschinenspezifischen Daten</param>
             <param name="schnittListe">list der zu sägenden MaterialBedarfDTOs</param>
         </member>
-        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ISaegeListeAufbereitenService.SortAndGroup(System.String,System.Collections.Generic.IEnumerable{Gandalan.IDAS.Client.Contracts.Contracts.ReportData.IMaterialReportDataListItem})">
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ISaegeListeAufbereitenService.SortAndGroup(System.String,System.Collections.Generic.IEnumerable{Gandalan.IDAS.Client.Contracts.Contracts.ReportData.IMaterialReportItem})">
             <summary>
             Sortiert und Gruppiert die Eingangsdaten und bereitet sie für den Sägelistendruck vor
             </summary>
@@ -318,7 +318,7 @@
             <param name="items">Items die aufbereitet werden sollen</param>
             <returns></returns>
         </member>
-        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ISaegeListeAufbereitenService.SortAndGroup(System.String,System.Collections.Generic.IEnumerable{Gandalan.IDAS.Client.Contracts.Contracts.ReportData.IMaterialReportDataListItem},System.String)">
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ISaegeListeAufbereitenService.SortAndGroup(System.String,System.Collections.Generic.IEnumerable{Gandalan.IDAS.Client.Contracts.Contracts.ReportData.IMaterialReportItem},System.String)">
             <summary>
             Sortiert und Gruppiert die Eingangsdaten und bereitet sie für den Sägelistendruck vor
             </summary>
@@ -440,6 +440,11 @@
         <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.UIServices.IFeedbackService.CollectUserFeedback">
             <summary>
             i.e. opens a dialog window, takes screenhots, emails them etc.
+            </summary>
+        </member>
+        <member name="E:Gandalan.IDAS.Client.Contracts.Flux.IFluxStore.DataChanged">
+            <summary>
+            Obsoleted - use AddPersistentEventHandler
             </summary>
         </member>
     </members>

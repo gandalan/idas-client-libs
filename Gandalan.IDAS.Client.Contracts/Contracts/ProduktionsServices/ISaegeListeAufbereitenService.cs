@@ -11,7 +11,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <param name="groupedProperty">Property, nachdem groupiert werden soll (Level 1)</param>
         /// <param name="items">Items die aufbereitet werden sollen</param>
         /// <returns></returns>
-        Task<IEnumerable<IMaterialReportData>> SortAndGroup(string groupedProperty, IEnumerable<IMaterialReportDataListItem> items);
+        Task<IEnumerable<IMaterialReportData>> SortAndGroup(string groupedProperty, IEnumerable<IMaterialReportItem> items);
         /// <summary>
         /// Sortiert und Gruppiert die Eingangsdaten und bereitet sie für den Sägelistendruck vor
         /// </summary>
@@ -19,6 +19,6 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <param name="items">Items die aufbereitet werden sollen</param>
         /// <param name="secondLevelGroup">Property, nachdem groupiert werden soll (Level 2)</param>
         /// <returns></returns>
-        Task<IEnumerable<IMaterialReportData>> SortAndGroup(string groupedProperty, IEnumerable<IMaterialReportDataListItem> items, string secondLevelGroup);
+        Task<IEnumerable<IMaterialReportData>> SortAndGroup(string groupedProperty, IEnumerable<IMaterialReportItem> items, string secondLevelGroup);
     }
 }
