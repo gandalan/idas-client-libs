@@ -16,6 +16,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public long BelegNummer { get; set; }
         public int BelegJahr { get; set; }
         public DateTime BelegDatum { get; set; }
+        public DateTime AenderungsDatum { get; set; }
         public BeleganschriftDTO BelegAdresse { get; set; }
         public BeleganschriftDTO VersandAdresse { get; set; }
         public bool VersandAdresseGleichBelegAdresse { get; set; }
@@ -47,6 +48,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             Historie = new ObservableCollection<BelegHistorieDTO>();
             PositionsObjekte = new ObservableCollection<BelegPositionDTO>();
             BelegDatum = DateTime.UtcNow;
+            AenderungsDatum = DateTime.UtcNow;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
