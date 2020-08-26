@@ -25,6 +25,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.BelegArt = beleg.BelegArt;
                 this.BelegNummer = beleg.BelegNummer;
                 this.BelegDatum = beleg.BelegDatum;
+                this.AenderungsDatum = beleg.AenderungsDatum;
                 this.BelegJahr = beleg.BelegJahr;
                 this.Schlusstext = beleg.Schlusstext;
                 this.Kommission = string.IsNullOrEmpty(vorgang.Kommission)?String.Empty : "Kommission: " + vorgang.Kommission;
@@ -99,6 +100,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string BelegArt { get; set; }
         public long BelegNummer { get; set; }
         public DateTime BelegDatum { get; set; }
+        public DateTime AenderungsDatum { get; set; }
         public int BelegJahr { get; set; }
         public string Schlusstext { get; set; }
         public string BelegTitelUeberschrift { get; set; }
