@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace Gandalan.IDAS.Client.Contracts.Contracts.Vorgaenge
+namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
 {
     public abstract class IBelegItemCommand : ICommand
     {
