@@ -48,10 +48,15 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// FarbeKuerzel (Neher-Kürzel oder Sonderfarbton)
         /// </summary>
         public string FarbKuerzel { get; set; }
+        public Guid FarbKuerzelGuid { get; set; }
         /// <summary>
         /// FarbeCode der Farbe
         /// </summary>
         public string FarbCode { get; set; }
+        public Guid FarbItemGuid { get; set; }
+
+        public string OberFlaeche { get; set; }
+        public Guid OberFlaecheGuid { get; set; }
 
         /// <summary>
         /// Kennzeichen für Zuschnittartikel 

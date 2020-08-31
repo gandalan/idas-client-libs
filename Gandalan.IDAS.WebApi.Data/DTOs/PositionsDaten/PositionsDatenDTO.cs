@@ -22,7 +22,12 @@ namespace Gandalan.IDAS.WebApi.DTO
         public float BmBreite { get; set; }
         public float BmHoehe { get; set; }
         public string FarbKuerzel { get; set; }
+        public Guid FarbKuerzelGuid { get; set; }
         public string FarbCode { get; set; }
+        public string FarbBezeichnung { get; set; }
+        public string Oberflaeche { get; set; }
+        public Guid OberflaecheGuid { get; set; }
+        public bool IstSonderFarbPosition { get; set; }
         public string Gewebe { get; set; }
     }
 }
