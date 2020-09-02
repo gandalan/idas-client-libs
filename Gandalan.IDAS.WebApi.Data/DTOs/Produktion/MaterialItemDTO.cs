@@ -27,6 +27,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public Guid BelegPositionGuid { get; set; }
         /// <summary>
+        /// Original-BelegPositionAVGuid
+        /// </summary>
+        public Guid BelegPositionAVGuid { get; set; }
+        /// <summary>
         /// Original-BelegsGuid
         /// </summary>
         public Guid BelegGuid { get; set; }
@@ -103,6 +107,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Skalenfarbcode, z.B. "RAL 9016"
         /// </summary>
         public string FarbCode { get; set; }
+        /// <summary>
+        /// Kennzeichen ob das MaterialItem Beschichtbar ist.
+        /// </summary>
+        public bool IstBeschichtbar { get; set; }
         /// <summary>
         /// Bezeichnung der Oberfläche, z.B. "matt"
         /// </summary>

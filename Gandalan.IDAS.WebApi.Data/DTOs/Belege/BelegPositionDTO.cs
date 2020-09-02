@@ -9,6 +9,7 @@ namespace Gandalan.IDAS.WebApi.DTO
     public class BelegPositionDTO : IDTOWithApplicationSpecificProperties
     {
         public Guid BelegPositionGuid { get; set; }
+        public Guid NachfolgeBelegPositionGuid { get; set; }
         public DateTime ErfassungsDatum { get; set; }        
 
         /// <summary>
@@ -31,6 +32,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstAktiv { get; set; }
         public bool IstFehlerhaft { get; set; }
         public bool IstFehlerhaftSFOhnePreis { get; set; }
+        public decimal KapazitaetsBedarf { get; set; }
         public decimal Menge { get; set; }
         public decimal Listenpreis { get; set; }
         public decimal Einzelpreis { get; set; }

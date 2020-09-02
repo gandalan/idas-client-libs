@@ -27,7 +27,22 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public Guid InstallationId { get; set; }
         [JsonIgnore]
         public string UserAgent { get; set; }
-        public string CMSUrl { get; internal set; }
+        /// <summary>
+        /// CMS für Variantenspez. Dokumente
+        /// </summary>
+        public string CMSUrl { get; set; }
+        /// <summary>
+        /// Latex-Reports 
+        /// </summary>
+        public string LatexReportUrl { get; set; }
+        /// <summary>
+        /// IBOS2-Varianten Produktionsberechnung 
+        /// </summary>
+        public string I2Url { get; set; }
+        /// <summary>
+        /// IBOS1-Varianten Produktionsberechnung 
+        /// </summary>
+        public string I1Url { get; set; }
 
         public WebApiSettings(Guid appToken, string env)
         {

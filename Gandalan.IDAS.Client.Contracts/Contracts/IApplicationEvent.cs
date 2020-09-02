@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts
 {
+
+    public interface IApplicationEventHandler
+    {
+        int Priority { get; set; }
+    }
     /// <summary>
     /// Register an event handler for a certain type of application event
     /// </summary>
     /// <typeparam name="TEvent">what kind of event do we want to be informed of</typeparam>
-    public interface IApplicationEventHandler<TEvent> where TEvent : IApplicationEvent 
-    {
+    public interface IApplicationEventHandler<TEvent> : IApplicationEventHandler where TEvent : IApplicationEvent
+    {        
         /// <summary>
         /// Handles a certain event that is dispatched to this instance
         /// </summary>

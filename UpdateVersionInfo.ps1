@@ -70,3 +70,13 @@ attrib $file -r
 # Search in the "GDL.IDAS.WebApi.Data.nuspec" file items that matches the version regex and replace them with the
 # correct version number
 $filecontent -replace $VersionReplaceRegex, $NewVersion | Out-File $file
+
+#GDL.IDAS.WebApi.Client.Wpf
+$VersionRegex = "\d+\.\d+.\d+\.\d+"
+$NewVersion = [regex]::matches($Env:Build_BuildNumber, $VersionRegex)
+$file = ".\Gandalan.IDAS.WebApi.Client.Wpf\GDL.IDAS.WebApi.Client.Wpf.nuspec" 
+$filecontent = Get-Content($file)
+attrib $file -r
+# Search in the "GDL.IDAS.WebApi.Client.Wpf.nuspec" file items that matches the version regex and replace them with the
+# correct version number
+$filecontent -replace $VersionReplaceRegex, $NewVersion | Out-File $file

@@ -13,10 +13,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid KatalogArtikelGuid { get; set; }
         public bool IsPassiv { get; set; }
         public bool IsInventurPflichtig { get; set; }
+        public bool IsLagerartikel { get; set; }
         public bool BestellMengeAufVERunden { get; set; }
         public string KundenArtikelNummer { get; set; }
         public IList<IndiFarbDatenDTO> FarbDaten { get; set; }
-
         public DateTime ChangedDate { get; set; }
     }
 

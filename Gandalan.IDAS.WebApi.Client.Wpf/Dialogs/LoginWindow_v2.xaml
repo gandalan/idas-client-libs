@@ -1,0 +1,96 @@
+﻿<Window x:Class="Gandalan.Controls.WPF.Dialogs.LoginWindow_v2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gandalan.Controls.WPF.Dialogs"
+        xmlns:controls="clr-namespace:Gandalan.IBOS3.Controls"
+        mc:Ignorable="d" 
+        Title="Neher Cloud - Anmeldung" Height="650" Width="500"  
+        WindowStartupLocation="CenterOwner" SizeToContent="Height" ResizeMode="NoResize" Topmost="True" KeyDown="Window_KeyDown">
+    <Window.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+            <controls:BoolInvertConverter x:Key="InvertBool" />
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal" Margin="40,30,40,40">
+            <Image Source="pack://application:,,,/GDL.IDAS.WebApi.Client.WPF;component/Assets/Neher/Logo.png" Height="70"/>
+            <Label FontSize="20" VerticalAlignment="Center" Padding="20,0,0,0">Neher Cloud - Anmeldung</Label>
+        </StackPanel>
+        <Grid Margin="0,0,0,20">
+            <ProgressBar IsIndeterminate="True" Margin="40,0" Panel.ZIndex="1" Visibility="{Binding LoginInProgress, Converter={StaticResource BoolToVis}}"/>
+            <TextBlock Text="{Binding StatusText}" FontWeight="Bold" Foreground="Red" TextWrapping="Wrap" Margin="40,0" Panel.ZIndex="2" Visibility="{Binding StatusTextvorhanden, Converter={StaticResource BoolToVis}}" MaxHeight="70px"/>
+        </Grid>
+        <!--<Label Content="{Binding StatusText}" Margin="40,0" FontWeight="Bold" Foreground="Red" ToolTip="{Binding StatusText}"></Label>-->
+        <StackPanel Visibility="{Binding ShowLoggedInEnvironments, Converter={StaticResource BoolToVis}}" Margin="40,0,40,0">
+            <Label>Benutzer auswählen:</Label>
+            <ItemsControl ItemsSource="{Binding LoggedInEnvironments}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Click="useAuthTokenButtonClick" Padding="15" Margin="0,4,0,0" Tag="{Binding .}" ToolTip="{Binding FriendlyName}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Icons/ic_person_black_18dp.png" Width="18" Height="18"></Image>
+                                <TextBlock Margin="15,0,0,0" Text="{Binding UserName}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+        <StackPanel Visibility="{Binding ShowLoginFields, Converter={StaticResource BoolToVis}}" Margin="40,0,40,40">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+
+                <Label Visibility="{Binding ShowServerSelection, Converter={StaticResource BoolToVis}}" Grid.Column="0" Grid.Row="1" Content="Environment:" VerticalAlignment="Center"></Label>
+                <DockPanel  Grid.Column="1" Grid.Row="1" Visibility="{Binding ShowServerSelection, Converter={StaticResource BoolToVis}}" >
+                    <CheckBox IsChecked="{Binding EnvAlsDefault, Mode=TwoWay}" DockPanel.Dock="Right" Content="Als Standard setzen" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="5,5,10,5" Padding="2"/>
+                    <ComboBox SelectedItem="{Binding ServerEnvironment, Mode=TwoWay}" ItemsSource="{Binding AlleEnvironments}" DisplayMemberPath="FriendlyName" IsSynchronizedWithCurrentItem="True" Margin="5" Padding="5"/>
+                </DockPanel>
+
+                <Label Grid.Column="0" Grid.Row="2" Content="Benutzername:" VerticalAlignment="Center" ></Label>
+                <TextBox Name="userNameTextBox" Grid.Column="1" Grid.Row="2" Text="{Binding UserName}" Margin="5" Padding="5"/>
+
+                <Label Grid.Column="0" Grid.Row="3" Content="Passwort:" VerticalAlignment="Center"></Label>
+                <PasswordBox x:Name="passwordBox" Grid.Column="1" Grid.Row="3" Margin="5" Padding="5"/>
+
+                <CheckBox x:Name="checkBoxAuthToken" IsChecked="{Binding SaveCredentials}" Grid.Column="1" Grid.Row="4" Content="Anmeldung merken" VerticalContentAlignment="Center" Margin="5,5,10,5" Padding="2"/>
+
+                <StackPanel Grid.Column="1" Grid.Row="5"  Orientation="Horizontal" Margin="0,10,0,0">
+                    <Button Content="Anmelden"  IsDefault="True" Click="anmeldenButtonClick"  Margin="5" Padding="5"/>
+                    <Button Content="Abbrechen" IsCancel="True" Click="abbrechenButton_Click"  Margin="5" Padding="5"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Grid.Row="6"  Orientation="Horizontal" Margin="0,0,0,0">
+                    <Button BorderThickness="0" Background="Transparent" Padding="0" Click="pwResetButton_Click" Margin="5">
+                        <TextBlock><Run TextDecorations="Underline" Foreground="Blue">Passwort vergessen</Run></TextBlock>
+                    </Button>
+                    <Button BorderThickness="0" Background="Transparent" Padding="0" Click="einrichtenButton_Click" Margin="5">
+                        <TextBlock><Run TextDecorations="Underline" Foreground="Blue">Produzent einrichten...</Run></TextBlock>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <Button Click="switchToLoginFields" Margin="40" Visibility="{Binding ShowLoggedInEnvironments, Converter={StaticResource BoolToVis}}" Padding="15">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Icons/ic_add_black_18dp.png" Width="18" Height="18"></Image>
+                <TextBlock VerticalAlignment="Center" Margin="15,0,0,0">Anderen Benutzer verwenden</TextBlock>
+            </StackPanel>
+        </Button>
+    </StackPanel>
+</Window>

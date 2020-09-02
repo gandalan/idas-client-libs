@@ -19,5 +19,17 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Text { get; set; }
         public string AngebotsText { get; set; }
         public DateTime ErfassungsDatum { get; set; }
+        public float BmBreite { get; set; }
+        public float BmHoehe { get; set; }
+        public string FarbKuerzel { get; set; }
+        public Guid FarbKuerzelGuid { get; set; }
+        public string FarbItem { get; set; }
+        public Guid FarbItemGuid { get; set; }
+        public string FarbCode { get; set; }
+        public string FarbBezeichnung { get; set; }
+        public string Oberflaeche { get; set; }
+        public Guid OberflaecheGuid { get; set; }
+        public bool IstSonderFarbPosition { get; set; }
+        public string Gewebe { get; set; }
     }
 }

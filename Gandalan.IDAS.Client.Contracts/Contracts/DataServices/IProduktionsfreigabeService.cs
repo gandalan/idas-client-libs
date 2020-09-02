@@ -8,8 +8,8 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
 {
     public interface IProduktionsfreigabeService
     {
-        Task<VorgangDTO> ProduktionsfreigabeAsync(ProduktionsfreigabeDTO dto);
+        Task<VorgangDTO> ProduktionsfreigabeAsync(BelegartWechselDTO dto);
 
-        VorgangDTO Produktionsfreigabe(ProduktionsfreigabeDTO dto);
+        VorgangDTO Produktionsfreigabe(BelegartWechselDTO dto);
     }
 }
