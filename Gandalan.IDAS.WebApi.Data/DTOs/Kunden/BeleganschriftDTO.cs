@@ -124,7 +124,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public string GetText()
         {
-            return $"{Firmenname} {Vorname} {Nachname}".Trim();
+            return AnzeigeName;
         }
 
         public override string ToString()
@@ -132,6 +132,18 @@ namespace Gandalan.IDAS.WebApi.DTO
             var text = string.IsNullOrEmpty(Firmenname) ? $"{Titel} {Vorname} {Nachname}".Trim() : Firmenname;
             var zusatz = !string.IsNullOrEmpty(Zusatz) ? $"{Zusatz}\r\n" : "";
             return $"{Anrede}\r\n{text}\r\n{zusatz}{Strasse} {Hausnummer}\r\n{Postleitzahl} {Ort}\r\n{Land}".Trim();
+        }
+
+        /// <summary>
+        /// Erzeugt einen Text aus den Namensfeldern für die Anzeige in 
+        /// Überschriften, Anschriftenfeldern usw. 
+        /// </summary>
+        public string AnzeigeName
+        {
+            get
+            {
+                return string.IsNullOrEmpty(Firmenname) ? $"{Anrede} {Titel} {Vorname} {Nachname}".Trim() : Firmenname;
+            }
         }
     }
 }
