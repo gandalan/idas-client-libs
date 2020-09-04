@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
 {
@@ -26,7 +27,6 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         bool IstAktiv { get; set; }
         bool IstAlternativ { get; set; }
 
-        void Load(BelegPositionDTO belegPositionDTO, VorgangDTO vorgangDTO, BelegDTO belegDTO, string pcode, string serie);
-        void SetStatus();
+        Task Load(BelegPositionDTO belegPositionDTO, VorgangDTO vorgangDTO, BelegDTO belegDTO);
     }
 }
