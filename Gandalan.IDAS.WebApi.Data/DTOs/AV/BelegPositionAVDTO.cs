@@ -37,7 +37,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 BelegPositionAVGuid = Guid.NewGuid();
         }
 
-        public BelegPositionAVDTO(BelegPositionDTO position, string kunde, string kommission = null)
+        public BelegPositionAVDTO(BelegPositionDTO position)
         {
             if (BelegPositionAVGuid.Equals(Guid.Empty))
                 BelegPositionAVGuid = Guid.NewGuid();
@@ -49,8 +49,6 @@ namespace Gandalan.IDAS.WebApi.DTO
             HatSonderwuensche = !string.IsNullOrEmpty(position.Besonderheiten);
             Variante = position.Variante;
             Position = position;
-            Kunde = kunde;
-            Kommission = string.IsNullOrEmpty(kommission) ? position.PositionsKommission : kommission;
         }
     }
 }
