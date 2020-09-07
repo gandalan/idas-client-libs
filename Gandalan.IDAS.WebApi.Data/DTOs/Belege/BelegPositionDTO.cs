@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.WebApi.DTO
     {
         public Guid BelegPositionGuid { get; set; }
         public Guid NachfolgeBelegPositionGuid { get; set; }
-        public DateTime ErfassungsDatum { get; set; }        
+        public DateTime ErfassungsDatum { get; set; }
 
         /// <summary>
         /// Die fortlaufende Nummer für jede Position innerhalb des Beleges.
@@ -27,7 +27,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Variante { get; set; }
         public Guid VarianteGuid { get; set; }
         public string Einbauort { get; set; }
-        public string PositionsKommission { get; set; }        
+        public string PositionsKommission { get; set; }
         public bool IstAlternativPosition { get; set; }
         public bool IstAktiv { get; set; }
         public bool IstFehlerhaft { get; set; }
@@ -52,11 +52,12 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string AngebotsText { get; set; }
         public DateTime? ProduktionsDatum { get; set; }
         public DateTime? LieferDatum { get; set; }
-        public DateTime? ProduktionsAuftragErstellt {get;set;}
+        public DateTime? ProduktionsAuftragErstellt { get; set; }
+        public Guid? GeplanteSerieGuid { get; set; }
 
         public BelegPositionDTO()
         {
-            Daten = new ObservableCollection<BelegPositionDatenDTO>();            
+            Daten = new ObservableCollection<BelegPositionDatenDTO>();
         }
     }
 }
