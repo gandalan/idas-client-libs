@@ -18,5 +18,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTO
         public string InternerName { get; set; }
         public string Standard { get; set; }
         public string ListenName { get; set; }
+        public Guid BelegPositionSonderwunschGuid { get; set; }
     }
 }
