@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.WebApi.Data.DTOs.SonderWuensche;
+﻿using Gandalan.IDAS.WebApi.Data.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
     public interface ISonderWuenscheService
     {
         Task<VarianteSonderWunschDTO[]> GetAllSonderWuenscheAsync();
-        Task<SonderWunschWerteListeDTO[]> GetAllSonderWuenscheWerteListenAsync();
+        Task<BelegPositionSonderwunschWerteListeDTO[]> GetAllSonderWuenscheWerteListenAsync();
         Task<VarianteSonderWunschDTO> GetAllSonderWuenscheFromVariante(string variantenName);
     }
 }
