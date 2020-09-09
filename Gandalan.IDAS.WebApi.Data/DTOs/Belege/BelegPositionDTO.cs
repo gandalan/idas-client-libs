@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Gandalan.IDAS.WebApi.Data.DTO;
 using Gandalan.IDAS.WebApi.Util;
 using PropertyChanged;
 
@@ -43,6 +44,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string MengenEinheit { get; set; }
         public string Text { get; set; }
         public virtual IList<BelegPositionDatenDTO> Daten { get; set; }
+        public virtual IList<BelegPositionSonderwunschDTO> Sonderwuensche { get; set; }
         public string Besonderheiten { get; set; }
         public bool IstBruttoGesamtpreis { get; set; }
         public bool IstBruttoEinzelpreis { get; set; }
