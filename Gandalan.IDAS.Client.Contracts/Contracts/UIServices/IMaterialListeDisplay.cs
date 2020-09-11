@@ -8,7 +8,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices
 {
     public interface IMaterialListeDisplay
     {
-        Task<bool> Execute(BelegPositionAVDTO dto);
-        Task<bool> Execute(List<BelegPositionAVDTO> dto);
+        Task<IList<MaterialItemDTO>> Execute(BelegPositionAVDTO dto);
+        Task<IList<MaterialItemDTO>> Execute(IList<BelegPositionAVDTO> dto);
     }
 }
