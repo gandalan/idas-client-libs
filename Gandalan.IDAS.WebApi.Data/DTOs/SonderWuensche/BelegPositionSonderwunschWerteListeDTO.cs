@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gandalan.IDAS.WebApi.Data.DTOs.SonderWuensche
+namespace Gandalan.IDAS.WebApi.Data.DTO
 {
-    public class SonderWunschWerteListeDTO
+    public class BelegPositionSonderwunschWerteListeDTO
     {
         public string Liste { get; set; }
         public string[] Werte { get; set; }

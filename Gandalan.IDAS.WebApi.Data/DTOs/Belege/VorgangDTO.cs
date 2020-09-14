@@ -70,6 +70,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
         public bool IstZustimmungErteilt { get; set; }
 
+        public Guid OriginalVorgangGuid { get; set; }
+        public Guid OriginalMandantGuid { get; set; }
+
         public VorgangDTO()
         {
             Belege = new ObservableCollection<BelegDTO>();

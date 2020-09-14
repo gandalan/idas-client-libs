@@ -664,6 +664,12 @@
             Intern
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.AnzeigeName">
+            <summary>
+            Erzeugt einen Text aus den Namensfeldern für die Anzeige in 
+            Überschriften, Anschriftenfeldern usw. 
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.KontaktGuid">
             <summary>
             Eindeutige GUID

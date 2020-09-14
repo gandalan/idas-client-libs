@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gandalan.IDAS.WebApi.Data.DTOs.SonderWuensche
+namespace Gandalan.IDAS.WebApi.Data.DTO
 {
     public class VarianteSonderWunschDTO
     {
         [JsonProperty("Variante")]
         public string Name { get; set; }
         public string KederZeigtNach { get; set; }
-        public SonderWunschEigenschaftDTO[] Eigenschaften { get; set; }
+        public BelegPositionSonderwunschDTO[] Eigenschaften { get; set; }
     }
 }
