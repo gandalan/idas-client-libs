@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.Jobs.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
 
@@ -13,7 +14,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
     public class DataPrintWebRoutinen : WebRoutinenBase
     {
-        public DataPrintWebRoutinen(WebApiSettings settings) : base(settings)
+        public DataPrintWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
 

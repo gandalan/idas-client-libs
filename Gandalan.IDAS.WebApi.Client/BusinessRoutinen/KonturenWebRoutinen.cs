@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
 
@@ -7,7 +8,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
     public class KonturenWebRoutinen : WebRoutinenBase
     {
-        public KonturenWebRoutinen(WebApiSettings settings) : base(settings)
+        public KonturenWebRoutinen(IWebApiConfig settings) : base(settings)
         {
             this.Settings.Url = this.Settings.Url.Replace("/api/", "/ModellDaten/");
         }

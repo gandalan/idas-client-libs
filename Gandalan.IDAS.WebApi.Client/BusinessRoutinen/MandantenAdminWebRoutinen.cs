@@ -4,12 +4,13 @@ using System.Diagnostics;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using System.Threading.Tasks;
 using System;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
     public class MandantenAdminWebRoutinen : WebRoutinenBase
     {
-        public MandantenAdminWebRoutinen(WebApiSettings settings) : base(settings)
+        public MandantenAdminWebRoutinen(IWebApiConfig settings) : base(settings)
         {            
         }
         

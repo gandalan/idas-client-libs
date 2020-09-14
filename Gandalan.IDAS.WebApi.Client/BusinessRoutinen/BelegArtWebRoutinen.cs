@@ -4,6 +4,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
 
@@ -11,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
     public class BelegArtWebRoutinen : WebRoutinenBase
     {
-        public BelegArtWebRoutinen(WebApiSettings settings) : base(settings)
+        public BelegArtWebRoutinen(IWebApiConfig settings) : base(settings)
         {
             //Settings.Url = Settings.Url.Replace("/api/", "/BelegArt/");
         }

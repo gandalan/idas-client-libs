@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Discovery;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
@@ -9,7 +10,7 @@ using Newtonsoft.Json;
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
     [ComVisible(true)]
-    public class WebApiSettings
+    public class WebApiSettings : IWebApiConfig
     {
         public string Url { get; set; }
         public string UserName { get; set; }
@@ -47,7 +48,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public WebApiSettings(Guid appToken, string env)
         {
             WebApiFileConfig.Initialize(appToken);
-            WebApiSettings settings = WebApiFileConfig.ByName(env);
+            IWebApiConfig settings = WebApiFileConfig.ByName(env);
             CopyToThis(settings);
         }
 
@@ -58,12 +59,12 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             WebApiFileConfig.Save(this);
         }
 
-        public List<WebApiSettings> GetAll()
+        public List<IWebApiConfig> GetAll()
         {
             return WebApiFileConfig.GetAll();
         }
 
-        public void CopyToThis(WebApiSettings settings)
+        public void CopyToThis(IWebApiConfig settings)
         {
             this.AppToken = settings.AppToken;
             this.AuthToken = settings.AuthToken;

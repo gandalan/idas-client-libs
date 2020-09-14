@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
 using Gandalan.IDAS.WebApi.DTO.API;
@@ -11,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
     public class AppWebRoutinen : WebRoutinenBase
     {
-        public AppWebRoutinen(WebApiSettings settings) : base(settings)
+        public AppWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
 using Gandalan.IDAS.WebApi.DTO.DTOs.Filter;
@@ -7,7 +8,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
     public class FilterWebRoutinen : WebRoutinenBase
     {
-        public FilterWebRoutinen(WebApiSettings settings) : base(settings)
+        public FilterWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
         public FilterItemDTO[] GetAll()

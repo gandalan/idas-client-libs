@@ -13,6 +13,7 @@ using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
 using Gandalan.IDAS.Web;
 using Newtonsoft.Json;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
@@ -20,7 +21,7 @@ namespace Gandalan.IDAS.WebApi.Client
     {
         #region  Felder
 
-        public WebApiSettings Settings;
+        public IWebApiConfig Settings;
 
         #endregion
 
@@ -36,7 +37,7 @@ namespace Gandalan.IDAS.WebApi.Client
 
         public delegate void ErrorOccuredEventHandler(object sender, ApiErrorArgs e);
 
-        public WebRoutinenBase(WebApiSettings settings)
+        public WebRoutinenBase(IWebApiConfig settings)
         {
             // Settings werden kopiert, damit die abgeleiteten Klassen ggf. eigene Settings ergänzen/
             // ändern können (vor allem z.B. Base-URL)

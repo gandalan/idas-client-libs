@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
 
@@ -9,7 +10,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
     public class AblageFachWebRoutinen : WebRoutinenBase
     {
-        public AblageFachWebRoutinen(WebApiSettings settings) : base(settings)
+        public AblageFachWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
 

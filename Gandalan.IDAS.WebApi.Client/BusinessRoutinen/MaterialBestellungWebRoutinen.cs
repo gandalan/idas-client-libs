@@ -4,12 +4,13 @@ using System.Diagnostics;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using System.Threading.Tasks;
 using System;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
     public class MaterialBestellungWebRoutinen : WebRoutinenBase
     {
-        public MaterialBestellungWebRoutinen(WebApiSettings settings) : base(settings)
+        public MaterialBestellungWebRoutinen(IWebApiConfig settings) : base(settings)
         {            
         }
 

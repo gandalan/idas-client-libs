@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
 
 namespace Gandalan.Controls.WPF.Dialogs
@@ -34,15 +35,15 @@ namespace Gandalan.Controls.WPF.Dialogs
         public string Passwort { get { return _passwort; } set { _passwort = value; SetOrClearMessage("Passwort", string.IsNullOrEmpty(_passwort), "Ungültiges Passwort"); } }
         public bool SaveCredentials { get; set; } = true;
 
-        public IEnumerable<WebApiSettings> AlleEnvironments { get; private set; }
-        public WebApiSettings ServerEnvironment { get; set; }
-        public IEnumerable<WebApiSettings> LoggedInEnvironments { get; set; }
+        public IEnumerable<IWebApiConfig> AlleEnvironments { get; private set; }
+        public IWebApiConfig ServerEnvironment { get; set; }
+        public IEnumerable<IWebApiConfig> LoggedInEnvironments { get; set; }
 
         public bool ShowLoggedInEnvironments { get; set; }
         public bool ShowLoginFields => !ShowLoggedInEnvironments;
         public string StatusText { get; set; }
         
-        public LoginWindowViewModel_v2(WebApiSettings webApiSettings)
+        public LoginWindowViewModel_v2(IWebApiConfig webApiSettings)
         {
             AlleEnvironments = webApiSettings.GetAll();
             LoggedInEnvironments = AlleEnvironments.Where(e => e.AuthToken != null && e.AuthToken.Token != Guid.Empty);
