@@ -401,6 +401,37 @@
             Interface für die Implementierung eines eigenen InfoScreen Moduls
             </summary>
         </member>
+        <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.DataServices.IMaterialBestellungService.Bestellung(System.Collections.Generic.IList{Gandalan.IDAS.WebApi.DTO.MaterialItemDTO},System.Boolean)">
+            <summary>
+            Bestellt eine Liste von MaterialItemDTOs. Dabei werden alle BeschaffungsServices berücksichtigt, die das Material 
+            beschaffen können. Für die Bestellung ausgewählt wird der mit der kürzesten Lieferzeit, oder bei ignoreLieferzeit = true, der mit
+            der höchsten Priorität laut Einstellungen. Wird für ein Material kein Service gefunden, so wird für das Material trotzdem ein Beschaffungsjob erstellt.
+            Dieser verbleibt jedoch im Status "Erstellt" und kann später erneut bestellt werden.
+            </summary>
+            <param name="materialListe">Zu bestellendes Material</param>
+            <param name="ignoreLieferzeit">Lieferzeit ignorieren</param>
+            <returns>Liste der erstellten MaterialBeschaffungsJobDTOs</returns>
+        </member>
+        <member name="P:Gandalan.IDAS.Client.Contracts.Contracts.IWebApiConfig.CMSUrl">
+            <summary>
+            CMS für Variantenspez. Dokumente
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Client.Contracts.Contracts.IWebApiConfig.LatexReportUrl">
+            <summary>
+            Latex-Reports 
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Client.Contracts.Contracts.IWebApiConfig.I2Url">
+            <summary>
+            IBOS2-Varianten Produktionsberechnung 
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Client.Contracts.Contracts.IWebApiConfig.I1Url">
+            <summary>
+            IBOS1-Varianten Produktionsberechnung 
+            </summary>
+        </member>
         <member name="T:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService">
             <summary>
             Abrufen von profilabhängigen Sägemaßkorrekturen
