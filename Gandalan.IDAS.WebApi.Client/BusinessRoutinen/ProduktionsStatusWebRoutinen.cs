@@ -14,7 +14,29 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public ProduktionsStatusWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
- 
+
+        public ProduktionsStatusDTO[] GetAll()
+        {
+            if (Login())
+            {
+                try
+                {
+                    return Get<ProduktionsStatusDTO[]>("ProduktionsStatus");
+                }
+                catch (WebException wex)
+                {
+                    if (wex.Response is HttpWebResponse)
+                    {
+                        HttpStatusCode code = (wex.Response as HttpWebResponse).StatusCode;
+                        if (code == HttpStatusCode.NotFound)
+                            return null;
+                    }
+                    throw;
+                }
+            }
+            return null;
+        }
+
         public ProduktionsStatusDTO GetProduktionsStatus(Guid guid)
         {
             if (Login())
@@ -32,7 +54,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                             return null;
                     }
                     throw;
-                }   
+                }
             }
             return null;
         }
@@ -44,6 +66,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 return Put<string>("ProduktionsStatus", status);
             }
             return "Not logged in";
+        }
+
+        public async Task<ProduktionsStatusDTO[]> GetAllProduktionsStatusAsync()
+        {
+            return await Task.Run(() => GetAll());
         }
 
         public async Task<ProduktionsStatusDTO> GetProduktionsStatusAsync(Guid guid)
