@@ -9,7 +9,7 @@ namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IPrintWorkflowData
     {
-        ReportDatenTypDTO ReportTyp { get; set; }
+        Guid ReportGuid { get; set; }
         object Daten { get; set; }
         bool IsList { get; set; }
         bool PrintSelectedData { get; set; }
@@ -18,7 +18,7 @@ namespace Gandalan.Client.Contracts.UIServices
 
     public class PrintWorkflowData : IPrintWorkflowData
     {
-        public ReportDatenTypDTO ReportTyp { get; set; }
+        public Guid ReportGuid { get; set; }
         public object Daten { get; set; }
         public bool IsList { get; set; }
         public bool PrintSelectedData { get; set; }
