@@ -9,7 +9,7 @@ namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IReportDesigner
     {
-        void EditReport(Guid guid);
+        void EditReport(Guid guid, string sampleData);
         bool canHandle(Type type);
     }
 }
