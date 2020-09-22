@@ -19,8 +19,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid SerieGuid { get; set; }
         public string SerieBezeichnung { get; set; }
 
-        public ProduktionsStatiDTO AktuellerStatus { get; set; }
+        public ProduktionsStatiWerteDTO AktuellerStatus { get; set; }
 
         public List<ProduktionsStatusHistorieDTO> Historie { get; set; } = new List<ProduktionsStatusHistorieDTO>();
+        public DateTime ChangedDate { get; set; }
     }
 }
