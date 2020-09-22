@@ -12,7 +12,7 @@ namespace Gandalan.Client.Contracts.UIServices
         ReportTypeDTO ReportType { get; set; }
     }
 
-    public interface IReportDesinger<T> : IReportDesigner where T : class
+    public interface IReportDesigner<T> : IReportDesigner where T : class
     {
         void EditReport(ReportDTO report, object sampleData);
     }
