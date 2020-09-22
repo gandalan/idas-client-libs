@@ -1,6 +1,6 @@
 ﻿namespace Gandalan.IDAS.WebApi.DTO
 {
-    public enum ProduktionsStatiDTO
+    public enum ProduktionsStatiWerteDTO
     {
         /// <summary>
         /// Undefinierter Zustand
