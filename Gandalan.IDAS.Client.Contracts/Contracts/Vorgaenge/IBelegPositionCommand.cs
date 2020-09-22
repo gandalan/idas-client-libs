@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
 
 namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
 {
-    public abstract class IBelegPositionCommand : ICommand
+    public abstract class IBelegPositionCommand : ICommand, INotifyPropertyChanged
     {
-        public abstract event EventHandler CanExecuteChanged;       
-        
+        public abstract event EventHandler CanExecuteChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public abstract bool CanExecute(IBelegPositionItem parameter);
         public bool CanExecute(object parameter)
         {
