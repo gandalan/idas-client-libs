@@ -23,7 +23,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 
                 this.BelegGuid = beleg.BelegGuid;
                 this.BelegArt = beleg.BelegArt;
-                this.BelegNummer = beleg.BelegNummer;
+                this.BelegNummer = vorgang.VorgangsNummer;
                 this.BelegDatum = beleg.BelegDatum;
                 this.AenderungsDatum = beleg.AenderungsDatum;
                 this.BelegJahr = beleg.BelegJahr;
