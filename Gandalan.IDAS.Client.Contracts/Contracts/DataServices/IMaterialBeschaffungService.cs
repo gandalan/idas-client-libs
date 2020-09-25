@@ -7,6 +7,7 @@ namespace Gandalan.Client.Contracts.DataServices
 {
     public interface IMaterialBeschaffungService
     {
+        Guid ServiceGuid { get; }
         string DisplayName { get; }
         int Order { get; set; }
 
