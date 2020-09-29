@@ -14,6 +14,7 @@ namespace Gandalan.IDAS.Jobs.Contracts
     public interface IBelegPrintJobData : IJobData
     {
         Guid BelegGuid { get; set; }
+        Guid VorgangGuid { get; set; }
         string FileFormat { get; set; }
         byte[] Result { get; set; }
         bool SavePDF { get; set; }
