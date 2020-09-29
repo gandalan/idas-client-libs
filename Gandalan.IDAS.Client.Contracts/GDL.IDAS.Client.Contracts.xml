@@ -131,7 +131,7 @@
             Handles dispatching of application specifc global events
             </summary>
         </member>
-        <member name="M:Gandalan.Client.Contracts.IApplicationEventDispatcher.Dispatch(Gandalan.Client.Contracts.IApplicationEvent)">
+        <member name="M:Gandalan.Client.Contracts.IApplicationEventDispatcher.DispatchAsync(Gandalan.Client.Contracts.IApplicationEvent)">
             <summary>
             Passes the event to all registered handlers for this event
             </summary>
@@ -477,6 +477,14 @@
             <summary>
             Obsoleted - use AddPersistentEventHandler
             </summary>
+        </member>
+        <member name="M:Gandalan.IDAS.Client.Contracts.Vorgaenge.IBelegPositionCommand.CanHandle(Gandalan.IDAS.Client.Contracts.Vorgaenge.IBelegPositionItem)">
+            <summary>
+            Returns wherever this command should be shown or not. 
+            Sometimes a position should not show some commands if they are not allowed
+            </summary>
+            <param name="parameter"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

@@ -820,6 +820,11 @@
             Internet-/Web-URL mit Protokoll-Präfix (https://...)
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Transportkosten">
+            <summary>
+            Transportkosten für den Kunden
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.ApplicationSpecificProperties">
             <summary>
             Intern
@@ -1505,57 +1510,57 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.Unbekannt">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiWerteDTO.Unbekannt">
             <summary>
             Undefinierter Zustand
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.FuerAVBereitgestellt">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiWerteDTO.FuerAVBereitgestellt">
             <summary>
             Bereitstellung der Position für AV erfolgte
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.AVBerechnet">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiWerteDTO.AVBerechnet">
             <summary>
             Materialberechnung erfolgt
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.AVAbgeschlossen">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiWerteDTO.AVAbgeschlossen">
             <summary>
             Korrekturen am Material durchgeführt
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.SerieZugeordnet">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiWerteDTO.SerieZugeordnet">
             <summary>
             In einer Serie eingeordnet
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.InProduktion">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiWerteDTO.InProduktion">
             <summary>
             Wird gerade produziert
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.ProduktionAbgeschlossen">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiWerteDTO.ProduktionAbgeschlossen">
             <summary>
             Produktion ist fertig
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.VersandVorbereitung">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiWerteDTO.VersandVorbereitung">
             <summary>
             Versand wird vorbereitet
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.VersandAbgeschlossen">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiWerteDTO.VersandAbgeschlossen">
             <summary>
             Versand durchgeführt
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.ProduktionUnterbrochen">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiWerteDTO.ProduktionUnterbrochen">
             <summary>
             Unterbrechung
             </summary>
         </member>
-        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiDTO.Fehler">
+        <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiWerteDTO.Fehler">
             <summary>
             Fehler
             </summary>
