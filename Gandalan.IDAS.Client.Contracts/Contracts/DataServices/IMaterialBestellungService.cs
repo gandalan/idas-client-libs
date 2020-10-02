@@ -19,10 +19,11 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
         /// <param name="ignoreLieferzeit">Lieferzeit ignorieren</param>
         /// <returns>Liste der erstellten MaterialBeschaffungsJobDTOs</returns>
         IList<MaterialBeschaffungsJobDTO> Bestellung(IList<MaterialItemDTO> materialListe, bool ignoreLieferzeit = false);
+        IList<MaterialBeschaffungsJobDTO> BestellungSimulieren(IList<MaterialItemDTO> materialListe, bool ignoreLieferzeit = false);
 
         MaterialBeschaffungsJobDTO Bestellung(MaterialItemDTO material, bool ignoreLieferzeit = false);
 
-        IList<MaterialBeschaffungsJobDTO> Bestellung(IList<MaterialBeschaffungsJobDTO> beschaffungsJobs, bool ignoreLieferzeit = false);
+        IList<MaterialBeschaffungsJobDTO> internalBestellung(IList<MaterialBeschaffungsJobDTO> beschaffungsJobs, bool ignoreLieferzeit = false, bool simulation = false);
 
         MaterialBeschaffungsJobDTO Bestellung(MaterialBeschaffungsJobDTO beschaffungsJob, bool ignoreLieferzeit = false);
     }
