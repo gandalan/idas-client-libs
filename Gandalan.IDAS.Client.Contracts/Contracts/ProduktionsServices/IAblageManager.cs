@@ -41,6 +41,12 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         void PutMaterial(AblageFachDTO ablageFach, List<MaterialbedarfDTO> materialListe);
 
         /// <summary>
+        /// Legt Material für eine Serie in mehren Ablagefächern ab
+        /// </summary>
+        /// <param name="serie">Sortiert alles Material in der Serie und weist allem Fächer zu</param>
+        void PutMaterial(SerieDTO serie);
+
+        /// <summary>
         /// Entfernt übergebene MaterialbedarfDTOs aus ihren Fächern
         /// </summary>
         /// <param name="materialListe">Liste von MaterialbedarfDTOs, die aus ihren Fächern entfernt werden sollen</param>

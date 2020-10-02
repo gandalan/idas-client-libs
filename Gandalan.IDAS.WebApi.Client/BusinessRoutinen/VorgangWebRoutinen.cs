@@ -171,5 +171,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             await Task.Run(() => { ArchiviereVorgang(vorgangGuid); });
         }
+
+        public async Task<VorgangStatusDTO> GetStatusAsync(Guid vorgangGuid)
+        {
+            return await Task<VorgangStatusDTO>.Run(() => { return GetStatus(vorgangGuid); });
+        }
+
+        public async Task<VorgangStatusDTO> SetStatusAsync(Guid vorgangGuid, string statusCode)
+        {
+            return await Task<VorgangStatusDTO>.Run(() => { return SetStatus(vorgangGuid, statusCode); });
+        }
     }
 }
