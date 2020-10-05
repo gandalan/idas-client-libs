@@ -173,6 +173,12 @@
             <param name="ablageFach">AblageFachDTO, in dem das Material abgelegt werden soll</param>
             <param name="materialListe">Liste von MaterialbedarfDTOs, die abgelegt werden sollen</param>
         </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.PutMaterial(Gandalan.IDAS.WebApi.DTO.SerieDTO)">
+            <summary>
+            Legt Material für eine Serie in mehren Ablagefächern ab
+            </summary>
+            <param name="serie">Sortiert alles Material in der Serie und weist allem Fächer zu</param>
+        </member>
         <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.RemoveMaterial(System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO})">
             <summary>
             Entfernt übergebene MaterialbedarfDTOs aus ihren Fächern
