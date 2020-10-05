@@ -59,5 +59,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
         public string Status { get; set; }
         public int AnzahlNachrichten { get; set; }
+
+        public bool HatFehlerhaftenBeleg { get; set; }
+        public bool PreisAufAnfrage { get; set; }
+        public string TextStatus { get; set; }
     }
 }
