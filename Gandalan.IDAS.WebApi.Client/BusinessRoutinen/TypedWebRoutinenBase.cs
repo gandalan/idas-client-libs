@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client;
 using Gandalan.IDAS.WebApi.Client.Settings;
 
@@ -12,7 +13,7 @@ namespace Gandalan.IDAS.WebApi.Client
         private Func<T, Guid> _getGuid;
         private string _endPoint;
 
-        public TypedWebRoutinenBase(string endPoint, Func<T, Guid> getGuid, WebApiSettings settings) : base(settings)
+        public TypedWebRoutinenBase(string endPoint, Func<T, Guid> getGuid, IWebApiConfig settings) : base(settings)
         {
             _endPoint = endPoint;
             _getGuid = getGuid;

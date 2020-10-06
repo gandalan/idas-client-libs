@@ -1,4 +1,5 @@
-﻿using Gandalan.IDAS.WebApi.Client;
+﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Client;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using System.ComponentModel;
 using System.Windows;
@@ -12,7 +13,7 @@ namespace Gandalan.Client.Common.Dialogs
     {
         public string Email { get; set; }
         public bool InProgress { get; set; } = false;
-        public WebApiSettings Settings { get; set; }
+        public IWebApiConfig Settings { get; set; }
 
         public PasswordResetDialog()
         {

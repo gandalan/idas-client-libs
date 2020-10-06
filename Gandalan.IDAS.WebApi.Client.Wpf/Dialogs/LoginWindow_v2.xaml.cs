@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Gandalan.Client.Common.Dialogs;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client;
 using Gandalan.IDAS.WebApi.Client.Settings;
 
@@ -22,7 +23,7 @@ namespace Gandalan.Controls.WPF.Dialogs
     /// </summary>
     public partial class LoginWindow_v2 : Window
     {
-        private WebApiSettings _webApiSettings;
+        private IWebApiConfig _webApiSettings;
         private LoginWindowViewModel_v2 _viewModel;
         private string _statusText;
 
@@ -31,7 +32,7 @@ namespace Gandalan.Controls.WPF.Dialogs
             InitializeComponent();
         }
 
-        public LoginWindow_v2(WebApiSettings webApiSettings)
+        public LoginWindow_v2(IWebApiConfig webApiSettings)
         {
             _webApiSettings = webApiSettings;
             _viewModel = new LoginWindowViewModel_v2(_webApiSettings);
@@ -49,7 +50,7 @@ namespace Gandalan.Controls.WPF.Dialogs
             DataContext = _viewModel;
         }
 
-        public WebApiSettings Show(WebApiSettings webApiSettings)
+        public IWebApiConfig Show(IWebApiConfig webApiSettings)
         {
             _webApiSettings = webApiSettings;
             _viewModel = new LoginWindowViewModel_v2();
@@ -68,7 +69,7 @@ namespace Gandalan.Controls.WPF.Dialogs
         {
             _viewModel.LoginInProgress = true;
             _viewModel.StatusText = null;
-            var settings = (sender as Button)?.Tag as WebApiSettings;
+            var settings = (sender as Button)?.Tag as IWebApiConfig;
             if (settings != null && await testConnection(settings))
             {
                 _webApiSettings.CopyToThis(settings);
@@ -107,7 +108,7 @@ namespace Gandalan.Controls.WPF.Dialogs
             _viewModel.StatusText= "Fehler: " + _statusText;
         }
 
-        private async Task<bool> testConnection(WebApiSettings settings)
+        private async Task<bool> testConnection(IWebApiConfig settings)
         {
             WebRoutinenBase wrb = new WebRoutinenBase(settings);
             try

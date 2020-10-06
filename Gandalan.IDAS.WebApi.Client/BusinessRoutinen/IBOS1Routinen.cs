@@ -4,13 +4,14 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
     public class IBOS1Routinen : WebRoutinenBase
     {
-        public IBOS1Routinen(WebApiSettings settings) : base(settings)
+        public IBOS1Routinen(IWebApiConfig settings) : base(settings)
         {
         }
 

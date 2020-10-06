@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
     public class PrintWebRoutinen : WebRoutinenBase
     {
-        public PrintWebRoutinen(WebApiSettings settings) : base(settings)
+        public PrintWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
 

@@ -21,7 +21,7 @@ namespace Gandalan.Client.Contracts
         /// Handles a certain event that is dispatched to this instance
         /// </summary>
         /// <param name="theEvent"></param>
-        void HandleEvent(TEvent theEvent);
+        Task HandleEvent(TEvent theEvent);
     }
 
     /// <summary>
@@ -40,6 +40,6 @@ namespace Gandalan.Client.Contracts
         /// Passes the event to all registered handlers for this event
         /// </summary>
         /// <param name="theEvent">event to dispatch</param>
-        void Dispatch(IApplicationEvent theEvent);
+        Task DispatchAsync(IApplicationEvent theEvent);
     }
 }

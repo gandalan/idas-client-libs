@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
 
@@ -7,7 +8,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
     public class VorgangWebRoutinen : WebRoutinenBase
     {
-        public VorgangWebRoutinen(WebApiSettings settings) : base(settings)
+        public VorgangWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
 
@@ -169,6 +170,16 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task ArchiviereVorgangAsync(Guid vorgangGuid)
         {
             await Task.Run(() => { ArchiviereVorgang(vorgangGuid); });
+        }
+
+        public async Task<VorgangStatusDTO> GetStatusAsync(Guid vorgangGuid)
+        {
+            return await Task<VorgangStatusDTO>.Run(() => { return GetStatus(vorgangGuid); });
+        }
+
+        public async Task<VorgangStatusDTO> SetStatusAsync(Guid vorgangGuid, string statusCode)
+        {
+            return await Task<VorgangStatusDTO>.Run(() => { return SetStatus(vorgangGuid, statusCode); });
         }
     }
 }

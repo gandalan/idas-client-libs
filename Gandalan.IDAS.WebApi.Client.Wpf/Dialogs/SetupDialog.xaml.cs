@@ -16,6 +16,7 @@ using Gandalan.IDAS.WebApi.Client.Settings;
 using System.ComponentModel;
 using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.Client;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 
 namespace Gandalan.Client.Common.Dialogs
 {
@@ -25,7 +26,7 @@ namespace Gandalan.Client.Common.Dialogs
     public partial class SetupDialog : Window, INotifyPropertyChanged
     {
         public string Email { get; set; }
-        public WebApiSettings Settings { get; set; }
+        public IWebApiConfig Settings { get; set; }
 
         public bool InProgress { get; set; } = false;
 

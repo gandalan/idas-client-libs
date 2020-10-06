@@ -131,7 +131,7 @@
             Handles dispatching of application specifc global events
             </summary>
         </member>
-        <member name="M:Gandalan.Client.Contracts.IApplicationEventDispatcher.Dispatch(Gandalan.Client.Contracts.IApplicationEvent)">
+        <member name="M:Gandalan.Client.Contracts.IApplicationEventDispatcher.DispatchAsync(Gandalan.Client.Contracts.IApplicationEvent)">
             <summary>
             Passes the event to all registered handlers for this event
             </summary>
@@ -172,6 +172,12 @@
             </summary>
             <param name="ablageFach">AblageFachDTO, in dem das Material abgelegt werden soll</param>
             <param name="materialListe">Liste von MaterialbedarfDTOs, die abgelegt werden sollen</param>
+        </member>
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.PutMaterial(Gandalan.IDAS.WebApi.DTO.SerieDTO)">
+            <summary>
+            Legt Material für eine Serie in mehren Ablagefächern ab
+            </summary>
+            <param name="serie">Sortiert alles Material in der Serie und weist allem Fächer zu</param>
         </member>
         <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.RemoveMaterial(System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO})">
             <summary>
@@ -401,6 +407,37 @@
             Interface für die Implementierung eines eigenen InfoScreen Moduls
             </summary>
         </member>
+        <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.DataServices.IMaterialBestellungService.Bestellung(System.Collections.Generic.IList{Gandalan.IDAS.WebApi.DTO.MaterialItemDTO},System.Boolean)">
+            <summary>
+            Bestellt eine Liste von MaterialItemDTOs. Dabei werden alle BeschaffungsServices berücksichtigt, die das Material 
+            beschaffen können. Für die Bestellung ausgewählt wird der mit der kürzesten Lieferzeit, oder bei ignoreLieferzeit = true, der mit
+            der höchsten Priorität laut Einstellungen. Wird für ein Material kein Service gefunden, so wird für das Material trotzdem ein Beschaffungsjob erstellt.
+            Dieser verbleibt jedoch im Status "Erstellt" und kann später erneut bestellt werden.
+            </summary>
+            <param name="materialListe">Zu bestellendes Material</param>
+            <param name="ignoreLieferzeit">Lieferzeit ignorieren</param>
+            <returns>Liste der erstellten MaterialBeschaffungsJobDTOs</returns>
+        </member>
+        <member name="P:Gandalan.IDAS.Client.Contracts.Contracts.IWebApiConfig.CMSUrl">
+            <summary>
+            CMS für Variantenspez. Dokumente
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Client.Contracts.Contracts.IWebApiConfig.LatexReportUrl">
+            <summary>
+            Latex-Reports 
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Client.Contracts.Contracts.IWebApiConfig.I2Url">
+            <summary>
+            IBOS2-Varianten Produktionsberechnung 
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Client.Contracts.Contracts.IWebApiConfig.I1Url">
+            <summary>
+            IBOS1-Varianten Produktionsberechnung 
+            </summary>
+        </member>
         <member name="T:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService">
             <summary>
             Abrufen von profilabhängigen Sägemaßkorrekturen
@@ -446,6 +483,14 @@
             <summary>
             Obsoleted - use AddPersistentEventHandler
             </summary>
+        </member>
+        <member name="M:Gandalan.IDAS.Client.Contracts.Vorgaenge.IBelegPositionCommand.CanHandle(Gandalan.IDAS.Client.Contracts.Vorgaenge.IBelegPositionItem)">
+            <summary>
+            Returns wherever this command should be shown or not. 
+            Sometimes a position should not show some commands if they are not allowed
+            </summary>
+            <param name="parameter"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

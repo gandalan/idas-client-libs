@@ -1,4 +1,5 @@
-﻿using Gandalan.IDAS.WebApi.Client.Settings;
+﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
     public class ProduktionsfreigabeWebRoutinen : WebRoutinenBase
     {
-        public ProduktionsfreigabeWebRoutinen(WebApiSettings settings) : base(settings)
+        public ProduktionsfreigabeWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
 

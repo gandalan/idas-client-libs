@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
 {
@@ -19,6 +20,9 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
         string FarbCode { get; set; }
         string FarbBezeichnung { get; set; }
         string FarbKuerzel { get; set; }
+        Guid VorgangGuid { get; set; }
+        Guid BelegPositionGuid { get; set; }
+        Guid BelegPositionAVGuid { get; set; }
     }
 
     public class MaterialReportItem : IMaterialReportItem
@@ -38,5 +42,8 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
         public string FarbCode { get; set; }
         public string FarbBezeichnung { get; set; }
         public string FarbKuerzel { get; set; }
+        public Guid VorgangGuid { get; set; }
+        public Guid BelegPositionGuid { get; set; }
+        public Guid BelegPositionAVGuid { get; set; }
     }
 }

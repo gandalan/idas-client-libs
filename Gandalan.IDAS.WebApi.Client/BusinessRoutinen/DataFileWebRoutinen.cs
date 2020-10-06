@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
 
@@ -11,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     /// </summary>
     public class DataFileWebRoutinen : WebRoutinenBase
     {
-        public DataFileWebRoutinen(WebApiSettings settings) : base(settings)
+        public DataFileWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
 

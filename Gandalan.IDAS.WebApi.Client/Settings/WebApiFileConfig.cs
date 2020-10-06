@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
 
@@ -10,12 +11,12 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
     {
         private static readonly string[] _environments = new[] {"dev", "staging", "produktiv" };
         private static string _settingsPath;
-        private static Dictionary<string, WebApiSettings> _settings;
+        private static Dictionary<string, IWebApiConfig> _settings;
         private static string _appTokenString;
 
         public static void Initialize(Guid appToken)
         {
-            _settings = new Dictionary<string, WebApiSettings>(StringComparer.OrdinalIgnoreCase);
+            _settings = new Dictionary<string, IWebApiConfig>(StringComparer.OrdinalIgnoreCase);
             _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
             _appTokenString = appToken.ToString().Trim('{', '}');
 
@@ -23,7 +24,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             setupLocalEnvironment(appToken);
         }
         
-        public static WebApiSettings ByName(string name)
+        public static IWebApiConfig ByName(string name)
         {
             if (_settings.ContainsKey(name))
             {
@@ -36,12 +37,12 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         {
             try
             {
-                WebApiSettings localEnvironment = null;
+                IWebApiConfig localEnvironment = null;
                 var localSettingsFile = Path.Combine(_settingsPath, "Local", "local.json");
 
                 if (File.Exists(localSettingsFile))
                 {
-                    localEnvironment = JsonConvert.DeserializeObject<WebApiSettings>(File.ReadAllText(localSettingsFile));
+                    localEnvironment = JsonConvert.DeserializeObject<IWebApiConfig>(File.ReadAllText(localSettingsFile));
                     localEnvironment.AppToken = appToken;
                 }
 
@@ -66,7 +67,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 try
                 {
                     var response = hub.GetEndpoints(env: env);
-                    WebApiSettings environment = null;
+                    IWebApiConfig environment = null;
                     if (response != null)
                     {
                         environment = new WebApiSettings
@@ -92,7 +93,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             }
         }
 
-        private static void internalLoadSavedAuthToken(string env, WebApiSettings environment)
+        private static void internalLoadSavedAuthToken(string env, IWebApiConfig environment)
         {
             var savedAuthToken = internalLoadSavedAuthToken(env);
             if (savedAuthToken != null)
@@ -123,12 +124,12 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             return null;
         }
 
-        internal static List<WebApiSettings> GetAll()
+        internal static List<IWebApiConfig> GetAll()
         {
-            return new List<WebApiSettings>(_settings.Values);
+            return new List<IWebApiConfig>(_settings.Values);
         }
 
-        internal static void Save(WebApiSettings settings)
+        internal static void Save(IWebApiConfig settings)
         {
             if (settings == null) 
                 return;

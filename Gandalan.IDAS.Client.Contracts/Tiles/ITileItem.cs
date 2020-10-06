@@ -12,7 +12,8 @@ namespace Gandalan.Client.Contracts.Tiles
 		object Control { get; set; }
         string Group { get; set; }
         Color StateColor { get; set; }
+		int Order { get; set; }
 
-        Task Load();
+		Task Load();
     }
 }
