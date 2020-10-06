@@ -82,5 +82,12 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <param name="targetFach">Ablagefach in das das Material verschoben werden soll</param>
         void MoveMaterial(AblageFachDTO sourceFach, AblageFachDTO targetFach);
 
+        /// <summary>
+        /// Liefert die Fachbezeichnung für ein MaterialbedarfDTO
+        /// </summary>
+        /// <param name="material"></param>
+        /// <returns></returns>
+        string GetFachBezeichnung(MaterialbedarfDTO material);
+
     }
 }
