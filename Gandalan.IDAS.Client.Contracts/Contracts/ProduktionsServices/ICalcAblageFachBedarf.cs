@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Contracts.Contracts.ProduktionsServices
+namespace Gandalan.Client.Contracts.ProduktionsServices
 {
     public interface ICalcAblageFachBedarf
     {        
