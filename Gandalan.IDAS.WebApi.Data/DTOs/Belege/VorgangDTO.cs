@@ -63,6 +63,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid KundeGuid { get; set; }
         
         public string AktuellerStatus { get; set; }
+        public string TextStatus { get; set; }
         public bool IstTestbeleg { get; set; }
         public string WaehrungsSymbol { get; set; }
         public decimal WaehrungsFaktor { get; set; }
