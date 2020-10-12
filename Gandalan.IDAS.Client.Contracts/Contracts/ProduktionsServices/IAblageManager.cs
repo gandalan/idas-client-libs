@@ -20,10 +20,10 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// Ruft ein freies Ablagefach am übergebenen Standort ab,
         /// das den/die übergebenen Materialtypen aufnehmen kann.
         /// </summary>
-        /// <param name="standort">Standort der Ablage</param>
         /// <param name="material">Material, das abgelegt werden soll</param>
+        /// <param name="standort">Standort der Ablage</param>
         /// <returns>AblageFachDTO</returns>
-        AblageFachDTO GetEmptyAblageFach(string standort, MaterialbedarfDTO material);
+        AblageFachDTO GetEmptyAblageFach(MaterialbedarfDTO material, string standort = "Werkstatt");
 
         /// <summary>
         /// Sucht das Ablagefach für ein übergebenes MaterialbedarfDTO. Liefert ein Ablagefach zurück, sofern
@@ -34,17 +34,18 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         AblageFachDTO SearchAblageFach(MaterialbedarfDTO material);
 
         /// <summary>
-        /// Legt Material in einem Ablagefach ab
+        /// Legt eine Materialliste in mehreren Ablagefächern ab
         /// </summary>
-        /// <param name="ablageFach">AblageFachDTO, in dem das Material abgelegt werden soll</param>
         /// <param name="materialListe">Liste von MaterialbedarfDTOs, die abgelegt werden sollen</param>
-        void PutMaterial(AblageFachDTO ablageFach, List<MaterialbedarfDTO> materialListe);
+        /// <param name="standort">Standort der Ablagen, die berücksichtigt werden</param>
+        void PutMaterial(List<MaterialbedarfDTO> materialListe, string standort = "Werkstatt");
 
         /// <summary>
-        /// Legt Material für eine Serie in mehren Ablagefächern ab
+        /// Legt Material für eine Serie in mehreren Ablagefächern ab
         /// </summary>
         /// <param name="serie">Sortiert alles Material in der Serie und weist allem Fächer zu</param>
-        void PutMaterial(SerieDTO serie);
+        /// <param name="standort">Standort der Ablagen, die berücksichtigt werden</param>
+        void PutMaterial(SerieDTO serie, string standort = "Werkstatt");
 
         /// <summary>
         /// Entfernt übergebene MaterialbedarfDTOs aus ihren Fächern
@@ -56,10 +57,10 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <summary>
         /// Kombination aus GetEmptyAblageFach und SearchAblageFach.
         /// </summary>
-        /// <param name="standort">Standort der Ablage</param>
         /// <param name="material"></param>
+        /// <param name="standort">Standort der Ablage</param>
         /// <returns>Material, das abgelegt werden soll</returns>
-        AblageFachDTO GetCurrentOrNewAblageFach(string standort, MaterialbedarfDTO material);
+        AblageFachDTO GetCurrentOrNewAblageFach(MaterialbedarfDTO material, string standort = "Werkstatt");
 
         /// <summary>
         /// Liefert alle registrierten Ablagen zu einem Standort
