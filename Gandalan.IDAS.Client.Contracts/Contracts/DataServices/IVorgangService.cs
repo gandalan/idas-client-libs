@@ -15,7 +15,7 @@ namespace Gandalan.Client.Contracts.DataServices
         Task<VorgangDTO> SaveAsync(VorgangDTO vorgang);
         Task<VorgangDTO> LoadVorgangAsync(Guid guid);
         Task ArchiveVorgang(Guid vorgangGuid);
-        Task ArchiveVorgangListe(List<Guid> vorgangGuidList);
+        Task ArchiveVorgangList(List<Guid> vorgangGuidList);
 
         Task<VorgangListItemDTO[]> LoadVorgaengeForKundeAsync(Guid kundeGuid);
     }
