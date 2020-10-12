@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -15,7 +16,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         {
             get
             {
-                return MaterialBedarfGuids != null ? MaterialBedarfGuids.Length > 0 : false;
+                return BelegPositionAVGuid != Guid.Empty;
             }
         }
 
@@ -24,12 +25,17 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// GUIDs der ProduktGrupptenDTOs, die im Ablagefach abgelegt werden können
         /// </summary>
-        public Guid[] ProduktGruppenGuids { get; set; }
+        public IList<Guid> ProduktGruppenGuids { get; set; } = new List<Guid>();
 
         /// <summary>
         /// GUIDs der aktuell im Ablagefach abgelegten MaterialbedarfDTOs
         /// </summary>
-        public Guid[] MaterialBedarfGuids { get; set; }
+        public IList<Guid> MaterialBedarfGuids { get; set; } = new List<Guid>();
+
+        /// <summary>
+        /// Guid der BelegPositionAV -> Ist diese Guid schon gesetzt, aber noch kein Material zugeordnet, dann ist das Fach für die Position reserviert
+        /// </summary>
+        public Guid BelegPositionAVGuid { get; set; }
 
     }
 }
