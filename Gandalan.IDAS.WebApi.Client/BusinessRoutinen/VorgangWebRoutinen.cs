@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
@@ -38,7 +39,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return null;
         }
-        
+
         public VorgangListItemDTO[] LadeVorgangsListe(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
         {
             if (Login())
@@ -112,6 +113,14 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
         }
 
+        public void ArchiviereVorgangList(List<Guid> vorgangGuidList)
+        {
+            if (Login())
+            {
+                Post("Archivierung/", vorgangGuidList);
+            }
+        }
+
         public void AendereBelegArt(Guid belegGuid, string neueBelegArt)
         {
             if (Login())
@@ -138,7 +147,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
         {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(jahr, status, changedSince, art, includeArchive, includeOthersData, search);});
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(jahr, status, changedSince, art, includeArchive, includeOthersData, search); });
         }
 
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(Guid kundeGuid)
@@ -166,10 +175,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             await Task.Run(() => { AendereBelegArt(belegGuid, neueBelegArt); });
         }
-        
+
         public async Task ArchiviereVorgangAsync(Guid vorgangGuid)
         {
             await Task.Run(() => { ArchiviereVorgang(vorgangGuid); });
+        }
+
+        public async Task ArchiviereVorgangListAsync(List<Guid> vorgangGuidList)
+        {
+            await Task.Run(() => { ArchiviereVorgangList(vorgangGuidList); });
         }
 
         public async Task<VorgangStatusDTO> GetStatusAsync(Guid vorgangGuid)
