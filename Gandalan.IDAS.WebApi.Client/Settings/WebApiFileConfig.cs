@@ -42,7 +42,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 
                 if (File.Exists(localSettingsFile))
                 {
-                    localEnvironment = JsonConvert.DeserializeObject<IWebApiConfig>(File.ReadAllText(localSettingsFile));
+                    localEnvironment = JsonConvert.DeserializeObject<WebApiSettings>(File.ReadAllText(localSettingsFile));
                     localEnvironment.AppToken = appToken;
                 }
 
