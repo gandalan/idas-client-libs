@@ -16,6 +16,8 @@ namespace Gandalan.IDAS.WebApi.DTO.DTOs.Reports
         Kunden = 16,
         Laufzettel = 32,
         Materialliste = 64,
-        Saegeliste = 128
+        Saegeliste = 128,
+        Bearbeitungen = 256, 
+        Packliste = 512
     }
 }

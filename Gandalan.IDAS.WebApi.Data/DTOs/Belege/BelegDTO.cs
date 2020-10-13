@@ -56,8 +56,12 @@ namespace Gandalan.IDAS.WebApi.DTO
         public void SetupObjekte(VorgangDTO vorgang)
         {
             PositionsObjekte = new ObservableCollection<BelegPositionDTO>();
-            Positionen.ForEach(p => this.PositionsObjekte.Add(vorgang.Positionen.Single(
-                pos => pos.BelegPositionGuid == p)));            
+            Positionen.ForEach(p =>
+            {
+                var pos = vorgang.Positionen.FirstOrDefault(pp => pp.BelegPositionGuid == p);
+                if (pos != null)
+                    this.PositionsObjekte.Add(pos);
+            });
         }
 
         
