@@ -8,6 +8,9 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
 {
     public class SerienPacklisteGruppeDataDTO
     {
+        public string Kunde { get; set; }
+        public string Ort { get; set; }
+        public string Kommission { get; set; }
         public string VorgangsNummer { get; set; }
         public string PositionsNummer { get; set; }
         public string Einbauort { get; set; }

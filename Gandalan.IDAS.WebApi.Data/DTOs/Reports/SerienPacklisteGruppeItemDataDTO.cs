@@ -7,10 +7,7 @@ using System.Threading.Tasks;
 namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
 {
     public class SerienPacklisteGruppeItemDataDTO
-    {
-        public string Kunde { get; set; }
-        public string Ort { get; set; }
-        public string Kommission { get; set; }
+    {        
         public int Anzahl { get; set; }
         public string Katalognummer { get; set; }
         public string Bezeichnung { get; set; }
