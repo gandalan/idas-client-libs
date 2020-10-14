@@ -26,6 +26,9 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
         public string PositionsNummer { get; set; }
         public string GemeinsameEtikettenNummer { get; set; }
         public float ProfilMass { get; set; }
+        public string ZuschnittWinkel { get; set; }
+        public string FachNummer { get; set; }
+        public string InternerName { get; set; }
 
     }
 }
