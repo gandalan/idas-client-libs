@@ -1,4 +1,5 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
+﻿using Gandalan.IDAS.WebApi.Data.DTOs.Reports;
+using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <param name="material"></param>
         /// <returns>Modellabhängige Daten zur Übermittlung an die Maschine</returns>
         string GenerateContent(IList<MaterialbedarfDTO> material);
+
+        string GenerateContent(SerienSaegelisteDataDTO saegeDaten);
     }
 }
