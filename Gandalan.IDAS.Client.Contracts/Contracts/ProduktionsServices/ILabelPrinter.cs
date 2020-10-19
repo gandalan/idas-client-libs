@@ -1,5 +1,6 @@
 ﻿
 
+using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 
@@ -33,7 +34,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// Wird aufgerufen, wenn Einzeldruck = true
         /// </summary>
         /// <param name="data">Datenobjekt für einzelnes Etikett</param>
-        void Print(object data);
+        void Print(EtikettDTO data);
 
         /// <summary>
         /// Druckt die angegebenen Daten auf dem Gerät aus.
@@ -41,7 +42,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// Wird aufgerufen, wenn Einzeldruck = false
         /// </summary>
         /// <param name="data">Liste mit Datenobjekten für zu druckende Etiketten</param>
-        void Print(IEnumerable<object> data);
+        void Print(IEnumerable<EtikettDTO> data);
 
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// </summary>
         /// <param name="data"></param>
         /// <param name="template">Druck Template (muss zum ausgewählten Drucker passen)</param>
-        void PrintCustom(object data, object template);
+        void PrintCustom(EtikettDTO data, object template);
 
         /// <summary>
         /// Liefert das SettingsControl für den Drucker zurück.
