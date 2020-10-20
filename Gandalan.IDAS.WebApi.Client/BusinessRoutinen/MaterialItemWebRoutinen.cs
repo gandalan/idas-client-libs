@@ -49,6 +49,19 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return "Not logged in";
         }
 
+        /// <summary>
+        /// Liefert alle MaterialItems (optional alle zu einem PCode)
+        /// </summary>
+        /// <returns>Liste von MaterialItemDTO</returns>  
+        public MaterialItemDTO[] GetAllMaterialItemBulk(string status = null)
+        {
+            if (Login())
+            {
+                return Get<MaterialItemDTO[]>($"MaterialItemBulk/?status={status}");
+            }
+            return null;
+        }
+
         public string SaveMaterialItemBulk(List<MaterialItemDTO> item)
         {
             if (Login())
@@ -87,6 +100,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<string> SaveMaterialItemAsync(MaterialItemDTO item)
         {
             return await Task.Run(() => SaveMaterialItem(item));
+        }
+
+        public async Task<MaterialItemDTO[]> GetAllMaterialItemBulkAsync(string status = null)
+        {
+            return await Task.Run(() => GetAllMaterialItemBulk(status));
         }
         public async Task<string> SaveMaterialItemBulkAsync(List<MaterialItemDTO> item)
         {

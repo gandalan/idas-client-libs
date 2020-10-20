@@ -40,6 +40,20 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+
+        /// <summary>
+        /// Liefert alle MaterialItems (optional alle zu einem PCode)
+        /// </summary>
+        /// <returns>Liste von MaterialItemDTO</returns>  
+        public MaterialBeschaffungsJobDTO[] GetAllMaterialBeschaffungsJobBulk(string status = null)
+        {
+            if (Login())
+            {
+                return Get<MaterialBeschaffungsJobDTO[]>($"MaterialBeschaffungsJobBulk/?status={status}");
+            }
+            return null;
+        }
+
         public string UpdateMaterialBeschaffungsJob(MaterialBeschaffungsJobDTO item)
         {
             if (Login())
@@ -107,6 +121,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<MaterialBeschaffungsJobDTO[]> GetAllMaterialBeschaffungsJobAsync(string pcode = null)
         {
             return await Task.Run(() => GetAllMaterialBeschaffungsJob(pcode));
+        }
+
+        public async Task<MaterialBeschaffungsJobDTO[]> GetAllMaterialBeschaffungsJobBulkAsync(string status = null)
+        {
+            return await Task.Run(() => GetAllMaterialBeschaffungsJobBulk(status));
         }
         public async Task<MaterialBeschaffungsJobDTO[]> GetMaterialBeschaffungsJobAsync(Guid guid)
         {
