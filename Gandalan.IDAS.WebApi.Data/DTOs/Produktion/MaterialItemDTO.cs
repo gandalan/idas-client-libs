@@ -51,6 +51,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public DateTime Erstellt { get; set; }
         /// <summary>
+        /// Vorgesehener Produktionsstart
+        /// </summary>
+        public DateTime? ProduktionsDatum { get; set; }
+        /// <summary>
         /// Anwender, der den Job erstellt hat
         /// </summary>
         public string Ersteller { get; set; }

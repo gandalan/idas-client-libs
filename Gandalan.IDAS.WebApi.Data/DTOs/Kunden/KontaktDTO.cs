@@ -144,6 +144,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public decimal? Transportkosten { get; set; }
         /// <summary>
+        /// Transportkosten für den Kunden
+        /// </summary>
+        public bool AbweichendeTransportkosten { get; set; }
+        /// <summary>
         /// Intern
         /// </summary>
         public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
