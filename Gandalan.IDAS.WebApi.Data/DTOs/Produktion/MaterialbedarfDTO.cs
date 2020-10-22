@@ -91,5 +91,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstBeschichtbar { get; set; }
         public KatalogArtikelArt KatalogArtikelArt { get; set; }
         public MaterialbedarfStatiDTO AktuellerStatus { get; set; }
+        /// <summary>
+        /// Kennzeichen, ob das Profil gedreht gesägt wird (z.B. bei PT2/46)
+        /// </summary>
+        public bool ProfilGedrehtSaegen { get; set; }
     }
 }
