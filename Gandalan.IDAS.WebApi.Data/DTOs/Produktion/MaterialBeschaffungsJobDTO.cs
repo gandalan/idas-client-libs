@@ -134,5 +134,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Historie des Jobs
         /// </summary>
         public List<MaterialBeschaffungsJobHistorieDTO> Historie { get; set; } = new List<MaterialBeschaffungsJobHistorieDTO>();
+        /// <summary>
+        /// Kennzeichen, ob das Profil gedreht gesägt wird (z.B. bei PT2/46)
+        /// </summary>
+        public bool ProfilGedrehtSaegen { get; set; }
     }
 }
