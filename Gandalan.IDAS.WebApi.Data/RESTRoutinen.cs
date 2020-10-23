@@ -2,6 +2,7 @@
 using System.Net;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Web
 {
@@ -75,12 +76,44 @@ namespace Gandalan.IDAS.Web
             #endregion
         }
 
+        public async Task<T> GetAsync<T>(string url, JsonSerializerSettings settings = null)
+        {
+            WebClient client = createWebClient();
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(await GetAsync(url), settings);
+            }
+            catch
+            #region Code
+            {
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+            #endregion
+        }
+
         public string Get(string url)
         {
             WebClient client = createWebClient();
             try
             {
                 return client.DownloadString(url);
+            }
+            catch
+            #region Code
+            {
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+            #endregion
+        }
+
+        public async Task<string> GetAsync(string url)
+        {
+            WebClient client = createWebClient();
+            try
+            {
+                return await client.DownloadStringTaskAsync(url);
             }
             catch
             #region Code
@@ -106,6 +139,22 @@ namespace Gandalan.IDAS.Web
             }
             #endregion
         }
+
+        public async Task<byte[]> GetDataAsync(string url)
+        {
+            WebClient client = createWebClient();
+            try
+            {
+                return await client.DownloadDataTaskAsync(url);
+            }
+            catch
+            #region Code
+            {
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+            #endregion
+        }
         /// <summary>
         /// Sendet ein Objekt per HTTP POST an die angegebene URL, i.d.R. um es zu speichern 
         /// </summary>
@@ -117,6 +166,11 @@ namespace Gandalan.IDAS.Web
         public T Post<T>(string url, object data, JsonSerializerSettings settings = null)
         {
             return JsonConvert.DeserializeObject<T>(Post(url, data, settings), settings);
+        }
+
+        public async Task<T> PostAsync<T>(string url, object data, JsonSerializerSettings settings = null)
+        {
+            return JsonConvert.DeserializeObject<T>(await PostAsync(url, data, settings), settings);
         }
 
         public string Post(string url, object data, JsonSerializerSettings settings = null)
@@ -134,12 +188,45 @@ namespace Gandalan.IDAS.Web
             }
         }
 
+        public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null)
+        {
+            System.Net.WebClient client = createWebClient();
+            try
+            {
+                string json = JsonConvert.SerializeObject(data, settings);
+                return await client.UploadStringTaskAsync(url, "POST", json);
+            }
+            catch
+            {
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+        }
+
+
+
         public byte[] PostData(string url, byte[] data)
         {
             WebClient client = createWebClient();
             try
             {
                 return client.UploadData(url, "POST", data);
+            }
+            catch
+            #region Code
+            {
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+            #endregion
+        }
+
+        public async Task<byte[]> PostDataAsync(string url, byte[] data)
+        {
+            WebClient client = createWebClient();
+            try
+            {
+                return await client.UploadDataTaskAsync(url, "POST", data);
             }
             catch
             #region Code
@@ -163,6 +250,11 @@ namespace Gandalan.IDAS.Web
             return JsonConvert.DeserializeObject<T>(Put(url, data, settings), settings);
         }
 
+        public async Task<T> PutAsync<T>(string url, object data, JsonSerializerSettings settings = null)
+        {
+            return JsonConvert.DeserializeObject<T>(await PutAsync(url, data, settings), settings);
+        }
+
         public string Put(string url, object data, JsonSerializerSettings settings = null)
         {
             WebClient client = createWebClient();
@@ -178,12 +270,43 @@ namespace Gandalan.IDAS.Web
             }
         }
 
+        public async Task<string> PutAsync(string url, object data, JsonSerializerSettings settings = null)
+        {
+            WebClient client = createWebClient();
+            try
+            {
+                string json = JsonConvert.SerializeObject(data, settings);
+                return await client.UploadStringTaskAsync(url, "PUT", json);
+            }
+            catch
+            {
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+        }
+
         public byte[] PutData(string url, byte[] data)
         {
             WebClient client = createWebClient();
             try
             {
                 return client.UploadData(url, "PUT", data);
+            }
+            catch
+            #region Code
+            {
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+            #endregion
+        }
+
+        public async Task<byte[]> PutDataAsync(string url, byte[] data)
+        {
+            WebClient client = createWebClient();
+            try
+            {
+                return await client.UploadDataTaskAsync(url, "PUT", data);
             }
             catch
             #region Code
@@ -213,6 +336,20 @@ namespace Gandalan.IDAS.Web
             }
         }
 
+        public async Task<string> DeleteAsync(string url)
+        {
+            WebClient client = createWebClient();
+            try
+            {
+                return await client.UploadStringTaskAsync(url, "DELETE", "");
+            }
+            catch
+            {
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+        }
+
         /// <summary>
         /// Löscht ein Objekt per HTTP DELETE an die angegebene URL
         /// </summary>
@@ -223,6 +360,11 @@ namespace Gandalan.IDAS.Web
         public T Delete<T>(string url, object data, JsonSerializerSettings settings = null)
         {
             return JsonConvert.DeserializeObject<T>(Delete(url, data, settings), settings);
+        }
+
+        public async Task<T> DeleteAsync<T>(string url, object data, JsonSerializerSettings settings = null)
+        {
+            return JsonConvert.DeserializeObject<T>(await DeleteAsync(url, data, settings), settings);
         }
 
         /// <summary>
@@ -236,6 +378,11 @@ namespace Gandalan.IDAS.Web
             return JsonConvert.DeserializeObject<T>(Delete(url), settings);
         }
 
+        public async Task<T> DeleteAsync<T>(string url, JsonSerializerSettings settings = null)
+        {
+            return JsonConvert.DeserializeObject<T>(await DeleteAsync(url), settings);
+        }
+
         public string Delete(string url, object data, JsonSerializerSettings settings = null)
         {
             WebClient client = createWebClient();
@@ -243,6 +390,21 @@ namespace Gandalan.IDAS.Web
             {
                 string json = JsonConvert.SerializeObject(data, settings);
                 return client.UploadString(url, "DELETE", json);
+            }
+            catch
+            {
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+        }
+
+        public async Task<string> DeleteAsync(string url, object data, JsonSerializerSettings settings = null)
+        {
+            WebClient client = createWebClient();
+            try
+            {
+                string json = JsonConvert.SerializeObject(data, settings);
+                return await client.UploadStringTaskAsync(url, "DELETE", json);
             }
             catch
             {
