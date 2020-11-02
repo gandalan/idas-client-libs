@@ -127,5 +127,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Art aus dem KatalogArtikel
         /// </summary>
         public KatalogArtikelArt KatalogArtikelArt { get; set; }
+        /// <summary>
+        /// Kennzeichen, ob das Profil gedreht gesägt wird (z.B. bei PT2/46)
+        /// </summary>
+        public bool ProfilGedrehtSaegen { get; set; }
     }
 }
