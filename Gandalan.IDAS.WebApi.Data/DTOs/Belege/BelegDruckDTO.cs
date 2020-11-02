@@ -22,6 +22,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 beleg.SetupObjekte(vorgang);
                 
                 this.BelegGuid = beleg.BelegGuid;
+                this.VorgangGuid = vorgang.VorgangGuid;
                 this.BelegArt = beleg.BelegArt;
                 this.BelegNummer = vorgang.VorgangsNummer;
                 this.BelegDatum = beleg.BelegDatum;
@@ -95,6 +96,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         }
 
         public Guid BelegGuid { get; set; }
+        public Guid VorgangGuid { get; set; }
         public string Kopfzeile { get; set; }
         public string Fusszeile { get; set; }
         public string BelegArt { get; set; }
