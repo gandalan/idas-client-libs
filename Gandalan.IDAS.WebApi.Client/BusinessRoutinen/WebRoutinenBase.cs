@@ -141,11 +141,86 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
+        public async Task<bool> LoginAsync()
+        {
+            try
+            {
+                UserAuthTokenDTO result = null;
+                if (AuthToken == null || AuthToken.Expires < DateTime.UtcNow)
+                {
+                    var ldto = new LoginDTO()
+                    {
+                        Email = Settings.UserName,
+                        Password = Settings.Passwort,
+                        AppToken = Settings.AppToken
+                    };
+                    result = await PostAsync<UserAuthTokenDTO>("/api/Login/Authenticate", ldto);
+                }
+                else
+                {
+                    if (AuthToken.Expires < DateTime.UtcNow.AddHours(6))
+                    {
+                        result = await PutAsync<UserAuthTokenDTO>("/api/Login/Update", AuthToken);
+                    }
+                    else
+                    {
+                        Status = "OK (Cached)";
+                        return true;
+                    }
+                }
+
+                if (result != null)
+                {
+                    AuthToken = result;
+                    Status = "OK";
+                    return true;
+                }
+                else
+                {
+                    AuthToken = null;
+                    Status = "Error";
+                    return false;
+                }
+            }
+            catch (ApiException apiex)
+            {
+                Status = apiex.Message;
+                if (Status.ToLower().Contains("<title>"))
+                {
+                    Status = internalStripHtml(Status);
+                }
+
+                if (apiex.InnerException != null)
+                    Status += " - " + apiex.InnerException.Message;
+                AuthToken = null;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Status = ex.Message;
+                AuthToken = null;
+                return false;
+            }
+        }
+
+
         public UserAuthTokenDTO RefreshToken(Guid authTokenGuid)
         {
             try
             {
                 return Put<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO() {Token = authTokenGuid});
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<UserAuthTokenDTO> RefreshTokenAsync(Guid authTokenGuid)
+        {
+            try
+            {
+                return await PutAsync<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO() { Token = authTokenGuid });
             }
             catch (Exception)
             {
@@ -169,6 +244,36 @@ namespace Gandalan.IDAS.WebApi.Client
                         cl.UserAgent = Settings.UserAgent;
 
                     return cl.Post<T>(uri, data, settings);
+                }
+                catch (WebException ex)
+                {
+                    ApiException exception = TranslateException(ex, data);
+                    if (!IgnoreOnErrorOccured)
+                    {
+                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                    }
+
+                    throw exception;
+                }
+            }
+        }
+
+        public async Task<T> PostAsync<T>(string uri, object data, JsonSerializerSettings settings = null)
+        {
+            using (var cl = new RESTRoutinen(Settings.Url))
+            {
+                try
+                {
+                    if (AuthToken != null)
+                    {
+                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                    }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
+
+                    return await cl.PostAsync<T>(uri, data, settings);
                 }
                 catch (WebException ex)
                 {
@@ -213,6 +318,36 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
+        public async Task<string> PostAsync(string uri, object data, JsonSerializerSettings settings = null)
+        {
+            using (var cl = new RESTRoutinen(Settings.Url))
+            {
+                try
+                {
+                    if (AuthToken != null)
+                    {
+                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                    }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
+
+                    return await cl.PostAsync(uri, data, settings);
+                }
+                catch (WebException ex)
+                {
+                    ApiException exception = TranslateException(ex, data);
+                    if (!IgnoreOnErrorOccured)
+                    {
+                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                    }
+
+                    throw exception;
+                }
+            }
+        }
+
         public byte[] PostData(string uri, byte[] data)
         {
             using (var cl = new RESTRoutinen(Settings.Url))
@@ -229,6 +364,36 @@ namespace Gandalan.IDAS.WebApi.Client
                         cl.UserAgent = Settings.UserAgent;
 
                     return cl.PostData(uri, data);
+                }
+                catch (WebException ex)
+                {
+                    ApiException exception = TranslateException(ex, data);
+                    if (!IgnoreOnErrorOccured)
+                    {
+                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                    }
+
+                    throw exception;
+                }
+            }
+        }
+
+        public async Task<byte[]> PostDataAsync(string uri, byte[] data)
+        {
+            using (var cl = new RESTRoutinen(Settings.Url))
+            {
+                try
+                {
+                    if (AuthToken != null)
+                    {
+                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                    }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
+
+                    return await cl.PostDataAsync(uri, data);
                 }
                 catch (WebException ex)
                 {
@@ -273,6 +438,36 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
+        public async Task<string> GetAsync(string uri)
+        {
+            using (var cl = new RESTRoutinen(Settings.Url))
+            {
+                try
+                {
+                    if (AuthToken != null)
+                    {
+                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                    }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
+
+                    return await cl.GetAsync(uri);
+                }
+                catch (WebException ex)
+                {
+                    ApiException exception = TranslateException(ex);
+                    if (!IgnoreOnErrorOccured)
+                    {
+                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                    }
+
+                    throw exception;
+                }
+            }
+        }
+
         public byte[] GetData(string uri)
         {
             using (var cl = new RESTRoutinen(Settings.Url))
@@ -299,6 +494,36 @@ namespace Gandalan.IDAS.WebApi.Client
                         }
 
                         throw exception;
+                }
+            }
+        }
+
+        public async Task<byte[]> GetDataAsync(string uri)
+        {
+            using (var cl = new RESTRoutinen(Settings.Url))
+            {
+                try
+                {
+                    if (AuthToken != null)
+                    {
+                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                    }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
+
+                    return await cl.GetDataAsync(uri);
+                }
+                catch (WebException ex)
+                {
+                    ApiException exception = TranslateException(ex);
+                    if (!IgnoreOnErrorOccured)
+                    {
+                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                    }
+
+                    throw exception;
                 }
             }
         }
@@ -333,6 +558,36 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
+        public async Task<T> GetAsync<T>(string uri, JsonSerializerSettings settings = null)
+        {
+            using (var cl = new RESTRoutinen(Settings.Url))
+            {
+                try
+                {
+                    if (AuthToken != null)
+                    {
+                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                    }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
+
+                    return await cl.GetAsync<T>(uri, settings);
+                }
+                catch (WebException ex)
+                {
+                    ApiException exception = TranslateException(ex);
+                    if (!IgnoreOnErrorOccured)
+                    {
+                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                    }
+
+                    throw exception;
+                }
+            }
+        }
+
         public T Put<T>(string uri, object data, JsonSerializerSettings settings = null)
         {
             using (var cl = new RESTRoutinen(Settings.Url))
@@ -359,6 +614,36 @@ namespace Gandalan.IDAS.WebApi.Client
                         }
 
                         throw exception;
+                }
+            }
+        }
+
+        public async Task<T> PutAsync<T>(string uri, object data, JsonSerializerSettings settings = null)
+        {
+            using (var cl = new RESTRoutinen(Settings.Url))
+            {
+                try
+                {
+                    if (AuthToken != null)
+                    {
+                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                    }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
+
+                    return await cl.PutAsync<T>(uri, data, settings);
+                }
+                catch (WebException ex)
+                {
+                    ApiException exception = TranslateException(ex, data);
+                    if (!IgnoreOnErrorOccured)
+                    {
+                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                    }
+
+                    throw exception;
                 }
             }
         }
@@ -393,6 +678,36 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
+        public async Task<string> PutAsync(string uri, object data, JsonSerializerSettings settings = null)
+        {
+            using (var cl = new RESTRoutinen(Settings.Url))
+            {
+                try
+                {
+                    if (AuthToken != null)
+                    {
+                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                    }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
+
+                    return await cl.PutAsync(uri, data, settings);
+                }
+                catch (WebException ex)
+                {
+                    ApiException exception = TranslateException(ex, data);
+                    if (!IgnoreOnErrorOccured)
+                    {
+                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                    }
+
+                    throw exception;
+                }
+            }
+        }
+
         public byte[] PutData(string uri, byte[] data)
         {
             using (var cl = new RESTRoutinen(Settings.Url))
@@ -409,6 +724,36 @@ namespace Gandalan.IDAS.WebApi.Client
                         cl.UserAgent = Settings.UserAgent;
 
                     return cl.PutData(uri, data);
+                }
+                catch (WebException ex)
+                {
+                    ApiException exception = TranslateException(ex, data);
+                    if (!IgnoreOnErrorOccured)
+                    {
+                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                    }
+
+                    throw exception;
+                }
+            }
+        }
+
+        public async Task<byte[]> PutDataAsync(string uri, byte[] data)
+        {
+            using (var cl = new RESTRoutinen(Settings.Url))
+            {
+                try
+                {
+                    if (AuthToken != null)
+                    {
+                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                    }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
+
+                    return await cl.PutDataAsync(uri, data);
                 }
                 catch (WebException ex)
                 {
@@ -453,6 +798,36 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
+        public async Task<T> DeleteAsync<T>(string uri, object data, JsonSerializerSettings settings = null)
+        {
+            using (var cl = new RESTRoutinen(Settings.Url))
+            {
+                try
+                {
+                    if (AuthToken != null)
+                    {
+                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                    }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
+
+                    return await cl.DeleteAsync<T>(uri, data, settings);
+                }
+                catch (WebException ex)
+                {
+                    ApiException exception = TranslateException(ex, data);
+                    if (!IgnoreOnErrorOccured)
+                    {
+                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                    }
+
+                    throw exception;
+                }
+            }
+        }
+
         public T Delete<T>(string uri, JsonSerializerSettings settings = null) 
         {
             using (var cl = new RESTRoutinen(Settings.Url))
@@ -479,6 +854,36 @@ namespace Gandalan.IDAS.WebApi.Client
                         }
 
                         throw exception;
+                }
+            }
+        }
+
+        public async Task<T> DeleteAsync<T>(string uri, JsonSerializerSettings settings = null)
+        {
+            using (var cl = new RESTRoutinen(Settings.Url))
+            {
+                try
+                {
+                    if (AuthToken != null)
+                    {
+                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                    }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
+
+                    return await cl.DeleteAsync<T>(uri, settings);
+                }
+                catch (WebException ex)
+                {
+                    ApiException exception = TranslateException(ex);
+                    if (!IgnoreOnErrorOccured)
+                    {
+                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                    }
+
+                    throw exception;
                 }
             }
         }
@@ -513,9 +918,34 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<bool> LoginAsync()
+        public async Task<string> DeleteAsync(string uri)
         {
-            return await Task.Run(() => Login());
+            using (var cl = new RESTRoutinen(Settings.Url))
+            {
+                try
+                {
+                    if (AuthToken != null)
+                    {
+                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                    }
+                    if (Settings.InstallationId != Guid.Empty)
+                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+                    if (!String.IsNullOrEmpty(Settings.UserAgent))
+                        cl.UserAgent = Settings.UserAgent;
+
+                    return await cl.DeleteAsync(uri);
+                }
+                catch (WebException ex)
+                {
+                    ApiException exception = TranslateException(ex);
+                    if (!IgnoreOnErrorOccured)
+                    {
+                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                    }
+
+                    throw exception;
+                }
+            }
         }
 
         private string internalStripHtml(string htmlString)
