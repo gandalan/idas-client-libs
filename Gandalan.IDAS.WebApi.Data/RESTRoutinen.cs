@@ -113,7 +113,7 @@ namespace Gandalan.IDAS.Web
             WebClient client = createWebClient();
             try
             {
-                return await client.DownloadStringTaskAsync(url);
+                return await client.DownloadStringTaskAsync(url).ConfigureAwait(false);
             }
             catch
             #region Code
@@ -145,7 +145,7 @@ namespace Gandalan.IDAS.Web
             WebClient client = createWebClient();
             try
             {
-                return await client.DownloadDataTaskAsync(url);
+                return await client.DownloadDataTaskAsync(url).ConfigureAwait(false);
             }
             catch
             #region Code
@@ -194,7 +194,7 @@ namespace Gandalan.IDAS.Web
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
-                return await client.UploadStringTaskAsync(url, "POST", json);
+                return await client.UploadStringTaskAsync(url, "POST", json).ConfigureAwait(false);
             }
             catch
             {
@@ -226,7 +226,7 @@ namespace Gandalan.IDAS.Web
             WebClient client = createWebClient();
             try
             {
-                return await client.UploadDataTaskAsync(url, "POST", data);
+                return await client.UploadDataTaskAsync(url, "POST", data).ConfigureAwait(false);
             }
             catch
             #region Code
@@ -276,7 +276,7 @@ namespace Gandalan.IDAS.Web
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
-                return await client.UploadStringTaskAsync(url, "PUT", json);
+                return await client.UploadStringTaskAsync(url, "PUT", json).ConfigureAwait(false);
             }
             catch
             {
@@ -306,7 +306,7 @@ namespace Gandalan.IDAS.Web
             WebClient client = createWebClient();
             try
             {
-                return await client.UploadDataTaskAsync(url, "PUT", data);
+                return await client.UploadDataTaskAsync(url, "PUT", data).ConfigureAwait(false);
             }
             catch
             #region Code
@@ -341,7 +341,7 @@ namespace Gandalan.IDAS.Web
             WebClient client = createWebClient();
             try
             {
-                return await client.UploadStringTaskAsync(url, "DELETE", "");
+                return await client.UploadStringTaskAsync(url, "DELETE", "").ConfigureAwait(false);
             }
             catch
             {
@@ -404,7 +404,7 @@ namespace Gandalan.IDAS.Web
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
-                return await client.UploadStringTaskAsync(url, "DELETE", json);
+                return await client.UploadStringTaskAsync(url, "DELETE", json).ConfigureAwait(false);
             }
             catch
             {
