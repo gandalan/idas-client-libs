@@ -19,6 +19,7 @@ namespace Gandalan.IDAS.Client.Contracts.Flux
         event EventHandler<IFluxAction> DataChanged;
 
         Task Handle(IFluxAction action);
+        void HandleSync(IFluxAction action);
         Task Initialize();
         Task Clean();
     }

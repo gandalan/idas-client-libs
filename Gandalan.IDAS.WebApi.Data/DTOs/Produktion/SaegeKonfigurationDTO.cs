@@ -23,5 +23,25 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Produktion
         /// Bezeichnung des SaegemassKorrekturSatzDTO, das genutzt werden soll
         /// </summary>
         public string KorrekturSatz { get; set; }
+
+        /// <summary>
+        /// Angabe, ob die Säge Schnitte mit 90-90 Grad sägen kann
+        /// </summary>
+        public bool DoppelGeradSchnitt { get; set; }
+
+        /// <summary>
+        /// Angabe, ob die Säge Schnitte mit 45-45 Grad sägen kann
+        /// </summary>
+        public bool DoppelGehrungsSchnitt { get; set; }
+
+        /// <summary>
+        /// Angabe, ob die Säge Schnitte mit 45-90 Grad sägen kann
+        /// </summary>
+        public bool GeradGehrungsSchnitt { get; set; }
+
+        /// <summary>
+        /// Angabe, ob die Säge Schnitte mit anderen Winkeln sägen kann
+        /// </summary>
+        public bool FreierSchnitt { get; set; }
     }
 }

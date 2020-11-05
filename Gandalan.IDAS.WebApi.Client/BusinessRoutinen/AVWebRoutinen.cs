@@ -125,62 +125,110 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync()
         {
-            return await Task.Run(() => GetAllBelegPositionenAV());
+            if (Login())
+            {
+                return await GetAsync<BelegPositionAVDTO[]>("BelegPositionenAV");
+            }
+            return null;
         }
 
         public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(DateTime changedSince)
         {
-            return await Task.Run(() => GetAllBelegPositionenAV(changedSince));
+            if (Login())
+            {
+                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}");
+            }
+            return null;
         }
 
         public async Task<List<BelegPositionAVDTO>> GetBelegPositionenAVAsync(Guid guid)
         {
-            return await Task.Run(() => GetBelegPositionenAV(guid));
+            if (Login())
+            {
+                return await GetAsync<List<BelegPositionAVDTO>>("BelegPositionenAV/" + guid.ToString());
+            }
+            return null;
         }
 
         public async Task<string> SaveBelegPositionenAVAsync(BelegPositionAVDTO position)
         {
-            return await Task.Run(() => SaveBelegPositionenAV(position));
+            if (Login())
+            {
+                return await PutAsync<string>("BelegPositionenAV", position);
+            }
+            return "Not logged in";
         }
 
         public async Task<List<BelegPositionAVDTO>> SaveBelegPositionenAVAsync(List<BelegPositionAVDTO> positionen)
         {
-            return await Task.Run(() => SaveBelegPositionenAV(positionen));
+            if (Login())
+            {
+                return await PutAsync<List<BelegPositionAVDTO>>("BelegPositionenAVBulk", positionen);
+            }
+            return null;
         }
 
         public async Task<string> DeleteBelegPositionenAVAsync(Guid guid)
         {
-            return await Task.Run(() => DeleteBelegPositionenAV(guid));
+            if (Login())
+            {
+                return await DeleteAsync($"BelegPositionenAV/{guid}");
+            }
+            return "Not logged in";
         }
 
         public async Task<string> DeleteBelegPositionenAVAsync(List<Guid> guids)
         {
-            return await Task.Run(() => DeleteBelegPositionenAV(guids));
+            if (Login())
+            {
+                return await DeleteAsync<string>($"BelegPositionenAVBulk", guids);
+            }
+            return "Not logged in";
         }
 
         public async Task<SerieDTO[]> GetAllSerienAsync()
         {
-            return await Task.Run(() => GetAllSerien());
+            if (Login())
+            {
+                return await GetAsync<SerieDTO[]>("Serie");
+            }
+            return null;
         }
 
         public async Task<SerieDTO[]> GetAllSerienAsync(DateTime changedSince)
         {
-            return await Task.Run(() => GetAllSerien(changedSince));
+            if (Login())
+            {
+                return await GetAsync<SerieDTO[]>($"Serie/?changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}");
+            }
+            return null;
         }
 
         public async Task<SerieDTO> GetSerieAsync(Guid guid)
         {
-            return await Task.Run(() => GetSerie(guid));
+            if (Login())
+            {
+                return await GetAsync<SerieDTO>("Serie/" + guid.ToString());
+            }
+            return null;
         }
 
         public async Task<string> SaveSerieAsync(SerieDTO serie)
         {
-            return await Task.Run(() => SaveSerie(serie));
+            if (Login())
+            {
+                return await PutAsync<string>("Serie", serie);
+            }
+            return "Not logged in";
         }
 
         public async Task<string> DeleteSerieAsync(Guid guid)
         {
-            return await Task.Run(() => DeleteSerie(guid));
+            if (Login())
+            {
+                return await DeleteAsync($"Serie/{guid}");
+            }
+            return "Not logged in";
         }
     }
 }
