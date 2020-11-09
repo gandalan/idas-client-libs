@@ -15,6 +15,7 @@ namespace Gandalan.IBOS3.Module.Lookups.Document
         DateTime LastChange { get; set; }
         int Filesize { get; set; }
         string MimeType { get; set; }
+        string md5 { get; set; }
     }
 
     public interface IDocumentLookupParams
