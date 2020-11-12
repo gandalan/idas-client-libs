@@ -74,7 +74,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                         {
                             Url = response.IDAS,
                             CMSUrl = response.CMS,
-                            DocUrl = response.DocUrl,
+                            DocUrl = response.DOCS,
                             I1Url = response.Prod_I1,
                             I2Url = response.Prod_I2, 
                             LatexReportUrl = response.Print_Latex,
