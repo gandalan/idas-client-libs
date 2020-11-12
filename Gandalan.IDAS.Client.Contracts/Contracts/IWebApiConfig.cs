@@ -2,8 +2,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts
@@ -27,7 +25,11 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts
         [JsonIgnore]
         string UserAgent { get; set; }
         /// <summary>
-        /// CMS für Variantenspez. Dokumente
+        /// CMSUrl für Dokumente
+        /// </summary>
+        string DocUrl { get; set; }
+        /// <summary>
+        /// CMS für Variantenspez
         /// </summary>
         string CMSUrl { get; set; }
         /// <summary>
