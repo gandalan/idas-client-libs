@@ -29,7 +29,11 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         [JsonIgnore]
         public string UserAgent { get; set; }
         /// <summary>
-        /// CMS für Variantenspez. Dokumente
+        /// CMSUrl für Dokumente
+        /// </summary>
+        public string DocUrl { get; set; }
+        /// <summary>
+        /// CMS für Variantenspez
         /// </summary>
         public string CMSUrl { get; set; }
         /// <summary>
@@ -72,6 +76,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             this.Mandant = settings.Mandant;
             this.Url = settings.Url;
             this.CMSUrl = settings.CMSUrl;
+            this.DocUrl = settings.DocUrl;
             this.Passwort = settings.Passwort;
             this.UserName = settings.UserName;
             this.InstallationId = settings.InstallationId;
