@@ -60,22 +60,45 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<AblageDTO> GetAsync(Guid guid)
         {
-            return await Task.Run(() => Get(guid));
+            if (await LoginAsync())
+            {
+                return await GetAsync<AblageDTO>("Ablage/?id=" + guid.ToString());
+            }
+            return null;
         }
 
         public async Task<List<AblageDTO>> GetAllAsync(DateTime? changedSince)
         {
-            return await Task.Run(() => GetAll(changedSince));
+            if (await LoginAsync())
+            {
+                if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+                {
+                    return await GetAsync<List<AblageDTO>>("Ablage?changedSince=" + changedSince.Value.ToString("yyyy-MM-ddTHH:mm:ss"));
+                }
+                else
+                {
+                    return await GetAsync<List<AblageDTO>>("Ablage");
+                }
+            }
+            return null;
         }
 
-        public async Task SaveAsync(AblageDTO dto)
+        public async Task<string> SaveAsync(AblageDTO dto)
         {
-            await Task.Run(() => Save(dto));
+            if (await LoginAsync())
+            {
+                return await PutAsync("Ablage/", dto);
+            }
+            return null;
         }
 
         public async Task<string> DeleteAsync(Guid guid)
         {
-            return await Task.Run(() => Delete(guid));
+            if (await LoginAsync())
+            {
+                return await DeleteAsync("Ablage/?id=" + guid.ToString());
+            }
+            return "Not logged in";
         }
     }
 }
