@@ -22,5 +22,14 @@ namespace Gandalan.Client.Contracts.DataServices
         /// </summary>
         /// <param name="word">Das zu löschende Wort</param>
         Task DeleteAsync(string word);
+        /// <summary>
+        /// Lädt die Einstellungen / Wörter
+        /// </summary>
+        /// <param name="word">Schlüssel, anhand dem die Einstellungen geladen werden sollen</param>
+        Task Load(string settingsKey);
+        /// <summary>
+        /// Speichert die Einstellungen / Wörter
+        /// </summary>
+        Task Save();
     }
 }
