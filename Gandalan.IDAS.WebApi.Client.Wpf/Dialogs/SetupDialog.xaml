@@ -13,7 +13,7 @@
             <ctl:BoolInvertConverter x:Key="InvertBool" />
 
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/GDL.Controls.WPF;component/StandardStyles.xaml"/>
+                <ResourceDictionary Source="/GDL.IDAS.WebApi.Client.WPF;component/StandardStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

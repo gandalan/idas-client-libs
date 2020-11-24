@@ -8,6 +8,7 @@
         mc:Ignorable="d" 
         Title="Neher Cloud - Anmeldung" Height="650" Width="500"  
         WindowStartupLocation="CenterOwner" SizeToContent="Height" ResizeMode="NoResize" Topmost="True" KeyDown="Window_KeyDown">
+    
     <Window.Resources>
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />

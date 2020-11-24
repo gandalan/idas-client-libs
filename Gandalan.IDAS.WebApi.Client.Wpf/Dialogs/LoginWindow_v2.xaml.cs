@@ -69,7 +69,7 @@ namespace Gandalan.Controls.WPF.Dialogs
         {
             _viewModel.LoginInProgress = true;
             _viewModel.StatusText = null;
-            var settings = (sender as Button)?.Tag as IWebApiConfig;
+            var settings = (sender as Button)?.Tag as WebApiSettings;
             if (settings != null && await testConnection(settings))
             {
                 _webApiSettings.CopyToThis(settings);
