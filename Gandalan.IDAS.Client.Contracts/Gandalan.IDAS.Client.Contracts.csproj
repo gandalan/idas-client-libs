@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+	<TargetFrameworks>netstandard2.1;net472</TargetFrameworks>
     <AssemblyName>GDL.IDAS.Client.Contracts</AssemblyName>
 
     <AssemblyVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</AssemblyVersion>

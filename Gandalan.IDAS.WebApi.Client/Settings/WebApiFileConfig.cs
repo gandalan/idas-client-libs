@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
@@ -58,7 +59,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             }
         }
 
-        private static void setupEnvironments(Guid appToken)
+        private async static void setupEnvironments(Guid appToken)
         {
             var hub = new ConnectHub(apiVersion: "2.1", clientOS: "win");
             var liste = _environments;
@@ -66,7 +67,17 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             {
                 try
                 {
-                    var response = hub.GetEndpoints(env: env);
+                    HubResponse response = null;
+
+                    try
+                    {
+                        response = await hub.GetEndpoints(env: env);
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
                     IWebApiConfig environment = null;
                     if (response != null)
                     {
@@ -89,6 +100,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e);
                     // No Hub response, discard
                 }
             }

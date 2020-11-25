@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -23,7 +24,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             ClientOS = clientOS ?? "win";
         }
 
-        public HubResponse GetEndpoints(string apiVersion = null, string env = null, string clientOS = null)
+        public async Task<HubResponse> GetEndpoints(string apiVersion = null, string env = null, string clientOS = null)
         {
             var requestURL = 
                 _hubURL + "?" +
@@ -32,7 +33,18 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 (clientOS != null ? "clientOS=" + clientOS : "");
             try
             {
-                var response = new WebClient().DownloadString(requestURL);
+                HttpClient httpClient = new HttpClient();
+                string response = string.Empty;
+
+                try
+                {
+                    response = await httpClient.GetStringAsync(requestURL);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
                 return JsonConvert.DeserializeObject<HubResponse>(response);
             }
             catch (Exception e)
