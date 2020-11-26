@@ -68,15 +68,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 try
                 {
                     HubResponse response = null;
-
-                    try
-                    {
-                        response = await hub.GetEndpoints(env: env);
-                    }
-                    catch(Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
+                    response = await hub.GetEndpoints(env: env);
 
                     IWebApiConfig environment = null;
                     if (response != null)
