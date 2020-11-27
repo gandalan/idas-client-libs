@@ -204,8 +204,15 @@ namespace Gandalan.IDAS.Web
             var contentData = new List<KeyValuePair<string, string>>();
             contentData.Add(new KeyValuePair<string, string>("Header", json));
 
-            HttpResponseMessage responseMessage = await httpClient.PostAsync(new Uri(url), new FormUrlEncodedContent(contentData));
-            _loginStatus = responseMessage.StatusCode.ToString();
+            try
+            {
+                HttpResponseMessage responseMessage = await httpClient.PostAsync(new Uri(url), new FormUrlEncodedContent(contentData));
+                _loginStatus = responseMessage.StatusCode.ToString();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null)
@@ -265,18 +272,8 @@ namespace Gandalan.IDAS.Web
         /// <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
         public T Put<T>(string url, object data, JsonSerializerSettings settings = null)
         {
-            // hier muss noch ein HTTPClient für UserAuthTokenDTO rein
             return JsonConvert.DeserializeObject<T>(Put(url, data, settings), settings);
         }
-
-        // SM: To do...
-        //public async void HTTPClientPut(string url, object data)
-        //{
-        //    Uri uri = new Uri(url);
-        //    HttpClient httpClient = new HttpClient();
-        //    httpClient.BaseAddress = new Uri(BaseUrl);
-        //    _loginStatus = responseMessage.StatusCode.ToString();
-        //}
 
         public async Task<T> PutAsync<T>(string url, object data, JsonSerializerSettings settings = null)
         {
@@ -286,10 +283,14 @@ namespace Gandalan.IDAS.Web
         public string Put(string url, object data, JsonSerializerSettings settings = null)
         {
             WebClient client = createWebClient();
+            // hier muss noch ein HTTPClient für UserAuthTokenDTO rein
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
-                return client.UploadString(url, "PUT", json);
+                HTTPClientPost(url, json);
+                return _loginStatus;
+                // SM: ursprünglich:
+                //return client.UploadString(url, "PUT", json);
             }
             catch
             {
