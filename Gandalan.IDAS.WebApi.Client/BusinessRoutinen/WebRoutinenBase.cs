@@ -14,6 +14,9 @@ using Gandalan.IDAS.WebApi.DTO;
 using Gandalan.IDAS.Web;
 using Newtonsoft.Json;
 using Gandalan.IDAS.Client.Contracts.Contracts;
+using System.Net.Http;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
@@ -22,7 +25,7 @@ namespace Gandalan.IDAS.WebApi.Client
         #region  Felder
 
         public IWebApiConfig Settings;
-
+        public UserAuthTokenDTO ReturnUserToken { get; private set; }
         #endregion
 
         #region  Eigenschaften
@@ -154,7 +157,28 @@ namespace Gandalan.IDAS.WebApi.Client
                 return false;
             }
         }
+        public async Task<UserAuthTokenDTO> LoginArtosPWA()
+        {
+            var ldto = new LoginDTO()
+            {
+                Email = Settings.UserName,
+                Password = Settings.Passwort,
+                AppToken = Settings.AppToken
+            };
+            string json = JsonConvert.SerializeObject(ldto);
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("https://bf-dev-1.gandalan.de");
 
+            HttpRequestMessage requestMessage = new HttpRequestMessage();
+            requestMessage.Method = HttpMethod.Post;
+
+            HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            requestMessage.Content = httpContent;
+
+            HttpResponseMessage responseMessage = await httpClient.PostAsync("/api/login/authenticate", httpContent);
+            string responseString = await responseMessage.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<UserAuthTokenDTO>(responseString);
+        }
         public async Task<bool> LoginAsync()
         {
             try
@@ -217,12 +241,11 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-
         public UserAuthTokenDTO RefreshToken(Guid authTokenGuid)
         {
             try
             {
-                return Put<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO() {Token = authTokenGuid});
+                return Put<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO() { Token = authTokenGuid });
             }
             catch (Exception)
             {
@@ -681,13 +704,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                        ApiException exception = TranslateException(ex, data);
-                        if (!IgnoreOnErrorOccured)
-                        {
-                            OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                        }
+                    ApiException exception = TranslateException(ex, data);
+                    if (!IgnoreOnErrorOccured)
+                    {
+                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                    }
 
-                        throw exception;
+                    throw exception;
                 }
             }
         }

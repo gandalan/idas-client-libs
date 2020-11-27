@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net.Http;
+using System.Text;
+using System.IO;
+using System.Linq;
 
 namespace Gandalan.IDAS.Web
 {
@@ -52,10 +55,6 @@ namespace Gandalan.IDAS.Web
         /// </summary>
         public string UserAgent { get; set; }
         #endregion
-
-        #region private properties
-        private string _loginStatus = string.Empty;
-        #endregion private properties
 
         #region public Methods
         /// <summary>
@@ -181,37 +180,44 @@ namespace Gandalan.IDAS.Web
         public string Post(string url, object data, JsonSerializerSettings settings = null)
         {
             WebClient client = createWebClient();
-            
+
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
-                HTTPClientPost(url, json);
-                return _loginStatus;
+                return HTTPClientPost(HttpMethod.Post, url, json);
                 // SM: ursprünglich:
-                // return client.UploadString(url, "POST", json);
+                //return client.UploadString(url, "POST", json);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
 
-        public async void HTTPClientPost(string url, string json)
+        public string HTTPClientPost(HttpMethod httpMethod, string url, string json)
         {
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(BaseUrl);
-
-            var contentData = new List<KeyValuePair<string, string>>();
-            contentData.Add(new KeyValuePair<string, string>("", json));
+            //BaseUrl = BaseUrl.Replace("/api/", "");
 
             HttpRequestMessage requestMessage = new HttpRequestMessage();
-            requestMessage.RequestUri = new Uri(url);
-            requestMessage.Method = HttpMethod.Put;
-            requestMessage.Content = new FormUrlEncodedContent(contentData);
+            AdditionalHeaders.ForEach(h =>
+            {
+                string[] splitString = h.Split(':');
+                string name = splitString[0];
+                string value = splitString[1].Trim();
 
-            HttpResponseMessage responseMessage = await httpClient.SendAsync(requestMessage);
-            _loginStatus = responseMessage.StatusCode.ToString();
+                requestMessage.Headers.Add(name, value);
+            });
+            //requestMessage.RequestUri = new Uri(url);
+            requestMessage.Method = httpMethod;
+
+            HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            requestMessage.Content = httpContent;
+
+            HttpResponseMessage responseMessage = httpClient.PostAsync(url, httpContent).Result;
+            return responseMessage.Content.ReadAsStringAsync().Result;
         }
 
         public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null)
@@ -286,8 +292,8 @@ namespace Gandalan.IDAS.Web
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
-                HTTPClientPost(url, json);
-                return _loginStatus;
+
+                return HTTPClientPost(HttpMethod.Put, url, json);
                 // SM: ursprünglich:
                 //return client.UploadString(url, "PUT", json);
             }
