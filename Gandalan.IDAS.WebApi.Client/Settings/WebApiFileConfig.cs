@@ -115,9 +115,9 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 
             // SM: Der Workaround hier muss raus und alles über internalLoadSavedAuthToken laufen:
             SavedAuthToken token = new SavedAuthToken();
-            //token.AuthTokenGuid = Guid.Parse("35ec2a5d-490e-44db-ba27-52dffc90d63d");
+            token.AuthTokenGuid = Guid.Parse("35ec2a5d-490e-44db-ba27-52dffc90d63d");
             //token.AuthTokenGuid = Guid.Parse("51aab13c-d27c-4241-a09d-4b12a3d22f34");
-            token.AuthTokenGuid = Guid.Parse("49deb3e3-e325-4bef-86d1-50584d996431");
+            //token.AuthTokenGuid = Guid.Parse("49deb3e3-e325-4bef-86d1-50584d996431");
             token.UserName = "simon.mahalsky@gandalan.de";
             savedAuthToken = token;
 

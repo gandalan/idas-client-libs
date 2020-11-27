@@ -201,18 +201,17 @@ namespace Gandalan.IDAS.Web
         {
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(BaseUrl);
-            var contentData = new List<KeyValuePair<string, string>>();
-            contentData.Add(new KeyValuePair<string, string>("Header", json));
 
-            try
-            {
-                HttpResponseMessage responseMessage = await httpClient.PostAsync(new Uri(url), new FormUrlEncodedContent(contentData));
-                _loginStatus = responseMessage.StatusCode.ToString();
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            var contentData = new List<KeyValuePair<string, string>>();
+            contentData.Add(new KeyValuePair<string, string>("", json));
+
+            HttpRequestMessage requestMessage = new HttpRequestMessage();
+            requestMessage.RequestUri = new Uri(url);
+            requestMessage.Method = HttpMethod.Put;
+            requestMessage.Content = new FormUrlEncodedContent(contentData);
+
+            HttpResponseMessage responseMessage = await httpClient.SendAsync(requestMessage);
+            _loginStatus = responseMessage.StatusCode.ToString();
         }
 
         public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null)
