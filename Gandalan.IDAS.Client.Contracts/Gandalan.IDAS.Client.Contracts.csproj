@@ -1,5 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup Label="Globals">
+    <SccProjectName>%24/ARTOS/Bestandsmodul/Gandalan.IDAS.Client.Contracts</SccProjectName>
+    <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
+    <SccAuxPath>https://dev.azure.com/gandalan</SccAuxPath>
+    <SccLocalPath>.</SccLocalPath>
+  </PropertyGroup>
+
   <PropertyGroup>
 	<TargetFrameworks>netstandard2.1;net472</TargetFrameworks>
     <AssemblyName>GDL.IDAS.Client.Contracts</AssemblyName>

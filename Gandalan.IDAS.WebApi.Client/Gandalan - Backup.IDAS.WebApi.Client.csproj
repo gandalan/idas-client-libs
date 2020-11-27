@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-	<TargetFrameworks>netstandard2.1;net472</TargetFrameworks>
+    <TargetFramework>net472</TargetFramework>
     <AssemblyName>GDL.IDAS.WebApi.Client</AssemblyName>
 
     <AssemblyVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</AssemblyVersion>

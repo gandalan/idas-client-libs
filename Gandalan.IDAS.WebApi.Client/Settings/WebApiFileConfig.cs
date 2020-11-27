@@ -67,10 +67,16 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             {
                 try
                 {
-                    HubResponse response = null;
-                    response = await hub.GetEndpoints(env: env);
-
                     IWebApiConfig environment = null;
+                    HubResponse response = new HubResponse();
+                    //response = await hub.GetEndpoints(env: env);
+                    response.CMS = "https://nehernext.sic-software.tk/";
+                    response.DOCS = "https://app2.neher.de/";
+                    response.IDAS = "https://bf-dev-1.gandalan.de/api/";
+                    response.Print_Latex = "https://gdl-template-engine.azurewebsites.net/";
+                    response.Prod_I1 = "https://gandalanibosapiprod.azurewebsites.net/";
+                    response.Prod_I2 = "https://gandalanibos2apiprod.azurewebsites.net/";
+
                     if (response != null)
                     {
                         environment = new WebApiSettings
@@ -115,17 +121,29 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         private static SavedAuthToken internalLoadSavedAuthToken(string env)
         {
             string configFile = Path.Combine(_settingsPath, env, "AuthToken_" + _appTokenString + ".json");
-            if (File.Exists(configFile))
+
+            try
             {
-                try
-                {
+                bool exists = File.Exists(configFile);
+                if(exists)
                     return JsonConvert.DeserializeObject<SavedAuthToken>(File.ReadAllText(configFile));
-                }
-                catch (Exception e)
-                {
-                    // damaged file, ignore saved token
-                }
             }
+            catch(Exception e)
+            {
+
+            }
+
+            //if (File.Exists(configFile))
+            //{
+            //    try
+            //    {
+            //        return JsonConvert.DeserializeObject<SavedAuthToken>(File.ReadAllText(configFile));
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        // damaged file, ignore saved token
+            //    }
+            //}
             return null;
         }
 
