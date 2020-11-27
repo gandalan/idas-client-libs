@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
+//using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -33,8 +33,9 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 (clientOS != null ? "clientOS=" + clientOS : "");
             try
             {
-                HttpClient httpClient = new HttpClient();
-                string response = await httpClient.GetStringAsync(requestURL);
+                // SM: HTTPClient ordentlich integrieren:
+                //HttpClient httpClient = new HttpClient();
+                string response = string.Empty; // await httpClient.GetStringAsync(requestURL);
                 return JsonConvert.DeserializeObject<HubResponse>(response);
             }
             catch (Exception e)

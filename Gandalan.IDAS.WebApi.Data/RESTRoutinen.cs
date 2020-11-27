@@ -3,6 +3,7 @@ using System.Net;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace Gandalan.IDAS.Web
 {
@@ -51,6 +52,10 @@ namespace Gandalan.IDAS.Web
         /// </summary>
         public string UserAgent { get; set; }
         #endregion
+
+        #region private properties
+        private string _loginStatus = string.Empty;
+        #endregion private properties
 
         #region public Methods
         /// <summary>
@@ -175,17 +180,32 @@ namespace Gandalan.IDAS.Web
 
         public string Post(string url, object data, JsonSerializerSettings settings = null)
         {
-            System.Net.WebClient client = createWebClient();
+            WebClient client = createWebClient();
+            
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
-                return client.UploadString(url, "POST", json);
+                HTTPClientPost(url, json);
+                return _loginStatus;
+                // SM: ursprünglich:
+                // return client.UploadString(url, "POST", json);
             }
-            catch
+            catch(Exception e)
             {
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
+        }
+
+        public async void HTTPClientPost(string url, string json)
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(BaseUrl);
+            var contentData = new List<KeyValuePair<string, string>>();
+            contentData.Add(new KeyValuePair<string, string>("Header", json));
+
+            HttpResponseMessage responseMessage = await httpClient.PostAsync(new Uri(url), new FormUrlEncodedContent(contentData));
+            _loginStatus = responseMessage.StatusCode.ToString();
         }
 
         public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null)
@@ -202,8 +222,6 @@ namespace Gandalan.IDAS.Web
                 throw;
             }
         }
-
-
 
         public byte[] PostData(string url, byte[] data)
         {
@@ -247,8 +265,18 @@ namespace Gandalan.IDAS.Web
         /// <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
         public T Put<T>(string url, object data, JsonSerializerSettings settings = null)
         {
+            // hier muss noch ein HTTPClient für UserAuthTokenDTO rein
             return JsonConvert.DeserializeObject<T>(Put(url, data, settings), settings);
         }
+
+        // SM: To do...
+        //public async void HTTPClientPut(string url, object data)
+        //{
+        //    Uri uri = new Uri(url);
+        //    HttpClient httpClient = new HttpClient();
+        //    httpClient.BaseAddress = new Uri(BaseUrl);
+        //    _loginStatus = responseMessage.StatusCode.ToString();
+        //}
 
         public async Task<T> PutAsync<T>(string url, object data, JsonSerializerSettings settings = null)
         {

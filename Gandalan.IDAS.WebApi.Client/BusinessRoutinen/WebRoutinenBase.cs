@@ -57,10 +57,12 @@ namespace Gandalan.IDAS.WebApi.Client
                 };
             }
 
-            if (settings?.AuthToken?.Token != Guid.Empty && settings?.AuthToken?.Expires > DateTime.UtcNow)
-            {
+            // SM: erstmal knallhart benutzen
+            AuthToken = settings.AuthToken;
+
+            // SM: DateTime.Now statt DateTime.UtcNow
+            if (settings?.AuthToken?.Token != Guid.Empty && settings?.AuthToken?.Expires > DateTime.Now)
                 AuthToken = settings.AuthToken;
-            }
         }
 
         protected virtual void OnErrorOccured(ApiErrorArgs e)
@@ -84,7 +86,9 @@ namespace Gandalan.IDAS.WebApi.Client
             try
             {
                 UserAuthTokenDTO result = null;
-                if (AuthToken == null || AuthToken.Expires < DateTime.UtcNow)
+                result = Put<UserAuthTokenDTO>("/api/Login/Update", AuthToken);
+                // SM: DateTime.Now statt DateTime.UtcNow
+                if (AuthToken == null || AuthToken.Expires < DateTime.Now)
                 {
                     var ldto = new LoginDTO()
                     {
@@ -96,7 +100,8 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 else
                 {
-                    if (AuthToken.Expires < DateTime.UtcNow.AddHours(6))
+                    // SM: DateTime.Now statt DateTime.UtcNow
+                    if (AuthToken.Expires < DateTime.Now.AddHours(6))
                     {
                         result = Put<UserAuthTokenDTO>("/api/Login/Update", AuthToken);
                     }
@@ -105,6 +110,15 @@ namespace Gandalan.IDAS.WebApi.Client
                         Status = "OK (Cached)";
                         return true;
                     }
+                }
+
+                try
+                {
+                    result = Put<UserAuthTokenDTO>("/api/Login/Update", AuthToken);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
 
                 if (result != null)
