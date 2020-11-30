@@ -90,8 +90,7 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 UserAuthTokenDTO result = null;
                 result = Put<UserAuthTokenDTO>("/api/Login/Update", AuthToken);
-                // SM: DateTime.Now statt DateTime.UtcNow
-                if (AuthToken == null || AuthToken.Expires < DateTime.Now)
+                if (AuthToken == null || AuthToken.Expires < DateTime.UtcNow)
                 {
                     var ldto = new LoginDTO()
                     {
@@ -103,8 +102,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 else
                 {
-                    // SM: DateTime.Now statt DateTime.UtcNow
-                    if (AuthToken.Expires < DateTime.Now.AddHours(6))
+                    if (AuthToken.Expires < DateTime.UtcNow.AddHours(6))
                     {
                         result = Put<UserAuthTokenDTO>("/api/Login/Update", AuthToken);
                     }
@@ -157,27 +155,24 @@ namespace Gandalan.IDAS.WebApi.Client
                 return false;
             }
         }
-        public async Task<UserAuthTokenDTO> LoginArtosPWA()
+        public async Task<UserAuthTokenDTO> HTTPLogin()
         {
             var ldto = new LoginDTO()
             {
                 Email = Settings.UserName,
                 Password = Settings.Passwort,
-                AppToken = Settings.AppToken
+                AppToken = Settings.AppToken,
             };
+
             string json = JsonConvert.SerializeObject(ldto);
-            HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("https://bf-dev-1.gandalan.de");
+            string authenticate = "/api/login/authenticate";
+            string update = "/api/Login/Update";
 
-            HttpRequestMessage requestMessage = new HttpRequestMessage();
-            requestMessage.Method = HttpMethod.Post;
+            // zur Sicherheit noch drin lassen:
+            //HttpClient httpClient = new HttpClient();
+            //httpClient.BaseAddress = new Uri("https://bf-dev-1.gandalan.de");
 
-            HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            requestMessage.Content = httpContent;
-
-            HttpResponseMessage responseMessage = await httpClient.PostAsync("/api/login/authenticate", httpContent);
-            string responseString = await responseMessage.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<UserAuthTokenDTO>(responseString);
+            return await HTTPPostAsync(HttpMethod.Post, authenticate, json);
         }
         public async Task<bool> LoginAsync()
         {
@@ -264,6 +259,8 @@ namespace Gandalan.IDAS.WebApi.Client
                 return null;
             }
         }
+
+        public async Task<UserAuthTokenDTO> HTTPPostAsync(HttpMethod method, string requestUri, string content) => JsonConvert.DeserializeObject<UserAuthTokenDTO>(await new RESTRoutinen(Settings.Url).HTTPPostAsync(method, requestUri, content));
 
         public T Post<T>(string uri, object data, JsonSerializerSettings settings = null)
         {
