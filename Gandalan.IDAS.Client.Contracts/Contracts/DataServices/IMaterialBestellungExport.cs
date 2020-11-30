@@ -8,6 +8,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
 {
     public interface IMaterialBestellungExport
     {
-        Task Export(VorgangDTO vorgang, string kommunkationSetting);
+        Task Export(IList<MaterialBeschaffungsJobDTO> jobs, string extension, string path);
+        Task Send(IList<MaterialBeschaffungsJobDTO> jobs, string extension, string email);
     }
 }
