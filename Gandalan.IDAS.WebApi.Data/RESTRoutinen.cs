@@ -425,7 +425,7 @@ namespace Gandalan.IDAS.Web
             if (this.Credentials != null)
                 client.Credentials = this.Credentials;
             client.BaseAddress = BaseUrl;
-            client.Timeout = 120000;
+            client.Timeout = 300000;
             if (!string.IsNullOrEmpty(UserAgent))
                 client.Headers.Add("user-agent", UserAgent);
             AdditionalHeaders.ForEach(h => client.Headers.Add(h));
