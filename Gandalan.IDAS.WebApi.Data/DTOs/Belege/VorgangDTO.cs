@@ -71,6 +71,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
         public bool IstZustimmungErteilt { get; set; }
 
+        public string InterneNotiz { get; set; }
+        public string BemerkungFuerKunde { get; set; }
         public Guid OriginalVorgangGuid { get; set; }
         public Guid OriginalMandantGuid { get; set; }
 
