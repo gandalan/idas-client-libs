@@ -24,7 +24,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             ClientOS = clientOS ?? "win";
         }
 
-        public async Task<HubResponse> GetEndpoints(string apiVersion = null, string env = null, string clientOS = null)
+        public HubResponse GetEndpoints(string apiVersion = null, string env = null, string clientOS = null)
         {
             var requestURL = 
                 _hubURL + "?" +
@@ -33,16 +33,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 (clientOS != null ? "clientOS=" + clientOS : "");
             try
             {
-                // SM: HTTPClient ordentlich integrieren:
-                HttpClient httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri(requestURL);
-
-                HttpRequestMessage requestMessage = new HttpRequestMessage();
-                //requestMessage.RequestUri = new Uri(url);
-                requestMessage.Method = HttpMethod.Get;
-                HttpResponseMessage responseMessage = await httpClient.SendAsync(requestMessage);
-
-                string response = string.Empty; // await httpClient.GetStringAsync(requestURL);
+                var response = new WebClient().DownloadString(requestURL);
                 return JsonConvert.DeserializeObject<HubResponse>(response);
             }
             catch (Exception e)
