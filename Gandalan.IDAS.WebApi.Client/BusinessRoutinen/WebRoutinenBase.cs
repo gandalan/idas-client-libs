@@ -172,7 +172,16 @@ namespace Gandalan.IDAS.WebApi.Client
             //HttpClient httpClient = new HttpClient();
             //httpClient.BaseAddress = new Uri("https://bf-dev-1.gandalan.de");
 
-            return await HTTPPostAsync(HttpMethod.Post, authenticate, json);
+            var authToken = await HTTPPostAsync(HttpMethod.Put, authenticate, json);
+            if(authToken == null)
+                authToken = await HTTPPostAsync(HttpMethod.Post, authenticate, json);
+
+            authToken = await HTTPPostAsync(HttpMethod.Put, update, json);
+
+            if (authToken != null)
+                AuthToken = authToken;
+
+            return authToken;
         }
         public async Task<bool> LoginAsync()
         {
@@ -589,6 +598,17 @@ namespace Gandalan.IDAS.WebApi.Client
 
                         throw exception;
                 }
+            }
+        }
+
+        public async Task<T> HTTPGet<T>(string uri, JsonSerializerSettings settings = null)
+        {
+            using (var cl = new RESTRoutinen(Settings.Url))
+            {
+                if (AuthToken != null)
+                    cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+
+                return await cl.HTTPGet<T>(uri);
             }
         }
 

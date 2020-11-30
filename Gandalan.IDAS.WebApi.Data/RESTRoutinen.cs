@@ -112,6 +112,13 @@ namespace Gandalan.IDAS.Web
             #endregion
         }
 
+        public async Task<T> HTTPGet<T>(string url)
+        {
+            HttpClient httpClient = createHTTPClient();
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(url);
+            return JsonConvert.DeserializeObject<T>(await responseMessage.Content.ReadAsStringAsync());
+        }
+
         public async Task<string> GetAsync(string url)
         {
             WebClient client = createWebClient();

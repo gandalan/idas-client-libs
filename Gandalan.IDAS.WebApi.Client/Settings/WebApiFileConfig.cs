@@ -72,8 +72,8 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                     IWebApiConfig environment = null;
                     HubResponse response = new HubResponse();
 
-                    // SM: In GetEndpoints muss HTTPClient anstelle WebClient verwendet werden
-                    //response = await hub.GetEndpoints(env: env);
+                    // SM: Noch so basteln, dass es funktioniert:
+                    //response = await hub.GetEndpointsAsync(env: env);
 
                     response.CMS = "https://nehernext.sic-software.tk/";
                     response.DOCS = "https://app2.neher.de/";
@@ -108,7 +108,6 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 }
             }
         }
-
         private static void internalLoadSavedAuthToken(string env, IWebApiConfig environment)
         {
             var savedAuthToken = internalLoadSavedAuthToken(env);
