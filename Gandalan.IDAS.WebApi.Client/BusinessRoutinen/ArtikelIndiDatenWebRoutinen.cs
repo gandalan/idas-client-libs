@@ -51,6 +51,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             return await Task.Run(() => GetAll());
         }
+        public async Task<KatalogArtikelIndiDatenDTO[]> HTTPGetAllAsync()
+        {
+            if (HTTPLogin() != null)
+                return await HTTPGet<KatalogArtikelIndiDatenDTO[]>("ArtikelIndiDaten");
+
+            return null;
+        }
 
         public async Task<string> SaveArtikelIndiDatenAsync(KatalogArtikelIndiDatenDTO daten)
         {

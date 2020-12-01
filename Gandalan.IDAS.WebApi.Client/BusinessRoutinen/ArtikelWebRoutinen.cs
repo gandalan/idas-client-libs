@@ -29,14 +29,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public async Task<WarenGruppeDTO[]> HTTPGetAll()
-        {
-            if(HTTPLogin() != null)
-                return await HTTPGet<WarenGruppeDTO[]>("Artikel");
-
-            return null;
-        }
-
         public string SaveArtikel(KatalogArtikelDTO artikel)
         {
             if (Login())
@@ -63,7 +55,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<WarenGruppeDTO[]> HTTPGetAllAsync()
         {
-            return await Task.Run(() => HTTPGetAll());
+            if (HTTPLogin() != null)
+                return await HTTPGet<WarenGruppeDTO[]>("Artikel");
+
+            return null;
         }
 
         public async Task<string> SaveArtikelAsync(KatalogArtikelDTO artikel)
