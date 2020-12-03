@@ -13,8 +13,6 @@ namespace Gandalan.IDAS.WebApi.Client
         public MaterialBestellungWebRoutinen(IWebApiConfig settings) : base(settings)
         {            
         }
-
-
         public string ErzeugeVorgangBeiBeschichter(VorgangDTO vorgang, Guid mGuid, string produzentenKundenNummer)
         {
             if (Login())
@@ -23,12 +21,10 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             return null;
         }
-
         public async Task<string> ErzeugeVorgangBeiBeschichterAsync(VorgangDTO vorgang, Guid mGuid, string produzentenKundenNummer)
         {
             return await Task.Run(() => ErzeugeVorgangBeiBeschichter(vorgang, mGuid, produzentenKundenNummer));
         }
-
         public string UpdateStatusBeimProduzenten(List<string> pCodes, Guid mGuid, string status)
         {
             if(Login())
@@ -37,11 +33,9 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             return null;
         }
-
         public async Task<string> UpdateStatusBeimProduzentenAsync(List<string> pCodes, Guid mGuid, string status)
         {
             return await Task.Run(() => UpdateStatusBeimProduzenten(pCodes, mGuid, status));
         }
-
     }
 }
