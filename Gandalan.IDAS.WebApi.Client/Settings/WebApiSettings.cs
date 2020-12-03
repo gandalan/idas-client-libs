@@ -53,7 +53,8 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         {
             WebApiFileConfig.Initialize(appToken);
             IWebApiConfig settings = WebApiFileConfig.ByName(env);
-            CopyToThis(settings);
+            if (settings != null)
+                CopyToThis(settings);
         }
 
         public WebApiSettings() { }
