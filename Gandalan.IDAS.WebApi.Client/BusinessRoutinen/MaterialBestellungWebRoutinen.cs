@@ -37,19 +37,19 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             return await Task.Run(() => UpdateStatusBeimProduzenten(pCodes, mGuid, status));
         }
-        public BaseListItemDTO[] GetAll(string status, int jahr)
-        {
-            if (Login())
-            {
-                return Get<BaseListItemDTO[]>($"MaterialBestellung/?status={status}&jahr={jahr}");
-            }
-            return null;
-        }
         public BaseListItemDTO[] GetAll(int jahr)
         {
             if (Login())
             {
-                return Get<BaseListItemDTO[]>($"MaterialBestellung/?jahr={jahr}");
+                return Get<BaseListItemDTO[]>($"MaterialBestellungen/?jahr={jahr}");
+            }
+            return null;
+        }
+        public BaseListItemDTO[] GetAll()
+        {
+            if (Login())
+            {
+                return Get<BaseListItemDTO[]>("MaterialBestellungen");
             }
             return null;
         }
