@@ -41,7 +41,7 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             if (Login())
             {
-                return Get<BaseListItemDTO[]>($"MaterialBestellungStatus/?status={status}&jahr={jahr}");
+                return Get<BaseListItemDTO[]>($"MaterialBestellung/?status={status}&jahr={jahr}");
             }
             return null;
         }
@@ -49,7 +49,7 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             if (Login())
             {
-                return Get<BaseListItemDTO[]>($"MaterialBestellungStatus/?jahr={jahr}");
+                return Get<BaseListItemDTO[]>($"MaterialBestellung/?jahr={jahr}");
             }
             return null;
         }
