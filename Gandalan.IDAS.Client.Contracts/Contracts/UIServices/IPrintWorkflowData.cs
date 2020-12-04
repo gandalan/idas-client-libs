@@ -14,7 +14,6 @@ namespace Gandalan.Client.Contracts.UIServices
         bool IsList { get; set; }
         bool PrintSelectedData { get; set; }
         bool ShowPrintSelectedData { get; set; }
-        bool PrintPDF { get; set; }
     }
 
     public class PrintWorkflowData : IPrintWorkflowData
@@ -24,6 +23,5 @@ namespace Gandalan.Client.Contracts.UIServices
         public bool IsList { get; set; }
         public bool PrintSelectedData { get; set; }
         public bool ShowPrintSelectedData { get; set; } = true;
-        public bool PrintPDF { get; set; }
     }
 }
