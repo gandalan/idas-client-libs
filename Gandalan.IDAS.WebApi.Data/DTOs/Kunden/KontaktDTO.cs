@@ -59,6 +59,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public bool IstSelbstabholer { get; set; }
         /// <summary>
+        /// Kunde muss in Vorkasse gehen.
+        /// </summary>
+        public bool IstVorkasse { get; set; }
+        /// <summary>
         /// Zugeordnete Personen
         /// </summary>
         public virtual IList<PersonDTO> Personen { get; set; }
