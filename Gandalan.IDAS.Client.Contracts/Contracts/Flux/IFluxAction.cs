@@ -8,5 +8,7 @@ namespace Gandalan.IDAS.Client.Contracts.Flux
     {
         object Payload { get; }
         string Verb { get; }
+
+        void Deconstruct(out string verb, out object payload);
     }
 }
