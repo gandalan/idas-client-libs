@@ -10,6 +10,6 @@ namespace Gandalan.Client.Contracts.Lookups
     public interface IFeldEditor
     {
         bool CanHandle(string tag);
-        void Execute(BelegPositionDTO belegPosition, out Dictionary<string, string> newValues);
+        Task<Dictionary<string, string>> ExecuteAsync(BelegPositionDTO data);
     }
 }
