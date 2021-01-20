@@ -22,6 +22,7 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Farben
     {
         public Guid FarbgruppenGuid { get; set; }
         public bool GruppeAktiv { get; set; }
+        public bool PreisAufAnfrage { get; set; }
         public decimal AufpreisElement { get; set; }
         public decimal ProzentAufpreisElement { get; set; }
         public decimal AufpreisMaximal { get; set; }
