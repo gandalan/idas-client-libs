@@ -30,6 +30,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Schlusstext { get; set; }
         public string AktuellerStatusCode { get; set; }
         public string AktuellerStatusText { get; set; }
+        public string Ansprechpartner { get; set; }
+        public string AnsprechpartnerKunde { get; set; }
 
         public virtual IList<Guid> Positionen { get; set; }
         public virtual IList<BelegSaldoDTO> Salden { get; set; }
@@ -64,6 +66,6 @@ namespace Gandalan.IDAS.WebApi.DTO
             });
         }
 
-        
+
     }
 }
