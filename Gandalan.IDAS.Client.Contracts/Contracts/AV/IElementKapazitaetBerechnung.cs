@@ -9,5 +9,6 @@ namespace Gandalan.IDAS.Client.Contracts.AV
     public interface IElementKapazitaetBerechnung
     {
         Task<decimal> GetKapazitaetsBedarf(BelegPositionDTO belegPosition);
+        Task<decimal> GetKapazitaetsBedarf(BelegPositionAVDTO belegPositionAV);
     }
 }
