@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFrameworks>netstandard2.1;net5.0;net472</TargetFrameworks>
     <AssemblyName>GDL.IDAS.Logging</AssemblyName>
 
     <AssemblyVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</AssemblyVersion>
@@ -14,8 +14,4 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>C:\Projects\idas-client-libs\Gandalan.IDAS.Logging\GDL.IDAS.Logging.xml</DocumentationFile>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="BCrypt.Net" Version="0.1.0" />
-  </ItemGroup>
 </Project>
