@@ -172,17 +172,17 @@ namespace Gandalan.IDAS.WebApi.Client
             //HttpClient httpClient = new HttpClient();
             //httpClient.BaseAddress = new Uri("https://bf-dev-1.gandalan.de");
 
-            var authToken = await HTTPPostAsync(HttpMethod.Put, authenticate, json);
+            var authToken = await HTTPSendDataAsync(HttpMethod.Put, authenticate, json);
             if(authToken == null)
-                authToken = await HTTPPostAsync(HttpMethod.Post, authenticate, json);
+                authToken = await HTTPSendDataAsync(HttpMethod.Post, authenticate, json);
 
-            authToken = await HTTPPostAsync(HttpMethod.Put, update, json);
+            authToken = await HTTPSendDataAsync(HttpMethod.Put, update, json);
 
             if (authToken != null)
-                AuthToken = authToken;
+                AuthToken = JsonConvert.DeserializeObject<UserAuthTokenDTO>(authToken);
 
-            return authToken;
-        }
+            return AuthToken;
+        } 
         public async Task<bool> LoginAsync()
         {
             try
@@ -269,7 +269,26 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<UserAuthTokenDTO> HTTPPostAsync(HttpMethod method, string requestUri, string content) => JsonConvert.DeserializeObject<UserAuthTokenDTO>(await new RESTRoutinen(Settings.Url).HTTPPostAsync(method, requestUri, content));
+        public async Task<string> HTTPSendDataAsync(HttpMethod method, string requestUri, string content)
+        {
+            // alt:
+            // JsonConvert.DeserializeObject<UserAuthTokenDTO>(await new RESTRoutinen(Settings.Url).HTTPPostAsync(method, requestUri, content));
+
+            using(var cl = new RESTRoutinen(Settings.Url))
+            {
+                try
+                {
+                    if(AuthToken != null)
+                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+
+                    return await cl.HTTPPostAsync(method, requestUri, content);
+                }
+                catch(Exception e)
+                { }
+            }
+
+            return null;
+        }
 
         public T Post<T>(string uri, object data, JsonSerializerSettings settings = null)
         {

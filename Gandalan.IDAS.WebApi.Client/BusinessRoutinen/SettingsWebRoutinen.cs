@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
-using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client.Settings;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -33,6 +30,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public async Task<string>HTTPSave(string key, string json)
+        {
+            if (await HTTPLogin() != null)
+                return await HTTPSendDataAsync(HttpMethod.Put, "Settings/" + key, json);
+
+            return null;
+        }
 
         public async Task<Dictionary<string, ExpandoObject>> GetAllAsync()
         {
