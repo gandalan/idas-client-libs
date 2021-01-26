@@ -174,6 +174,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Freitextfeld bei Vorkasse Kunden "Hinweis auf Zahlung" (Rechnung)
         /// </summary>
         public string SchlussTextRechnung { get; set; }
+        /// <summary>
+        /// Freitextfeld für die Zahlungsbedingung
+        /// </summary>
+        public string Zahlungsbedingung{ get; set; }
 
         public KontaktDTO()
         {
