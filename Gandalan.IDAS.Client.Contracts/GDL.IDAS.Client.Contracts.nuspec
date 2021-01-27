@@ -17,5 +17,7 @@
     <files>
         <file src="bin\Release\net472\GDL.IDAS.Client.Contracts.dll" target="lib\net472\GDL.IDAS.Client.Contracts.dll" />
         <file src="bin\Release\net472\GDL.IDAS.Client.Contracts.XML" target="lib\net472\GDL.IDAS.Client.Contracts.XML" />
+        <file src="bin\Release\net5.0\GDL.IDAS.Client.Contracts.dll" target="lib\net5.0\GDL.IDAS.Client.Contracts.dll" />
+        <file src="bin\Release\netstandard2.1\GDL.IDAS.Client.Contracts.dll" target="lib\netstandard2.1\GDL.IDAS.Client.Contracts.dll" />
     </files>
 </package>
