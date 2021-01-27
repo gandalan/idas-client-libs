@@ -9,7 +9,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
 {
     public interface IFarbgruppenaufpreisService
     {
-        Task<FarbgruppenaufpreiseDTO> GetAsync();
+        Task<List<FarbgruppenaufpreiseDTO>> GetAsync();
         Task SaveAsync(FarbgruppenaufpreiseDTO aufpreis);
     }
 }
