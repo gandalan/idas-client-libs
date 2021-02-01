@@ -78,7 +78,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Branche { get; set; }
         public string Briefanrede { get; set; }
         public string Titel { get; set; }
-
         /// <summary>
         /// Namensanrede, z.B. "Herr"/"Frau"/"Firma"
         /// </summary>
@@ -157,9 +156,28 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
         public Guid KontaktMandantGuid { get; set; }
         public bool KontaktMandantIstAktiv { get; set; }
-
         public long Version { get; set; }
         public DateTime ChangedDate { get; set; }
+        /// <summary>
+        /// Zahleneintrag für Tage
+        /// </summary>
+        public int NettoTage { get; set; }
+        /// <summary>
+        /// Zahleneintrag für Tage sowie Skonto in %
+        /// </summary>
+        public decimal Skonto { get; set; }
+        /// <summary>
+        /// Freitextfeld bei Vorkasse Kunden "Hinweis auf Zahlung" (Angebot + AB)
+        /// </summary>
+        public string SchlussTextAngebotAB { get; set; }
+        /// <summary>
+        /// Freitextfeld bei Vorkasse Kunden "Hinweis auf Zahlung" (Rechnung)
+        /// </summary>
+        public string SchlussTextRechnung { get; set; }
+        /// <summary>
+        /// Freitextfeld für die Zahlungsbedingung
+        /// </summary>
+        public string Zahlungsbedingung{ get; set; }
 
         public KontaktDTO()
         {

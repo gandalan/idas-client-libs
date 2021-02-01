@@ -13,11 +13,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public FarbgruppenaufpreiseDTO Get()
+        public FarbgruppenaufpreiseDTO[] Get()
         {
             if (Login())
             {
-                return Get<FarbgruppenaufpreiseDTO>("Farbgruppenaufpreis");
+                return Get<FarbgruppenaufpreiseDTO[]>("Farbgruppenaufpreis");
             }
             return null;
         }
@@ -32,7 +32,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
 
-        public async Task<FarbgruppenaufpreiseDTO> GetAsync()
+        public async Task<FarbgruppenaufpreiseDTO[]> GetAsync()
         {
             return await Task.Run(() => Get());
         }
