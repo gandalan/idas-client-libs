@@ -64,5 +64,11 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool HatFehlerhaftenBeleg { get; set; }
         public bool PreisAufAnfrage { get; set; }
         public string TextStatus { get; set; }
+        // Email des Besitzer
+        public string Besitzer { get; set; }
+        // Falls Benutzer null und 1. Beleg ist Bestellschein -> Bestellfix -> Besitzer aus OriginalVorgangGuid aus Vorgang
+        public string Besteller { get; set; }
+        // Der Ansprechpartner vom letzten Beleg des Vorgangs
+        public string Bearbeiter { get; set; }
     }
 }

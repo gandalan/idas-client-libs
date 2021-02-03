@@ -25,7 +25,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<BaseListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}");
+                return Get<BaseListItemDTO[]>($"Lieferscheine/?status={status}&jahr={jahr}");
             }
             return null;
         }
@@ -34,7 +34,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<BaseListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}");
+                return Get<BaseListItemDTO[]>($"Lieferscheine/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}");
             }
             return null;
         }
@@ -43,16 +43,16 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<BaseListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
+                return Get<BaseListItemDTO[]>($"Lieferscheine/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
             }
             return null;
         }
 
-        public VorgangDTO GetVorgang(Guid vorgangGuid)
+        public VorgangDTO GetVorgangByLieferscheinGuid(Guid lieferscheinGuid)
         {
             if (Login())
             {
-                return Get<VorgangDTO>("Vorgang/" + vorgangGuid.ToString());
+                return Get<VorgangDTO>("Lieferscheine/" + lieferscheinGuid.ToString());
             }
             return null;
         }
@@ -100,9 +100,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await Task<BaseListItemDTO[]>.Run(() => { return LadeListe(jahr, status, changedSince, art, includeArchive, includeOthersData, search);});
         }
 
-        public async Task<VorgangDTO> GetVorgangAsync(Guid vorgangGuid)
+        public async Task<VorgangDTO> GetVorgangByLieferscheinGuidAsync(Guid vorgangGuid)
         {
-            return await Task<VorgangDTO>.Run(() => { return GetVorgang(vorgangGuid); });
+            return await Task<VorgangDTO>.Run(() => { return GetVorgangByLieferscheinGuid(vorgangGuid); });
         }
 
         public async Task<VorgangStatusDTO> GetStatusAsync(Guid vorgangGuid)

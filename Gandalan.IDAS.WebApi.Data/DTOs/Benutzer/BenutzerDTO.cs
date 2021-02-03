@@ -24,6 +24,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public IList<Guid> GesperrteVarianten { get; set; }
         public DateTime ChangedDate { get; set; }
         public string EmailAdresse { get; set; }
+        public string TelefonNummer { get; set; }
         public string Art { get; set; }
         public bool IstSicSynchronized { get; set; }
         public string LastSicMessage { get; set; }
@@ -48,13 +49,13 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public void RemoveRolle(RolleDTO rolle)
         {
-            for (int i = Rollen.Count-1; i >= 0; i--)
+            for (int i = Rollen.Count - 1; i >= 0; i--)
             {
                 if (Rollen[i].Name.Equals(rolle.Name, StringComparison.InvariantCultureIgnoreCase))
                     Rollen.RemoveAt(i);
             }
         }
-        
+
         public void AddRolle(RolleDTO rolle)
         {
             RemoveRolle(rolle.Name);
