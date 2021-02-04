@@ -20,7 +20,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             if (beleg != null && vorgang != null)
             {
                 beleg.SetupObjekte(vorgang);
-                
+
                 this.BelegGuid = beleg.BelegGuid;
                 this.VorgangGuid = vorgang.VorgangGuid;
                 this.BelegArt = beleg.BelegArt;
@@ -29,7 +29,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.AenderungsDatum = beleg.AenderungsDatum;
                 this.BelegJahr = beleg.BelegJahr;
                 this.Schlusstext = beleg.Schlusstext;
-                this.Kommission = string.IsNullOrEmpty(vorgang.Kommission)?String.Empty : "Kommission: " + vorgang.Kommission;
+                this.Kommission = string.IsNullOrEmpty(vorgang.Kommission) ? String.Empty : "Kommission: " + vorgang.Kommission;
                 this.Ausfuehrungsdatum = string.IsNullOrEmpty(beleg.AusfuehrungsDatum) ? String.Empty : "Ausführungsdatum: " + beleg.AusfuehrungsDatum;
 
                 if (string.IsNullOrEmpty(beleg.BelegTitelUeberschrift))
@@ -136,14 +136,14 @@ namespace Gandalan.IDAS.WebApi.DTO
     public class AdresseDruckDTO
     {
         public AdresseDruckDTO() { }
-        
+
         public AdresseDruckDTO(BeleganschriftDTO beleganschrift)
         {
             if (beleganschrift != null)
             {
                 this.Anrede = beleganschrift.Anrede;
                 this.Nachname = beleganschrift.Nachname;
-                this.Vorname = beleganschrift.Vorname;                
+                this.Vorname = beleganschrift.Vorname;
                 this.Firmenname = beleganschrift.Firmenname;
                 this.Zusatz = beleganschrift.Zusatz;
                 this.AdressZusatz1 = beleganschrift.AdressZusatz1;
@@ -194,6 +194,24 @@ namespace Gandalan.IDAS.WebApi.DTO
 
     public class BelegPositionDruckDTO
     {
+        public int LaufendeNummer { get; set; }
+        public string ArtikelNummer { get; set; }
+        public string Variante { get; set; }
+        public bool IstAlternativPosition { get; set; }
+        public bool IstAktiv { get; set; }
+        public decimal Menge { get; set; }
+        public string EinzelpreisOhneFarbzuschlag { get; set; }
+        public string Einzelpreis { get; set; }
+        public string Rabatt { get; set; }
+        public string Gesamtpreis { get; set; }
+        public string Farbzuschlag { get; set; }
+        public string MengenEinheit { get; set; }
+        public string Text { get; set; }
+        public string AngebotsText { get; set; }
+        public string ProduktionZusatzInfo { get; set; }
+        public bool ProduktionZusatzInfoPrintOnReport { get; set; }
+        public bool ProduktionZusatzInfoPrintZusatzEtikett { get; set; }
+
         public BelegPositionDruckDTO()
         {
         }
@@ -210,9 +228,12 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.IstAktiv = position.IstAktiv;
                 this.Menge = position.Menge;
                 this.MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.ZuschnittLaenge")) != null ? "Stk." : position.MengenEinheit;
-                if (this.MengenEinheit == null || this.MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase) ) this.MengenEinheit = "Stk.";
+                if (this.MengenEinheit == null || this.MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase)) this.MengenEinheit = "Stk.";
                 this.Text = position.Text;
                 this.AngebotsText = position.AngebotsText;
+                this.ProduktionZusatzInfo = position.ProduktionZusatzInfo;
+                this.ProduktionZusatzInfoPrintOnReport = position.ProduktionZusatzInfoPrintOnReport;
+                this.ProduktionZusatzInfoPrintZusatzEtikett = position.ProduktionZusatzInfoPrintZusatzEtikett;
                 if (preiseAnzeigen)
                 {
                     this.Farbzuschlag = position.Farbzuschlag.ToString(culture);
@@ -223,19 +244,6 @@ namespace Gandalan.IDAS.WebApi.DTO
                 }
             }
         }
-        public int LaufendeNummer { get; set; }
-        public string ArtikelNummer { get; set; }
-        public string Variante { get; set; }
-        public bool IstAlternativPosition { get; set; }
-        public bool IstAktiv { get; set; }
-        public decimal Menge { get; set; }
-        public string EinzelpreisOhneFarbzuschlag { get; set; }
-        public string Einzelpreis { get; set; }
-        public string Rabatt { get; set; }
-        public string Gesamtpreis { get; set; }
-        public string Farbzuschlag { get; set; }
-        public string MengenEinheit { get; set; }
-        public string Text { get; set; }
-        public string AngebotsText { get; set; }
+
     }
 }
