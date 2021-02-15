@@ -96,7 +96,6 @@ namespace Gandalan.Controls.WPF.Dialogs
             _webApiSettings.FriendlyName = _viewModel.ServerEnvironment.FriendlyName;
             _webApiSettings.AuthToken = null;
 
-
             if (await testConnection(_webApiSettings))
             {
                 if (_viewModel.SaveCredentials)

@@ -46,6 +46,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public virtual IList<BelegPositionDatenDTO> Daten { get; set; }
         public virtual IList<BelegPositionSonderwunschDTO> Sonderwuensche { get; set; }
         public string Besonderheiten { get; set; }
+        public string ProduktionZusatzInfo { get; set; }
+        public bool ProduktionZusatzInfoPrintOnReport { get; set; }
+        public bool ProduktionZusatzInfoPrintZusatzEtikett { get; set; }
         public bool IstBruttoGesamtpreis { get; set; }
         public bool IstBruttoEinzelpreis { get; set; }
         public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
