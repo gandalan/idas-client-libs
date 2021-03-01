@@ -7,7 +7,7 @@ namespace Gandalan.Client.Contracts.DataServices
 
     public interface IProduktionService
     {
-        Task<ProduktionsDatenDTO> GetDaten(BerechnungParameterDTO parameter);
+        Task<BerechnungResultDTO> GetDaten(BerechnungParameterDTO parameter);
         bool CanHandle(string variantenName);
     }
 }
