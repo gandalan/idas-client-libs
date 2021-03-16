@@ -24,6 +24,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         // Eigenschaften
         public bool IstZuschnittArtikel { get; set; }
         public bool IstBestellfixSonderfarbBestellbar { get; set; }
+        public bool IstIbosSonderfarbBestellbar { get; set; }
+        public bool IstArtosSonderfarbBestellbar { get; set; }
         public bool NichtRabattfaehig { get; set; }
         public bool IstEKPArtikel { get; set; }
         public bool IstGewebeArtikel { get; set; }

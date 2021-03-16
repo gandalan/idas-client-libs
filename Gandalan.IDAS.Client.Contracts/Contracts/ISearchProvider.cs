@@ -15,7 +15,6 @@ namespace Gandalan.Client.Contracts
         Guid ItemGuid { get; }
         string Title { get; }
         string Description { get; }
-        string Type { get; }
         DateTime ItemVersion { get; }
         Func<Task> OpenItem { get; }
     }

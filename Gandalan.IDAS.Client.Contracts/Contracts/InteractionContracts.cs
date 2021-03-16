@@ -36,4 +36,9 @@ namespace Gandalan.Client.Contracts
     {
         T Execute();
     }
+
+    public interface IDirtyFlag
+    {
+        bool IsDirty { get; }
+    }
 }

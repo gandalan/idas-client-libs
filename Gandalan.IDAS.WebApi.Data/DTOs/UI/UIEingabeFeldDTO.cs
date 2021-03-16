@@ -27,6 +27,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string BelegBlattText { get; set; }
         public string AngebotsText { get; set; }
         public int EingabeLevel { get; set; }
+        public int? ZusatzFeldGruppeId { get; set; }
+        public int? GehoertZuZusatzFeldGruppeId { get; set; }
         public DateTime? GueltigAb { get; set; }
         public DateTime? GueltigBis { get; set; }
 	    
