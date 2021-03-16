@@ -60,6 +60,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public DateTime? LieferDatum { get; set; }
         public DateTime? ProduktionsAuftragErstellt { get; set; }
         public Guid? GeplanteSerieGuid { get; set; }
+        public Guid? VorgaengerBelegPositionGuid { get; set; }
 
         public BelegPositionDTO()
         {

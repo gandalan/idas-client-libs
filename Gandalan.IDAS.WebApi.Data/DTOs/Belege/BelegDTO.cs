@@ -43,6 +43,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string TextFuerAnschreiben { get; set; }
         public bool IstGesperrt { get; set; }
 
+        public string ExterneReferenznummer { get; set; }
+        public Guid? ExterneMandantenGuid { get; set; }
+
         public BelegDTO()
         {
             Positionen = new ObservableCollection<Guid>();

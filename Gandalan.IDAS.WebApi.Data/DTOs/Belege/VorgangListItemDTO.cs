@@ -70,5 +70,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Besteller { get; set; }
         // Der Ansprechpartner vom letzten Beleg des Vorgangs
         public string Bearbeiter { get; set; }
+        public string ExterneReferenznummer { get; set; }
+        public Guid? ExterneMandantenGuid { get; set; }
+        public string ExternerFirmenname { get; set; }
     }
 }
