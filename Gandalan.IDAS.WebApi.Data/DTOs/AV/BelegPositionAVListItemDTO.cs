@@ -8,7 +8,7 @@ namespace Gandalan.IDAS.WebApi.DTO
     {
         public Guid BelegPositionAVGuid { get; set; }
 
-        public Guid BelegPositionGuid { get; set; }
+        public Guid? BelegPositionGuid { get; set; }
 
         public string PCode { get; set; }
 
