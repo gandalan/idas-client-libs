@@ -30,9 +30,17 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public Guid BelegPositionGuid { get; set; }
         /// <summary>
+        /// Externe BelegPositionGuid in Bestellung
+        /// </summary>
+        public Guid? BestellBelegPositionGuid { get; set; }
+        /// <summary>
         /// Original-BelegsGuid
         /// </summary>
         public Guid BelegGuid { get; set; }
+        /// <summary>
+        /// Externe BelegsGuid in Bestellung
+        /// </summary>
+        public Guid? BestellBelegGuid { get; set; }
         /// <summary>
         /// PCode (Produktionscode) für das zugehörige Fertigelement
         /// </summary>
@@ -45,6 +53,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Original-VorgangGuid
         /// </summary>
         public Guid VorgangGuid { get; set; }
+        /// <summary>
+        /// Externe VorgangGuid in Bestellung
+        /// </summary>
+        public Guid? BestellVorgangGuid { get; set; }
         /// <summary>
         /// Erstellzeitstempel des Jobs
         /// </summary>

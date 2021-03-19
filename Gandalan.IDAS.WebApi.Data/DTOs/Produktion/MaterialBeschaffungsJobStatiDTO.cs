@@ -37,6 +37,10 @@
         /// <summary>
         /// MaterialbeschaffungsJob wurde durch FolgeJob abgelöst
         /// </summary>
-        Abgelöst = 128
+        Abgelöst = 128,
+        /// <summary>
+        /// Material wurde reklamiert
+        /// </summary>
+        Reklamiert = 256
     }
 }
