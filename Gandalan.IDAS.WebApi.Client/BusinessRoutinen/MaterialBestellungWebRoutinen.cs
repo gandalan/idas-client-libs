@@ -29,6 +29,25 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             return null;
         }
+
+        public string ErzeugeReklamationBeiBeschichter(VorgangDTO vorgang, Guid quellVorgang, Guid mGuid, string produzentenKundenNummer)
+        {
+            if (Login())
+            {
+                return Put($"MaterialBestellungReklamation?quellVorgangGuid={quellVorgang}&mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", vorgang);
+            }
+            return null;
+        }
+        public async Task<string> ErzeugeReklamationBeiBeschichterAsync(VorgangDTO vorgang, Guid quellVorgang, Guid mGuid, string produzentenKundenNummer)
+        {
+            if (Login())
+            {
+                return await PutAsync($"MaterialBestellungReklamation?quellVorgangGuid={quellVorgang}&mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", vorgang);
+            }
+            return null;
+        }
+
+
         public string UpdateStatusBeimProduzenten(List<string> pCodes, Guid mGuid, string status, string externeReferenz = "")
         {
             if(Login())
