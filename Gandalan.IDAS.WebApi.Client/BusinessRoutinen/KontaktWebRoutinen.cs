@@ -1,4 +1,5 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
                 return Get<KontaktListItemDTO[]>("Kontakt");
-            throw new Exception("Login fehlgeschlagen");
+            throw new ApiException("Login fehlgeschlagen");
         }
         public KontaktListItemDTO[] GetKontakte(DateTime? changedSince)
         {
@@ -22,19 +23,19 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                     return Get<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value.ToString("yyyy-MM-ddTHH:mm:ss")}");
                 else
                     return Get<KontaktListItemDTO[]>("Kontakt");
-            throw new Exception("Login fehlgeschlagen");
+            throw new ApiException("Login fehlgeschlagen");
         }
         public KontaktDTO GetKontakt(Guid kontaktGuid)
         {
             if (Login())
                 return Get<KontaktDTO>($"Kontakt/{kontaktGuid}");
-            throw new Exception("Login fehlgeschlagen");
+            throw new ApiException("Login fehlgeschlagen");
         }
         public KontaktDTO SaveKontakt(KontaktDTO kontakt)
         {
             if (Login())
                 return Put<KontaktDTO>("Kontakt", kontakt);
-            throw new Exception("Login fehlgeschlagen");
+            throw new ApiException("Login fehlgeschlagen");
         }
         public async Task<KontaktListItemDTO[]> GetKontakteAsync() => await Task.Run(() => GetKontakte());
         public async Task<KontaktListItemDTO[]> GetKontakteAsync(DateTime? changedSince) => await Task.Run(() => GetKontakte(changedSince));

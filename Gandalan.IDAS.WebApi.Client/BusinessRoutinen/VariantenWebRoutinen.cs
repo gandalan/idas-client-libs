@@ -1,4 +1,5 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Threading.Tasks;
@@ -13,13 +14,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
                 return Get<VarianteDTO[]>("Variante?includeUIDefs=true&maxLevel=99");
-            throw new Exception("Login fehlgeschlagen");
+            throw new ApiException("Login fehlgeschlagen");
         }
         public VarianteDTO SaveVariante(VarianteDTO variante)
         {
             if (Login())
                 return Put<VarianteDTO>($"Variante/{variante.VarianteGuid}", variante);
-            throw new Exception("Login fehlgeschlagen");
+            throw new ApiException("Login fehlgeschlagen");
         }
         public async Task<VarianteDTO[]> GetAllAsync() => await Task.Run(() => GetAll());
         public async Task<VarianteDTO> SaveVarianteAsync(VarianteDTO variante) => await Task.Run(() => SaveVariante(variante));
