@@ -23,7 +23,7 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         string Status { get; set; }
         string PCode { get; set; }
         string Serie { get; set; }
-        public IList<IProduktionsInfo> ProduktionsInfos { get; set; }
+        IList<IProduktionsInfo> ProduktionsInfos { get; set; }
         DateTime StatusDatum { get; set; }
         bool IsDeleted { get; set; }
         bool IstAktiv { get; set; }
