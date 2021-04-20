@@ -30,7 +30,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public async Task<string>HTTPSave(string key, string json)
+        public async Task<string>HTTPSaveAsync(string key, string json)
         {
             if (await HTTPLogin() != null)
                 return await HTTPSendDataAsync(HttpMethod.Put, "Settings/" + key, json);
@@ -43,6 +43,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await Task.Run(() => { return GetAll(); });
         }
 
+        public async Task<Dictionary<string, ExpandoObject>> HTTPGetAllAsync()
+        {
+            if (HTTPLogin() != null)
+                return await HTTPGet<Dictionary<string, ExpandoObject>>("Settings");
+
+            return null;
+        }
 
         public async Task SaveAsync(string key, ExpandoObject expandoObject)
         {

@@ -69,7 +69,8 @@ namespace Gandalan.IDAS.Web
             WebClient client = createWebClient();
             try
             {
-                return JsonConvert.DeserializeObject<T>(Get(url), settings);
+                var test = Get(url);
+                return JsonConvert.DeserializeObject<T>(test, settings);
             }
             catch
             #region Code
