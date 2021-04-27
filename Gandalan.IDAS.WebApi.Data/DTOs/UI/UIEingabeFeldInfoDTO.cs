@@ -14,5 +14,6 @@ namespace Gandalan.IDAS.WebApi.DTO
 		public string HilfeText { get; set; }
 	    public string WarnText { get; set; }
         public string FehlerText { get; set; }
+		public string VorgabeWert { get; set; }
 	}
 }

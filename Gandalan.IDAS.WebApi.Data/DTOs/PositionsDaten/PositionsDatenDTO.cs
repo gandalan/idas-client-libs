@@ -31,5 +31,13 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid OberflaecheGuid { get; set; }
         public bool IstSonderFarbPosition { get; set; }
         public string Gewebe { get; set; }
+
+        public DateTime LieferDatum { get; set; }
+        public string Serie { get; set; }
+        public string PCode { get; set; }
+        public string VorgangsNummer { get; set; }
+        public string DruckDatum { get; set; }
+        public string VersandAdresse { get; set; }
+
     }
 }

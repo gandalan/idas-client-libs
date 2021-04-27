@@ -1,4 +1,5 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
+﻿using Gandalan.IDAS.WebApi.Data.DTOs.Produktion;
+using Gandalan.IDAS.WebApi.DTO;
 using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.DataServices
@@ -6,7 +7,7 @@ namespace Gandalan.Client.Contracts.DataServices
 
     public interface IProduktionService
     {
-        Task<ProduktionsDatenDTO> GetDaten(BelegPositionDTO belegPosition);
+        Task<BerechnungResultDTO> GetDaten(BerechnungParameterDTO parameter);
         bool CanHandle(string variantenName);
     }
 }

@@ -23,19 +23,46 @@ namespace Gandalan.IDAS.WebApi.Client
         }
         public async Task<string> ErzeugeVorgangBeiBeschichterAsync(VorgangDTO vorgang, Guid mGuid, string produzentenKundenNummer)
         {
-            return await Task.Run(() => ErzeugeVorgangBeiBeschichter(vorgang, mGuid, produzentenKundenNummer));
-        }
-        public string UpdateStatusBeimProduzenten(List<string> pCodes, Guid mGuid, string status)
-        {
-            if(Login())
+            if (Login())
             {
-                return Post($"MaterialBestellungStatus?mGuid={mGuid}&status={status}", pCodes);
+                return await PutAsync($"MaterialBestellung?mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", vorgang);
             }
             return null;
         }
-        public async Task<string> UpdateStatusBeimProduzentenAsync(List<string> pCodes, Guid mGuid, string status)
+
+        public string ErzeugeReklamationBeiBeschichter(VorgangDTO vorgang, Guid quellVorgang, Guid mGuid, string produzentenKundenNummer)
         {
-            return await Task.Run(() => UpdateStatusBeimProduzenten(pCodes, mGuid, status));
+            if (Login())
+            {
+                return Put($"MaterialBestellungReklamation?quellVorgangGuid={quellVorgang}&mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", vorgang);
+            }
+            return null;
+        }
+        public async Task<string> ErzeugeReklamationBeiBeschichterAsync(VorgangDTO vorgang, Guid quellVorgang, Guid mGuid, string produzentenKundenNummer)
+        {
+            if (Login())
+            {
+                return await PutAsync($"MaterialBestellungReklamation?quellVorgangGuid={quellVorgang}&mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", vorgang);
+            }
+            return null;
+        }
+
+
+        public string UpdateStatusBeimProduzenten(List<string> pCodes, Guid mGuid, string status, string externeReferenz = "")
+        {
+            if(Login())
+            {
+                return Post($"MaterialBestellungStatus?mGuid={mGuid}&status={status}&externeReferenz={externeReferenz}", pCodes);
+            }
+            return null;
+        }
+        public async Task<string> UpdateStatusBeimProduzentenAsync(List<string> pCodes, Guid mGuid, string status, string externeReferenz = "")
+        {
+            if (Login())
+            {
+                return await PostAsync($"MaterialBestellungStatus?mGuid={mGuid}&status={status}&externeReferenz={externeReferenz}", pCodes);
+            }
+            return null;
         }
         public BaseListItemDTO[] GetAll(int jahr)
         {
