@@ -9,6 +9,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.AV
 {
     public interface IProduktionsDatenProcessor
     {
-        Task<ProduktionsDatenDTO> Process(ProduktionsDatenDTO daten, BelegPositionDTO originalPos);
+        Task<ProduktionsDatenDTO> Process(ProduktionsDatenDTO daten, BelegPositionDTO originalPos, BelegPositionAVDTO originalAVPos);
     }
 }
