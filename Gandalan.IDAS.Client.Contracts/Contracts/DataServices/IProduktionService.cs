@@ -9,5 +9,6 @@ namespace Gandalan.Client.Contracts.DataServices
     {
         Task<BerechnungResultDTO> GetDaten(BerechnungParameterDTO parameter);
         bool CanHandle(string variantenName);
+        string TempFolder { get; set; }
     }
 }
