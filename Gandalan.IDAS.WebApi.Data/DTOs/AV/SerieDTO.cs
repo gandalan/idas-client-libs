@@ -17,5 +17,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal Kapazitaet { get; set; }
         public decimal KapazitaetReserviert { get; set; }
         public DateTime ChangedDate { get; set; }
-    }
+        public string Kuerzel { get; set; }
+}
 }
