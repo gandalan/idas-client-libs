@@ -18,5 +18,6 @@ namespace Gandalan.IDAS.WebApi.DTO.DTOs.Reports
 
         public long Version { get; set; }
         public DateTime ChangedDate { get; set; }
+        public bool IsCoreReport { get; set; }
     }
 }
