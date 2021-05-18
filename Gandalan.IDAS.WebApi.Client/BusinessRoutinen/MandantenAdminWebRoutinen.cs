@@ -18,10 +18,13 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             if (Login())
             {
-                if (String.IsNullOrEmpty(filter))
-                    return Get<List<MandantDTO>>("MandantenAdmin?filter=" + filter + "&onlyHaendler=" + onlyHaendler + "&onlyProduzenten=" + onlyProduzenten);
+                if (!String.IsNullOrEmpty(filter))
+                    filter = System.Uri.EscapeDataString(filter);
                 else
-                    return Get<List<MandantDTO>>("MandantenAdmin?filter=" + System.Uri.EscapeDataString(filter) + "&onlyHaendler=" + onlyHaendler + "&onlyProduzenten=" + onlyProduzenten);
+                    fitler = string.Empty;
+
+
+                return Get<List<MandantDTO>>("MandantenAdmin?filter=" + filter + "&onlyHaendler=" + onlyHaendler + "&onlyProduzenten=" + onlyProduzenten);
             }
 
             return null;
