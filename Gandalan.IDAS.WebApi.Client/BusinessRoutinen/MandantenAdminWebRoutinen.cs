@@ -21,7 +21,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 if (!String.IsNullOrEmpty(filter))
                     filter = System.Uri.EscapeDataString(filter);
                 else
-                    fitler = string.Empty;
+                    filter = string.Empty;
 
 
                 return Get<List<MandantDTO>>("MandantenAdmin?filter=" + filter + "&onlyHaendler=" + onlyHaendler + "&onlyProduzenten=" + onlyProduzenten);
