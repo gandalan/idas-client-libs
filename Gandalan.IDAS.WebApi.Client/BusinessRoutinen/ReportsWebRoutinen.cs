@@ -62,7 +62,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Put("Reports/" + ZielMandantGuid, reportGuids);
+                return Put("Reports/ZielMandantGuid=" + ZielMandantGuid, reportGuids);
             }
             return null;
         }
