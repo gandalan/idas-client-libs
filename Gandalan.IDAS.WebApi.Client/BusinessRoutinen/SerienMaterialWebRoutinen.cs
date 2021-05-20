@@ -21,7 +21,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Post<string>("SerieMaterialbedarf", JsonConvert.SerializeObject(serieGuid));
+                return Post<string>("SerieMaterialbedarf", serieGuid);
             }
             return null;
         }
@@ -39,7 +39,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<string>("SerieMaterialbedarf?serieGuid=" + serieGuid.ToString());
+                return Delete<string>("SerieMaterialbedarf?serieGuid=" + serieGuid.ToString());
             }
             return null;
         }
@@ -47,17 +47,17 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<List<MaterialbedarfDTO>> GetMaterialAsync(Guid serieGuid)
         {
-            return await Task<List<MaterialbedarfDTO>>.Run(() => { return GetMaterial(serieGuid); });
+            return await Task.Run(() => { return GetMaterial(serieGuid); });
         }
 
         public async Task<string> ResetMaterialAsync(Guid serieGuid)
         {
-            return await Task<string>.Run(() => { return ResetMaterial(serieGuid); });
+            return await Task.Run(() => { return ResetMaterial(serieGuid); });
         }
         
         public async Task<string> MaterialBerechnenAsync(Guid serieGuid)
         {
-            return await Task<string>.Run(() => { return MaterialBerechnen(serieGuid); });
+            return await Task.Run(() => { return MaterialBerechnen(serieGuid); });
         }
     }
 }
