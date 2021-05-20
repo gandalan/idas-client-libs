@@ -17,12 +17,20 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public LieferzusageWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
+        public List<LieferzusageDTO> GetAllZusagen(Guid serie, string lieferant = "")
+        {
+            if (Login())
+            {
+                return Get<List<LieferzusageDTO>>($"Lieferzusage/?serieGuid={serie.ToString()}&lieferant={lieferant}");
+            }
+            return null;
+        }
 
         public string MaterialZusagen(LieferzusageDTO lieferzusage)
         {
             if (Login())
             {
-                return Post<string>("Lieferzusage", JsonConvert.SerializeObject(lieferzusage));
+                return Post<string>("Lieferzusage", lieferzusage);
             }
             return null;
         }
@@ -31,20 +39,24 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<string>("Lieferzusage?zusageGuid=" + lieferzusageGuid.ToString());
+                return Delete<string>("Lieferzusage?zusageGuid=" + lieferzusageGuid.ToString());
             }
             return null;
         }
 
+        public async Task<List<LieferzusageDTO>> GetAllZusagenAsync(Guid serie, string lieferant = "")
+        {
+            return await Task.Run(() => { return GetAllZusagen(serie, lieferant); });
+        }
 
         public async Task<string> MaterialZusagenAsync(LieferzusageDTO lieferzusage)
         {
-            return await Task<string>.Run(() => { return MaterialZusagen(lieferzusage); });
+            return await Task.Run(() => { return MaterialZusagen(lieferzusage); });
         }
 
         public async Task<string> ResetZusageAsync(Guid lieferzusageGuid)
         {
-            return await Task<string>.Run(() => { return ResetZusage(lieferzusageGuid); });
+            return await Task.Run(() => { return ResetZusage(lieferzusageGuid); });
         }        
     }
 }
