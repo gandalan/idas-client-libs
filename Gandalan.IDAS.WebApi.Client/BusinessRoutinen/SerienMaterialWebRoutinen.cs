@@ -35,6 +35,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public List<MaterialbedarfDTO> GetOffenerMaterialBedarf(Guid serieGuid)
+        {
+            if (Login())
+            {
+                return Get<List<MaterialbedarfDTO>>("SerieOffenerMaterialbedarf?serieGuid=" + serieGuid.ToString());
+            }
+            return null;
+        }
+
         public string ResetMaterial(Guid serieGuid)
         {
             if (Login())
@@ -48,6 +57,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<List<MaterialbedarfDTO>> GetMaterialAsync(Guid serieGuid)
         {
             return await Task.Run(() => { return GetMaterial(serieGuid); });
+        }
+        public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfAsync(Guid serieGuid)
+        {
+            return await Task.Run(() => { return GetOffenerMaterialBedarf(serieGuid); });
         }
 
         public async Task<string> ResetMaterialAsync(Guid serieGuid)
