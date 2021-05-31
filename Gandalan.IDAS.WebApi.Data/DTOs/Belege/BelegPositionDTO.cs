@@ -45,7 +45,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string MengenEinheit { get; set; }
         public string Text { get; set; }
         public virtual IList<BelegPositionDatenDTO> Daten { get; set; }
-        public virtual IList<BelegPositionSonderwunschGruppeDTO> SonderwunschGruppen { get; set; }
+        public virtual IList<BelegPositionSonderwunschDTO> Sonderwuensche { get; set; }
         public string Besonderheiten { get; set; }
         public string ProduktionZusatzInfo { get; set; }
         public bool ProduktionZusatzInfoPrintOnReport { get; set; }
