@@ -13,6 +13,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTO
         [JsonProperty("Variante")]
         public string Name { get; set; }
         public string KederZeigtNach { get; set; }
-        public BelegPositionSonderwunschGruppeDTO[] Eigenschaften { get; set; }
+        public BelegPositionSonderwunschDTO[] Eigenschaften { get; set; }
     }
 }
