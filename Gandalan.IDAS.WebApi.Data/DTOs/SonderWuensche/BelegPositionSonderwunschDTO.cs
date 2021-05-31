@@ -12,6 +12,7 @@ namespace Gandalan.IDAS.WebApi.Data.DTO
         public decimal Laenge { get; set; }
         public decimal Hoehe { get; set; }
         public string Typ { get; set; }
+        public string Gruppe { get; set; }
         public string Farbe { get; set; }
         public float Aufpreis { get; set; }
         public string Bezeichnung { get; set; }
