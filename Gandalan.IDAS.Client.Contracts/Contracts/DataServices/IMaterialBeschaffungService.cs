@@ -10,13 +10,6 @@ namespace Gandalan.Client.Contracts.DataServices
         Guid ServiceGuid { get; }
         string DisplayName { get; }
         int Order { get; set; }
-
-        bool CanHandle(MaterialBeschaffungsJobDTO job);
-        int GetLieferzeit(MaterialBeschaffungsJobDTO beschaffungsJob);
-        void RegisterJob(MaterialBeschaffungsJobDTO beschaffungsJob);
-        
-        IList<MaterialBeschaffungsJobDTO> GetJobs(Guid belegpositionsGuid);
-        IList<MaterialBeschaffungsJobDTO> GetJobs(string pCode);
         
     }
 }
