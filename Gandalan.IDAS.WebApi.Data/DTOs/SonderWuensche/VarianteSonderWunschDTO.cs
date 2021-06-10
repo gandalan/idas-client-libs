@@ -14,6 +14,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTO
         public string Name { get; set; }
         public string KederZeigtNach { get; set; }
         public string[] Imports { get; set; }
-        public BelegPositionSonderwunschDTO[] Eigenschaften { get; set; }
+        public List<BelegPositionSonderwunschDTO> Eigenschaften { get; set; } = new List<BelegPositionSonderwunschDTO>();
     }
 }
