@@ -99,6 +99,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstSonderfarbe { get; set; }
         public string MaterialPCode { get; set; }
         public string Bemerkung { get; set; }
-        public Guid AVPositionGuid { get; set; }
+        public Guid? AVPositionGuid { get; set; }
     }
 }
