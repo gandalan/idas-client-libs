@@ -95,5 +95,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Kennzeichen, ob das Profil gedreht gesägt wird (z.B. bei PT2/46)
         /// </summary>
         public bool ProfilGedrehtSaegen { get; set; }
+
+        public bool IstSonderfarbe { get; set; }
+        public string MaterialPCode { get; set; }
+        public string Bemerkung { get; set; }
+        public Guid AVPositionGuid { get; set; }
     }
 }

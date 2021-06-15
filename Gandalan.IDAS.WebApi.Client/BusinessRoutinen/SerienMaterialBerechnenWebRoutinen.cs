@@ -11,9 +11,9 @@ using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
-    public class SerienMaterialWebRoutinen : WebRoutinenBase
+    public class SerienMaterialBerechnenWebRoutinen : WebRoutinenBase
     {
-        public SerienMaterialWebRoutinen(IWebApiConfig settings) : base(settings)
+        public SerienMaterialBerechnenWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
 
@@ -21,7 +21,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Post<string>("SerieMaterialbedarf", serieGuid);
+                return Post<string>("SerieMaterialbedarfBerechnen", serieGuid);
             }
             return null;
         }
@@ -30,7 +30,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<List<MaterialbedarfDTO>>("SerieMaterialbedarf?serieGuid=" + serieGuid.ToString());
+                return Get<List<MaterialbedarfDTO>>("SerieMaterialbedarfBerechnen?serieGuid=" + serieGuid.ToString());
             }
             return null;
         }
@@ -48,7 +48,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Delete<string>("SerieMaterialbedarf?serieGuid=" + serieGuid.ToString());
+                return Delete<string>("SerieMaterialbedarfBerechnen?serieGuid=" + serieGuid.ToString());
             }
             return null;
         }
