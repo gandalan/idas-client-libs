@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFrameworks>net472;net48</TargetFrameworks>
     <UseWPF>true</UseWPF>
 
     <AssemblyName>GDL.IDAS.WebApi.Client.Wpf</AssemblyName>

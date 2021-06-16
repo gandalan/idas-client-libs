@@ -10,13 +10,15 @@
         <description>Gandalan.IDAS.Client.Contracts</description>
         <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2020</copyright>
         <dependencies>
-          <dependency id="Newtonsoft.Json" version="12.0.3" />
+          <dependency id="Newtonsoft.Json" version="13.0.1" />
           <dependency id="GDL.IDAS.WebApi.Data" version="BUILDVERSION" />
         </dependencies>
     </metadata>
     <files>
         <file src="bin\Release\net472\GDL.IDAS.Client.Contracts.dll" target="lib\net472\GDL.IDAS.Client.Contracts.dll" />
         <file src="bin\Release\net472\GDL.IDAS.Client.Contracts.XML" target="lib\net472\GDL.IDAS.Client.Contracts.XML" />
+      <file src="bin\Release\net48\GDL.IDAS.Client.Contracts.dll" target="lib\net48\GDL.IDAS.Client.Contracts.dll" />
+      <file src="bin\Release\net48\GDL.IDAS.Client.Contracts.XML" target="lib\net48\GDL.IDAS.Client.Contracts.XML" />
         <file src="bin\Release\net5.0\GDL.IDAS.Client.Contracts.dll" target="lib\net5.0\GDL.IDAS.Client.Contracts.dll" />
         <file src="bin\Release\netstandard2.1\GDL.IDAS.Client.Contracts.dll" target="lib\netstandard2.1\GDL.IDAS.Client.Contracts.dll" />
     </files>
