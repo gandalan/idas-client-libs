@@ -58,6 +58,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
         }
 
+        public string CopyReport(Guid ZielMandantGuid, List<Guid> reportGuids)
+        {
+            if (Login())
+            {
+                return Put("Reports?ZielMandantGuid=" + ZielMandantGuid, reportGuids);
+            }
+            return null;
+        }
+
 
         public async Task<ReportDTO[]> GetAllAsync()
         {
@@ -74,6 +83,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task DeleteReportAsync(Guid reportGuid)
         {
             await Task.Run(() => DeleteReport(reportGuid));
+        }
+        public async Task CopyReportAsync(Guid ZielMandantGuid, List<Guid> reportGuids)
+        {
+            await Task.Run(() => CopyReport(ZielMandantGuid, reportGuids));
         }
     }
 }

@@ -16,5 +16,6 @@ namespace Gandalan.Client.Contracts.DataServices
         Task DeleteReport(ReportDTO reportToDelete);
         Task<ReportDTO> GetReport(Guid guid);
         Task<ReportDTO> GetDefaultReport(Guid guid);
+        Task CopyReportZielMandant(Guid ZielMandantGuid, List<Guid> reportGuids);
     }
 }

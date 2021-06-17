@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gandalan.IDAS.WebApi.Data.DTOs.SonderWuensche;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Gandalan.IDAS.WebApi.Data.DTO
         [JsonProperty("Variante")]
         public string Name { get; set; }
         public string KederZeigtNach { get; set; }
-        public BelegPositionSonderwunschDTO[] Eigenschaften { get; set; }
+        public string[] Imports { get; set; }
+        public List<BelegPositionSonderwunschDTO> Eigenschaften { get; set; } = new List<BelegPositionSonderwunschDTO>();
     }
 }

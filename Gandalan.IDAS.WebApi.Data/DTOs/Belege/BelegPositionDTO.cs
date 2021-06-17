@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Gandalan.IDAS.WebApi.Data.DTO;
+using Gandalan.IDAS.WebApi.Data.DTOs.SonderWuensche;
 using Gandalan.IDAS.WebApi.Util;
 using PropertyChanged;
 

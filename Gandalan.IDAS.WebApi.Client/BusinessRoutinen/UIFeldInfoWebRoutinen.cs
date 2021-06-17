@@ -1,27 +1,31 @@
-﻿using System;
-using System.Threading.Tasks;
-using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client.Settings;
+﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.DTO;
+using System;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
     public class UIFeldInfoWebRoutinen : WebRoutinenBase
     {
-        public UIFeldInfoWebRoutinen(IWebApiConfig settings) : base(settings)
-        {
-        }
+        public UIFeldInfoWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
         public UIEingabeFeldInfoDTO[] GetAll()
         {
             if (Login())
-            {
                 return Get<UIEingabeFeldInfoDTO[]>("UIEingabeFeldInfo");
-            }
-            return null;
+            throw new ApiException("Login fehlgeschlagen");
         }
+        public UIEingabeFeldInfoDTO SaveUIEingabeFeldInfo(UIEingabeFeldInfoDTO uiEingabeFeldInfo)
+        {
+            if (Login())
+                return Put<UIEingabeFeldInfoDTO>($"UIEingabeFeldInfo/{uiEingabeFeldInfo.UIEingabeFeldGuid}", uiEingabeFeldInfo);
+            throw new ApiException("Login fehlgeschlagen");
+        }
+        public async Task SaveUIEingabeFeldInfoAsync(UIEingabeFeldInfoDTO uiEingabeFeldInfo) => await Task.Run(() => SaveUIEingabeFeldInfo(uiEingabeFeldInfo));
+        public async Task<UIEingabeFeldInfoDTO[]> GetAllAsync() => await Task.Run(() => { return GetAll(); });
 
-        
+        [Obsolete("Funktion 'SaveUIEingabeFeldInfo()' verwenden")]
         public string Save(UIEingabeFeldInfoDTO dto)
         {
             if (Login())
@@ -30,13 +34,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return null;
         }
-
-
-        public async Task<UIEingabeFeldInfoDTO[]> GetAllAsync()
-        {
-            return await Task.Run(() => { return GetAll(); });
-        }
-
+        [Obsolete("Funktion 'SaveUIEingabeFeldInfo()' verwenden")]
         public async Task SaveAsync(UIEingabeFeldInfoDTO dto)
         {
             await Task.Run(() => Save(dto));
