@@ -32,6 +32,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public BelegPositionAVDTO GetBelegPositionAVById(Guid avGuid)
+        {
+            if (Login())
+            {
+                return Get<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid.ToString()}");
+            }
+            return null;
+        }
+
         public SerieDTO[] GetAllSerien()
         {
             if (Login())
@@ -137,6 +146,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             if (Login())
             {
                 return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}");
+            }
+            return null;
+        }
+
+        public async Task<BelegPositionAVDTO> GetBelegPositionAVByIdAsync(Guid avGuid)
+        {
+            if (Login())
+            {
+                return await GetAsync<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid.ToString()}");
             }
             return null;
         }
