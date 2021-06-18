@@ -18,11 +18,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
    
-        public MaterialbedarfDTO AddOrUpdate(SerienMaterialEditDTO dto)
+        public SerienMaterialEditDTO AddOrUpdate(SerienMaterialEditDTO dto)
         {
             if (Login())
             {
-                return Put<MaterialbedarfDTO>("SerieMaterialbedarfEdit", dto);
+                return Put<SerienMaterialEditDTO>("SerieMaterialbedarfEdit", dto);
             }
             return null;
         }
@@ -37,11 +37,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
 
-        public async Task<MaterialbedarfDTO> AddOrUpdateAsync(MaterialbedarfDTO dto)
+        public async Task<SerienMaterialEditDTO> AddOrUpdateAsync(MaterialbedarfDTO dto)
         {
             if (Login())
             {
-                return await PutAsync<MaterialbedarfDTO>("SerieMaterialbedarfEdit", dto);
+                return await PutAsync<SerienMaterialEditDTO>("SerieMaterialbedarfEdit", dto);
             }
             return null;
         }
