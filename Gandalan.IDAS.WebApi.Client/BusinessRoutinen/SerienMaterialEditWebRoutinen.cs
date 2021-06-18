@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
+using Gandalan.IDAS.WebApi.Data.DTOs.AV;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
 
@@ -17,7 +18,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
    
-        public MaterialbedarfDTO AddOrUpdate(MaterialbedarfDTO dto)
+        public MaterialbedarfDTO AddOrUpdate(SerienMaterialEditDTO dto)
         {
             if (Login())
             {
@@ -30,7 +31,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Delete<string>("SerieMaterialbedarfEdit?serieGuid=" + materialbedarfGuid.ToString());
+                return Delete<string>("SerieMaterialbedarfEdit?bedarfGuid=" + materialbedarfGuid.ToString());
             }
             return null;
         }
@@ -38,12 +39,20 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<MaterialbedarfDTO> AddOrUpdateAsync(MaterialbedarfDTO dto)
         {
-            return await Task.Run(() => { return AddOrUpdate(dto); });
+            if (Login())
+            {
+                return await PutAsync<MaterialbedarfDTO>("SerieMaterialbedarfEdit", dto);
+            }
+            return null;
         }
 
         public async Task<string> DeleteMaterialAsync(Guid materialbedarfGuid)
         {
-            return await Task.Run(() => { return DeleteMaterial(materialbedarfGuid); });
+            if (Login())
+            {
+                return await DeleteAsync<string>("SerieMaterialbedarfEdit?bedarfGuid=" + materialbedarfGuid.ToString());
+            }
+            return null;
         }
     }
 }
