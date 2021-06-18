@@ -16,6 +16,7 @@ namespace Gandalan.Client.Contracts.DataServices
         Task<VorgangDTO> LoadVorgangAsync(Guid guid);
         Task ArchiveVorgang(Guid vorgangGuid);
         Task ArchiveVorgangList(List<Guid> vorgangGuidList);
+        Task SetTextStatus(List<Guid> vorgangGuidList, string textStatus);
 
         Task<VorgangListItemDTO[]> LoadVorgaengeForKundeAsync(Guid kundeGuid);
     }
