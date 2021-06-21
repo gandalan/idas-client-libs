@@ -48,19 +48,19 @@ namespace Gandalan.IDAS.WebApi.Client
         }
 
 
-        public string UpdateStatusBeimProduzenten(List<string> pCodes, Guid mGuid, string status, string externeReferenz = "")
+        public string UpdateStatusBeimProduzenten(Guid vorgangGuid, string status, string externeReferenz = "")
         {
             if(Login())
             {
-                return Post($"MaterialBestellungStatus?mGuid={mGuid}&status={status}&externeReferenz={externeReferenz}", pCodes);
+                return Post($"MaterialBestellungStatus?vorgangGuid={vorgangGuid}&status={status}&externeReferenz={externeReferenz}", null);
             }
             return null;
         }
-        public async Task<string> UpdateStatusBeimProduzentenAsync(List<string> pCodes, Guid mGuid, string status, string externeReferenz = "")
+        public async Task<string> UpdateStatusBeimProduzentenAsync(Guid vorgangGuid, string status, string externeReferenz = "")
         {
             if (Login())
             {
-                return await PostAsync($"MaterialBestellungStatus?mGuid={mGuid}&status={status}&externeReferenz={externeReferenz}", pCodes);
+                return await PostAsync($"MaterialBestellungStatus?vorgangGuid={vorgangGuid}&status={status}&externeReferenz={externeReferenz}", null);
             }
             return null;
         }
