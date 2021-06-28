@@ -18,7 +18,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstBerechnet { get; set; }
         public bool IstProduziert { get; set; }
         public bool IstGeloescht { get; set; }
-        public MaterialBeschaffungsJobStatiDTO Materialbeschaffungsstatus { get; set; }
         public bool HatSonderwuensche { get; set; }
         public string Variante { get; set; }
         public string Kommission { get; set; }

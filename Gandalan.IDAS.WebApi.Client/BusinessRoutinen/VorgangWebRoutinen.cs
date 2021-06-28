@@ -105,6 +105,19 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public void SetTextStatus(List<Guid> vorgangGuids, string textStatus)
+        {
+            if (Login())
+            {
+                VorgangTextStatusDTO set = new VorgangTextStatusDTO()
+                {
+                    VorgangGuids = vorgangGuids,
+                    NeuerTextStatus = textStatus
+                };
+                Post("VorgangTextStatus", set);
+            }
+        }
+
         public void ArchiviereVorgang(Guid vorgangGuid)
         {
             if (Login())
@@ -194,6 +207,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<VorgangStatusDTO> SetStatusAsync(Guid vorgangGuid, string statusCode)
         {
             return await Task<VorgangStatusDTO>.Run(() => { return SetStatus(vorgangGuid, statusCode); });
+        }
+
+        public async Task SetTextStatusAsync(List<Guid> vorgangGuids, string textStatus)
+        {
+            await Task.Run(() => { SetTextStatus(vorgangGuids, textStatus); });
         }
     }
 }
