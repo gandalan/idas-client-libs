@@ -18,6 +18,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string PositionsKommission { get; set; }
         public string Text { get; set; }
         public string AngebotsText { get; set; }
+        public string SonderwunschText { get; set; }
+        public string SonderwunschAngebotsText { get; set; }
         public DateTime ErfassungsDatum { get; set; }
         public float BmBreite { get; set; }
         public float BmHoehe { get; set; }
