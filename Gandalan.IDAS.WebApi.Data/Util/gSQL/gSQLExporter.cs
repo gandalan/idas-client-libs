@@ -143,7 +143,9 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                 aktuelleSektion.Items.Add(new gSQLItem("Position_PositionsKommission", pos.PositionsKommission));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_Text", pos.Text?.Replace("\r", "||").Replace("\n", "")));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_AngebotsText", pos.AngebotsText?.Replace("\r", "||").Replace("\n", "")));
-                
+                aktuelleSektion.Items.Add(new gSQLItem("Position_SonderwunschText", pos.SonderwunschText?.Replace("\r", "||").Replace("\n", "")));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_SonderwunschAngebotsText", pos.SonderwunschAngebotsText?.Replace("\r", "||").Replace("\n", "")));
+
                 foreach (var konfig in pos.Daten.Where(u => u.UnterkomponenteName == "Variante"))
                 {
                     var key = konfig.KonfigName.Replace("Konfig.", "");
