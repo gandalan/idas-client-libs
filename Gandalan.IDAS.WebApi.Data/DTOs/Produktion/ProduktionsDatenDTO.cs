@@ -32,6 +32,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public PositionsDatenDTO PositionsDaten { get; set; }
         
         public List<SonderwuenscheDTO> Sonderwuensche { get; set; } = new List<SonderwuenscheDTO>();
+        public string[] Log { get; set; }
 
         /// <summary>
         /// Gibt Artikel aus dem Materialbedarf zurück, die KEINE Zuschnitte sind
