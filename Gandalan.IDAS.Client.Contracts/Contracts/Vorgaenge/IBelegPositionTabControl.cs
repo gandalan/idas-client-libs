@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
 {
@@ -8,5 +9,14 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         int Order { get; }
 
         Task OnSave();
+
+        Task OnNavigation(TabNavigationKind kind);
+    }
+
+    public enum TabNavigationKind
+    {
+        Unknown = 0,
+        Enter = 1,
+        Leave = 2
     }
 }
