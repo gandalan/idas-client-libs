@@ -10,9 +10,9 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
     {
         byte[] GetFile(string name);
         Task<byte[]> GetFileAsync(string name);
-        FileInfoDTO[] GetFileList(string directory = "/");
-        Task<FileInfoDTO[]> GetFileListAsync();
-        byte[] SaveFile(string fileName, byte[] data);
+        FileInfoDTO[] GetFileList(string directory = "");
+        Task<FileInfoDTO[]> GetFileListAsync(string directory = "");
+        void SaveFile(string fileName, byte[] data);
         Task SaveFileAsync(string fileName, byte[] data);
     }
 }

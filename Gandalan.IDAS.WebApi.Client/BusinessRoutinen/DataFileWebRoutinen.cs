@@ -34,13 +34,12 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
                 
-        public byte[] SaveFile(string fileName, byte[] data)
+        public void SaveFile(string fileName, byte[] data)
         {
             if (Login())
             {
-                return PutData("DataFile/?filename=" + fileName, data);
+                PutData("DataFile/?filename=" + fileName, data);
             }
-            return null;
         }
 
         public string DeleteFile(string fileName)
@@ -51,7 +50,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return "Not logged in";
         }
-
 
         public async Task SaveFileAsync(string fileName, byte[] data)
         {
