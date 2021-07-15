@@ -117,6 +117,8 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
                 aktuelleSektion.Items.Add(new gSQLItem()); // Leerzeile
                 aktuelleSektion.Items.Add(new gSQLItem("Position_PositionsNummer", pos.PositionsNummer));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_LaufendeNummer", pos.LaufendeNummer.ToString()));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_Nummer", pos.PositionsNummer));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_PositionsGuid", pos.BelegPositionGuid.ToString()));
 
                 if (pos.Variante != null)
@@ -134,12 +136,12 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                     aktuelleSektion.Items.Add(new gSQLItem("SystemTyp", "Sonderposition"));
                 }
 
-                aktuelleSektion.Items.Add(new gSQLItem("Position_LaufendeNummer", pos.LaufendeNummer.ToString()));
-                aktuelleSektion.Items.Add(new gSQLItem("Position_Nummer", pos.PositionsNummer));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_Menge", pos.Menge.ToString()));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_MengenEinheit", pos.MengenEinheit));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_Besonderheiten", pos.Besonderheiten));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_Einbauort", pos.Einbauort));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_IstAktiv", pos.IstAktiv.ToString()));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_IstAlternativPosition", pos.IstAlternativPosition.ToString()));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_PositionsKommission", pos.PositionsKommission));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_Text", pos.Text?.Replace("\r", "||").Replace("\n", "")));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_AngebotsText", pos.AngebotsText?.Replace("\r", "||").Replace("\n", "")));
