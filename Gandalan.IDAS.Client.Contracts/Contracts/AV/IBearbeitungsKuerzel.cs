@@ -7,6 +7,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.AV
 {
     public interface IBearbeitungsKuerzel
     {
-        IList<BearbeitungsKuerzelDTO> GetListe { get; set; }
+        IList<BearbeitungsKuerzelDTO> GetListe();
     }
 }

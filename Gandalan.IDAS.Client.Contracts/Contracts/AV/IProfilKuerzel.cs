@@ -7,6 +7,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.AV
 {
     public interface IProfilKuerzel
     {
-        IList<ProfilKuerzelDTO> GetListe { get; set; }
+        IList<ProfilKuerzelDTO> GetListe();
     }
 }
