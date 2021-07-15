@@ -138,15 +138,15 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
                 aktuelleSektion.Items.Add(new gSQLItem("Position_Menge", pos.Menge.ToString()));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_MengenEinheit", pos.MengenEinheit));
-                aktuelleSektion.Items.Add(new gSQLItem("Position_Besonderheiten", pos.Besonderheiten));
-                aktuelleSektion.Items.Add(new gSQLItem("Position_Einbauort", pos.Einbauort));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_Besonderheiten", SanitizeString(pos.Besonderheiten)));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_Einbauort", SanitizeString(pos.Einbauort)));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_IstAktiv", pos.IstAktiv.ToString()));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_IstAlternativPosition", pos.IstAlternativPosition.ToString()));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_PositionsKommission", pos.PositionsKommission));
-                aktuelleSektion.Items.Add(new gSQLItem("Position_Text", pos.Text?.Replace("\r", "||").Replace("\n", "")));
-                aktuelleSektion.Items.Add(new gSQLItem("Position_AngebotsText", pos.AngebotsText?.Replace("\r", "||").Replace("\n", "")));
-                aktuelleSektion.Items.Add(new gSQLItem("Position_SonderwunschText", pos.SonderwunschText?.Replace("\r", "||").Replace("\n", "")));
-                aktuelleSektion.Items.Add(new gSQLItem("Position_SonderwunschAngebotsText", pos.SonderwunschAngebotsText?.Replace("\r", "||").Replace("\n", "")));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_Text", SanitizeString(pos.Text)));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_AngebotsText", SanitizeString(pos.AngebotsText)));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_SonderwunschText", SanitizeString(pos.SonderwunschText)));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_SonderwunschAngebotsText", SanitizeString(pos.SonderwunschAngebotsText)));
 
                 foreach (var konfig in pos.Daten.Where(u => u.UnterkomponenteName == "Variante"))
                 {
@@ -205,6 +205,16 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
             result.Sektionen.Add(aktuelleSektion);
 
             return result;
+        }
+
+        private static string SanitizeString(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return string.Empty;
+            }
+
+            return text.Replace("\r", "||").Replace("\n", "");
         }
     }
 }
