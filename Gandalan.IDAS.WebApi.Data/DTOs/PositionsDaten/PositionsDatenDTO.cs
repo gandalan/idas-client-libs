@@ -41,7 +41,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string DruckDatum { get; set; }
         public string VersandAdresse { get; set; }
         
-        public string KurzZeichen { get; set; }
         public string DataErstellDatum { get; set; }
         public string BelegNummer { get; set; }
         public string BelegJahr { get; set; }
