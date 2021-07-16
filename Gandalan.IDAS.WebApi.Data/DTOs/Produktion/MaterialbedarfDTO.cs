@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
-    public class MaterialbedarfDTO
+    public class MaterialbedarfDTO : ICloneable
     {
         public Guid MaterialBedarfGuid { get; set; }
         /// <summary>
@@ -100,5 +100,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string MaterialPCode { get; set; }
         public string Bemerkung { get; set; }
         public Guid? AVPositionGuid { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }
