@@ -23,6 +23,16 @@ namespace Gandalan.Client.Contracts
         bool CancelPossible { get; }
     }
 
+    public interface ISaveAndContinue
+    {
+        Task<bool> SaveAndContinue();
+    }
+
+    public interface ISaveAndNew
+    {
+        Task<bool> SaveAndNew();
+    }
+
     public interface IDisplayPanel : IInteractivePanel
     {     
     }
