@@ -40,6 +40,13 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string VorgangsNummer { get; set; }
         public string DruckDatum { get; set; }
         public string VersandAdresse { get; set; }
-
+        
+        public string DataErstellDatum { get; set; }
+        public string BelegNummer { get; set; }
+        public string BelegJahr { get; set; }
+        public string Breite { get; set; }
+        public string Hoehe { get; set; }
+        public string Oeffnungsrichtung { get; set; }
+        public string Farbe { get; set; }
     }
 }
