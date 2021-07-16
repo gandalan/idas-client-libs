@@ -49,7 +49,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
             //aktuelleSektion.Items.Add(new gSQLItem("Kundennummer", vorgang.Kontakt?.KundenNummer));
             //aktuelleSektion.Items.Add(new gSQLItem("HaendlerMandantGuid", vorgang.Kontakt.KontaktMandantGuid.ToString()));
             aktuelleSektion.Items.Add(new gSQLItem("VorgangGuid", vorgang.VorgangGuid.ToString()));
-            //aktuelleSektion.Items.Add(new gSQLItem("OriginalVorgangGuid", vorgang.OriginalVorgangGuid.ToString()));
+            aktuelleSektion.Items.Add(new gSQLItem("OriginalVorgangGuid", vorgang.OriginalVorgangGuid.ToString()));
             //aktuelleSektion.Items.Add(new gSQLItem("OriginalVorgangsNummer", vorgang.OriginalVorgangsNummer?.ToString() ?? String.Empty));
             aktuelleSektion.Items.Add(new gSQLItem("Beleg_IstTestBeleg", vorgang.IstTestbeleg.ToString()));
             result.Sektionen.Add(aktuelleSektion);
@@ -139,6 +139,9 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                 aktuelleSektion.Items.Add(new gSQLItem("Position_Menge", pos.Menge.ToString()));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_MengenEinheit", pos.MengenEinheit));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_Besonderheiten", SanitizeString(pos.Besonderheiten)));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_ProduktionZusatzInfo", SanitizeString(pos.ProduktionZusatzInfo)));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_ProduktionZusatzInfoPrintOnReport", SanitizeString(pos.ProduktionZusatzInfoPrintOnReport.ToString())));
+                aktuelleSektion.Items.Add(new gSQLItem("Position_ProduktionZusatzInfoPrintZusatzEtikett", SanitizeString(pos.ProduktionZusatzInfoPrintZusatzEtikett.ToString())));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_Einbauort", SanitizeString(pos.Einbauort)));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_IstAktiv", pos.IstAktiv.ToString()));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_IstAlternativPosition", pos.IstAlternativPosition.ToString()));
