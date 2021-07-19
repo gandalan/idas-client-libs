@@ -115,9 +115,9 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
             {
                 var pos = vorgang.Positionen.FirstOrDefault(p => p.BelegPositionGuid.Equals(posGuid));
 
-				if (pos == null) {
-					continue;
-				}
+                if (pos == null) {
+                    continue;
+                }
 
                 aktuelleSektion.Items.Add(new gSQLItem()); // Leerzeile
                 aktuelleSektion.Items.Add(new gSQLItem("Position_PositionsNummer", pos.PositionsNummer));
