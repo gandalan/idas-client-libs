@@ -29,7 +29,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
             aktuelleSektion.Items.Add(new gSQLItem("letzterZugriff", vorgang.AenderungsDatum.ToUniversalTime().ToString("O")));
             aktuelleSektion.Items.Add(new gSQLItem("ErstellDatum", vorgang.ErstellDatum.ToUniversalTime().ToString("O")));
             aktuelleSektion.Items.Add(new gSQLItem("AenderungsDatum", vorgang.AenderungsDatum.ToUniversalTime().ToString("O")));
-            aktuelleSektion.Items.Add(new gSQLItem("Bestellfix_Version", "01.10.2017"));
+            aktuelleSektion.Items.Add(new gSQLItem("Bestellfix_Version", "16.07.2021"));
             aktuelleSektion.Items.Add(new gSQLItem("DatenQuelle", "NeherApp"));
             aktuelleSektion.Items.Add(new gSQLItem("DateiTyp", "Beleg"));
             result.Sektionen.Add(aktuelleSektion);
