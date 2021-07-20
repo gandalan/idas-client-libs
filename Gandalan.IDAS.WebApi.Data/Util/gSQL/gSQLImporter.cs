@@ -34,7 +34,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
         /// <param name="gsqlData"></param>
         /// <param name="encoding">Use Encoding.Default if null</param>
         /// <returns></returns>
-        public static gSQLInhalt ImportFromGsql(gSQLInhalt gsqlData, Encoding encoding = null)
+        public static gSQLInhalt ImportFromGsqlInhalt(gSQLInhalt gsqlData, Encoding encoding = null)
         {
             if (encoding == null)
             {
