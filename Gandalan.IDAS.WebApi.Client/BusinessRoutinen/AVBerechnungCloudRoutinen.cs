@@ -12,13 +12,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public BerechnungResultDTO Process(BerechnungParameterDTO parameter)
         {
-            if (Login())
-            {
-                string variante = Uri.EscapeDataString(parameter.BelegPositionAVDTO.Variante);
-                return Post<BerechnungResultDTO>($"ProcessIbos/Process?varianteName={variante}", parameter);
-            }
-
-            return null;
+            string variante = Uri.EscapeDataString(parameter.BelegPositionAVDTO.Variante);
+            return Post<BerechnungResultDTO>($"ProcessIbos/Process?varianteName={variante}", parameter);
         }
     }
 }
