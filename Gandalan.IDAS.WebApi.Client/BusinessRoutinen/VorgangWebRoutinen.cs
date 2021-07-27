@@ -82,6 +82,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public VorgangDTO LadeVorgang(long vorgangsNummer, int jahr, string status, bool mitKunde = false)
+        {
+            if (Login())
+            {
+                return Get<VorgangDTO>($"Vorgang/{vorgangsNummer}?jahr={jahr}?status={status}?includeKunde={mitKunde}");
+            }
+            return null;
+        }
+
         public VorgangStatusDTO GetStatus(Guid vorgangGuid)
         {
             if (Login())
