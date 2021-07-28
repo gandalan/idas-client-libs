@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Gandalan.IDAS.Client.Contracts.Contracts;
+﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
@@ -23,7 +23,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             setupEnvironments(appToken);
             setupLocalEnvironment(appToken);
         }
-        
+
         public static IWebApiConfig ByName(string name)
         {
             if (_settings.ContainsKey(name))
@@ -75,8 +75,6 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                             Url = response.IDAS,
                             CMSUrl = response.CMS,
                             DocUrl = response.DOCS,
-                            I1Url = response.Prod_I1,
-                            I2Url = response.Prod_I2, 
                             LatexReportUrl = response.Print_Latex,
                             FriendlyName = env,
                             AppToken = appToken
@@ -107,7 +105,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 environment.UserName = savedAuthToken.UserName;
             }
         }
-        
+
         private static SavedAuthToken internalLoadSavedAuthToken(string env)
         {
             string configFile = Path.Combine(_settingsPath, env, "AuthToken_" + _appTokenString + ".json");
@@ -132,7 +130,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 
         internal static void Save(IWebApiConfig settings)
         {
-            if (settings == null) 
+            if (settings == null)
                 return;
 
             string configPath = Path.Combine(_settingsPath, settings.FriendlyName);

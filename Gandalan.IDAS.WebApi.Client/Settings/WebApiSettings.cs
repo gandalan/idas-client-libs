@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using Gandalan.IDAS.Client.Contracts.Contracts;
+﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Discovery;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
@@ -37,17 +37,9 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         /// </summary>
         public string CMSUrl { get; set; }
         /// <summary>
-        /// Latex-Reports 
+        /// Latex-Reports
         /// </summary>
         public string LatexReportUrl { get; set; }
-        /// <summary>
-        /// IBOS2-Varianten Produktionsberechnung 
-        /// </summary>
-        public string I2Url { get; set; }
-        /// <summary>
-        /// IBOS1-Varianten Produktionsberechnung 
-        /// </summary>
-        public string I1Url { get; set; }
 
         public WebApiSettings(Guid appToken, string env)
         {
@@ -82,8 +74,6 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             this.UserName = settings.UserName;
             this.InstallationId = settings.InstallationId;
             this.UserAgent = settings.UserAgent;
-            this.I1Url = settings.I1Url;
-            this.I2Url = settings.I2Url;
         }
 
 

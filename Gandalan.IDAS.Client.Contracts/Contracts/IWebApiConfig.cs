@@ -33,17 +33,9 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts
         /// </summary>
         string CMSUrl { get; set; }
         /// <summary>
-        /// Latex-Reports 
+        /// Latex-Reports
         /// </summary>
         string LatexReportUrl { get; set; }
-        /// <summary>
-        /// IBOS2-Varianten Produktionsberechnung 
-        /// </summary>
-        string I2Url { get; set; }
-        /// <summary>
-        /// IBOS1-Varianten Produktionsberechnung 
-        /// </summary>
-        string I1Url { get; set; }
 
         void Save();
 
