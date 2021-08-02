@@ -46,11 +46,11 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
             aktuelleSektion.Items.Add(new gSQLItem("Beleg_Kommission", vorgang.Kommission));
             aktuelleSektion.Items.Add(new gSQLItem("Beleg_Bemerkungen_FussZeile_1_Bestellschein", "???"));
             aktuelleSektion.Items.Add(new gSQLItem("Beleg_Bemerkungen_FussZeile_2_Bestellschein", "???"));
-            //aktuelleSektion.Items.Add(new gSQLItem("Kundennummer", vorgang.Kontakt?.KundenNummer));
-            //aktuelleSektion.Items.Add(new gSQLItem("HaendlerMandantGuid", vorgang.Kontakt.KontaktMandantGuid.ToString()));
+            aktuelleSektion.Items.Add(new gSQLItem("Kundennummer", vorgang.KundenNummer ?? vorgang?.Kunde?.KundenNummer ?? "0"));
+            aktuelleSektion.Items.Add(new gSQLItem("HaendlerMandantGuid", vorgang.Kunde?.KontaktMandantGuid.ToString()));
             aktuelleSektion.Items.Add(new gSQLItem("VorgangGuid", vorgang.VorgangGuid.ToString()));
             aktuelleSektion.Items.Add(new gSQLItem("OriginalVorgangGuid", vorgang.OriginalVorgangGuid.ToString()));
-            //aktuelleSektion.Items.Add(new gSQLItem("OriginalVorgangsNummer", vorgang.OriginalVorgangsNummer?.ToString() ?? String.Empty));
+            //aktuelleSektion.Items.Add(new gSQLItem("OriginalVorgangsNummer", vorgang.o?.ToString() ?? String.Empty));
             aktuelleSektion.Items.Add(new gSQLItem("Beleg_IstTestBeleg", vorgang.IstTestbeleg.ToString()));
             result.Sektionen.Add(aktuelleSektion);
 
