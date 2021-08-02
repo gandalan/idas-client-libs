@@ -125,12 +125,12 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                 aktuelleSektion.Items.Add(new gSQLItem("Position_Nummer", pos.PositionsNummer));
                 aktuelleSektion.Items.Add(new gSQLItem("Position_PositionsGuid", pos.BelegPositionGuid.ToString()));
 
-                if (pos.Variante != null)
+                if (!string.IsNullOrEmpty(pos.Variante))
                 {
                     aktuelleSektion.Items.Add(new gSQLItem("SystemTyp", "Insektenschutz"));
                     aktuelleSektion.Items.Add(new gSQLItem("Position_Variante", pos.Variante));
                 }
-                else if (pos.ArtikelNummer != null)
+                else if (!string.IsNullOrEmpty(pos.ArtikelNummer))
                 {
                     aktuelleSektion.Items.Add(new gSQLItem("SystemTyp", "Katalogartikel"));
                     aktuelleSektion.Items.Add(new gSQLItem("Position_KatalogArtikel", pos.ArtikelNummer));
