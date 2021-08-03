@@ -10,6 +10,6 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// Zuletzt verwendeter Daten-Temp-Ordner (für Diagnosezwecke) 
         /// </summary>
         string TempFolder { get; set; }
-        Task Execute(BerechnungParameterDTO parameter);
+        Task<BerechnungParameterDTO> Execute(BerechnungParameterDTO parameter);
     }
 }
