@@ -10,9 +10,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public BerechnungResultDTO Process(BerechnungParameterDTO parameter)
+        public BerechnungParameterDTO Process(BerechnungParameterDTO parameter)
         {
-            return Post<BerechnungResultDTO>($"ProcessIbos/Process", parameter);
+            return Post<BerechnungParameterDTO>($"ProcessIbos/Process", parameter);
         }
     }
 }
