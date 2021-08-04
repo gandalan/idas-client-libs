@@ -57,6 +57,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal Farbzuschlag { get; set; }
         public bool IstFarbzuschlagManuell { get; set; }
         public string AngebotsText { get; set; }
+        public string SonderwunschText { get; set; }
+        public string SonderwunschAngebotsText { get; set; }
         public DateTime? ProduktionsDatum { get; set; }
         public DateTime? LieferDatum { get; set; }
         public DateTime? ProduktionsAuftragErstellt { get; set; }

@@ -76,6 +76,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string BemerkungFuerKunde { get; set; }
         public Guid OriginalVorgangGuid { get; set; }
         public Guid OriginalMandantGuid { get; set; }
+        public long? OriginalVorgangsNummer { get; set; }
 
         public VorgangDTO()
         {

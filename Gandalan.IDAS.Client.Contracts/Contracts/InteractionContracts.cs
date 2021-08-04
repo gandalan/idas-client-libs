@@ -17,10 +17,18 @@ namespace Gandalan.Client.Contracts
     {
         Task<bool> Save();
         bool Cancel();
-        bool Pause();
-        bool PausePossible { get; }
         bool SavePossible { get; }
         bool CancelPossible { get; }
+    }
+
+    public interface ISaveAndContinue
+    {
+        Task<bool> SaveAndContinue();
+    }
+
+    public interface ISaveAndNew
+    {
+        Task<bool> SaveAndNew();
     }
 
     public interface IDisplayPanel : IInteractivePanel

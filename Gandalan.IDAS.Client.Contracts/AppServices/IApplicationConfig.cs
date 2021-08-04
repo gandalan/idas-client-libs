@@ -18,5 +18,7 @@ namespace Gandalan.Client.Contracts.AppServices
         string ApplicationName { get; }
         string IconPath { get; }
         string SplashPath { get; }
+        bool IsFirstRun { get; set; }
+        string ChangeLogFileName { get; set; }
     }
 }

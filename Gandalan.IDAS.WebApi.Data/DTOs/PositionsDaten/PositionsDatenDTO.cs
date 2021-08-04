@@ -18,6 +18,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string PositionsKommission { get; set; }
         public string Text { get; set; }
         public string AngebotsText { get; set; }
+        public string SonderwunschText { get; set; }
+        public string SonderwunschAngebotsText { get; set; }
         public DateTime ErfassungsDatum { get; set; }
         public float BmBreite { get; set; }
         public float BmHoehe { get; set; }
@@ -38,6 +40,13 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string VorgangsNummer { get; set; }
         public string DruckDatum { get; set; }
         public string VersandAdresse { get; set; }
-
+        
+        public string DataErstellDatum { get; set; }
+        public string BelegNummer { get; set; }
+        public string BelegJahr { get; set; }
+        public string Breite { get; set; }
+        public string Hoehe { get; set; }
+        public string Oeffnungsrichtung { get; set; }
+        public string Farbe { get; set; }
     }
 }

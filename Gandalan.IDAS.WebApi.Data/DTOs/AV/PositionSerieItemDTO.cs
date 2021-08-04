@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gandalan.IDAS.WebApi.Data.DTOs.AV
+namespace Gandalan.IDAS.WebApi.Data
 {
     public class PositionSerieItemDTO
     {

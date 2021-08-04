@@ -208,6 +208,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string MengenEinheit { get; set; }
         public string Text { get; set; }
         public string AngebotsText { get; set; }
+        public string SonderwunschText { get; set; }
+        public string SonderwunschAngebotsText { get; set; }
         public string ProduktionZusatzInfo { get; set; }
         public bool ProduktionZusatzInfoPrintOnReport { get; set; }
         public bool ProduktionZusatzInfoPrintZusatzEtikett { get; set; }
@@ -231,6 +233,8 @@ namespace Gandalan.IDAS.WebApi.DTO
                 if (this.MengenEinheit == null || this.MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase)) this.MengenEinheit = "Stk.";
                 this.Text = position.Text;
                 this.AngebotsText = position.AngebotsText;
+                this.SonderwunschText = position.SonderwunschText;
+                this.SonderwunschAngebotsText = position.SonderwunschAngebotsText;
                 this.ProduktionZusatzInfo = position.ProduktionZusatzInfo;
                 this.ProduktionZusatzInfoPrintOnReport = position.ProduktionZusatzInfoPrintOnReport;
                 this.ProduktionZusatzInfoPrintZusatzEtikett = position.ProduktionZusatzInfoPrintZusatzEtikett;
