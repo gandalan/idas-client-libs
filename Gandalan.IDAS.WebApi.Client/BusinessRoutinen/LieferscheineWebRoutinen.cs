@@ -56,7 +56,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return null;
         }
-
+        
         public VorgangStatusDTO GetStatus(Guid vorgangGuid)
         {
             if (Login())

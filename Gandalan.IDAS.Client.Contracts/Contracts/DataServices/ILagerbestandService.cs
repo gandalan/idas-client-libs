@@ -7,7 +7,7 @@ namespace Gandalan.Client.Contracts.DataServices
     /// <summary>
     /// Interface für die Datenzugriffsebene der Bestandsverwaltung
     /// </summary>
-    public interface ILagerbestandService
+    public interface LagerbestandDBItemService
     {
         /// <summary>
         /// Ruft alle LagerbestandDTOs ab
