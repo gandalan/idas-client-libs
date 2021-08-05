@@ -34,16 +34,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
                 return Delete($"Artikel/{artikel.KatalogArtikelGuid}");
-            }
+
             return "Not logged in";
         }
-
-
-        public async Task<WarenGruppeDTO[]> GetAllAsync()
-        {
-            return await Task.Run(() => GetAll());
-        }
-
+        public async Task<WarenGruppeDTO[]> GetAllAsync() => await Task.Run(() => GetAll());
         public async Task<WarenGruppeDTO[]> HTTPGetAllAsync()
         {
             if (HTTPLogin() != null)
@@ -51,12 +45,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
             return null;
         }
-
-        public async Task<string> SaveArtikelAsync(KatalogArtikelDTO artikel)
-        {
-            return await Task.Run(() => SaveArtikel(artikel));
-        }
-        public async Task<WarenGruppeDTO[]> GetAllAsync() => await Task.Run(() => GetAll());
         public async Task<KatalogArtikelDTO> SaveArtikelAsync(KatalogArtikelDTO artikel) => await Task.Run(() => SaveArtikel(artikel));
     }
 }

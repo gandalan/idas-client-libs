@@ -31,7 +31,6 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             return null;
         }
-
         public string ErzeugeReklamationBeiBeschichter(VorgangDTO vorgang, Guid quellVorgang, Guid mGuid, string produzentenKundenNummer)
         {
             if (Login())
@@ -53,7 +52,8 @@ namespace Gandalan.IDAS.WebApi.Client
             if (HTTPLogin() != null)
                 return JsonConvert.DeserializeObject<UserAuthTokenDTO>(await HTTPSendDataAsync(HttpMethod.Put, $"MaterialBestellung?mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", json));
 
-
+            return null;
+        }
         public string UpdateStatusBeimProduzenten(Guid vorgangGuid, string status, string externeReferenz = "")
         {
             if(Login())
