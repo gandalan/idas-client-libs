@@ -13,8 +13,10 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
 
         IList<MaterialbedarfDTO> AblageFachSortierung(IList<MaterialbedarfDTO> materialListe);
 
-        IList<MaterialbedarfDTO> EtikettenDruckSortierung(SerieDTO serie);
+        Dictionary<string, MaterialbedarfDTO> SchnittSortierung(SerieDTO serie);
 
-        IList<MaterialbedarfDTO> EtikettenDruckSortierung(IList<MaterialbedarfDTO> materialListe);
+        Dictionary<string, MaterialbedarfDTO> SchnittSortierung(IList<MaterialbedarfDTO> materialListe);
+
+        string KuerzelSortierung(string kuerzel);
     }
 }
