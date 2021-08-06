@@ -3,6 +3,10 @@ using System.Net;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Text;
+using System.IO;
+using System.Linq;
 
 namespace Gandalan.IDAS.Web
 {
@@ -65,7 +69,8 @@ namespace Gandalan.IDAS.Web
             WebClient client = createWebClient();
             try
             {
-                return JsonConvert.DeserializeObject<T>(Get(url), settings);
+                var test = Get(url);
+                return JsonConvert.DeserializeObject<T>(test, settings);
             }
             catch
             #region Code
@@ -106,6 +111,13 @@ namespace Gandalan.IDAS.Web
                 throw;
             }
             #endregion
+        }
+
+        public async Task<T> HTTPGet<T>(string url)
+        {
+            HttpClient httpClient = createHTTPClient();
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(url);
+            return JsonConvert.DeserializeObject<T>(await responseMessage.Content.ReadAsStringAsync());
         }
 
         public async Task<string> GetAsync(string url)
@@ -175,17 +187,26 @@ namespace Gandalan.IDAS.Web
 
         public string Post(string url, object data, JsonSerializerSettings settings = null)
         {
-            System.Net.WebClient client = createWebClient();
+            WebClient client = createWebClient();
+
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
                 return client.UploadString(url, "POST", json);
             }
-            catch
+            catch (Exception e)
             {
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
+        }
+
+        public async Task<string> HTTPPostAsync(HttpMethod method, string requestUri, string content)
+        {
+            HttpClient httpClient = createHTTPClient();
+            HttpResponseMessage responseMessage = await httpClient.PostAsync(requestUri, createHTTPContent(method, content));
+
+            return await responseMessage.Content.ReadAsStringAsync();
         }
 
         public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null)
@@ -202,8 +223,6 @@ namespace Gandalan.IDAS.Web
                 throw;
             }
         }
-
-
 
         public byte[] PostData(string url, byte[] data)
         {
@@ -434,6 +453,30 @@ namespace Gandalan.IDAS.Web
                 client.Proxy = Proxy;
 
             return client;
+        }
+
+        private HttpClient createHTTPClient()
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(BaseUrl);
+
+            AdditionalHeaders.ForEach(h =>
+            {
+                string[] headerData = h.Split(':');
+                httpClient.DefaultRequestHeaders.Add(headerData[0].Trim(), headerData[1].Trim());
+            });
+
+            return httpClient;
+        }
+
+        private HttpContent createHTTPContent(HttpMethod method, string content)
+        {
+            HttpRequestMessage requestMessage = new HttpRequestMessage();
+            requestMessage.Method = method;
+            HttpContent httpContent = new StringContent(content, Encoding.UTF8, "application/json");
+            requestMessage.Content = httpContent;
+
+            return httpContent;
         }
 
         public void Dispose()

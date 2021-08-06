@@ -34,9 +34,17 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
                 return Delete($"Artikel/{artikel.KatalogArtikelGuid}");
-            throw new ApiException("Login fehlgeschlagen");
+
+            return "Not logged in";
         }
         public async Task<WarenGruppeDTO[]> GetAllAsync() => await Task.Run(() => GetAll());
+        public async Task<WarenGruppeDTO[]> HTTPGetAllAsync()
+        {
+            if (HTTPLogin() != null)
+                return await HTTPGet<WarenGruppeDTO[]>("Artikel");
+
+            return null;
+        }
         public async Task<KatalogArtikelDTO> SaveArtikelAsync(KatalogArtikelDTO artikel) => await Task.Run(() => SaveArtikel(artikel));
     }
 }

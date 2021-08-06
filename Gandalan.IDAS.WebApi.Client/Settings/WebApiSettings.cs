@@ -71,19 +71,24 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 
         public void CopyToThis(IWebApiConfig settings)
         {
-            this.AppToken = settings.AppToken;
-            this.AuthToken = settings.AuthToken;
-            this.FriendlyName = settings.FriendlyName;
-            this.Mandant = settings.Mandant;
-            this.Url = settings.Url;
-            this.CMSUrl = settings.CMSUrl;
-            this.DocUrl = settings.DocUrl;
-            this.Passwort = settings.Passwort;
-            this.UserName = settings.UserName;
-            this.InstallationId = settings.InstallationId;
-            this.UserAgent = settings.UserAgent;
-            this.I1Url = settings.I1Url;
-            this.I2Url = settings.I2Url;
+            try
+            {
+                this.AppToken = settings.AppToken;
+                this.AuthToken = settings.AuthToken;
+                this.FriendlyName = settings.FriendlyName;
+                this.Mandant = settings.Mandant;
+                this.Url = settings.Url;
+                this.CMSUrl = settings.CMSUrl;
+                this.DocUrl = settings.DocUrl;
+                this.Passwort = settings.Passwort;
+                this.UserName = settings.UserName;
+                this.InstallationId = settings.InstallationId;
+                this.UserAgent = settings.UserAgent;
+                this.I1Url = settings.I1Url;
+                this.I2Url = settings.I2Url;
+            }
+            catch(Exception e)
+            { }
         }
 
 

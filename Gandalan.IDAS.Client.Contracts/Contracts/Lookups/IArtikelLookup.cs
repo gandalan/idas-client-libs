@@ -3,30 +3,30 @@ using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.Client.Contracts
 {
-    public interface IArtikelLookup : ILookupDialog<IArtikelLookupResult, IArtikelLookupParams>
+    public interface ArtikelDBItemLookup : ILookupDialog<ArtikelDBItemLookupResult, ArtikelDBItemLookupParams>
     {
     }
 
-    public interface IArtikelLookupParams
+    public interface ArtikelDBItemLookupParams
     {
         KatalogArtikelDTO[] ArtikelListe { get; }
         VarianteDTO[] VariantenListe { get; }
     }
 
-    public interface IArtikelLookupResult
+    public interface ArtikelDBItemLookupResult
     {
         KatalogArtikelDTO Artikel { get; }
         VarianteDTO Variante { get; }
     }
 
-    public class ArtikelLookupParams : IArtikelLookupParams
+    public class ArtikelLookupParams : ArtikelDBItemLookupParams
     {
         public KatalogArtikelDTO[] ArtikelListe { get; set; }
 
         public VarianteDTO[] VariantenListe { get; set; }
     }
 
-    public class ArtikelLookupResult : IArtikelLookupResult
+    public class ArtikelLookupResult : ArtikelDBItemLookupResult
     {
         public ArtikelLookupResult(VarianteDTO varianteDTO)
         {
