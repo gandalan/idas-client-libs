@@ -46,8 +46,6 @@ namespace Gandalan.IDAS.WebApi.Client
             return null;
         }
 
-            return null;
-        }
         public string UpdateStatusBeimProduzenten(Guid vorgangGuid, string status, string externeReferenz = "")
         {
             if(Login())
