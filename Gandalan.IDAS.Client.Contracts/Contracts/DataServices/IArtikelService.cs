@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.DataServices
 {
-    public interface ArtikelDBItemService
+    public interface IArtikelService
     {
         Task<KatalogArtikelDTO[]> GetAllAsync();
         Task<WarenGruppeDTO[]> GetAllWarenGruppenAsync();

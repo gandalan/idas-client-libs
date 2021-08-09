@@ -5,8 +5,6 @@ using Gandalan.IDAS.WebApi.Client.Settings;
 using System.Threading.Tasks;
 using System;
 using Gandalan.IDAS.Client.Contracts.Contracts;
-using System.Net.Http;
-using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
@@ -47,10 +45,6 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             return null;
         }
-        public async Task<UserAuthTokenDTO> HTTPErzeugeVorgangBeiBeschichterAsync(string json, Guid mGuid, string produzentenKundenNummer)
-        {
-            if (HTTPLogin() != null)
-                return JsonConvert.DeserializeObject<UserAuthTokenDTO>(await HTTPSendDataAsync(HttpMethod.Put, $"MaterialBestellung?mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", json));
 
             return null;
         }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
@@ -18,9 +17,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public static void Initialize(Guid appToken)
         {
             _settings = new Dictionary<string, IWebApiConfig>(StringComparer.OrdinalIgnoreCase);
-
-            // SM: Der Settingspath muss geändert werden von Environment.SpecialFolder.LocalApplicationData in ein anderes Verzeichnis 
-             _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
+            _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
             _appTokenString = appToken.ToString().Trim('{', '}');
 
             setupEnvironments(appToken);
@@ -61,7 +58,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             }
         }
 
-        private async static void setupEnvironments(Guid appToken)
+        private static void setupEnvironments(Guid appToken)
         {
             var hub = new ConnectHub(apiVersion: "2.1", clientOS: "win");
             var liste = _environments;
@@ -69,19 +66,8 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             {
                 try
                 {
+                    var response = hub.GetEndpoints(env: env);
                     IWebApiConfig environment = null;
-                    HubResponse response = new HubResponse();
-
-                    // SM: Noch so basteln, dass es funktioniert:
-                    //response = await hub.GetEndpointsAsync(env: env);
-
-                    response.CMS = "https://nehernext.sic-software.tk/";
-                    response.DOCS = "https://app2.neher.de/";
-                    response.IDAS = "https://bf-dev-1.gandalan.de/api/";
-                    response.Print_Latex = "https://gdl-template-engine.azurewebsites.net/";
-                    response.Prod_I1 = "https://gandalanibosapiprod.azurewebsites.net/";
-                    response.Prod_I2 = "https://gandalanibos2apiprod.azurewebsites.net/";
-
                     if (response != null)
                     {
                         environment = new WebApiSettings
@@ -103,23 +89,14 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
                     // No Hub response, discard
                 }
             }
         }
+
         private static void internalLoadSavedAuthToken(string env, IWebApiConfig environment)
         {
             var savedAuthToken = internalLoadSavedAuthToken(env);
-
-            // SM: Der Workaround hier muss raus und alles über internalLoadSavedAuthToken laufen:
-            SavedAuthToken token = new SavedAuthToken();
-            token.AuthTokenGuid = Guid.Parse("35ec2a5d-490e-44db-ba27-52dffc90d63d");
-            //token.AuthTokenGuid = Guid.Parse("51aab13c-d27c-4241-a09d-4b12a3d22f34");
-            //token.AuthTokenGuid = Guid.Parse("49deb3e3-e325-4bef-86d1-50584d996431");
-            token.UserName = "simon.mahalsky@gandalan.de";
-            savedAuthToken = token;
-
             if (savedAuthToken != null)
             {
                 environment.AuthToken = new UserAuthTokenDTO()
@@ -134,8 +111,6 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         private static SavedAuthToken internalLoadSavedAuthToken(string env)
         {
             string configFile = Path.Combine(_settingsPath, env, "AuthToken_" + _appTokenString + ".json");
-
-            // SM: Dieser File.Exists() schlägt fehl, egal wie der Pfad ist.
             if (File.Exists(configFile))
             {
                 try

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
-    public interface LagerbestandDBItemStore : IStore<LagerbestandDTO>
+    public interface ILagerbestandStore : IStore<LagerbestandDTO>
     {
         Task<IList<LagerbestandDTO>> GetAllAsync(DateTime changedSince);
     }

@@ -76,29 +76,29 @@
             </summary>
             <param name="infoScreenConfigDTO">InfoScreenConfigDTO, das entfernt werden soll</param>
         </member>
-        <member name="T:Gandalan.Client.Contracts.DataServices.LagerbestandDBItemService">
+        <member name="T:Gandalan.Client.Contracts.DataServices.ILagerbestandService">
             <summary>
             Interface für die Datenzugriffsebene der Bestandsverwaltung
             </summary>
         </member>
-        <member name="M:Gandalan.Client.Contracts.DataServices.LagerbestandDBItemService.GetAllAsync">
+        <member name="M:Gandalan.Client.Contracts.DataServices.ILagerbestandService.GetAllAsync">
             <summary>
             Ruft alle LagerbestandDTOs ab
             </summary>
         </member>
-        <member name="M:Gandalan.Client.Contracts.DataServices.LagerbestandDBItemService.AddOrUpdateAsync(Gandalan.IDAS.WebApi.DTO.LagerbestandDTO)">
+        <member name="M:Gandalan.Client.Contracts.DataServices.ILagerbestandService.AddOrUpdateAsync(Gandalan.IDAS.WebApi.DTO.LagerbestandDTO)">
             <summary>
             Legt ein neues LagerbestandDTO an, oder aktualisiert es, sofern bereits vorhanden
             </summary>
             <param name="lagerbestandDTO">LagerbestandDTO, das angelegt/aktualisiert werden soll</param>        
         </member>
-        <member name="M:Gandalan.Client.Contracts.DataServices.LagerbestandDBItemService.AddOrUpdateAsync(System.Collections.Generic.IList{Gandalan.IDAS.WebApi.DTO.LagerbestandDTO})">
+        <member name="M:Gandalan.Client.Contracts.DataServices.ILagerbestandService.AddOrUpdateAsync(System.Collections.Generic.IList{Gandalan.IDAS.WebApi.DTO.LagerbestandDTO})">
             <summary>
             Legt eine Liste neuer LagerbestandDTOs an, oder aktualisiert sie, sofern bereits vorhanden
             </summary>
             <param name="lagerbestandDTOs">Liste der LagerbestandDTOs, die angelegt/aktualisiert werden sollen</param>        
         </member>
-        <member name="M:Gandalan.Client.Contracts.DataServices.LagerbestandDBItemService.DeleteAsync(Gandalan.IDAS.WebApi.DTO.LagerbestandDTO)">
+        <member name="M:Gandalan.Client.Contracts.DataServices.ILagerbestandService.DeleteAsync(Gandalan.IDAS.WebApi.DTO.LagerbestandDTO)">
             <summary>
             Entfernt das übergebene LagerbestandDTO
             </summary>

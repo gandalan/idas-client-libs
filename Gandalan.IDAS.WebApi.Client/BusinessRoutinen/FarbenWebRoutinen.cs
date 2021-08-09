@@ -35,13 +35,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             return await Task.Run(() => GetAll());
         }
-        public async Task<FarbeDTO[]> HTTPGetAllAsync()
-        {
-            if (HTTPLogin() != null)
-                return await HTTPGet<FarbeDTO[]>("Farben");
-
-            return null;
-        }
 
         public async Task SaveFarbItemAsync(FarbeDTO dto)
         {
