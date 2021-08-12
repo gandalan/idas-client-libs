@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using Gandalan.IDAS.WebApi.Client.Settings;
 using System.Threading.Tasks;
-using Gandalan.IDAS.Client.Contracts.Contracts;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
@@ -77,6 +76,11 @@ namespace Gandalan.IDAS.WebApi.Client
         public async Task<string> PasswortResetAsync(string benutzerName)
         {
             return await Task.Run(() => PasswortReset(benutzerName));
+        }
+
+        public string SICSyncWebJob()
+        {
+            return Post("Benutzer/SICSyncWebJob", null);
         }
     }
 }
