@@ -12,5 +12,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Update
         public System.DateTime ChangedWhen { get; set; }
         public string ChangeType { get; set; }
         public string ChangeOperation { get; set; }
+        public long MandantId { get; set; }
     }
 }
