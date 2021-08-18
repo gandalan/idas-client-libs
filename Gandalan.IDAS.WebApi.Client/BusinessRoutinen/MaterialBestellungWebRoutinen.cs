@@ -29,7 +29,6 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             return null;
         }
-
         public string ErzeugeReklamationBeiBeschichter(VorgangDTO vorgang, Guid quellVorgang, Guid mGuid, string produzentenKundenNummer)
         {
             if (Login())
@@ -46,7 +45,6 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             return null;
         }
-
 
         public string UpdateStatusBeimProduzenten(Guid vorgangGuid, string status, string externeReferenz = "")
         {
