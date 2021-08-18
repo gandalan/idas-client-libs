@@ -24,6 +24,15 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Salden
         /// "Gesamtbetrag", "Endbetrag", "Farbe"  
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Zulässige Werte: "Unbekannt", "ManuelleEingabe", "AutoEingabe", "AufAnfrage"
+        /// </summary>
+        public string SaldenStatus { get; set; }
+        public bool IstInaktiv { get; set; }
+        /// <summary>
+        /// In diesem Tag können belibige interne Informationen als String gespeichert werden.
+        /// </summary>
+        public string Tag { get; set; }
         public bool IsNettoSaldo { get; set; }
         /// <summary>
         /// Text für die Anzeige
