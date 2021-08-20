@@ -50,5 +50,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             await Task.Run(() => DeleteAnpassung(anpassungGuid));
         }
+
+        public string WebJob()
+        {
+            return Post("Anpassungen/WebJob", null);
+        }
     }
 }
