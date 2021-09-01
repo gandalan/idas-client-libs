@@ -46,16 +46,19 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// </summary>
         public IList<int> Laengen { get; } = new List<int>();
 
+        public Guid MaterialbedarfGuid { get; }
+
         /// <summary>
         /// "Eröffnet" eine neue Stange mit der angegebenen Gesamtlänge und
         /// dem Zugabe-Parameter für Teilstückzwischenräume
         /// </summary>
         /// <param name="laenge"></param>
         /// <param name="zugabe"></param>
-        public ZuschnittStangenInfo(int laenge, int zugabe)
+        public ZuschnittStangenInfo(int laenge, int zugabe, Guid materialbedarfGuid = default)
         {
             _laenge = laenge;
             _zugabe = zugabe;
+            MaterialbedarfGuid = materialbedarfGuid;
         }
 
         /// <summary>
