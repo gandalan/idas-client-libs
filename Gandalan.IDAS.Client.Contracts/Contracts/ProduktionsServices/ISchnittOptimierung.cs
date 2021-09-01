@@ -54,6 +54,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// </summary>
         /// <param name="laenge"></param>
         /// <param name="zugabe"></param>
+        /// <param name="materialbedarfGuid"></param>
         public ZuschnittStangenInfo(int laenge, int zugabe, Guid materialbedarfGuid = default)
         {
             _laenge = laenge;
