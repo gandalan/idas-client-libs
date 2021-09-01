@@ -1,19 +1,17 @@
-﻿using System;
+﻿using Gandalan.IDAS.WebApi.DTO;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
     /// <summary>
-    /// Contract für die Schnitt-Optimierung, d.h. möglichst optimale Verteilung 
+    /// Contract für die Schnitt-Optimierung, d.h. möglichst optimale Verteilung
     /// von Teilstücken auf Rohmaterial
     /// </summary>
     public interface ISchnittOptimierung
     {
         /// <summary>
-        /// Berechnet eine möglichst optimale Verteilung von Teilstücken auf eine 
+        /// Berechnet eine möglichst optimale Verteilung von Teilstücken auf eine
         /// möglichst geringe Anzahl von Rohmaterial-Teilen. Alle Längenangaben in mm!
         /// </summary>
         /// <param name="rohmaterialLaenge">Maximal zu belegende Länge. Endabschnitte müssen vom Aufrufer bereits abgezogen sein.</param>
@@ -49,7 +47,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         public IList<int> Laengen { get; } = new List<int>();
 
         /// <summary>
-        /// "Eröffnet" eine neue Stange mit der angegebenen Gesamtlänge und 
+        /// "Eröffnet" eine neue Stange mit der angegebenen Gesamtlänge und
         /// dem Zugabe-Parameter für Teilstückzwischenräume
         /// </summary>
         /// <param name="laenge"></param>
@@ -85,5 +83,11 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
             }
             else throw new InvalidOperationException("Kein Platz mehr für dieses Teilstück!");
         }
+    }
+
+    public class MaterialbedarfCutOptimization
+    {
+        public MaterialbedarfDTO[] Materialbedarfs;
+        public ZuschnittStangenInfo[] ZuschnittStangenInfos;
     }
 }
