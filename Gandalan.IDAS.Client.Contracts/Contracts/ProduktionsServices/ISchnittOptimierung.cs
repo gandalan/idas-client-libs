@@ -49,7 +49,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// </summary>
         public IList<int> Laengen { get; } = new List<int>();
 
-        public Guid MaterialbedarfGuid { get; }
+        public List<Guid> MaterialBedarfGuids { get; } = new List<Guid>();
 
         /// <summary>
         /// "Eröffnet" eine neue Stange mit der angegebenen Gesamtlänge und
@@ -57,12 +57,10 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// </summary>
         /// <param name="laenge"></param>
         /// <param name="zugabe"></param>
-        /// <param name="materialbedarfGuid"></param>
-        public ZuschnittStangenInfo(int laenge, int zugabe, Guid materialbedarfGuid = default)
+        public ZuschnittStangenInfo(int laenge, int zugabe)
         {
             _laenge = laenge;
             _zugabe = zugabe;
-            MaterialbedarfGuid = materialbedarfGuid;
         }
 
         /// <summary>
@@ -79,11 +77,13 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// Fügt ein Teilstück an.
         /// </summary>
         /// <param name="laenge">Länge des Teilstücks</param>
-        public void Add(int laenge)
+        /// <param name="materialBedarfGuid"></param>
+        public void Add(int laenge, Guid materialBedarfGuid = default)
         {
             if (CanAdd(laenge))
             {
                 Laengen.Add(laenge);
+                MaterialBedarfGuids.Add(materialBedarfGuid);
                 BelegungInMM += _zugabe + laenge;
                 BelegungInProzent = (int)Math.Floor(((float)BelegungInMM / (float)_laenge) * 100);
                 VerschnittInProzent = 100 - BelegungInProzent;
@@ -98,10 +98,9 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         public ZuschnittStangenInfo[] ZuschnittStangenInfos;
     }
 
-    // TODO: Uncomment after merging 5925_cutOptimization (IDAS repo) to master
-    /*public class GuidKeyIntValue
+    public class GuidKeyIntValue
     {
         public Guid Key { get; set; }
         public int Value { get; set; }
-    }*/
+    }
 }
