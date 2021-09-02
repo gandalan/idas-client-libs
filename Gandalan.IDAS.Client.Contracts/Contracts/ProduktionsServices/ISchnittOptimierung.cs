@@ -19,6 +19,9 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <param name="zugabe">Sägezugabe zwischen den Teilstücken (nicht am Anfang/Ende)</param>
         /// <returns></returns>
         IList<ZuschnittStangenInfo> Optimize(int rohmaterialLaenge, int[] teilstueckLaengen, int zugabe = 100);
+
+        // TODO: Uncomment after merging 5925_cutOptimization (IDAS repo) to master
+        //IList<ZuschnittStangenInfo> Optimize(int rohmaterialLaenge, List<GuidKeyIntValue> materialbedarfTeilstueckLaengen, int zugabe = 100);
     }
 
     /// <summary>
@@ -94,4 +97,11 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         public MaterialbedarfDTO[] Materialbedarfs;
         public ZuschnittStangenInfo[] ZuschnittStangenInfos;
     }
+
+    // TODO: Uncomment after merging 5925_cutOptimization (IDAS repo) to master
+    /*public class GuidKeyIntValue
+    {
+        public Guid Key { get; set; }
+        public int Value { get; set; }
+    }*/
 }
