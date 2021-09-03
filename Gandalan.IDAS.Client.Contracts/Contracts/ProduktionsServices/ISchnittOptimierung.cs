@@ -15,13 +15,10 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// möglichst geringe Anzahl von Rohmaterial-Teilen. Alle Längenangaben in mm!
         /// </summary>
         /// <param name="rohmaterialLaenge">Maximal zu belegende Länge. Endabschnitte müssen vom Aufrufer bereits abgezogen sein.</param>
-        /// <param name="teilstueckLaengen">Liste aller gewünschten Teilstücke</param>
+        /// <param name="materialbedarfTeilstueckLaengen">Liste aller gewünschten Teilstücke mit MaterialBedarfGuid</param>
         /// <param name="zugabe">Sägezugabe zwischen den Teilstücken (nicht am Anfang/Ende)</param>
         /// <returns></returns>
-        IList<ZuschnittStangenInfo> Optimize(int rohmaterialLaenge, int[] teilstueckLaengen, int zugabe = 100);
-
-        // TODO: Uncomment after merging 5925_cutOptimization (IDAS repo) to master
-        //IList<ZuschnittStangenInfo> Optimize(int rohmaterialLaenge, List<GuidKeyIntValue> materialbedarfTeilstueckLaengen, int zugabe = 100);
+        IList<ZuschnittStangenInfo> Optimize(int rohmaterialLaenge, List<GuidKeyIntValue> materialbedarfTeilstueckLaengen, int zugabe = 100);
     }
 
     /// <summary>
