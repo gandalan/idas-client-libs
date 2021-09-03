@@ -29,21 +29,24 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
     /// </summary>
     public class ZuschnittStangenInfo
     {
-        private readonly int _laenge;
         private readonly int _zugabe;
 
         /// <summary>
+        /// In most cases, this is KatalogArtikel.ProfilLaengeMM
+        /// </summary>
+        public int Laenge { get; set; }
+        /// <summary>
         /// Wie viele MM sind belegt?
         /// </summary>
-        public int BelegungInMM { get; private set; } = 0;
+        public int BelegungInMM { get; set; }
         /// <summary>
         /// Wie viele Prozent sind belegt?
         /// </summary>
-        public int BelegungInProzent { get; private set; } = 0;
+        public int BelegungInProzent { get; set; }
         /// <summary>
         /// Wie viele Prozent sind Verschnitt?
         /// </summary>
-        public int VerschnittInProzent { get; private set; } = 100;
+        public int VerschnittInProzent { get; set; } = 100;
         /// <summary>
         /// Welche Längen in welcher Reihenfolge liegen auf der Stange?
         /// </summary>
@@ -59,7 +62,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <param name="zugabe"></param>
         public ZuschnittStangenInfo(int laenge, int zugabe)
         {
-            _laenge = laenge;
+            Laenge = laenge;
             _zugabe = zugabe;
         }
 
@@ -70,7 +73,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <returns>true/false</returns>
         public bool CanAdd(int laenge)
         {
-            return BelegungInMM + _zugabe + laenge <= _laenge;
+            return BelegungInMM + _zugabe + laenge <= Laenge;
         }
 
         /// <summary>
@@ -85,7 +88,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
                 Laengen.Add(laenge);
                 MaterialBedarfGuids.Add(materialBedarfGuid);
                 BelegungInMM += _zugabe + laenge;
-                BelegungInProzent = (int)Math.Floor(((float)BelegungInMM / (float)_laenge) * 100);
+                BelegungInProzent = (int)Math.Floor(((float)BelegungInMM / (float)Laenge) * 100);
                 VerschnittInProzent = 100 - BelegungInProzent;
             }
             else throw new InvalidOperationException("Kein Platz mehr für dieses Teilstück!");
