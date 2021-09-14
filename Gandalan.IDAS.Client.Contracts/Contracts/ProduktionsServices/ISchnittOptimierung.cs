@@ -1,26 +1,24 @@
-﻿using System;
+﻿using Gandalan.IDAS.WebApi.DTO;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
     /// <summary>
-    /// Contract für die Schnitt-Optimierung, d.h. möglichst optimale Verteilung 
+    /// Contract für die Schnitt-Optimierung, d.h. möglichst optimale Verteilung
     /// von Teilstücken auf Rohmaterial
     /// </summary>
     public interface ISchnittOptimierung
     {
         /// <summary>
-        /// Berechnet eine möglichst optimale Verteilung von Teilstücken auf eine 
+        /// Berechnet eine möglichst optimale Verteilung von Teilstücken auf eine
         /// möglichst geringe Anzahl von Rohmaterial-Teilen. Alle Längenangaben in mm!
         /// </summary>
         /// <param name="rohmaterialLaenge">Maximal zu belegende Länge. Endabschnitte müssen vom Aufrufer bereits abgezogen sein.</param>
-        /// <param name="teilstueckLaengen">Liste aller gewünschten Teilstücke</param>
+        /// <param name="materialbedarfTeilstueckLaengen">Liste aller gewünschten Teilstücke mit MaterialBedarfGuid</param>
         /// <param name="zugabe">Sägezugabe zwischen den Teilstücken (nicht am Anfang/Ende)</param>
         /// <returns></returns>
-        IList<ZuschnittStangenInfo> Optimize(int rohmaterialLaenge, int[] teilstueckLaengen, int zugabe = 100);
+        IList<ZuschnittStangenInfo> Optimize(int rohmaterialLaenge, List<GuidKeyIntValue> materialbedarfTeilstueckLaengen, int zugabe = 100);
     }
 
     /// <summary>
@@ -28,35 +26,40 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
     /// </summary>
     public class ZuschnittStangenInfo
     {
-        private readonly int _laenge;
         private readonly int _zugabe;
 
         /// <summary>
+        /// In most cases, this is KatalogArtikel.ProfilLaengeMM
+        /// </summary>
+        public int Laenge { get; set; }
+        /// <summary>
         /// Wie viele MM sind belegt?
         /// </summary>
-        public int BelegungInMM { get; private set; } = 0;
+        public int BelegungInMM { get; set; }
         /// <summary>
         /// Wie viele Prozent sind belegt?
         /// </summary>
-        public int BelegungInProzent { get; private set; } = 0;
+        public int BelegungInProzent { get; set; }
         /// <summary>
         /// Wie viele Prozent sind Verschnitt?
         /// </summary>
-        public int VerschnittInProzent { get; private set; } = 100;
+        public int VerschnittInProzent { get; set; } = 100;
         /// <summary>
         /// Welche Längen in welcher Reihenfolge liegen auf der Stange?
         /// </summary>
         public IList<int> Laengen { get; } = new List<int>();
 
+        public List<Guid> MaterialBedarfGuids { get; } = new List<Guid>();
+
         /// <summary>
-        /// "Eröffnet" eine neue Stange mit der angegebenen Gesamtlänge und 
+        /// "Eröffnet" eine neue Stange mit der angegebenen Gesamtlänge und
         /// dem Zugabe-Parameter für Teilstückzwischenräume
         /// </summary>
         /// <param name="laenge"></param>
         /// <param name="zugabe"></param>
         public ZuschnittStangenInfo(int laenge, int zugabe)
         {
-            _laenge = laenge;
+            Laenge = laenge;
             _zugabe = zugabe;
         }
 
@@ -67,23 +70,37 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <returns>true/false</returns>
         public bool CanAdd(int laenge)
         {
-            return BelegungInMM + _zugabe + laenge <= _laenge;
+            return BelegungInMM + _zugabe + laenge <= Laenge;
         }
 
         /// <summary>
         /// Fügt ein Teilstück an.
         /// </summary>
         /// <param name="laenge">Länge des Teilstücks</param>
-        public void Add(int laenge)
+        /// <param name="materialBedarfGuid"></param>
+        public void Add(int laenge, Guid materialBedarfGuid = default)
         {
             if (CanAdd(laenge))
             {
                 Laengen.Add(laenge);
+                MaterialBedarfGuids.Add(materialBedarfGuid);
                 BelegungInMM += _zugabe + laenge;
-                BelegungInProzent = (int)Math.Floor(((float)BelegungInMM / (float)_laenge) * 100);
+                BelegungInProzent = (int)Math.Floor(((float)BelegungInMM / (float)Laenge) * 100);
                 VerschnittInProzent = 100 - BelegungInProzent;
             }
             else throw new InvalidOperationException("Kein Platz mehr für dieses Teilstück!");
         }
+    }
+
+    public class MaterialbedarfCutOptimization
+    {
+        public MaterialbedarfDTO[] Materialbedarfs;
+        public ZuschnittStangenInfo[] ZuschnittStangenInfos;
+    }
+
+    public class GuidKeyIntValue
+    {
+        public Guid Key { get; set; }
+        public int Value { get; set; }
     }
 }

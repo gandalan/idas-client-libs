@@ -101,6 +101,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Bemerkung { get; set; }
         public Guid? AVPositionGuid { get; set; }
 
+        public Guid ZielKennzeichen { get; set; }
+
         public object Clone()
         {
             return this.MemberwiseClone();

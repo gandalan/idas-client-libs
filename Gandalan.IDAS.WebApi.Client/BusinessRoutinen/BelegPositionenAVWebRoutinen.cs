@@ -9,7 +9,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public string RunAVBerechnung(Guid id, long mandantId)
         {
-            return Post("BelegPositionenAV/GetForWebJob/" + id + "?mandantId=" + mandantId, null);
+            return Post("BelegPositionenAV/RunAVBerechnung/" + id + "?mandantId=" + mandantId, null);
         }
 
         public string CalculateItems()
