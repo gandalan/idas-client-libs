@@ -16,7 +16,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         Anbauteilfarben = 16,
         Preisfaktoren = 32,
         Aufpreise = 64,
-        Farbzuschlaege = 128,
         MbAufpreise = 256,
         Grenzenfreigabe = 512,
         FarbGruppen = 1024
