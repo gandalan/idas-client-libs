@@ -89,6 +89,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 {
                     foreach (BelegSaldoDTO dto in beleg.Salden)
                     {
+                        if (dto.IstInaktiv) continue;
                         this.Salden.Add(new BelegSaldoDruckDTO(dto));
                     }
                 }
