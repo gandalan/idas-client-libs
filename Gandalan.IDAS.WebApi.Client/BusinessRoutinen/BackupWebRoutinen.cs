@@ -1,4 +1,7 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
+using System;
+using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -8,9 +11,14 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public void Run(string email, bool onlyBills, int year)
+        public List<Guid> GetVorgangGuids(string email, int year = 0)
         {
-            Post("Backup/Post?email=" + email + "&nurRechnungen=" + onlyBills + "&jahr=" + year, null);
+            return Get<List<Guid>>("Backup/GetVorgangGuids?email=" + email + "&jahr=" + year, null);
+        }
+
+        public VorgangExtendendedDTO GetVorgang(string email, Guid guid, bool onlyBills = false)
+        {
+            return Get<VorgangExtendendedDTO>("Backup/GetVorgang?email=" + email + "&nurRechnungen=" + onlyBills + "&guid=" + guid);
         }
 
         public void RequestBackup(string email, bool onlyBills, int year)
