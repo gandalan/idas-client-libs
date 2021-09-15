@@ -16,9 +16,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return Get<List<Guid>>("Backup/GetVorgangGuids?email=" + email + "&jahr=" + year, null);
         }
 
-        public VorgangExtendendedDTO GetVorgang(string email, Guid guid, bool onlyBills = false)
+        public VorgangExtendedDTO GetVorgang(string email, Guid guid, bool onlyBills = false)
         {
-            return Get<VorgangExtendendedDTO>("Backup/GetVorgang?email=" + email + "&nurRechnungen=" + onlyBills + "&guid=" + guid);
+            return Get<VorgangExtendedDTO>("Backup/GetVorgang?email=" + email + "&nurRechnungen=" + onlyBills + "&guid=" + guid);
         }
 
         public void RequestBackup(string email, bool onlyBills, int year)
