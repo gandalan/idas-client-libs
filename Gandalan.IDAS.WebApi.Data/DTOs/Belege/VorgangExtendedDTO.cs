@@ -1,8 +1,9 @@
 ﻿namespace Gandalan.IDAS.WebApi.DTO
 {
-    public class VorgangExtendendedDTO
+    public class VorgangExtendedDTO
     {
         public VorgangDTO Vorgang { get; set; }
         public MandantDTO Mandant { get; set; }
+        public long MandantId { get; set; }
     }
 }
