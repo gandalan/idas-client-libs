@@ -8,6 +8,8 @@
     <AssemblyVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</AssemblyVersion>
     <FileVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</FileVersion>
     <FileVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</FileVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>2099.0.0-alpha</Version>
     
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

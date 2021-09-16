@@ -95,6 +95,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public List<BelegPositionAVDTO> SaveBelegPositionenAVToSerie(Guid serieGuid, List<Guid> positionen)
+        {
+            if (Login())
+            {
+                return Put<List<BelegPositionAVDTO>>("BelegPositionenAVBulk/AddToSerie/" + serieGuid.ToString(), positionen);
+            }
+            return null;
+        }
+
         public string SaveSerie(SerieDTO serie)
         {
             if (Login())
