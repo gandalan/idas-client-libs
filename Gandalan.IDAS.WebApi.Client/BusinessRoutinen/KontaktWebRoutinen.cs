@@ -20,7 +20,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
                 if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
-                    return Get<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value.ToString("yyyy-MM-ddTHH:mm:ss")}");
+                    return Get<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value.ToString("o")}");
                 else
                     return Get<KontaktListItemDTO[]>("Kontakt");
             throw new ApiException("Login fehlgeschlagen");

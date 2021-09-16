@@ -30,7 +30,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                Get($"BestellungenReset?resetAb={resetAb.ToString("yyyy-MM-ddTHH:mm:ss")}");
+                Get($"BestellungenReset?resetAb={resetAb.ToString("o")}");
             }
         }
 
@@ -45,7 +45,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public void ResetMaterialBestellungen(DateTime resetAb)
         {
             if (Login())
-                Get($"MaterialBestellungenReset?resetAb={resetAb.ToString("yyyy-MM-ddTHH:mm:ss")}");
+                Get($"MaterialBestellungenReset?resetAb={resetAb.ToString("o")}");
         }
 
         public string GetgSQLBeleg(Guid belegGuid)
