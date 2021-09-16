@@ -13,7 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.Crypto", "Gan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.Logging", "Gandalan.IDAS.Logging\Gandalan.IDAS.Logging.csproj", "{9F026D00-7C5C-4E98-A494-63006BBAC70A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gandalan.IDAS.WebApi.Client.Wpf", "Gandalan.IDAS.WebApi.Client.Wpf\Gandalan.IDAS.WebApi.Client.Wpf.csproj", "{33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.WebApi.Client.Wpf", "Gandalan.IDAS.WebApi.Client.Wpf\Gandalan.IDAS.WebApi.Client.Wpf.csproj", "{33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F75A4690-2A78-4DF5-AF1F-90BC4DABFA26}"
+	ProjectSection(SolutionItems) = preProject
+		nuget_lokal.cmd = nuget_lokal.cmd
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
