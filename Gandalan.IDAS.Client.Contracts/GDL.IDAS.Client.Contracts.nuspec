@@ -15,6 +15,8 @@
         </dependencies>
     </metadata>
     <files>
+      <file src="bin\Release\net472\GDL.IDAS.Client.Contracts.dll" target="lib\net472\GDL.IDAS.Client.Contracts.dll" />
+      <file src="bin\Release\net472\GDL.IDAS.Client.Contracts.XML" target="lib\net472\GDL.IDAS.Client.Contracts.XML" />
         <file src="bin\Release\net48\GDL.IDAS.Client.Contracts.dll" target="lib\net48\GDL.IDAS.Client.Contracts.dll" />
         <file src="bin\Release\net48\GDL.IDAS.Client.Contracts.XML" target="lib\net48\GDL.IDAS.Client.Contracts.XML" />
         <file src="bin\Release\net5.0\GDL.IDAS.Client.Contracts.dll" target="lib\net5.0\GDL.IDAS.Client.Contracts.dll" />
