@@ -63,6 +63,9 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public bool HatFehlerhaftenBeleg { get; set; }
         public bool PreisAufAnfrage { get; set; }
+        public bool KundeFehlt => KundeGuid.Equals(Guid.Empty) || string.IsNullOrEmpty(Kundenname)
+            || Kundenname.Equals("<nicht zugeordnet>");
+
         public string TextStatus { get; set; }
         // Email des Besitzer
         public string Besitzer { get; set; }
