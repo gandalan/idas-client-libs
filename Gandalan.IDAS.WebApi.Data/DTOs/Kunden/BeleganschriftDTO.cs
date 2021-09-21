@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using Gandalan.IDAS.WebApi.Util;
+using System.Text;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -129,9 +130,26 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public override string ToString()
         {
-            var text = string.IsNullOrEmpty(Firmenname) ? $"{Titel} {Vorname} {Nachname}".Trim() : Firmenname;
-            var zusatz = !string.IsNullOrEmpty(Zusatz) ? $"{Zusatz}\r\n" : "";
-            return $"{Anrede}\r\n{text}\r\n{zusatz}{Strasse} {Hausnummer}\r\n{Postleitzahl} {Ort}\r\n{Land}".Trim();
+            StringBuilder sb = new StringBuilder();
+
+            if (!string.IsNullOrEmpty(Firmenname))
+                sb.AppendLine(Firmenname);
+            if (!string.IsNullOrEmpty(Titel) || !string.IsNullOrEmpty(Vorname) || !string.IsNullOrEmpty(Nachname))
+                sb.AppendLine($"{Titel} {Vorname} {Nachname}".Trim());
+            if (!string.IsNullOrEmpty(AdressZusatz1))
+                sb.AppendLine(AdressZusatz1);
+            if (!string.IsNullOrEmpty(AdressZusatz2))
+                sb.AppendLine(AdressZusatz2);
+            if (!string.IsNullOrEmpty(Strasse) || !string.IsNullOrEmpty(Hausnummer))
+                sb.AppendLine($"{Strasse} {Hausnummer}".Trim());
+            if (!string.IsNullOrEmpty(Land) || !string.IsNullOrEmpty(Postleitzahl) || !string.IsNullOrEmpty(Ort))
+                sb.AppendLine($"{Land} {Postleitzahl} {Ort}".Trim());
+
+            return sb.ToString();
+
+            //var text = string.IsNullOrEmpty(Firmenname) ? $"{Titel} {Vorname} {Nachname}".Trim() : Firmenname;
+            //var zusatz = !string.IsNullOrEmpty(Zusatz) ? $"{Zusatz}\r\n" : "";
+            //return $"{Anrede}\r\n{text}\r\n{zusatz}{Strasse} {Hausnummer}\r\n{Postleitzahl} {Ort}\r\n{Land}".Trim();
         }
 
         /// <summary>
