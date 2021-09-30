@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Discovery\" />
     <Folder Include="EventArgs\" />
     <Folder Include="Settings\" />
   </ItemGroup>

@@ -33,9 +33,9 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts
         /// </summary>
         string CMSUrl { get; set; }
         /// <summary>
-        /// Latex-Reports 
+        /// Package Store
         /// </summary>
-        string LatexReportUrl { get; set; }
+        string StoreUrl { get; set; }
         /// <summary>
         /// IBOS2-Varianten Produktionsberechnung 
         /// </summary>
@@ -50,7 +50,5 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts
         List<IWebApiConfig> GetAll();
 
         void CopyToThis(IWebApiConfig settings);
-
-        Task<bool> Discover();
     }
 }
