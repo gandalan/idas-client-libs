@@ -9,9 +9,6 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Gandalan.IDAS.WebApi.Data</description>
         <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2020</copyright>
-        <dependencies>
-          <dependency id="Newtonsoft.Json" version="12.0.3" />
-        </dependencies>
     </metadata>
     <files>
       <file src="bin\Release\net472\GDL.IDAS.WebApi.Data.dll" target="lib\net472\GDL.IDAS.WebApi.Data.dll" />

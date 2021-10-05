@@ -11,7 +11,6 @@
         <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2020</copyright>
         <dependencies>
           <dependency id="Newtonsoft.Json" version="12.0.3" />
-          <dependency id="GDL.IDAS.WebApi.Data" version="BUILDVERSION" />
         </dependencies>
     </metadata>
     <files>
