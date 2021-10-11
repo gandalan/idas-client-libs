@@ -34,7 +34,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<BaseListItemDTO[]>($"Lieferscheine/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}");
+                return Get<BaseListItemDTO[]>($"Lieferscheine/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}");
             }
             return null;
         }
@@ -43,7 +43,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<BaseListItemDTO[]>($"Lieferscheine/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("yyyy-MM-ddTHH:mm:ss")}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
+                return Get<BaseListItemDTO[]>($"Lieferscheine/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
             }
             return null;
         }

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFrameworks>net48;net472</TargetFrameworks>
     <UseWPF>true</UseWPF>
 
     <AssemblyName>GDL.IDAS.WebApi.Client.Wpf</AssemblyName>
@@ -8,6 +8,8 @@
     <AssemblyVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</AssemblyVersion>
     <FileVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</FileVersion>
     <FileVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</FileVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>2099.0.0-alpha</Version>
     
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -17,7 +19,7 @@
     <None Remove="Assets\Neher\Logo.png" />
   </ItemGroup>
   <ItemGroup>
-	<PackageReference Include="PropertyChanged.Fody" Version="3.2.8" />
+	<PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gandalan.IDAS.WebApi.Client\Gandalan.IDAS.WebApi.Client.csproj" />

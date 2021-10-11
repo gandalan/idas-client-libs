@@ -77,7 +77,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                             DocUrl = response.DOCS,
                             I1Url = response.Prod_I1,
                             I2Url = response.Prod_I2, 
-                            LatexReportUrl = response.Print_Latex,
+                            StoreUrl = response.Store,
                             FriendlyName = env,
                             AppToken = appToken
                         };
