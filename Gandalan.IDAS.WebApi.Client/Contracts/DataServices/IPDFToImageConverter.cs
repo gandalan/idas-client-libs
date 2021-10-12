@@ -7,6 +7,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
 {
     public interface IPDFToImageConverter
     {
-        Task<List<string>> ConvertPDFListToImages(List<string> pdfList);
+        Task<List<string>> ConvertPDFListToImages(List<string> pdfList, string outputFolder);
     }
 }
