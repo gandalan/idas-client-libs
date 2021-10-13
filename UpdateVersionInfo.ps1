@@ -31,26 +31,6 @@ attrib $file -r
 # correct version number
 $filecontent -replace $VersionReplaceRegex, $NewVersion | Out-File $file
 
-#GDL.IDAS.WebApi.Data.nuspec
-$VersionRegex = "\d+\.\d+.\d+\.\d+"
-$NewVersion = [regex]::matches($Env:Build_BuildNumber, $VersionRegex)
-$file = ".\Gandalan.IDAS.WebApi.Data\GDL.IDAS.WebApi.Data.nuspec" 
-$filecontent = Get-Content($file)
-attrib $file -r
-# Search in the "GDL.IDAS.WebApi.Data.nuspec" file items that matches the version regex and replace them with the
-# correct version number
-$filecontent -replace $VersionReplaceRegex, $NewVersion | Out-File $file
-
-#GDL.IDAS.Client.Contracts.nuspec
-$VersionRegex = "\d+\.\d+.\d+\.\d+"
-$NewVersion = [regex]::matches($Env:Build_BuildNumber, $VersionRegex)
-$file = ".\Gandalan.IDAS.Client.Contracts\GDL.IDAS.Client.Contracts.nuspec" 
-$filecontent = Get-Content($file)
-attrib $file -r
-# Search in the "GDL.IDAS.WebApi.Data.nuspec" file items that matches the version regex and replace them with the
-# correct version number
-$filecontent -replace $VersionReplaceRegex, $NewVersion | Out-File $file
-
 #GDL.IDAS.Logging.nuspec
 $VersionRegex = "\d+\.\d+.\d+\.\d+"
 $NewVersion = [regex]::matches($Env:Build_BuildNumber, $VersionRegex)
