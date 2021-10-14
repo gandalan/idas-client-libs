@@ -29,7 +29,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
                 {
-                    return Get<List<LagerbestandDTO>>("Lagerbestand?changedSince=" + changedSince.Value.ToString("yyyy-MM-ddTHH:mm:ss"));
+                    return Get<List<LagerbestandDTO>>("Lagerbestand?changedSince=" + changedSince.Value.ToString("o"));
                 }
                 else
                 {
@@ -75,13 +75,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
             return null;
         }
-        public async Task<LagerbuchungDTO[]> HTTPGetLagerhistorieAsync()
-        {
-            if (HTTPLogin() != null)
-                return await HTTPGet<LagerbuchungDTO[]>("Lagerbuchung");
-
-            return null;
-        }
         public async Task<LagerbestandDTO> GetAsync(Guid guid)
         {
             return await Task.Run(() => Get(guid));
@@ -90,13 +83,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<List<LagerbestandDTO>> GetAllAsync(DateTime? changedSince)
         {
             return await Task.Run(() => GetAll(changedSince));
-        }
-        public async Task<LagerbestandDTO[]> HTTPGetAllAsync()
-        {
-            if (HTTPLogin() != null)
-                return await HTTPGet<LagerbestandDTO[]>("Lagerbestand");
-
-            return null;
         }
 
         public async Task SaveAsync(LagerbestandDTO dto)

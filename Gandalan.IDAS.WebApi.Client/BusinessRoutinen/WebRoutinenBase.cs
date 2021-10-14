@@ -14,9 +14,6 @@ using Gandalan.IDAS.WebApi.DTO;
 using Gandalan.IDAS.Web;
 using Newtonsoft.Json;
 using Gandalan.IDAS.Client.Contracts.Contracts;
-using System.Net.Http;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
@@ -25,7 +22,7 @@ namespace Gandalan.IDAS.WebApi.Client
         #region  Felder
 
         public IWebApiConfig Settings;
-        public UserAuthTokenDTO ReturnUserToken { get; private set; }
+
         #endregion
 
         #region  Eigenschaften
@@ -60,12 +57,10 @@ namespace Gandalan.IDAS.WebApi.Client
                 };
             }
 
-            // SM: erstmal knallhart benutzen
-            AuthToken = settings.AuthToken;
-
-            // SM: DateTime.Now statt DateTime.UtcNow
-            if (settings?.AuthToken?.Token != Guid.Empty && settings?.AuthToken?.Expires > DateTime.Now)
+            if (settings?.AuthToken?.Token != Guid.Empty && settings?.AuthToken?.Expires > DateTime.UtcNow)
+            {
                 AuthToken = settings.AuthToken;
+            }
         }
 
         protected virtual void OnErrorOccured(ApiErrorArgs e)
@@ -89,7 +84,6 @@ namespace Gandalan.IDAS.WebApi.Client
             try
             {
                 UserAuthTokenDTO result = null;
-                result = Put<UserAuthTokenDTO>("/api/Login/Update", AuthToken);
                 if (AuthToken == null || AuthToken.Expires < DateTime.UtcNow)
                 {
                     var ldto = new LoginDTO()
@@ -111,15 +105,6 @@ namespace Gandalan.IDAS.WebApi.Client
                         Status = "OK (Cached)";
                         return true;
                     }
-                }
-
-                try
-                {
-                    result = Put<UserAuthTokenDTO>("/api/Login/Update", AuthToken);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
                 }
 
                 if (result != null)
@@ -155,34 +140,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 return false;
             }
         }
-        public async Task<UserAuthTokenDTO> HTTPLogin()
-        {
-            var ldto = new LoginDTO()
-            {
-                Email = Settings.UserName,
-                Password = Settings.Passwort,
-                AppToken = Settings.AppToken,
-            };
 
-            string json = JsonConvert.SerializeObject(ldto);
-            string authenticate = "/api/login/authenticate";
-            string update = "/api/Login/Update";
-
-            // zur Sicherheit noch drin lassen:
-            //HttpClient httpClient = new HttpClient();
-            //httpClient.BaseAddress = new Uri("https://bf-dev-1.gandalan.de");
-
-            var authToken = await HTTPSendDataAsync(HttpMethod.Put, authenticate, json);
-            if(authToken == null)
-                authToken = await HTTPSendDataAsync(HttpMethod.Post, authenticate, json);
-
-            authToken = await HTTPSendDataAsync(HttpMethod.Put, update, json);
-
-            if (authToken != null)
-                AuthToken = JsonConvert.DeserializeObject<UserAuthTokenDTO>(authToken);
-
-            return AuthToken;
-        } 
         public async Task<bool> LoginAsync()
         {
             try
@@ -245,11 +203,12 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
+
         public UserAuthTokenDTO RefreshToken(Guid authTokenGuid)
         {
             try
             {
-                return Put<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO() { Token = authTokenGuid });
+                return Put<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO() {Token = authTokenGuid});
             }
             catch (Exception)
             {
@@ -267,27 +226,6 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 return null;
             }
-        }
-
-        public async Task<string> HTTPSendDataAsync(HttpMethod method, string requestUri, string content)
-        {
-            // alt:
-            // JsonConvert.DeserializeObject<UserAuthTokenDTO>(await new RESTRoutinen(Settings.Url).HTTPPostAsync(method, requestUri, content));
-
-            using(var cl = new RESTRoutinen(Settings.Url))
-            {
-                try
-                {
-                    if(AuthToken != null)
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-
-                    return await cl.HTTPPostAsync(method, requestUri, content);
-                }
-                catch(Exception e)
-                { }
-            }
-
-            return null;
         }
 
         public T Post<T>(string uri, object data, JsonSerializerSettings settings = null)
@@ -620,17 +558,6 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<T> HTTPGet<T>(string uri, JsonSerializerSettings settings = null)
-        {
-            using (var cl = new RESTRoutinen(Settings.Url))
-            {
-                if (AuthToken != null)
-                    cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-
-                return await cl.HTTPGet<T>(uri);
-            }
-        }
-
         public async Task<T> GetAsync<T>(string uri, JsonSerializerSettings settings = null)
         {
             using (var cl = new RESTRoutinen(Settings.Url))
@@ -740,13 +667,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex, data);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
+                        ApiException exception = TranslateException(ex, data);
+                        if (!IgnoreOnErrorOccured)
+                        {
+                            OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+                        }
 
-                    throw exception;
+                        throw exception;
                 }
             }
         }

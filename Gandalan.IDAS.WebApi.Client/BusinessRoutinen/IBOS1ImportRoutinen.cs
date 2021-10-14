@@ -15,7 +15,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             this.Settings.Url = this.Settings.Url.Replace("/api/", "/ibos-api/");
         }
-        
+
         // eigentlich kann man die Funktionen LadeBestellungen() und LadeMaterialBestellungen() sowie ResetBestellungen() und ResetMaterialBestellungen() auch noch zusammenfassen aber da war ich jetzt echt zu faul für...
         public BestellungListItemDTO[] LadeBestellungen(int jahr = -1)
         {
@@ -30,7 +30,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                Get($"BestellungenReset?resetAb={resetAb.ToString("yyyy-MM-ddTHH:mm:ss")}");
+                Get($"BestellungenReset?resetAb={resetAb.ToString("o")}");
             }
         }
 
@@ -42,18 +42,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public MaterialBestellungListItemDTO[] LadeMaterialBestellungen()
-        {
-            if (Login())
-                return Get<MaterialBestellungListItemDTO[]>("MaterialBestellungen");
-
-            return null;
-        }
-
         public void ResetMaterialBestellungen(DateTime resetAb)
         {
             if (Login())
-                Get($"MaterialBestellungenReset?resetAb={resetAb.ToString("yyyy-MM-ddTHH:mm:ss")}");
+                Get($"MaterialBestellungenReset?resetAb={resetAb.ToString("o")}");
         }
 
         public string GetgSQLBeleg(Guid belegGuid)

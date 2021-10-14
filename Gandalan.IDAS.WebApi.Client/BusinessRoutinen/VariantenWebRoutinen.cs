@@ -24,6 +24,12 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
         public async Task<VarianteDTO[]> GetAllAsync() => await Task.Run(() => GetAll());
         public async Task<VarianteDTO> SaveVarianteAsync(VarianteDTO variante) => await Task.Run(() => SaveVariante(variante));
+
+        public string CacheWebJob()
+        {
+            return Post("Variante/CacheWebJob", null);
+        }
+
         [Obsolete("Funktion 'SaveVariante()' verwenden")]
         public string Save(VarianteDTO dto)
         {

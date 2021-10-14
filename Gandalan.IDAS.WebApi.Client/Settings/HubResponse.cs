@@ -7,6 +7,6 @@
         public string IDAS { get; set; }
         public string Prod_I1 { get; set; }
         public string Prod_I2 { get; set; }
-        public string Print_Latex { get; set; }
+        public string Store { get; set; }
     }
 }

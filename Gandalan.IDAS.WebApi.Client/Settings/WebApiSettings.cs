@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client.Discovery;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
 
@@ -39,7 +37,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         /// <summary>
         /// Latex-Reports 
         /// </summary>
-        public string LatexReportUrl { get; set; }
+        public string StoreUrl { get; set; }
         /// <summary>
         /// IBOS2-Varianten Produktionsberechnung 
         /// </summary>
@@ -71,38 +69,20 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 
         public void CopyToThis(IWebApiConfig settings)
         {
-            try
-            {
-                this.AppToken = settings.AppToken;
-                this.AuthToken = settings.AuthToken;
-                this.FriendlyName = settings.FriendlyName;
-                this.Mandant = settings.Mandant;
-                this.Url = settings.Url;
-                this.CMSUrl = settings.CMSUrl;
-                this.DocUrl = settings.DocUrl;
-                this.Passwort = settings.Passwort;
-                this.UserName = settings.UserName;
-                this.InstallationId = settings.InstallationId;
-                this.UserAgent = settings.UserAgent;
-                this.I1Url = settings.I1Url;
-                this.I2Url = settings.I2Url;
-            }
-            catch(Exception e)
-            { }
-        }
-
-
-        public async Task<bool> Discover()
-        {
-            if (await ServerDiscovery.ExecuteUDP())
-            {
-                Url = ServerDiscovery.WebAPIBaseURL;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            this.AppToken = settings.AppToken;
+            this.AuthToken = settings.AuthToken;
+            this.FriendlyName = settings.FriendlyName;
+            this.Mandant = settings.Mandant;
+            this.Url = settings.Url;
+            this.CMSUrl = settings.CMSUrl;
+            this.DocUrl = settings.DocUrl;
+            this.Passwort = settings.Passwort;
+            this.UserName = settings.UserName;
+            this.InstallationId = settings.InstallationId;
+            this.UserAgent = settings.UserAgent;
+            this.I1Url = settings.I1Url;
+            this.I2Url = settings.I2Url;
+            this.StoreUrl = settings.StoreUrl;
         }
     }
 }
