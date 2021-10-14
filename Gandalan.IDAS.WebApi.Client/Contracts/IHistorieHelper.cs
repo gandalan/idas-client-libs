@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts
 {
@@ -6,6 +7,7 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts
     {
         void ProgressInfo(Action action);
         void ProgressInfo(string label, Action action);
+        void ProgressTaskInfo(string label, Task task);
         void Info(string text);
         void Warning(string text);
         void Error(string text);
