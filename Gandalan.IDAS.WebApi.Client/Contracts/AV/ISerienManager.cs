@@ -11,16 +11,18 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.AV
     public interface ISerienManager
     {
         Task AddToSerie(BelegPositionDTO position, SerieDTO serie);
-        Task AddToSerie(IList<BelegPositionAVDTO> position, SerieDTO serie);
+        Task AddToSerie(IList<BelegPositionDTO> position, SerieDTO serie);
+        Task AddToSerie(BelegPositionAVDTO position, SerieDTO serie);
+        Task AddToSerie(IList<BelegPositionAVDTO> positionen, SerieDTO serie);
+        Task AddToSerie(Guid avPositionsGuid, SerieDTO serie);
+        Task AddToSerie(IList<Guid> avPositionenGuids, SerieDTO serie);
+
+
         Task RemoveFromSerie(BelegPositionDTO position, SerieDTO serie);
+        Task RemoveFromSerie(IList<BelegPositionDTO> position, SerieDTO serie);
+        Task RemoveFromSerie(BelegPositionAVDTO position, SerieDTO serie);
         Task RemoveFromSerie(IList<BelegPositionAVDTO> position, SerieDTO serie);
-
-
-        Task<List<PositionSerieItemDTO>> GetSeriePositionItemsFromBeleg(BelegDTO beleg);
-        Task<List<PositionSerieItemDTO>> GetSeriePositionItemsFromModus(BelegDTO beleg, List<PositionSerieItemDTO> items, SerieSuchenModus serieSuchenModus, bool allePosDisponieren);
-        Task SaveSeriePositionItemsToSerie(BelegDTO beleg, List<PositionSerieItemDTO> items, SerieSuchenModus serieSuchenModus, bool showDialog = true);
-        Task SaveSeriePositionItemsToSerieAuto(BelegDTO beleg);
-
-
+        Task RemoveFromSerie(Guid avPositionsGuid, SerieDTO serie);
+        Task RemoveFromSerie(IList<Guid> avPositionenGuids, SerieDTO serie);
     }
 }
