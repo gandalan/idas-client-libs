@@ -1,13 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.352
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31808.319
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.WebApi.Data", "Gandalan.IDAS.WebApi.Data\Gandalan.IDAS.WebApi.Data.csproj", "{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.WebApi.Client", "Gandalan.IDAS.WebApi.Client\Gandalan.IDAS.WebApi.Client.csproj", "{A35EA672-7E79-4D68-BEEF-A34866ED6E80}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.Client.Contracts", "Gandalan.IDAS.Client.Contracts\Gandalan.IDAS.Client.Contracts.csproj", "{8E99D70D-CDE2-4287-8D04-6AF1F9D31592}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.Crypto", "Gandalan.IDAS.Crypto\Gandalan.IDAS.Crypto.csproj", "{A5BCF7DE-A532-438B-B879-B2F7829AA684}"
 EndProject
@@ -26,18 +22,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0E1AF3C-9F75-4C6C-9947-088843DBBB97}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E99D70D-CDE2-4287-8D04-6AF1F9D31592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E99D70D-CDE2-4287-8D04-6AF1F9D31592}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E99D70D-CDE2-4287-8D04-6AF1F9D31592}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E99D70D-CDE2-4287-8D04-6AF1F9D31592}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A5BCF7DE-A532-438B-B879-B2F7829AA684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5BCF7DE-A532-438B-B879-B2F7829AA684}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5BCF7DE-A532-438B-B879-B2F7829AA684}.Release|Any CPU.ActiveCfg = Release|Any CPU
