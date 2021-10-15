@@ -17,12 +17,11 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.AV
         Task AddToSerie(Guid avPositionsGuid, SerieDTO serie);
         Task AddToSerie(IList<Guid> avPositionenGuids, SerieDTO serie);
 
-
-        Task RemoveFromSerie(BelegPositionDTO position, SerieDTO serie);
-        Task RemoveFromSerie(IList<BelegPositionDTO> position, SerieDTO serie);
-        Task RemoveFromSerie(BelegPositionAVDTO position, SerieDTO serie);
-        Task RemoveFromSerie(IList<BelegPositionAVDTO> position, SerieDTO serie);
-        Task RemoveFromSerie(Guid avPositionsGuid, SerieDTO serie);
-        Task RemoveFromSerie(IList<Guid> avPositionenGuids, SerieDTO serie);
+        Task RemoveFromSerie(BelegPositionDTO position);
+        Task RemoveFromSerie(IList<BelegPositionDTO> position);
+        Task RemoveFromSerie(BelegPositionAVDTO position);
+        Task RemoveFromSerie(IList<BelegPositionAVDTO> position);
+        Task RemoveFromSerie(Guid avPositionsGuid);
+        Task RemoveFromSerie(IList<Guid> avPositionenGuids);
     }
 }
