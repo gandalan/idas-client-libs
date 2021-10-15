@@ -31,5 +31,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Salden
         public string Text { get; set; }
         public DateTime? GueltigAb { get; set; }
         public DateTime? GueltigBis { get; set; }
+        public int Order { get; set; }
     }
 }
