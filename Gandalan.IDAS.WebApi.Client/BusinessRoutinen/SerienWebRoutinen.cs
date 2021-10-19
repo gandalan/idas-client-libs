@@ -72,7 +72,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<string>($"Serie/ReleaseElemente?fromSerie={fromSerie}&toSerie={toSerie}");
+                return Get<string>($"Serie/MoveElemente?fromSerie={fromSerie}&toSerie={toSerie}");
             }
             return null;
         }
