@@ -41,42 +41,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public SerieDTO[] GetAllSerien()
+        public List<BelegPositionAVDTO> GetBelegPositionenAV(Guid belegpositionGuid)
         {
             if (Login())
             {
-                return Get<SerieDTO[]>("Serie");
-            }
-            return null;
-        }
-
-        public SerieDTO[] GetAllSerien(DateTime changedSince)
-        {
-            if (Login())
-            {
-                return Get<SerieDTO[]>($"Serie/?changedSince={changedSince.ToString("o")}");
-            }
-            return null;
-        }
-
-        public List<BelegPositionAVDTO> GetBelegPositionenAV(Guid guid)
-        {
-            if (Login())
-            {
-                return Get<List<BelegPositionAVDTO>>("BelegPositionenAV/" + guid.ToString());
+                return Get<List<BelegPositionAVDTO>>("BelegPositionenAV/" + belegpositionGuid.ToString());
             }
             return null;
         }
                
-        public SerieDTO GetSerie(Guid guid)
-        {
-            if (Login())
-            {
-                return Get<SerieDTO>("Serie/" + guid.ToString());
-            }
-            return null;
-        }
-
         public string SaveBelegPositionenAV(BelegPositionAVDTO position)
         {
             if (Login())
@@ -104,15 +77,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public string SaveSerie(SerieDTO serie)
-        {
-            if (Login())
-            {
-                return Put<string>("Serie", serie);
-            }
-            return "Not logged in";
-        }
-
         public string DeleteBelegPositionenAV(Guid guid)
         {
             if (Login())
@@ -130,16 +94,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return "Not logged in";
         }
-
-        public string DeleteSerie(Guid guid)
-        {
-            if (Login())
-            {
-                return Delete($"Serie/{guid}");
-            }
-            return "Not logged in";
-        }
-
 
         public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync()
         {
@@ -209,51 +163,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             if (Login())
             {
                 return await DeleteAsync<string>($"BelegPositionenAVBulk", guids);
-            }
-            return "Not logged in";
-        }
-
-        public async Task<SerieDTO[]> GetAllSerienAsync()
-        {
-            if (Login())
-            {
-                return await GetAsync<SerieDTO[]>("Serie");
-            }
-            return null;
-        }
-
-        public async Task<SerieDTO[]> GetAllSerienAsync(DateTime changedSince)
-        {
-            if (Login())
-            {
-                return await GetAsync<SerieDTO[]>($"Serie/?changedSince={changedSince.ToString("o")}");
-            }
-            return null;
-        }
-
-        public async Task<SerieDTO> GetSerieAsync(Guid guid)
-        {
-            if (Login())
-            {
-                return await GetAsync<SerieDTO>("Serie/" + guid.ToString());
-            }
-            return null;
-        }
-
-        public async Task<string> SaveSerieAsync(SerieDTO serie)
-        {
-            if (Login())
-            {
-                return await PutAsync<string>("Serie", serie);
-            }
-            return "Not logged in";
-        }
-
-        public async Task<string> DeleteSerieAsync(Guid guid)
-        {
-            if (Login())
-            {
-                return await DeleteAsync($"Serie/{guid}");
             }
             return "Not logged in";
         }
