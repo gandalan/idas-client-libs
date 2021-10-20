@@ -64,6 +64,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public DateTime? ProduktionsAuftragErstellt { get; set; }
         public Guid? GeplanteSerieGuid { get; set; }
         public Guid? VorgaengerBelegPositionGuid { get; set; }
+        /// <summary>
+        /// Gültige Werte: "NichtFreigegeben", "Freigegeben", "Abgerechnet"
+        /// </summary>
+        public string FakturaKennzeichen { get; set; }
 
         public BelegPositionDTO()
         {
