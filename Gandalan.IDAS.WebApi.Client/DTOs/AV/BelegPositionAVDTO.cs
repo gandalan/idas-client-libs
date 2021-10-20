@@ -29,8 +29,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string FakturaKennzeichen { get; set; }
 
-        public BelegPositionDTO Position { get; set; }
-        public ProduktionsDatenDTO ProduktionsDaten { get; set; }
+        public virtual BelegPositionDTO Position { get; set; }
+        public virtual ProduktionsDatenDTO ProduktionsDaten { get; set; }
         public bool IstGedruckt { get; set; }
 
         public DateTime ChangedDate { get; set; }
