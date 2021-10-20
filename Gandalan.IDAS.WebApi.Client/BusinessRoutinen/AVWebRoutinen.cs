@@ -32,6 +32,24 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public BelegPositionAVDTO[] GetSerieBelegPositionenAV(Guid serieGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
+        {
+            if (Login())
+            {
+                return Get<BelegPositionAVDTO[]>($"BelegPositionenAV/?serieGuid={serieGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
+            }
+            return null;
+        }
+
+        public async Task<BelegPositionAVDTO[]> GetSerieBelegPositionenAVAsync(Guid serieGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
+        {
+            if (Login())
+            {
+                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?serieGuid={serieGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
+            }
+            return null;
+        }
+
         public BelegPositionAVDTO GetBelegPositionAVById(Guid avGuid)
         {
             if (Login())
