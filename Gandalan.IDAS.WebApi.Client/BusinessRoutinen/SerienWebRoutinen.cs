@@ -68,6 +68,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public async Task<string> ReleaseElementeAsync(Guid fromSerie)
+        {
+            if (Login())
+            {
+                return await GetAsync<string>($"Serie/ReleaseElemente?fromSerie={fromSerie}");
+            }
+            return null;
+        }
+
         public string MoveElemente(Guid fromSerie, Guid toSerie)
         {
             if (Login())
@@ -77,11 +86,29 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public async Task<string> MoveElementeAsync(Guid fromSerie, Guid toSerie)
+        {
+            if (Login())
+            {
+                return await GetAsync<string>($"Serie/MoveElemente?fromSerie={fromSerie}&toSerie={toSerie}");
+            }
+            return null;
+        }
+
         public string RedistributeElemente(Guid fromSerie)
         {
             if (Login())
             {
                 return Get<string>($"Serie/RedistributeElemente?fromSerie={fromSerie}");
+            }
+            return null;
+        }
+
+        public async Task<string> RedistributeElementeAsync(Guid fromSerie)
+        {
+            if (Login())
+            {
+                return await GetAsync<string>($"Serie/RedistributeElemente?fromSerie={fromSerie}");
             }
             return null;
         }
