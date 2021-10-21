@@ -54,7 +54,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid.ToString()}");
+                return Get<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid}");
             }
             return null;
         }
@@ -63,7 +63,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<List<BelegPositionAVDTO>>("BelegPositionenAV/" + belegpositionGuid.ToString());
+                return Get<List<BelegPositionAVDTO>>($"BelegPositionenAV/{belegpositionGuid}");
             }
             return null;
         }
@@ -90,7 +90,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Put<List<BelegPositionAVDTO>>("BelegPositionenAVBulk/AddToSerie/" + serieGuid.ToString(), positionen);
+                return Put<List<BelegPositionAVDTO>>($"BelegPositionenAVBulk/AddToSerie/{serieGuid}", positionen);
             }
             return null;
         }
@@ -113,20 +113,20 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return "Not logged in";
         }
 
-        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync()
+        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
             if (Login())
             {
-                return await GetAsync<BelegPositionAVDTO[]>("BelegPositionenAV");
+                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV?includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
             }
             return null;
         }
 
-        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(DateTime changedSince)
+        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(DateTime changedSince, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
             if (Login())
             {
-                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("o")}");
+                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("o")}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
             }
             return null;
         }
