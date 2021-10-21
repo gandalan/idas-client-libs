@@ -24,6 +24,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Kunde { get; set; }
         public string Pcode { get; set; }
         public string Fehlerlog { get; set; }
+        public string ProduktionsStatus { get; set; }
+        public string ProduktionsStatusInfo { get; set; }
         /// <summary>
         /// Gültige Werte: "NichtFreigegeben", "Freigegeben", "Abgerechnet"
         /// </summary>
