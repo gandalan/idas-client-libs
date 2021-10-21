@@ -46,6 +46,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Text { get; set; }
         public virtual IList<BelegPositionDatenDTO> Daten { get; set; }
         public virtual IList<BelegPositionSonderwunschDTO> Sonderwuensche { get; set; }
+        public virtual IList<BelegPositionHistorieDTO> Historie { get; set; }
         public string Besonderheiten { get; set; }
         public string ProduktionZusatzInfo { get; set; }
         public bool ProduktionZusatzInfoPrintOnReport { get; set; }
@@ -72,6 +73,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public BelegPositionDTO()
         {
             Daten = new ObservableCollection<BelegPositionDatenDTO>();
+            Historie = new ObservableCollection<BelegPositionHistorieDTO>();
         }
     }
 }
