@@ -50,6 +50,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public virtual IList<BelegPositionDTO> Positionen { get; set; }
 
         public virtual IList<Guid> Nachrichten { get; set; }
+        public virtual IList<VorgangHistorieDTO> Historie { get; set; }
 
         /// <summary>
         /// Ersteller-/Besitzerbenutzer des Vorgangs
@@ -88,6 +89,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             Belege = new ObservableCollection<BelegDTO>();
             Positionen = new ObservableCollection<BelegPositionDTO>();
             Nachrichten = new ObservableCollection<Guid>();
+            Historie = new ObservableCollection<VorgangHistorieDTO>();
             ErstellDatum = DateTime.Today;
         }
 
