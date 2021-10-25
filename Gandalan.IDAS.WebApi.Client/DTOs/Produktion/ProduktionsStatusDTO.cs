@@ -12,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         }
 
         public Guid ProduktionsStatusGuid { get; set; }
-        public Guid BelegPositionGuid { get; set; }
+        public Guid BelegPositionAVGuid { get; set; }
         public DateTime Erstellt { get; set; }
         public string Ersteller { get; set; }
 
