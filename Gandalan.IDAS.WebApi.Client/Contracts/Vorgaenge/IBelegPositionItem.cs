@@ -20,7 +20,6 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         decimal Gesamtpreis { get; set; }
         string Text { get; set; }
         string AnzeigeText { get; set; }
-        string Status { get; set; }
         string PCode { get; set; }
         string Serie { get; set; }
         IList<IProduktionsInfo> ProduktionsInfos { get; set; }
