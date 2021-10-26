@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gandalan.IDAS.WebApi.Client.Contracts.Lookups
+namespace Gandalan.IDAS.WebApi.Client.Contracts
 {
     public interface IAnsprechPartnerLookup : ILookupDialog<List<PersonDTO>, IAnsprechPartnerLookupParams>
     {
