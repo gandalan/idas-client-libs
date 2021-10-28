@@ -33,7 +33,7 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             if (Login())
             {
-                return await PutAsync($"MaterialBestellung/?mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", vorgang);
+                return await PutAsync($"MaterialBestellung/BestellungSpeichern", vorgang);
             }
             return null;
         }
