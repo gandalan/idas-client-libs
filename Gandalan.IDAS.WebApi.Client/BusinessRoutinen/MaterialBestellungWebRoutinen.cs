@@ -29,6 +29,14 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             return null;
         }
+        public async Task<string> ErzeugeBestellVorgang(VorgangDTO vorgang)
+        {
+            if (Login())
+            {
+                return await PutAsync($"MaterialBestellung/?mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", vorgang);
+            }
+            return null;
+        }
         public string ErzeugeReklamationBeiBeschichter(VorgangDTO vorgang, Guid quellVorgang, Guid mGuid, string produzentenKundenNummer)
         {
             if (Login())
