@@ -60,24 +60,24 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
 
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr)
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr, bool includeASP = false)
         {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(jahr); });
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(jahr, includeASP); });
         }
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr)
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr, bool includeASP = false)
         {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr); });
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr, includeASP); });
         }
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr, DateTime changedSince)
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr, DateTime changedSince, bool includeASP = false)
         {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr, changedSince); });
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr, changedSince, includeASP); });
         }
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "", bool includeASP = false)
         {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(jahr, status, changedSince, art, includeArchive, includeOthersData, search); });
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(jahr, status, changedSince, art, includeArchive, includeOthersData, search, includeASP); });
         }
 
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(Guid kundeGuid)
