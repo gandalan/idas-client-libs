@@ -15,7 +15,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public BelegLoeschenWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
-
+         
         public string BelegLoeschen(Guid bguid)
         {
             if (Login())
