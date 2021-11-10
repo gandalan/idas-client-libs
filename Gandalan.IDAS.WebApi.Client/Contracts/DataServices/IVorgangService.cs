@@ -19,5 +19,7 @@ namespace Gandalan.Client.Contracts.DataServices
         Task SetTextStatus(List<Guid> vorgangGuidList, string textStatus);
 
         Task<VorgangListItemDTO[]> LoadVorgaengeForKundeAsync(Guid kundeGuid);
+
+        Task<bool> DeleteBeleg(Guid bGuid);
     }
 }
