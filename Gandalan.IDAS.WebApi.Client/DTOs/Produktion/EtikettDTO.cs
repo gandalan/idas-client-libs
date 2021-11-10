@@ -12,6 +12,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstSonderEtikett { get; set; }
         public string Typ { get; set; } = "Produktionsetikett";
         public IList<EtikettDatenDTO> EtikettDaten { get; set; } = new List<EtikettDatenDTO>();
-        public bool EtikettenProfileVorbiegen { get; set; }
+        public bool EtikettenProfilVorbiegen { get; set; }
     }
 }
