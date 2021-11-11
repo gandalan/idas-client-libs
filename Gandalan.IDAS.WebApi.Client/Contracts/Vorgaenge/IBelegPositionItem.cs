@@ -1,5 +1,4 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts.Vorgaenge;
-using Gandalan.IDAS.WebApi.DTO;
+﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
