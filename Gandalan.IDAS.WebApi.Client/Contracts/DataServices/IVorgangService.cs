@@ -20,6 +20,6 @@ namespace Gandalan.Client.Contracts.DataServices
 
         Task<VorgangListItemDTO[]> LoadVorgaengeForKundeAsync(Guid kundeGuid);
 
-        Task DeleteBeleg(Guid bGuid);
+        Task<VorgangDTO> DeleteBeleg(Guid bGuid);
     }
 }
