@@ -16,5 +16,6 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion
         public string Besitzer { get; set; }
         public string Besteller { get; set; }
         public string Bearbeiter { get; set; }
+        public ProduktionsInfoDTO ProduktionsInfos { get; set; }
     }
 }
