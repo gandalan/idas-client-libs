@@ -15,21 +15,21 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public BelegLoeschenWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
-         
-        public string BelegLoeschen(Guid bguid)
+
+        public VorgangDTO BelegLoeschen(Guid bguid)
         {
             if (Login())
             {
-                return Delete("Vorgang/DeleteBeleg/" + bguid.ToString());
+                return Delete<VorgangDTO>("Vorgang/DeleteBeleg/" + bguid.ToString());
             }
             return null;
         }
 
-        public async Task<string> BelegLoeschenAsync(Guid bguid)
+        public async Task<VorgangDTO> BelegLoeschenAsync(Guid bguid)
         {
             if (await LoginAsync())
             {
-                return await DeleteAsync("Vorgang/DeleteBeleg/" + bguid.ToString());
+                return await DeleteAsync<VorgangDTO>("Vorgang/DeleteBeleg/" + bguid.ToString());
             }
             return null;
         }
