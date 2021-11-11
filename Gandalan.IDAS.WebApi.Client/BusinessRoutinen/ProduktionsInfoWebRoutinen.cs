@@ -22,7 +22,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 try
                 {
-                    return Get<ProduktionsInfoDTO>("ProduktionsInfo/" + vorgangGuid.ToString());
+                    return Get<ProduktionsInfoDTO>("ProduktionsInfo?vorgangGuid=" + vorgangGuid.ToString());
                 }
                 catch (WebException wex)
                 {
