@@ -25,6 +25,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion
     {
         public Guid BelegPosGuid { get; set; }
         public int BelegPositionsNummer { get; set; }
+        public string VariantenName { get; set; }
+        public int Menge { get; set; }
         public string BelegPositionInfos { get; set; }
 
         public Guid? SerieGuid { get; set; }
@@ -34,7 +36,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion
         public DateTime? LieferDatum { get; set; }
         public DateTime? ProduktionsDatum { get; set; }
 
-        public List<ProduktionsInfoBelegPositionAVDTO> AvBelegPositionenInfos {  get; set; } = new List<ProduktionsInfoBelegPositionAVDTO> { };
+        public List<ProduktionsInfoBelegPositionAVDTO> AvBelegPositionenInfos { get; set; } = new List<ProduktionsInfoBelegPositionAVDTO> { };
 
     }
 
@@ -46,7 +48,11 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion
         public Guid? ZugeodneteSerie { get; set; }
         public string ZugeodneteSerieName { get; set; }
 
-        public ProduktionsStatiWerteDTO AktuellerStatus { get { return _aktuellerStatus; } set {
+        public ProduktionsStatiWerteDTO AktuellerStatus
+        {
+            get { return _aktuellerStatus; }
+            set
+            {
                 _aktuellerStatus = value;
                 IstFuerAVBereitgestellt = (_aktuellerStatus & ProduktionsStatiWerteDTO.FuerAVBereitgestellt) > 0;
                 IstAVBerechnet = (_aktuellerStatus & ProduktionsStatiWerteDTO.AVBerechnet) > 0;
@@ -58,7 +64,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion
                 IstVersandAbgeschlossen = (_aktuellerStatus & ProduktionsStatiWerteDTO.VersandAbgeschlossen) > 0;
                 IstProduktionUnterbrochen = (_aktuellerStatus & ProduktionsStatiWerteDTO.ProduktionUnterbrochen) > 0;
                 IstFehler = (_aktuellerStatus & ProduktionsStatiWerteDTO.Fehler) > 0;
-            } }
+            }
+        }
         public bool IstFuerAVBereitgestellt { get; private set; }
         public bool IstAVBerechnet { get; private set; }
         public bool IstAVAbgeschlossen { get; set; }
