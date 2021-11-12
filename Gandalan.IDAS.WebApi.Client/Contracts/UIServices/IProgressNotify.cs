@@ -9,8 +9,8 @@ namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IProgressNotify
     {
-        void ShowProgress(string title, bool showPercentage, Func<Task> toExecute);
-        void ShowProgress(string title, bool showPercentage, Func<IProgressNotify, Task> toExecute);
-        void UpdateProgress(int percent);
+        Task ShowProgress(string title, bool showPercentage, Func<Task> toExecute);
+        Task ShowProgress(string title, bool showPercentage, Func<IProgressNotify, Task> toExecute);
+        Task UpdateProgress(int percent);
     }
 }
