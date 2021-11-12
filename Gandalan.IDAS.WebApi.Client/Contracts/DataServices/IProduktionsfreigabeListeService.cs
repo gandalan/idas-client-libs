@@ -7,6 +7,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
 {
     public interface IProduktionsfreigabeListeService
     {
-        Task<ProduktionsfreigabeItemDTO[]> GetIProduktionsfreigabeListeAsync();
+        Task<ProduktionsfreigabeItemDTO[]> GetProduktionsfreigabeListeAsync();
     }
 }
