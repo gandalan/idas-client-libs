@@ -24,6 +24,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion
     public class ProduktionsInfoBelegPositionDTO
     {
         public Guid BelegPosGuid { get; set; }
+        public Guid NachfolgeBelegPosGuid { get; set; }
         public int BelegPositionsNummer { get; set; }
         public string VariantenName { get; set; }
         public decimal Menge { get; set; }
