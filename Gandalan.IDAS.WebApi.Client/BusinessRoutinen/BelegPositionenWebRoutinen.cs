@@ -12,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public void RunBelegPositionAVLogic(long mandantId, Guid belegPositionGuid)
         {
-            Post("BelegPositionen/RunBelegPositionAVLogic?mandantId" + mandantId + "&belegPositionGuid=" + belegPositionGuid, null);
+            Post("BelegPositionen/RunBelegPositionAVLogic?mandantId=" + mandantId + "&belegPositionGuid=" + belegPositionGuid, null);
         }
 
         public async Task RunBelegPositionAVLogicAsync(long mandantId, Guid belegPositionGuid)
