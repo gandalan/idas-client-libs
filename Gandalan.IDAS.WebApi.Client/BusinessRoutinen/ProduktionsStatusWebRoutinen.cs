@@ -68,6 +68,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return "Not logged in";
         }
 
+        public string SaveProduktionsStatusHistorie(Guid avGuid, ProduktionsStatusHistorieDTO historie)
+        {
+            if (Login())
+            {
+                return Put<string>($"ProduktionsStatus/AddHistorie/{avGuid}", historie);
+            }
+            return "Not logged in";
+        }
+
         public async Task<ProduktionsStatusDTO[]> GetAllProduktionsStatusAsync()
         {
             return await Task.Run(() => GetAll());
@@ -81,6 +90,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<string> SaveProduktionsStatusAsync(ProduktionsStatusDTO status)
         {
             return await Task.Run(() => SaveProduktionsStatus(status));
+        }
+
+        public async Task<string> SaveProduktionsStatusHistorieAsync(Guid avGuid, ProduktionsStatusHistorieDTO historie)
+        {
+            return await Task.Run(() => SaveProduktionsStatusHistorie(avGuid, historie));
         }
     }
 }
