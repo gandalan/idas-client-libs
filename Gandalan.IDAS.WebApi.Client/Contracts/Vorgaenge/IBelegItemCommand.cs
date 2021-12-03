@@ -28,7 +28,10 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
             Execute(pos);
         }
 
-        public string Caption { get; set; } = "?";
+        /// <summary>
+        /// Wird als Content in den Buttons angezeigt.
+        /// </summary>
+        public object Caption { get; set; } = "?";
         public string Tooltip { get; set; } = "";
     }
 }
