@@ -115,7 +115,8 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
             {
                 var pos = vorgang.Positionen.FirstOrDefault(p => p.BelegPositionGuid.Equals(posGuid));
 
-                if (pos == null) {
+                if (pos == null)
+                {
                     continue;
                 }
 
@@ -186,10 +187,19 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
                 foreach (var sw in pos.Sonderwuensche)
                 {
-                    var swBezeichnung = sw.Bezeichnung.Replace("Ä", "Ae").Replace("Ü", "Ue").Replace("Ö", "Oe");
-                    swBezeichnung = swBezeichnung.Replace("ä", "ae").Replace("ü", "ue").Replace("ö", "oe");
-                    swBezeichnung = swBezeichnung.Replace("ß", "ss");
-                    swBezeichnung = swBezeichnung.Replace(" ", "_");
+                    var swBezeichnung = String.Empty;
+
+                    if (!String.IsNullOrEmpty(sw.InternerName) && sw.InternerName != sw.Kuerzel)
+                    {
+                        swBezeichnung = sw.InternerName;
+                    }
+                    else
+                    {
+                        swBezeichnung = sw.Bezeichnung.Replace("Ä", "Ae").Replace("Ü", "Ue").Replace("Ö", "Oe");
+                        swBezeichnung = swBezeichnung.Replace("ä", "ae").Replace("ü", "ue").Replace("ö", "oe");
+                        swBezeichnung = swBezeichnung.Replace("ß", "ss");
+                        swBezeichnung = swBezeichnung.Replace(" ", "_");
+                    }
 
                     aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swBezeichnung, sw.Wert));
 
