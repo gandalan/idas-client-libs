@@ -50,6 +50,24 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public BelegPositionAVDTO[] GetVorgangBelegPositionenAV(Guid vorgangGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
+        {
+            if (Login())
+            {
+                return Get<BelegPositionAVDTO[]>($"BelegPositionenAV/?vorgangGuid={vorgangGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
+            }
+            return null;
+        }
+
+        public async Task<BelegPositionAVDTO[]> GetVorgangBelegPositionenAVAsync(Guid vorgangGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
+        {
+            if (Login())
+            {
+                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?vorgangGuid={vorgangGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
+            }
+            return null;
+        }
+
         public BelegPositionAVDTO GetBelegPositionAVById(Guid avGuid)
         {
             if (Login())
