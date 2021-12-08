@@ -17,6 +17,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion
     {
         public Guid BelegGuid { get; set; }
         public string BelegTitel { get; set; } // z.B. 'AB vom 17.07.2021'
+        public DateTime ErstellDatum { get; set; }
 
         public List<ProduktionsInfoBelegPositionDTO> PositionenInfos { get; set; } = new List<ProduktionsInfoBelegPositionDTO> { };
     }
