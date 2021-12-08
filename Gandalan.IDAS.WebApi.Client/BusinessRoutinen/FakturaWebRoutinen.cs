@@ -19,7 +19,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<List<VorgangDTO>>($"/Faktura/GetVorgaenge?kennzeichen={kennzeichen}");
+                return Get<List<VorgangDTO>>($"Faktura/GetVorgaenge?kennzeichen={kennzeichen}");
             }
             return null;
         }
@@ -28,7 +28,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return await GetAsync<List<VorgangDTO>>($"/Faktura/GetVorgaenge?kennzeichen={kennzeichen}");
+                return await GetAsync<List<VorgangDTO>>($"Faktura/GetVorgaenge?kennzeichen={kennzeichen}");
             }
             return null;
         }
@@ -37,7 +37,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<string>($"/Faktura/GetVorgangKennzeichen?vorgangGuid={vorgangGuid}");
+                return Get<string>($"Faktura/GetVorgangKennzeichen?vorgangGuid={vorgangGuid}");
             }
             return null;
         }
@@ -46,7 +46,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return await GetAsync<string>($"/Faktura/GetVorgangKennzeichen?vorgangGuid={vorgangGuid}");
+                return await GetAsync<string>($"Faktura/GetVorgangKennzeichen?vorgangGuid={vorgangGuid}");
             }
             return null;
         }
@@ -55,7 +55,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<List<BelegDTO>>($"/Faktura/GetBelege?kennzeichen={kennzeichen}");
+                return Get<List<BelegDTO>>($"Faktura/GetBelege?kennzeichen={kennzeichen}");
             }
             return null;
         }
@@ -64,7 +64,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return await GetAsync<List<BelegDTO>>($"/Faktura/GetBelege?kennzeichen={kennzeichen}");
+                return await GetAsync<List<BelegDTO>>($"Faktura/GetBelege?kennzeichen={kennzeichen}");
             }
             return null;
         }
@@ -73,7 +73,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<string>($"/Faktura/GetBelegKennzeichen?belegGuid={belegGuid}");
+                return Get<string>($"Faktura/GetBelegKennzeichen?belegGuid={belegGuid}");
             }
             return null;
         }
@@ -82,7 +82,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return await GetAsync<string>($"/Faktura/GetBelegKennzeichen?belegGuid={belegGuid}");
+                return await GetAsync<string>($"Faktura/GetBelegKennzeichen?belegGuid={belegGuid}");
             }
             return null;
         }
@@ -91,7 +91,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<List<BelegPositionDTO>>($"/Faktura/GetBelegPositionen?kennzeichen={kennzeichen}");
+                return Get<List<BelegPositionDTO>>($"Faktura/GetBelegPositionen?kennzeichen={kennzeichen}");
             }
             return null;
         }
@@ -100,7 +100,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return await GetAsync<List<BelegPositionDTO>>($"/Faktura/GetBelegPositionen?kennzeichen={kennzeichen}");
+                return await GetAsync<List<BelegPositionDTO>>($"Faktura/GetBelegPositionen?kennzeichen={kennzeichen}");
             }
             return null;
         }
@@ -109,7 +109,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<string>($"/Faktura/GetBelegPositionKennzeichen?vorgangGuid={belegPositionGuid}");
+                return Get<string>($"Faktura/GetBelegPositionKennzeichen?vorgangGuid={belegPositionGuid}");
             }
             return null;
         }
@@ -118,7 +118,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return await GetAsync<string>($"/Faktura/GetBelegPositionKennzeichen?vorgangGuid={belegPositionGuid}");
+                return await GetAsync<string>($"Faktura/GetBelegPositionKennzeichen?vorgangGuid={belegPositionGuid}");
             }
             return null;
         }
@@ -127,7 +127,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<List<BelegPositionAVDTO>>($"/Faktura/GetBelegPositionAVs?kennzeichen={kennzeichen}");
+                return Get<List<BelegPositionAVDTO>>($"Faktura/GetBelegPositionAVs?kennzeichen={kennzeichen}");
             }
             return null;
         }
@@ -136,7 +136,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return await GetAsync<List<BelegPositionAVDTO>>($"/Faktura/GetBelegPositionAVs?kennzeichen={kennzeichen}");
+                return await GetAsync<List<BelegPositionAVDTO>>($"Faktura/GetBelegPositionAVs?kennzeichen={kennzeichen}");
             }
             return null;
         }
@@ -145,7 +145,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<string>($"/Faktura/GetBelegPositionAVKennzeichen?vorgangGuid={belegPositionAvGuid}");
+                return Get<string>($"Faktura/GetBelegPositionAVKennzeichen?vorgangGuid={belegPositionAvGuid}");
             }
             return null;
         }
@@ -154,7 +154,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return await GetAsync<string>($"/Faktura/GetBelegPositionAVKennzeichen?vorgangGuid={belegPositionAvGuid}");
+                return await GetAsync<string>($"Faktura/GetBelegPositionAVKennzeichen?vorgangGuid={belegPositionAvGuid}");
             }
             return null;
         }
@@ -163,7 +163,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Post<string>("/Faktura/SetVorgangKennzeichen", dto);
+                return Post<string>("Faktura/SetVorgangKennzeichen", dto);
             }
             return "Not logged in";
         }
@@ -172,7 +172,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return await PostAsync<string>("/Faktura/SetVorgangKennzeichen", dto);
+                return await PostAsync<string>("Faktura/SetVorgangKennzeichen", dto);
             }
             return "Not logged in";
         }
@@ -181,7 +181,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Post<string>("/Faktura/SetBelegKennzeichen", dto);
+                return Post<string>("Faktura/SetBelegKennzeichen", dto);
             }
             return "Not logged in";
         }
@@ -190,7 +190,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return await PostAsync<string>("/Faktura/SetBelegKennzeichen", dto);
+                return await PostAsync<string>("Faktura/SetBelegKennzeichen", dto);
             }
             return "Not logged in";
         }
@@ -199,7 +199,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Post<string>("/Faktura/SetBelegPositionKennzeichen", dto);
+                return Post<string>("Faktura/SetBelegPositionKennzeichen", dto);
             }
             return "Not logged in";
         }
@@ -208,7 +208,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return await PostAsync<string>("/Faktura/SetBelegPositionKennzeichen", dto);
+                return await PostAsync<string>("Faktura/SetBelegPositionKennzeichen", dto);
             }
             return "Not logged in";
         }
@@ -217,7 +217,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Post<string>("/Faktura/SetBelegPositionAVKennzeichen", dto);
+                return Post<string>("Faktura/SetBelegPositionAVKennzeichen", dto);
             }
             return "Not logged in";
         }
@@ -226,7 +226,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return await PostAsync<string>("/Faktura/SetBelegPositionAVKennzeichen", dto);
+                return await PostAsync<string>("Faktura/SetBelegPositionAVKennzeichen", dto);
             }
             return "Not logged in";
         }
