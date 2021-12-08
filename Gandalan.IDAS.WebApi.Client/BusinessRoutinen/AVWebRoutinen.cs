@@ -50,15 +50,24 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public BelegPositionAVDTO GetBelegPositionAVById(Guid avGuid)
+        public BelegPositionAVDTO[] GetVorgangBelegPositionenAV(Guid vorgangGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
             if (Login())
             {
-                return Get<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid}");
+                return Get<BelegPositionAVDTO[]>($"BelegPositionenAV/?vorgangGuid={vorgangGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
             }
             return null;
         }
 
+        public async Task<BelegPositionAVDTO[]> GetVorgangBelegPositionenAVAsync(Guid vorgangGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
+        {
+            if (Login())
+            {
+                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?vorgangGuid={vorgangGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
+            }
+            return null;
+        }
+                
         public List<BelegPositionAVDTO> GetBelegPositionenAV(Guid belegpositionGuid)
         {
             if (Login())
@@ -131,11 +140,38 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public BelegPositionAVDTO GetBelegPositionAVById(Guid avGuid)
+        {
+            if (Login())
+            {
+                return Get<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid}");
+            }
+            return null;
+        }
+
         public async Task<BelegPositionAVDTO> GetBelegPositionAVByIdAsync(Guid avGuid)
         {
             if (Login())
             {
                 return await GetAsync<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid.ToString()}");
+            }
+            return null;
+        }
+
+        public BelegPositionAVDTO GetBelegPositionAVByPCode(string pcode)
+        {
+            if (Login())
+            {
+                return Get<BelegPositionAVDTO>($"BelegPositionenAVByPCode/{pcode}");
+            }
+            return null;
+        }
+
+        public async Task<BelegPositionAVDTO> GetBelegPositionAVByPCodeAsync(string pcode)
+        {
+            if (Login())
+            {
+                return await GetAsync<BelegPositionAVDTO>($"BelegPositionenAVByPCode/{pcode}");
             }
             return null;
         }
