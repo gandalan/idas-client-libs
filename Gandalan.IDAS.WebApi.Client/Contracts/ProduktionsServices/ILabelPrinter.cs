@@ -41,15 +41,15 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// Es wird das in den Settings konfigurierte Template File genutzt.
         /// Wird aufgerufen, wenn Einzeldruck = false
         /// </summary>
+        /// <param name="titel">Titel für den Etikettenbogen</param>
         /// <param name="data">Liste mit Datenobjekten für zu druckende Etiketten</param>
-        void Print(IEnumerable<EtikettDTO> data);
+        void Print(string titel, IEnumerable<EtikettDTO> data);
 
 
         /// <summary>
         /// Druckt die angegebenen Daten auf dem Gerät aus.
         /// Es wird das übergebene Template genutzt.
         /// </summary>
-        /// <param name="data"></param>
         /// <param name="template">Druck Template (muss zum ausgewählten Drucker passen)</param>
         void PrintCustom(EtikettDTO data, object template);
 
