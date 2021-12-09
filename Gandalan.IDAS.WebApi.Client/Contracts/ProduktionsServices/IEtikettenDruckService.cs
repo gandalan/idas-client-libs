@@ -12,7 +12,8 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <summary>
         /// Druckt die angegebenen EtikettDTOs aus
         /// </summary>
+        /// <param name="titel">Titel für die Etiketten</param>
         /// <param name="etikettListe">Liste mit EtikettDTOs, die gedruckt werden soll</param>
-        void PrintEtiketten(List<EtikettDTO> etikettListe);
+        void PrintEtiketten(string titel, List<EtikettDTO> etikettListe);
     }
 }
