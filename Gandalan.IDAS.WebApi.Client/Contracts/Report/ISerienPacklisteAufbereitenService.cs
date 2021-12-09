@@ -10,8 +10,8 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
 {
     public interface ISerienPacklisteAufbereitenService
     {
-        Task<SerienPacklisteDataDTO> Aufbereiten(SerieDTO serie);
-        Task<SerienPacklisteDataDTO> Aufbereiten(VorgangDTO vorgang);
+        Task<SerienPacklisteDataDTO> Aufbereiten(SerieDTO serie, IList<BelegPositionAVDTO> elemente);
+        Task<SerienPacklisteDataDTO> Aufbereiten(VorgangDTO vorgang, IList<BelegPositionAVDTO> elemente);
         Task<SerienPacklisteDataDTO> getBySerie(SerieDTO serie, IList<BelegPositionAVDTO> elemente);
     }
 }
