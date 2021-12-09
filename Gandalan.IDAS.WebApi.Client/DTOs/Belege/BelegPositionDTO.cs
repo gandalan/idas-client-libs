@@ -46,6 +46,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Text { get; set; }
         public virtual IList<BelegPositionDatenDTO> Daten { get; set; }
         public virtual IList<BelegPositionSonderwunschDTO> Sonderwuensche { get; set; }
+        public virtual IList<BelegPositionHistorieDTO> Historie { get; set; }
         public string Besonderheiten { get; set; }
         public string ProduktionZusatzInfo { get; set; }
         public bool ProduktionZusatzInfoPrintOnReport { get; set; }
@@ -64,10 +65,15 @@ namespace Gandalan.IDAS.WebApi.DTO
         public DateTime? ProduktionsAuftragErstellt { get; set; }
         public Guid? GeplanteSerieGuid { get; set; }
         public Guid? VorgaengerBelegPositionGuid { get; set; }
+        /// <summary>
+        /// Gültige Werte: "NichtFreigegeben", "Freigegeben", "Abgerechnet"
+        /// </summary>
+        public string FakturaKennzeichen { get; set; }
 
         public BelegPositionDTO()
         {
             Daten = new ObservableCollection<BelegPositionDatenDTO>();
+            Historie = new ObservableCollection<BelegPositionHistorieDTO>();
         }
     }
 }

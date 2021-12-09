@@ -177,7 +177,11 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Freitextfeld für die Zahlungsbedingung
         /// </summary>
-        public string Zahlungsbedingung{ get; set; }
+        public string Zahlungsbedingung { get; set; }
+        /// <summary>
+        /// Kunde hat Winterrabatt ja/nein
+        /// </summary>
+        public bool HatWinterrabatt { get; set; }
 
         public KontaktDTO()
         {
@@ -196,12 +200,12 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Erzeugt einen Text aus den Namensfeldern für die Anzeige in 
         /// Überschriften, Anschriftenfeldern usw. 
         /// </summary>
-        public string AnzeigeName 
-        { 
+        public string AnzeigeName
+        {
             get
             {
                 return string.IsNullOrEmpty(Firmenname) ? $"{Anrede} {Titel} {Vorname} {Nachname}".Trim() : Firmenname;
-            } 
+            }
         }
     }
 }

@@ -42,6 +42,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public ObservableCollection<BelegPositionDTO> PositionsObjekte { get; set; }
         public string TextFuerAnschreiben { get; set; }
         public bool IstGesperrt { get; set; }
+        /// <summary>
+        /// Gültige Werte: "NichtFreigegeben", "Freigegeben", "Abgerechnet"
+        /// </summary>
+        public string FakturaKennzeichen { get; set; }
 
         public string ExterneReferenznummer { get; set; }
         public Guid? ExterneMandantenGuid { get; set; }

@@ -6,7 +6,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
 {
     public interface IProduktionsStatusService
     {
-        Task UpdateStatus(Guid positionsGuid, ProduktionsStatusHistorieDTO info);
-        Task UpdateStatus(Guid positionsGuid, SerieDTO serie);
+        Task UpdateStatus(Guid positionsAVGuid, ProduktionsStatusHistorieDTO info);
+        Task UpdateStatus(Guid positionsAVGuid, SerieDTO serie);
     }
 }

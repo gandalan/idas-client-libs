@@ -24,9 +24,13 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Kunde { get; set; }
         public string Pcode { get; set; }
         public string Fehlerlog { get; set; }
+        /// <summary>
+        /// Gültige Werte: "NichtFreigegeben", "Freigegeben", "Abgerechnet"
+        /// </summary>
+        public string FakturaKennzeichen { get; set; }
 
-        public BelegPositionDTO Position { get; set; }
-        public ProduktionsDatenDTO ProduktionsDaten { get; set; }
+        public virtual BelegPositionDTO Position { get; set; }
+        public virtual ProduktionsDatenDTO ProduktionsDaten { get; set; }
         public bool IstGedruckt { get; set; }
 
         public DateTime ChangedDate { get; set; }

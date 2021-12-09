@@ -14,6 +14,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public Guid Kennzeichen { get; set; }
         public string InternerName { get; set; }
+        //InternerName wird derzeit an vielen Stellen verwendet weshalb wir jetzt die Backup Property hinzufügen welche den echten InternenNamen aus dem Modell beinhaltet
+        public string InternerName_Backup { get; set; }
         /// <summary>
         /// Neher-Katalognummer des Artikels
         /// </summary>

@@ -45,6 +45,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public Guid AktuelleBelegGuid { get; set; }
         /// <summary>
+        /// Kundennummer des Kunden
+        /// </summary>
+        public string KundenNummer { get; set; }
+        /// <summary>
         /// Name des Kunden für Anzeige
         /// </summary>
         public string Kundenname { get; set; }

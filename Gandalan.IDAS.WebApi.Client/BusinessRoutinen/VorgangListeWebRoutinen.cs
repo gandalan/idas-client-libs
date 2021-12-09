@@ -13,38 +13,38 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public VorgangListItemDTO[] LadeVorgangsListe(int jahr)
+        public VorgangListItemDTO[] LadeVorgangsListe(int jahr, bool includeASP = false)
         {
             if (Login())
             {
-                return Get<VorgangListItemDTO[]>("VorgangListe/?jahr=" + jahr);
+                return Get<VorgangListItemDTO[]>($"VorgangListe/?jahr={jahr}&includeASP={includeASP}");
             }
             return null;
         }
 
-        public VorgangListItemDTO[] LadeVorgangsListe(string status, int jahr)
+        public VorgangListItemDTO[] LadeVorgangsListe(string status, int jahr, bool includeASP = false)
         {
             if (Login())
             {
-                return Get<VorgangListItemDTO[]>($"VorgangListe/?status={status}&jahr={jahr}");
+                return Get<VorgangListItemDTO[]>($"VorgangListe/?status={status}&jahr={jahr}&includeASP={includeASP}");
             }
             return null;
         }
 
-        public VorgangListItemDTO[] LadeVorgangsListe(string status, int jahr, DateTime changedSince)
+        public VorgangListItemDTO[] LadeVorgangsListe(string status, int jahr, DateTime changedSince, bool includeASP = false)
         {
             if (Login())
             {
-                return Get<VorgangListItemDTO[]>($"VorgangListe/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}");
+                return Get<VorgangListItemDTO[]>($"VorgangListe/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}&includeASP={includeASP}");
             }
             return null;
         }
 
-        public VorgangListItemDTO[] LadeVorgangsListe(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
+        public VorgangListItemDTO[] LadeVorgangsListe(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "", bool includeASP = false)
         {
             if (Login())
             {
-                return Get<VorgangListItemDTO[]>($"VorgangListe/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
+                return Get<VorgangListItemDTO[]>($"VorgangListe/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}&includeASP={includeASP}");
             }
             return null;
         }
@@ -60,24 +60,24 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
 
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr)
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr, bool includeASP = false)
         {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(jahr); });
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(jahr, includeASP); });
         }
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr)
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr, bool includeASP = false)
         {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr); });
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr, includeASP); });
         }
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr, DateTime changedSince)
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr, DateTime changedSince, bool includeASP = false)
         {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr, changedSince); });
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr, changedSince, includeASP); });
         }
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "", bool includeASP = false)
         {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(jahr, status, changedSince, art, includeArchive, includeOthersData, search); });
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(jahr, status, changedSince, art, includeArchive, includeOthersData, search, includeASP); });
         }
 
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(Guid kundeGuid)

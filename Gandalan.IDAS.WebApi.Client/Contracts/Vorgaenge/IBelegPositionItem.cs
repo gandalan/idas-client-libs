@@ -1,5 +1,4 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts.Vorgaenge;
-using Gandalan.IDAS.WebApi.DTO;
+﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,10 +19,7 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         decimal Gesamtpreis { get; set; }
         string Text { get; set; }
         string AnzeigeText { get; set; }
-        string Status { get; set; }
-        string PCode { get; set; }
         string Serie { get; set; }
-        IList<IProduktionsInfo> ProduktionsInfos { get; set; }
         DateTime StatusDatum { get; set; }
         bool IsDeleted { get; set; }
         bool IstAktiv { get; set; }

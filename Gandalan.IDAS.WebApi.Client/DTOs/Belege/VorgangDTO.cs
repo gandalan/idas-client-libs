@@ -50,6 +50,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public virtual IList<BelegPositionDTO> Positionen { get; set; }
 
         public virtual IList<Guid> Nachrichten { get; set; }
+        public virtual IList<VorgangHistorieDTO> Historie { get; set; }
 
         /// <summary>
         /// Ersteller-/Besitzerbenutzer des Vorgangs
@@ -63,6 +64,11 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid KundeGuid { get; set; }
         
         public string AktuellerStatus { get; set; }
+
+        /// <summary>
+        /// Gültige Werte: "NichtFreigegeben", "Freigegeben", "Abgerechnet"
+        /// </summary>
+        public string FakturaKennzeichen { get; set; }
         public string TextStatus { get; set; }
         public bool IstTestbeleg { get; set; }
         public string WaehrungsSymbol { get; set; }
@@ -83,6 +89,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             Belege = new ObservableCollection<BelegDTO>();
             Positionen = new ObservableCollection<BelegPositionDTO>();
             Nachrichten = new ObservableCollection<Guid>();
+            Historie = new ObservableCollection<VorgangHistorieDTO>();
             ErstellDatum = DateTime.Today;
         }
 

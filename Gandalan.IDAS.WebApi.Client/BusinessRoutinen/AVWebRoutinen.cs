@@ -32,51 +32,51 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public BelegPositionAVDTO GetBelegPositionAVById(Guid avGuid)
+        public BelegPositionAVDTO[] GetSerieBelegPositionenAV(Guid serieGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
             if (Login())
             {
-                return Get<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid.ToString()}");
+                return Get<BelegPositionAVDTO[]>($"BelegPositionenAV/?serieGuid={serieGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
             }
             return null;
         }
 
-        public SerieDTO[] GetAllSerien()
+        public async Task<BelegPositionAVDTO[]> GetSerieBelegPositionenAVAsync(Guid serieGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
             if (Login())
             {
-                return Get<SerieDTO[]>("Serie");
+                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?serieGuid={serieGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
             }
             return null;
         }
 
-        public SerieDTO[] GetAllSerien(DateTime changedSince)
+        public BelegPositionAVDTO[] GetVorgangBelegPositionenAV(Guid vorgangGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
             if (Login())
             {
-                return Get<SerieDTO[]>($"Serie/?changedSince={changedSince.ToString("o")}");
+                return Get<BelegPositionAVDTO[]>($"BelegPositionenAV/?vorgangGuid={vorgangGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
             }
             return null;
         }
 
-        public List<BelegPositionAVDTO> GetBelegPositionenAV(Guid guid)
+        public async Task<BelegPositionAVDTO[]> GetVorgangBelegPositionenAVAsync(Guid vorgangGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
             if (Login())
             {
-                return Get<List<BelegPositionAVDTO>>("BelegPositionenAV/" + guid.ToString());
+                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?vorgangGuid={vorgangGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
+            }
+            return null;
+        }
+                
+        public List<BelegPositionAVDTO> GetBelegPositionenAV(Guid belegpositionGuid)
+        {
+            if (Login())
+            {
+                return Get<List<BelegPositionAVDTO>>($"BelegPositionenAV/{belegpositionGuid}");
             }
             return null;
         }
                
-        public SerieDTO GetSerie(Guid guid)
-        {
-            if (Login())
-            {
-                return Get<SerieDTO>("Serie/" + guid.ToString());
-            }
-            return null;
-        }
-
         public string SaveBelegPositionenAV(BelegPositionAVDTO position)
         {
             if (Login())
@@ -99,18 +99,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Put<List<BelegPositionAVDTO>>("BelegPositionenAVBulk/AddToSerie/" + serieGuid.ToString(), positionen);
+                return Put<List<BelegPositionAVDTO>>($"BelegPositionenAVBulk/AddToSerie/{serieGuid}", positionen);
             }
             return null;
-        }
-
-        public string SaveSerie(SerieDTO serie)
-        {
-            if (Login())
-            {
-                return Put<string>("Serie", serie);
-            }
-            return "Not logged in";
         }
 
         public string DeleteBelegPositionenAV(Guid guid)
@@ -131,30 +122,29 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return "Not logged in";
         }
 
-        public string DeleteSerie(Guid guid)
+        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
             if (Login())
             {
-                return Delete($"Serie/{guid}");
-            }
-            return "Not logged in";
-        }
-
-
-        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync()
-        {
-            if (Login())
-            {
-                return await GetAsync<BelegPositionAVDTO[]>("BelegPositionenAV");
+                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV?includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
             }
             return null;
         }
 
-        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(DateTime changedSince)
+        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(DateTime changedSince, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
             if (Login())
             {
-                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("o")}");
+                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("o")}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
+            }
+            return null;
+        }
+
+        public BelegPositionAVDTO GetBelegPositionAVById(Guid avGuid)
+        {
+            if (Login())
+            {
+                return Get<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid}");
             }
             return null;
         }
@@ -164,6 +154,24 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             if (Login())
             {
                 return await GetAsync<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid.ToString()}");
+            }
+            return null;
+        }
+
+        public BelegPositionAVDTO GetBelegPositionAVByPCode(string pcode)
+        {
+            if (Login())
+            {
+                return Get<BelegPositionAVDTO>($"BelegPositionenAVByPCode/{pcode}");
+            }
+            return null;
+        }
+
+        public async Task<BelegPositionAVDTO> GetBelegPositionAVByPCodeAsync(string pcode)
+        {
+            if (Login())
+            {
+                return await GetAsync<BelegPositionAVDTO>($"BelegPositionenAVByPCode/{pcode}");
             }
             return null;
         }
@@ -209,51 +217,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             if (Login())
             {
                 return await DeleteAsync<string>($"BelegPositionenAVBulk", guids);
-            }
-            return "Not logged in";
-        }
-
-        public async Task<SerieDTO[]> GetAllSerienAsync()
-        {
-            if (Login())
-            {
-                return await GetAsync<SerieDTO[]>("Serie");
-            }
-            return null;
-        }
-
-        public async Task<SerieDTO[]> GetAllSerienAsync(DateTime changedSince)
-        {
-            if (Login())
-            {
-                return await GetAsync<SerieDTO[]>($"Serie/?changedSince={changedSince.ToString("o")}");
-            }
-            return null;
-        }
-
-        public async Task<SerieDTO> GetSerieAsync(Guid guid)
-        {
-            if (Login())
-            {
-                return await GetAsync<SerieDTO>("Serie/" + guid.ToString());
-            }
-            return null;
-        }
-
-        public async Task<string> SaveSerieAsync(SerieDTO serie)
-        {
-            if (Login())
-            {
-                return await PutAsync<string>("Serie", serie);
-            }
-            return "Not logged in";
-        }
-
-        public async Task<string> DeleteSerieAsync(Guid guid)
-        {
-            if (Login())
-            {
-                return await DeleteAsync($"Serie/{guid}");
             }
             return "Not logged in";
         }
