@@ -20,25 +20,28 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// Ruft ein freies Ablagefach am übergebenen Standort ab,
         /// das den/die übergebenen Materialtypen aufnehmen kann.
         /// </summary>
+        /// <param name="position">Position, aus der Material abgelegt werden soll</param>
         /// <param name="material">Material, das abgelegt werden soll</param>
         /// <param name="standort">Standort der Ablage</param>
         /// <returns>AblageFachDTO</returns>
-        AblageFachDTO GetEmptyAblageFach(MaterialbedarfDTO material, string standort = "Werkstatt");
+        AblageFachDTO GetEmptyAblageFach(BelegPositionAVDTO position, MaterialbedarfDTO material, string standort = "Werkstatt");
 
         /// <summary>
         /// Sucht das Ablagefach für ein übergebenes MaterialbedarfDTO. Liefert ein Ablagefach zurück, sofern
         /// bereits ein MaterialbedarfDTO der gleichen Position in einem Fach abgelegt ist. Wird kein Fach gefunden, wird null zurückgeliefert.
         /// </summary>
+        /// <param name="position">Position, aus der Material abgelegt werden soll</param>
         /// <param name="material">MaterialbedarfDTO</param>
         /// <returns>AbalgeFachDTO, sofern bereits ein MaterialbedarfDTO der gleichen Position in einem Fach lagert</returns>
-        AblageFachDTO SearchAblageFach(MaterialbedarfDTO material);
+        AblageFachDTO SearchAblageFach(BelegPositionAVDTO position, MaterialbedarfDTO material);
 
         /// <summary>
         /// Legt eine Materialliste in mehreren Ablagefächern ab
         /// </summary>
+        /// <param name="positionen">Liste von Positionen, die das abzulegende Material enthalten</param>
         /// <param name="materialListe">Liste von MaterialbedarfDTOs, die abgelegt werden sollen</param>
         /// <param name="standort">Standort der Ablagen, die berücksichtigt werden</param>
-        void PutMaterial(List<MaterialbedarfDTO> materialListe, string standort = "Werkstatt");
+        void PutMaterial(List<BelegPositionAVDTO> positionen, List<MaterialbedarfDTO> materialListe, string standort = "Werkstatt");
 
         /// <summary>
         /// Legt Material für eine Serie in mehreren Ablagefächern ab
@@ -57,10 +60,11 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <summary>
         /// Kombination aus GetEmptyAblageFach und SearchAblageFach.
         /// </summary>
+        /// <param name="position"></param>
         /// <param name="material"></param>
         /// <param name="standort">Standort der Ablage</param>
         /// <returns>Material, das abgelegt werden soll</returns>
-        AblageFachDTO GetCurrentOrNewAblageFach(MaterialbedarfDTO material, string standort = "Werkstatt");
+        AblageFachDTO GetCurrentOrNewAblageFach(BelegPositionAVDTO position, MaterialbedarfDTO material, string standort = "Werkstatt");
 
         /// <summary>
         /// Liefert alle registrierten Ablagen zu einem Standort
@@ -86,9 +90,10 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <summary>
         /// Liefert die Fachbezeichnung für ein MaterialbedarfDTO
         /// </summary>
+        /// <param name="position">Position, aus der Material abgelegt werden soll</param>
         /// <param name="material"></param>
         /// <returns></returns>
-        string GetFachBezeichnung(MaterialbedarfDTO material);
+        string GetFachBezeichnung(BelegPositionAVDTO position, MaterialbedarfDTO material);
 
     }
 }
