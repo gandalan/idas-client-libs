@@ -12,9 +12,10 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <summary>
         /// Erstellt Sägedatei (per ISaegeDatenGenerator) und sendet diese an die Säge.
         /// </summary>
+        /// <param name="avData">AV Daten zum Sägematerial</param>
         /// <param name="saegeDatenGenerator">Generator zur Erzeugung der maschinenspezifischen Daten</param>
         /// <param name="schnittListe">list der zu sägenden MaterialBedarfDTOs</param>
-        void GenerateAndSend(ISaegeDatenGenerator saegeDatenGenerator, IList<MaterialbedarfDTO> schnittListe);
+        void GenerateAndSend(ISaegeDatenGenerator saegeDatenGenerator, IList<BelegPositionAVDTO> avData, IList<MaterialbedarfDTO> schnittListe);
 
         /// <summary>
         /// Erstellt Sägedatei (per ISaegeDatenGenerator) für  und speichert die Datei unter dem angegebenen Dateinamen.

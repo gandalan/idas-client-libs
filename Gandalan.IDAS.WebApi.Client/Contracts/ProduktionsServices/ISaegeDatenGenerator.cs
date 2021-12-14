@@ -17,9 +17,10 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <summary>
         /// Erzeugt die Sägedaten.
         /// </summary>
+        /// <param name="avData">AV Daten zum Sägematerial</param>
         /// <param name="material"></param>
         /// <returns>Modellabhängige Daten zur Übermittlung an die Maschine</returns>
-        string GenerateContent(IList<MaterialbedarfDTO> material);
+        string GenerateContent(IList<BelegPositionAVDTO> avData, IList<MaterialbedarfDTO> material);
 
         string GenerateContent(SerienSaegelisteDataDTO saegeDaten);
     }
