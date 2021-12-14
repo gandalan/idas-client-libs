@@ -8,6 +8,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Settings
     {
         public List<ProduktionProduktfamilieSettingsDTO> ProduktionProduktfamilieSettingList { get; set; }
         public bool SprossenfreiEnabled { get; set; }
+        public bool SaegedatenAufEtiketten { get; set; } = false;
         public DateTime ChangedDate { get; set; }
     }
 }
