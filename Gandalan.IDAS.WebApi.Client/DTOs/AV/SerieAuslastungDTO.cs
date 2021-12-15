@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
-    internal class SerieAuslastungDTO
+    public class SerieAuslastungDTO
     {
         public string Produktfamilie { get; set; }
         public int Anzahl { get; set; }
