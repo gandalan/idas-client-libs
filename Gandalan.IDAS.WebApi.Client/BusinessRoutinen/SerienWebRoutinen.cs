@@ -157,5 +157,23 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return "Not logged in";
         }
+
+        public string GetAuslastung(Guid? serie)
+        {
+            if (Login())
+            {
+                return Get<string>($"Auslastung/{serie}");
+            }
+            return null;
+        }
+
+        public async Task<string> GetAuslastungAsync(Guid? serie)
+        {
+            if (Login())
+            {
+                return await GetAsync<string>($"Auslastung/{serie}");
+            }
+            return null;
+        }
     }
 }
