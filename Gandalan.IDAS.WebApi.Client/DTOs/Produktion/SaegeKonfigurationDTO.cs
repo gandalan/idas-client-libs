@@ -43,5 +43,20 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Produktion
         /// Angabe, ob die Säge Schnitte mit anderen Winkeln sägen kann
         /// </summary>
         public bool FreierSchnitt { get; set; }
+
+        /// <summary>
+        /// Ausgabeverzeichnis für die Datei mit Geradschnitten (90-90)
+        /// </summary>
+        public string Ausgabeverzeichnis_Geradschnitt { get; set; }
+
+        /// <summary>
+        /// Ausgabeverzeichnis für die Datei mit GeradGehrungsschnitten (45-90; 90-45)
+        /// </summary>     
+        public string Ausgabeverzeichnis_GeradGehrung { get; set; }
+
+        /// <summary>
+        /// Ausgabeverzeichnis für die Datei mit Doppelgehrungsschnitten (45-45)
+        /// </summary>
+        public string Ausgabeverzeichnis_DoppelGehrung { get; set; }
     }
 }
