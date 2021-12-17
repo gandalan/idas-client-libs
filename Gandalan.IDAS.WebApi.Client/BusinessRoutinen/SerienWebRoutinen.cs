@@ -157,5 +157,42 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return "Not logged in";
         }
+
+        public IList<SerieAuslastungDTO> GetAuslastung(Guid serie)
+        {
+            if (Login())
+            {
+                return Get<IList<SerieAuslastungDTO>>($"Auslastung/{serie}");
+            }
+            return null;
+        }
+
+        public async Task<IList<SerieAuslastungDTO>> GetAuslastungAsync(Guid serie)
+        {
+            if (Login())
+            {
+                return await GetAsync<IList<SerieAuslastungDTO>>($"Auslastung/{serie}");
+            }
+            return null;
+        }
+
+        public IDictionary<Guid, IList<SerieAuslastungDTO>> GetGesamtAuslastung(bool includeAbgelaufene = false)
+        {
+            if (Login())
+            {
+                return Get<IDictionary<Guid, IList<SerieAuslastungDTO>>>($"Auslastung/?includeAbgelaufene={includeAbgelaufene}");
+            }
+            return null;
+        }
+
+        public async Task<IDictionary<Guid, IList<SerieAuslastungDTO>>> GetGesamtAuslastungAsync(bool includeAbgelaufene = false)
+        {
+            if (Login())
+            {
+                return await GetAsync<IDictionary<Guid, IList<SerieAuslastungDTO>>>($"Auslastung/?includeAbgelaufene={includeAbgelaufene}");
+            }
+            return null;
+        }
     }
+
 }
