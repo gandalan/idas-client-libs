@@ -158,20 +158,20 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public BelegPositionAVDTO GetBelegPositionAVByPCode(string pcode)
+        public IList<BelegPositionAVDTO> GetBelegPositionAVByPCode(string pcode, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
             if (Login())
             {
-                return Get<BelegPositionAVDTO>($"BelegPositionenAVByPCode/{pcode}");
+                return Get<IList<BelegPositionAVDTO>>($"BelegPositionenAVByPCode/{pcode}?includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
             }
             return null;
         }
 
-        public async Task<BelegPositionAVDTO> GetBelegPositionAVByPCodeAsync(string pcode)
+        public async Task<IList<BelegPositionAVDTO>> GetBelegPositionAVByPCodeAsync(string pcode, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
             if (Login())
             {
-                return await GetAsync<BelegPositionAVDTO>($"BelegPositionenAVByPCode/{pcode}");
+                return await GetAsync<IList<BelegPositionAVDTO>>($"BelegPositionenAVByPCode/{pcode}?includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
             }
             return null;
         }

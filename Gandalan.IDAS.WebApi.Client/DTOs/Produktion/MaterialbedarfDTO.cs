@@ -67,6 +67,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstZuschnitt { get; set; }
         public float ZuschnittLaenge { get; set; }
         public string ZuschnittWinkel { get; set; }
+        public string PositionsAngabe { get; set; }
 
         public string MaterialBezeichnung { get; set; }
         public bool MaterialBearbeitungSaegen { get; set; }

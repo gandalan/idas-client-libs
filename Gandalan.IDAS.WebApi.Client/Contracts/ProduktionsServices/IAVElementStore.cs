@@ -11,8 +11,8 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
 
         Task<IList<BelegPositionAVDTO>> GetAsync(Guid guid);
 
-        Task<IList<BelegPositionAVDTO>> GetAllAsync();
-        Task<IList<BelegPositionAVDTO>> GetAllAsync(DateTime changedSince);
+        Task<IList<BelegPositionAVDTO>> GetAllAsync(bool includeOriginalBeleg = true, bool includeProdDaten = true);
+        Task<IList<BelegPositionAVDTO>> GetAllAsync(DateTime changedSince, bool includeOriginalBeleg = true, bool includeProdDaten = true);
 
         Task AddOrUpdateAsync(BelegPositionAVDTO data);
         Task<IList<BelegPositionAVDTO>> AddOrUpdateAsync(List<BelegPositionAVDTO> data);

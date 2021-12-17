@@ -14,6 +14,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         IList<MaterialbedarfDTO> AblageFachSortierung(IList<BelegPositionAVDTO> avData, IList<MaterialbedarfDTO> materialListe);
 
         Task<Dictionary<string, MaterialbedarfDTO>> SchnittSortierung(SerieDTO serie);
+        Dictionary<string, MaterialbedarfDTO> SchnittSortierung(IList<BelegPositionAVDTO> avData);
 
         Dictionary<string, MaterialbedarfDTO> SchnittSortierung(IList<BelegPositionAVDTO> avData, IList<MaterialbedarfDTO> materialListe);
 
