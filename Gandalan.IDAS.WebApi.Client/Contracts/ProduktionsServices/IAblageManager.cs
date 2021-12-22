@@ -36,6 +36,13 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         AblageFachDTO SearchAblageFach(BelegPositionAVDTO position, MaterialbedarfDTO material);
 
         /// <summary>
+        /// Sucht alle Ablagefach für die übergebene BelegPositionAV.
+        /// </summary>
+        /// <param name="position">Position, aus der Material abgelegt werden soll</param>
+        /// <returns>Liste von AbalgeFachDTO</returns>
+        List<AblageFachDTO> SearchAblageFach(BelegPositionAVDTO position);
+
+        /// <summary>
         /// Legt eine Materialliste in mehreren Ablagefächern ab
         /// </summary>
         /// <param name="positionen">Liste von Positionen, die das abzulegende Material enthalten</param>
