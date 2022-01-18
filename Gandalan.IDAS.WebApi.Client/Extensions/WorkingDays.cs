@@ -16,5 +16,15 @@
 
             return datum;
         }
+
+        public static DateTime AddWorkingHours(this DateTime datum, int hours)
+        {
+            datum = datum.AddHours(hours);
+         
+            while (datum.DayOfWeek == DayOfWeek.Saturday || datum.DayOfWeek == DayOfWeek.Sunday)
+                datum = datum.AddWorkingDays(1);
+
+            return datum;
+        }
     }
 }
