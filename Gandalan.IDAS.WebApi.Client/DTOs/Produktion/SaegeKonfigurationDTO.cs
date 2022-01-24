@@ -58,5 +58,15 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Produktion
         /// Ausgabeverzeichnis für die Datei mit Doppelgehrungsschnitten (45-45)
         /// </summary>
         public string Ausgabeverzeichnis_DoppelGehrung { get; set; }
+
+        /// <summary>
+        /// Kennzeichen, ob alle Schnitte in einer Datei ausgegeben werden sollen
+        /// </summary>
+        public bool KombinierteSaegeDatei { get; set; }
+        
+        /// <summary>
+        /// Ausgabeverzeichnis für kombinierte Sägedatei
+        /// </summary>
+        public string Ausgabverzeichnis_kombiniert { get; set; }
     }
 }
