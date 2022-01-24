@@ -1,4 +1,5 @@
-﻿using Gandalan.IDAS.WebApi.Data.DTOs.Reports;
+﻿using Gandalan.IDAS.WebApi.Data.DTOs.Produktion;
+using Gandalan.IDAS.WebApi.Data.DTOs.Reports;
 using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,8 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <param name="avData">AV Daten zum Sägematerial</param>
         /// <param name="material"></param>
         /// <returns>Modellabhängige Daten zur Übermittlung an die Maschine</returns>
-        string GenerateContent(IList<BelegPositionAVDTO> avData, IList<MaterialbedarfDTO> material);
+        string GenerateContent(SaegeKonfigurationDTO saegeKonfiguration, IList<BelegPositionAVDTO> avData, IList<MaterialbedarfDTO> material);
 
-        string GenerateContent(SerienSaegelisteDataDTO saegeDaten);
+        string GenerateContent(SaegeKonfigurationDTO saegeKonfiguration, SerienSaegelisteDataDTO saegeDaten);
     }
 }
