@@ -10,7 +10,12 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Settings
         public bool SprossenfreiEnabled { get; set; }
         public bool SaegedatenAufEtiketten { get; set; } = false;
         public bool MaschinenkederVerwenden { get; set; } = false;
+        public bool PacklistenEtikettenZusammengefasst { get; set; } = true;
+        public string EtikettSerienkennzeichen { get; set; } = "Ohne";
+        public string PackEtikettSerienkennzeichen { get; set; } = "Kürzel";
+        public bool PrintPCode { get; set; } = true;
         public bool PrintPCodeASQRCode { get; set; } = true;
+
         public bool HaendlerKommAufEtikett { get; set; } = false;
         public bool VorgangKommAufEtikett { get; set; } = true;
         public bool PositionKommAufEtikett { get; set; } = false;
