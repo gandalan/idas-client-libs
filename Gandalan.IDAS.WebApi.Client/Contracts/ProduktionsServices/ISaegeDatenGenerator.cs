@@ -23,6 +23,6 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <returns>Modellabhängige Daten zur Übermittlung an die Maschine</returns>
         string GenerateContent(SaegeKonfigurationDTO saegeKonfiguration, IList<BelegPositionAVDTO> avData, IList<MaterialbedarfDTO> material);
 
-        string GenerateContent(SaegeKonfigurationDTO saegeKonfiguration, SerienSaegelisteDataDTO saegeDaten);
+        string GenerateContent(SaegeKonfigurationDTO saegeKonfiguration, IList<SerienSaegelisteDataDTO> saegeDaten);
     }
 }
