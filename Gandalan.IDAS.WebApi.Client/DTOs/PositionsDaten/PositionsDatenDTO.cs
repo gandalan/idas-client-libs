@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -29,7 +27,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid FarbItemGuid { get; set; }
         public string FarbCode { get; set; }
         public string FarbBezeichnung { get; set; }
-        public string Oberflaeche { get; set; }
+        public string OberflaecheBezeichnung { get; set; }
         public Guid OberflaecheGuid { get; set; }
         public bool IstSonderFarbPosition { get; set; }
         public string Gewebe { get; set; }
@@ -40,7 +38,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string VorgangsNummer { get; set; }
         public string DruckDatum { get; set; }
         public string VersandAdresse { get; set; }
-        
+
         public string DataErstellDatum { get; set; }
         public string BelegNummer { get; set; }
         public string BelegJahr { get; set; }

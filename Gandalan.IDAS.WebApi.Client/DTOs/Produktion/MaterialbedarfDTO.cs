@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -32,12 +28,12 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool Beipacken { get; set; }
 
         /// <summary>
-        /// Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+        /// Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt
         /// sich aus mit Laufmeter!)
         /// </summary>
         public decimal Stueckzahl { get; set; }
         /// <summary>
-        /// Laufmeter des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+        /// Laufmeter des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt
         /// sich aus mit Stückzahl!)
         /// </summary>
         public decimal Laufmeter { get; set; }
@@ -58,11 +54,11 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string FarbeItem { get; set; }
         public Guid FarbItemGuid { get; set; }
 
-        public string OberFlaeche { get; set; }
+        public string OberflaecheBezeichnung { get; set; }
         public Guid OberFlaecheGuid { get; set; }
 
         /// <summary>
-        /// Kennzeichen für Zuschnittartikel 
+        /// Kennzeichen für Zuschnittartikel
         /// </summary>
         public bool IstZuschnitt { get; set; }
         public float ZuschnittLaenge { get; set; }
