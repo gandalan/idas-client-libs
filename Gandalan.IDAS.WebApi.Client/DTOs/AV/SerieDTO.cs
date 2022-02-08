@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Gandalan.IDAS.WebApi.DTO
@@ -52,10 +53,32 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Änderungsdatum des Datensatzes
         /// </summary>
         public DateTime ChangedDate { get; set; }        
+
+        public void AddDruckInfo(string dokumentArt, string benutzerName)
+        {
+            DruckInfos.Add(new SerieDruckInfoDTO() { Benutzername = benutzerName, DokumentArt = dokumentArt, Zeitstempel = DateTime.UtcNow });
+        }
+
+        public IList<SerieDruckInfoDTO> GetDruckInfos(string dokumentArt)
+        {
+            return DruckInfos
+                .Where(i => i.DokumentArt.Equals(dokumentArt, StringComparison.InvariantCultureIgnoreCase))
+                .OrderBy(i=>i.Zeitstempel)
+                .ToList();
+        }
+
+        public SerieDruckInfoDTO GetLastDruckInfo(string dokumentArt)
+        {
+            return GetDruckInfos(dokumentArt).LastOrDefault();
+        }
     }
 
     public class SerieDruckInfoDTO
     {
+        /// <summary>
+        /// Eindeutige ID
+        /// </summary>
+        public Guid SerieDruckInfoGuid { get; set; }
         /// <summary>
         /// Benutzername des Anwenders
         /// </summary>
