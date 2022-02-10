@@ -78,7 +78,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Eindeutige ID
         /// </summary>
-        public Guid SerieDruckInfoGuid { get; set; }
+        public Guid SerieDruckInfoGuid { get; set; } = Guid.NewGuid();
         /// <summary>
         /// Benutzername des Anwenders
         /// </summary>
