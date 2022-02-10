@@ -78,7 +78,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstZustimmungErteilt { get; set; }
 
         public string InterneNotiz { get; set; }
-        public bool WarteAufZahlungseingang { get; set; }
         public string BemerkungFuerKunde { get; set; }
         public Guid OriginalVorgangGuid { get; set; }
         public Guid OriginalMandantGuid { get; set; }

@@ -182,6 +182,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Kunde hat Winterrabatt ja/nein
         /// </summary>
         public bool HatWinterrabatt { get; set; }
+        public bool KeineAutofreigabe { get; set; }
 
         public KontaktDTO()
         {
