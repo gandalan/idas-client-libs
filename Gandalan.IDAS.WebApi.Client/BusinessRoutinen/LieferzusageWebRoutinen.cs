@@ -26,6 +26,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public int GetZusagenCount(Guid serie, string lieferant = "")
+        {
+            if (Login())
+            {
+                return Get<int>($"Lieferzusage/GetCount/{serie.ToString()}/{lieferant}");
+            }
+            return 0;
+        }
+
         public string MaterialZusagen(LieferzusageDTO lieferzusage)
         {
             if (Login())
@@ -34,7 +43,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return null;
         }
-        
+
         public string ResetZusage(Guid lieferzusageGuid)
         {
             if (Login())
@@ -57,6 +66,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<string> ResetZusageAsync(Guid lieferzusageGuid)
         {
             return await Task.Run(() => { return ResetZusage(lieferzusageGuid); });
-        }        
+        }
     }
 }
