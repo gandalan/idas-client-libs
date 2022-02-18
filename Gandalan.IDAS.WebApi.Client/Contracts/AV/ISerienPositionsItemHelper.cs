@@ -11,8 +11,8 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.AV
     public interface ISerienPositionsItemHelper
     {
         Task<List<PositionSerieItemDTO>> GetSeriePositionItemsFromBeleg(BelegDTO beleg);
-        Task<List<PositionSerieItemDTO>> GetSeriePositionItemsFromModus(BelegDTO beleg, List<PositionSerieItemDTO> items, SerieSuchenModus serieSuchenModus, bool allePosDisponieren);
-        Task SaveSeriePositionItemsToSerie(BelegDTO beleg, List<PositionSerieItemDTO> items, SerieSuchenModus serieSuchenModus, bool showDialog = true);
-        Task SaveSeriePositionItemsToSerieAuto(BelegDTO beleg);
+        Task<List<PositionSerieItemDTO>> GetSeriePositionItemsFromModus(BelegDTO beleg, List<PositionSerieItemDTO> items, SerieSuchenModus serieSuchenModus);
+        Task SaveSeriePositionItemsToSerie(BelegDTO beleg, List<PositionSerieItemDTO> items, bool autoFreigabeErlaubt, bool showDialog = true);
+        Task SaveSeriePositionItemsToSerieAuto(BelegDTO beleg, bool autoFreigabeErlaubt);
     }
 }
