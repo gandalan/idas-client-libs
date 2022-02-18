@@ -17,7 +17,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Settings
         public bool PrintPCodeASQRCode { get; set; } = true;
         public bool Schutzplattenmontage { get; set; } = false;
         public bool WeisserKeder { get; set; } = false;
-
+        public bool SortierungMitPositionsbezug { get; set; } = true;
+        public bool HaendlerNameAufEtikett { get; set; } = false;
         public bool HaendlerKommAufEtikett { get; set; } = false;
         public bool VorgangKommAufEtikett { get; set; } = true;
         public bool PositionKommAufEtikett { get; set; } = false;
