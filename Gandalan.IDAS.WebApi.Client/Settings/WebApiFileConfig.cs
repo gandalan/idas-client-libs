@@ -41,7 +41,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             if (Directory.Exists(localEnvPath))
             {
                 var files = Directory.GetFiles(localEnvPath, "*.json");
-                foreach (var file in files.Where(fn => !fn.StartsWith("AuthToken")))
+                foreach (var file in files.Where(fn => !fn.Contains("AuthToken_")))
                 {
                     var friendlyName = Path.GetFileNameWithoutExtension(file);
                     try
