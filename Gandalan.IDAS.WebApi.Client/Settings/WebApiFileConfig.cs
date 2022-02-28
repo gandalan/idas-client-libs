@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
@@ -35,26 +37,28 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 
         private static void setupLocalEnvironment(Guid appToken)
         {
-            try
+            var localEnvPath = Path.Combine(_settingsPath, "Local");
+            if (Directory.Exists(localEnvPath))
             {
-                IWebApiConfig localEnvironment = null;
-                var localSettingsFile = Path.Combine(_settingsPath, "Local", "local.json");
-
-                if (File.Exists(localSettingsFile))
+                var files = Directory.GetFiles(localEnvPath, "*.json");
+                foreach (var file in files.Where(fn => !fn.Contains("AuthToken_")))
                 {
-                    localEnvironment = JsonConvert.DeserializeObject<WebApiSettings>(File.ReadAllText(localSettingsFile));
-                    localEnvironment.AppToken = appToken;
+                    var friendlyName = Path.GetFileNameWithoutExtension(file);
+                    try
+                    {
+                        IWebApiConfig localEnvironment = JsonConvert.DeserializeObject<WebApiSettings>(File.ReadAllText(file));
+                        if (localEnvironment != null)
+                        {
+                            localEnvironment.FriendlyName = friendlyName;
+                            localEnvironment.AppToken = appToken;
+                            _settings.Add(friendlyName, localEnvironment);
+                            internalLoadSavedAuthToken(friendlyName, localEnvironment);
+                        }
+                    } catch (Exception ex)
+                    {
+                        Debug.WriteLine($"Loading local env {friendlyName}: {ex.Message}");
+                    }
                 }
-
-                if (localEnvironment != null)
-                {
-                    _settings.Add("local", localEnvironment);
-                    internalLoadSavedAuthToken("local", localEnvironment);
-                }
-            }
-            catch (Exception e)
-            {
-                // Local env not available, that's actually the "normal" case
             }
         }
 
