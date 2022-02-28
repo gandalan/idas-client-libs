@@ -35,6 +35,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public virtual ProduktionsDatenDTO ProduktionsDaten { get; set; }
         public bool IstGedruckt { get; set; }
 
+        public DateTime ErfassungsDatum { get; set; }
         public DateTime ChangedDate { get; set; }
 
         public BelegPositionAVDTO()
