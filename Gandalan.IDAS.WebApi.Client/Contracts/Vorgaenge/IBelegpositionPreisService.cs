@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.Vorgaenge
 {
     public interface IBelegpositionPreisService
     {
-        bool RecalculatePreis(BelegPositionDTO pos);
+        Task<bool> RecalculatePreis(BelegPositionDTO pos);
     }
 }
