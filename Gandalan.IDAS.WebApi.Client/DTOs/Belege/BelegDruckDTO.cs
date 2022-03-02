@@ -234,7 +234,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 if (this.MengenEinheit == null || this.MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase)) this.MengenEinheit = "Stk.";
 
                 string einbauort = String.Empty;
-                if (!string.IsNullOrWhiteSpace(position.Einbauort))
+                if (!string.IsNullOrWhiteSpace(position.Einbauort) && !position.Text.StartsWith("Einbauort"))
                     einbauort = "Einbauort: " + position.Einbauort + " - ";
 
                 this.Text = einbauort + position.Text;
