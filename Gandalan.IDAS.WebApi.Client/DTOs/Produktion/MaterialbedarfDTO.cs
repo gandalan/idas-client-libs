@@ -102,6 +102,8 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public Guid ZielKennzeichen { get; set; }
 
+        public string Lagerfach { get; set; }
+
         public object Clone()
         {
             return this.MemberwiseClone();
