@@ -191,6 +191,9 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
                 foreach (var sw in pos.Sonderwuensche)
                 {
+                    if (sw.InternerName == "KederZeigtNachAussen")
+                        continue;
+
                     var swBezeichnung = String.Empty;
 
                     if (!String.IsNullOrEmpty(sw.InternerName) && sw.InternerName != sw.Kuerzel)
