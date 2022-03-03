@@ -49,6 +49,12 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 
         public WebApiSettings(Guid appToken, string env)
         {
+            if (appToken.Equals(Guid.Empty))
+                throw new ArgumentException("WebApiSettings: AppToken must not be Guid.Empty");
+
+            if (string.IsNullOrEmpty(env))
+                throw new ArgumentNullException("WebApiSettings: Environment must not be null or empty");
+
             WebApiFileConfig.Initialize(appToken);
             IWebApiConfig settings = WebApiFileConfig.ByName(env);
             if (settings != null)
