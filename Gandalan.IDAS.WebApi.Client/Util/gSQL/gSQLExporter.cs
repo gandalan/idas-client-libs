@@ -199,6 +199,11 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                     }
                     else
                     {
+                        swBezeichnung = sw.Bezeichnung.Replace("Ä", "Ae").Replace("Ü", "Ue").Replace("Ö", "Oe");
+                        swBezeichnung = swBezeichnung.Replace("ä", "ae").Replace("ü", "ue").Replace("ö", "oe");
+                        swBezeichnung = swBezeichnung.Replace("ß", "ss");
+                        swBezeichnung = swBezeichnung.Replace(" ", "_");
+
                         if (kederZeigtNachAussen)
                         {
                             if (swBezeichnung.Contains("links"))
@@ -206,12 +211,6 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                             else if (swBezeichnung.Contains("rechts"))
                                 swBezeichnung = swBezeichnung.Replace("rechts", "links");
                         }
-
-
-                        swBezeichnung = sw.Bezeichnung.Replace("Ä", "Ae").Replace("Ü", "Ue").Replace("Ö", "Oe");
-                        swBezeichnung = swBezeichnung.Replace("ä", "ae").Replace("ü", "ue").Replace("ö", "oe");
-                        swBezeichnung = swBezeichnung.Replace("ß", "ss");
-                        swBezeichnung = swBezeichnung.Replace(" ", "_");
                     }
 
                     aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swBezeichnung, sw.Wert));
