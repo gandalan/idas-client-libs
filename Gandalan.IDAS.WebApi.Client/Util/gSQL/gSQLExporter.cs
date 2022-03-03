@@ -185,6 +185,10 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                     continue;
                 }
 
+                //KederZeigtNachAussen bedeutet dass Fl und Fr in der Produktion getauscht werden (in IBOS1) deshalb muss das hier getauscht werden
+                bool kederZeigtNachAussen = pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert != null ?
+                    Convert.ToBoolean(pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert) : false;
+
                 foreach (var sw in pos.Sonderwuensche)
                 {
                     var swBezeichnung = String.Empty;
@@ -195,6 +199,15 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                     }
                     else
                     {
+                        if (kederZeigtNachAussen)
+                        {
+                            if (swBezeichnung.Contains("links"))
+                                swBezeichnung = swBezeichnung.Replace("links", "rechts");
+                            else if (swBezeichnung.Contains("rechts"))
+                                swBezeichnung = swBezeichnung.Replace("rechts", "links");
+                        }
+
+
                         swBezeichnung = sw.Bezeichnung.Replace("Ä", "Ae").Replace("Ü", "Ue").Replace("Ö", "Oe");
                         swBezeichnung = swBezeichnung.Replace("ä", "ae").Replace("ü", "ue").Replace("ö", "oe");
                         swBezeichnung = swBezeichnung.Replace("ß", "ss");
