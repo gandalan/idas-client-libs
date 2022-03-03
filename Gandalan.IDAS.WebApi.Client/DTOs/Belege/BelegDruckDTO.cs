@@ -232,8 +232,13 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.Menge = position.Menge;
                 this.MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.ZuschnittLaenge")) != null ? "Stk." : position.MengenEinheit;
                 if (this.MengenEinheit == null || this.MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase)) this.MengenEinheit = "Stk.";
-                this.Text = position.Text;
-                this.AngebotsText = position.AngebotsText;
+
+                string einbauort = String.Empty;
+                if (!string.IsNullOrWhiteSpace(position.Einbauort) && !position.Text.StartsWith("Einbauort"))
+                    einbauort = "Einbauort: " + position.Einbauort + " - ";
+
+                this.Text = einbauort + position.Text;
+                this.AngebotsText = einbauort + position.AngebotsText;
                 this.SonderwunschText = position.SonderwunschText;
                 this.SonderwunschAngebotsText = position.SonderwunschAngebotsText;
                 this.ProduktionZusatzInfo = position.ProduktionZusatzInfo;
