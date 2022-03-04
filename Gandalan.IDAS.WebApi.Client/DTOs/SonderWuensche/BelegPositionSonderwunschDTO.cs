@@ -18,6 +18,7 @@ namespace Gandalan.IDAS.WebApi.Data.DTO
         public string CalculatedFarbe { get; set; }
         public float Aufpreis { get; set; }
         public string Bezeichnung { get; set; }
+        public string ExportName { get; set; }
         public string Kuerzel { get; set; }
         public string GehoertZuProfilMitKuerzel { get; set; }
         public string InternerName { get; set; }
@@ -29,9 +30,10 @@ namespace Gandalan.IDAS.WebApi.Data.DTO
         {
         }
 
-        public BelegPositionSonderwunschDTO(string bezeichnung, string wert)
+        public BelegPositionSonderwunschDTO(string bezeichnung, string exportname, string wert)
         {
             Bezeichnung = bezeichnung;
+            ExportName = exportname;
             Wert = wert;
         }
     }

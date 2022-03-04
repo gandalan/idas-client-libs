@@ -194,41 +194,43 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                     if (sw.InternerName == "KederZeigtNachAussen")
                         continue;
 
-                    var swBezeichnung = String.Empty;
+                    var swExportParameter = String.Empty;
 
                     if (!String.IsNullOrEmpty(sw.InternerName) && sw.InternerName != sw.Kuerzel)
                     {
-                        swBezeichnung = sw.InternerName;
+                        swExportParameter = sw.InternerName;
                     }
                     else
                     {
-                        swBezeichnung = sw.Bezeichnung.Replace("Ä", "Ae").Replace("Ü", "Ue").Replace("Ö", "Oe");
-                        swBezeichnung = swBezeichnung.Replace("ä", "ae").Replace("ü", "ue").Replace("ö", "oe");
-                        swBezeichnung = swBezeichnung.Replace("ß", "ss");
-                        swBezeichnung = swBezeichnung.Replace(" ", "_");
+                        swExportParameter = !String.IsNullOrEmpty(sw.ExportName) ? sw.ExportName : sw.Bezeichnung;
+
+                        swExportParameter = swExportParameter.Replace("Ä", "Ae").Replace("Ü", "Ue").Replace("Ö", "Oe");
+                        swExportParameter = swExportParameter.Replace("ä", "ae").Replace("ü", "ue").Replace("ö", "oe");
+                        swExportParameter = swExportParameter.Replace("ß", "ss");
+                        swExportParameter = swExportParameter.Replace(" ", "_");
 
                         if (kederZeigtNachAussen)
                         {
-                            if (swBezeichnung.Contains("links"))
-                                swBezeichnung = swBezeichnung.Replace("links", "rechts");
-                            else if (swBezeichnung.Contains("rechts"))
-                                swBezeichnung = swBezeichnung.Replace("rechts", "links");
+                            if (swExportParameter.Contains("links"))
+                                swExportParameter = swExportParameter.Replace("links", "rechts");
+                            else if (swExportParameter.Contains("rechts"))
+                                swExportParameter = swExportParameter.Replace("rechts", "links");
                         }
                     }
 
-                    aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swBezeichnung, sw.Wert));
+                    aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swExportParameter, sw.Wert));
 
                     if (sw.Laenge > 0)
                     {
-                        aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swBezeichnung + "_Laenge", sw.Laenge.ToString()));
+                        aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swExportParameter + "_Laenge", sw.Laenge.ToString()));
                     }
                     if (sw.Hoehe > 0)
                     {
-                        aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swBezeichnung + "_Hoehe", sw.Hoehe.ToString()));
+                        aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swExportParameter + "_Hoehe", sw.Hoehe.ToString()));
                     }
                     if (!String.IsNullOrEmpty(sw.Farbe))
                     {
-                        aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swBezeichnung + "_Farbe", sw.Farbe));
+                        aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swExportParameter + "_Farbe", sw.Farbe));
                     }
                 }
 
