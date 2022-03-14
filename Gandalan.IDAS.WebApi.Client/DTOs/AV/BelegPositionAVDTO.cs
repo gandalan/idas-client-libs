@@ -55,7 +55,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             IstProduziert = false;
             HatSonderwuensche = !string.IsNullOrEmpty(position.Besonderheiten);
             SonderwunschText = position.SonderwunschText;
-            Variante = position.Variante;
+            Variante = position.Variante ?? position.ArtikelNummer;
             Position = position;
         }
     }
