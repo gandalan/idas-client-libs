@@ -57,6 +57,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             SonderwunschText = position.SonderwunschText;
             Variante = position.Variante ?? position.ArtikelNummer;
             Position = position;
+            ErfassungsDatum = position.ErfassungsDatum;
         }
     }
 }
