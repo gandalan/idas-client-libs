@@ -21,6 +21,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool HatSonderwuensche { get; set; }
         public string SonderwunschText { get; set; }
         public string Variante { get; set; }
+        public string ArtikelNummer { get; set; }
         public string Kommission { get; set; }
         public string Kunde { get; set; }
         public string Pcode { get; set; }
@@ -55,7 +56,8 @@ namespace Gandalan.IDAS.WebApi.DTO
             IstProduziert = false;
             HatSonderwuensche = !string.IsNullOrEmpty(position.Besonderheiten);
             SonderwunschText = position.SonderwunschText;
-            Variante = position.Variante ?? position.ArtikelNummer;
+            Variante = position.Variante;
+            ArtikelNummer = position.ArtikelNummer;
             Position = position;
             ErfassungsDatum = position.ErfassungsDatum;
         }
