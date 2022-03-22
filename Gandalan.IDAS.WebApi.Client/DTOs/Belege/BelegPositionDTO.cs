@@ -69,6 +69,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Gültige Werte: "NichtFreigegeben", "Freigegeben", "Abgerechnet"
         /// </summary>
         public string FakturaKennzeichen { get; set; }
+        public bool IstAusserhalbGewaehrleistung { get; set; }
 
         public BelegPositionDTO()
         {

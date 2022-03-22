@@ -30,6 +30,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Gültige Werte: "NichtFreigegeben", "Freigegeben", "Abgerechnet"
         /// </summary>
         public string FakturaKennzeichen { get; set; }
+        public bool IstAusserhalbGewaehrleistung { get; set; }
         public decimal KapazitaetsBedarf { get; set; }
 
         public virtual BelegPositionDTO Position { get; set; }
@@ -60,6 +61,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             ArtikelNummer = position.ArtikelNummer;
             Position = position;
             ErfassungsDatum = position.ErfassungsDatum;
+            IstAusserhalbGewaehrleistung = position.IstAusserhalbGewaehrleistung;
         }
     }
 }
