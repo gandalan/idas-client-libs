@@ -12,6 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Settings
         public string VorbiegenSprossenfrei { get; set; }
         public string IstAusserhalbGewaehrleistung { get; set; }
         public string VorbiegenGrenzwert { get; set; }
+        public List<string> SonderGewebe { get; set; }
         public bool SaegedatenAufEtiketten { get; set; } = false;
         public bool MaschinenkederVerwenden { get; set; } = false;
         public bool PacklistenEtikettenZusammengefasst { get; set; } = true;
