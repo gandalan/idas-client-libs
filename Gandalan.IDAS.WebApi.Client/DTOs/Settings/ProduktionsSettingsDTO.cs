@@ -8,6 +8,10 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Settings
     {
         public List<ProduktionProduktfamilieSettingsDTO> ProduktionProduktfamilieSettingList { get; set; }
         public bool SprossenfreiEnabled { get; set; }
+        public bool VorbiegenEnabled { get; set; }
+        public string VorbiegenSprossenfrei { get; set; }
+        public string IstAusserhalbGewaehrleistung { get; set; }
+        public string VorbiegenGrenzwert { get; set; }
         public bool SaegedatenAufEtiketten { get; set; } = false;
         public bool MaschinenkederVerwenden { get; set; } = false;
         public bool PacklistenEtikettenZusammengefasst { get; set; } = true;
