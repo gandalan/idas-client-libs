@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -20,8 +17,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public DateTime ChangedDate { get; set; }
     }
 
-    public class IndiFarbDatenDTO 
+    public class IndiFarbDatenDTO
     {
+        public Guid IndiFarbDatenGuid { get; set; }
+        public bool IsPassiv { get; set; }
         public string FarbKuerzel { get; set; }
         public bool BestellMengeAufVERunden { get; set; }
         public decimal SonderPreis { get; set; }
