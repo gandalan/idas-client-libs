@@ -21,6 +21,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool HatSonderwuensche { get; set; }
         public string SonderwunschText { get; set; }
         public string Variante { get; set; }
+        public string ArtikelNummer { get; set; }
         public string Kommission { get; set; }
         public string Kunde { get; set; }
         public string Pcode { get; set; }
@@ -29,6 +30,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Gültige Werte: "NichtFreigegeben", "Freigegeben", "Abgerechnet"
         /// </summary>
         public string FakturaKennzeichen { get; set; }
+        public bool IstAusserhalbGewaehrleistung { get; set; }
         public decimal KapazitaetsBedarf { get; set; }
 
         public virtual BelegPositionDTO Position { get; set; }
@@ -56,7 +58,10 @@ namespace Gandalan.IDAS.WebApi.DTO
             HatSonderwuensche = !string.IsNullOrEmpty(position.Besonderheiten);
             SonderwunschText = position.SonderwunschText;
             Variante = position.Variante;
+            ArtikelNummer = position.ArtikelNummer;
             Position = position;
+            ErfassungsDatum = position.ErfassungsDatum;
+            IstAusserhalbGewaehrleistung = position.IstAusserhalbGewaehrleistung;
         }
     }
 }

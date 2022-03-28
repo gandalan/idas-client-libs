@@ -34,6 +34,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstAktiv { get; set; }
         public bool IstFehlerhaft { get; set; }
         public bool IstFehlerhaftSFOhnePreis { get; set; }
+        public bool IstGesperrt { get; set; }
         public decimal KapazitaetsBedarf { get; set; }
         public decimal Menge { get; set; }
         public decimal Listenpreis { get; set; }
@@ -69,6 +70,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Gültige Werte: "NichtFreigegeben", "Freigegeben", "Abgerechnet"
         /// </summary>
         public string FakturaKennzeichen { get; set; }
+        public bool IstAusserhalbGewaehrleistung { get; set; }
 
         public BelegPositionDTO()
         {
