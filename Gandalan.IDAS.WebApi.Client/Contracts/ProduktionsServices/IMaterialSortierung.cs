@@ -9,9 +9,9 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
 {
     public interface IMaterialSortierung
     {
-        Task<IList<MaterialbedarfDTO>> AblageFachSortierung(SerieDTO serie);
+        Task<Dictionary<string, MaterialbedarfDTO>> AblageFachSortierung(SerieDTO serie);
 
-        IList<MaterialbedarfDTO> AblageFachSortierung(IList<BelegPositionAVDTO> avData, IList<MaterialbedarfDTO> materialListe);
+        Dictionary<string, MaterialbedarfDTO> AblageFachSortierung(IList<BelegPositionAVDTO> avData, IList<MaterialbedarfDTO> materialListe);
 
         Task<Dictionary<string, MaterialbedarfDTO>> SchnittSortierung(SerieDTO serie);
         Dictionary<string, MaterialbedarfDTO> SchnittSortierung(IList<BelegPositionAVDTO> avData);
