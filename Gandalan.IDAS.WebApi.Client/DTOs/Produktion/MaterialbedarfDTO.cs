@@ -28,6 +28,11 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool Beipacken { get; set; }
 
         /// <summary>
+        /// Vorgangsnummer die gesetzt ist, wenn es sich um Sonderfarbartikel handelt die nicht zusammengefasst wurden.
+        /// </summary>
+        public string Vorgangsnummer { get; set; }
+
+        /// <summary>
         /// Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt
         /// sich aus mit Laufmeter!)
         /// </summary>
