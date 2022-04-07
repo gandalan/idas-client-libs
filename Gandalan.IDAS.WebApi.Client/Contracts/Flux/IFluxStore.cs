@@ -28,6 +28,6 @@ namespace Gandalan.IDAS.Client.Contracts.Flux
     
     public interface IFluxStore<T> : IFluxStore
     {
-        T Data { get; set; }
+        T Data { get; }
     }
 }
