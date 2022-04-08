@@ -1,4 +1,5 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using System;
 using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
@@ -9,14 +10,14 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public byte[] Pdf(string vorgangNumer, string email, bool onlyBills)
+        public byte[] Pdf(Guid bguid, string email)
         {
-            return GetData("PrintV2/Pdf?vorgangNumer=" + vorgangNumer + "&email=" + email + "&nurRechnungen=" + onlyBills);
+            return GetData("PrintV2/Pdf?bguid=" + bguid + "&email=" + email);
         }
 
-        public async Task<byte[]> PdfAsync(string vorgangNumer, string email, bool onlyBills)
+        public async Task<byte[]> PdfAsync(Guid bguid, string email)
         {
-            return await Task<byte[]>.Run(() => Pdf(vorgangNumer, email, onlyBills));
+            return await Task<byte[]>.Run(() => Pdf(bguid, email));
         }
 
     }
