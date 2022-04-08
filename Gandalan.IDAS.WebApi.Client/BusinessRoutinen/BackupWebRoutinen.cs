@@ -13,17 +13,17 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public List<Guid> GetVorgangGuids(string email, int year = 0)
         {
-            return Get<List<Guid>>("Backup/GetVorgangGuids?email=" + email + "&jahr=" + year, null);
+            return Get<List<Guid>>("Backup/GetVorgangGuids?email=" + System.Uri.EscapeDataString(email) + "&jahr=" + year, null);
         }
 
         public VorgangExtendedDTO GetVorgang(string email, Guid guid, bool onlyBills = false)
         {
-            return Get<VorgangExtendedDTO>("Backup/GetVorgang?email=" + email + "&nurRechnungen=" + onlyBills + "&guid=" + guid);
+            return Get<VorgangExtendedDTO>("Backup/GetVorgang?email=" + System.Uri.EscapeDataString(email) + "&nurRechnungen=" + onlyBills + "&guid=" + guid);
         }
 
         public void RequestBackup(string email, bool onlyBills, int year)
         {
-            Post("Backup/RequestBackup?email=" + email + "&nurRechnungen=" + onlyBills + "&jahr=" + year, null);
+            Post("Backup/RequestBackup?email=" + System.Uri.EscapeDataString(email) + "&nurRechnungen=" + onlyBills + "&jahr=" + year, null);
         }
     }
 }
