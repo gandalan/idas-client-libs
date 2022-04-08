@@ -12,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public byte[] Pdf(Guid bguid, string email)
         {
-            return GetData("PrintV2/Pdf?bguid=" + bguid + "&email=" + email);
+            return GetData("PrintV2/Pdf?bguid=" + bguid + "&email=" + System.Uri.EscapeDataString(email));
         }
 
         public async Task<byte[]> PdfAsync(Guid bguid, string email)
