@@ -10,13 +10,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     public class BelegStatusWebRoutinen : WebRoutinenBase
     {
         public BelegStatusWebRoutinen(IWebApiConfig settings) : base(settings) { }
-        public BelegStatusDTO Get(Guid belegGuid)
+        public BelegStatusDTO GetBelegStatus(Guid belegGuid)
         {
             if(Login())
                 return Get<BelegStatusDTO>($"BelegStatus?id={belegGuid}");
             return null;
         }
-        public async Task<BelegStatusDTO> GetAsync(Guid belegGuid) => await Task.Run(() => Get(belegGuid));
+        public async Task<BelegStatusDTO> GetBelegStatusAsync(Guid belegGuid) => await Task.Run(() => GetBelegStatus(belegGuid));
         public string SaveBelegStatus(BelegStatusDTO belegStatus)
         {
             if (Login())
