@@ -17,11 +17,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
         // eigentlich kann man die Funktionen LadeBestellungen() und LadeMaterialBestellungen() sowie ResetBestellungen() und ResetMaterialBestellungen() auch noch zusammenfassen aber da war ich jetzt echt zu faul für...
-        public BestellungListItemDTO[] LadeBestellungen(int jahr = -1)
+        public BestellungListItemDTO[] LadeBestellungen(int jahr = -1, bool includeAbegholte = false)
         {
             if (Login())
             {
-                return Get<BestellungListItemDTO[]>($"Bestellungen?jahr={jahr}");
+                return Get<BestellungListItemDTO[]>($"Bestellungen?jahr={jahr}&includeAbegholte={includeAbegholte}");
             }
             return null;
         }
