@@ -34,10 +34,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
         }
 
-        public MaterialBestellungListItemDTO[] LadeMaterialBestellungen(int jahr = -1)
+        public MaterialBestellungListItemDTO[] LadeMaterialBestellungen(int jahr = -1, bool includeAbegholte = false)
         {
             if (Login())
-                return Get<MaterialBestellungListItemDTO[]>($"MaterialBestellungen?jahr={jahr}");
+                return Get<MaterialBestellungListItemDTO[]>($"MaterialBestellungen?jahr={jahr}&includeAbegholte={includeAbegholte}");
 
             return null;
         }
