@@ -11,8 +11,9 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
     {
         string Name { get; }
         ReportTypeDTO ReportType { get; set; }
+        Task Preview();
         Task Print(bool showPrinterDialog = true, string printerName = null);
-        Task Export(string exportFormat);
+        Task Export(string fileName, string exportFormat);
         void Design();
     }
 
