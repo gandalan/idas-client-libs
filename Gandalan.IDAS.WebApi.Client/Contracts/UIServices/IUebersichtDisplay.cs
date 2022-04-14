@@ -8,6 +8,6 @@ namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IUebersichtDisplay
     {
-        void DisplayUebersicht();
+        void DisplayUebersicht(bool showNavigateBack = false);
     }
 }
