@@ -9,6 +9,7 @@ namespace Gandalan.IDAS.WebApi.DTO.DTOs.Reports
     {
         Unbekannt = 0,
         LL = 1,
-        JSR = 2
+        JSR = 2,
+        WebView2 = 3
     }
 }
