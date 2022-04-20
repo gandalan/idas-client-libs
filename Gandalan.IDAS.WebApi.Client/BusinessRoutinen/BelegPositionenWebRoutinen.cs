@@ -38,5 +38,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return null;
         }
+
+        public string CalculateItems()
+        {
+            return Post("BelegPositionen/CalculateItems", null);
+        }
     }
 }
