@@ -28,5 +28,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             return await Task.Run(() => GetChanges(typeName, changedSince));
         }
+
+        public string DeleteOldChanges()
+        {
+            return Get("Change/DeleteOldChanges");
+        }
     }
 }
