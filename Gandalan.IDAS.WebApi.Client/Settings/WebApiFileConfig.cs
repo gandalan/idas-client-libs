@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.DTO;
-using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
@@ -25,7 +25,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             setupEnvironments(appToken);
             setupLocalEnvironment(appToken);
         }
-        
+
         public static IWebApiConfig ByName(string name)
         {
             if (_settings.ContainsKey(name))
@@ -80,7 +80,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                             CMSUrl = response.CMS,
                             DocUrl = response.DOCS,
                             I1Url = response.Prod_I1,
-                            I2Url = response.Prod_I2, 
+                            I2Url = response.Prod_I2,
                             StoreUrl = response.Store,
                             FriendlyName = env,
                             AppToken = appToken
@@ -91,7 +91,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                     if (environment != null)
                         _settings.Add(env, environment);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     // No Hub response, discard
                 }
@@ -111,7 +111,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 environment.UserName = savedAuthToken.UserName;
             }
         }
-        
+
         private static SavedAuthToken internalLoadSavedAuthToken(string env)
         {
             string configFile = Path.Combine(_settingsPath, env, "AuthToken_" + _appTokenString + ".json");
@@ -121,7 +121,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 {
                     return JsonConvert.DeserializeObject<SavedAuthToken>(File.ReadAllText(configFile));
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     // damaged file, ignore saved token
                 }
@@ -136,7 +136,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 
         internal static void Save(IWebApiConfig settings)
         {
-            if (settings == null) 
+            if (settings == null)
                 return;
 
             string configPath = Path.Combine(_settingsPath, settings.FriendlyName);
@@ -153,7 +153,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 }));
                 _settings[settings.FriendlyName] = settings;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Save went wrong, maybe rights missing. Ignore, no user info for now
             }
