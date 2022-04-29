@@ -13,5 +13,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             return Post("Historie", historyDto);
         }
+
+        public string DeleteOldHistorie()
+        {
+            return Get("Historie/DeleteOldHistorie");
+        }
     }
 }

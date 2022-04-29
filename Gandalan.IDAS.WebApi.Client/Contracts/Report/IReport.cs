@@ -11,14 +11,23 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
     {
         string Name { get; }
         ReportTypeDTO ReportType { get; set; }
-        Task Print(bool showPrinterDialog = true, string printerName = null);
-        Task Export(string exportFormat);
-        void Design();
+        ReportAction[] AllowedActions { get; }
+
+        Task Execute(ReportAction action, string printerName = null, string fileName = null);
     }
 
     public interface IReport<T> : IReport where T : class
     {
         T Data { get; set; }
         Task Initialize(T data);
+    }
+
+    public enum ReportAction
+    {
+        Cancel = 0,
+        Print = 1,
+        Preview = 3,
+        Export = 4,
+        Design = 99
     }
 }
