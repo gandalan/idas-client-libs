@@ -8,6 +8,8 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         string TabCaption { get; }
         int Order { get; }
 
+        bool ShowOnlyInDevMode { get; }
+
         Task OnSave();
 
         Task OnNavigation(TabNavigationKind kind);

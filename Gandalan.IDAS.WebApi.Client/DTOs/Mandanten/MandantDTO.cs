@@ -19,6 +19,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstAktiv { get; set; }
         public bool IstHaendler { get; set; }
         public bool IstProduzent { get; set; }
+        public bool ErbtAuswahlOhneSprosse { get; set; } = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

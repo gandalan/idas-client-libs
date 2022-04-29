@@ -28,6 +28,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Settings
         public bool VorgangKommAufEtikett { get; set; } = true;
         public bool PositionKommAufEtikett { get; set; } = false;
         public bool EinbauOrtAufEtikett { get; set; } = true;
+        public bool SettingsFuerHaendler { get; set; } = false;
         public DateTime ChangedDate { get; set; }
     }
 }

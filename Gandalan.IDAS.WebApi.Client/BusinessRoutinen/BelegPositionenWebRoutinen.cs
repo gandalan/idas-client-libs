@@ -1,5 +1,6 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
@@ -18,6 +19,29 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task RunBelegPositionAVLogicAsync(long mandantId, Guid belegPositionGuid)
         {
             await Task.Run(() => RunBelegPositionAVLogic(mandantId, belegPositionGuid));
+        }
+
+        public List<Guid> SetBelegPositionGesperrtStatus(bool gesperrtStatus, List<Guid> positionen)
+        {
+            if (Login())
+            {
+                return Put<List<Guid>>($"BelegPositionGesperrtStatus/SetStatus/{gesperrtStatus}", positionen);
+            }
+            return null;
+        }
+
+        public async Task<List<Guid>> SetBelegPositionGesperrtStatusAsync(bool gesperrtStatus, List<Guid> positionen)
+        {
+            if (Login())
+            {
+                return await PutAsync<List<Guid>>($"BelegPositionGesperrtStatus/SetStatus/{gesperrtStatus}", positionen);
+            }
+            return null;
+        }
+
+        public string CalculateItems()
+        {
+            return Post("BelegPositionen/CalculateItems", null);
         }
     }
 }

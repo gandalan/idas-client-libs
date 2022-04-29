@@ -9,5 +9,6 @@ namespace Gandalan.Client.Contracts.DataServices
     public interface IScriptService
     {
         Task<Dictionary<string, string>> GetAllAsync();
+        Task Clean();
     }
 }

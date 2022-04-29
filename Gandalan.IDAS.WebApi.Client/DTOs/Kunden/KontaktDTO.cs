@@ -183,6 +183,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public bool HatWinterrabatt { get; set; }
         public bool KeineAutofreigabe { get; set; }
+        public bool ErbtAuswahlOhneSprosse { get; set; } = false;
 
         public KontaktDTO()
         {
