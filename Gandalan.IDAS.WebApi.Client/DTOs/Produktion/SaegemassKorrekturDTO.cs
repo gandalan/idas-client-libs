@@ -22,5 +22,15 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public float Korrektur45Grad { get; set; }
 
+
+        /// <summary>
+        /// Winkelkorrektur bei 45° Schnitt (in °)
+        /// </summary>
+        public float WinkelKorrektur45Grad { get; set; }
+
+        /// <summary>
+        /// Winkelkorrektur bei 90° Schnitt (in °)
+        /// </summary>
+        public float WinkelKorrektur90Grad { get; set; }
     }
 }
