@@ -11,9 +11,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public List<Guid> GetVorgangGuids(string email, int year = 0)
+        public List<Guid> GetVorgangGuids(string email, int year = 0, bool onlyBills = false)
         {
-            return Get<List<Guid>>("Backup/GetVorgangGuids?email=" + System.Uri.EscapeDataString(email) + "&jahr=" + year, null);
+            return Get<List<Guid>>("Backup/GetVorgangGuids?email=" + System.Uri.EscapeDataString(email) + "&jahr=" + year + "&nurRechnungen=" + onlyBills, null);
         }
 
         public VorgangExtendedDTO GetVorgang(string email, Guid guid, bool onlyBills = false)
