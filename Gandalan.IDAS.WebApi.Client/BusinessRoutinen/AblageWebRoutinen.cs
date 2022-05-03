@@ -57,6 +57,22 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return "Not logged in";
         }
 
+        public void SerienFachverteilung(Guid serieGuid)
+        {
+            if(Login())
+            {
+                Put($"Ablage/SerienFachverteilung/{serieGuid.ToString()}",null);
+            }
+        }
+
+
+        public void Fachverteilung(List<Guid> avGuids)
+        {
+            if (Login())
+            {
+                Put($"Ablage/Fachverteilung", avGuids);
+            }
+        }
 
         public async Task<AblageDTO> GetAsync(Guid guid)
         {
@@ -100,5 +116,23 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return "Not logged in";
         }
+
+        public async Task SerienFachverteilungAsync(Guid serieGuid)
+        {
+            if (await LoginAsync())
+            {
+                await PutAsync($"Ablage/SerienFachverteilung/{serieGuid.ToString()}", null);
+            }
+        }
+
+        public async Task FachverteilungAsync(List<Guid> avGuids)
+        {
+            if (await LoginAsync())
+            {
+                await PutAsync($"Ablage/Fachverteilung", avGuids);
+            }
+        }
+
+
     }
 }
