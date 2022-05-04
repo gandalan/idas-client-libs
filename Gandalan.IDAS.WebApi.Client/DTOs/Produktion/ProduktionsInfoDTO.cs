@@ -80,6 +80,10 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion
         public bool IstProduktionUnterbrochen { get; set; }
         public bool IstFehler { get; set; }
 
+        public int AktuelleProzent { get; set; }
+        public string AktuellerText { get; set; }
+        public int GesamtMinuten { get; set; }
+
 
         public List<ProduktionsStatusHistorieDTO> Historie { get; set; } = new List<ProduktionsStatusHistorieDTO>();
     }
