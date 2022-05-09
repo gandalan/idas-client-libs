@@ -19,7 +19,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
         public async Task<BelegStatusDTO> GetStatusAsync(Guid belegGuid) => await Task.Run(() => GetStatus(belegGuid));
 
-        public BelegStatusDTO SetStatus(Guid belegGuid, string statusCode, string statusText)
+        public BelegStatusDTO SetStatus(Guid belegGuid, string statusCode, string statusText = "")
         {
             if (Login())
             {
