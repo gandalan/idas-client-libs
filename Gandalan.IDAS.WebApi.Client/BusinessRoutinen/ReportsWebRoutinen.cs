@@ -24,6 +24,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public ReportDTO[] GetAll(DateTime changedSince)
+        {
+            if (Login())
+            {
+                return Get<ReportDTO[]>($"Reports/?changedSince={changedSince.ToString("o")}");
+            }
+            return null;
+        }
+
         public ReportDTO GetReport(Guid id)
         {
             if (Login())
@@ -71,6 +80,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<ReportDTO[]> GetAllAsync()
         {
             return await Task.Run(() => GetAll());
+        }
+        public async Task<ReportDTO[]> GetAllAsync(DateTime changedSince)
+        {
+            return await Task.Run(() => GetAll(changedSince));
         }
         public async Task<ReportDTO> GetReportAsync(Guid id)
         {
