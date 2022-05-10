@@ -14,6 +14,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool BestellMengeAufVERunden { get; set; }
         public string KundenArtikelNummer { get; set; }
         public IList<IndiFarbDatenDTO> FarbDaten { get; set; }
+        public bool Freigabe_IBOS { get; set; }
+        public bool Freigabe_BestellFix { get; set; }
+        public bool Freigabe_ARTOS { get; set; }
+
         public DateTime ChangedDate { get; set; }
     }
 
@@ -26,5 +30,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal SonderPreis { get; set; }
         public bool IsInventurpflichtig { get; set; }
         public bool Lagerfuehrung { get; set; }
+        public bool Freigabe_IBOS { get; set; }
+        public bool Freigabe_BestellFix { get; set; }
+        public bool Freigabe_ARTOS { get; set; }
+
     }
 }
