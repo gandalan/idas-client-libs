@@ -11,15 +11,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public BelegStatusWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
-        public BelegStatusDTO GetBelegStatus(Guid belegGuid)
+        public BelegStatusDTO GetStatus(Guid belegGuid)
         {
             if(Login())
                 return Get<BelegStatusDTO>($"BelegStatus?id={belegGuid}");
             return null;
         }
-        public async Task<BelegStatusDTO> GetBelegStatusAsync(Guid belegGuid) => await Task.Run(() => GetBelegStatus(belegGuid));
+        public async Task<BelegStatusDTO> GetStatusAsync(Guid belegGuid) => await Task.Run(() => GetStatus(belegGuid));
 
-        public string SaveBelegStatus(Guid belegGuid, string statusCode, string statusText)
+        public BelegStatusDTO SetStatus(Guid belegGuid, string statusCode, string statusText = "")
         {
             if (Login())
             {
@@ -29,11 +29,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                     NeuerStatus = statusCode,
                     NeuerStatusText = statusText
                 };
-                return Put($"BelegStatus", set);
+                return Put<BelegStatusDTO>($"BelegStatus", set);
             }
             return null;
         }
 
-        public async Task<string> SaveBelegStatusAsync(Guid belegGuid, string statusCode, string statusText) => await Task.Run(() => SaveBelegStatus(belegGuid, statusCode, statusText));
+        public async Task<BelegStatusDTO> SetStatusAsync(Guid belegGuid, string statusCode, string statusText) => await Task.Run(() => SetStatus(belegGuid, statusCode, statusText));
     }
 }

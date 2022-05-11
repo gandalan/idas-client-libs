@@ -62,6 +62,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Kunde muss in Vorkasse gehen.
         /// </summary>
         public bool IstVorkasse { get; set; }
+
+        public bool IstUmsatzsteuerPflichtig { get; set; } = true;
         /// <summary>
         /// Zugeordnete Personen
         /// </summary>
