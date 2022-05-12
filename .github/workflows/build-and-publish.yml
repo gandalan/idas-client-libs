@@ -3,6 +3,8 @@ name: Build and publish
 on:
   push:
     branches: [ master ]
+  pull_request: # for test only
+    branches: [ master ]
 
 env:
   SDK_VERSION: 6.0.x
