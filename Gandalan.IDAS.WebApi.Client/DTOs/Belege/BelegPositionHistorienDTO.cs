@@ -5,6 +5,6 @@ namespace Gandalan.IDAS.WebApi.DTO
 {
     public class BelegPositionHistorienDTO
     {
-        public List<BelegHistorieDTO> BelegPositionHistorien { get; set; }
+        public List<BelegPositionHistorieDTO> BelegPositionHistorien { get; set; }
     }
 }
