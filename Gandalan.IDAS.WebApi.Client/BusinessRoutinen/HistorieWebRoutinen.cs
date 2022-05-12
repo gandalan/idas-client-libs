@@ -11,6 +11,45 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
+        public VorgangHistorienDTO GetVorgangHistorie(Guid vorgangGuid, bool includeBelege = false, bool includePositionen = false)
+        {
+            if (Login())
+            {
+                return Get<VorgangHistorienDTO>($"HistorieVorgang?vorgangGuid={vorgangGuid}&includeBelege={includeBelege}&includePositionen={includePositionen}");
+            }
+            return null;
+        }
+        public async Task<VorgangHistorienDTO> GetVorgangHistorieAsync(Guid vorgangGuid, bool includeBelege = false, bool includePositionen = false)
+        {
+            return await Task.Run(() => { return GetVorgangHistorie(vorgangGuid, includeBelege, includePositionen); });
+        }
+
+        public BelegHistorienDTO GetBelegHistorie(Guid belegGuid, bool includePositionen = false)
+        {
+            if (Login())
+            {
+                return Get<BelegHistorienDTO>($"HistorieBeleg?belegGuid={belegGuid}&includePositionen={includePositionen}");
+            }
+            return null;
+        }
+        public async Task<BelegHistorienDTO> GetBelegHistorieAsync(Guid belegGuid, bool includePositionen = false)
+        {
+            return await Task.Run(() => { return GetBelegHistorie(belegGuid, includePositionen); });
+        }
+
+        public BelegPositionHistorienDTO GetBelegPositionHistorie(Guid positionGuid)
+        {
+            if (Login())
+            {
+                return Get<BelegPositionHistorienDTO>($"HistorieBelegPosition?positionGuid={positionGuid}");
+            }
+            return null;
+        }
+        public async Task<BelegPositionHistorienDTO> GetBelegPositionHistorieAsync(Guid positionGuid)
+        {
+            return await Task.Run(() => { return GetBelegPositionHistorie(positionGuid); });
+        }
+
         public void AddVorgangHistorie(Guid vorgangGuid, VorgangHistorieDTO historyDto)
         {
             if (Login())
