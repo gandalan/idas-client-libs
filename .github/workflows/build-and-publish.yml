@@ -1,0 +1,26 @@
+name: Build and publish
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  SDK_VERSION: 6.0.x
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup .NET Core SDK ${{ env.SDK_VERSION }}
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: ${{ env.SDK_VERSION }}
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Create packages
+      run: dotnet pack --configuration Release **/*.nuspec
