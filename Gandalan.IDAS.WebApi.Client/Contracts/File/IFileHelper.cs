@@ -1,8 +1,5 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.File
 {
@@ -13,5 +10,6 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.File
         bool FileExists(string fileNameWithPath);
         FileInfoDTO[] GetFiles(string path);
         void DeleteFile(string fileNameWithPath);
+        void MoveFile(string fileFromWithPath, string fileToWithPath);
     }
 }
