@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
-        <id>GDL.IDAS.WebApi.Client.Wpf</id>
+        <id>xxx.IDAS.WebApi.Client.Wpf</id>
         <title>Gandalan.IDAS.WebApi.Client.Wpf</title>
         <version>BUILDVERSION</version>
         <authors>Gandalan GmbH &amp; Co. KG</authors>
