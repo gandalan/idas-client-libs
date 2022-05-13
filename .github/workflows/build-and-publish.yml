@@ -44,14 +44,21 @@ jobs:
       run: dotnet pack --configuration Release **/${{ env.PACKAGE_3 }}.csproj
     - name: Create package ${{ env.PACKAGE_4 }}
       run: dotnet pack --configuration Release **/${{ env.PACKAGE_4 }}.csproj
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+    #- name: Create Release
+      #id: create_release
+      #uses: actions/create-release@v1
+      #env:
+        #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      #with:
+        #tag_name: IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}
+        #release_name: IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}
+        #prerelease: true
+    - name: Build Changelog
+      id: build_changelog
+      uses: fregante/release-with-changelog@v3
       with:
-        tag_name: IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}
-        release_name: IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        title: IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}
         prerelease: true
     - name: Upload Assets to Release with a wildcard
       uses: csexton/release-asset-action@v2
@@ -59,10 +66,6 @@ jobs:
         pattern: "**/*.nupkg"
         github-token: ${{ secrets.GITHUB_TOKEN }}
         release-url: ${{ steps.create_release.outputs.upload_url }}
-    - name: Build Changelog
-      id: build_changelog
-      uses: fregante/release-with-changelog@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Push packages
       run: dotnet nuget push "**/*.nupkg"
