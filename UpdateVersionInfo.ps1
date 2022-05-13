@@ -1,18 +1,39 @@
 [CmdletBinding()]
 
-# Use a regular expression to get "minor, major, fix, revision" from the BUILD_BUILDNUMBER environment variable
-# the build process will automatically set the value of the environment variable to the correct build number 
+param (
+    # https://regex101.com/r/3qs3QO/1
+    [ValidatePattern("[0-9]{4}\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}")]
+    [String]
+    $PackageVersion
+)
+
+if ($PackageVersion) {
+    $BuildNumber = $PackageVersion
+} else {
+    # Could be run in DevOps
+    # The build process will automatically set the value of the BUILD_BUILDNUMBER environment variable to the correct build number
+    $BuildNumber = $Env:Build_BuildNumber
+}
+
+Write-Host "BuildNumber: $BuildNumber"
+
+if (-not $BuildNumber) {
+    throw 'BuildNumber variable cannot be null'
+}
+
+# Use a regular expression to get "minor, major, fix, revision"
 $VersionRegex = "\d+\.\d+\.\*+|\d+\.\d+.\d+\.\d+|\d+\.\d+.\d+"
-Write-Host $Env:Build_BuildNumber
-$NewVersion = [regex]::matches($Env:Build_BuildNumber, $VersionRegex)
-Write-Host "Updating version of the application to the build version: " $NewVersion
 
-##vso[task.setvariable variable=BUILDNUMBER]$NewVersion
+$NewVersion = [regex]::matches($BuildNumber, $VersionRegex)
+Write-Host "Updating version of the application to the build version: $NewVersion"
 
-Write-Host "##vso[task.setvariable variable=BUILDNUMBER]$NewVersion"
+if (-not $PackageVersion) {
+    ##vso[task.setvariable variable=BUILDNUMBER]$NewVersion
+    Write-Host "##vso[task.setvariable variable=BUILDNUMBER]$NewVersion"
+}
 
 #AssemblyProjectInfo:
-$file = ".\AssemblyProjectInfo.cs" 
+$file = ".\AssemblyProjectInfo.cs"
 $filecontent = Get-Content($file)
 attrib $file -r
 # Search in the "AssemblyProjectInfo.cs" file items that matches the version regex and replace them with the
@@ -23,8 +44,8 @@ $VersionReplaceRegex = "(BUILDVERSION)"
 
 #GDL.IDAS.WebApi.Client.nuspec
 $VersionRegex = "\d+\.\d+.\d+\.\d+"
-$NewVersion = [regex]::matches($Env:Build_BuildNumber, $VersionRegex)
-$file = ".\Gandalan.IDAS.WebApi.Client\GDL.IDAS.WebApi.Client.nuspec" 
+$NewVersion = [regex]::matches($BuildNumber, $VersionRegex)
+$file = ".\Gandalan.IDAS.WebApi.Client\GDL.IDAS.WebApi.Client.nuspec"
 $filecontent = Get-Content($file)
 attrib $file -r
 # Search in the "GDL.IDAS.WebApi.Client.nuspec" file items that matches the version regex and replace them with the
@@ -33,8 +54,8 @@ $filecontent -replace $VersionReplaceRegex, $NewVersion | Out-File $file
 
 #GDL.IDAS.Logging.nuspec
 $VersionRegex = "\d+\.\d+.\d+\.\d+"
-$NewVersion = [regex]::matches($Env:Build_BuildNumber, $VersionRegex)
-$file = ".\Gandalan.IDAS.Logging\GDL.IDAS.Logging.nuspec" 
+$NewVersion = [regex]::matches($BuildNumber, $VersionRegex)
+$file = ".\Gandalan.IDAS.Logging\GDL.IDAS.Logging.nuspec"
 $filecontent = Get-Content($file)
 attrib $file -r
 # Search in the "GDL.IDAS.WebApi.Data.nuspec" file items that matches the version regex and replace them with the
@@ -43,8 +64,8 @@ $filecontent -replace $VersionReplaceRegex, $NewVersion | Out-File $file
 
 #GDL.IDAS.Crypto.nuspec
 $VersionRegex = "\d+\.\d+.\d+\.\d+"
-$NewVersion = [regex]::matches($Env:Build_BuildNumber, $VersionRegex)
-$file = ".\Gandalan.IDAS.Crypto\GDL.IDAS.Crypto.nuspec" 
+$NewVersion = [regex]::matches($BuildNumber, $VersionRegex)
+$file = ".\Gandalan.IDAS.Crypto\GDL.IDAS.Crypto.nuspec"
 $filecontent = Get-Content($file)
 attrib $file -r
 # Search in the "GDL.IDAS.WebApi.Data.nuspec" file items that matches the version regex and replace them with the
@@ -53,8 +74,8 @@ $filecontent -replace $VersionReplaceRegex, $NewVersion | Out-File $file
 
 #GDL.IDAS.WebApi.Client.Wpf
 $VersionRegex = "\d+\.\d+.\d+\.\d+"
-$NewVersion = [regex]::matches($Env:Build_BuildNumber, $VersionRegex)
-$file = ".\Gandalan.IDAS.WebApi.Client.Wpf\GDL.IDAS.WebApi.Client.Wpf.nuspec" 
+$NewVersion = [regex]::matches($BuildNumber, $VersionRegex)
+$file = ".\Gandalan.IDAS.WebApi.Client.Wpf\GDL.IDAS.WebApi.Client.Wpf.nuspec"
 $filecontent = Get-Content($file)
 attrib $file -r
 # Search in the "GDL.IDAS.WebApi.Client.Wpf.nuspec" file items that matches the version regex and replace them with the
