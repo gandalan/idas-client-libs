@@ -53,6 +53,9 @@ jobs:
         #tag_name: IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}
         #release_name: IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}
         #prerelease: true
+    - uses: rickstaa/action-create-tag@v1
+      with:
+        tag: IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}
     - name: Build Changelog
       id: build_changelog
       uses: fregante/release-with-changelog@v3
