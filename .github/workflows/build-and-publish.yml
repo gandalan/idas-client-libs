@@ -22,7 +22,7 @@ jobs:
 
     - name: Set release_name
       id: set_release_name
-      run: echo "::set-output name=release_name::'$(date +'%-Y.%-m.%-d').$GITHUB_RUN_NUMBER'"
+      run: echo "::set-output name=release_name::$(date +'%-Y.%-m.%-d').$GITHUB_RUN_NUMBER"
     - name: Setup .NET Core SDK ${{ env.SDK_VERSION }}
       uses: actions/setup-dotnet@v2
       with:
