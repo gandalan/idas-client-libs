@@ -23,8 +23,6 @@ jobs:
     - name: Set release_name
       id: set_release_name
       run: echo "::set-output name=release_name::'$(date +'%-Y.%-m.%-d').$GITHUB_RUN_NUMBER'"
-    - name: Test release_name
-      run: echo ${{ steps.set_release_name.outputs.release_name }}
     - name: Setup .NET Core SDK ${{ env.SDK_VERSION }}
       uses: actions/setup-dotnet@v2
       with:
@@ -44,3 +42,5 @@ jobs:
       run: dotnet pack --configuration Release **/${{ env.PACKAGE_3 }}.csproj
     - name: Create package ${{ env.PACKAGE_4 }}
       run: dotnet pack --configuration Release **/${{ env.PACKAGE_4 }}.csproj
+    - name: Push packages
+      run: dotnet nuget push "**/*.nupkg"
