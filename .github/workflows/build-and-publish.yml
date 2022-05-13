@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        fetch-depth: 0
+        fetch-depth: 50
 
     - name: Set release_name
       id: set_release_name
@@ -61,8 +61,8 @@ jobs:
         release-url: ${{ steps.create_release.outputs.upload_url }}
     - name: Build Changelog
       id: build_changelog
-      uses: mikepenz/release-changelog-builder-action@v3.0.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: fregante/release-with-changelog@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
     - name: Push packages
       run: dotnet nuget push "**/*.nupkg"
