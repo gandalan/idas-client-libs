@@ -34,11 +34,9 @@ if (-not $PackageVersion) {
 
 #AssemblyProjectInfo:
 $file = ".\AssemblyProjectInfo.cs"
-$filecontent = Get-Content($file)
-attrib $file -r
 # Search in the "AssemblyProjectInfo.cs" file items that matches the version regex and replace them with the
 # correct version number
-$filecontent -replace $VersionRegex, $NewVersion | Out-File $file
+(Get-Content $file) -replace $VersionRegex, $NewVersion | Out-File $file
 
 $VersionReplaceRegex = "(BUILDVERSION)"
 
@@ -46,38 +44,30 @@ $VersionReplaceRegex = "(BUILDVERSION)"
 $VersionRegex = "\d+\.\d+.\d+\.\d+"
 $NewVersion = [regex]::matches($BuildNumber, $VersionRegex)
 $file = ".\Gandalan.IDAS.WebApi.Client\GDL.IDAS.WebApi.Client.nuspec"
-$filecontent = Get-Content($file)
-attrib $file -r
 # Search in the "GDL.IDAS.WebApi.Client.nuspec" file items that matches the version regex and replace them with the
 # correct version number
-$filecontent -replace $VersionReplaceRegex, $NewVersion | Out-File $file
+(Get-Content $file) -replace $VersionReplaceRegex, $NewVersion | Out-File $file
 
 #GDL.IDAS.Logging.nuspec
 $VersionRegex = "\d+\.\d+.\d+\.\d+"
 $NewVersion = [regex]::matches($BuildNumber, $VersionRegex)
 $file = ".\Gandalan.IDAS.Logging\GDL.IDAS.Logging.nuspec"
-$filecontent = Get-Content($file)
-attrib $file -r
 # Search in the "GDL.IDAS.WebApi.Data.nuspec" file items that matches the version regex and replace them with the
 # correct version number
-$filecontent -replace $VersionReplaceRegex, $NewVersion | Out-File $file
+(Get-Content $file) -replace $VersionReplaceRegex, $NewVersion | Out-File $file
 
 #GDL.IDAS.Crypto.nuspec
 $VersionRegex = "\d+\.\d+.\d+\.\d+"
 $NewVersion = [regex]::matches($BuildNumber, $VersionRegex)
 $file = ".\Gandalan.IDAS.Crypto\GDL.IDAS.Crypto.nuspec"
-$filecontent = Get-Content($file)
-attrib $file -r
 # Search in the "GDL.IDAS.WebApi.Data.nuspec" file items that matches the version regex and replace them with the
 # correct version number
-$filecontent -replace $VersionReplaceRegex, $NewVersion | Out-File $file
+(Get-Content $file) -replace $VersionReplaceRegex, $NewVersion | Out-File $file
 
 #GDL.IDAS.WebApi.Client.Wpf
 $VersionRegex = "\d+\.\d+.\d+\.\d+"
 $NewVersion = [regex]::matches($BuildNumber, $VersionRegex)
 $file = ".\Gandalan.IDAS.WebApi.Client.Wpf\GDL.IDAS.WebApi.Client.Wpf.nuspec"
-$filecontent = Get-Content($file)
-attrib $file -r
 # Search in the "GDL.IDAS.WebApi.Client.Wpf.nuspec" file items that matches the version regex and replace them with the
 # correct version number
-$filecontent -replace $VersionReplaceRegex, $NewVersion | Out-File $file
+(Get-Content $file) -replace $VersionReplaceRegex, $NewVersion | Out-File $file
