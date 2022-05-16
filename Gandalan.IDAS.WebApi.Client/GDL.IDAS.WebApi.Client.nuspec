@@ -9,6 +9,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Gandalan.IDAS.WebApi.Client</description>
         <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2020</copyright>
+        <license type="expression">MIT</license>
         <dependencies>
           <dependency id="Newtonsoft.Json" version="12.0.3" />
         </dependencies>

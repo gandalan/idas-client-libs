@@ -1,4 +1,4 @@
-name: Publish WebLibs
+name: Publish WebLibs (NPM)
 
 on: workflow_dispatch
 

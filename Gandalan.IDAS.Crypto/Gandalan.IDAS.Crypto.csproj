@@ -10,6 +10,7 @@
     <FileVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>2099.0.0-alpha</Version>
+    <NuspecFile>GDL.IDAS.Crypto.nuspec</NuspecFile>
 
   </PropertyGroup>
 
