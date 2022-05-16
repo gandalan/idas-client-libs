@@ -3,8 +3,6 @@ name: Build and publish (NuGet)
 on:
   push:
     branches: [ master ]
-  pull_request: # for test only
-    branches: [ master ]
 
 env:
   SDK_VERSION: 6.0.x
@@ -44,10 +42,10 @@ jobs:
       run: dotnet pack --configuration Release **/${{ env.PACKAGE_3 }}.csproj
     - name: Create package ${{ env.PACKAGE_4 }}
       run: dotnet pack --configuration Release **/${{ env.PACKAGE_4 }}.csproj
-    #- name: Push packages
-      #run: dotnet nuget push "**/*.nupkg" -k ${NUGET_TOKEN}
-      #env:
-        #NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+    - name: Push packages
+      run: dotnet nuget push "**/*.nupkg" -k ${NUGET_TOKEN}
+      env:
+        NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
     - name: Create tag
       uses: rickstaa/action-create-tag@v1
       with:
