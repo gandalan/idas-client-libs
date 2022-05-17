@@ -232,7 +232,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public VorgangDTO LadeVorgangForWebJob(Guid vorgangGuid, bool mitKunde = false)
+        public VorgangDTO LadeVorgangForWebJob(Guid vorgangGuid, bool mitKunde = false) 
         {
             if (Login())
             {
