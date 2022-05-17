@@ -69,5 +69,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             await Task.Run(() => DeleteTagInfo(dto));
         }
+
+        public void AddOrUpdateTagInfoForWebJob(TagInfoDTO dto, bool isVorgang, bool isBelegPos)
+        {
+            if (Login())
+            {
+                Post($"AddTagInfoForWebJob?isVorgang={isVorgang}&isBelegPos={isBelegPos}", dto);
+            }
+        }
     }
 }
