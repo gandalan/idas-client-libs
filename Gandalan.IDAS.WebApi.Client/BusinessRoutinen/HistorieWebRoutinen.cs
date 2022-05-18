@@ -86,19 +86,19 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             await Task.Run(() => AddBelegPositionHistorie(positionGuid, historyDto));
         }
 
-        public void AddVorgangHistorieFromWebJob(Guid vorgangGuid, VorgangHistorieDTO historyDto)
+        public void AddVorgangHistorieFromFunction(Guid vorgangGuid, VorgangHistorieDTO historyDto, long mandantID)
         {
             if (Login())
             {
-                Post($"HistorieVorgangFromWebJob?vorgangGuid={vorgangGuid}", historyDto);
+                Post($"AddVorgangHistorieFromFunction?vorgangGuid={vorgangGuid}&mandantID={mandantID}", historyDto);
             }
         }
 
-        public void AddBelegPositionHistorieFromWebJob(Guid positionGuid, BelegPositionHistorieDTO historyDto)
+        public void AddBelegPositionHistorieFromFunction(Guid positionGuid, BelegPositionHistorieDTO historyDto, long mandantID)
         {
             if (Login())
             {
-                Post($"HistorieBelegPositionFromWebJob?positionGuid={positionGuid}", historyDto);
+                Post($"AddBelegPositionHistorieFromFunction?positionGuid={positionGuid}&mandantID={mandantID}", historyDto);
             }
         }
     }

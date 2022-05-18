@@ -223,22 +223,31 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             await Task.Run(() => { SetTextStatus(vorgangGuids, textStatus); });
         }
 
-        public VorgangListItemDTO[] LadeVorgangsListeForWebJob(DateTime changedSince)
+        public Dictionary<long, List<VorgangListItemDTO>> GetAllVorgangForFunction(DateTime changedSince)
         {
             if (Login())
             {
-                return Get<VorgangListItemDTO[]>($"VorgangGetAllForWebJob/?changedSince={changedSince.ToString("o")}");
+                return Get<Dictionary<long, List<VorgangListItemDTO>>>($"GetAllVorgangForFunction/?changedSince={changedSince.ToString("o")}");
             }
             return null;
         }
 
-        public VorgangDTO LadeVorgangForWebJob(Guid vorgangGuid, bool mitKunde = false) 
+        public VorgangDTO GetVorgangForFunction(Guid vorgangGuid, long mandantId) 
         {
             if (Login())
             {
-                return Get<VorgangDTO>("VorgangGetForWebJob?id=" + vorgangGuid.ToString() + "&includeKunde=" + mitKunde.ToString());
+                return Get<VorgangDTO>("GetVorgangForFunction?id=" + vorgangGuid.ToString() + "&mandantID=" + mandantId.ToString());
             }
             return null;
+        }
+
+        public long GetMandantIDFromVorgangForFunction(Guid vorgangGuid)
+        {
+            if (Login())
+            {
+                return Get<long>("GetMandantIDFromVorgangForFunction?id=" + vorgangGuid.ToString());
+            }
+            return -1;
         }
     }
 }
