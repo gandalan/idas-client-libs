@@ -46,6 +46,20 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await Task.Run(() => { return GetTagInfo(objectGuid); });
         }
 
+        public List<TagInfoDTO> GetTagInfo(GuidListDTO guidList)
+        {
+            if (Login())
+            {
+                return Put<List<TagInfoDTO>>($"GetTagInfoForGuidList", guidList);
+            }
+            return null;
+        }
+
+        public async Task<List<TagInfoDTO>> GetTagInfoAsync(GuidListDTO guidList)
+        {
+            return await Task.Run(() => { return GetTagInfo(guidList); });
+        }
+
         public void AddOrUpdateTagInfo(TagInfoDTO dto)
         {
             if (Login())
