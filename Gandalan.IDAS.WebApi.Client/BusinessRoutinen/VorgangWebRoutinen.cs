@@ -240,14 +240,5 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return null;
         }
-
-        public long GetMandantIDFromVorgangForFunction(Guid vorgangGuid)
-        {
-            if (Login())
-            {
-                return Get<long>("GetMandantIDFromVorgangForFunction?id=" + vorgangGuid.ToString());
-            }
-            return -1;
-        }
     }
 }
