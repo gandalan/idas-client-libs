@@ -65,7 +65,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string Land { get; set; }
         /// <summary>
-        /// Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)        
+        /// Verwendungszweck für diesen Adressdatensatz , mögliche Werte: Allgemein = 0, Angebot = 1,
+        /// Rechnung = 3, Versand = 4, Bestellschein = 5, Newsletter = 6, Postversand = 7, Speditionsversand = 8,
+        /// DigitalerDownload = 9, EmailDownload = 10, Firmensitz = 11
         /// </summary>
         public string Verwendungszweck { get; set; }
         /// <summary>

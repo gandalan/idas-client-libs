@@ -11,6 +11,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>2099.0.0-alpha</Version>
     <Authors>GDL.IDAS.WebApi.Client</Authors>
+    <NuspecFile>GDL.IDAS.WebApi.Client.nuspec</NuspecFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
