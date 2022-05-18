@@ -13,6 +13,9 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Produktion
         public long VorgangsNummer { get; set; } = -999;
         public long BelegNummer { get; set; } = -999;
         public bool IgnoreSonderwuensche { get; set; }
+        public bool ReturnRawDataFile { get; set; }
+        public string RawDataFileContent { get; set; }
+
     }
 
     public class BerechnungResultDTO
