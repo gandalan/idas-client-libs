@@ -38,7 +38,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration ${{ env.CONFIGURATION }} --no-restore
     - name: Create package ${{ env.PACKAGE_1 }}
-      run: dotnet pack --configuration ${{ env.CONFIGURATION }} --no-restore **/${{ env.PACKAGE_1 }}.csproj -p:NuspecFile=**/${{ env.PACKAGE_1 }}.nuspec
+      run: dotnet pack --configuration ${{ env.CONFIGURATION }} **/${{ env.PACKAGE_1 }}.csproj -p:NuspecFile=**/${{ env.PACKAGE_1 }}.nuspec
     - name: Create package ${{ env.PACKAGE_2 }}
       run: dotnet pack --configuration ${{ env.CONFIGURATION }} --no-restore **/${{ env.PACKAGE_2 }}.csproj -p:NuspecFile=**/${{ env.PACKAGE_2 }}.nuspec
     - name: Create package ${{ env.PACKAGE_3 }}
