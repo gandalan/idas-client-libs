@@ -3,17 +3,19 @@ name: Build and publish (NuGet)
 on:
   push:
     branches: [ master ]
-
+  pull_request: # for test only
+    branches: [ master ]
 env:
   SDK_VERSION: 6.0.x
   PACKAGE_1: Gandalan.IDAS.Crypto
   PACKAGE_2: Gandalan.IDAS.Logging
   PACKAGE_3: Gandalan.IDAS.WebApi.Client
   PACKAGE_4: Gandalan.IDAS.WebApi.Client.Wpf
+  CONFIGURATION: Release
 
 jobs:
   build-and-publish:
-    if: github.repository_owner == 'gandalan'
+    #if: github.repository_owner == 'gandalan'
     runs-on: ubuntu-latest
 
     steps:
@@ -34,15 +36,15 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration ${{ env.CONFIGURATION }} --no-restore
     - name: Create package ${{ env.PACKAGE_1 }}
-      run: dotnet pack --configuration Release **/${{ env.PACKAGE_1 }}.csproj
+      run: dotnet pack --configuration ${{ env.CONFIGURATION }} --no-restore **/${{ env.PACKAGE_1 }}.csproj -p:NuspecFile=**/${{ env.PACKAGE_1 }}.nuspec
     - name: Create package ${{ env.PACKAGE_2 }}
-      run: dotnet pack --configuration Release **/${{ env.PACKAGE_2 }}.csproj
+      run: dotnet pack --configuration ${{ env.CONFIGURATION }} --no-restore **/${{ env.PACKAGE_2 }}.csproj -p:NuspecFile=**/${{ env.PACKAGE_2 }}.nuspec
     - name: Create package ${{ env.PACKAGE_3 }}
-      run: dotnet pack --configuration Release **/${{ env.PACKAGE_3 }}.csproj
+      run: dotnet pack --configuration ${{ env.CONFIGURATION }} --no-restore **/${{ env.PACKAGE_3 }}.csproj -p:NuspecFile=**/${{ env.PACKAGE_3 }}.nuspec
     - name: Create package ${{ env.PACKAGE_4 }}
-      run: dotnet pack --configuration Release **/${{ env.PACKAGE_4 }}.csproj
+      run: dotnet pack --configuration ${{ env.CONFIGURATION }} --no-restore **/${{ env.PACKAGE_4 }}.csproj -p:NuspecFile=**/${{ env.PACKAGE_4 }}.nuspec
     - name: Push packages
       run: dotnet nuget push "**/*.nupkg" -k ${NUGET_TOKEN}
       env:
