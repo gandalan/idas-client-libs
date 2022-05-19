@@ -42,7 +42,7 @@ jobs:
     #- name: Create package ${{ env.PACKAGE_1 }}
       #run: nuget pack ${{ env.PACKAGE_1 }}/${{ env.PACKAGE_1 }}.nuspec -NonInteractive
     - name: Create package ${{ env.PACKAGE_1 }}
-      run: dotnet pack --configuration ${{ env.BUILD_CONFIG }} ${{ env.PACKAGE_1 }}/${{ env.PACKAGE_1 }}.csproj -p:NuspecFile=${{ env.PACKAGE_1 }}/${{ env.PACKAGE_1 }}.nuspec
+      run: dotnet pack --configuration ${{ env.BUILD_CONFIG }} ${{ env.PACKAGE_1 }}/${{ env.PACKAGE_1 }}.csproj
     - name: Create package ${{ env.PACKAGE_2 }}
       run: dotnet pack --configuration ${{ env.BUILD_CONFIG }} --no-restore **/${{ env.PACKAGE_2 }}.csproj -p:NuspecFile=**/${{ env.PACKAGE_2 }}.nuspec
     - name: Create package ${{ env.PACKAGE_3 }}
