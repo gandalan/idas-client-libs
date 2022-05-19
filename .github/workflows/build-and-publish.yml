@@ -13,6 +13,7 @@ env:
 
 jobs:
   build-and-publish:
+    if: github.repository_owner == 'gandalan'
     runs-on: ubuntu-latest
 
     steps:
