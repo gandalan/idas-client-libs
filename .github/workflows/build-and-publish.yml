@@ -3,6 +3,7 @@ name: Build and publish (NuGet)
 on:
   push:
     branches: [ master ]
+
 env:
   SDK_VERSION: 6.0.x
   PACKAGE_1: GDL.IDAS.Crypto
