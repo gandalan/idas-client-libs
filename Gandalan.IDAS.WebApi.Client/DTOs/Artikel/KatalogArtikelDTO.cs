@@ -77,6 +77,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstTechnischerArtikel { get; set; }
         public decimal BasisBestellMenge { get; set; }
 
+        public bool IsIndiArtikel { get; set; }
+
         public KatalogArtikelDTO()
         {
             MoeglicheFarben = new ObservableCollection<KatalogArtikelFarbZuordnungDTO>();
