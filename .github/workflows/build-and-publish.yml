@@ -3,8 +3,6 @@ name: Build and publish (NuGet)
 on:
   push:
     branches: [ master ]
-  pull_request: # for test only
-    branches: [ master ]
 env:
   SDK_VERSION: 6.0.x
   PACKAGE_1: GDL.IDAS.Crypto
@@ -19,7 +17,7 @@ env:
 
 jobs:
   build-and-publish:
-    #if: github.repository_owner == 'gandalan'
+    if: github.repository_owner == 'gandalan'
     runs-on: ubuntu-latest
 
     steps:
