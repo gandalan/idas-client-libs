@@ -9,6 +9,7 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
     public class SerienPacklisteGruppeItemDataDTO
     {
         public int Anzahl { get; set; }
+        public string Einheit { get; set; }
         public string Katalognummer { get; set; }
         public string Bezeichnung { get; set; }
         public string FarbKuerzel { get; set; }
