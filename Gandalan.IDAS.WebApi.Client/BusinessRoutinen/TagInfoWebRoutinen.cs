@@ -34,6 +34,27 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await Task.Run(() => GetAllTagInfo(changedSince));
         }
 
+        public IList<TagInfoDTO> GetTagInfoSuggestions(DateTime? changedSince = null)
+        {
+            if (Login())
+            {
+                if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+                {
+                    return Get<List<TagInfoDTO>>("GetTagInfoSuggestions?changedSince=" + changedSince.Value.ToString("o"));
+                }
+                else
+                {
+                    return Get<List<TagInfoDTO>>("GetTagInfoSuggestions");
+                }
+            }
+            return null;
+        }
+
+        public async Task<IList<TagInfoDTO>> GetTagInfoSuggestionsAsync(DateTime? changedSince = null)
+        {
+            return await Task.Run(() => GetTagInfoSuggestions(changedSince));
+        }
+
         public IList<TagInfoDTO> GetTagInfo(Guid objectGuid)
         {
             if (Login())
