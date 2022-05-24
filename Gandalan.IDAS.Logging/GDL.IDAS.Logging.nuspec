@@ -3,7 +3,7 @@
     <metadata>
         <id>GDL.IDAS.Logging</id>
         <title>Gandalan.IDAS.Logging</title>
-        <version>BUILDVERSION</version>
+        <version>0.0.1</version>
         <authors>Gandalan GmbH &amp; Co. KG</authors>
         <owners>Gandalan GmbH &amp; Co. KG</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
