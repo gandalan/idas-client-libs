@@ -18,6 +18,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PACKAGEJSON_DIR: ${{ env.WEBLIBS_DIR }}
+    # Setup .npmrc file to publish to npm
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16.x'
+        registry-url: 'https://registry.npmjs.org'
     - run: npm ci
       working-directory: ${{ env.WEBLIBS_DIR }}
     - run: npm publish
