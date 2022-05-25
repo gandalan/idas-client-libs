@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 /*export let AppToken = "66B70E0B-F7C4-4829-B12A-18AD309E3970";
 export let AuthToken = localStorage.getItem("AuthToken");
@@ -33,7 +33,7 @@ export class RESTClient
     async get(uri)
     {
         try {
-            const response = await axios.get(this.baseurl + uri);
+            const response = await axios.get(this.baseurl + uri, { withCredentials: false });
             this.lastError = '';
             return response.data;
         }
@@ -63,7 +63,7 @@ export class RESTClient
     {
         let response = {};
         try {
-            response = await axios.get(this.baseurl + uri, { withCredentials: true })
+            response = await axios.get(this.baseurl + uri, { withCredentials: false })
             this.lastError = '';
         }
         catch (error) {
@@ -75,7 +75,7 @@ export class RESTClient
     async post(uri, formData) 
     {
         try {
-            const response = await axios.post(this.baseurl + uri, formData, { withCredentials: true });
+            const response = await axios.post(this.baseurl + uri, formData, { withCredentials: false });
             this.lastError = '';
             return response;
         }
@@ -87,7 +87,7 @@ export class RESTClient
     async put(uri, formData) 
     {
         try {
-            const response = await axios.put(this.baseurl + uri, formData, { withCredentials: true });
+            const response = await axios.put(this.baseurl + uri, formData, { withCredentials: false });
             this.lastError = '';
             return response;
         }
@@ -100,7 +100,7 @@ export class RESTClient
     {
         try
         {
-            const response = await axios.delete(this.baseurl + uri, { withCredentials: true });
+            const response = await axios.delete(this.baseurl + uri, { withCredentials: false });
             this.lastError = '';
             return response;
         }
@@ -109,12 +109,14 @@ export class RESTClient
         }
     }
 
+    onError = (error, message) => {};
+
     handleError(error)
     {
-        let status = error && error.response ? error.response.status : -1;
         let message = error ? error.message : "?";
-        console.log("API Error " + status + ": " + message);
+        console.log("API Error: " + message);
         this.lastError = message;
+        this.onError(error, message);
         throw error;
     }
 }
