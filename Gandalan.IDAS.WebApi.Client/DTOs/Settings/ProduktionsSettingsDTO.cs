@@ -33,5 +33,6 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Settings
         public bool EtikettenZugehoerigkeit { get; set; } = false;
         public bool Saegeliste4590Zusammenfassen { get; set; } = true;
         public DateTime ChangedDate { get; set; }
+        public bool EtikettNewStyleSonderkennzeichen { get; set; } = false;
     }
 }
