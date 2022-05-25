@@ -53,7 +53,7 @@ jobs:
     - name: Create package ${{ env.PACKAGE_4 }}
       run: nuget pack ${{ env.PACKAGE_4_FULL }}/${{ env.PACKAGE_4 }}.nuspec -NonInteractive -Verbosity Detailed
     - name: Push packages
-      run: dotnet nuget push "**/*.nupkg" -k ${NUGET_TOKEN}
+      run: dotnet nuget push "**/*.nupkg" -k ${NUGET_TOKEN} --skip-duplicate
       env:
         NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
     - name: Create tag
