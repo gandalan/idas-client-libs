@@ -18,6 +18,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid FarbGuid { get; set; }
         public string FarbKuerzel { get; set; }
         public decimal Lagerbestand { get; set; }
+        public decimal Bestellbestand { get; set; }
         public decimal Mindestbestand { get; set; }
         public decimal Reserviert { get; set; }
         public decimal Maximalbestand { get; set; }
