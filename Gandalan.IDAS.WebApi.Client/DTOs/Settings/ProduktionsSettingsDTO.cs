@@ -30,5 +30,6 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Settings
         public bool EinbauOrtAufEtikett { get; set; } = true;
         public bool SettingsFuerHaendler { get; set; } = false;
         public DateTime ChangedDate { get; set; }
+        public bool EtikettNewStyleSonderkennzeichen { get; set; } = false;
     }
 }
