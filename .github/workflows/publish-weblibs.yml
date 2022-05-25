@@ -2,6 +2,9 @@ name: Publish WebLibs (NPM)
 
 on: workflow_dispatch
 
+env:
+  WEBLIBS_DIR: WebLibs
+
 jobs:
   build-and-publish:
     if: github.repository_owner == 'gandalan'
@@ -10,14 +13,19 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Automated Version Bump for ${{ env.WEBLIBS_DIR }}
+      uses: phips28/gh-action-bump-version@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PACKAGEJSON_DIR: ${{ env.WEBLIBS_DIR }}
     # Setup .npmrc file to publish to npm
     - uses: actions/setup-node@v3
       with:
         node-version: '16.x'
         registry-url: 'https://registry.npmjs.org'
     - run: npm ci
-      working-directory: WebLibs
+      working-directory: ${{ env.WEBLIBS_DIR }}
     - run: npm publish
-      working-directory: WebLibs
+      working-directory: ${{ env.WEBLIBS_DIR }}
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
