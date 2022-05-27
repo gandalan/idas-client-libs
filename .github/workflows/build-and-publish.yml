@@ -2,7 +2,7 @@ name: Build and publish (NuGet)
 
 on:
   push:
-    #branches: [ master ]
+    branches: [ master ]
     paths-ignore:
       - 'WebLibs/**'
 
@@ -21,7 +21,7 @@ env:
 
 jobs:
   build-and-publish:
-    #if: github.repository_owner == 'gandalan'
+    if: github.repository_owner == 'gandalan'
     runs-on: ubuntu-latest
 
     steps:
@@ -53,10 +53,10 @@ jobs:
       run: nuget pack ${{ env.PACKAGE_3_FULL }}/${{ env.PACKAGE_3 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
     - name: Create package ${{ env.PACKAGE_4 }}
       run: nuget pack ${{ env.PACKAGE_4_FULL }}/${{ env.PACKAGE_4 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
-    #- name: Push packages
-      #run: dotnet nuget push "${{ env.OUTPUT_DIR }}/*.nupkg" -k ${NUGET_TOKEN} #--skip-duplicate
-      #env:
-        #NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+    - name: Push packages
+      run: dotnet nuget push "${{ env.OUTPUT_DIR }}/*.nupkg" -k ${NUGET_TOKEN} #--skip-duplicate
+      env:
+        NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
     - name: Create tag
       uses: rickstaa/action-create-tag@v1
       with:
