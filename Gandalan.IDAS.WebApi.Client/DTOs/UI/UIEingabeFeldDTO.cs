@@ -17,8 +17,6 @@ namespace Gandalan.IDAS.WebApi.DTO
 	    public string WarnText { get; set; }
         public string FehlerText { get; set; }		
 		public string WerteListeName { get; set; }
-		public double WerteListeMinWert { get; set; }
-		public double WerteListeMaxWert { get; set; }
 		public bool PreisFeldAnzeigen { get; set; }
 		public int MindestBreite { get; set; }		
 		public long Version { get; set; }
