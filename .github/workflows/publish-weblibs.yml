@@ -18,6 +18,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PACKAGEJSON_DIR: ${{ env.WEBLIBS_DIR }}
+        tag-prefix:  WebLibs_
+        commit-message: 'CI: WebLibs version bump to {{version}}'
     # Setup .npmrc file to publish to npm
     - uses: actions/setup-node@v3
       with:
