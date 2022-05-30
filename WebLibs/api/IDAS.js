@@ -1,5 +1,16 @@
 import { RESTClient } from "./RESTClient";
 
+if (window.location.search) {
+    var urlParams = new URLSearchParams(location.search);
+    if (urlParams.has("t")) 
+        localStorage.setItem("IDAS_AuthToken", urlParams.get("t"));
+    if (urlParams.has("m")) 
+        localStorage.setItem("IDAS_MandantGuid", urlParams.get("m"));
+    if (urlParams.has("a")) 	
+        localStorage.setItem("IDAS_ApiBaseUrl", urlParams.get("a"));
+    window.location = window.location.origin;
+}
+
 let appToken = localStorage.getItem("IDAS_AppToken") || "66B70E0B-F7C4-4829-B12A-18AD309E3970";
 let authToken = localStorage.getItem("IDAS_AuthToken");
 //let mandantGuid = localStorage.getItem("IDAS_MandantGuid");
@@ -12,7 +23,8 @@ restClient.onError = (error, message) => {
     {    
         //console.log(message+" would remove Token");
         localStorage.removeItem("IDAS_AuthToken");
-        restClient.authenticateWithSSO();
+        var ssoURL = ssoAuthUrl.replace("%target%", window.location.origin);
+        window.location = ssoURL;
     }
 }
 
@@ -32,9 +44,14 @@ export class IDAS
     }
 
     async authenticateWithSSO() { 
-        var ssoURL = ssoAuthUrl.replace("%target%", window.location.origin);
-        window.location = ssoURL;
+        if (!authToken)
+        {
+            var ssoURL = ssoAuthUrl.replace("%target%", window.location.origin);
+            window.location = ssoURL;
+        }
     }
+
+    mandantGuid = localStorage.getItem("IDAS_MandantGuid");
 
     mandanten = {
         async getAll() { return await restClient.get("/Mandanten"); },
