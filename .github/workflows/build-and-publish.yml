@@ -5,6 +5,7 @@ on:
     branches: [ master ]
     paths-ignore:
       - 'WebLibs/**'
+      - '.github/workflows/publish-weblibs.yml'
 
 env:
   SDK_VERSION: 6.0.x
