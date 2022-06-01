@@ -5,6 +5,7 @@ on:
     branches: [ master ]
     paths-ignore:
       - 'WebLibs/**'
+      - '.github/workflows/publish-weblibs.yml'
 
 env:
   SDK_VERSION: 6.0.x
@@ -61,7 +62,7 @@ jobs:
       uses: rickstaa/action-create-tag@v1
       with:
         tag: IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Create release with changelog
       id: create_release
       uses: fregante/release-with-changelog@v3
