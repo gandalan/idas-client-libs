@@ -15,5 +15,6 @@ namespace Gandalan.Client.Contracts.Tiles
 		int Order { get; set; }
 
 		Task Load();
+        Task UnLoad();
     }
 }
