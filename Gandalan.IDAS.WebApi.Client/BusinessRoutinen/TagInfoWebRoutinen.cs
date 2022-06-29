@@ -118,6 +118,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public IDictionary<Guid, IEnumerable<TagInfoDTO>> GetTagInfoListForFunction(IEnumerable<Guid> guidList, long mandantID)
+        {
+            if (Login())
+            {
+                return Put<Dictionary<Guid, IEnumerable<TagInfoDTO>>>($"GetTagInfoListForFunction?mandantID={mandantID}", guidList);
+            }
+            return null;
+        }
+
         public void AddTagInfoForFunction(TagInfoDTO dto, long mandantID)
         {
             if (Login())
