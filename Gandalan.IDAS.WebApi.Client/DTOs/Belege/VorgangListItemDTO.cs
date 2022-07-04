@@ -69,7 +69,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool PreisAufAnfrage { get; set; }
         public bool KundeFehlt => 
             KundeGuid.Equals(Guid.Empty) 
-            || string.IsNullOrEmpty(Kundenname) || Kundenname.Equals("<nicht zugeordnet>") 
             || string.IsNullOrEmpty(KundenNummer) || KundenNummer.Equals("<nicht zugeordnet>");
 
         public string TextStatus { get; set; }

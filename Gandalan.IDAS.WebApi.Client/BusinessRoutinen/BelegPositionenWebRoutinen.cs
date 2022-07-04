@@ -1,4 +1,5 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -42,6 +43,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public string CalculateItems()
         {
             return Post("BelegPositionen/CalculateItems", null);
+        }
+
+        public VorgangDTO GetVorgangForFunction(Guid belegPositionGuid, long mandantId)
+        {
+            if (Login())
+            {
+                return Get<VorgangDTO>("BelegPositionen/GetVorgangForFunction?belegPositionGuid=" + belegPositionGuid.ToString() + "&mandantId=" + mandantId.ToString());
+            }
+            return null;
         }
     }
 }

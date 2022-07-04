@@ -29,7 +29,19 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Settings
         public bool PositionKommAufEtikett { get; set; } = false;
         public bool EinbauOrtAufEtikett { get; set; } = true;
         public bool SettingsFuerHaendler { get; set; } = false;
+        public bool SaegemaßeOhneKorrektur { get; set; } = true;
+        public bool EtikettenZugehoerigkeit { get; set; } = false;
+        public bool Saegeliste4590Zusammenfassen { get; set; } = true;
         public DateTime ChangedDate { get; set; }
         public bool EtikettNewStyleSonderkennzeichen { get; set; } = false;
+        public bool Buegelgriffe_10_22 { get; set; } = false;
+        public bool RO4_Buerste { get; set; } = true;
+        public bool Montagelehre_ST_164802 { get; set; } = true;
+        public bool Kunststoffbohrlehre_ST_164851 { get; set; } = true;
+        public bool Inbussschluessel_lang_ST_170625_25 { get; set; } = true;
+        public bool Schraubeckwinkel_1601 { get; set; } = true;
+        public bool LI1_Sickenstanze_auf_Etikett { get; set; } = false;
+        public bool Griffmulde_ST3_134850 { get; set; } = false;
+        public bool AnbauteileP2_G6 { get; set; } = false;
     }
 }

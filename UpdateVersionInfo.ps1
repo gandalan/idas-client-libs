@@ -38,7 +38,7 @@ $file = ".\AssemblyProjectInfo.cs"
 # correct version number
 (Get-Content $file) -replace $VersionRegex, $NewVersion | Out-File $file
 
-$VersionReplaceRegex = "(BUILDVERSION)"
+$VersionReplaceRegex = "(BUILDVERSION)|(0\.0\.1)"
 
 #GDL.IDAS.WebApi.Client.nuspec
 $VersionRegex = "\d+\.\d+.\d+\.\d+"
@@ -64,7 +64,7 @@ $file = ".\Gandalan.IDAS.Crypto\GDL.IDAS.Crypto.nuspec"
 # correct version number
 (Get-Content $file) -replace $VersionReplaceRegex, $NewVersion | Out-File $file
 
-#GDL.IDAS.WebApi.Client.Wpf
+#GDL.IDAS.WebApi.Client.Wpf.nuspec
 $VersionRegex = "\d+\.\d+.\d+\.\d+"
 $NewVersion = [regex]::matches($BuildNumber, $VersionRegex)
 $file = ".\Gandalan.IDAS.WebApi.Client.Wpf\GDL.IDAS.WebApi.Client.Wpf.nuspec"

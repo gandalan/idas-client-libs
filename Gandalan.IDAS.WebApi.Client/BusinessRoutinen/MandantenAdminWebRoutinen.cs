@@ -50,6 +50,14 @@ namespace Gandalan.IDAS.WebApi.Client
             return null;
         }
 
+        public void AddAdminRechte(string email)
+        {
+            if (Login())
+            {
+                Post($"MandantenAdmin/SetAdminRechte?email={Uri.EscapeDataString(email)}", null);
+            }
+        }
+
 
         public async Task<List<MandantDTO>> LadeMandantenMitFilterAsync(string filter, bool onlyHaendler, bool onlyProduzenten)
         {

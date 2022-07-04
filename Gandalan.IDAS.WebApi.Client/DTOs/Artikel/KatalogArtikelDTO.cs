@@ -26,6 +26,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstBestellfixSonderfarbBestellbar { get; set; }
         public bool IstIbosSonderfarbBestellbar { get; set; }
         public bool IstArtosSonderfarbBestellbar { get; set; }
+        public bool IstBestellfixTrendfarbBestellbar { get; set; }
+        public bool IstIbosTrendfarbBestellbar { get; set; }
+        public bool IstArtosTrendfarbBestellbar { get; set; }
         public bool IstFarbeOptional { get; set; }
 
         public bool NichtRabattfaehig { get; set; }
@@ -76,6 +79,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public long Version { get; set; }
         public bool IstTechnischerArtikel { get; set; }
         public decimal BasisBestellMenge { get; set; }
+
+        public bool IsIndiArtikel { get; set; }
 
         public KatalogArtikelDTO()
         {

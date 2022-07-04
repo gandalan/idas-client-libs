@@ -13,7 +13,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public List<TagInfoDTO> GetAllTagInfo(DateTime? changedSince = null)
+        public IList<TagInfoDTO> GetAllTagInfo(DateTime? changedSince = null)
         {
             if (Login())
             {
@@ -28,12 +28,34 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return null;
         }
-        public async Task<List<TagInfoDTO>> GetAllTagInfoAsync(DateTime? changedSince = null)
+
+        public async Task<IList<TagInfoDTO>> GetAllTagInfoAsync(DateTime? changedSince = null)
         {
-            return await Task.Run(() => { return GetAllTagInfo(changedSince); });
+            return await Task.Run(() => GetAllTagInfo(changedSince));
         }
 
-        public List<TagInfoDTO> GetTagInfo(Guid objectGuid)
+        public IList<TagInfoDTO> GetTagInfoSuggestions(DateTime? changedSince = null)
+        {
+            if (Login())
+            {
+                if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+                {
+                    return Get<List<TagInfoDTO>>("GetTagInfoSuggestions?changedSince=" + changedSince.Value.ToString("o"));
+                }
+                else
+                {
+                    return Get<List<TagInfoDTO>>("GetTagInfoSuggestions");
+                }
+            }
+            return null;
+        }
+
+        public async Task<IList<TagInfoDTO>> GetTagInfoSuggestionsAsync(DateTime? changedSince = null)
+        {
+            return await Task.Run(() => GetTagInfoSuggestions(changedSince));
+        }
+
+        public IList<TagInfoDTO> GetTagInfo(Guid objectGuid)
         {
             if (Login())
             {
@@ -41,9 +63,24 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return null;
         }
-        public async Task<List<TagInfoDTO>> GetTagInfoAsync(Guid objectGuid)
+
+        public async Task<IList<TagInfoDTO>> GetTagInfoAsync(Guid objectGuid)
         {
-            return await Task.Run(() => { return GetTagInfo(objectGuid); });
+            return await Task.Run(() => GetTagInfo(objectGuid));
+        }
+
+        public IDictionary<Guid, IEnumerable<TagInfoDTO>> GetTagInfo(IEnumerable<Guid> guidList)
+        {
+            if (Login())
+            {
+                return Put<Dictionary<Guid, IEnumerable<TagInfoDTO>>>($"GetTagInfoForGuidList", guidList);
+            }
+            return null;
+        }
+
+        public async Task<IDictionary<Guid, IEnumerable<TagInfoDTO>>> GetTagInfoAsync(IEnumerable<Guid> guidList)
+        {
+            return await Task.Run(() => GetTagInfo(guidList));
         }
 
         public void AddOrUpdateTagInfo(TagInfoDTO dto)
@@ -53,6 +90,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 Post($"TagInfo", dto);
             }
         }
+
         public async Task AddOrUpdateTagInfoAsync(TagInfoDTO dto)
         {
             await Task.Run(() => AddOrUpdateTagInfo(dto));
@@ -65,16 +103,43 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 Delete<TagInfoDTO>($"TagInfo", dto);
             }
         }
+
         public async Task DeleteTagInfoAsync(TagInfoDTO dto)
         {
             await Task.Run(() => DeleteTagInfo(dto));
         }
 
-        public void AddOrUpdateTagInfoForWebJob(TagInfoDTO dto, bool isVorgang, bool isBelegPos)
+        public IList<TagInfoDTO> GetTagInfoForFunction(Guid objectGuid, long mandantID)
         {
             if (Login())
             {
-                Post($"AddTagInfoForWebJob?isVorgang={isVorgang}&isBelegPos={isBelegPos}", dto);
+                return Get<List<TagInfoDTO>>($"GetTagInfoForFunction?objectGuid={objectGuid}&mandantID={mandantID}");
+            }
+            return null;
+        }
+
+        public IDictionary<Guid, IEnumerable<TagInfoDTO>> GetTagInfoListForFunction(IEnumerable<Guid> guidList, long mandantID)
+        {
+            if (Login())
+            {
+                return Put<Dictionary<Guid, IEnumerable<TagInfoDTO>>>($"GetTagInfoListForFunction?mandantID={mandantID}", guidList);
+            }
+            return null;
+        }
+
+        public void AddTagInfoForFunction(TagInfoDTO dto, long mandantID)
+        {
+            if (Login())
+            {
+                Post($"AddTagInfoForFunction?mandantID={mandantID}", dto);
+            }
+        }
+
+        public void DeleteTagInfoForFunction(TagInfoDTO dto, long mandantID)
+        {
+            if (Login())
+            {
+                Delete<TagInfoDTO>($"DeleteTagInfoForFunction?mandantID={mandantID}", dto);
             }
         }
     }

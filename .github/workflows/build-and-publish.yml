@@ -3,16 +3,26 @@ name: Build and publish (NuGet)
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - 'WebLibs/**'
+      - '.github/workflows/publish-weblibs.yml'
 
 env:
   SDK_VERSION: 6.0.x
-  PACKAGE_1: Gandalan.IDAS.Crypto
-  PACKAGE_2: Gandalan.IDAS.Logging
-  PACKAGE_3: Gandalan.IDAS.WebApi.Client
-  PACKAGE_4: Gandalan.IDAS.WebApi.Client.Wpf
+  PACKAGE_1: GDL.IDAS.Crypto
+  PACKAGE_1_FULL: Gandalan.IDAS.Crypto
+  PACKAGE_2: GDL.IDAS.Logging
+  PACKAGE_2_FULL: Gandalan.IDAS.Logging
+  PACKAGE_3: GDL.IDAS.WebApi.Client
+  PACKAGE_3_FULL: Gandalan.IDAS.WebApi.Client
+  PACKAGE_4: GDL.IDAS.WebApi.Client.Wpf
+  PACKAGE_4_FULL: Gandalan.IDAS.WebApi.Client.Wpf
+  BUILD_CONFIG: Release
+  OUTPUT_DIR: ./GDLPackages
 
 jobs:
   build-and-publish:
+    if: github.repository_owner == 'gandalan'
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +30,8 @@ jobs:
       with:
         fetch-depth: 50
 
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1
     - name: Set release_name
       id: set_release_name
       run: echo "::set-output name=release_name::$(date +'%-Y.%-m.%-d').$GITHUB_RUN_NUMBER"
@@ -33,23 +45,24 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration ${{ env.BUILD_CONFIG }} --no-restore -p:Version=${{ steps.set_release_name.outputs.release_name }}
     - name: Create package ${{ env.PACKAGE_1 }}
-      run: dotnet pack --configuration Release **/${{ env.PACKAGE_1 }}.csproj
+      run: nuget pack ${{ env.PACKAGE_1_FULL }}/${{ env.PACKAGE_1 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
     - name: Create package ${{ env.PACKAGE_2 }}
-      run: dotnet pack --configuration Release **/${{ env.PACKAGE_2 }}.csproj
+      run: nuget pack ${{ env.PACKAGE_2_FULL }}/${{ env.PACKAGE_2 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
     - name: Create package ${{ env.PACKAGE_3 }}
-      run: dotnet pack --configuration Release **/${{ env.PACKAGE_3 }}.csproj
+      run: nuget pack ${{ env.PACKAGE_3_FULL }}/${{ env.PACKAGE_3 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
     - name: Create package ${{ env.PACKAGE_4 }}
-      run: dotnet pack --configuration Release **/${{ env.PACKAGE_4 }}.csproj
+      run: nuget pack ${{ env.PACKAGE_4_FULL }}/${{ env.PACKAGE_4 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
     - name: Push packages
-      run: dotnet nuget push "**/*.nupkg" -k ${NUGET_TOKEN}
+      run: dotnet nuget push "${{ env.OUTPUT_DIR }}/*.nupkg" -k ${NUGET_TOKEN} #--skip-duplicate
       env:
         NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
     - name: Create tag
       uses: rickstaa/action-create-tag@v1
       with:
         tag: IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Create release with changelog
       id: create_release
       uses: fregante/release-with-changelog@v3
@@ -61,6 +74,6 @@ jobs:
     - name: Upload Assets to Release with a wildcard
       uses: csexton/release-asset-action@v2
       with:
-        pattern: "**/*.nupkg"
+        pattern: "${{ env.OUTPUT_DIR }}/*.nupkg"
         github-token: ${{ secrets.GITHUB_TOKEN }}
         release-url: ${{ steps.create_release.outputs.upload_url }}
