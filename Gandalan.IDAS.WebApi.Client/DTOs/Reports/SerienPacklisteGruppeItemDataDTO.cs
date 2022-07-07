@@ -17,6 +17,7 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
         public string FarbBezeichnung { get; set; }
         public float Laenge { get; set; }
         public string Winkel { get; set; }
+        public bool IstZuschnitt { get; set; }
 
     }
 }
