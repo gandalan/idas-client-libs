@@ -19,11 +19,12 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Positionsnummer { get; set; }
         public string Benutzername { get; set; }
         public MandantDTO Mandant { get; set; }
+        public Guid BelegPositionGuid { get; set; }
         public BelegPositionDTO BelegPosition { get; set; }
         public IList<BelegPositionAVDTO> AVPositionen { get; set; }
         public ProduktionsSettingsDTO ProduktionsSettings { get; set; }
         public string Beschreibung { get; set; }
-        public IDictionary<string, string> Anhaenge { get; set; }
+        public IList<FeedbackAttachmentDTO> Anhaenge { get; set; }
         public IList<FeedbackKommentarDTO> Kommentare { get; set; }        
     }
 
@@ -33,5 +34,14 @@ namespace Gandalan.IDAS.WebApi.DTO
         public DateTime Zeitstempel { get; set; }
         public string Benutzer { get; set; }
         public string Inhalt { get; set; }
+    }
+
+    public class FeedbackAttachmentDTO
+    {
+        public Guid FeedbackAttachmentGuid { get; set; }
+        public DateTime Zeitstempel { get; set; }
+        public string Filename { get; set; }
+        public string URL { get; set; }
+
     }
 }
