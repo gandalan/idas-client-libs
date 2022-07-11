@@ -8,6 +8,7 @@ namespace Gandalan.IDAS.Client.Contracts.AV
 {
     public interface ISerienKapazitaetBerechnung
     {
-        Task<SerienKapazitaetInfo> GetKapazitaetsBedarf(SerieDTO datum);
+        Task<IList<SerienKapazitaetInfo>> GetKapazitaetsBedarf(IList<SerieDTO> serien);
+        Task<SerienKapazitaetInfo> GetKapazitaetsBedarf(SerieDTO serie);
     }
 }
