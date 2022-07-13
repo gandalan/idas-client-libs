@@ -18,7 +18,8 @@ let apiBaseUrl = localStorage.getItem("IDAS_ApiBaseUrl") || "https://api.dev.ida
 //let siteBaseUrl = localStorage.getItem("SiteBaseUrl") || window.location.protocol + "//" + window.location.host;
 
 let ssoAuthUrl = apiBaseUrl + "/SSO?a=" + appToken + "&r=%target%?t=%token%%26m=%mandant%";
-ssoAuthUrl = ssoAuthUrl.replace('/api/', '');
+ssoAuthUrl = ssoAuthUrl.replace('/api/', '/');
+ssoAuthUrl = ssoAuthUrl.replace('//', '/');
 
 let restClient = new RESTClient(apiBaseUrl, authToken);
 restClient.onError = (error, message) => {
