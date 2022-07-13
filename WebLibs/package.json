@@ -1,9 +1,10 @@
 {
   "name": "@gandalan/weblibs",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "description": "WebLibs for Gandalan JS/TS/Svelte projects",
   "author": "Philipp Reif",
   "license": "ISC",
+  "main": "index.js",
   "devDependencies": {
     "chota": "^0.8.0",
     "svelte": "^3.38.3",
