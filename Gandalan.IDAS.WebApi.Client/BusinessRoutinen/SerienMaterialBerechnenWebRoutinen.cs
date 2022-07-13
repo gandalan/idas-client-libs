@@ -17,24 +17,29 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public string MaterialBerechnen(Guid serieGuid, bool sfZusammenfassen = false)
+        public string MaterialBerechnen(Guid serieGuid, bool sfZusammenfassen = false, bool serieZusammenfassen = false)
         {
             if (Login())
             {
                 if (sfZusammenfassen)
-                    return Post<string>("SerieMaterialbedarfBerechnen/SFZusammenfassen", serieGuid);
+                {
+                    if (serieZusammenfassen)
+                        return Post<string>("SerieMaterialbedarfBerechnen/SFZusammenfassenSerie", serieGuid);
+                    else
+                        return Post<string>("SerieMaterialbedarfBerechnen/SFZusammenfassenVorgang", serieGuid);
+                }
                 else
                     return Post<string>("SerieMaterialbedarfBerechnen", serieGuid);
             }
             return null;
         }
-        
+
         public List<MaterialbedarfDTO> GetMaterial(Guid serieGuid)
         {
             if (Login())
             {
-               
-                    return Get<List<MaterialbedarfDTO>>("SerieMaterialbedarfBerechnen?serieGuid=" + serieGuid.ToString());
+
+                return Get<List<MaterialbedarfDTO>>("SerieMaterialbedarfBerechnen?serieGuid=" + serieGuid.ToString());
             }
             return null;
         }
@@ -71,7 +76,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             return await Task.Run(() => { return ResetMaterial(serieGuid); });
         }
-        
+
         public async Task<string> MaterialBerechnenAsync(Guid serieGuid, bool sfZusammenfassen = false)
         {
             return await Task.Run(() => { return MaterialBerechnen(serieGuid, sfZusammenfassen); });
