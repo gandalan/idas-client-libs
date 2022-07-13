@@ -1,6 +1,6 @@
 import { RESTClient } from "./RESTClient";
 
-if (window.location.search) {
+/*if (window.location.search) {
     var urlParams = new URLSearchParams(location.search);
     if (urlParams.has("t")) 
         localStorage.setItem("IDAS_AuthToken", urlParams.get("t"));
@@ -9,15 +9,15 @@ if (window.location.search) {
     if (urlParams.has("a")) 	
         localStorage.setItem("IDAS_ApiBaseUrl", urlParams.get("a"));
     window.location = window.location.origin;
-}
+}*/
 
 let appToken = localStorage.getItem("IDAS_AppToken") || "66B70E0B-F7C4-4829-B12A-18AD309E3970";
 let authToken = localStorage.getItem("IDAS_AuthToken");
 //let mandantGuid = localStorage.getItem("IDAS_MandantGuid");
-let apiBaseUrl = localStorage.getItem("IDAS_ApiBaseUrl") || "https://api.dev.idas-cloudservices.net/api";
+let apiBaseUrl = localStorage.getItem("IDAS_ApiBaseUrl") || "https://api.dev.idas-cloudservices.net/api/";
 //let siteBaseUrl = localStorage.getItem("SiteBaseUrl") || window.location.protocol + "//" + window.location.host;
 
-let ssoAuthUrl = apiBaseUrl + "/SSO?a=" + appToken + "&r=%target%?t=%token%%26m=%mandant%";
+let ssoAuthUrl = apiBaseUrl + "/SSO?a=" + appToken + "&r=%target%%3Ft=%token%%26m=%mandant%";
 ssoAuthUrl = ssoAuthUrl.replace('/api/', '/');
 ssoAuthUrl = ssoAuthUrl.replace('//', '/');
 
