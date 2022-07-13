@@ -24,7 +24,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 if (sfZusammenfassen)
                 {
                     if (serieZusammenfassen)
-                        return Post<string>("SerieMaterialbedarfBerechnen/SFZusammenfassenSerie", serieGuid);
+                        return Post<string>("SerieMaterialbedarfBerechnen/SFZusammenfassen", serieGuid);
                     else
                         return Post<string>("SerieMaterialbedarfBerechnen/SFZusammenfassenVorgang", serieGuid);
                 }
