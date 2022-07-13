@@ -77,9 +77,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await Task.Run(() => { return ResetMaterial(serieGuid); });
         }
 
-        public async Task<string> MaterialBerechnenAsync(Guid serieGuid, bool sfZusammenfassen = false)
+        public async Task<string> MaterialBerechnenAsync(Guid serieGuid, bool sfZusammenfassen = false, bool serieZusammenfassen = false)
         {
-            return await Task.Run(() => { return MaterialBerechnen(serieGuid, sfZusammenfassen); });
+            return await Task.Run(() => { return MaterialBerechnen(serieGuid, sfZusammenfassen, serieZusammenfassen); });
         }
     }
 }
