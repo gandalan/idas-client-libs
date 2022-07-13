@@ -16,7 +16,11 @@ let authToken = localStorage.getItem("IDAS_AuthToken");
 //let mandantGuid = localStorage.getItem("IDAS_MandantGuid");
 let apiBaseUrl = localStorage.getItem("IDAS_ApiBaseUrl") || "https://api.dev.idas-cloudservices.net/api";
 //let siteBaseUrl = localStorage.getItem("SiteBaseUrl") || window.location.protocol + "//" + window.location.host;
-let ssoAuthUrl = apiBaseUrl.replace(/\/api$/, "") + "/SSO?a=" + appToken + "&r=%target%?t=%token%%26m=%mandant%";
+
+let ssoAuthUrl = apiBaseUrl + "/SSO?a=" + appToken + "&r=%target%?t=%token%%26m=%mandant%";
+ssoAuthUrl = ssoAuthUrl.replace('/api/', '/');
+ssoAuthUrl = ssoAuthUrl.replace('//', '/');
+
 let restClient = new RESTClient(apiBaseUrl, authToken);
 restClient.onError = (error, message) => {
     if (message.indexOf("401") || message.indexOf("403"))
@@ -63,6 +67,15 @@ export class IDAS
         async getAll(mandantGuid) { return await restClient.get("/BenutzerListe/" + mandantGuid + "/?mitRollenUndRechten=true"); },
         async get(guid) { return await restClient.get("/Benutzer/" + guid); },
         async save(m) { await restClient.put("/Benutzer", m); }
+    };
+
+    feedback = {
+        async getAll() { return await restClient.get("/Feedback/"); },
+        async get(guid) { return await restClient.get("/Feedback/" + guid); },
+        async save(m) { await restClient.put("/Feedback", m); },
+        async comment(m) { await restClient.put("/FeedbackKommentar", m); },
+        async attachFile(m) { await restClient.put("/FeedbackAttachment", m); },
+        async deleteFile(guid) { await restClient.delete("/FeedbackAttachment/" + guid); }
     };
 
     rollen = {
