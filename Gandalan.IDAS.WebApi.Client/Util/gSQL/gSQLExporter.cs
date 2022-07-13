@@ -220,7 +220,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
                     aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swExportParameter, sw.Wert));
 
-                    if (sw.Laenge > 0)
+                    if (sw.Laenge > 0 || sw.Laenge == -1)
                     {
                         aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swExportParameter + "_Laenge", sw.Laenge.ToString()));
                     }
