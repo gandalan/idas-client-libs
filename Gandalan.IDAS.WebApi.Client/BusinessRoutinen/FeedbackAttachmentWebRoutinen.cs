@@ -11,7 +11,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public byte[] GetAttachement(Guid attachmentGuid)
+        public byte[] GetAttachment(Guid attachmentGuid)
         {
             if (Login())
             {
@@ -20,7 +20,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
                         
-        public void SaveAttachement(Guid feedbackGuid, string fileName, byte[] data)
+        public void SaveAttachment(Guid feedbackGuid, string fileName, byte[] data)
         {
             if (Login())
             {
@@ -28,7 +28,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
         }
 
-        public string DeleteAttachement(Guid attachmentGuid)
+        public string DeleteAttachment(Guid attachmentGuid)
         {
             if (Login())
             {
@@ -37,19 +37,19 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return "Not logged in";
         }
 
-        public async Task SaveAttachementAsync(Guid feedbackGuid, string fileName, byte[] data)
+        public async Task SaveAttachmentAsync(Guid feedbackGuid, string fileName, byte[] data)
         {
-            await Task.Run(() => SaveAttachement(feedbackGuid, fileName, data));
+            await Task.Run(() => SaveAttachment(feedbackGuid, fileName, data));
         }
 
         public async Task<byte[]> GetAttachementAsync(Guid attachmentGuid)
         {
-            return await Task.Run(() => GetAttachement(attachmentGuid));
+            return await Task.Run(() => GetAttachment(attachmentGuid));
         }
 
-        public async Task<string> DeleteAttachementAsync(Guid attachmentGuid)
+        public async Task<string> DeleteAttachmentAsync(Guid attachmentGuid)
         {
-            return await Task.Run(() => DeleteAttachement(attachmentGuid));
+            return await Task.Run(() => DeleteAttachment(attachmentGuid));
         }
     }
 }
