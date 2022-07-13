@@ -16,7 +16,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                Put($"FeedbackKommentar/?feedbackGuid={feedbackGuid}", dto);
+                Put($"FeedbackKommentar/{feedbackGuid}", dto);
             }
         }
 
