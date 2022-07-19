@@ -45,6 +45,10 @@ export class IDAS
 
     mandantGuid = localStorage.getItem("IDAS_MandantGuid");
 
+    auth = {
+        async getCurrentAuthToken() { return await restClient.put("/Login/Update/", { Token: authToken }); },
+    };
+
     mandanten = {
         async getAll() { return await restClient.get("/Mandanten"); },
         async get(guid) { return await restClient.get("/Mandanten/" + guid); },
