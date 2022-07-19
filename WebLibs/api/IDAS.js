@@ -15,7 +15,7 @@ restClient.onError = (error, message) => {
     {    
         //console.log(message+" would remove Token");
         localStorage.removeItem("IDAS_AuthToken");
-        var ssoURL = ssoAuthUrl.replace("%target%", encodeURIComponent(window.location.origin));
+        var ssoURL = ssoAuthUrl.replace("%target%", encodeURIComponent(window.location.href));
         window.location = ssoURL;
     }
 }
@@ -38,7 +38,7 @@ export class IDAS
     async authenticateWithSSO() { 
         if (!authToken)
         {
-            var ssoURL = ssoAuthUrl.replace("%target%", encodeURIComponent(window.location.origin));
+            var ssoURL = ssoAuthUrl.replace("%target%", encodeURIComponent(window.location.href));
             window.location = ssoURL;
         }
     }
