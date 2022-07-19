@@ -5,14 +5,14 @@ using System.Linq;
 namespace Gandalan.IDAS.WebApi.Util.gSQL
 {
     public class gSQLSektion
-	{
+    {
         public string Name { get; set; }
-		public List<gSQLItem> Items { get; set; }
+        public List<gSQLItem> Items { get; set; }
 
-		public gSQLSektion()
-		{
-			Items = new List<gSQLItem>();
-		}
+        public gSQLSektion()
+        {
+            Items = new List<gSQLItem>();
+        }
 
         public gSQLSektion(string name) : this()
         {
@@ -25,7 +25,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
         }
 
-        internal string GetItemWert(string itemName, string defaultWert = null)
+        public string GetItemWert(string itemName, string defaultWert = null)
         {
             gSQLItem item = GetItem(itemName);
             return item != null ? item.Wert : defaultWert;
