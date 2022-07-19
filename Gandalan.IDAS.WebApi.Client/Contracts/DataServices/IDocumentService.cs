@@ -14,6 +14,6 @@ namespace Gandalan.Client.Contracts.DataServices
         Task<Dictionary<Guid, IList<byte[]>>> GetAllBegleitpapiereWithRelation(IList<Guid> varianten);
         Task<byte[]> GetAssetAsync(string katalognummer);
         Task<IDocument[]> GetAllProductionAssetsAsync();
-        Task<byte[]> GetProductionAssetsAsync(Guid assetGuid);
+        Task<Tuple<string, byte[]>> GetProductionAssetsAsync(Guid assetGuid);
     }
 }
