@@ -23,17 +23,17 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public List<AblageDTO> GetAll(DateTime? changedSince)
+        public List<AblageDTO> GetAll(DateTime? changedSince, bool includeDetails = true)
         {
             if (Login())
             {
                 if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
                 {
-                    return Get<List<AblageDTO>>("Ablage?changedSince=" + changedSince.Value.ToString("o"));
+                    return Get<List<AblageDTO>>($"Ablage?changedSince={changedSince.Value.ToString("o")}&includeDetails={includeDetails}");
                 }
                 else
                 {
-                    return Get<List<AblageDTO>>("Ablage");
+                    return Get<List<AblageDTO>>($"Ablage?includeDetails={includeDetails}");
                 }
             }
             return null;
@@ -83,17 +83,17 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public async Task<List<AblageDTO>> GetAllAsync(DateTime? changedSince)
+        public async Task<List<AblageDTO>> GetAllAsync(DateTime? changedSince, bool includeDetails = true)
         {
             if (await LoginAsync())
             {
                 if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
                 {
-                    return await GetAsync<List<AblageDTO>>("Ablage?changedSince=" + changedSince.Value.ToString("o"));
+                    return await GetAsync<List<AblageDTO>>($"Ablage?changedSince={changedSince.Value.ToString("o")}&includeDetails={includeDetails}");
                 }
                 else
                 {
-                    return await GetAsync<List<AblageDTO>>("Ablage");
+                    return await GetAsync<List<AblageDTO>>($"Ablage?includeDetails={includeDetails}");
                 }
             }
             return null;
