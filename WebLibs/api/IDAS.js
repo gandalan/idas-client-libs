@@ -61,7 +61,7 @@ export class IDAS
         async getAll() { return await restClient.get("/Feedback/"); },
         async get(guid) { return await restClient.get("/Feedback/" + guid); },
         async save(m) { await restClient.put("/Feedback", m); },
-        async comment(m) { await restClient.put("/FeedbackKommentar", m); },
+        async comment(guid, commentData) { await restClient.put("/FeedbackKommentar/" + guid, commentData); },
         async attachFile(m) { await restClient.put("/FeedbackAttachment", m); },
         async deleteFile(guid) { await restClient.delete("/FeedbackAttachment/" + guid); }
     };
