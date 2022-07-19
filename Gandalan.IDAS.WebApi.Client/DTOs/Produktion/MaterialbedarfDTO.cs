@@ -69,7 +69,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public float ZuschnittLaenge { get; set; }
         public string ZuschnittWinkel { get; set; }
         public string PositionsAngabe { get; set; }
-
         public string MaterialBezeichnung { get; set; }
         public bool MaterialBearbeitungSaegen { get; set; }
         public bool MaterialBearbeitungFraesen { get; set; }
@@ -77,7 +76,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool MaterialBearbeitungBeschichten { get; set; }
         public bool MaterialBearbeitungBohren { get; set; }
         public bool MaterialBearbeitungEloxieren { get; set; }
-
         public bool AufPackListe { get; set; }
         public string CADKennung { get; set; }
         public string EtikettenSonderS { get; set; }
@@ -91,7 +89,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool AufMaterialListe { get; set; }
         public bool NurLieferscheinAnzeige { get; set; }
         public bool FromSonderWunsch { get; set; }
-
         public bool IstBeschichtbar { get; set; }
         public KatalogArtikelArt KatalogArtikelArt { get; set; }
         public MaterialbedarfStatiDTO AktuellerStatus { get; set; }
@@ -99,16 +96,14 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Kennzeichen, ob das Profil gedreht gesägt wird (z.B. bei PT2/46)
         /// </summary>
         public bool ProfilGedrehtSaegen { get; set; }
-
         public bool IstSonderfarbe { get; set; }
         public string MaterialPCode { get; set; }
         public string Bemerkung { get; set; }
         public Guid? AVPositionGuid { get; set; }
-
         public Guid ZielKennzeichen { get; set; }
-
+        public Guid? AblageGuid { get; set; }
+        public Guid? AblageFachGuid { get; set; }
         public string Lagerfach { get; set; }
-
         public object Clone()
         {
             return this.MemberwiseClone();
