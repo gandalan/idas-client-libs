@@ -31,7 +31,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public string DeleteOldChanges()
         {
-            return Get("Change/DeleteOldChanges");
+            return Delete("Change");
         }
     }
 }
