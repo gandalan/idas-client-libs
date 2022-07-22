@@ -1,6 +1,11 @@
 name: Publish WebLibs (NPM)
 
-on: workflow_dispatch
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'WebLibs/**'
+      - '.github/workflows/publish-weblibs.yml'
 
 env:
   WEBLIBS_DIR: WebLibs
