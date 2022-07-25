@@ -36,6 +36,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion
         public bool IstGeplanteSerie { get; set; }
         public string SerieName { get; set; }
         public bool IsAktiv { get; set; }
+        public bool IstAlternativPosition { get; set; }
 
         public DateTime? LieferDatum { get; set; }
         public DateTime? ProduktionsDatum { get; set; }
