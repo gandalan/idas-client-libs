@@ -23,17 +23,17 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public List<AblageFachDTO> GetAll(DateTime? changedSince)
+        public List<AblageFachDTO> GetAll(DateTime? changedSince, bool includeDetails = true)
         {
             if (Login())
             {
                 if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
                 {
-                    return Get<List<AblageFachDTO>>("AblageFach?changedSince=" + changedSince.Value.ToString("o"));
+                    return Get<List<AblageFachDTO>>($"AblageFach?changedSince={changedSince.Value.ToString("o")}&includeDetails={includeDetails}");
                 }
                 else
                 {
-                    return Get<List<AblageFachDTO>>("AblageFach");
+                    return Get<List<AblageFachDTO>>($"AblageFach?includeDetails={includeDetails}");
                 }
             }
             return null;
@@ -67,17 +67,17 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public async Task<List<AblageFachDTO>> GetAllAsync(DateTime? changedSince)
+        public async Task<List<AblageFachDTO>> GetAllAsync(DateTime? changedSince, bool includeDetails = true)
         {
             if (await LoginAsync())
             {
                 if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
                 {
-                    return await GetAsync<List<AblageFachDTO>>("AblageFach?changedSince=" + changedSince.Value.ToString("o"));
+                    return await GetAsync<List<AblageFachDTO>>($"AblageFach?changedSince={changedSince.Value.ToString("o")}&includeDetails={includeDetails}");
                 }
                 else
                 {
-                    return await GetAsync<List<AblageFachDTO>>("AblageFach");
+                    return await GetAsync<List<AblageFachDTO>>($"AblageFach?includeDetails={includeDetails}");
                 }
             }
             return null;

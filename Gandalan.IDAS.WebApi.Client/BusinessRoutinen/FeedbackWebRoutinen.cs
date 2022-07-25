@@ -27,6 +27,19 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             return await Task.Run(() => GetFeedbacks());
         }
+        public FeedbackDTO GetFeedback(Guid feedbackGuid)
+        {
+            if (Login())
+            {
+                return Get<FeedbackDTO>($"Feedback/{feedbackGuid}");
+            }
+            return null;
+        }
+
+        public async Task<FeedbackDTO> GetFeedbackAsync(Guid feedbackGuid)
+        {
+            return await Task.Run(() => GetFeedback(feedbackGuid));
+        }
 
         public string SetFeedback(FeedbackDTO dto)
         {
