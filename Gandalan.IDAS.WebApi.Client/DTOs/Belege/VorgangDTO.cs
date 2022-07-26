@@ -82,6 +82,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid OriginalVorgangGuid { get; set; }
         public Guid OriginalMandantGuid { get; set; }
         public long? OriginalVorgangsNummer { get; set; }
+        public Guid AppGuid { get; set; }
 
         public VorgangDTO()
         {
