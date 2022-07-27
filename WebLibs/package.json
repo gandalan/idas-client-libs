@@ -1,6 +1,6 @@
 {
   "name": "@gandalan/weblibs",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "WebLibs for Gandalan JS/TS/Svelte projects",
   "author": "Philipp Reif",
   "license": "ISC",
