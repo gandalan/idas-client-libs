@@ -1,19 +1,22 @@
 {
   "name": "@gandalan/weblibs",
-  "version": "0.0.21",
+  "version": "0.0.24",
   "description": "WebLibs for Gandalan JS/TS/Svelte projects",
   "author": "Philipp Reif",
   "license": "ISC",
   "main": "index.js",
   "devDependencies": {
     "chota": "^0.8.0",
-    "svelte": "^3.38.3",
-    "svelte-chota": "^1.8.4"
+    "svelte": "^3.49.0",
+    "svelte-chota": "^1.8.6"
   },
   "dependencies": {
-    "@mdi/js": "^5.9.55",
-    "axios": "^0.21.1",
-    "uuid": "^8.3.2"
+    "@mdi/js": "^7.0.96",
+    "axios": "^0.27.2",
+    "svelte-table": "^0.5.0"
+  },
+  "peerDependencies": {
+    "svelte-chota": "^1.8.6"
   },
   "repository": {
     "type": "git",
