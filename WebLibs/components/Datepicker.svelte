@@ -8,11 +8,9 @@
     const backgroundFalschesDatum = "#FF0000";
     
     let monate = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-    let montateKurz = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Nov", "Dez"];
-    let tage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sontag"];
     let tageKurz = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
 
-    let inputField, buttonStyle, divStyle, inputStyle;
+    let buttonStyle, divStyle, inputStyle;
     let background = backgroundNormal;
     let buttonHeight = Height - 6;
     let buttonImageHeight = Height - 10;
@@ -23,7 +21,6 @@
 
     let allowedNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
     let allowedTage = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    let allowedTageSchaltjahr = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     let allowedSonderzeichen = ".";
     let allowedFunctionalKeys = ["ArrowLeft", "ArrowRight", "Backspace", "Delete"];
     let currentJahr = new Date().getFullYear();
@@ -49,7 +46,6 @@
         let inhalt = Value.split(allowedSonderzeichen);
         let localTag = inhalt[0];
         let localMonat = inhalt[1];
-        let localJahr = inhalt[2];
 
         if(inhalt.length == 1 && Value.length == 2)
         {
@@ -105,7 +101,6 @@
         let tageImMonat = new Date(currentJahr, monatIndex, 0).getDate();
         let localTagIndex = 0;
         let woche = [];
-        let tagesWochenCounter = 0;
 
         for(let counter = 0; counter < tageImMonat; counter++)
         {
@@ -121,18 +116,15 @@
             }
             woche = [...woche, counter+1];
 
-            tagesWochenCounter++;
             if(woche.length >= 7)
             {
                 wochenImMonat = [...wochenImMonat, woche]
                 woche = [];
-                tagesWochenCounter = 0;
             }
             if(counter == tageImMonat-1)
             {
                 wochenImMonat = [...wochenImMonat, woche]
                 woche = [];
-                tagesWochenCounter = 0;
             }
         }
     }
@@ -174,7 +166,6 @@
 	{
         if(allowedNumbers.includes(e.key) == true)
         {
-            let inhalt = Value.split(allowedSonderzeichen);
             if(Value.length >= 10)
             {
                 ignoreInput(e);
@@ -224,7 +215,7 @@
 </script>
 
 <div style={divStyle}>
-    <input bind:this={inputField} type="text" style={inputStyle} placeholder={Placeholder} bind:value={Value} on:keydown={thisKeyDown}>
+    <input type="text" style={inputStyle} placeholder={Placeholder} bind:value={Value} on:keydown={thisKeyDown}>
     <button style={buttonStyle} on:click={() => datePickerHidden = !datePickerHidden}>
         <img src="calendar.png" alt="" height={buttonImageHeight}>
         <!-- [...] -->
@@ -255,7 +246,7 @@
             <tr>
                 {#each woche as tageInWoche}
                     <td>
-                        <button class="buttonTag" on:mouseover={() => setPlaceholder(tageInWoche)} on:click={() => setValue(tageInWoche)}>
+                        <button class="buttonTag" on:mouseover={() => setPlaceholder(tageInWoche)} on:focus={() => setPlaceholder(tageInWoche)} on:click={() => setValue(tageInWoche)}>
                             {tageInWoche}
                         </button>
                     </td>
