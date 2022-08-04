@@ -16,7 +16,6 @@
     let errorMessage = "";
     let style = "height: " + Height + "px; width: " + Width + "px;";
     let styleError = "width: " + Width + "px;";
-    let tausenderTrenner = ".";
 
     let allowedNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8,", "9"];
     let allowedDecimalTrenner = [",", "."];
@@ -203,7 +202,7 @@
         }
         return isBetween;
     }
-    function thisKeyUp(e)
+    function thisKeyUp()
     {
         setFieldStyle();
     }
@@ -220,14 +219,6 @@
         }
     }
 
-    $:if(DecimalTrenner)
-    {
-        // Dezimaltrenner und Tausendertrenner müssen für das US-Amerikanische Format getauscht werden
-        if(DecimalTrenner == allowedDecimalTrenner[1])
-        {
-            tausenderTrenner = allowedDecimalTrenner[0];
-        }
-    }
     $:if(Type)
     {
         Type = Type.toLocaleLowerCase();
