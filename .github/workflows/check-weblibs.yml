@@ -1,0 +1,25 @@
+name: Check WebLibs (NPM)
+
+on:
+  pull_request:
+    paths:
+      - 'WebLibs/**'
+      - '.github/workflows/check-weblibs.yml'
+
+env:
+  WEBLIBS_DIR: WebLibs
+
+jobs:
+  check-weblibs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16.x'
+    - run: npm ci
+      working-directory: ${{ env.WEBLIBS_DIR }}
+    - run: npm run check
+      working-directory: ${{ env.WEBLIBS_DIR }}
