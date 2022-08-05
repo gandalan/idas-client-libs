@@ -1,0 +1,56 @@
+name: Check IDAS Libs (NuGet)
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'WebLibs/**'
+      - '.github/workflows/build-and-publish.yml'
+      - '.github/workflows/check-weblibs.yml'
+      - '.github/workflows/publish-weblibs.yml'
+
+env:
+  SDK_VERSION: 6.0.x
+  PACKAGE_1: GDL.IDAS.Crypto
+  PACKAGE_1_FULL: Gandalan.IDAS.Crypto
+  PACKAGE_2: GDL.IDAS.Logging
+  PACKAGE_2_FULL: Gandalan.IDAS.Logging
+  PACKAGE_3: GDL.IDAS.WebApi.Client
+  PACKAGE_3_FULL: Gandalan.IDAS.WebApi.Client
+  PACKAGE_4: GDL.IDAS.WebApi.Client.Wpf
+  PACKAGE_4_FULL: Gandalan.IDAS.WebApi.Client.Wpf
+  BUILD_CONFIG: Release
+  OUTPUT_DIR: ./GDLPackages
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 50
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1
+    - name: Set release_name
+      id: set_release_name
+      run: echo "::set-output name=release_name::$(date +'%-Y.%-m.%-d').$GITHUB_RUN_NUMBER"
+    - name: Setup .NET Core SDK ${{ env.SDK_VERSION }}
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: ${{ env.SDK_VERSION }}
+    - name: Run UpdateVersionInfo.ps1 with ${{ steps.set_release_name.outputs.release_name }}
+      shell: pwsh
+      run: .\UpdateVersionInfo.ps1 ${{ steps.set_release_name.outputs.release_name }}
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration ${{ env.BUILD_CONFIG }} --no-restore -p:Version=${{ steps.set_release_name.outputs.release_name }}
+    - name: Create package ${{ env.PACKAGE_1 }}
+      run: nuget pack ${{ env.PACKAGE_1_FULL }}/${{ env.PACKAGE_1 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
+    - name: Create package ${{ env.PACKAGE_2 }}
+      run: nuget pack ${{ env.PACKAGE_2_FULL }}/${{ env.PACKAGE_2 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
+    - name: Create package ${{ env.PACKAGE_3 }}
+      run: nuget pack ${{ env.PACKAGE_3_FULL }}/${{ env.PACKAGE_3 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
+    - name: Create package ${{ env.PACKAGE_4 }}
+      run: nuget pack ${{ env.PACKAGE_4_FULL }}/${{ env.PACKAGE_4 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
