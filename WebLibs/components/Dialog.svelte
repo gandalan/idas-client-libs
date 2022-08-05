@@ -3,7 +3,7 @@
 </script>
 
 {#if isOpen}
-    <div class="z-10 absolute w-screen h-screen bg-black left-0 top-0 bg-opacity-50">        
+    <div class="z-10 absolute w-screen h-screen bg-black left-0 top-0 bg-opacity-50">
     </div>
 
     <div class="z-10 absolute left-[20vw] top-[10vw] w-[60vw] shadow-xl shadow-slate-700 bg-white p-8">

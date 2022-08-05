@@ -23,3 +23,5 @@ jobs:
       working-directory: ${{ env.WEBLIBS_DIR }}
     - run: npm run check
       working-directory: ${{ env.WEBLIBS_DIR }}
+    - run: npm run lint
+      working-directory: ${{ env.WEBLIBS_DIR }}
