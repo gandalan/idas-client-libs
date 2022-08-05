@@ -30,6 +30,25 @@
     export let clickExpand = null;
     /** @type {function | null} */
     export let clickCell = null;
+
+    // CSS Classes
+    export let classNameTable = "border-2 border-collapse my-4";
+    export let classNameThead = "";
+    export let classNameTbody = "";
+    export let classNameSelect = "";
+    export let classNameInput = "";
+    export let classNameRow = "border-2 border-collapse odd:bg-gray-100 hover:bg-gray-300";
+    export let classNameCell = "";
+    export let classNameRowSelected = "!bg-gray-400";
+    export let classNameRowExpanded = "bg-gray-400";
+    export let classNameExpandedContent = "";
+    export let classNameCellExpand = "";
+
+    const asStringArray = v =>
+        []
+        .concat(v)
+        .filter(v => v !== null && typeof v === "string" && v !== "")
+        .join(" ");
 </script>
 
 <SvelteTable
@@ -47,17 +66,17 @@
     on:clickRow={clickRow}
     on:clickExpand={clickExpand}
     on:clickCell={clickCell}
-    classNameTable="gan-table border-2 border-collapse mt-4 mb-4"
-    classNameThead="gan-thead"
-    classNameTbody="gan-tbody"
-    classNameSelect="custom-select"
-    classNameInput="custom-input"
-    classNameRow="gan-row border-2 border-collapse cursor-pointer odd:bg-gray-100 hover:bg-gray-300"
-    classNameCell="gan-cell pr-4"
-    classNameRowSelected="row-selected !bg-gray-400"
-    classNameRowExpanded="row-expanded bg-gray-400"
-    classNameExpandedContent="expanded-content"
-    classNameCellExpand="cell-expand">
+    classNameTable={asStringArray(["gan-table", classNameTable])}
+    classNameThead={asStringArray(["gan-thead", classNameThead])}
+    classNameTbody={asStringArray(["gan-tbody", classNameTbody])}
+    classNameSelect={asStringArray(["custom-select", classNameSelect])}
+    classNameInput={asStringArray(["custom-input", classNameInput])}
+    classNameRow={asStringArray(["gan-row", classNameRow])}
+    classNameCell={asStringArray(["gan-cell", classNameCell])}
+    classNameRowSelected={asStringArray(["row-selected", classNameRowSelected])}
+    classNameRowExpanded={asStringArray(["row-expanded", classNameRowExpanded])}
+    classNameExpandedContent={asStringArray(["expanded-content", classNameExpandedContent])}
+    classNameCellExpand={asStringArray(["cell-expand", classNameCellExpand])}>
 
         <!-- Wait for better workaround. See: https://github.com/sveltejs/svelte/issues/5604 -->
 
