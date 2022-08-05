@@ -39,7 +39,7 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration ${{ env.BUILD_CONFIG }} --no-restore
+      run: dotnet build --configuration ${{ env.BUILD_CONFIG }} --no-restore -p:Version="1.0.0-pull_request"
     - name: Create package ${{ env.PACKAGE_1 }}
       run: nuget pack ${{ env.PACKAGE_1_FULL }}/${{ env.PACKAGE_1 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
     - name: Create package ${{ env.PACKAGE_2 }}
