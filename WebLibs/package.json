@@ -8,10 +8,14 @@
   "typings": "index",
   "scripts": {
     "check": "svelte-check",
-    "check:watch": "svelte-check --watch"
+    "check:watch": "svelte-check --watch",
+    "lint": "eslint ."
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.18.9",
     "chota": "^0.8.0",
+    "eslint": "^8.21.0",
+    "eslint-plugin-svelte3": "^4.0.0",
     "svelte": "^3.49.0",
     "svelte-check": "^2.8.0",
     "svelte-chota": "^1.8.6"
