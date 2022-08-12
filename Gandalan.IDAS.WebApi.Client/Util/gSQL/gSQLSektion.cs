@@ -21,7 +21,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
         internal gSQLItem GetItem(string itemName)
         {
-            return Items.FirstOrDefault(i => i.Name.Equals(itemName, StringComparison.InvariantCultureIgnoreCase));
+            return Items.FirstOrDefault(i => i.Name != null && i.Name.Equals(itemName, StringComparison.InvariantCultureIgnoreCase));
 
         }
 

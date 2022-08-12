@@ -16,7 +16,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
         public gSQLSektion GetSektion(string sektion)
         {
-            return Sektionen.FirstOrDefault(s => s.Name.Equals(sektion, StringComparison.InvariantCultureIgnoreCase));
+            return Sektionen.FirstOrDefault(s => s.Name != null && s.Name.Equals(sektion, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public string GetItem(string sektion, string itemName, string defaultWert = null)

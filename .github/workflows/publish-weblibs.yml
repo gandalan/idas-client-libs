@@ -1,6 +1,11 @@
 name: Publish WebLibs (NPM)
 
-on: workflow_dispatch
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'WebLibs/**'
+      - '.github/workflows/publish-weblibs.yml'
 
 env:
   WEBLIBS_DIR: WebLibs
@@ -27,6 +32,10 @@ jobs:
         node-version: '16.x'
         registry-url: 'https://registry.npmjs.org'
     - run: npm ci
+      working-directory: ${{ env.WEBLIBS_DIR }}
+    - run: npm run check
+      working-directory: ${{ env.WEBLIBS_DIR }}
+    - run: npm run lint
       working-directory: ${{ env.WEBLIBS_DIR }}
     - run: npm publish
       working-directory: ${{ env.WEBLIBS_DIR }}
