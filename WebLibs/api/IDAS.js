@@ -7,7 +7,6 @@ let apiBaseUrl = localStorage.getItem('IDAS_ApiBaseUrl') || 'https://api.dev.ida
 let restClient = new RESTClient(apiBaseUrl, authToken);
 restClient.onError = (error, message) => {
     if (message.indexOf('401') || message.indexOf('403')) {
-        //console.log(message+" would remove Token");
         localStorage.removeItem('IDAS_AuthToken');
         new IDAS().authenticateWithSSO(true);
     }
