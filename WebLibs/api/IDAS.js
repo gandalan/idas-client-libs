@@ -4,11 +4,6 @@ let appToken = localStorage.getItem("IDAS_AppToken") || "66B70E0B-F7C4-4829-B12A
 let authToken = localStorage.getItem("IDAS_AuthToken");
 let apiBaseUrl = localStorage.getItem("IDAS_ApiBaseUrl") || "https://api.dev.idas-cloudservices.net/api/";
 
-const url = new URL(apiBaseUrl);
-url.pathname = "/SSO";
-url.search = "?a=" + appToken + "&r=%target%%3Ft=%token%%26m=%mandant%";
-let ssoAuthUrl = url.toString();
-
 let restClient = new RESTClient(apiBaseUrl, authToken);
 restClient.onError = (error, message) => {
     if (message.indexOf("401") || message.indexOf("403"))
@@ -35,9 +30,17 @@ export class IDAS
         return data;
     }
 
-    async authenticateWithSSO() { 
+    async authenticateWithSSO(forceRenew = false) { 
         if (!authToken)
         {
+            const url = new URL(apiBaseUrl);
+            url.pathname = "/SSO";
+            url.search = "?a=" + appToken;
+            if (forceRenew)
+                url.search = url.search + "&forceRenew=true";
+            url.search = url.search + "&r=%target%%3Ft=%token%%26m=%mandant%";
+            let ssoAuthUrl = url.toString();
+
             var ssoURL = ssoAuthUrl.replace("%target%", encodeURIComponent(window.location.href));
             window.location = ssoURL;
         }
