@@ -9,7 +9,7 @@ restClient.onError = (error, message) => {
     if (message.indexOf('401') || message.indexOf('403')) {
         //console.log(message+" would remove Token");
         localStorage.removeItem('IDAS_AuthToken');
-        authenticateWithSSO(true);
+        new IDAS().authenticateWithSSO(true);
     }
 }
 
