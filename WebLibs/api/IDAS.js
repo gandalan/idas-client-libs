@@ -9,8 +9,7 @@ restClient.onError = (error, message) => {
     if (message.indexOf('401') || message.indexOf('403')) {
         //console.log(message+" would remove Token");
         localStorage.removeItem('IDAS_AuthToken');
-        let ssoURL = ssoAuthUrl.replace('%target%', encodeURIComponent(window.location.href));
-        window.location = ssoURL;
+        authenticateWithSSO(true);
     }
 }
 
