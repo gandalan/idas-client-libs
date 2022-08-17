@@ -6,6 +6,7 @@ on:
     paths-ignore:
       - 'WebLibs/**'
       - '.github/workflows/publish-weblibs.yml'
+      - '.github/workflows/check-weblibs.yml'
 
 env:
   SDK_VERSION: 6.0.x
