@@ -6,14 +6,14 @@
 // Edit: phil - 21.02.2017
 // *****************************************************************************
 
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Web;
+using Gandalan.IDAS.WebApi.Client.Settings;
+using Gandalan.IDAS.WebApi.DTO;
+using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Gandalan.IDAS.WebApi.Client.Settings;
-using Gandalan.IDAS.WebApi.DTO;
-using Gandalan.IDAS.Web;
-using Newtonsoft.Json;
-using Gandalan.IDAS.Client.Contracts.Contracts;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
@@ -74,7 +74,7 @@ namespace Gandalan.IDAS.WebApi.Client
         }
 
         /// <summary>
-        /// Meldet mit den aktuellen Credentials am Endpunkt /api/Login/Authenticate an. Wenn ein AuthToken vorhanden ist, wird 
+        /// Meldet mit den aktuellen Credentials am Endpunkt /api/Login/Authenticate an. Wenn ein AuthToken vorhanden ist, wird
         /// zunächst versucht, dieses zu verwenden und ggf. zu updaten. Wenn das fehlschlägt, erfolgt eine Anmeldung mit Username/
         /// Passwort aus den Settings.
         /// </summary>
@@ -113,12 +113,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     Status = "OK";
                     return true;
                 }
-                else
-                {
-                    AuthToken = null;
-                    Status = "Error";
-                    return false;
-                }
+
+                AuthToken = null;
+                Status = "Error";
+                return false;
             }
             catch (ApiException apiex)
             {
@@ -175,12 +173,10 @@ namespace Gandalan.IDAS.WebApi.Client
                     Status = "OK";
                     return true;
                 }
-                else
-                {
-                    AuthToken = null;
-                    Status = "Error";
-                    return false;
-                }
+
+                AuthToken = null;
+                Status = "Error";
+                return false;
             }
             catch (ApiException apiex)
             {
@@ -202,7 +198,6 @@ namespace Gandalan.IDAS.WebApi.Client
                 return false;
             }
         }
-
 
         public UserAuthTokenDTO RefreshToken(Guid authTokenGuid)
         {
@@ -234,26 +229,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return cl.Post<T>(uri, data, settings);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex, data);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -264,26 +246,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return await cl.PostAsync<T>(uri, data, settings);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex, data);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -294,26 +263,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return cl.Post(uri, data, settings);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex, data);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -324,26 +280,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return await cl.PostAsync(uri, data, settings);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex, data);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -354,26 +297,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return cl.PostData(uri, data);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex, data);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -384,26 +314,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return await cl.PostDataAsync(uri, data);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex, data);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -414,26 +331,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return cl.Get(uri);
                 }
                 catch (WebException ex)
                 {
-                        ApiException exception = TranslateException(ex);
-                        if (!IgnoreOnErrorOccured)
-                        {
-                            OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                        }
-
-                        throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -444,26 +348,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return await cl.GetAsync(uri);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -474,26 +365,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return cl.GetData(uri);
                 }
                 catch (WebException ex)
                 {
-                        ApiException exception = TranslateException(ex);
-                        if (!IgnoreOnErrorOccured)
-                        {
-                            OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                        }
-
-                        throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -504,26 +382,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return await cl.GetDataAsync(uri);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -534,26 +399,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return cl.Get<T>(uri, settings);
                 }
                 catch (WebException ex)
                 {
-                        ApiException exception = TranslateException(ex);
-                        if (!IgnoreOnErrorOccured)
-                        {
-                            OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                        }
-
-                        throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -564,26 +416,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return await cl.GetAsync<T>(uri, settings);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -594,26 +433,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return cl.Put<T>(uri, data, settings);
                 }
                 catch (WebException ex)
                 {
-                        ApiException exception = TranslateException(ex, data);
-                        if (!IgnoreOnErrorOccured)
-                        {
-                            OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                        }
-
-                        throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -624,26 +450,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return await cl.PutAsync<T>(uri, data, settings);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex, data);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -654,26 +467,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return cl.Put(uri, data, settings);
                 }
                 catch (WebException ex)
                 {
-                        ApiException exception = TranslateException(ex, data);
-                        if (!IgnoreOnErrorOccured)
-                        {
-                            OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                        }
-
-                        throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -684,26 +484,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return await cl.PutAsync(uri, data, settings);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex, data);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -714,26 +501,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return cl.PutData(uri, data);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex, data);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -744,56 +518,30 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return await cl.PutDataAsync(uri, data);
                 }
                 catch (WebException ex)
                 {
-                        ApiException exception = TranslateException(ex, data);
-                        if (!IgnoreOnErrorOccured)
-                        {
-                            OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                        }
-
-                        throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
 
-        public T Delete<T>(string uri, object data, JsonSerializerSettings settings = null) 
+        public T Delete<T>(string uri, object data, JsonSerializerSettings settings = null)
         {
             using (var cl = new RESTRoutinen(Settings.Url))
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return cl.Delete<T>(uri, data, settings);
                 }
                 catch (WebException ex)
                 {
-                        ApiException exception = TranslateException(ex, data);
-                        if (!IgnoreOnErrorOccured)
-                        {
-                            OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                        }
-
-                        throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -804,56 +552,30 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return await cl.DeleteAsync<T>(uri, data, settings);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex, data);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
 
-        public T Delete<T>(string uri, JsonSerializerSettings settings = null) 
+        public T Delete<T>(string uri, JsonSerializerSettings settings = null)
         {
             using (var cl = new RESTRoutinen(Settings.Url))
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return cl.Delete<T>(uri, settings);
                 }
                 catch (WebException ex)
                 {
-                        ApiException exception = TranslateException(ex);
-                        if (!IgnoreOnErrorOccured)
-                        {
-                            OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                        }
-
-                        throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -864,26 +586,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return await cl.DeleteAsync<T>(uri, settings);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -894,26 +603,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return cl.Delete(uri);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex);
-                        if (!IgnoreOnErrorOccured)
-                        {
-                            OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                        }
-
-                        throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -924,26 +620,13 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 try
                 {
-                    if (AuthToken != null)
-                    {
-                        cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                    }
-                    if (Settings.InstallationId != Guid.Empty)
-                        cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-                    if (!String.IsNullOrEmpty(Settings.UserAgent))
-                        cl.UserAgent = Settings.UserAgent;
+                    SetupRestRoutinen(cl);
 
                     return await cl.DeleteAsync(uri);
                 }
                 catch (WebException ex)
                 {
-                    ApiException exception = TranslateException(ex);
-                    if (!IgnoreOnErrorOccured)
-                    {
-                        OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
-                    }
-
-                    throw exception;
+                    throw HandleWebException(ex);
                 }
             }
         }
@@ -959,6 +642,35 @@ namespace Gandalan.IDAS.WebApi.Client
                     result = $"Interner Serverfehler (\"{result.Substring(start, end - start)}\"). Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.";
             }
             return result;
+        }
+
+        private void SetupRestRoutinen(RESTRoutinen cl)
+        {
+            if (AuthToken != null)
+            {
+                cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+            }
+
+            if (Settings.InstallationId != Guid.Empty)
+            {
+                cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
+            }
+
+            if (!string.IsNullOrEmpty(Settings.UserAgent))
+            {
+                cl.UserAgent = Settings.UserAgent;
+            }
+        }
+
+        private ApiException HandleWebException(WebException ex)
+        {
+            ApiException exception = TranslateException(ex);
+            if (!IgnoreOnErrorOccured)
+            {
+                OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+            }
+
+            return exception;
         }
     }
 }
