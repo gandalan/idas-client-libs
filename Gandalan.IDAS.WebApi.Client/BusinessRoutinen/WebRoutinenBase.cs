@@ -235,7 +235,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -252,7 +252,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -269,7 +269,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -286,7 +286,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -303,7 +303,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -320,7 +320,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -439,7 +439,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -456,7 +456,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -473,7 +473,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -490,7 +490,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -507,7 +507,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -524,7 +524,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -541,7 +541,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -558,7 +558,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex);
+                    throw HandleWebException(ex, data);
                 }
             }
         }
@@ -665,6 +665,17 @@ namespace Gandalan.IDAS.WebApi.Client
         private ApiException HandleWebException(WebException ex)
         {
             ApiException exception = TranslateException(ex);
+            if (!IgnoreOnErrorOccured)
+            {
+                OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
+            }
+
+            return exception;
+        }
+
+        private ApiException HandleWebException(WebException ex, object data)
+        {
+            ApiException exception = TranslateException(ex, data);
             if (!IgnoreOnErrorOccured)
             {
                 OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
