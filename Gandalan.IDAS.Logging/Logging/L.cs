@@ -12,7 +12,7 @@ namespace Gandalan.IDAS.Logging
 
         public static void Fehler(Exception ex, string message, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
         {
-            Fehler($"{message} {ex.GetType().FullName}: {ex.Message}{Environment.NewLine} Stacktrace: {ex.StackTrace}", context, sender);
+            Fehler($"{message} {ex.GetType().FullName}: {ex.Message}{Environment.NewLine}Stacktrace: {ex.StackTrace}", context, sender);
             if (ex is AggregateException exception)
             {
                 foreach (var e in exception.InnerExceptions)
@@ -24,7 +24,7 @@ namespace Gandalan.IDAS.Logging
 
         public static void Fehler(Exception ex, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
         {
-            Fehler($"{ex.GetType().FullName}: {ex.Message}{Environment.NewLine} Stacktrace: {ex.StackTrace}", context, sender);
+            Fehler($"{ex.GetType().FullName}: {ex.Message}{Environment.NewLine}Stacktrace: {ex.StackTrace}", context, sender);
             if (ex is AggregateException exception)
             {
                 foreach (var e in exception.InnerExceptions)
