@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client.Settings;
-using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -131,7 +130,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                Post("Archivierung/?vguid=" + vorgangGuid.ToString(), null);
+                Post("Archivierung/Archivieren/?vguid=" + vorgangGuid.ToString(), null);
             }
         }
 
@@ -139,7 +138,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                Post("Archivierung/", vorgangGuidList);
+                Post("Archivierung/ArchivierenByGuids/", vorgangGuidList);
             }
         }
 
@@ -232,7 +231,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public VorgangDTO GetVorgangForFunction(Guid vorgangGuid, long mandantId) 
+        public VorgangDTO GetVorgangForFunction(Guid vorgangGuid, long mandantId)
         {
             if (Login())
             {
