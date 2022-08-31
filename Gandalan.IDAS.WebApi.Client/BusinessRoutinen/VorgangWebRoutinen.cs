@@ -130,7 +130,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                Post("Archivierung/Archivieren/?vguid=" + vorgangGuid.ToString(), null);
+                Post("Archivierung/Archivieren?vguid=" + vorgangGuid.ToString(), null);
             }
         }
 
@@ -138,7 +138,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                Post("Archivierung/ArchivierenByGuids/", vorgangGuidList);
+                Post("Archivierung/ArchivierenByGuids", vorgangGuidList);
             }
         }
 
