@@ -17,7 +17,7 @@ namespace Gandalan.IDAS.Logging
             {
                 foreach (var e in exception.InnerExceptions)
                 {
-                    Fehler(e, $"{message} InnerException:", context, sender);
+                    Fehler(e, $"{message} InnerException", context, sender);
                 }
             }
         }
@@ -29,7 +29,7 @@ namespace Gandalan.IDAS.Logging
             {
                 foreach (var e in exception.InnerExceptions)
                 {
-                    Fehler(e, "InnerException:", context, sender);
+                    Fehler(e, "InnerException", context, sender);
                 }
             }
         }
