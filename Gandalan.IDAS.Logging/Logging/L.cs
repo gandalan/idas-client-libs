@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Logging
 {
@@ -16,24 +12,24 @@ namespace Gandalan.IDAS.Logging
 
         public static void Fehler(Exception ex, string message, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
         {
-            Fehler($"{message} {ex.GetType().FullName}: {ex.Message}", context, sender);
-            if (ex is AggregateException)
+            Fehler($"{message} {ex.GetType().FullName}: {ex.Message}{Environment.NewLine} Stacktrace: {ex.StackTrace}", context, sender);
+            if (ex is AggregateException exception)
             {
-                foreach (var e in (ex as AggregateException).InnerExceptions)
+                foreach (var e in exception.InnerExceptions)
                 {
-                    Fehler(e, message, context, sender);
+                    Fehler(e, $"{message} InnerException:", context, sender);
                 }
             }
         }
 
         public static void Fehler(Exception ex, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
         {
-            Fehler($"{ex.GetType().FullName}: {ex.Message}", context, sender);
-            if (ex is AggregateException)
+            Fehler($"{ex.GetType().FullName}: {ex.Message}{Environment.NewLine} Stacktrace: {ex.StackTrace}", context, sender);
+            if (ex is AggregateException exception)
             {
-                foreach (var e in (ex as AggregateException).InnerExceptions)
+                foreach (var e in exception.InnerExceptions)
                 {
-                    Fehler(e, context, sender);
+                    Fehler(e, "InnerException:", context, sender);
                 }
             }
         }
