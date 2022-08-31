@@ -1,13 +1,10 @@
-﻿using System;
+using Gandalan.IDAS.Logging.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Gandalan.IDAS.Logging.Contracts;
 
 namespace Gandalan.IDAS.Logging
 {
@@ -79,12 +76,12 @@ namespace Gandalan.IDAS.Logging
                     _traceListener.Flush();
                 }
             }
+
             // Event-Abonnenten informieren und/oder Debug-Ausgabe
             OnLogStringAdded?.Invoke(log);
-#if DEBUG 
+
             // Debug-Console ausgeben
             Debug.WriteLine(log);
-#endif
         }
     }
 }
