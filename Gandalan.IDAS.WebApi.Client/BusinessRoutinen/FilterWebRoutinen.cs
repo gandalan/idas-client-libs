@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client.Settings;
-using Gandalan.IDAS.WebApi.DTO;
+﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO.DTOs.Filter;
+using System;
+using System.Threading.Tasks;
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
     public class FilterWebRoutinen : WebRoutinenBase
@@ -15,7 +13,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<FilterItemDTO[]>("Filter");
+                return Get<FilterItemDTO[]>("Filter/GetAll");
             }
             return null;
         }
@@ -23,7 +21,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<FilterItemDTO>("Filter?id=" + id.ToString());
+                return Get<FilterItemDTO>("Filter/GetByGuid?id=" + id.ToString());
             }
             return null;
         }
@@ -31,7 +29,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<FilterItemDTO[]>("Filter?context=" + context);
+                return Get<FilterItemDTO[]>("Filter/Get?context=" + context);
             }
             return null;
         }
@@ -40,10 +38,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Put("Filter", dto);
+                return Put("Filter/Put", dto);
             }
             return null;
-        }       
+        }
 
         public async Task<FilterItemDTO[]> GetAllAsync()
         {
