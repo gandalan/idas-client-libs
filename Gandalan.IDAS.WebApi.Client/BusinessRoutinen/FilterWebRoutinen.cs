@@ -29,7 +29,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<FilterItemDTO[]>("Filter/Get?context=" + context);
+                return Get<FilterItemDTO[]>("Filter/GetByContext?context=" + context);
             }
             return null;
         }
