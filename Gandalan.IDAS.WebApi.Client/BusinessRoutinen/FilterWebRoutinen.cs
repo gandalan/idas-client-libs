@@ -13,7 +13,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<FilterItemDTO[]>("Filter/GetAll");
+                return Get<FilterItemDTO[]>("Filter");
             }
             return null;
         }
@@ -21,7 +21,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<FilterItemDTO>("Filter/GetByGuid?id=" + id.ToString());
+                return Get<FilterItemDTO>("Filter?id=" + id.ToString());
             }
             return null;
         }
@@ -29,7 +29,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<FilterItemDTO[]>("Filter/Get?context=" + context);
+                return Get<FilterItemDTO[]>("Filter?context=" + context);
             }
             return null;
         }
@@ -38,7 +38,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Put("Filter/Put", dto);
+                return Put("Filter", dto);
             }
             return null;
         }
