@@ -63,34 +63,12 @@ namespace Gandalan.IDAS.Web
         /// <returns>Objektinstanz</returns>
         public T Get<T>(string url, JsonSerializerSettings settings = null)
         {
-            try
-            {
-                return JsonConvert.DeserializeObject<T>(Get(url), settings);
-            }
-            catch (Exception ex)
-            #region Code
-            {
-                AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
-                throw;
-            }
-            #endregion
+            return JsonConvert.DeserializeObject<T>(Get(url), settings);
         }
 
         public async Task<T> GetAsync<T>(string url, JsonSerializerSettings settings = null)
         {
-            try
-            {
-                return JsonConvert.DeserializeObject<T>(await GetAsync(url), settings);
-            }
-            catch (Exception ex)
-            #region Code
-            {
-                AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
-                throw;
-            }
-            #endregion
+            return JsonConvert.DeserializeObject<T>(await GetAsync(url), settings);
         }
 
         public string Get(string url)
