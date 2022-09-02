@@ -16,6 +16,8 @@ namespace Gandalan.IBOS3.Module.Lookups.Document
         int Filesize { get; set; }
         string MimeType { get; set; }
         string md5 { get; set; }
+        List<string> Path { get; set; }
+        string Name { get; set; }
     }
 
     public interface IDocumentLookupParams

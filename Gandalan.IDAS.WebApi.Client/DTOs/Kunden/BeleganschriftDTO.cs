@@ -142,6 +142,8 @@ namespace Gandalan.IDAS.WebApi.DTO
                 sb.AppendLine(AdressZusatz1);
             if (!string.IsNullOrEmpty(AdressZusatz2))
                 sb.AppendLine(AdressZusatz2);
+            if (!string.IsNullOrEmpty(Ortsteil))
+                sb.AppendLine("OT " + Ortsteil);
             if (!string.IsNullOrEmpty(Strasse) || !string.IsNullOrEmpty(Hausnummer))
                 sb.AppendLine($"{Strasse} {Hausnummer}".Trim());
             if (!string.IsNullOrEmpty(Land) || !string.IsNullOrEmpty(Postleitzahl) || !string.IsNullOrEmpty(Ort))

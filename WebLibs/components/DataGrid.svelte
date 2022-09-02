@@ -6,35 +6,33 @@
     export let items = [];
     export let selectedItem = {};
     export let standardItem;
-    export let displayProperty = "";
-    export let header = "Überschrift";
-    export let key = "Guid";
+    export let displayProperty = '';
+    export let header = 'Überschrift';
+    export let key = 'Guid';
     export let marker = null;
-    export let markerField = "";
+    export let markerField = '';
 
-    function setCurrent(item)
-    {
+    function setCurrent(item) {
         selectedItem = item;
-        console.log(item);
-        dispatch("selectedItemChanged", item);
+        dispatch('selectedItemChanged', item);
     }
 </script>
 
-<div class="datagrid">    
+<div class="datagrid">
     <div class="dgheader">
         {header}
     </div>
     <div>
         {#if standardItem}
-        <div class="dgrow" on:click={setCurrent(standardItem)} class:selected="{selectedItem[key] === standardItem[key]}">{standardItem[displayProperty]}</div>
+            <div class="dgrow" on:click={setCurrent(standardItem)} class:selected="{selectedItem[key] === standardItem[key]}">{standardItem[displayProperty]}</div>
         {/if}
         {#each items as d}
-        <div class="dgrow" on:click={setCurrent(d)} class:selected="{selectedItem[key] === d[key]}">
-            {d[displayProperty]}
-            {#if marker && markerField && d[markerField] === true}
-            <Icon src={marker} />
-            {/if}
-        </div>
+            <div class="dgrow" on:click={setCurrent(d)} class:selected="{selectedItem[key] === d[key]}">
+                {d[displayProperty]}
+                {#if marker && markerField && d[markerField] === true}
+                    <Icon src={marker} />
+                {/if}
+            </div>
         {/each}
     </div>
 </div>
@@ -55,7 +53,7 @@
     padding: 4px 4px 4px 8px;
     flex: 1;
 }
- 
+
 .dgrow {
     margin-left: 8px;
     border-bottom: 1px solid var(--color-darkGrey);
@@ -65,8 +63,8 @@
 }
 
 .selected {
-    background-color: var(--color-selected); 
-    color: var(--color-selected-text);    
+    background-color: var(--color-selected);
+    color: var(--color-selected-text);
 }
 
 </style>

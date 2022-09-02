@@ -1,11 +1,12 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Gandalan.IDAS.WebApi.Data.DTOs.Produktion
 {
-    public class BerechnungParameterDTO
+    public class BerechnungParameterDTO : ICloneable
     {
         public Guid MandantGuid { get; set; } = Guid.Empty;
         public bool SaveResultData { get; set; } = true;
@@ -16,6 +17,11 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Produktion
         public bool ReturnRawDataFile { get; set; }
         public string RawDataFileContent { get; set; }
 
+        public object Clone()
+        {
+            var jsonString = JsonConvert.SerializeObject(this);
+            return JsonConvert.DeserializeObject<BerechnungParameterDTO>(jsonString);
+        }
     }
 
     public class BerechnungResultDTO

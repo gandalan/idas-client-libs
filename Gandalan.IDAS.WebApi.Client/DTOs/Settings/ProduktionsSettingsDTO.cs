@@ -44,5 +44,6 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Settings
         public bool Griffmulde_ST3_134850 { get; set; } = false;
         public bool AnbauteileP2_G6 { get; set; } = false;
         public bool SP_Z_Mass_inkl_Buerstendichtung { get; set; } = true;
+        public bool SP5_Sprosse_ausklinken { get; set; } = false;
     }
 }

@@ -81,5 +81,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string ExterneReferenznummer { get; set; }
         public Guid? ExterneMandantenGuid { get; set; }
         public string ExternerFirmenname { get; set; }
+
+        public Guid MandantGuid { get; set; }
     }
 }

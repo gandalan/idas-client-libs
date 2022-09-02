@@ -6,28 +6,29 @@ using System.Text;
 namespace Gandalan.IDAS.WebApi.Util.gSQL
 {
     public class gSQLInhalt
-	{
-		public List<gSQLSektion> Sektionen { get; set; }
+    {
+        public List<gSQLSektion> Sektionen { get; set; }
 
-		public gSQLInhalt()
-		{
-			Sektionen = new List<gSQLSektion>();
-		}
+        public gSQLInhalt()
+        {
+            Sektionen = new List<gSQLSektion>();
+        }
 
         public gSQLSektion GetSektion(string sektion)
         {
-            return Sektionen.FirstOrDefault(s => s.Name.Equals(sektion, StringComparison.InvariantCultureIgnoreCase));
+            return Sektionen.FirstOrDefault(s => s.Name != null && s.Name.Equals(sektion, StringComparison.InvariantCultureIgnoreCase));
         }
 
-		public string GetItem(string sektion, string itemName, string defaultWert = null)
-		{
+        public string GetItem(string sektion, string itemName, string defaultWert = null)
+        {
             gSQLSektion sek = GetSektion(sektion);
-			if (sek != null)
-			{
+            if (sek != null)
+            {
                 return sek.GetItemWert(itemName, defaultWert);
-			}
-			return defaultWert;
-		}
+            }
+
+            return defaultWert;
+        }
 
         public override string ToString()
         {
@@ -39,8 +40,10 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                 {
                     sb.AppendLine(item.ToString());
                 }
+
                 sb.AppendLine();
             }
+
             return sb.ToString();
         }
     }
