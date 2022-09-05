@@ -82,6 +82,8 @@ namespace Gandalan.IDAS.Logging
 
             // Debug-Console ausgeben
             Debug.WriteLine(log);
+
+            Console.WriteLine(log);
         }
     }
 }
