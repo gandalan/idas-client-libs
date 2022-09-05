@@ -684,6 +684,7 @@ namespace Gandalan.IDAS.WebApi.Client
 
             var foundUrlInData = false;
 
+            // Check if we already have data from RESTRoutinen.AddInfoToException()
             if (!exception.Data.Contains("URL"))
             {
                 var innerException = exception;
