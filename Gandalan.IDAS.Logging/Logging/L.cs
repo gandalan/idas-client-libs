@@ -13,24 +13,26 @@ namespace Gandalan.IDAS.Logging
         public static void Fehler(Exception ex, string message, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
         {
             Fehler($"{message} {ex.GetType().FullName}: {ex.Message}{Environment.NewLine}Stacktrace: {ex.StackTrace}", context, sender);
-            if (ex is AggregateException exception)
+
+            var innerException = ex.InnerException;
+            while (innerException != null)
             {
-                foreach (var e in exception.InnerExceptions)
-                {
-                    Fehler(e, $"{message} InnerException", context, sender);
-                }
+                Fehler(innerException, $"{message} InnerException", context, sender);
+
+                innerException = innerException.InnerException;
             }
         }
 
         public static void Fehler(Exception ex, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
         {
             Fehler($"{ex.GetType().FullName}: {ex.Message}{Environment.NewLine}Stacktrace: {ex.StackTrace}", context, sender);
-            if (ex is AggregateException exception)
+
+            var innerException = ex.InnerException;
+            while (innerException != null)
             {
-                foreach (var e in exception.InnerExceptions)
-                {
-                    Fehler(e, "InnerException", context, sender);
-                }
+                Fehler(innerException, "InnerException", context, sender);
+
+                innerException = innerException.InnerException;
             }
         }
 

@@ -11,7 +11,7 @@ env:
   WEBLIBS_DIR: WebLibs
 
 jobs:
-  build-and-publish:
+  build-and-publish-weblibs:
     if: github.repository_owner == 'gandalan'
     runs-on: ubuntu-latest
 
