@@ -6,7 +6,7 @@ let apiBaseUrl = localStorage.getItem('IDAS_ApiBaseUrl') || 'https://api.dev.ida
 
 let restClient = new RESTClient(apiBaseUrl, authToken);
 restClient.onError = (error, message) => {
-    if (message.indexOf('401') || message.indexOf('403')) {
+    if (message.indexOf("401") != -1 || message.indexOf("403") != -1) {
         localStorage.removeItem('IDAS_AuthToken');
         new IDAS().authenticateWithSSO(true);
     }
@@ -85,8 +85,8 @@ export class IDAS {
         async comment(guid, commentData) {
             await restClient.put(`/FeedbackKommentar/${guid}`, commentData);
         },
-        async attachFile(m) {
-            await restClient.put('/FeedbackAttachment', m);
+        async attachFile(guid, filename, data) {
+            await restClient.put(`/FeedbackAttachment/?feedbackGuid=${guid}&filename=${filename}`, data);
         },
         async deleteFile(guid) {
             await restClient.delete(`/FeedbackAttachment/${guid}`);
@@ -99,6 +99,21 @@ export class IDAS {
         },
         async save(m) {
             await restClient.put('/Rollen', m);
+        },
+    };
+
+    vorgaenge = {
+        async getByVorgangsnummer(vorgangsNummer, jahr) {
+            return await restClient.get(`/Vorgang/${vorgangsNummer}/${jahr}`);
+        },
+    };
+
+    positionen = {
+        async getByPcode(pcode) {
+            return await restClient.get(`/BelegPositionen/GetByPcode/${pcode}`);
+        },
+        async get(guid) {
+            return await restClient.get(`/BelegPositionen/Get/${guid}`);
         },
     };
 }
