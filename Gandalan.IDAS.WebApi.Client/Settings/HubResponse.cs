@@ -3,10 +3,10 @@
     internal class HubResponse
     {
         public string CMS { get; set; }
-        public string DOCS { get; set; }
+        public string Docs { get; set; }
         public string IDAS { get; set; }
-        public string Prod_I1 { get; set; }
-        public string Prod_I2 { get; set; }
         public string Store { get; set; }
+        public string Feedback { get; set; }
+        public string Notify { get; set; }
     }
 }

@@ -78,9 +78,9 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                         {
                             Url = response.IDAS,
                             CMSUrl = response.CMS,
-                            DocUrl = response.DOCS,
-                            I1Url = response.Prod_I1,
-                            I2Url = response.Prod_I2,
+                            DocUrl = response.Docs,
+                            FeedbackUrl = response.Feedback,
+                            NotifyUrl = response.Notify,
                             StoreUrl = response.Store,
                             FriendlyName = env,
                             AppToken = appToken
