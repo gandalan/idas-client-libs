@@ -35,6 +35,7 @@ namespace Gandalan.IDAS.Web
                         }
                     }
                 }
+                return new ApiException(ex.Message, code, ex, payload);
             }
 
             return new ApiException(ex.Message, ex, payload);
