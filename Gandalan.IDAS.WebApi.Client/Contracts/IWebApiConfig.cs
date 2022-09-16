@@ -37,13 +37,10 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts
         /// </summary>
         string StoreUrl { get; set; }
         /// <summary>
-        /// IBOS2-Varianten Produktionsberechnung 
+        /// Feedback-Tool
         /// </summary>
-        string I2Url { get; set; }
-        /// <summary>
-        /// IBOS1-Varianten Produktionsberechnung 
-        /// </summary>
-        string I1Url { get; set; }
+        string FeedbackUrl { get; set; }
+        string NotifyUrl { get; set; }
 
         void Save();
 

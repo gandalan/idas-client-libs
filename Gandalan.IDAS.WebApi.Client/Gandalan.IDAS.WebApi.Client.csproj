@@ -24,4 +24,8 @@
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.1" PrivateAssets="All" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Gandalan.IDAS.Logging\Gandalan.IDAS.Logging.csproj" />
+  </ItemGroup>
+
 </Project>
