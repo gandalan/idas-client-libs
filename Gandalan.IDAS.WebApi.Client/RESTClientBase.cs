@@ -35,6 +35,7 @@ namespace Gandalan.IDAS.Web
                         }
                     }
                 }
+
                 return new ApiException(ex.Message, code, ex, payload);
             }
 
@@ -69,6 +70,8 @@ namespace Gandalan.IDAS.Web
                         }
                     }
                 }
+
+                return new ApiException(ex.Message, code, ex);
             }
 
             return new ApiException(ex.Message, ex);
