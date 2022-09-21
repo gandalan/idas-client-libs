@@ -12,18 +12,18 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.18.9",
+    "@babel/eslint-parser": "^7.19.1",
     "chota": "^0.8.0",
-    "eslint": "^8.21.0",
+    "eslint": "^8.23.1",
     "eslint-plugin-svelte3": "^4.0.0",
-    "svelte": "^3.49.0",
-    "svelte-check": "^2.8.0",
+    "svelte": "^3.50.1",
+    "svelte-check": "^2.9.0",
     "svelte-chota": "^1.8.6"
   },
   "dependencies": {
     "@mdi/js": "^7.0.96",
     "axios": "^0.27.2",
-    "svelte-table": "^0.5.0"
+    "svelte-table": "^0.5.1"
   },
   "peerDependencies": {
     "svelte-chota": "^1.8.6"
