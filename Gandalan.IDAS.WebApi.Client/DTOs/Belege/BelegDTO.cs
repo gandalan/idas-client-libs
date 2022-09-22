@@ -21,6 +21,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public BeleganschriftDTO VersandAdresse { get; set; }
         public bool VersandAdresseGleichBelegAdresse { get; set; }
         public string AusfuehrungsDatum { get; set; }
+        public string Terminwunsch { get; set; }
         public string InterneNotiz { get; set; }
         public string BemerkungFuerKunde { get; set; }
         public bool IstSelbstabholer { get; set; }
