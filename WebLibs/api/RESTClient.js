@@ -12,12 +12,13 @@ export class RESTClient {
     token = '';
     baseurl = '';
 
-    constructor(url, token) {
+    constructor(url, token, isJWT = false) {
         this.lastError = '';
         this.baseurl = url;
         this.token = token;
+        this.isJWT = isJWT;
 
-        if (this.token) {
+        if (this.token && !isJWT) {
             axios.defaults.headers.common['X-Gdl-AuthToken'] = this.token;
         }
 
@@ -26,15 +27,23 @@ export class RESTClient {
         });
     }
 
-    async get(uri) {
+    updateToken(token) {
+        this.token = token;
+    }
+
+    async get(uri, noJWT = false) {
         try {
-            const response = await axios.get(this.baseurl + uri, { withCredentials: false });
+            let options = { withCredentials: false }
+            if (this.isJWT && !noJWT)
+                options.headers = { Authorization: `Bearer ${this.token}` }
+            const response = await axios.get(this.baseurl + uri, options);
             this.lastError = '';
             return response.data;
         } catch (error) {
             this.handleError(error);
         }
     }
+
 
     async getFile(uri) {
         try {
@@ -54,7 +63,10 @@ export class RESTClient {
     async getRaw(uri) {
         let response = {};
         try {
-            response = await axios.get(this.baseurl + uri, { withCredentials: false })
+            let options = { withCredentials: false }
+            if (this.isJWT)
+                options.headers = { Authorization: `Bearer ${this.token}` }
+            response = await axios.get(this.baseurl + uri, options)
             this.lastError = '';
         } catch (error) {
             this.handleError(error);
@@ -64,7 +76,10 @@ export class RESTClient {
 
     async post(uri, formData) {
         try {
-            const response = await axios.post(this.baseurl + uri, formData, { withCredentials: false });
+            let options = { withCredentials: false }
+            if (this.isJWT)
+                options.headers = { Authorization: `Bearer ${this.token}` }
+            const response = await axios.post(this.baseurl + uri, formData, options);
             this.lastError = '';
             return response;
         } catch (error) {
@@ -74,7 +89,10 @@ export class RESTClient {
 
     async put(uri, formData) {
         try {
-            const response = await axios.put(this.baseurl + uri, formData, { withCredentials: false });
+            let options = { withCredentials: false }
+            if (this.isJWT)
+                options.headers = { Authorization: `Bearer ${this.token}` }
+            const response = await axios.put(this.baseurl + uri, formData, options);
             this.lastError = '';
             return response;
         } catch (error) {
@@ -84,7 +102,10 @@ export class RESTClient {
 
     async delete(uri) {
         try {
-            const response = await axios.delete(this.baseurl + uri, { withCredentials: false });
+            let options = { withCredentials: false }
+            if (this.isJWT)
+                options.headers = { Authorization: `Bearer ${this.token}` }
+            const response = await axios.delete(this.baseurl + uri, options);
             this.lastError = '';
             return response;
         } catch (error) {
@@ -93,7 +114,7 @@ export class RESTClient {
     }
 
     // eslint-disable-next-line no-unused-vars
-    onError = (error, message) => {};
+    onError = (error, message) => { };
 
     handleError(error) {
         let message = error ? error.message : '?';
