@@ -7,6 +7,7 @@
 // *****************************************************************************
 
 using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
@@ -666,16 +667,16 @@ namespace Gandalan.IDAS.WebApi.Client
         private ApiException HandleWebException(WebException ex, string url)
         {
             ApiException exception = TranslateException(ex);
-            return internalHandleWebException(exception, url);
+            return InternalHandleWebException(exception, url);
         }
 
         private ApiException HandleWebException(WebException ex, string url, object data)
         {
             ApiException exception = TranslateException(ex, data);
-            return internalHandleWebException(exception, url);
+            return InternalHandleWebException(exception, url);
         }
 
-        private ApiException internalHandleWebException(ApiException exception, string url)
+        private ApiException InternalHandleWebException(ApiException exception, string url)
         {
             if (!IgnoreOnErrorOccured)
             {
@@ -683,23 +684,34 @@ namespace Gandalan.IDAS.WebApi.Client
             }
 
             var foundUrlInData = false;
+            object dataBaseUrl = null;
+            object dataUrl = null;
+            object dataCallMethod = null;
 
             // Check if we already have data from RESTRoutinen.AddInfoToException()
             if (!exception.Data.Contains("URL"))
             {
-                var innerException = exception;
-                while (innerException.InnerException != null)
+                var innerException = exception.InnerException;
+                while (innerException != null)
                 {
-                    if (exception.Data.Contains("URL"))
+                    if (innerException.Data.Contains("URL"))
                     {
+                        dataBaseUrl = innerException.Data["BaseUrl"];
+                        dataUrl = innerException.Data["URL"];
+                        dataCallMethod = innerException.Data["CallMethod"];
+
                         foundUrlInData = true;
                     }
 
-                    innerException = exception;
+                    innerException = innerException.InnerException;
                 }
             }
             else
             {
+                dataBaseUrl = exception.Data["BaseUrl"];
+                dataUrl = exception.Data["URL"];
+                dataCallMethod = exception.Data["CallMethod"];
+
                 foundUrlInData = true;
             }
 
@@ -710,7 +722,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 exception.Data.Add("BaseUrl", Settings.Url);
                 exception.Data.Add("URL", url);
                 exception.Data.Add("CallMethod", callerMethodName);
+
+                dataBaseUrl = exception.Data["BaseUrl"];
+                dataUrl = exception.Data["URL"];
+                dataCallMethod = exception.Data["CallMethod"];
             }
+
+            L.Fehler(exception, $"Exception data: BaseUrl: {dataBaseUrl} URL: {dataUrl} CallMethod: {dataCallMethod}{Environment.NewLine}");
 
             return exception;
         }

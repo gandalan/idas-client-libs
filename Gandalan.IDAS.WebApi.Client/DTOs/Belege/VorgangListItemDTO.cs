@@ -37,6 +37,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string Kommission { get; set; }
         /// <summary>
+        /// Eingegebene Notitzen zum Vorgang vom Produzenten
+        /// </summary>
+        public string VorgangsNotitz { get; set; }
+        /// <summary>
         /// Aktuelle Belegnummer
         /// </summary>        
         public string AktuelleBelegNummer { get; set; }

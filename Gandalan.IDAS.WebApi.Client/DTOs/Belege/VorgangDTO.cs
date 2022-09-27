@@ -32,6 +32,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string Kommission { get; set; }
         /// <summary>
+        /// Kommission2 des Vorgangs
+        /// </summary>
+        public string Kommission2 { get; set; }
+        /// <summary>
         /// Erstelldatum des Vorgangs
         /// </summary>
         public DateTime ErstellDatum { get; set; }

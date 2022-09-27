@@ -22,7 +22,7 @@ env:
   OUTPUT_DIR: ./GDLPackages
 
 jobs:
-  build-and-publish:
+  build-and-publish-nuget:
     if: github.repository_owner == 'gandalan'
     runs-on: ubuntu-latest
 

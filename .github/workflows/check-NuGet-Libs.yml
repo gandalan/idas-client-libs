@@ -22,7 +22,7 @@ env:
   OUTPUT_DIR: ./GDLPackages
 
 jobs:
-  build-and-publish:
+  check-nuget-libs:
     runs-on: ubuntu-latest
 
     steps:
