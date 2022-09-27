@@ -13,8 +13,8 @@ namespace Gandalan.IDAS.Logging
     public class Logger : ILogger
     {
         private static Logger _logger;
-        private object _lock = new Object();
-        private System.Diagnostics.TextWriterTraceListener _traceListener;
+        private readonly object _lock = new Object();
+        private TextWriterTraceListener _traceListener;
 
         public Dictionary<LogContext, LogLevel> LogLevels { get; set; }
         public event LogStringAddedDelegate OnLogStringAdded;
@@ -37,8 +37,12 @@ namespace Gandalan.IDAS.Logging
             try
             {
                 LogDateiPfad = pfad ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan", app, "Logs");
-                LogDateiName = Path.Combine(LogDateiPfad, user + "_" + datum + ".log");
-                if (!Directory.Exists(LogDateiPfad)) Directory.CreateDirectory(LogDateiPfad);
+                LogDateiName = Path.Combine(LogDateiPfad, $"{user}_{datum}.log");
+                if (!Directory.Exists(LogDateiPfad))
+                {
+                    Directory.CreateDirectory(LogDateiPfad);
+                }
+
                 _traceListener = new TextWriterTraceListener(LogDateiName);
                 Debug.WriteLine($"Logfile: {LogDateiName}");
             }
@@ -55,17 +59,28 @@ namespace Gandalan.IDAS.Logging
 
         public void Log(string message, LogLevel level = LogLevel.Diagnose, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
         {
-            if (LogLevels.ContainsKey(context) && level > LogLevels[context])
+            if (LogLevels.ContainsKey(context) &&
+                level > LogLevels[context])
+            {
                 return;
+            }
 
             // Log-Eintrag formatieren
-            string log = context.ToString().PadRight(15) + " " + level.ToString().PadRight(8) + " " + DateTime.Now.ToShortTimeString() + " ";
+            const string timeFormat = "HH:mm:ss";
+            var log = $"{context.ToString().PadRight(15)} {level.ToString().PadRight(8)} {DateTime.Now.ToString(timeFormat)} ";
             if (sender != null)
-                log += sender.PadRight(16).Substring(0, 15) + " ";
+            {
+                log += $"{sender.PadRight(16).Substring(0, 15)} ";
+            }
             else
+            {
                 log += new string(' ', 16);
+            }
+
             if (!string.IsNullOrEmpty(message))
+            {
                 log += message;
+            }
 
             // Ausgeben in Logfile
             if (_traceListener != null)
@@ -82,6 +97,8 @@ namespace Gandalan.IDAS.Logging
 
             // Debug-Console ausgeben
             Debug.WriteLine(log);
+
+            Console.WriteLine(log);
         }
     }
 }

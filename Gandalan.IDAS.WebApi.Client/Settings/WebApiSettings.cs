@@ -35,17 +35,14 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         /// </summary>
         public string CMSUrl { get; set; }
         /// <summary>
-        /// Latex-Reports 
+        /// Paket-Store
         /// </summary>
         public string StoreUrl { get; set; }
         /// <summary>
-        /// IBOS2-Varianten Produktionsberechnung 
+        /// Feedback-Tool
         /// </summary>
-        public string I2Url { get; set; }
-        /// <summary>
-        /// IBOS1-Varianten Produktionsberechnung 
-        /// </summary>
-        public string I1Url { get; set; }
+        public string FeedbackUrl { get; set; }
+        public string NotifyUrl { get; set; }
 
         public WebApiSettings(Guid appToken, string env)
         {
@@ -79,15 +76,15 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             this.AuthToken = settings.AuthToken;
             this.FriendlyName = settings.FriendlyName;
             this.Mandant = settings.Mandant;
-            this.Url = settings.Url;
-            this.CMSUrl = settings.CMSUrl;
-            this.DocUrl = settings.DocUrl;
             this.Passwort = settings.Passwort;
             this.UserName = settings.UserName;
             this.InstallationId = settings.InstallationId;
             this.UserAgent = settings.UserAgent;
-            this.I1Url = settings.I1Url;
-            this.I2Url = settings.I2Url;
+
+            this.Url = settings.Url;
+            this.CMSUrl = settings.CMSUrl;
+            this.DocUrl = settings.DocUrl;
+            this.FeedbackUrl = settings.FeedbackUrl;
             this.StoreUrl = settings.StoreUrl;
         }
     }
