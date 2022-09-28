@@ -16,7 +16,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Post("UpdateVorgangStatusTableForFunction", dto);
+                return Post("VorgangStatus/UpdateVorgangStatusTableForFunction", dto);
             }
             return null;
         }
@@ -25,7 +25,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<VorgangStatusTableDTO>("GetNotCalculatedVorgangStatusTableForFunction");
+                return Get<VorgangStatusTableDTO>("VorgangStatus/GetNotCalculatedVorgangStatusTableForFunction");
             }
             return null;
         }
