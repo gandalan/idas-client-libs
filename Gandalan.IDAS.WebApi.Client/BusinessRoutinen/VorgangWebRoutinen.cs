@@ -239,14 +239,5 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             return null;
         }
-        
-        public string UpdateVorgangStatusTableForFunction(Guid vorgangGuid, long mandantId, bool kundeGeaendert)
-        {
-            if (Login())
-            {
-                return Post("UpdateVorgangStatusTableForFunction?id=" + vorgangGuid.ToString() + "&mandantID=" + mandantId.ToString() + "&kundeGeaendert=" + kundeGeaendert, null);
-            }
-            return null;
-        }
     }
 }
