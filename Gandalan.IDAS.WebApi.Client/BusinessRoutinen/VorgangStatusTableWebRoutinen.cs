@@ -21,11 +21,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public VorgangStatusTableDTO GetNotCalculatedVorgangStatusTableForFunction()
+        public IList<VorgangStatusTableDTO> GetNotCalculatedVorgangStatusTableForFunction()
         {
             if (Login())
             {
-                return Get<VorgangStatusTableDTO>("VorgangStatus/GetNotCalculatedVorgangStatusTableForFunction");
+                return Get<IList<VorgangStatusTableDTO>>("VorgangStatus/GetNotCalculatedVorgangStatusTableForFunction");
             }
             return null;
         }
