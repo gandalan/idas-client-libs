@@ -165,7 +165,10 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                     {
                         continue;
                     }
-                    aktuelleSektion.Items.Add(new gSQLItem("Position_" + key, konfig.Wert));
+                    if(key.StartsWith("Sonder_"))
+                        aktuelleSektion.Items.Add(new gSQLItem(key, konfig.Wert));
+                    else
+                        aktuelleSektion.Items.Add(new gSQLItem("Position_" + key, konfig.Wert));
                 }
 
                 foreach (var konfig in pos.Daten.Where(u => u.UnterkomponenteName == "Artikel"))
@@ -177,7 +180,11 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                     {
                         continue;
                     }
-                    aktuelleSektion.Items.Add(new gSQLItem("Position_" + key, konfig.Wert));
+
+                    if (key.StartsWith("Sonder_"))
+                        aktuelleSektion.Items.Add(new gSQLItem(key, konfig.Wert));
+                    else
+                        aktuelleSektion.Items.Add(new gSQLItem("Position_" + key, konfig.Wert));
                 }
 
                 if (pos.Sonderwuensche == null)
