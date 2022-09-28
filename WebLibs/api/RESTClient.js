@@ -64,7 +64,7 @@ export class RESTClient {
         }
     }
 
-    async getRaw(uri) {
+    async getRaw(uri, noJWT = false) {
         let response = {};
         try {
             response = await axios.get(this.baseurl + uri, this.getUrlOptions(noJWT))
