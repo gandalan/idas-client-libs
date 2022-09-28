@@ -31,12 +31,16 @@ export class RESTClient {
         this.token = token;
     }
 
+    getUrlOptions(noJWT = false) {
+        let options = { withCredentials: false }
+        if (this.isJWT && !noJWT)
+            options.headers = { Authorization: `Bearer ${this.token}` }
+        return options
+    }
+
     async get(uri, noJWT = false) {
         try {
-            let options = { withCredentials: false }
-            if (this.isJWT && !noJWT)
-                options.headers = { Authorization: `Bearer ${this.token}` }
-            const response = await axios.get(this.baseurl + uri, options);
+            const response = await axios.get(this.baseurl + uri, this.getUrlOptions(noJWT));
             this.lastError = '';
             return response.data;
         } catch (error) {
@@ -63,10 +67,7 @@ export class RESTClient {
     async getRaw(uri) {
         let response = {};
         try {
-            let options = { withCredentials: false }
-            if (this.isJWT)
-                options.headers = { Authorization: `Bearer ${this.token}` }
-            response = await axios.get(this.baseurl + uri, options)
+            response = await axios.get(this.baseurl + uri, this.getUrlOptions(noJWT))
             this.lastError = '';
         } catch (error) {
             this.handleError(error);
@@ -74,12 +75,9 @@ export class RESTClient {
         return response;
     }
 
-    async post(uri, formData) {
+    async post(uri, formData, noJWT = false) {
         try {
-            let options = { withCredentials: false }
-            if (this.isJWT)
-                options.headers = { Authorization: `Bearer ${this.token}` }
-            const response = await axios.post(this.baseurl + uri, formData, options);
+            const response = await axios.post(this.baseurl + uri, formData, this.getUrlOptions(noJWT));
             this.lastError = '';
             return response;
         } catch (error) {
@@ -87,12 +85,9 @@ export class RESTClient {
         }
     }
 
-    async put(uri, formData) {
+    async put(uri, formData, noJWT = false) {
         try {
-            let options = { withCredentials: false }
-            if (this.isJWT)
-                options.headers = { Authorization: `Bearer ${this.token}` }
-            const response = await axios.put(this.baseurl + uri, formData, options);
+            const response = await axios.put(this.baseurl + uri, formData, this.getUrlOptions(noJWT));
             this.lastError = '';
             return response;
         } catch (error) {
@@ -100,12 +95,9 @@ export class RESTClient {
         }
     }
 
-    async delete(uri) {
+    async delete(uri, noJWT = false) {
         try {
-            let options = { withCredentials: false }
-            if (this.isJWT)
-                options.headers = { Authorization: `Bearer ${this.token}` }
-            const response = await axios.delete(this.baseurl + uri, options);
+            const response = await axios.delete(this.baseurl + uri, this.getUrlOptions(noJWT));
             this.lastError = '';
             return response;
         } catch (error) {
