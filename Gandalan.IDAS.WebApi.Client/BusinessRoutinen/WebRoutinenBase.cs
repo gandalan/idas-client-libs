@@ -21,13 +21,13 @@ namespace Gandalan.IDAS.WebApi.Client
 {
     public class WebRoutinenBase : RESTClientBase
     {
-        #region  Felder
+        #region Felder
 
         public IWebApiConfig Settings;
 
         #endregion
 
-        #region  Eigenschaften
+        #region Eigenschaften
 
         public UserAuthTokenDTO AuthToken { get; set; }
         public string Status { get; private set; }
@@ -205,7 +205,7 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             try
             {
-                return Put<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO() {Token = authTokenGuid});
+                return Put<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO() { Token = authTokenGuid });
             }
             catch (Exception)
             {
@@ -237,7 +237,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return default;
                 }
             }
         }
@@ -254,7 +260,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return default;
                 }
             }
         }
@@ -271,7 +283,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -288,7 +306,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -305,7 +329,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -322,7 +352,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -339,7 +375,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri);
+                    var exception = HandleWebException(ex, uri);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -356,7 +398,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri);
+                    var exception = HandleWebException(ex, uri);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -373,7 +421,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri);
+                    var exception = HandleWebException(ex, uri);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -390,7 +444,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri);
+                    var exception = HandleWebException(ex, uri);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -407,7 +467,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri);
+                    var exception = HandleWebException(ex, uri);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return default;
                 }
             }
         }
@@ -424,7 +490,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri);
+                    var exception = HandleWebException(ex, uri);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return default;
                 }
             }
         }
@@ -441,7 +513,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return default;
                 }
             }
         }
@@ -458,7 +536,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return default;
                 }
             }
         }
@@ -475,7 +559,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -492,7 +582,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -509,7 +605,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -526,7 +628,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -543,7 +651,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return default;
                 }
             }
         }
@@ -560,7 +674,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri, data);
+                    var exception = HandleWebException(ex, uri, data);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return default;
                 }
             }
         }
@@ -577,7 +697,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri);
+                    var exception = HandleWebException(ex, uri);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return default;
                 }
             }
         }
@@ -594,7 +720,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri);
+                    var exception = HandleWebException(ex, uri);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return default;
                 }
             }
         }
@@ -611,7 +743,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri);
+                    var exception = HandleWebException(ex, uri);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -628,7 +766,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 }
                 catch (WebException ex)
                 {
-                    throw HandleWebException(ex, uri);
+                    var exception = HandleWebException(ex, uri);
+                    if (exception != null)
+                    {
+                        throw exception;
+                    }
+
+                    return null;
                 }
             }
         }
@@ -641,8 +785,11 @@ namespace Gandalan.IDAS.WebApi.Client
                 var start = result.IndexOf("<title>") + 7;
                 var end = result.IndexOf("</title>");
                 if (end > start)
+                {
                     result = $"Interner Serverfehler (\"{result.Substring(start, end - start)}\"). Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.";
+                }
             }
+
             return result;
         }
 
@@ -666,12 +813,32 @@ namespace Gandalan.IDAS.WebApi.Client
 
         private ApiException HandleWebException(WebException ex, string url)
         {
+            // Return null if we are returning HTTP 404 from WebAPI
+            if (ex.Status == WebExceptionStatus.ProtocolError && ex.Response != null)
+            {
+                var resp = (HttpWebResponse)ex.Response;
+                if (resp.StatusCode == HttpStatusCode.NotFound) // HTTP 404
+                {
+                    return null;
+                }
+            }
+
             ApiException exception = TranslateException(ex);
             return InternalHandleWebException(exception, url);
         }
 
         private ApiException HandleWebException(WebException ex, string url, object data)
         {
+            // Return null if we are returning HTTP 404 from WebAPI
+            if (ex.Status == WebExceptionStatus.ProtocolError && ex.Response != null)
+            {
+                var resp = (HttpWebResponse)ex.Response;
+                if (resp.StatusCode == HttpStatusCode.NotFound) // HTTP 404
+                {
+                    return null;
+                }
+            }
+
             ApiException exception = TranslateException(ex, data);
             return InternalHandleWebException(exception, url);
         }

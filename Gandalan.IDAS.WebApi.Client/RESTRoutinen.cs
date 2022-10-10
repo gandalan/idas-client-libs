@@ -14,6 +14,7 @@ namespace Gandalan.IDAS.Web
     public class RESTRoutinen : IDisposable
     {
         #region Constructors
+
         public RESTRoutinen()
         {
             AdditionalHeaders = new List<string>();
@@ -29,31 +30,39 @@ namespace Gandalan.IDAS.Web
             BaseUrl = baseUrl;
             Proxy = proxy;
         }
+
         #endregion Constructors
 
         #region public Properties
+
         /// <summary>
         /// Stammadresse der Web-API. Die Resource-Parameter der einzelnen Übertragungsmethoden
         /// werden angehängt. Beispiel: http://192.168.217.10/neurosAPI/api/
         /// </summary>
         public string BaseUrl { get; set; }
+
         /// <summary>
         /// Proxy-Informationen (optional)
         /// </summary>
         public IWebProxy Proxy { get; set; }
+
         /// <summary>
         /// Liste der zusätzlich zu übermittelnden Header. Werden bei jeder Anfrage mitgeschickt,
         /// z.B. für Authentifizierungs-Header
         /// </summary>
         public List<string> AdditionalHeaders { get; private set; }
+
         public ICredentials Credentials { get; set; }
+
         /// <summary>
         /// User-Agent Header. Wird bei jeder Anfrage mitgeschickt.
         /// </summary>
         public string UserAgent { get; set; }
+
         #endregion
 
         #region public Methods
+
         /// <summary>
         /// Holt ein Objekt per HTTP GET
         /// </summary>
@@ -79,13 +88,10 @@ namespace Gandalan.IDAS.Web
                 return client.DownloadString(url);
             }
             catch (Exception ex)
-            #region Code
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-            #endregion
         }
 
         public async Task<string> GetAsync(string url)
@@ -96,13 +102,10 @@ namespace Gandalan.IDAS.Web
                 return await client.DownloadStringTaskAsync(url).ConfigureAwait(false);
             }
             catch (Exception ex)
-            #region Code
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-            #endregion
         }
 
         public byte[] GetData(string url)
@@ -113,13 +116,10 @@ namespace Gandalan.IDAS.Web
                 return client.DownloadData(url);
             }
             catch (Exception ex)
-            #region Code
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-            #endregion
         }
 
         public async Task<byte[]> GetDataAsync(string url)
@@ -130,14 +130,12 @@ namespace Gandalan.IDAS.Web
                 return await client.DownloadDataTaskAsync(url).ConfigureAwait(false);
             }
             catch (Exception ex)
-            #region Code
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-            #endregion
         }
+
         /// <summary>
         /// Sendet ein Objekt per HTTP POST an die angegebene URL, i.d.R. um es zu speichern
         /// </summary>
@@ -158,7 +156,7 @@ namespace Gandalan.IDAS.Web
 
         public string Post(string url, object data, JsonSerializerSettings settings = null)
         {
-            System.Net.WebClient client = createWebClient();
+            WebClient client = createWebClient();
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
@@ -167,14 +165,13 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
 
         public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null)
         {
-            System.Net.WebClient client = createWebClient();
+            WebClient client = createWebClient();
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
@@ -183,7 +180,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -196,13 +192,10 @@ namespace Gandalan.IDAS.Web
                 return client.UploadData(url, "POST", data);
             }
             catch (Exception ex)
-            #region Code
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-            #endregion
         }
 
         public async Task<byte[]> PostDataAsync(string url, byte[] data)
@@ -213,13 +206,10 @@ namespace Gandalan.IDAS.Web
                 return await client.UploadDataTaskAsync(url, "POST", data).ConfigureAwait(false);
             }
             catch (Exception ex)
-            #region Code
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-            #endregion
         }
 
         /// <summary>
@@ -251,7 +241,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -267,7 +256,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -280,13 +268,10 @@ namespace Gandalan.IDAS.Web
                 return client.UploadData(url, "PUT", data);
             }
             catch (Exception ex)
-            #region Code
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-            #endregion
         }
 
         public async Task<byte[]> PutDataAsync(string url, byte[] data)
@@ -297,13 +282,10 @@ namespace Gandalan.IDAS.Web
                 return await client.UploadDataTaskAsync(url, "PUT", data).ConfigureAwait(false);
             }
             catch (Exception ex)
-            #region Code
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-            #endregion
         }
 
         /// <summary>
@@ -321,7 +303,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -336,7 +317,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -385,7 +365,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -401,13 +380,14 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, GetCurrentMethodName());
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
+
         #endregion
 
         #region private Methods
+
         /// <summary>
         /// Erstellt und konfiguriert eine neue WebClient-Instanz
         /// </summary>
@@ -415,16 +395,24 @@ namespace Gandalan.IDAS.Web
         private WebClient createWebClient()
         {
             GDLWebClient client = new GDLWebClient();
-            if (this.Credentials != null)
-                client.Credentials = this.Credentials;
+            if (Credentials != null)
+            {
+                client.Credentials = Credentials;
+            }
+
             client.BaseAddress = BaseUrl;
             client.Timeout = 300000;
             if (!string.IsNullOrEmpty(UserAgent))
+            {
                 client.Headers.Add("user-agent", UserAgent);
+            }
+
             AdditionalHeaders.ForEach(h => client.Headers.Add(h));
 
             if (Proxy != null)
+            {
                 client.Proxy = Proxy;
+            }
 
             return client;
         }
@@ -443,6 +431,7 @@ namespace Gandalan.IDAS.Web
 
             return stackFrame?.GetMethod()?.Name;
         }
+
         #endregion
 
         public void Dispose()
