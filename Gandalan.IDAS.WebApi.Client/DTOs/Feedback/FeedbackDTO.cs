@@ -25,7 +25,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public ProduktionsSettingsDTO ProduktionsSettings { get; set; }
         public string Beschreibung { get; set; }
         public IList<FeedbackAttachmentDTO> Anhaenge { get; set; }
-        public IList<FeedbackKommentarDTO> Kommentare { get; set; }        
+        public IList<FeedbackKommentarDTO> Kommentare { get; set; }   
+        public string Status { get; set; }
+        public string LoesungsVersion { get; set; }
     }
 
     public class FeedbackKommentarDTO
