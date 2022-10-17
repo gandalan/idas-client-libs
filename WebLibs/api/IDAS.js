@@ -2,12 +2,14 @@ import { RESTClient } from './RESTClient';
 
 let appToken = localStorage.getItem('IDAS_AppToken') || '66B70E0B-F7C4-4829-B12A-18AD309E3970';
 let authToken = localStorage.getItem('IDAS_AuthToken');
+let authJwtToken = localStorage.getItem('IDAS_AuthJwtToken');
 let apiBaseUrl = localStorage.getItem('IDAS_ApiBaseUrl') || 'https://api.dev.idas-cloudservices.net/api/';
 
 let restClient = new RESTClient(apiBaseUrl, authToken);
 restClient.onError = (error, message) => {
     if (message.indexOf("401") != -1 || message.indexOf("403") != -1) {
         localStorage.removeItem('IDAS_AuthToken');
+        localStorage.removeItem('IDAS_AuthJwtToken');
         new IDAS().authenticateWithSSO(true);
     }
 }
@@ -37,6 +39,19 @@ export class IDAS {
 
             var ssoURL = ssoAuthUrl.replace("%target%", encodeURIComponent(window.location.href));
             window.location = ssoURL;
+        }
+    }
+
+    async authenticateWithJwt() {
+        if (!authJwtToken) {
+            const url = new URL(apiBaseUrl);
+            url.pathname = "/Session";
+            url.search = "?a=" + appToken;
+            url.search = url.search + "&r=%target%";
+            let jwtAuthUrl = url.toString();
+
+            var jwtUrl = jwtAuthUrl.replace("%target%", encodeURIComponent(window.location.href));
+            window.location = jwtUrl;
         }
     }
 
