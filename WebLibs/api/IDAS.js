@@ -26,6 +26,11 @@ export class IDAS {
         return data;
     }
 
+    authorizeWithJwt(jwtToken) {
+        localStorage.setItem('IDAS_AuthJwtToken', jwtToken);
+        restClient = new RESTClient(apiBaseUrl, jwtToken, true);
+    }
+
     async authenticateWithSSO(forceRenew = false) { 
         if (!authToken)
         {
@@ -42,16 +47,20 @@ export class IDAS {
         }
     }
 
-    async authenticateWithJwt() {
+    async authenticateWithJwt(authPath) {
         if (!authJwtToken) {
+            const authEndpoint = (new URL(window.location.href).origin) + authPath;
+            let authUrlCallback = `${authEndpoint}?r=%target%&t=%jwt%`;
+            authUrlCallback = authUrlCallback.replace('%target%', encodeURIComponent(window.location.href));
+
             const url = new URL(apiBaseUrl);
             url.pathname = "/Session";
-            url.search = "?a=" + appToken;
-            url.search = url.search + "&r=%target%";
-            let jwtAuthUrl = url.toString();
+            url.search = `?a=${appToken}&r=${encodeURIComponent(authUrlCallback)}`;
+            let jwtUrl = url.toString();
 
-            var jwtUrl = jwtAuthUrl.replace("%target%", encodeURIComponent(window.location.href));
             window.location = jwtUrl;
+        } else {
+            restClient = new RESTClient(apiBaseUrl, authJwtToken, true);
         }
     }
 
