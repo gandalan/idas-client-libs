@@ -12,7 +12,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.AV
     {
         Task<List<PositionSerieItemDTO>> GetSeriePositionItemsFromBeleg(BelegDTO beleg);
         Task<List<PositionSerieItemDTO>> GetSeriePositionItemsFromModus(BelegDTO beleg, List<PositionSerieItemDTO> items, SerieSuchenModus serieSuchenModus);
-        Task SaveSeriePositionItemsToSerie(BelegDTO beleg, List<PositionSerieItemDTO> items, bool autoFreigabeErlaubt, bool showDialog = true);
-        Task SaveSeriePositionItemsToSerieAuto(BelegDTO beleg, bool autoFreigabeErlaubt);
+        Task SaveSeriePositionItemsToSerie(BelegDTO beleg, List<PositionSerieItemDTO> items, bool autoFreigabeErlaubt, bool showDialog = true, bool timerReset = true);
+        Task SaveSeriePositionItemsToSerieAuto(BelegDTO beleg, bool autoFreigabeErlaubt, bool timerReset = true);
     }
 }
