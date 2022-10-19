@@ -2,9 +2,13 @@
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
-    public interface IAVModul 
+    public interface IAVModul
     {
         Task ShowAVPlanung();
+    }
+
+    public interface IAVDruckModul
+    { 
         Task ShowAVDruck();
     }
 }
