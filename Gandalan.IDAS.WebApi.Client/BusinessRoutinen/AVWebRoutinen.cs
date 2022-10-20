@@ -240,6 +240,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return "Not logged in";
         }
 
+        public async Task<string> DeleteBelegPositionenAVAsync(List<Guid> guids)
+        {
+            if (Login())
+            {
+                return await DeleteAsync<string>($"BelegPositionenAVBulk", guids);
+            }
+            return "Not logged in";
+        }
+
         public async Task<string> BelegPositionenAVBerechnenAsync(List<Guid> guids)
         {
             if (Login())
