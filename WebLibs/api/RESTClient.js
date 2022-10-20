@@ -12,12 +12,13 @@ export class RESTClient {
     token = '';
     baseurl = '';
 
-    constructor(url, token) {
+    constructor(url, token, isJWT = false) {
         this.lastError = '';
         this.baseurl = url;
         this.token = token;
+        this.isJWT = isJWT;
 
-        if (this.token) {
+        if (this.token && !isJWT) {
             axios.defaults.headers.common['X-Gdl-AuthToken'] = this.token;
         }
 
@@ -26,15 +27,27 @@ export class RESTClient {
         });
     }
 
-    async get(uri) {
+    updateToken(token) {
+        this.token = token;
+    }
+
+    getUrlOptions(noJWT = false) {
+        let options = { withCredentials: false }
+        if (this.isJWT && !noJWT)
+            options.headers = { Authorization: `Bearer ${this.token}` }
+        return options
+    }
+
+    async get(uri, noJWT = false) {
         try {
-            const response = await axios.get(this.baseurl + uri, { withCredentials: false });
+            const response = await axios.get(this.baseurl + uri, this.getUrlOptions(noJWT));
             this.lastError = '';
             return response.data;
         } catch (error) {
             this.handleError(error);
         }
     }
+
 
     async getFile(uri) {
         try {
@@ -51,10 +64,10 @@ export class RESTClient {
         }
     }
 
-    async getRaw(uri) {
+    async getRaw(uri, noJWT = false) {
         let response = {};
         try {
-            response = await axios.get(this.baseurl + uri, { withCredentials: false })
+            response = await axios.get(this.baseurl + uri, this.getUrlOptions(noJWT))
             this.lastError = '';
         } catch (error) {
             this.handleError(error);
@@ -62,9 +75,9 @@ export class RESTClient {
         return response;
     }
 
-    async post(uri, formData) {
+    async post(uri, formData, noJWT = false) {
         try {
-            const response = await axios.post(this.baseurl + uri, formData, { withCredentials: false });
+            const response = await axios.post(this.baseurl + uri, formData, this.getUrlOptions(noJWT));
             this.lastError = '';
             return response;
         } catch (error) {
@@ -72,9 +85,9 @@ export class RESTClient {
         }
     }
 
-    async put(uri, formData) {
+    async put(uri, formData, noJWT = false) {
         try {
-            const response = await axios.put(this.baseurl + uri, formData, { withCredentials: false });
+            const response = await axios.put(this.baseurl + uri, formData, this.getUrlOptions(noJWT));
             this.lastError = '';
             return response;
         } catch (error) {
@@ -82,9 +95,9 @@ export class RESTClient {
         }
     }
 
-    async delete(uri) {
+    async delete(uri, noJWT = false) {
         try {
-            const response = await axios.delete(this.baseurl + uri, { withCredentials: false });
+            const response = await axios.delete(this.baseurl + uri, this.getUrlOptions(noJWT));
             this.lastError = '';
             return response;
         } catch (error) {
@@ -93,7 +106,7 @@ export class RESTClient {
     }
 
     // eslint-disable-next-line no-unused-vars
-    onError = (error, message) => {};
+    onError = (error, message) => { };
 
     handleError(error) {
         let message = error ? error.message : '?';

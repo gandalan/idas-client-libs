@@ -8,6 +8,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.UI
         public string Text { get; set; }
 
         public bool CanRemove { get; set; }
+        public bool IsDefaultTag { get; set; }
         public string ToolTip { get; set; }
         public string IconName { get; set; }
         public string BackgroundColorCode { get; set; }
