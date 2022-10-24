@@ -2,8 +2,15 @@
   "name": "@gandalan/weblibs",
   "version": "0.0.41",
   "description": "WebLibs for Gandalan JS/TS/Svelte projects",
-  "author": "Philipp Reif",
+  "keywords": [
+    "gandalan"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gandalan/idas-client-libs"
+  },
   "license": "ISC",
+  "author": "Philipp Reif",
   "main": "index",
   "typings": "index",
   "scripts": {
@@ -11,6 +18,11 @@
     "check:watch": "svelte-check --watch",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@mdi/js": "^7.0.96",
+    "axios": "^0.27.2",
+    "svelte-table": "^0.5.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
@@ -21,21 +33,9 @@
     "svelte-check": "^2.9.0",
     "svelte-chota": "^1.8.6"
   },
-  "dependencies": {
-    "@mdi/js": "^7.0.96",
-    "axios": "^0.27.2",
-    "svelte-table": "^0.5.1"
-  },
   "peerDependencies": {
     "svelte-chota": "^1.8.6"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gandalan/idas-client-libs"
-  },
-  "keywords": [
-    "gandalan"
-  ],
   "publishConfig": {
     "access": "public"
   }
