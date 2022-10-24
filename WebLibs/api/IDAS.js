@@ -7,7 +7,7 @@ let apiBaseUrl = localStorage.getItem('IDAS_ApiBaseUrl') || 'https://api.dev.ida
 
 let restClient = new RESTClient(apiBaseUrl, authToken);
 restClient.onError = (error, message) => {
-    if (message.indexOf("401") != -1 || message.indexOf("403") != -1) {
+    if (message.indexOf('401') != -1 || message.indexOf('403') != -1) {
         localStorage.removeItem('IDAS_AuthToken');
         localStorage.removeItem('IDAS_AuthJwtToken');
         new IDAS().authenticateWithSSO(true);
@@ -31,18 +31,19 @@ export class IDAS {
         restClient = new RESTClient(apiBaseUrl, jwtToken, true);
     }
 
-    async authenticateWithSSO(forceRenew = false) { 
-        if (!authToken)
-        {
+    async authenticateWithSSO(forceRenew = false) {
+        if (!authToken) {
             const url = new URL(apiBaseUrl);
-            url.pathname = "/SSO";
-            url.search = "?a=" + appToken;
-            if (forceRenew)
-                url.search = url.search + "&forceRenew=true";
-            url.search = url.search + "&r=%target%%3Ft=%token%%26m=%mandant%";
+            url.pathname = '/SSO';
+            url.search = `?a=${appToken}`;
+            if (forceRenew) {
+                url.search = `${url.search}&forceRenew=true`;
+            }
+
+            url.search = `${url.search}&r=%target%%3Ft=%token%%26m=%mandant%`;
             let ssoAuthUrl = url.toString();
 
-            var ssoURL = ssoAuthUrl.replace("%target%", encodeURIComponent(window.location.href));
+            let ssoURL = ssoAuthUrl.replace('%target%', encodeURIComponent(window.location.href));
             window.location = ssoURL;
         }
     }
@@ -54,7 +55,7 @@ export class IDAS {
             authUrlCallback = authUrlCallback.replace('%target%', encodeURIComponent(window.location.href));
 
             const url = new URL(apiBaseUrl);
-            url.pathname = "/Session";
+            url.pathname = '/Session';
             url.search = `?a=${appToken}&r=${encodeURIComponent(authUrlCallback)}`;
             let jwtUrl = url.toString();
 

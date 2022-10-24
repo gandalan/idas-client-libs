@@ -33,8 +33,10 @@ export class RESTClient {
 
     getUrlOptions(noJWT = false) {
         let options = { withCredentials: false }
-        if (this.isJWT && !noJWT)
+        if (this.isJWT && !noJWT) {
             options.headers = { Authorization: `Bearer ${this.token}` }
+        }
+
         return options
     }
 
@@ -48,7 +50,6 @@ export class RESTClient {
         }
     }
 
-
     async getFile(uri) {
         try {
             const response = await axios.get(this.baseurl + uri, { responseType: 'blob' });
@@ -57,6 +58,7 @@ export class RESTClient {
                 fileName = response.headers['content-disposition'].split(';')[1];
                 fileName = fileName.replace('filename=', '').trim();
             }
+
             this.lastError = '';
             return { data: response.data, filename: fileName, contentType: 'application/pdf' };
         } catch (error) {
@@ -111,7 +113,7 @@ export class RESTClient {
     handleError(error) {
         let message = error ? error.message : '?';
         // eslint-disable-next-line no-console
-        console.log(`API Error: ${message}`);
+        console.error(`API Error: ${message}`);
         this.lastError = message;
         this.onError(error, message);
         throw error;

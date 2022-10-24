@@ -9,7 +9,8 @@
   "scripts": {
     "check": "svelte-check",
     "check:watch": "svelte-check --watch",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
