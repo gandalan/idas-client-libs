@@ -4,13 +4,18 @@ let appToken = localStorage.getItem('IDAS_AppToken') || '66B70E0B-F7C4-4829-B12A
 let authToken = localStorage.getItem('IDAS_AuthToken');
 let authJwtToken = localStorage.getItem('IDAS_AuthJwtToken');
 let apiBaseUrl = localStorage.getItem('IDAS_ApiBaseUrl') || 'https://api.dev.idas-cloudservices.net/api/';
+let authJwtCallbackPath = localStorage.getItem('IDAS_AuthJwtCallbackPath') || '/auth/';
 
 let restClient = new RESTClient(apiBaseUrl, authToken);
 restClient.onError = (error, message) => {
     if (message.indexOf("401") != -1 || message.indexOf("403") != -1) {
         localStorage.removeItem('IDAS_AuthToken');
         localStorage.removeItem('IDAS_AuthJwtToken');
-        new IDAS().authenticateWithSSO(true);
+        if (restClient.isJWT) {
+            new IDAS().authenticateWithJwt(authJwtCallbackPath);
+        } else {
+            new IDAS().authenticateWithSSO(true);
+        }
     }
 }
 
@@ -26,8 +31,9 @@ export class IDAS {
         return data;
     }
 
-    authorizeWithJwt(jwtToken) {
+    authorizeWithJwt(jwtToken, mandant = '') {
         localStorage.setItem('IDAS_AuthJwtToken', jwtToken);
+        mandant && localStorage.setItem('IDAS_MandantGuid', mandant);
         restClient = new RESTClient(apiBaseUrl, jwtToken, true);
     }
 
@@ -48,20 +54,26 @@ export class IDAS {
     }
 
     async authenticateWithJwt(authPath) {
-        if (!authJwtToken) {
-            const authEndpoint = (new URL(window.location.href).origin) + authPath;
-            let authUrlCallback = `${authEndpoint}?r=%target%&t=%jwt%`;
-            authUrlCallback = authUrlCallback.replace('%target%', encodeURIComponent(window.location.href));
-
-            const url = new URL(apiBaseUrl);
-            url.pathname = "/Session";
-            url.search = `?a=${appToken}&r=${encodeURIComponent(authUrlCallback)}`;
-            let jwtUrl = url.toString();
-
-            window.location = jwtUrl;
-        } else {
-            restClient = new RESTClient(apiBaseUrl, authJwtToken, true);
-        }
+        var promise = new Promise((resolve, reject) => {
+            if (!authJwtToken) {
+                localStorage.setItem('IDAS_AuthJwtCallbackPath', authPath);
+                const authEndpoint = (new URL(window.location.href).origin) + authPath;
+                let authUrlCallback = `${authEndpoint}?r=%target%&t=%jwt%&m=%mandant%`;
+                authUrlCallback = authUrlCallback.replace('%target%', encodeURIComponent(window.location.href));
+    
+                const url = new URL(apiBaseUrl);
+                url.pathname = "/Session";
+                url.search = `?a=${appToken}&r=${encodeURIComponent(authUrlCallback)}`;
+                let jwtUrl = url.toString();
+    
+                window.location = jwtUrl;
+                reject('not authenticated yet');
+            } else {
+                restClient = new RESTClient(apiBaseUrl, authJwtToken, true);
+                resolve(restClient);
+            }    
+        })
+        return promise;
     }
 
     mandantGuid = localStorage.getItem('IDAS_MandantGuid');
