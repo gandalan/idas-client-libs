@@ -94,7 +94,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             Positionen = new ObservableCollection<BelegPositionDTO>();
             Nachrichten = new ObservableCollection<Guid>();
             Historie = new ObservableCollection<VorgangHistorieDTO>();
-            ErstellDatum = DateTime.Today;
+            ErstellDatum = DateTime.UtcNow;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
