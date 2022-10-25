@@ -38,23 +38,27 @@ export class IDAS {
     }
 
     async authenticateWithSSO(forceRenew = false) { 
-        if (!authToken)
-        {
-            const url = new URL(apiBaseUrl);
-            url.pathname = "/SSO";
-            url.search = "?a=" + appToken;
-            if (forceRenew)
-                url.search = url.search + "&forceRenew=true";
-            url.search = url.search + "&r=%target%%3Ft=%token%%26m=%mandant%";
-            let ssoAuthUrl = url.toString();
+        return new Promise((resolve, reject) => {
+            if (!authToken) {
+                const url = new URL(apiBaseUrl);
+                url.pathname = "/SSO";
+                url.search = "?a=" + appToken;
+                if (forceRenew)
+                    url.search = url.search + "&forceRenew=true";
+                url.search = url.search + "&r=%target%%3Ft=%token%%26m=%mandant%";
+                let ssoAuthUrl = url.toString();
 
-            var ssoURL = ssoAuthUrl.replace("%target%", encodeURIComponent(window.location.href));
-            window.location = ssoURL;
-        }
+                var ssoURL = ssoAuthUrl.replace("%target%", encodeURIComponent(window.location.href));
+                window.location = ssoURL;
+                reject('not authenticated yet');
+            } else {
+                resolve(restClient);
+            }
+        });
     }
 
     async authenticateWithJwt(authPath) {
-        var promise = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             if (!authJwtToken) {
                 localStorage.setItem('IDAS_AuthJwtCallbackPath', authPath);
                 const authEndpoint = (new URL(window.location.href).origin) + authPath;
@@ -72,8 +76,7 @@ export class IDAS {
                 restClient = new RESTClient(apiBaseUrl, authJwtToken, true);
                 resolve(restClient);
             }    
-        })
-        return promise;
+        });
     }
 
     mandantGuid = localStorage.getItem('IDAS_MandantGuid');
