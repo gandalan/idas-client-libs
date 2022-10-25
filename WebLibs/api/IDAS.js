@@ -43,8 +43,10 @@ export class IDAS {
                 const url = new URL(apiBaseUrl);
                 url.pathname = "/SSO";
                 url.search = "?a=" + appToken;
-                if (forceRenew)
+                if (forceRenew) {
                     url.search = url.search + "&forceRenew=true";
+                }
+                    
                 url.search = url.search + "&r=%target%%3Ft=%token%%26m=%mandant%";
                 let ssoAuthUrl = url.toString();
 
