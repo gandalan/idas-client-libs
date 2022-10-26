@@ -10,6 +10,6 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.Store
         bool MustRestartApp { get; set; }
         event EventHandler<string> OnPackageUpdate;
 
-        void UpdatePackages();
+        void UpdatePackages(string basePath);
     }
 }
