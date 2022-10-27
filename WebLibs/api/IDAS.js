@@ -2,15 +2,16 @@ import { RESTClient } from './RESTClient';
 
 let appToken = localStorage.getItem('IDAS_AppToken') || '66B70E0B-F7C4-4829-B12A-18AD309E3970';
 let authToken = localStorage.getItem('IDAS_AuthToken');
-let authJwtToken = localStorage.getItem('IDAS_AuthJwtToken');
+let authJwtRefreshToken = localStorage.getItem('IDAS_AuthJwtRefreshToken');
 let apiBaseUrl = localStorage.getItem('IDAS_ApiBaseUrl') || 'https://api.dev.idas-cloudservices.net/api/';
 let authJwtCallbackPath = localStorage.getItem('IDAS_AuthJwtCallbackPath') || '/auth/';
+let authJwtToken;
 
 let restClient = new RESTClient(apiBaseUrl, authToken);
 restClient.onError = (error, message) => {
     if (message.indexOf("401") != -1 || message.indexOf("403") != -1) {
+        authJwtToken = undefined;
         localStorage.removeItem('IDAS_AuthToken');
-        localStorage.removeItem('IDAS_AuthJwtToken');
         if (restClient.isJWT) {
             new IDAS().authenticateWithJwt(authJwtCallbackPath);
         } else {
@@ -32,7 +33,8 @@ export class IDAS {
     }
 
     authorizeWithJwt(jwtToken, mandant = '') {
-        localStorage.setItem('IDAS_AuthJwtToken', jwtToken);
+        // extract idasAuthToken - our "refresh token"
+        this.updateRefreshToken(jwtToken);
         mandant && localStorage.setItem('IDAS_MandantGuid', mandant);
         restClient = new RESTClient(apiBaseUrl, jwtToken, true);
     }
@@ -46,7 +48,7 @@ export class IDAS {
                 if (forceRenew) {
                     url.search = url.search + "&forceRenew=true";
                 }
-                    
+
                 url.search = url.search + "&r=%target%%3Ft=%token%%26m=%mandant%";
                 let ssoAuthUrl = url.toString();
 
@@ -60,7 +62,29 @@ export class IDAS {
     }
 
     async authenticateWithJwt(authPath) {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
+            // no valid JWT, but try to use "refresh token" first to retrive new JWT
+            if (!authJwtToken && authJwtRefreshToken) {
+                var refreshClient = new RESTClient(apiBaseUrl, '');
+                refreshClient.onError = (error, message) => {
+                    // LoginJwt/Refresh failed, which means "refresh token" is expired/invalid...
+                    if (message.indexOf("401") != -1 || message.indexOf("403") != -1) {
+                        authJwtToken = undefined;
+                        authJwtRefreshToken = undefined;
+                        localStorage.removeItem('IDAS_AuthJwtRefreshToken');
+                        // ... so repeat authenticate (should lead to /Session login page)
+                        new IDAS().authenticateWithJwt(authPath);
+                    }
+                };
+                // fetch fresh JWT
+                await refreshClient
+                    .put('/LoginJwt/Refresh', { token: authJwtRefreshToken })
+                    .then(resp => {
+                        this.updateRefreshToken(resp.data)
+                    })
+            }
+
+            // still not valid JWT -> authenticate
             if (!authJwtToken) {
                 localStorage.setItem('IDAS_AuthJwtCallbackPath', authPath);
                 const authEndpoint = (new URL(window.location.href).origin) + authPath;
@@ -79,6 +103,16 @@ export class IDAS {
                 resolve(restClient);
             }    
         });
+    }
+
+    updateRefreshToken(jwt) {
+        let base64 = jwt.split('.')[1];
+        let json = decodeURIComponent(window.atob(base64));
+        let payload = JSON.parse(json);
+        let refreshToken = payload.idasAuthToken;
+        localStorage.setItem('IDAS_AuthJwtRefreshToken', refreshToken);
+        authJwtRefreshToken = refreshToken;
+        authJwtToken = jwt;
     }
 
     mandantGuid = localStorage.getItem('IDAS_MandantGuid');
