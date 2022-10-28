@@ -22,6 +22,11 @@ namespace Gandalan.Client.Contracts.AppServices
         string StatusText { get; }
 
         /// <summary>
+        /// Relative Installpath for updated I3 Version
+        /// </summary>
+        string VersionDir { get; }
+
+        /// <summary>
         /// Wether or not there are updates available. Should return
         /// as quick as possible and not display progress
         /// </summary>
