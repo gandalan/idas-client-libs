@@ -86,6 +86,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             this.DocUrl = settings.DocUrl;
             this.FeedbackUrl = settings.FeedbackUrl;
             this.StoreUrl = settings.StoreUrl;
+            this.NotifyUrl = settings.NotifyUrl;
         }
     }
 }
