@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 /*export let AppToken = "66B70E0B-F7C4-4829-B12A-18AD309E3970";
 export let AuthToken = localStorage.getItem("AuthToken");
@@ -22,9 +23,48 @@ export class RESTClient {
             axios.defaults.headers.common['X-Gdl-AuthToken'] = this.token;
         }
 
-        axios.interceptors.request.use(req => {
-            return req;
+        axios.interceptors.request.use(config => {
+            this.checkAuthorizationHeader(config);
+            return config;
         });
+    }
+
+    checkAuthorizationHeader(config) {
+        let authHeader = config.headers['Authorization'];
+        if (authHeader && authHeader.toString().startsWith('Bearer ')) {
+            let parts = authHeader.toString().split(' ');
+            let jwt = parts[1];
+            if (!this.isJwtTokenExpired(jwt)) {
+                // JWT token is not expired
+                return;
+            }
+
+            // expired token - refresh
+            let decoded = jwt_decode(jwt);
+            if (decoded && decoded['refreshToken']) {
+                let rest = new RESTClient(this.baseurl, '');
+                rest.put('/LoginJwt/Refresh', { token: decoded['refreshToken'] })
+                .then(resp => {
+                    // TODO
+                    console.log('refresh', resp.data);
+                })
+            }
+        }
+    }
+
+    isJwtTokenExpired(jwt) {
+        if (!jwt) {
+            return true;
+        }
+
+        let decoded = jwt_decode(jwt);
+        const utcNow = Date.parse(new Date().toUTCString()) / 1000;
+
+        if (decoded && decoded.exp >= utcNow) {
+            return false;
+        }
+
+        return true;
     }
 
     updateToken(token) {
