@@ -11,7 +11,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public NotifyWebRoutinen(IWebApiConfig settings) : base(settings)
         {
-            Settings.Url = settings.NotifyUrl;
+            var uri = new UriBuilder(settings.NotifyUrl);
+            uri.Path = "/api/";
+            Settings.Url = uri.ToString();
         }
 
         public IList<NachrichtenDTO> GetAllNotifications()
