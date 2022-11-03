@@ -11,14 +11,14 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public NotifyWebRoutinen(IWebApiConfig settings) : base(settings)
         {
-            Settings.Url = settings.NotifyUrl.Replace("/api/", "");
+            Settings.Url = settings.NotifyUrl;
         }
 
         public IList<NachrichtenDTO> GetAllNotifications()
         {
             var mandant = Settings.AuthToken.Mandant.MandantGuid;
             var produzent = Settings.AuthToken.Mandant.ProduzentMandantGuid;
-            return Get<List<NachrichtenDTO>>($"/Nachrichten?mandantGuid={mandant}&produzentGuid={produzent}");
+            return Get<List<NachrichtenDTO>>($"Nachrichten?mandantGuid={mandant}&produzentGuid={produzent}");
         }
 
         public async Task<IList<NachrichtenDTO>> GetAllNotificationsAsync()
