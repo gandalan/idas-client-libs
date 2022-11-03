@@ -8,6 +8,8 @@ export let ApiBaseUrl = localStorage.getItem("ApiBaseUrl") || "https://api.dev.i
 export let SiteBaseUrl = window.location.origin;
 export let SSOAuthUrl = ApiBaseUrl.replace("/api", '') + "/SSO?a=" + AppToken + "&r=%target%?t=%token%%26m=%mandant%";*/
 
+let authJwtRefreshToken = localStorage.getItem('IDAS_AuthJwtRefreshToken');
+
 export class RESTClient {
     lastError = '';
     token = '';
@@ -23,13 +25,17 @@ export class RESTClient {
             axios.defaults.headers.common['X-Gdl-AuthToken'] = this.token;
         }
 
-        axios.interceptors.request.use(config => {
-            this.checkAuthorizationHeader(config);
+        if (this.token && isJWT) {
+            this.updateJwtToken(token);
+        }
+
+        axios.interceptors.request.use(async (config) => {
+            await this.checkAuthorizationHeader(config);
             return config;
         });
     }
 
-    checkAuthorizationHeader(config) {
+    async checkAuthorizationHeader(config) {
         let authHeader = config.headers['Authorization'];
         if (authHeader && authHeader.toString().startsWith('Bearer ')) {
             let parts = authHeader.toString().split(' ');
@@ -40,16 +46,27 @@ export class RESTClient {
             }
 
             // expired token - refresh
-            let decoded = jwt_decode(jwt);
-            if (decoded && decoded['refreshToken']) {
-                let rest = new RESTClient(this.baseurl, '');
-                rest.put('/LoginJwt/Refresh', { token: decoded['refreshToken'] })
-                .then(resp => {
-                    // TODO
-                    console.log('refresh', resp.data);
-                })
-            }
+            await this.checkRefreshToken(jwt);
         }
+    }
+
+    async checkRefreshToken(jwt, authCallback) {
+        if (!jwt && authJwtRefreshToken) {
+            this.onError = (error, message) => {
+                // LoginJwt/Refresh failed, which means "refresh token" is expired/invalid...
+                if (message.indexOf("401") != -1 || message.indexOf("403") != -1) {
+                    authJwtRefreshToken = undefined;
+                    localStorage.removeItem('IDAS_AuthJwtRefreshToken');
+                    // ... so repeat authenticate
+                    authCallback && authCallback();
+                }
+            };
+            // fetch fresh JWT
+            await this.refreshToken();
+            return;
+        }
+        this.token = jwt;
+        this.isJWT = true;
     }
 
     isJwtTokenExpired(jwt) {
@@ -65,6 +82,26 @@ export class RESTClient {
         }
 
         return true;
+    }
+
+    updateJwtToken(jwt) {
+        let decoded = jwt_decode(jwt);
+        let refreshToken = decoded['refreshToken'];
+        localStorage.setItem('IDAS_AuthJwtRefreshToken', refreshToken);
+        authJwtRefreshToken = refreshToken;
+        this.token = jwt;
+        this.isJWT = true;
+    }
+
+    async refreshToken() {
+        try {
+            await axios.put(this.baseurl + '/LoginJwt/Refresh', { token: localStorage.getItem('IDAS_AuthJwtRefreshToken') })
+                .then(resp => {
+                    this.updateJwtToken(resp.data);
+                });
+        } catch (error) {
+            this.handleError(error);
+        }
     }
 
     updateToken(token) {
