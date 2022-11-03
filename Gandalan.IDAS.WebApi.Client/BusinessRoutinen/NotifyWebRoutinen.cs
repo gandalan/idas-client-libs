@@ -18,7 +18,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public IList<NachrichtenDTO> GetAllNotifications()
         {
-            return Get<List<NachrichtenDTO>>("/Nachrichten");
+            var mandant = _settings.AuthToken.Mandant.MandantGuid;
+            var produzent = _settings.AuthToken.Mandant.ProduzentMandantGuid;
+            return Get<List<NachrichtenDTO>>($"/Nachrichten?mandantGuid={mandant}&produzentGuid={produzent}");
         }
 
         public async Task<IList<NachrichtenDTO>> GetAllNotificationsAsync()
