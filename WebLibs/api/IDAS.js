@@ -51,7 +51,7 @@ class IDAS {
 
             // still not valid JWT -> authenticate
             if (!refreshClient.token) {
-                localStorage.setItem('IDAS_AuthJwtCallbackPath', authPath);
+                localStorage.setItem('IDAS_AuthJwtCallbackPath', authPath || '');
                 const authEndpoint = (new URL(window.location.href).origin) + authPath;
                 let authUrlCallback = `${authEndpoint}?r=%target%&t=%jwt%&m=%mandant%`;
                 authUrlCallback = authUrlCallback.replace('%target%', encodeURIComponent(window.location.href));
