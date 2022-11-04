@@ -4,27 +4,28 @@ WebLibs for Gandalan JS/TS/Svelte projects
 
 
 ```js
-import { IDAS } from '@gandalan/weblibs/api/IDAS';
-let idas = new IDAS();
-
-// bei Bedarf wird der Client zur Anmeldung umgeleitet, danach wird die aktuelle Seite wieder aufgerufen
-idas.authenticateWithSSO(); 
+import { IDASFactory } from '@gandalan/weblibs';
+let idas = IDASFactory.create();
 ```
+
+IDAS ab Version 1.0.0 verwendet JWT-Token für die Authentifizierung mit WebAPI. 
 
 Danach z.B. Zugriff auf die Mandant-Guid:
 
 ```js
-let mandantGuid = idas.mandantGuid;
+let mandantGuid = await idas.then(i => i.mandantGuid);
 ```
 
 Datenzugriffe erfolgen über die Objekte innerhalb der IDAS-Klasse
 
 ```js
 let loader = Promise.all([
-	idas.mandanten.getAll()
+	idas.
+		.then(i => i.mandanten.getAll())
 		.then(d => mandanten = d.sort((a,b) => a.Name.localeCompare(b.Name)))
 		.catch(e => error = e),
-	idas.rollen.getAll()
+	idas
+		.then(i => i.rollen.getAll())
 		.then(d => rollen = d.sort((a,b) => a.Name.localeCompare(b.Name)))
 		.catch(e => error = e)
 ])

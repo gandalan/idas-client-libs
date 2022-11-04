@@ -12,7 +12,7 @@ export {
     AddButton, RemoveButton, SaveButton,
 }
 
-import { IDAS } from './api/IDAS';
+import { IDASFactory } from './api/IDAS';
 import { RESTClient } from './api/RESTClient';
 
-export { IDAS, RESTClient };
+export { IDASFactory, RESTClient };
