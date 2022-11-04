@@ -86,7 +86,7 @@ export class RESTClient {
 
     updateJwtToken(jwt) {
         let decoded = jwt_decode(jwt);
-        let refreshToken = decoded['refreshToken'];
+        let refreshToken = decoded['refreshToken'] || '';
         localStorage.setItem('IDAS_AuthJwtRefreshToken', refreshToken);
         authJwtRefreshToken = refreshToken;
         this.token = jwt;
