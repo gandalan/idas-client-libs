@@ -1,4 +1,5 @@
 import { RESTClient } from './RESTClient';
+import jwt_decode from 'jwt-decode';
 
 let appToken = localStorage.getItem('IDAS_AppToken') || '66B70E0B-F7C4-4829-B12A-18AD309E3970';
 let authToken = localStorage.getItem('IDAS_AuthToken');
@@ -71,6 +72,37 @@ class IDAS {
     }
 
     mandantGuid = localStorage.getItem('IDAS_MandantGuid');
+
+    claims = {
+        hasClaim(key) {
+            if (!authJwtToken) {
+                return false;
+            }
+
+            try {
+                let decoded = jwt_decode(authJwtToken);
+                let val = decoded[key];
+                return val !== undefined;
+            }
+            catch {}
+
+            return false;
+        },
+
+        getClaim(key) {
+            if (!authJwtToken) {
+                return;
+            }
+
+            try {
+                let decoded = jwt_decode(authJwtToken);
+                return decoded[key];
+            }
+            catch {}
+
+            return;
+        }
+    }
 
     auth = {
         _self: this,
