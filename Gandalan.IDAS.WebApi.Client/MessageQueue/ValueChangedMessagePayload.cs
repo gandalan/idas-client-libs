@@ -5,5 +5,6 @@
         public string Empfaenger { get; set; }
         public string OldValue { get; set; }
         public string NewValue { get; set; }
+        public string Vorgangsnummer { get; set; }
     }
 }
