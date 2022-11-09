@@ -14,6 +14,8 @@ using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -93,7 +95,7 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             if (IsJwt)
             {
-                return true;
+                return CheckJwtToken();
             }
 
             try
@@ -158,7 +160,7 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             if (IsJwt)
             {
-                return true;
+                return await CheckJwtTokenAsync();
             }
 
             try
@@ -689,6 +691,123 @@ namespace Gandalan.IDAS.WebApi.Client
             if (!string.IsNullOrEmpty(Settings.UserAgent))
             {
                 cl.UserAgent = Settings.UserAgent;
+            }
+        }
+
+        private bool CheckJwtToken()
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            if (!tokenHandler.CanReadToken(JwtToken))
+            {
+                // unreadable
+                return false;
+            }
+
+            var jwtToken = tokenHandler.ReadJwtToken(JwtToken);
+            if (jwtToken.ValidTo >= DateTime.UtcNow)
+            {
+                // token is not expired
+                return true;
+            }
+
+            var refreshTokenClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "refreshToken");
+            var refreshToken = refreshTokenClaim?.Value;
+            Guid.TryParse(refreshToken, out Guid refreshTokenGuid);
+
+            if (refreshTokenClaim == null ||
+                refreshTokenGuid == Guid.Empty)
+            {
+                // JWT is expired and has no refreshToken
+                return false;
+            }
+
+            try
+            {
+                // refresh JWT using refresh token
+                //var refreshToken = refreshTokenClaim.Value;
+                var newJwt = Put<string>("/api/LoginJwt/Refresh", new { Token = refreshToken });
+                JwtToken = newJwt;
+                return true;
+            }
+            catch (ApiException apiex)
+            {
+                Status = apiex.Message;
+                if (Status.ToLower().Contains("<title>"))
+                {
+                    Status = internalStripHtml(Status);
+                }
+
+                if (apiex.InnerException != null)
+                {
+                    Status += " - " + apiex.InnerException.Message;
+                }
+
+                JwtToken = null;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Status = ex.Message;
+                JwtToken = null;
+                return false;
+            }
+        }
+
+        private async Task<bool> CheckJwtTokenAsync()
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            if (!tokenHandler.CanReadToken(JwtToken))
+            {
+                // unreadable
+                return false;
+            }
+
+            var jwtToken = tokenHandler.ReadJwtToken(JwtToken);
+            if (jwtToken.ValidTo >= DateTime.UtcNow)
+            {
+                // token is not expired
+                return true;
+            }
+
+            var refreshTokenClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "refreshToken");
+            var refreshToken = refreshTokenClaim?.Value;
+            Guid.TryParse(refreshToken, out Guid refreshTokenGuid);
+
+            if (refreshTokenClaim == null ||
+                refreshTokenGuid == Guid.Empty)
+            {
+                // JWT is expired and has no refreshToken
+                return false;
+            }
+
+            try
+            {
+                // refresh JWT using refresh token
+                var newJwt = await PutAsync<string>("/api/LoginJwt/Refresh", new { Token = refreshToken });
+                JwtToken = newJwt;
+                return true;
+            }
+            catch (ApiException apiex)
+            {
+                Status = apiex.Message;
+                if (Status.ToLower().Contains("<title>"))
+                {
+                    Status = internalStripHtml(Status);
+                }
+
+                if (apiex.InnerException != null)
+                {
+                    Status += " - " + apiex.InnerException.Message;
+                }
+
+                JwtToken = null;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Status = ex.Message;
+                JwtToken = null;
+                return false;
             }
         }
 
