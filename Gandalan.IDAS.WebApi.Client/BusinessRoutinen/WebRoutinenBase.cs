@@ -24,6 +24,7 @@ namespace Gandalan.IDAS.WebApi.Client
         #region  Felder
 
         public IWebApiConfig Settings;
+        public bool IsJwt;
 
         #endregion
 
@@ -32,6 +33,7 @@ namespace Gandalan.IDAS.WebApi.Client
         public UserAuthTokenDTO AuthToken { get; set; }
         public string Status { get; private set; }
         public bool IgnoreOnErrorOccured { get; set; }
+        public string JwtToken { get; set; }
 
         #endregion
 
@@ -57,6 +59,12 @@ namespace Gandalan.IDAS.WebApi.Client
                     InstallationId = settings.InstallationId,
                     UserAgent = settings.UserAgent
                 };
+
+                if (settings is IJwtWebApiConfig)
+                {
+                    IsJwt = true;
+                    JwtToken = ((IJwtWebApiConfig)settings).JwtToken;
+                }
             }
 
             if (settings?.AuthToken?.Token != Guid.Empty && settings?.AuthToken?.Expires > DateTime.UtcNow)
@@ -83,6 +91,11 @@ namespace Gandalan.IDAS.WebApi.Client
         /// <returns>Status des Logins</returns>
         public bool Login()
         {
+            if (IsJwt)
+            {
+                return true;
+            }
+
             try
             {
                 UserAuthTokenDTO result = null;
@@ -143,6 +156,11 @@ namespace Gandalan.IDAS.WebApi.Client
 
         public async Task<bool> LoginAsync()
         {
+            if (IsJwt)
+            {
+                return true;
+            }
+
             try
             {
                 UserAuthTokenDTO result = null;
@@ -648,9 +666,19 @@ namespace Gandalan.IDAS.WebApi.Client
 
         private void SetupRestRoutinen(RESTRoutinen cl)
         {
-            if (AuthToken != null)
+            if (IsJwt)
             {
-                cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                if (!string.IsNullOrEmpty(JwtToken))
+                {
+                    cl.AdditionalHeaders.Add("Authorization: Bearer " + JwtToken);
+                }
+            }
+            else
+            {
+                if (AuthToken != null)
+                {
+                    cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                }
             }
 
             if (Settings.InstallationId != Guid.Empty)
