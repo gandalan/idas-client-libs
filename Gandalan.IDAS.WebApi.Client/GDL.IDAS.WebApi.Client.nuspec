@@ -13,6 +13,7 @@
         <dependencies>
           <dependency id="GDL.IDAS.Logging" version="BUILDVERSION" />
           <dependency id="Newtonsoft.Json" version="13.0.1" />
+          <dependency id="System.IdentityModel.Tokens.Jwt" version="6.23.1" />
         </dependencies>
     </metadata>
     <files>

@@ -696,35 +696,14 @@ namespace Gandalan.IDAS.WebApi.Client
 
         private bool CheckJwtToken()
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            if (!tokenHandler.CanReadToken(JwtToken))
+            if (CheckJwtTokenInternal(out var refreshToken, out bool checkResult))
             {
-                // unreadable
-                return false;
-            }
-
-            var jwtToken = tokenHandler.ReadJwtToken(JwtToken);
-            if (jwtToken.ValidTo >= DateTime.UtcNow)
-            {
-                // token is not expired
-                return true;
-            }
-
-            var refreshTokenClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "refreshToken");
-            var refreshToken = refreshTokenClaim?.Value;
-            Guid.TryParse(refreshToken, out Guid refreshTokenGuid);
-
-            if (refreshTokenClaim == null ||
-                refreshTokenGuid == Guid.Empty)
-            {
-                // JWT is expired and has no refreshToken
-                return false;
+                return checkResult;
             }
 
             try
             {
                 // refresh JWT using refresh token
-                //var refreshToken = refreshTokenClaim.Value;
                 var newJwt = Put<string>("/api/LoginJwt/Refresh", new { Token = refreshToken });
                 JwtToken = newJwt;
                 return true;
@@ -755,29 +734,9 @@ namespace Gandalan.IDAS.WebApi.Client
 
         private async Task<bool> CheckJwtTokenAsync()
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            if (!tokenHandler.CanReadToken(JwtToken))
+            if (CheckJwtTokenInternal(out var refreshToken, out bool checkResult))
             {
-                // unreadable
-                return false;
-            }
-
-            var jwtToken = tokenHandler.ReadJwtToken(JwtToken);
-            if (jwtToken.ValidTo >= DateTime.UtcNow)
-            {
-                // token is not expired
-                return true;
-            }
-
-            var refreshTokenClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "refreshToken");
-            var refreshToken = refreshTokenClaim?.Value;
-            Guid.TryParse(refreshToken, out Guid refreshTokenGuid);
-
-            if (refreshTokenClaim == null ||
-                refreshTokenGuid == Guid.Empty)
-            {
-                // JWT is expired and has no refreshToken
-                return false;
+                return checkResult;
             }
 
             try
@@ -809,6 +768,42 @@ namespace Gandalan.IDAS.WebApi.Client
                 JwtToken = null;
                 return false;
             }
+        }
+
+        private bool CheckJwtTokenInternal(out string refreshToken, out bool checkResult)
+        {
+            refreshToken = null;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            if (!tokenHandler.CanReadToken(JwtToken))
+            {
+                // unreadable
+                checkResult = false;
+                return true;
+            }
+
+            var jwtToken = tokenHandler.ReadJwtToken(JwtToken);
+            if (jwtToken.ValidTo >= DateTime.UtcNow)
+            {
+                // token is not expired
+                checkResult = true;
+                return true;
+            }
+
+            var refreshTokenClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "refreshToken");
+            refreshToken = refreshTokenClaim?.Value;
+            Guid.TryParse(refreshToken, out Guid refreshTokenGuid);
+
+            if (refreshTokenClaim == null ||
+                refreshTokenGuid == Guid.Empty)
+            {
+                // JWT is expired and has no refreshToken
+                checkResult = false;
+                return true;
+            }
+
+            // token is good - return "false" for further processing
+            checkResult = true;
+            return false;
         }
 
         private ApiException HandleWebException(WebException ex, string url)
