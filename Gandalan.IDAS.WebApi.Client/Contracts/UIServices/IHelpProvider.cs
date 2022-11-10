@@ -7,5 +7,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices
         Task ShowChangelog();
         Task ShowTooltip(string slug);
         Task ShowContextHelp(string slug);
+        Task ShowHelpCenter();
     }
 }
