@@ -9,24 +9,38 @@ let authJwtToken;
 export let IDASFactory = {
     async create() {
         return new Promise((resolve, reject) => {
-            let idas = new IDAS();
-            resolve(idas.authenticateWithJwt(authJwtCallbackPath));
+            let promise = this.authorize()
+                .then(() => {
+                    let idas = new IDAS();
+                    return idas.authenticateWithJwt(authJwtCallbackPath)
+                });
+            resolve(promise);
         });
     },
 
-    authorize() {
+    async authorize() {
         var urlParams = new URLSearchParams(location.search);
-        if (urlParams.has('t')) {
-            let idas = new IDAS();
-            idas.authorizeWithJwt(urlParams.get('t'));
-        }
         if (urlParams.has("m")) {
             localStorage.setItem("IDAS_MandantGuid", urlParams.get("m"));
         }
         if (urlParams.has("a")) {
             localStorage.setItem("IDAS_ApiBaseUrl", urlParams.get("a"));
         }
-        window.location.search = "";
+        if (urlParams.has('j')) { // it is JWT
+            let idas = new IDAS();
+            idas.authorizeWithJwt(urlParams.get('j'));
+            window.location.search = "";
+            return Promise.reject("redirect is required");
+        }
+        if (urlParams.has('t')) { // it is authToken
+            localStorage.setItem('IDAS_AuthJwtRefreshToken', urlParams.get("t"));
+            var refreshClient = new RESTClient(apiBaseUrl, '');
+            await refreshClient.refreshToken()
+                .then(() => {
+                    window.location.search = "";
+                });
+            return Promise.reject("redirect is required");
+        }
     }
 }
 
@@ -53,7 +67,7 @@ class IDAS {
             if (!refreshClient.token) {
                 localStorage.setItem('IDAS_AuthJwtCallbackPath', authPath || '');
                 const authEndpoint = (new URL(window.location.href).origin) + authPath;
-                let authUrlCallback = `${authEndpoint}?r=%target%&t=%jwt%&m=%mandant%`;
+                let authUrlCallback = `${authEndpoint}?r=%target%&j=%jwt%&m=%mandant%`;
                 authUrlCallback = authUrlCallback.replace('%target%', encodeURIComponent(window.location.href));
     
                 const url = new URL(apiBaseUrl);
