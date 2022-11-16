@@ -188,6 +188,9 @@ class IDAS {
         async getByVorgangsnummer(vorgangsNummer, jahr) {
             return await this._self.restClient.get(`/Vorgang/${vorgangsNummer}/${jahr}`);
         },
+        async getByGuid(guid) {
+            return await this._self.restClient.get(`/Vorgang/${guid}`);
+        },
     };
 
     positionen = {
