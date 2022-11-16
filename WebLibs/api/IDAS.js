@@ -26,6 +26,7 @@ export let IDASFactory = {
         }
         if (urlParams.has("a")) {
             localStorage.setItem("IDAS_ApiBaseUrl", urlParams.get("a"));
+            apiBaseUrl = urlParams.get("a");
         }
         if (urlParams.has('j')) { // it is JWT
             let idas = new IDAS();
