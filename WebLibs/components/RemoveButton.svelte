@@ -1,7 +1,7 @@
 <script>
     import { Button } from 'svelte-chota';
     import { mdiTrashCan } from '@mdi/js'
-    
+
     export let Handler;
     export let disabled;
     export let title;
