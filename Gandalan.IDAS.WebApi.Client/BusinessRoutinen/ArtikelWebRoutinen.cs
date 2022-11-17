@@ -19,7 +19,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public ArtikelWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
-        public WarenGruppeDTO[] GetAll(DateTime? changedSince)
+        public WarenGruppeDTO[] GetAll(DateTime? changedSince = null)
         {
             if (Login())
             {
@@ -42,7 +42,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 return Delete($"Artikel/{artikel.KatalogArtikelGuid}");
             throw new ApiException("Login fehlgeschlagen");
         }
-        public async Task<WarenGruppeDTO[]> GetAllAsync(DateTime? changedSince) => await Task.Run(() => GetAll(changedSince));
+        public async Task<WarenGruppeDTO[]> GetAllAsync(DateTime? changedSince = null) => await Task.Run(() => GetAll(changedSince));
         public async Task<KatalogArtikelDTO> SaveArtikelAsync(KatalogArtikelDTO artikel) => await Task.Run(() => SaveArtikel(artikel));
     }
 }
