@@ -20,30 +20,30 @@ export let IDASFactory = {
     },
 
     async authorize() {
-        var urlParams = new URLSearchParams(location.search);
-        if (urlParams.has("m")) {
-            localStorage.setItem("IDAS_MandantGuid", urlParams.get("m"));
+        let urlParams = new URLSearchParams(location.search);
+        if (urlParams.has('m')) {
+            localStorage.setItem('IDAS_MandantGuid', urlParams.get('m'));
         }
-        if (urlParams.has("a")) {
-            localStorage.setItem("IDAS_ApiBaseUrl", urlParams.get("a"));
-            apiBaseUrl = urlParams.get("a");
+        if (urlParams.has('a')) {
+            localStorage.setItem('IDAS_ApiBaseUrl', urlParams.get('a'));
+            apiBaseUrl = urlParams.get('a');
         }
         if (urlParams.has('j')) { // it is JWT
             let idas = new IDAS();
             idas.authorizeWithJwt(urlParams.get('j'));
-            window.location.search = "";
-            return Promise.reject("redirect is required");
+            window.location.search = '';
+            return Promise.reject('redirect is required');
         }
         if (urlParams.has('t')) { // it is authToken
-            localStorage.setItem('IDAS_AuthJwtRefreshToken', urlParams.get("t"));
-            var refreshClient = new RESTClient(apiBaseUrl, '');
+            localStorage.setItem('IDAS_AuthJwtRefreshToken', urlParams.get('t'));
+            let refreshClient = new RESTClient(apiBaseUrl, '');
             await refreshClient.refreshToken()
                 .then(() => {
-                    window.location.search = "";
+                    window.location.search = '';
                 });
-            return Promise.reject("redirect is required");
+            return Promise.reject('redirect is required');
         }
-    }
+    },
 }
 
 class IDAS {
@@ -58,7 +58,7 @@ class IDAS {
     async authenticateWithJwt(authPath) {
         return new Promise(async (resolve, reject) => {
             // no valid JWT, but try to use "refresh token" first to retrive new JWT
-            var refreshClient = new RESTClient(apiBaseUrl, '');
+            let refreshClient = new RESTClient(apiBaseUrl, '');
             await refreshClient.checkRefreshToken(authJwtToken, () => {
                 authJwtToken = undefined;
                 // ... so repeat authenticate (should lead to /Session login page)
@@ -71,18 +71,18 @@ class IDAS {
                 const authEndpoint = (new URL(window.location.href).origin) + authPath;
                 let authUrlCallback = `${authEndpoint}?r=%target%&j=%jwt%&m=%mandant%`;
                 authUrlCallback = authUrlCallback.replace('%target%', encodeURIComponent(window.location.href));
-    
+
                 const url = new URL(apiBaseUrl);
-                url.pathname = "/Session";
+                url.pathname = '/Session';
                 url.search = `?a=${appToken}&r=${encodeURIComponent(authUrlCallback)}`;
                 let jwtUrl = url.toString();
-    
+
                 window.location = jwtUrl;
                 reject('not authenticated yet');
             } else {
                 this.authorizeWithJwt(refreshClient.token);
                 resolve(this);
-            }    
+            }
         });
     }
 
@@ -98,8 +98,8 @@ class IDAS {
                 let decoded = jwt_decode(authJwtToken);
                 let val = decoded[key];
                 return val !== undefined;
-            }
-            catch {}
+            // eslint-disable-next-line no-empty
+            } catch {}
 
             return false;
         },
@@ -112,11 +112,11 @@ class IDAS {
             try {
                 let decoded = jwt_decode(authJwtToken);
                 return decoded[key];
-            }
-            catch {}
+            // eslint-disable-next-line no-empty
+            } catch {}
 
             return;
-        }
+        },
     }
 
     auth = {

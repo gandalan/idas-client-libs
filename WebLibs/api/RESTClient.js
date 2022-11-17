@@ -54,13 +54,14 @@ export class RESTClient {
         if (!jwt && authJwtRefreshToken) {
             this.onError = (error, message) => {
                 // LoginJwt/Refresh failed, which means "refresh token" is expired/invalid...
-                if (message.indexOf("401") != -1 || message.indexOf("403") != -1) {
+                if (message.indexOf('401') != -1 || message.indexOf('403') != -1) {
                     authJwtRefreshToken = undefined;
                     localStorage.removeItem('IDAS_AuthJwtRefreshToken');
                     // ... so repeat authenticate
                     authCallback && authCallback();
                 }
             };
+
             // fetch fresh JWT
             await this.refreshToken();
             return;
@@ -95,7 +96,7 @@ export class RESTClient {
 
     async refreshToken() {
         try {
-            await axios.put(this.baseurl + '/LoginJwt/Refresh', { token: localStorage.getItem('IDAS_AuthJwtRefreshToken') })
+            await axios.put(`${this.baseurl}/LoginJwt/Refresh`, { token: localStorage.getItem('IDAS_AuthJwtRefreshToken') })
                 .then(resp => {
                     this.updateJwtToken(resp.data);
                 });
@@ -110,8 +111,10 @@ export class RESTClient {
 
     getUrlOptions(noJWT = false) {
         let options = { withCredentials: false }
-        if (this.isJWT && !noJWT)
+        if (this.isJWT && !noJWT) {
             options.headers = { Authorization: `Bearer ${this.token}` }
+        }
+
         return options
     }
 
@@ -124,7 +127,6 @@ export class RESTClient {
             this.handleError(error);
         }
     }
-
 
     async getFile(uri) {
         try {
