@@ -1,20 +1,20 @@
 <script>
-    import { createEventDispatcher } from 'svelte';
+    import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher();
-    import { Icon } from 'svelte-chota';
+    import { Icon } from "svelte-chota";
 
     export let items = [];
     export let selectedItem = {};
     export let standardItem;
-    export let displayProperty = '';
-    export let header = 'Überschrift';
-    export let key = 'Guid';
+    export let displayProperty = "";
+    export let header = "Überschrift";
+    export let key = "Guid";
     export let marker = null;
-    export let markerField = '';
+    export let markerField = "";
 
     function setCurrent(item) {
         selectedItem = item;
-        dispatch('selectedItemChanged', item);
+        dispatch("selectedItemChanged", item);
     }
 </script>
 
@@ -24,10 +24,10 @@
     </div>
     <div>
         {#if standardItem}
-            <div class="dgrow" on:click={setCurrent(standardItem)} on:keypress={e => e.key === 'Enter' && setCurrent(standardItem)} class:selected="{selectedItem[key] === standardItem[key]}">{standardItem[displayProperty]}</div>
+            <div class="dgrow" on:click={setCurrent(standardItem)} on:keypress={e => e.key === "Enter" && setCurrent(standardItem)} class:selected="{selectedItem[key] === standardItem[key]}">{standardItem[displayProperty]}</div>
         {/if}
         {#each items as d}
-            <div class="dgrow" on:click={setCurrent(d)} on:keypress={e => e.key === 'Enter' && setCurrent(d)} class:selected="{selectedItem[key] === d[key]}">
+            <div class="dgrow" on:click={setCurrent(d)} on:keypress={e => e.key === "Enter" && setCurrent(d)} class:selected="{selectedItem[key] === d[key]}">
                 {d[displayProperty]}
                 {#if marker && markerField && d[markerField] === true}
                     <Icon src={marker} />
