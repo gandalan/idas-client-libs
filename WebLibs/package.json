@@ -16,7 +16,8 @@
   "scripts": {
     "svelte-check": "svelte-check",
     "svelte-check:watch": "svelte-check --watch",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@mdi/js": "^7.0.96",
@@ -27,9 +28,9 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
     "chota": "^0.8.0",
-    "eslint": "^8.23.1",
+    "eslint": "^8.27.0",
     "eslint-plugin-svelte3": "^4.0.0",
-    "svelte": "^3.50.1",
+    "svelte": "^3.53.1",
     "svelte-check": "^2.9.2",
     "svelte-chota": "^1.8.6"
   },

@@ -24,10 +24,10 @@
     </div>
     <div>
         {#if standardItem}
-            <div class="dgrow" on:click={setCurrent(standardItem)} class:selected="{selectedItem[key] === standardItem[key]}">{standardItem[displayProperty]}</div>
+            <div class="dgrow" on:click={setCurrent(standardItem)} on:keypress={e => e.key === 'Enter' && setCurrent(standardItem)} class:selected="{selectedItem[key] === standardItem[key]}">{standardItem[displayProperty]}</div>
         {/if}
         {#each items as d}
-            <div class="dgrow" on:click={setCurrent(d)} class:selected="{selectedItem[key] === d[key]}">
+            <div class="dgrow" on:click={setCurrent(d)} on:keypress={e => e.key === 'Enter' && setCurrent(d)} class:selected="{selectedItem[key] === d[key]}">
                 {d[displayProperty]}
                 {#if marker && markerField && d[markerField] === true}
                     <Icon src={marker} />

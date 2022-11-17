@@ -190,7 +190,7 @@ export class RESTClient {
     handleError(error) {
         let message = error ? error.message : '?';
         // eslint-disable-next-line no-console
-        console.log(`API Error: ${message}`);
+        console.error(`API Error: ${message}`);
         this.lastError = message;
         this.onError(error, message);
         throw error;
