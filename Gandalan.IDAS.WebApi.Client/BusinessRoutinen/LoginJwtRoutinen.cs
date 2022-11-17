@@ -15,9 +15,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return Post<string>("LoginJwt/Authenticate", dto);
         }
 
-        public string AuthenticateForFunction(string email, long mandantId)
+        public string AuthenticateForFunction(string email)
         {
-            return Post<string>("LoginJwt/AuthenticateForFunction/?email=" + Uri.EscapeDataString(email) + "&mandantId=" + mandantId, null);
+            return Post<string>("LoginJwt/AuthenticateForFunction/?email=" + Uri.EscapeDataString(email), null);
         }
 
         public string Refresh(string token)

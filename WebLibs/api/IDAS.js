@@ -1,4 +1,5 @@
 import { RESTClient } from './RESTClient';
+import jwt_decode from 'jwt-decode';
 
 let appToken = localStorage.getItem('IDAS_AppToken') || '66B70E0B-F7C4-4829-B12A-18AD309E3970';
 let authToken = localStorage.getItem('IDAS_AuthToken');
@@ -9,24 +10,39 @@ let authJwtToken;
 export let IDASFactory = {
     async create() {
         return new Promise((resolve, reject) => {
-            let idas = new IDAS();
-            resolve(idas.authenticateWithJwt(authJwtCallbackPath));
+            let promise = this.authorize()
+                .then(() => {
+                    let idas = new IDAS();
+                    return idas.authenticateWithJwt(authJwtCallbackPath)
+                });
+            resolve(promise);
         });
     },
 
-    authorize() {
+    async authorize() {
         var urlParams = new URLSearchParams(location.search);
-        if (urlParams.has('t')) {
-            let idas = new IDAS();
-            idas.authorizeWithJwt(urlParams.get('t'));
-        }
         if (urlParams.has("m")) {
             localStorage.setItem("IDAS_MandantGuid", urlParams.get("m"));
         }
         if (urlParams.has("a")) {
             localStorage.setItem("IDAS_ApiBaseUrl", urlParams.get("a"));
+            apiBaseUrl = urlParams.get("a");
         }
-        window.location.search = "";
+        if (urlParams.has('j')) { // it is JWT
+            let idas = new IDAS();
+            idas.authorizeWithJwt(urlParams.get('j'));
+            window.location.search = "";
+            return Promise.reject("redirect is required");
+        }
+        if (urlParams.has('t')) { // it is authToken
+            localStorage.setItem('IDAS_AuthJwtRefreshToken', urlParams.get("t"));
+            var refreshClient = new RESTClient(apiBaseUrl, '');
+            await refreshClient.refreshToken()
+                .then(() => {
+                    window.location.search = "";
+                });
+            return Promise.reject("redirect is required");
+        }
     }
 }
 
@@ -53,7 +69,7 @@ class IDAS {
             if (!refreshClient.token) {
                 localStorage.setItem('IDAS_AuthJwtCallbackPath', authPath || '');
                 const authEndpoint = (new URL(window.location.href).origin) + authPath;
-                let authUrlCallback = `${authEndpoint}?r=%target%&t=%jwt%&m=%mandant%`;
+                let authUrlCallback = `${authEndpoint}?r=%target%&j=%jwt%&m=%mandant%`;
                 authUrlCallback = authUrlCallback.replace('%target%', encodeURIComponent(window.location.href));
     
                 const url = new URL(apiBaseUrl);
@@ -71,6 +87,37 @@ class IDAS {
     }
 
     mandantGuid = localStorage.getItem('IDAS_MandantGuid');
+
+    claims = {
+        hasClaim(key) {
+            if (!authJwtToken) {
+                return false;
+            }
+
+            try {
+                let decoded = jwt_decode(authJwtToken);
+                let val = decoded[key];
+                return val !== undefined;
+            }
+            catch {}
+
+            return false;
+        },
+
+        getClaim(key) {
+            if (!authJwtToken) {
+                return;
+            }
+
+            try {
+                let decoded = jwt_decode(authJwtToken);
+                return decoded[key];
+            }
+            catch {}
+
+            return;
+        }
+    }
 
     auth = {
         _self: this,
@@ -141,6 +188,9 @@ class IDAS {
         _self: this,
         async getByVorgangsnummer(vorgangsNummer, jahr) {
             return await this._self.restClient.get(`/Vorgang/${vorgangsNummer}/${jahr}`);
+        },
+        async getByGuid(guid) {
+            return await this._self.restClient.get(`/Vorgang/${guid}`);
         },
     };
 
