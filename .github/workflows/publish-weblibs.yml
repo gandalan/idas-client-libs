@@ -33,7 +33,7 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - run: npm ci
       working-directory: ${{ env.WEBLIBS_DIR }}
-    - run: npm run check
+    - run: npm run svelte-check
       working-directory: ${{ env.WEBLIBS_DIR }}
     #- run: npm run lint
     #  working-directory: ${{ env.WEBLIBS_DIR }}

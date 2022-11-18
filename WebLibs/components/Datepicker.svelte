@@ -1,14 +1,14 @@
 <script>
     export let Height = 30;
-    export let Placeholder = '';
-    export let Value = '';
+    export let Placeholder = "";
+    export let Value = "";
     export let Width = 120;
 
-    const backgroundNormal = '#FFFFFF';
-    const backgroundFalschesDatum = '#FF0000';
+    const backgroundNormal = "#FFFFFF";
+    const backgroundFalschesDatum = "#FF0000";
 
-    let monate = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
-    let tageKurz = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+    let monate = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+    let tageKurz = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
 
     let buttonStyle, divStyle, inputStyle;
     let background = backgroundNormal;
@@ -19,10 +19,10 @@
     let inputHeight = Height - 2;
     let inputWidth = Width - Height - 10;
 
-    let allowedNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+    let allowedNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
     let allowedTage = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    let allowedSonderzeichen = '.';
-    let allowedFunctionalKeys = ['ArrowLeft', 'ArrowRight', 'Backspace', 'Delete'];
+    let allowedSonderzeichen = ".";
+    let allowedFunctionalKeys = ["ArrowLeft", "ArrowRight", "Backspace", "Delete"];
     let currentJahr = new Date().getFullYear();
     let currentMonat = monate[new Date().getMonth()];
     let wochenImMonat = [];
@@ -52,7 +52,7 @@
         }
 
         // Prüfung, ob der Monat korrekt eingegeben wurde
-        if (localMonat != 'undefined' && (localMonat < 1 || localMonat > 12)) {
+        if (localMonat != "undefined" && (localMonat < 1 || localMonat > 12)) {
             error = true;
         } else {
             error = false;
@@ -63,9 +63,9 @@
             error = true;
         }
 
-        if (localMonat != 'undefined') {
+        if (localMonat != "undefined") {
             let localAllowedTage = allowedTage[inhalt[1]];
-            if (localAllowedTage == 'undefined') {
+            if (localAllowedTage == "undefined") {
                 error = true;
             }
             if (localTag > localAllowedTage) {
@@ -92,7 +92,7 @@
                 // Am Anfang müssen erstmal x Leertage in die Woche eingefügt werden, damit der Monat
                 // am passenden Wochentag startet => das macht es in der Anzeigeschleife leichter
                 for (let bufferCounter = 0; bufferCounter < localTagIndex; bufferCounter++) {
-                    woche = [...woche, ''];
+                    woche = [...woche, ""];
                 }
             }
             woche = [...woche, counter + 1];
@@ -125,7 +125,7 @@
         daysInMonth();
     }
     function setPlaceholder(tag) {
-        if (tag != '') {
+        if (tag != "") {
             //Placeholder = getFormattedDate(tag);
         }
     }

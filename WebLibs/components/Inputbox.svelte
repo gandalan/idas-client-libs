@@ -1,6 +1,6 @@
 <script>
     export let AllowedDecimals = 2;
-    export let DecimalTrenner = ',';
+    export let DecimalTrenner = ",";
     export let KeyDownFunctionOnEnter, KeyDownFunctionOnTab;
     export let Height = 30;
     export let IsPflichtfeld = false;
@@ -8,28 +8,28 @@
     export let MinValue = 0;
     export let MaxValue = 0;
     export let Multiline = false;
-    export let Type = 'text';
-    export let Value = '';
+    export let Type = "text";
+    export let Value = "";
     export let Width = 120;
 
     let errorHidden = true;
-    let errorMessage = '';
+    let errorMessage = "";
     let style = `height: ${Height}px; width: ${Width}px;`;
     let styleError = `width: ${Width}px;`;
 
-    let allowedNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    let allowedDecimalTrenner = [',', '.'];
-    let allowedFunctionalKeys = ['ArrowLeft', 'ArrowRight', 'Backspace', 'Delete'];
-    let allowedVorzeichen = '-';
+    let allowedNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    let allowedDecimalTrenner = [",", "."];
+    let allowedFunctionalKeys = ["ArrowLeft", "ArrowRight", "Backspace", "Delete"];
+    let allowedVorzeichen = "-";
 
     function checkInput(e) {
         switch (Type) {
-            case 'currency':
-            case 'number':
+            case "currency":
+            case "number":
                 checkInputNumber(e);
                 break;
 
-            case 'email':
+            case "email":
                 checkInputEMail(e)
                 break;
         }
@@ -45,7 +45,7 @@
                 let positionDezimalTrenner = localValueString.indexOf(DecimalTrenner)
                 if (positionDezimalTrenner > -1) {
                     let decimals = localValueString.substring(positionDezimalTrenner);
-                    if (decimals.length > AllowedDecimals || (Type == 'currency' && decimals.length > 2)) {
+                    if (decimals.length > AllowedDecimals || (Type == "currency" && decimals.length > 2)) {
                         ignoreInput(e);
                     }
                 }
@@ -74,39 +74,39 @@
         }
     }
     function checkInputEMail(e) {
-        let mailParts = Value.split('@');
+        let mailParts = Value.split("@");
         errorHidden = false;    // Pauschal einen Fehler anzeigen lassen - spart Codezeilen
 
         if (mailParts[0].length > 64) {
-            errorMessage = 'Der Lokalteil der E-Mail Adresse (vor dem @-Zeichen) darf eine Maximallänge von 64 Zeichen nicht überschreiten.'
+            errorMessage = "Der Lokalteil der E-Mail Adresse (vor dem @-Zeichen) darf eine Maximallänge von 64 Zeichen nicht überschreiten."
         } else if (mailParts.length > 1 && mailParts[0].length < 1) {
-            errorMessage = 'Der Lokalteil der E-Mail Adresse (vor dem @-Zeichen) muss eine Mindestlänge von 1 Zeichen besitzen.'
-        } else if (mailParts.length > 1 && !mailParts[1].includes('.')) {
-            errorMessage = 'Der Domainteil der E-Mail Adresse (nach dem @-Zeichen) muss einen Punkt (.) enthalten.'
-        } else if (Value.startsWith('.') || Value.endsWith('.')) {
-            errorMessage = 'Die E-Mail Adresse darf mit einem Punkt weder beginnen noch enden.'
-        } else if (Value.startsWith('@') || Value.endsWith('@')) {
-            errorMessage = 'Die E-Mail Adresse darf mit einem @-Zeichen weder beginnen noch enden.'
-        } else if (!Value.includes('@') && e.key != '@') {
-            errorMessage = '@-Zeichen muss enthalten sein.'
+            errorMessage = "Der Lokalteil der E-Mail Adresse (vor dem @-Zeichen) muss eine Mindestlänge von 1 Zeichen besitzen."
+        } else if (mailParts.length > 1 && !mailParts[1].includes(".")) {
+            errorMessage = "Der Domainteil der E-Mail Adresse (nach dem @-Zeichen) muss einen Punkt (.) enthalten."
+        } else if (Value.startsWith(".") || Value.endsWith(".")) {
+            errorMessage = "Die E-Mail Adresse darf mit einem Punkt weder beginnen noch enden."
+        } else if (Value.startsWith("@") || Value.endsWith("@")) {
+            errorMessage = "Die E-Mail Adresse darf mit einem @-Zeichen weder beginnen noch enden."
+        } else if (!Value.includes("@") && e.key != "@") {
+            errorMessage = "@-Zeichen muss enthalten sein."
         } else if (Value.length > 253) {
-            errorMessage = 'Maximallänge: 254 Zeichen.';
+            errorMessage = "Maximallänge: 254 Zeichen.";
         } else if (Value.length < 6) {
-            errorMessage = 'Mindestlänge: 6 Zeichen.';
+            errorMessage = "Mindestlänge: 6 Zeichen.";
         } else {
             errorHidden = true;
-            errorMessage = ''; // einfach für die Sauberkeit
+            errorMessage = ""; // einfach für die Sauberkeit
         }
     }
     function executeAdditionalFunctions(e) {
         switch (e.key) {
-			case 'Enter':
-                if (typeof(KeyDownFunctionOnEnter) != 'undefined') {
+			case "Enter":
+                if (typeof(KeyDownFunctionOnEnter) != "undefined") {
                     KeyDownFunctionOnEnter();
                 }
 				break;
-			case 'Tab':
-                if (typeof(KeyDownFunctionOnTab) != 'undefined') {
+			case "Tab":
+                if (typeof(KeyDownFunctionOnTab) != "undefined") {
                     KeyDownFunctionOnTab();
                 }
 				break;
@@ -127,7 +127,7 @@
         }
 
         // Replace wird benötigt, da sonst der Vergleich das deutsche "," als Dezimaltrenner nicht erkennt und ignoriert.
-        localValueString = localValueString.replaceAll(',', '.');
+        localValueString = localValueString.replaceAll(",", ".");
 
         if (MinValue == MaxValue || MinValue > MaxValue) {
             return isBetween;
@@ -144,9 +144,9 @@
         setFieldStyle();
     }
     function setFieldStyle() {
-        if (IsPflichtfeld && Value != '') {
+        if (IsPflichtfeld && Value != "") {
             style = `${style} background: #f5fc99;`
-        } else if (IsPflichtfeld && Value == '') {
+        } else if (IsPflichtfeld && Value == "") {
             style = `${style} background: #fc5d5d;`
         }
     }
@@ -154,8 +154,8 @@
     $:if (Type) {
         Type = Type.toLocaleLowerCase();
         switch (Type) {
-            case 'currency':
-            case 'number':
+            case "currency":
+            case "number":
                 style = `${style} text-align: right;`
                 break;
         }
@@ -166,25 +166,25 @@
 </script>
 
 <!-- Datum -->
-{#if (Type == 'date')}
+{#if (Type == "date")}
     <input type="date" style={style} on:keydown={checkInput} on:keyup={thisKeyUp} on bind:value={Value}/>
 {/if}
 
 <!-- Nummerisch -->
-{#if (Type == 'number')}
+{#if (Type == "number")}
     <input style={style} on:keydown={checkInput} on:keyup={thisKeyUp} bind:value={Value}/>
 {/if}
 
 <!-- Text -->
-{#if (Type == 'text' && !Multiline) || (Type == 'email')}
+{#if (Type == "text" && !Multiline) || (Type == "email")}
     <input style={style} on:keydown={checkInput} on:keyup={thisKeyUp} bind:value={Value}/>
 {/if}
-{#if (Type == 'text' && Multiline)}
+{#if (Type == "text" && Multiline)}
     <textarea style={style} on:keydown={checkInput} bind:value={Value}/>
 {/if}
 
 <!-- Währung -->
-{#if (Type == 'currency')}
+{#if (Type == "currency")}
     <input style={style} on:keydown={checkInput} on:keyup={thisKeyUp} bind:value={Value}/>
 {/if}
 
