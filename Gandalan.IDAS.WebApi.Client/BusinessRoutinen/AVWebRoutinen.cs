@@ -122,6 +122,16 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return "Not logged in";
         }
 
+
+        public string BelegPositionenAVBerechnen(List<Guid> guids)
+        {
+            if (Login())
+            {
+                return Put<string>($"BelegPositionenAVBulk/AVBerechnung", guids);
+            }
+            return "Not logged in";
+        }
+
         public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
             if (Login())
@@ -235,6 +245,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             if (Login())
             {
                 return await DeleteAsync<string>($"BelegPositionenAVBulk", guids);
+            }
+            return "Not logged in";
+        }
+
+        public async Task<string> BelegPositionenAVBerechnenAsync(List<Guid> guids)
+        {
+            if (Login())
+            {
+                return await PutAsync<string>($"BelegPositionenAVBulk/AVBerechnung", guids);
             }
             return "Not logged in";
         }

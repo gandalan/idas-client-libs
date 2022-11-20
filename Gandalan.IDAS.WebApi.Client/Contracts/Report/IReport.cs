@@ -13,6 +13,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
         ReportTypeDTO ReportType { get; set; }
         ReportAction[] AllowedActions { get; }
 
+        bool CanHandle(object data = null);
         Task Execute(ReportAction action, string printerName = null, string fileName = null);
     }
 

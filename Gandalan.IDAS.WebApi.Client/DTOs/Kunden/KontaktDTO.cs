@@ -186,6 +186,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool HatWinterrabatt { get; set; }
         public bool KeineAutofreigabe { get; set; }
         public bool ErbtAuswahlOhneSprosse { get; set; } = false;
+        public bool DigitalerRechnungsversand { get; set; }
 
         public KontaktDTO()
         {

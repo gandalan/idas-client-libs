@@ -149,7 +149,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             if (!string.IsNullOrEmpty(Land) || !string.IsNullOrEmpty(Postleitzahl) || !string.IsNullOrEmpty(Ort))
                 sb.AppendLine($"{Land} {Postleitzahl} {Ort}".Trim());
 
-            return sb.ToString();
+            return sb.ToString().Trim();
 
             //var text = string.IsNullOrEmpty(Firmenname) ? $"{Titel} {Vorname} {Nachname}".Trim() : Firmenname;
             //var zusatz = !string.IsNullOrEmpty(Zusatz) ? $"{Zusatz}\r\n" : "";

@@ -14,6 +14,8 @@ using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -24,6 +26,7 @@ namespace Gandalan.IDAS.WebApi.Client
         #region Felder
 
         public IWebApiConfig Settings;
+        public bool IsJwt;
 
         #endregion
 
@@ -32,6 +35,7 @@ namespace Gandalan.IDAS.WebApi.Client
         public UserAuthTokenDTO AuthToken { get; set; }
         public string Status { get; private set; }
         public bool IgnoreOnErrorOccured { get; set; }
+        public string JwtToken { get; set; }
 
         #endregion
 
@@ -57,6 +61,12 @@ namespace Gandalan.IDAS.WebApi.Client
                     InstallationId = settings.InstallationId,
                     UserAgent = settings.UserAgent
                 };
+
+                if (settings is IJwtWebApiConfig)
+                {
+                    IsJwt = true;
+                    JwtToken = ((IJwtWebApiConfig)settings).JwtToken;
+                }
             }
 
             if (settings?.AuthToken?.Token != Guid.Empty && settings?.AuthToken?.Expires > DateTime.UtcNow)
@@ -83,6 +93,11 @@ namespace Gandalan.IDAS.WebApi.Client
         /// <returns>Status des Logins</returns>
         public bool Login()
         {
+            if (IsJwt)
+            {
+                return CheckJwtToken();
+            }
+
             try
             {
                 UserAuthTokenDTO result = null;
@@ -143,6 +158,11 @@ namespace Gandalan.IDAS.WebApi.Client
 
         public async Task<bool> LoginAsync()
         {
+            if (IsJwt)
+            {
+                return await CheckJwtTokenAsync();
+            }
+
             try
             {
                 UserAuthTokenDTO result = null;
@@ -795,9 +815,19 @@ namespace Gandalan.IDAS.WebApi.Client
 
         private void SetupRestRoutinen(RESTRoutinen cl)
         {
-            if (AuthToken != null)
+            if (IsJwt)
             {
-                cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                if (!string.IsNullOrEmpty(JwtToken))
+                {
+                    cl.AdditionalHeaders.Add("Authorization: Bearer " + JwtToken);
+                }
+            }
+            else
+            {
+                if (AuthToken != null)
+                {
+                    cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
+                }
             }
 
             if (Settings.InstallationId != Guid.Empty)
@@ -809,6 +839,118 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 cl.UserAgent = Settings.UserAgent;
             }
+        }
+
+        private bool CheckJwtToken()
+        {
+            if (CheckJwtTokenInternal(out var refreshToken, out bool checkResult))
+            {
+                return checkResult;
+            }
+
+            try
+            {
+                // refresh JWT using refresh token
+                var newJwt = Put<string>("/api/LoginJwt/Refresh", new { Token = refreshToken });
+                JwtToken = newJwt;
+                return true;
+            }
+            catch (ApiException apiex)
+            {
+                Status = apiex.Message;
+                if (Status.ToLower().Contains("<title>"))
+                {
+                    Status = internalStripHtml(Status);
+                }
+
+                if (apiex.InnerException != null)
+                {
+                    Status += " - " + apiex.InnerException.Message;
+                }
+
+                JwtToken = null;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Status = ex.Message;
+                JwtToken = null;
+                return false;
+            }
+        }
+
+        private async Task<bool> CheckJwtTokenAsync()
+        {
+            if (CheckJwtTokenInternal(out var refreshToken, out bool checkResult))
+            {
+                return checkResult;
+            }
+
+            try
+            {
+                // refresh JWT using refresh token
+                var newJwt = await PutAsync<string>("/api/LoginJwt/Refresh", new { Token = refreshToken });
+                JwtToken = newJwt;
+                return true;
+            }
+            catch (ApiException apiex)
+            {
+                Status = apiex.Message;
+                if (Status.ToLower().Contains("<title>"))
+                {
+                    Status = internalStripHtml(Status);
+                }
+
+                if (apiex.InnerException != null)
+                {
+                    Status += " - " + apiex.InnerException.Message;
+                }
+
+                JwtToken = null;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Status = ex.Message;
+                JwtToken = null;
+                return false;
+            }
+        }
+
+        private bool CheckJwtTokenInternal(out string refreshToken, out bool checkResult)
+        {
+            refreshToken = null;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            if (!tokenHandler.CanReadToken(JwtToken))
+            {
+                // unreadable
+                checkResult = false;
+                return true;
+            }
+
+            var jwtToken = tokenHandler.ReadJwtToken(JwtToken);
+            if (jwtToken.ValidTo >= DateTime.UtcNow)
+            {
+                // token is not expired
+                checkResult = true;
+                return true;
+            }
+
+            var refreshTokenClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "refreshToken");
+            refreshToken = refreshTokenClaim?.Value;
+            Guid.TryParse(refreshToken, out Guid refreshTokenGuid);
+
+            if (refreshTokenClaim == null ||
+                refreshTokenGuid == Guid.Empty)
+            {
+                // JWT is expired and has no refreshToken
+                checkResult = false;
+                return true;
+            }
+
+            // token is good - return "false" for further processing
+            checkResult = true;
+            return false;
         }
 
         private ApiException HandleWebException(WebException ex, string url)

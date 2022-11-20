@@ -43,6 +43,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         /// </summary>
         public string FeedbackUrl { get; set; }
         public string NotifyUrl { get; set; }
+        public string HelpCenterUrl { get; set; }
 
         public WebApiSettings(Guid appToken, string env)
         {
@@ -86,6 +87,8 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             this.DocUrl = settings.DocUrl;
             this.FeedbackUrl = settings.FeedbackUrl;
             this.StoreUrl = settings.StoreUrl;
+            this.NotifyUrl = settings.NotifyUrl;
+            this.HelpCenterUrl = settings.HelpCenterUrl;
         }
     }
 }
