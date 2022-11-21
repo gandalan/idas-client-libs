@@ -21,6 +21,8 @@ export class RESTClient {
         this.token = token;
         this.isJWT = isJWT;
 
+        axios.defaults.baseURL = url;
+
         if (this.token && !isJWT) {
             axios.defaults.headers.common["X-Gdl-AuthToken"] = this.token;
         }
@@ -96,7 +98,7 @@ export class RESTClient {
 
     async refreshToken() {
         try {
-            await axios.put(`${this.baseurl}/LoginJwt/Refresh`, { token: localStorage.getItem("IDAS_AuthJwtRefreshToken") })
+            await this.put("/LoginJwt/Refresh", { token: localStorage.getItem("IDAS_AuthJwtRefreshToken") })
                 .then(resp => {
                     this.updateJwtToken(resp.data);
                 });
@@ -120,7 +122,7 @@ export class RESTClient {
 
     async get(uri, noJWT = false) {
         try {
-            const response = await axios.get(this.baseurl + uri, this.getUrlOptions(noJWT));
+            const response = await axios.get(uri, this.getUrlOptions(noJWT));
             this.lastError = "";
             return response.data;
         } catch (error) {
@@ -130,7 +132,7 @@ export class RESTClient {
 
     async getFile(uri) {
         try {
-            const response = await axios.get(this.baseurl + uri, { responseType: "blob" });
+            const response = await axios.get(uri, { responseType: "blob" });
             let fileName = "1000.pdf";
             if (response.headers["content-disposition"]) {
                 fileName = response.headers["content-disposition"].split(";")[1];
@@ -146,7 +148,7 @@ export class RESTClient {
     async getRaw(uri, noJWT = false) {
         let response = {};
         try {
-            response = await axios.get(this.baseurl + uri, this.getUrlOptions(noJWT))
+            response = await axios.get(uri, this.getUrlOptions(noJWT))
             this.lastError = "";
         } catch (error) {
             this.handleError(error);
@@ -156,7 +158,7 @@ export class RESTClient {
 
     async post(uri, formData, noJWT = false) {
         try {
-            const response = await axios.post(this.baseurl + uri, formData, this.getUrlOptions(noJWT));
+            const response = await axios.post(uri, formData, this.getUrlOptions(noJWT));
             this.lastError = "";
             return response;
         } catch (error) {
@@ -166,7 +168,7 @@ export class RESTClient {
 
     async put(uri, formData, noJWT = false) {
         try {
-            const response = await axios.put(this.baseurl + uri, formData, this.getUrlOptions(noJWT));
+            const response = await axios.put(uri, formData, this.getUrlOptions(noJWT));
             this.lastError = "";
             return response;
         } catch (error) {
@@ -176,7 +178,7 @@ export class RESTClient {
 
     async delete(uri, noJWT = false) {
         try {
-            const response = await axios.delete(this.baseurl + uri, this.getUrlOptions(noJWT));
+            const response = await axios.delete(uri, this.getUrlOptions(noJWT));
             this.lastError = "";
             return response;
         } catch (error) {
