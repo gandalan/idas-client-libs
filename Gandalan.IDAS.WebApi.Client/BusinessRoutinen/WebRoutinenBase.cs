@@ -955,6 +955,7 @@ namespace Gandalan.IDAS.WebApi.Client
 
         private ApiException HandleWebException(WebException ex, string url)
         {
+			/*	Check PR172 conversation to see why this is not used(https://github.com/gandalan/idas-client-libs/pull/172)
             // Return null if we are returning HTTP 404 from WebAPI
             if (ex.Status == WebExceptionStatus.ProtocolError && ex.Response != null)
             {
@@ -963,7 +964,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 {
                     return null;
                 }
-            }
+            }*/
 
             ApiException exception = TranslateException(ex);
             return InternalHandleWebException(exception, url);
@@ -971,6 +972,7 @@ namespace Gandalan.IDAS.WebApi.Client
 
         private ApiException HandleWebException(WebException ex, string url, object data)
         {
+			/*	Check PR172 conversation to see why this is not used(https://github.com/gandalan/idas-client-libs/pull/172)
             // Return null if we are returning HTTP 404 from WebAPI
             if (ex.Status == WebExceptionStatus.ProtocolError && ex.Response != null)
             {
@@ -979,7 +981,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 {
                     return null;
                 }
-            }
+            }*/
 
             ApiException exception = TranslateException(ex, data);
             return InternalHandleWebException(exception, url);
