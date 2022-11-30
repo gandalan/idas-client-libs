@@ -1,4 +1,3 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31808.319
@@ -14,9 +13,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F75A4690-2A78-4DF5-AF1F-90BC4DABFA26}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build-and-publish.yml = .github\workflows\build-and-publish.yml
+		.github\workflows\check-NuGet-Libs.yml = .github\workflows\check-NuGet-Libs.yml
 		nuget_lokal.cmd = nuget_lokal.cmd
 		UpdateVersionInfo.ps1 = UpdateVersionInfo.ps1
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gandalan.IDAS.Contracts", "Gandalan.IDAS.Contracts\Gandalan.IDAS.Contracts.csproj", "{BC916DBF-1692-47F9-91D3-C158C6AF0E34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,10 @@ Global
 		{33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC916DBF-1692-47F9-91D3-C158C6AF0E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC916DBF-1692-47F9-91D3-C158C6AF0E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC916DBF-1692-47F9-91D3-C158C6AF0E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC916DBF-1692-47F9-91D3-C158C6AF0E34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
