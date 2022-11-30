@@ -1,11 +1,5 @@
+import { jwtTokenInvalid } from "./authUtils";
 import { RESTClient } from "./RESTClient";
-import jwt_decode from "jwt-decode";
-
-let appToken = localStorage.getItem("IDAS_AppToken") || "66B70E0B-F7C4-4829-B12A-18AD309E3970";
-let authToken = localStorage.getItem("IDAS_AuthToken");
-let apiBaseUrl = localStorage.getItem("IDAS_ApiBaseUrl") || "https://api.dev.idas-cloudservices.net/api/";
-let authJwtCallbackPath = localStorage.getItem("IDAS_AuthJwtCallbackPath") || "";
-let authJwtToken;
 
 export let IDASFactory = {
     async create(settings = {
@@ -16,24 +10,13 @@ export let IDASFactory = {
         jwtCallbackPath : localStorage.getItem("IDAS_AuthJwtCallbackPath")
       }) 
     {
-        apiBaseUrl = settings.apiBaseurl;
         let idas = undefined;
-
-        if (settings.jwtToken) // it is JWT
+        if (!jwtTokenInvalid(settings)) 
         { 
             console.log("init: with JWT token");
-            idas = new IDAS();
-            idas.initWithJWTtoken(settings.jwtToken);
+            idas = new IDAS(settings);
         } 
-        else if (settings.jwtRefreshToken) // it is authToken
-        { 
-            console.log("init: with refresh/classic token");
-            let refreshClient = new RESTClient(apiBaseUrl, "");
-            await refreshClient.refreshToken();
-            idas = new IDAS();
-            await idas.authenticateWithJwt(authJwtCallbackPath);
-        }
-        
+        else throw("Invalid settings: call setup first to obtain a valid JWT token!");
         return idas;
     }
 }
@@ -41,41 +24,13 @@ export let IDASFactory = {
 class IDAS 
 {
     restClient = undefined;
-
-    initWithJWTtoken(jwtToken) 
-    {
-        authJwtToken = jwtToken;
-        this.restClient = new RESTClient(apiBaseUrl, jwtToken, true);
-    }
-
-    async authenticateWithJwt(authPath) 
-    {
-        let refreshClient = new RESTClient(apiBaseUrl, "");
-        await refreshClient.checkRefreshToken(authJwtToken, () => {
-            authJwtToken = undefined;
-            // ... so repeat authenticate (should lead to /Session login page)
-            new IDAS().authenticateWithJwt(authPath);
-        });
-
-        // still not valid JWT -> authenticate
-        if (!refreshClient.token) {
-            localStorage.setItem("IDAS_AuthJwtCallbackPath", authPath || "");
-            const authEndpoint = (new URL(window.location.href).origin) + authPath;
-            let authUrlCallback = `${authEndpoint}?r=%target%&j=%jwt%&m=%mandant%`;
-            authUrlCallback = authUrlCallback.replace("%target%", encodeURIComponent(window.location.href));
-
-            const url = new URL(apiBaseUrl);
-            url.pathname = "/Session";
-            url.search = `?a=${appToken}&r=${encodeURIComponent(authUrlCallback)}`;
-            let jwtUrl = url.toString();
-
-            window.location = jwtUrl;
-        } else {
-            this.initWithJWTtoken(refreshClient.token);
-        }
-    }
-
     mandantGuid = localStorage.getItem("IDAS_MandantGuid");
+
+    constructor(settings) 
+    {
+        this.settings = settings;
+        this.restClient = new RESTClient(settings);
+    }
 
     claims = {
         hasClaim(key) {

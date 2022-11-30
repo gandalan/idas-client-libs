@@ -1,123 +1,44 @@
 import axios from "axios";
-import jwt_decode from "jwt-decode";
-
-/*export let AppToken = "66B70E0B-F7C4-4829-B12A-18AD309E3970";
-export let AuthToken = localStorage.getItem("AuthToken");
-export let MandantGuid = localStorage.getItem("MandantGuid");
-export let ApiBaseUrl = localStorage.getItem("ApiBaseUrl") || "https://api.dev.idas-cloudservices.net/api";
-export let SiteBaseUrl = window.location.origin;
-export let SSOAuthUrl = ApiBaseUrl.replace("/api", '') + "/SSO?a=" + AppToken + "&r=%target%?t=%token%%26m=%mandant%";*/
-
-let authJwtRefreshToken = localStorage.getItem("IDAS_AuthJwtRefreshToken");
+import { jwtTokenInvalid, jwtTokenRenew } from './authUtils';
 
 export class RESTClient {
     lastError = "";
-    token = "";
-    baseurl = "";
+    settings = {};
 
-    constructor(url, token, isJWT = false) {
-        this.lastError = "";
-        this.baseurl = url;
-        this.token = token;
-        this.isJWT = isJWT;
-
-        axios.defaults.baseURL = url;
-
-        if (this.token && !isJWT) {
-            axios.defaults.headers.common["X-Gdl-AuthToken"] = this.token;
+    constructor(settings) 
+    {
+        this.settings = settings;
+        axios.defaults.baseURL = settings.apiBaseurl;
+        if (settings.jwtToken)
+        {
+            axios.defaults.headers.common["Authorization"] = "Bearer " + this.token;
+            axios.interceptors.request.use(async (config) => {
+                await this.checkTokenBeforeRequest(config);
+                return config;
+            });
+        } else {
+            // might contain the classic token for fallback
+            axios.defaults.headers.common["X-Gdl-AuthToken"] = settings.jwtRefreshToken;
         }
-
-        if (this.token && isJWT) {
-            this.updateJwtToken(token);
-        }
-
-        axios.interceptors.request.use(async (config) => {
-            await this.checkAuthorizationHeader(config);
-            return config;
-        });
     }
 
-    async checkAuthorizationHeader(config) {
+    async checkTokenBeforeRequest(config) {
         let authHeader = config.headers["Authorization"];
-        if (authHeader && authHeader.toString().startsWith("Bearer ")) {
+        if (authHeader && authHeader.toString().startsWith("Bearer ")) // only check requests containing a Bearer token
+        {
             let parts = authHeader.toString().split(" ");
             let jwt = parts[1];
-            if (!this.isJwtTokenExpired(jwt)) {
-                // JWT token is not expired
-                return;
-            }
-
-            // expired token - refresh
-            await this.checkRefreshToken(jwt);
+            if (this.settings.jwtToken === jwt && jwtTokenInvalid(this.settings)) // ignore custom/different JWT tokens
+                await jwtTokenRenew(this.settings);
         }
-    }
-
-    async checkRefreshToken(jwt, authCallback) {
-        if (!jwt && authJwtRefreshToken) {
-            this.onError = (error, message) => {
-                // LoginJwt/Refresh failed, which means "refresh token" is expired/invalid...
-                if (message.indexOf("401") != -1 || message.indexOf("403") != -1) {
-                    authJwtRefreshToken = undefined;
-                    localStorage.removeItem("IDAS_AuthJwtRefreshToken");
-                    // ... so repeat authenticate
-                    authCallback && authCallback();
-                }
-            };
-
-            // fetch fresh JWT
-            await this.refreshToken();
-            return;
-        }
-        this.token = jwt;
-        this.isJWT = true;
-    }
-
-    isJwtTokenExpired(jwt) {
-        if (!jwt) {
-            return true;
-        }
-
-        let decoded = jwt_decode(jwt);
-        const utcNow = Date.parse(new Date().toUTCString()) / 1000;
-
-        if (decoded && decoded.exp >= utcNow) {
-            return false;
-        }
-
-        return true;
-    }
-
-    updateJwtToken(jwt) {
-        let decoded = jwt_decode(jwt);
-        let refreshToken = decoded["refreshToken"] || "";
-        localStorage.setItem("IDAS_AuthJwtRefreshToken", refreshToken);
-        authJwtRefreshToken = refreshToken;
-        this.token = jwt;
-        this.isJWT = true;
-    }
-
-    async refreshToken() {
-        try {
-            await this.put("/LoginJwt/Refresh", { token: localStorage.getItem("IDAS_AuthJwtRefreshToken") })
-                .then(resp => {
-                    this.updateJwtToken(resp.data);
-                });
-        } catch (error) {
-            this.handleError(error);
-        }
-    }
-
-    updateToken(token) {
-        this.token = token;
     }
 
     getUrlOptions(noJWT = false) {
         let options = { withCredentials: false }
-        if (this.isJWT && !noJWT) {
+        /*if (this.isJWT && !noJWT) {
             options.headers = { Authorization: `Bearer ${this.token}` }
-        }
-
-        return options
+        }*/
+        return options;
     }
 
     async get(uri, noJWT = false) {
