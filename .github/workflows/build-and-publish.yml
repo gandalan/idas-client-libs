@@ -18,6 +18,8 @@ env:
   PACKAGE_3_FULL: Gandalan.IDAS.WebApi.Client
   PACKAGE_4: GDL.IDAS.WebApi.Client.Wpf
   PACKAGE_4_FULL: Gandalan.IDAS.WebApi.Client.Wpf
+  PACKAGE_5: GDL.IDAS.Contracts
+  PACKAGE_5_FULL: Gandalan.IDAS.Contracts
   BUILD_CONFIG: Release
   OUTPUT_DIR: ./GDLPackages
 
@@ -37,7 +39,7 @@ jobs:
       id: set_release_name
       run: echo "::set-output name=release_name::$(date +'%-Y.%-m.%-d').$GITHUB_RUN_NUMBER"
     - name: Setup .NET Core SDK ${{ env.SDK_VERSION }}
-      uses: actions/setup-dotnet@v2
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: ${{ env.SDK_VERSION }}
     - name: Run UpdateVersionInfo.ps1 with ${{ steps.set_release_name.outputs.release_name }}
@@ -55,6 +57,8 @@ jobs:
       run: nuget pack ${{ env.PACKAGE_3_FULL }}/${{ env.PACKAGE_3 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
     - name: Create package ${{ env.PACKAGE_4 }}
       run: nuget pack ${{ env.PACKAGE_4_FULL }}/${{ env.PACKAGE_4 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
+    - name: Create package ${{ env.PACKAGE_5 }}
+      run: nuget pack ${{ env.PACKAGE_5_FULL }}/${{ env.PACKAGE_5 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
     - name: Push packages
       run: dotnet nuget push "${{ env.OUTPUT_DIR }}/*.nupkg" -k ${NUGET_TOKEN} #--skip-duplicate
       env:
