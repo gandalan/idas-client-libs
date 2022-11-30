@@ -9,44 +9,32 @@ export class RESTClient {
     constructor(settings) {
         this.settings = settings;
 
-        if (settings.jwtToken) {
-            axios.defaults.headers.common["Authorization"] = `Bearer ${ this.token}`;
-            axios.interceptors.request.use(async (config) => {
-                await this.checkTokenBeforeRequest(config);
-                return config;
-            });
-        } else {
-            // might contain the classic token for fallback
-            axios.defaults.headers.common["X-Gdl-AuthToken"] = settings.jwtRefreshToken;
-        }
-
         this.axiosInstance = axios.create({
             baseURL: settings.apiBaseurl,
+            headers: {
+                "Authorization" : `Bearer ${ settings.jwtToken }`
+            }
+        });
+
+        this.axiosInstance.interceptors.request.use(async (config) => {
+            await this.checkTokenBeforeRequest(config);
+            return config;
         });
     }
 
     async checkTokenBeforeRequest(config) {
-        let authHeader = config.headers["Authorization"];
-        if (authHeader && authHeader.toString().startsWith("Bearer ")) { // only check requests containing a Bearer token
-            let parts = authHeader.toString().split(" ");
-            let jwt = parts[1];
-            if (this.settings.jwtToken === jwt && jwtTokenInvalid(this.settings)) { // ignore custom/different JWT tokens
-                await jwtTokenRenew(this.settings);
-            }
+        if (this.settings.jwtToken && jwtTokenInvalid(this.settings)) { // ignore custom/different JWT tokens
+            await jwtTokenRenew(this.settings);
         }
     }
 
-    getUrlOptions(noJWT = false) {
-        let options = { withCredentials: false }
-        /*if (this.isJWT && !noJWT) {
-            options.headers = { Authorization: `Bearer ${this.token}` }
-        }*/
-        return options;
+    getUrlOptions() {
+        return { withCredentials: false };
     }
 
-    async get(uri, noJWT = false) {
+    async get(uri) {
         try {
-            const response = await this.axiosInstance.get(uri, this.getUrlOptions(noJWT));
+            const response = await this.axiosInstance.get(uri, this.getUrlOptions());
             this.lastError = "";
             return response.data;
         } catch (error) {
@@ -69,10 +57,10 @@ export class RESTClient {
         }
     }
 
-    async getRaw(uri, noJWT = false) {
+    async getRaw(uri) {
         let response = {};
         try {
-            response = await this.axiosInstance.get(uri, this.getUrlOptions(noJWT))
+            response = await this.axiosInstance.get(uri, this.getUrlOptions())
             this.lastError = "";
         } catch (error) {
             this.handleError(error);
@@ -80,9 +68,9 @@ export class RESTClient {
         return response;
     }
 
-    async post(uri, formData, noJWT = false) {
+    async post(uri, formData) {
         try {
-            const response = await this.axiosInstance.post(uri, formData, this.getUrlOptions(noJWT));
+            const response = await this.axiosInstance.post(uri, formData, this.getUrlOptions());
             this.lastError = "";
             return response;
         } catch (error) {
@@ -90,9 +78,9 @@ export class RESTClient {
         }
     }
 
-    async put(uri, formData, noJWT = false) {
+    async put(uri, formData) {
         try {
-            const response = await this.axiosInstance.put(uri, formData, this.getUrlOptions(noJWT));
+            const response = await this.axiosInstance.put(uri, formData, this.getUrlOptions());
             this.lastError = "";
             return response;
         } catch (error) {
@@ -100,9 +88,9 @@ export class RESTClient {
         }
     }
 
-    async delete(uri, noJWT = false) {
+    async delete(uri) {
         try {
-            const response = await this.axiosInstance.delete(uri, this.getUrlOptions(noJWT));
+            const response = await this.axiosInstance.delete(uri, this.getUrlOptions());
             this.lastError = "";
             return response;
         } catch (error) {
