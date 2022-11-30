@@ -2,14 +2,14 @@
 
 namespace Gandalan.IDAS.Data.Contracts
 {
-	public interface IKategorieBrowsable
-	{
-		void AddSubItem();
+    public interface IKategorieBrowsable
+    {
+        void AddSubItem();
 
-		IKategorieBrowsable GetParent();
+        IKategorieBrowsable GetParent();
 
-		IList<IKategorieBrowsable> GetSubItems();
+        IList<IKategorieBrowsable> GetSubItems();
 
-		void RemoveSubItem(IKategorieBrowsable item);
-	}
+        void RemoveSubItem(IKategorieBrowsable item);
+    }
 }
