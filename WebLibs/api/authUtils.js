@@ -4,6 +4,9 @@ import jwt_decode from "jwt-decode";
 export async function setup(settings)
 {
     console.log("Setup");
+    if (!settings.jwtToken && !settings.jwtRefreshToken)
+        throw("Either jwtToken or jwtRefreshToken must be set to authenticate");
+
     if (settings.jwtRefreshToken && jwtTokenInvalid(settings))
     {
         const payload = { "Token" : settings.jwtRefreshToken };
