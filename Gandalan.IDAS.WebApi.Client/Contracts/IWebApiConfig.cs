@@ -41,6 +41,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts
         /// </summary>
         string FeedbackUrl { get; set; }
         string NotifyUrl { get; set; }
+        string HelpCenterUrl { get; set; }
 
         void Save();
 

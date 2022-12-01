@@ -14,5 +14,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
         Task<FileInfoDTO[]> GetFileListAsync(string directory = "");
         void SaveFile(string fileName, byte[] data);
         Task SaveFileAsync(string fileName, byte[] data);
+        void DeleteFile(string fileName);
+        Task DeleteFileAsync(string fileName);
     }
 }

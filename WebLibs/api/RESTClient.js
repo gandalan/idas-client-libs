@@ -1,104 +1,97 @@
-import axios from 'axios';
-
-/*export let AppToken = "66B70E0B-F7C4-4829-B12A-18AD309E3970";
-export let AuthToken = localStorage.getItem("AuthToken");
-export let MandantGuid = localStorage.getItem("MandantGuid");
-export let ApiBaseUrl = localStorage.getItem("ApiBaseUrl") || "https://api.dev.idas-cloudservices.net/api";
-export let SiteBaseUrl = window.location.origin;
-export let SSOAuthUrl = ApiBaseUrl.replace("/api", '') + "/SSO?a=" + AppToken + "&r=%target%?t=%token%%26m=%mandant%";*/
+import axios from "axios";
+import { jwtTokenInvalid, jwtTokenRenew } from "./authUtils";
 
 export class RESTClient {
-    lastError = '';
-    token = '';
-    baseurl = '';
+    lastError = "";
+    settings = {};
+    axiosInstance = null;
 
-    constructor(url, token, isJWT = false) {
-        this.lastError = '';
-        this.baseurl = url;
-        this.token = token;
-        this.isJWT = isJWT;
+    constructor(settings) {
+        this.settings = settings;
 
-        if (this.token && !isJWT) {
-            axios.defaults.headers.common['X-Gdl-AuthToken'] = this.token;
-        }
+        this.axiosInstance = axios.create({
+            baseURL: settings.apiBaseurl,
+            headers: {
+                "Authorization" : `Bearer ${ settings.jwtToken }`
+            }
+        });
 
-        axios.interceptors.request.use(req => {
-            return req;
+        this.axiosInstance.interceptors.request.use(async (config) => {
+            await this.checkTokenBeforeRequest(config);
+            return config;
         });
     }
 
-    updateToken(token) {
-        this.token = token;
+    async checkTokenBeforeRequest(config) {
+        if (this.settings.jwtToken && jwtTokenInvalid(this.settings)) { // ignore custom/different JWT tokens
+            await jwtTokenRenew(this.settings);
+        }
     }
 
-    getUrlOptions(noJWT = false) {
-        let options = { withCredentials: false }
-        if (this.isJWT && !noJWT)
-            options.headers = { Authorization: `Bearer ${this.token}` }
-        return options
+    getUrlOptions() {
+        return { withCredentials: false };
     }
 
-    async get(uri, noJWT = false) {
+    async get(uri) {
         try {
-            const response = await axios.get(this.baseurl + uri, this.getUrlOptions(noJWT));
-            this.lastError = '';
+            const response = await this.axiosInstance.get(uri, this.getUrlOptions());
+            this.lastError = "";
             return response.data;
         } catch (error) {
             this.handleError(error);
         }
     }
 
-
     async getFile(uri) {
         try {
-            const response = await axios.get(this.baseurl + uri, { responseType: 'blob' });
-            let fileName = '1000.pdf';
-            if (response.headers['content-disposition']) {
-                fileName = response.headers['content-disposition'].split(';')[1];
-                fileName = fileName.replace('filename=', '').trim();
+            const response = await this.axiosInstance.get(uri, { responseType: "blob" });
+            let fileName = "1000.pdf";
+            if (response.headers["content-disposition"]) {
+                fileName = response.headers["content-disposition"].split(";")[1];
+                fileName = fileName.replace("filename=", "").trim();
             }
-            this.lastError = '';
-            return { data: response.data, filename: fileName, contentType: 'application/pdf' };
+            this.lastError = "";
+            return { data: response.data, filename: fileName, contentType: "application/pdf" };
         } catch (error) {
             this.handleError(error);
         }
     }
 
-    async getRaw(uri, noJWT = false) {
+    async getRaw(uri) {
         let response = {};
         try {
-            response = await axios.get(this.baseurl + uri, this.getUrlOptions(noJWT))
-            this.lastError = '';
+            response = await this.axiosInstance.get(uri, this.getUrlOptions())
+            this.lastError = "";
         } catch (error) {
             this.handleError(error);
         }
         return response;
     }
 
-    async post(uri, formData, noJWT = false) {
+    async post(uri, formData) {
         try {
-            const response = await axios.post(this.baseurl + uri, formData, this.getUrlOptions(noJWT));
-            this.lastError = '';
+            const response = await this.axiosInstance.post(uri, formData, this.getUrlOptions());
+            this.lastError = "";
             return response;
         } catch (error) {
             this.handleError(error);
         }
     }
 
-    async put(uri, formData, noJWT = false) {
+    async put(uri, formData) {
         try {
-            const response = await axios.put(this.baseurl + uri, formData, this.getUrlOptions(noJWT));
-            this.lastError = '';
+            const response = await this.axiosInstance.put(uri, formData, this.getUrlOptions());
+            this.lastError = "";
             return response;
         } catch (error) {
             this.handleError(error);
         }
     }
 
-    async delete(uri, noJWT = false) {
+    async delete(uri) {
         try {
-            const response = await axios.delete(this.baseurl + uri, this.getUrlOptions(noJWT));
-            this.lastError = '';
+            const response = await this.axiosInstance.delete(uri, this.getUrlOptions());
+            this.lastError = "";
             return response;
         } catch (error) {
             this.handleError(error);
@@ -109,9 +102,9 @@ export class RESTClient {
     onError = (error, message) => { };
 
     handleError(error) {
-        let message = error ? error.message : '?';
+        let message = error ? error.message : "?";
         // eslint-disable-next-line no-console
-        console.log(`API Error: ${message}`);
+        console.error(`API Error: ${message}`);
         this.lastError = message;
         this.onError(error, message);
         throw error;

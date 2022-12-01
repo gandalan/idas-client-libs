@@ -1,143 +1,148 @@
-import { RESTClient } from './RESTClient';
+import { jwtTokenInvalid } from "./authUtils";
+import { RESTClient } from "./RESTClient";
 
-let appToken = localStorage.getItem('IDAS_AppToken') || '66B70E0B-F7C4-4829-B12A-18AD309E3970';
-let authToken = localStorage.getItem('IDAS_AuthToken');
-let authJwtToken = localStorage.getItem('IDAS_AuthJwtToken');
-let apiBaseUrl = localStorage.getItem('IDAS_ApiBaseUrl') || 'https://api.dev.idas-cloudservices.net/api/';
-
-let restClient = new RESTClient(apiBaseUrl, authToken);
-restClient.onError = (error, message) => {
-    if (message.indexOf("401") != -1 || message.indexOf("403") != -1) {
-        localStorage.removeItem('IDAS_AuthToken');
-        localStorage.removeItem('IDAS_AuthJwtToken');
-        new IDAS().authenticateWithSSO(true);
-    }
+export function IDASFactory(settings = {
+        appToken : localStorage.getItem("IDAS_AppToken"),
+        mandantGuid : localStorage.getItem("IDAS_MandantGuid"),
+        apiBaseurl : localStorage.getItem("IDAS_ApiBaseUrl"),
+        jwtRefreshToken : localStorage.getItem("IDAS_AuthJwtRefreshToken"),
+        jwtCallbackPath : localStorage.getItem("IDAS_AuthJwtCallbackPath")
+      }) 
+{
+    let idas = undefined;
+    if (!jwtTokenInvalid(settings)) 
+    { 
+        console.log("init: with JWT token");
+        idas = new IDAS(settings);
+    } 
+    else throw("Invalid settings: call setup first to obtain a valid JWT token!");
+    return idas;
 }
 
-export class IDAS {
-    async authenticate(authDTO) {
-        authDTO.AppToken = appToken;
-        let { data } = await restClient.post('/Login/Authenticate', authDTO);
-        if (data?.Token) {
-            authToken = data.Token;
-            localStorage.setItem('IDAS_AuthToken', authToken);
-            restClient = new RESTClient(apiBaseUrl, authToken);
-        }
-        return data;
+class IDAS 
+{
+    restClient = undefined;
+    mandantGuid = localStorage.getItem("IDAS_MandantGuid");
+
+    constructor(settings) 
+    {
+        this.settings = settings;
+        this.restClient = new RESTClient(settings);
     }
 
-    authorizeWithJwt(jwtToken) {
-        localStorage.setItem('IDAS_AuthJwtToken', jwtToken);
-        restClient = new RESTClient(apiBaseUrl, jwtToken, true);
+    claims = {
+        hasClaim(key) {
+            if (!authJwtToken) {
+                return false;
+            }
+
+            try {
+                let decoded = jwt_decode(authJwtToken);
+                let val = decoded[key];
+                return val !== undefined;
+            // eslint-disable-next-line no-empty
+            } catch {}
+
+            return false;
+        },
+
+        getClaim(key) {
+            if (!authJwtToken) {
+                return;
+            }
+
+            try {
+                let decoded = jwt_decode(authJwtToken);
+                return decoded[key];
+            // eslint-disable-next-line no-empty
+            } catch {}
+
+            return;
+        },
     }
-
-    async authenticateWithSSO(forceRenew = false) { 
-        if (!authToken)
-        {
-            const url = new URL(apiBaseUrl);
-            url.pathname = "/SSO";
-            url.search = "?a=" + appToken;
-            if (forceRenew)
-                url.search = url.search + "&forceRenew=true";
-            url.search = url.search + "&r=%target%%3Ft=%token%%26m=%mandant%";
-            let ssoAuthUrl = url.toString();
-
-            var ssoURL = ssoAuthUrl.replace("%target%", encodeURIComponent(window.location.href));
-            window.location = ssoURL;
-        }
-    }
-
-    async authenticateWithJwt(authPath) {
-        if (!authJwtToken) {
-            const authEndpoint = (new URL(window.location.href).origin) + authPath;
-            let authUrlCallback = `${authEndpoint}?r=%target%&t=%jwt%`;
-            authUrlCallback = authUrlCallback.replace('%target%', encodeURIComponent(window.location.href));
-
-            const url = new URL(apiBaseUrl);
-            url.pathname = "/Session";
-            url.search = `?a=${appToken}&r=${encodeURIComponent(authUrlCallback)}`;
-            let jwtUrl = url.toString();
-
-            window.location = jwtUrl;
-        } else {
-            restClient = new RESTClient(apiBaseUrl, authJwtToken, true);
-        }
-    }
-
-    mandantGuid = localStorage.getItem('IDAS_MandantGuid');
 
     auth = {
+        _self: this,
         async getCurrentAuthToken() {
-            return await restClient.put('/Login/Update/', { Token: authToken })
+            return await this._self.restClient.put("/Login/Update/", { Token: authToken })
         },
     };
 
     mandanten = {
+        _self: this,
         async getAll() {
-            return await restClient.get('/Mandanten');
+            return await this._self.restClient.get("/Mandanten");
         },
         async get(guid) {
-            return await restClient.get(`/Mandanten/${guid}`);
+            return await this._self.restClient.get(`/Mandanten/${guid}`);
         },
         async save(m) {
-            await restClient.put('/Mandanten', m);
+            await this._self.restClient.put("/Mandanten", m);
         },
     };
 
     benutzer = {
+        _self: this,
         async getAll(mandantGuid) {
-            return await restClient.get(`/BenutzerListe/${mandantGuid }/?mitRollenUndRechten=true`);
+            return await this._self.restClient.get(`/BenutzerListe/${mandantGuid }/?mitRollenUndRechten=true`);
         },
         async get(guid) {
-            return await restClient.get(`/Benutzer/${guid}`);
+            return await this._self.restClient.get(`/Benutzer/${guid}`);
         },
         async save(m) {
-            await restClient.put('/Benutzer', m);
+            await this._self.restClient.put("/Benutzer", m);
         },
     };
 
     feedback = {
+        _self: this,
         async getAll() {
-            return await restClient.get('/Feedback/');
+            return await this._self.restClient.get("/Feedback/");
         },
         async get(guid) {
-            return await restClient.get(`/Feedback/${guid}`);
+            return await this._self.restClient.get(`/Feedback/${guid}`);
         },
         async save(m) {
-            await restClient.put('/Feedback', m);
+            await this._self.restClient.put("/Feedback", m);
         },
         async comment(guid, commentData) {
-            await restClient.put(`/FeedbackKommentar/${guid}`, commentData);
+            await this._self.restClient.put(`/FeedbackKommentar/${guid}`, commentData);
         },
         async attachFile(guid, filename, data) {
-            await restClient.put(`/FeedbackAttachment/?feedbackGuid=${guid}&filename=${filename}`, data);
+            await this._self.restClient.put(`/FeedbackAttachment/?feedbackGuid=${guid}&filename=${filename}`, data);
         },
         async deleteFile(guid) {
-            await restClient.delete(`/FeedbackAttachment/${guid}`);
+            await this._self.restClient.delete(`/FeedbackAttachment/${guid}`);
         },
     };
 
     rollen = {
+        _self: this,
         async getAll() {
-            return await restClient.get('/Rollen');
+            return await this._self.restClient.get("/Rollen");
         },
         async save(m) {
-            await restClient.put('/Rollen', m);
+            await this._self.restClient.put("/Rollen", m);
         },
     };
 
     vorgaenge = {
+        _self: this,
         async getByVorgangsnummer(vorgangsNummer, jahr) {
-            return await restClient.get(`/Vorgang/${vorgangsNummer}/${jahr}`);
+            return await this._self.restClient.get(`/Vorgang/${vorgangsNummer}/${jahr}`);
+        },
+        async getByGuid(guid) {
+            return await this._self.restClient.get(`/Vorgang/${guid}`);
         },
     };
 
     positionen = {
+        _self: this,
         async getByPcode(pcode) {
-            return await restClient.get(`/BelegPositionen/GetByPcode/${pcode}`);
+            return await this._self.restClient.get(`/BelegPositionen/GetByPcode/${pcode}`);
         },
         async get(guid) {
-            return await restClient.get(`/BelegPositionen/Get/${guid}`);
+            return await this._self.restClient.get(`/BelegPositionen/Get/${guid}`);
         },
     };
 }

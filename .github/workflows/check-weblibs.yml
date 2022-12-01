@@ -21,7 +21,7 @@ jobs:
         node-version: '16.x'
     - run: npm ci
       working-directory: ${{ env.WEBLIBS_DIR }}
-    - run: npm run check
+    - run: npm run svelte-check
       working-directory: ${{ env.WEBLIBS_DIR }}
 #    - run: npm run lint
 #      working-directory: ${{ env.WEBLIBS_DIR }}

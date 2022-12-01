@@ -10,6 +10,7 @@ namespace Gandalan.Client.Contracts
         bool IsLoading { get; }
         Task OnLoadAsync(object sender, EventArgs e);
         Task OnUnLoadAsync(object sender, EventArgs e);
+        [Obsolete("This method is no longer called by the navigator logic!")]
         Task CleanupToDispose();
     }
 
