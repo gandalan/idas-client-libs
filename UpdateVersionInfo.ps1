@@ -59,3 +59,7 @@ $file = ".\Gandalan.IDAS.Crypto\GDL.IDAS.Crypto.nuspec"
 #GDL.IDAS.WebApi.Client.Wpf.nuspec
 $file = ".\Gandalan.IDAS.WebApi.Client.Wpf\GDL.IDAS.WebApi.Client.Wpf.nuspec"
 (Get-Content $file) -replace $VersionReplaceRegex, $NewVersion | Out-File $file
+
+#GDL.IDAS.Contracts.nuspec
+$file = ".\Gandalan.IDAS.Contracts\GDL.IDAS.Contracts.nuspec"
+(Get-Content $file) -replace $VersionReplaceRegex, $NewVersion | Out-File $file

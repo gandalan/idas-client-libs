@@ -1,11 +1,11 @@
 <script>
-    import SvelteTable from 'svelte-table';
+    import SvelteTable from "svelte-table";
 
     export let columns;
     /** @type {any[]} */
     export let rows;
     /** @type {string} */
-    export let sortBy = '';
+    export let sortBy = "";
     /** @type {(string | number)[]} */
     export let expanded = [];
     /** @type {(string | number)[]} */
@@ -32,23 +32,23 @@
     export let clickCell = null;
 
     // CSS Classes
-    export let classNameTable = 'border-2 border-collapse my-4';
-    export let classNameThead = '';
-    export let classNameTbody = '';
-    export let classNameSelect = '';
-    export let classNameInput = '';
-    export let classNameRow = 'border-2 border-collapse odd:bg-gray-100 hover:bg-gray-300';
-    export let classNameCell = '';
-    export let classNameRowSelected = '!bg-gray-400';
-    export let classNameRowExpanded = 'bg-gray-400';
-    export let classNameExpandedContent = '';
-    export let classNameCellExpand = '';
+    export let classNameTable = "border-2 border-collapse my-4";
+    export let classNameThead = "";
+    export let classNameTbody = "";
+    export let classNameSelect = "";
+    export let classNameInput = "";
+    export let classNameRow = "border-2 border-collapse odd:bg-gray-100 hover:bg-gray-300";
+    export let classNameCell = "";
+    export let classNameRowSelected = "!bg-gray-400";
+    export let classNameRowExpanded = "bg-gray-400";
+    export let classNameExpandedContent = "";
+    export let classNameCellExpand = "";
 
     const asStringArray = v =>
         []
         .concat(v)
-        .filter(v => v !== null && typeof v === 'string' && v !== '')
-        .join(' ');
+        .filter(v => v !== null && typeof v === "string" && v !== "")
+        .join(" ");
 </script>
 
 <SvelteTable
@@ -66,17 +66,17 @@
     on:clickRow={clickRow}
     on:clickExpand={clickExpand}
     on:clickCell={clickCell}
-    classNameTable={asStringArray(['gan-table', classNameTable])}
-    classNameThead={asStringArray(['gan-thead', classNameThead])}
-    classNameTbody={asStringArray(['gan-tbody', classNameTbody])}
-    classNameSelect={asStringArray(['custom-select', classNameSelect])}
-    classNameInput={asStringArray(['custom-input', classNameInput])}
-    classNameRow={asStringArray(['gan-row', classNameRow])}
-    classNameCell={asStringArray(['gan-cell', classNameCell])}
-    classNameRowSelected={asStringArray(['row-selected', classNameRowSelected])}
-    classNameRowExpanded={asStringArray(['row-expanded', classNameRowExpanded])}
-    classNameExpandedContent={asStringArray(['expanded-content', classNameExpandedContent])}
-    classNameCellExpand={asStringArray(['cell-expand', classNameCellExpand])}>
+    classNameTable={asStringArray(["gan-table", classNameTable])}
+    classNameThead={asStringArray(["gan-thead", classNameThead])}
+    classNameTbody={asStringArray(["gan-tbody", classNameTbody])}
+    classNameSelect={asStringArray(["custom-select", classNameSelect])}
+    classNameInput={asStringArray(["custom-input", classNameInput])}
+    classNameRow={asStringArray(["gan-row", classNameRow])}
+    classNameCell={asStringArray(["gan-cell", classNameCell])}
+    classNameRowSelected={asStringArray(["row-selected", classNameRowSelected])}
+    classNameRowExpanded={asStringArray(["row-expanded", classNameRowExpanded])}
+    classNameExpandedContent={asStringArray(["expanded-content", classNameExpandedContent])}
+    classNameCellExpand={asStringArray(["cell-expand", classNameCellExpand])}>
 
         <!-- Wait for better workaround. See: https://github.com/sveltejs/svelte/issues/5604 -->
 

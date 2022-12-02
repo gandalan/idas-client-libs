@@ -9,7 +9,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
 {
     public interface IReport
     {
-        string Name { get; }
+        string Name { get; set; }
         ReportTypeDTO ReportType { get; set; }
         ReportAction[] AllowedActions { get; }
 

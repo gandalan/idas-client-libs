@@ -1,6 +1,6 @@
 <script>
-    import { Button } from 'svelte-chota';
-    import { mdiMessageAlert } from '@mdi/js'
+    import { Button } from "svelte-chota";
+    import { mdiMessageAlert } from "@mdi/js"
 
     export let Handler;
     export let disabled;
