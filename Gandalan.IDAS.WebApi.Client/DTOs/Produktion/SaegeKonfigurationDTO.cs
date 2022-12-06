@@ -68,5 +68,10 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Produktion
         /// Ausgabeverzeichnis für kombinierte Sägedatei
         /// </summary>
         public string Ausgabverzeichnis_kombiniert { get; set; }
+
+        /// <summary>
+        /// FarbKuerzel für Sonderfarbschnitte
+        /// </summary>
+        public string FarbKuerzel_SF { get; set; } = "SF";
     }
 }
