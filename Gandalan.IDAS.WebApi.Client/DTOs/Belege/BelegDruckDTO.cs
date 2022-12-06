@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
@@ -25,12 +26,22 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.VorgangGuid = vorgang.VorgangGuid;
                 this.BelegArt = beleg.BelegArt;
                 this.BelegNummer = vorgang.VorgangsNummer;
+                this.VorgangsNummer = vorgang.VorgangsNummer;
                 this.BelegDatum = beleg.BelegDatum;
+                this.VorgangErstellDatum = vorgang.ErstellDatum.ToString("d", culture);
                 this.AenderungsDatum = beleg.AenderungsDatum;
                 this.BelegJahr = beleg.BelegJahr;
                 this.Schlusstext = beleg.Schlusstext;
                 this.Kommission = string.IsNullOrEmpty(vorgang.Kommission) ? String.Empty : "Kommission: " + vorgang.Kommission;
                 this.Ausfuehrungsdatum = string.IsNullOrEmpty(beleg.AusfuehrungsDatum) ? String.Empty : "Ausführungsdatum: " + beleg.AusfuehrungsDatum;
+                this.AnsprechpartnerKunde = beleg.AnsprechpartnerKunde ?? "";
+                this.Ansprechpartner = ""; //??? _apiSettings?.AuthToken?.Benutzer?.Vorname + " " + _apiSettings?.AuthToken?.Benutzer?.Nachname;
+                this.Telefonnummer = ""; //??? _apiSettings?.AuthToken?.Benutzer?.TelefonNummer ?? "";
+                this.Bestelldatum = !String.IsNullOrEmpty(beleg.BelegDatum.ToString("d", culture)) ? beleg.BelegDatum.ToString("d", culture) : "";
+                this.Lieferzeit = ""; //???
+                this.IsEndkunde = vorgang?.Kunde?.IstEndkunde != null ? vorgang.Kunde.IstEndkunde : false;
+                this.IsRabatt = beleg.PositionsObjekte?.Any(i => !i.Equals(0m)) ?? false;
+                this.IstSelbstabholer = beleg.IstSelbstabholer;
 
                 if (string.IsNullOrEmpty(beleg.BelegTitelUeberschrift))
                 {
@@ -71,7 +82,9 @@ namespace Gandalan.IDAS.WebApi.DTO
 
                 this.TextFuerAnschreiben = beleg.TextFuerAnschreiben;
                 this.BelegAdresse = new AdresseDruckDTO(beleg.BelegAdresse);
+                this.BelegAdresseString = BelegAdresse.ToString();
                 this.VersandAdresse = new AdresseDruckDTO(beleg.VersandAdresse);
+                this.VersandAdresseString = VersandAdresse.ToString();
 
 
                 bool preiseAnzeigen = beleg.BelegArt != "Lieferschein" && beleg.BelegArt != "Bestellschein";
@@ -87,12 +100,17 @@ namespace Gandalan.IDAS.WebApi.DTO
 
                 if (preiseAnzeigen)
                 {
-                    foreach (BelegSaldoDTO dto in beleg.Salden)
+                    var saldenSorted = beleg.Salden.OrderBy(i => i.Reihenfolge);
+                    var lastActivSalde = saldenSorted.Last(s => !s.IstInaktiv);
+                    foreach (BelegSaldoDTO dto in saldenSorted)
                     {
                         if (dto.IstInaktiv) continue;
-                        this.Salden.Add(new BelegSaldoDruckDTO(dto));
+                        this.Salden.Add(new BelegSaldoDruckDTO(dto) { IsLastElement = lastActivSalde != null && lastActivSalde == dto });
                     }
                 }
+
+                CountValuePositionen = PositionsObjekte.Count();
+                CountValueSalden = Salden.Count();
             }
         }
 
@@ -102,7 +120,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Fusszeile { get; set; }
         public string BelegArt { get; set; }
         public long BelegNummer { get; set; }
+        public long VorgangsNummer { get; set; }
         public DateTime BelegDatum { get; set; }
+        public string VorgangErstellDatum { get; set; }
         public DateTime AenderungsDatum { get; set; }
         public int BelegJahr { get; set; }
         public string Schlusstext { get; set; }
@@ -112,10 +132,22 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string TextFuerAnschreiben { get; set; }
         public string Kommission { get; set; }
         public string Ausfuehrungsdatum { get; set; }
+        public string AnsprechpartnerKunde { get; set; }
+        public string Ansprechpartner { get; set; }
+        public string Telefonnummer { get; set; }
+        public string Bestelldatum { get; set; }
         public AdresseDruckDTO BelegAdresse { get; set; }
+        public string BelegAdresseString { get; set; }
         public AdresseDruckDTO VersandAdresse { get; set; }
+        public string VersandAdresseString { get; set; }
         public ObservableCollection<BelegPositionDruckDTO> PositionsObjekte { get; set; }
         public IList<BelegSaldoDruckDTO> Salden { get; set; }
+        public int CountValuePositionen { get; set; }
+        public int CountValueSalden { get; set; }
+        public string Lieferzeit { get; set; }
+        public bool IsEndkunde { get; set; }
+        public bool IsRabatt { get; set; } = false;
+        public bool IstSelbstabholer { get; set; } = false;
 
         public void SetTextBausteine(object textBausteine)
         {
@@ -170,6 +202,31 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Ortsteil { get; set; }
         public string Land { get; set; }
         public bool IstInland { get; set; }
+
+        public override string ToString()
+        {
+            StringBuilder adressText = new StringBuilder();
+            {
+                adressText.AppendLine(Anrede);
+                adressText.AppendLine(buildAnschriftsName());
+                if (!string.IsNullOrEmpty(AdressZusatz1))
+                    adressText.AppendLine(AdressZusatz1);
+                if (!string.IsNullOrEmpty(Ortsteil))
+                    adressText.AppendLine(Ortsteil);
+                adressText.AppendLine($"{Strasse} {Hausnummer}");
+                adressText.Append($"{Postleitzahl} {Ort}");
+                if (!IstInland)
+                    adressText.AppendLine().Append(Land?.ToUpper());
+            }
+            return adressText.ToString();
+        }
+        private string buildAnschriftsName()
+        {
+            var adesszusatz = "";
+            var name1 = string.IsNullOrEmpty(Vorname) ? Nachname : Vorname;
+            var name2 = string.IsNullOrEmpty(Vorname) ? adesszusatz : Nachname;
+            return (!string.IsNullOrEmpty(Firmenname) ? $"{Firmenname}" : ($"{name1} {name2}")).Trim();
+        }
     }
 
     public class BelegSaldoDruckDTO
@@ -191,6 +248,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public int Reihenfolge { get; set; }
         public string Text { get; set; }
         public string Betrag { get; set; }
+        public bool IsLastElement { get; set; } = false;
     }
 
     public class BelegPositionDruckDTO

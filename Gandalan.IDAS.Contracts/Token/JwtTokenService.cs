@@ -18,6 +18,7 @@ namespace Gandalan.IDAS.Contracts.Token
         public Guid AuthToken { get; set; }
         public Guid? RefreshToken { get; set; }
         public List<string> Roles { get; set; }
+        public List<string> Rights { get; set; }
     }
 
     public class TokenParseResult
@@ -47,6 +48,7 @@ namespace Gandalan.IDAS.Contracts.Token
         private string _claimIdasAuthToken = "idasAuthToken";
         private string _claimRefreshToken = "refreshToken";
         private string _claimRole = "role";
+        private string _claimRights = "rights";
 
         public JwtTokenService(DateTime? issuedAt = null)
         {
@@ -74,15 +76,19 @@ namespace Gandalan.IDAS.Contracts.Token
             var credentials = GetSigningCredentials(privateKey);
 
             // roles
+            // roles & rights
+            var roleCodes = new List<string>();
             var rightCodes = new List<string>();
             if (authToken.Benutzer?.Rollen != null)
             {
+                roleCodes = authToken.Benutzer.Rollen.Select(r => r.Name).ToList();
                 rightCodes = authToken.Benutzer.Rollen.SelectMany(r => r.Berechtigungen.Select(b => b.Code)).Distinct().ToList();
             }
 
             // claims
             var rights = new List<Claim>();
-            rights.AddRange(rightCodes.Select(c => new Claim(ClaimTypes.Role, c)));
+            rights.AddRange(roleCodes.Select(c => new Claim(_claimRole, c)));
+            rights.AddRange(rightCodes.Select(c => new Claim(_claimRights, c)));
             rights.Add(new Claim(_claimId, authToken.Benutzer.EmailAdresse));
             rights.Add(new Claim(_claimMandantGuid, authToken.MandantGuid.ToString()));
             rights.Add(new Claim(_claimAppToken, authToken.AppToken.ToString()));
@@ -139,6 +145,10 @@ namespace Gandalan.IDAS.Contracts.Token
                     .Where(x => x.Type == _claimRole)
                     .Select(x => x.Value)
                     .ToList();
+                var rights = jwtToken.Claims
+                    .Where(x => x.Type == _claimRights)
+                    .Select(x => x.Value)
+                    .ToList();
 
                 return new TokenParseResult()
                 {
@@ -152,6 +162,7 @@ namespace Gandalan.IDAS.Contracts.Token
                         AuthToken = authTokenClaim == null ? Guid.Empty : Guid.Parse(authTokenClaim.Value),
                         RefreshToken = refreshTokenClaim == null ? Guid.Empty : Guid.Parse(refreshTokenClaim.Value),
                         Roles = roles,
+                        Rights = rights,
                     }
                 };
             }
