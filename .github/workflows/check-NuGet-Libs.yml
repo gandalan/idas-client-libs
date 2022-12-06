@@ -1,6 +1,7 @@
 name: Check IDAS Libs (NuGet)
 
 on:
+  workflow_dispatch:
   pull_request:
     paths-ignore:
       - 'WebLibs/**'
