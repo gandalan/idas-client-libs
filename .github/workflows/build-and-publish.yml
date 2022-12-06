@@ -68,17 +68,7 @@ jobs:
       with:
         tag: IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Create release with changelog
-      id: create_release
-      uses: fregante/release-with-changelog@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        title: IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}
-        tag: IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}
-        prerelease: true
-    - name: Upload Assets to Release with a wildcard
-      uses: csexton/release-asset-action@v2
-      with:
-        pattern: "${{ env.OUTPUT_DIR }}/*.nupkg"
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        release-url: ${{ steps.create_release.outputs.upload_url }}
+    - name: Create release with changelog and assets
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: gh release create "IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}" --generate-notes --prerelease ${{ env.OUTPUT_DIR }}/*.nupkg
