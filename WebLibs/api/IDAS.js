@@ -10,7 +10,7 @@ export function IDASFactory(settings)
         jwtRefreshToken: localStorage.getItem("IDAS_AuthJwtRefreshToken"),
         jwtCallbackPath: localStorage.getItem("IDAS_AuthJwtCallbackPath"),
     };
-    settings = Object.assign({}, defaultSettings, settings)
+    settings = { ...defaultSettings, ...settings };
     let idas = undefined;
     if (!jwtTokenInvalid(settings))
     { 
