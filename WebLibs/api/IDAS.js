@@ -1,16 +1,18 @@
 import { jwtTokenInvalid } from "./authUtils";
 import { RESTClient } from "./RESTClient";
 
-export function IDASFactory(settings = {
-        appToken : localStorage.getItem("IDAS_AppToken"),
-        mandantGuid : localStorage.getItem("IDAS_MandantGuid"),
-        apiBaseurl : localStorage.getItem("IDAS_ApiBaseUrl"),
-        jwtRefreshToken : localStorage.getItem("IDAS_AuthJwtRefreshToken"),
-        jwtCallbackPath : localStorage.getItem("IDAS_AuthJwtCallbackPath")
-      }) 
+export function IDASFactory(settings)
 {
+    let defaultSettings = {
+        appToken: localStorage.getItem("IDAS_AppToken"),
+        mandantGuid: localStorage.getItem("IDAS_MandantGuid"),
+        apiBaseurl: localStorage.getItem("IDAS_ApiBaseUrl"),
+        jwtRefreshToken: localStorage.getItem("IDAS_AuthJwtRefreshToken"),
+        jwtCallbackPath: localStorage.getItem("IDAS_AuthJwtCallbackPath"),
+    };
+    settings = Object.assign({}, defaultSettings, settings)
     let idas = undefined;
-    if (!jwtTokenInvalid(settings)) 
+    if (!jwtTokenInvalid(settings))
     { 
         console.log("init: with JWT token");
         idas = new IDAS(settings);
