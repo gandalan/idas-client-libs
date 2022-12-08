@@ -9,22 +9,20 @@ export async function setup(settings)
 
     if (settings.jwtRefreshToken && jwtTokenInvalid(settings))
     {
-        const payload = { "Token" : settings.jwtRefreshToken };
-        // Fetch Token from IDAS API
-        let api = new RESTClient(settings);
-        const response = await api.put("Login/Update", payload);
-        const iat = response.data;
-        console.log("Got IDAS token: ", iat);
-
-        // If valid, check roles and authenticate against JWT API
-        if (iat)
-            await jwtTokenRenew(settings);
-        
+        await jwtTokenRenew(settings);
         if (jwtTokenInvalid(settings))
-            console.log("Attention: no valid JWT token!");
+            console.log("Refresh failed, invalid JWT token!");
 
     } else {
         console.log("Settings already have a valid JWT token, nothing to do");
+        let decoded = jwt_decode(settings.jwtToken);
+        let refreshToken = decoded["refreshToken"] || "";
+        if (refreshToken)
+        {
+            console.log("Got new refresh token:", refreshToken);
+            settings.jwtRefreshToken = refreshToken;
+            localStorage.setItem("IDAS_AuthJwtRefreshToken", refreshToken);
+        }
     }
     console.log("Setup finished", settings);
 }
@@ -42,7 +40,8 @@ export function jwtTokenInvalid(settings)
 
 export async function jwtTokenRenew(settings) 
 {
-    const renewSettings = { ...settings, jwtToken : undefined };
+    console.log("try to refresh");
+    const renewSettings = { ...settings, jwtToken : undefined, apiBaseurl : settings.authUrl || settings.apiBaseurl };
     let api = new RESTClient(renewSettings);
     const payload = { "Token" : settings.jwtRefreshToken };
     const response = await api.put("LoginJwt/Refresh", payload);
@@ -55,6 +54,7 @@ export async function jwtTokenRenew(settings)
     {
         console.log("Got new refresh token:", refreshToken);
         settings.jwtRefreshToken = refreshToken;
+        localStorage.setItem("IDAS_AuthJwtRefreshToken", refreshToken);
     }
 
     if (jwtTokenInvalid(settings))
@@ -68,7 +68,7 @@ export function jwtAuthenticateOnBackend(settings, authPath)
     let authUrlCallback = `${authEndpoint}?r=%target%&j=%jwt%&m=%mandant%`;
     authUrlCallback = authUrlCallback.replace("%target%", encodeURIComponent(window.location.href));
 
-    const url = new URL(settings.apiBaseurl);
+    const url = new URL(settings.authUrl || settings.apiBaseurl);
     url.pathname = "/Session";
     url.search = `?a=${settings.appToken}&r=${encodeURIComponent(authUrlCallback)}`;
     let jwtUrl = url.toString();
