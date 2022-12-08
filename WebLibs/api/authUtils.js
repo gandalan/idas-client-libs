@@ -41,7 +41,7 @@ export function jwtTokenInvalid(settings)
 export async function jwtTokenRenew(settings) 
 {
     console.log("try to refresh");
-    const renewSettings = { ...settings, jwtToken : undefined };
+    const renewSettings = { ...settings, jwtToken : undefined, apiBaseurl : settings.authUrl || settings.apiBaseurl };
     let api = new RESTClient(renewSettings);
     const payload = { "Token" : settings.jwtRefreshToken };
     const response = await api.put("LoginJwt/Refresh", payload);
@@ -68,7 +68,7 @@ export function jwtAuthenticateOnBackend(settings, authPath)
     let authUrlCallback = `${authEndpoint}?r=%target%&j=%jwt%&m=%mandant%`;
     authUrlCallback = authUrlCallback.replace("%target%", encodeURIComponent(window.location.href));
 
-    const url = new URL(settings.apiBaseurl);
+    const url = new URL(settings.authUrl || settings.apiBaseurl);
     url.pathname = "/Session";
     url.search = `?a=${settings.appToken}&r=${encodeURIComponent(authUrlCallback)}`;
     let jwtUrl = url.toString();

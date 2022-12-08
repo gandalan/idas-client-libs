@@ -6,6 +6,7 @@ export function IDASFactory(settings = {
         appToken : localStorage.getItem("IDAS_AppToken"),
         mandantGuid : localStorage.getItem("IDAS_MandantGuid"),
         apiBaseurl : localStorage.getItem("IDAS_ApiBaseUrl"),
+        authUrl : localStorage.getItem("IDAS_ApiBaseUrl"),
         jwtRefreshToken : localStorage.getItem("IDAS_AuthJwtRefreshToken"),
         jwtCallbackPath : localStorage.getItem("IDAS_AuthJwtCallbackPath")
       }) 
