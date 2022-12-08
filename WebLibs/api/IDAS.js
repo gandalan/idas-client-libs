@@ -40,14 +40,14 @@ class IDAS
             const token = this._self.settings.jwtToken;
             if (!token)
                 return [];
-            const decoded = jwt_decode(authJwtToken);
+            const decoded = jwt_decode(token);
             return decoded.rights;
         },
         getRoles() {
             const token = this._self.settings.jwtToken;
             if (!token)
                 return [];
-            const decoded = jwt_decode(authJwtToken);
+            const decoded = jwt_decode(token);
             return decoded.role;
         },
         hasRight(code)
@@ -61,8 +61,8 @@ class IDAS
         getUsername() {
             const token = this._self.settings.jwtToken;
             if (!token)
-                return [];
-            const decoded = jwt_decode(authJwtToken);
+                return undefined;
+            const decoded = jwt_decode(token);
             return decoded.id;
         }
     };
