@@ -56,6 +56,13 @@ class IDAS
         hasRole(code)
         {
             return this.getRoles().some(r => r === code);
+        },
+        getUsername() {
+            const token = this._self.settings.jwtToken;
+            if (!token)
+                return [];
+            const decoded = jwt_decode(authJwtToken);
+            return decoded.id;
         }
     };
 
