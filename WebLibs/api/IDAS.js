@@ -1,5 +1,6 @@
 import { jwtTokenInvalid } from "./authUtils";
 import { RESTClient } from "./RESTClient";
+import jwt_decode from 'jwt-decode';
 
 export function IDASFactory(settings = {
         appToken : localStorage.getItem("IDAS_AppToken"),
