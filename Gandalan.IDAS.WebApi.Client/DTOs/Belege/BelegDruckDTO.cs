@@ -1,12 +1,10 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -39,7 +37,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.Telefonnummer = ""; //??? _apiSettings?.AuthToken?.Benutzer?.TelefonNummer ?? "";
                 this.Bestelldatum = !String.IsNullOrEmpty(beleg.BelegDatum.ToString("d", culture)) ? beleg.BelegDatum.ToString("d", culture) : "";
                 this.Lieferzeit = ""; //???
-                this.IsEndkunde = vorgang?.Kunde?.IstEndkunde != null ? vorgang.Kunde.IstEndkunde : false;
+                this.IsEndkunde = vorgang.Kunde?.IstEndkunde != null ? vorgang.Kunde.IstEndkunde : false;
                 this.IsRabatt = beleg.PositionsObjekte?.Any(i => !i.Equals(0m)) ?? false;
                 this.IstSelbstabholer = beleg.IstSelbstabholer;
 
@@ -86,26 +84,38 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.VersandAdresse = new AdresseDruckDTO(beleg.VersandAdresse);
                 this.VersandAdresseString = VersandAdresse.ToString();
 
-
                 bool preiseAnzeigen = beleg.BelegArt != "Lieferschein" && beleg.BelegArt != "Bestellschein";
 
                 if (beleg.PositionsObjekte.Any(p => p.IstSonderfarbPosition && p.Farbzuschlag == -1))
+                {
                     preiseAnzeigen = false;
+                }
 
                 foreach (BelegPositionDTO dto in beleg.PositionsObjekte)
                 {
-                    if (!dto.IstAktiv && !dto.IstAlternativPosition) continue;
+                    if (!dto.IstAktiv && !dto.IstAlternativPosition)
+                    {
+                        continue;
+                    }
+
                     this.PositionsObjekte.Add(new BelegPositionDruckDTO(dto, preiseAnzeigen));
                 }
 
                 if (preiseAnzeigen)
                 {
                     var saldenSorted = beleg.Salden.OrderBy(i => i.Reihenfolge);
-                    var lastActivSalde = saldenSorted.Last(s => !s.IstInaktiv);
-                    foreach (BelegSaldoDTO dto in saldenSorted)
+                    if (saldenSorted.Any())
                     {
-                        if (dto.IstInaktiv) continue;
-                        this.Salden.Add(new BelegSaldoDruckDTO(dto) { IsLastElement = lastActivSalde != null && lastActivSalde == dto });
+                        var lastActivSalde = saldenSorted.Last(s => !s.IstInaktiv);
+                        foreach (BelegSaldoDTO dto in saldenSorted)
+                        {
+                            if (dto.IstInaktiv)
+                            {
+                                continue;
+                            }
+
+                            this.Salden.Add(new BelegSaldoDruckDTO(dto) { IsLastElement = lastActivSalde != null && lastActivSalde == dto });
+                        }
                     }
                 }
 
@@ -189,6 +199,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.IstInland = beleganschrift.IstInland;
             }
         }
+
         public string Anrede { get; set; }
         public string Nachname { get; set; }
         public string Vorname { get; set; }
@@ -210,16 +221,25 @@ namespace Gandalan.IDAS.WebApi.DTO
                 adressText.AppendLine(Anrede);
                 adressText.AppendLine(buildAnschriftsName());
                 if (!string.IsNullOrEmpty(AdressZusatz1))
+                {
                     adressText.AppendLine(AdressZusatz1);
+                }
+
                 if (!string.IsNullOrEmpty(Ortsteil))
+                {
                     adressText.AppendLine(Ortsteil);
+                }
+
                 adressText.AppendLine($"{Strasse} {Hausnummer}");
                 adressText.Append($"{Postleitzahl} {Ort}");
                 if (!IstInland)
+                {
                     adressText.AppendLine().Append(Land?.ToUpper());
+                }
             }
             return adressText.ToString();
         }
+
         private string buildAnschriftsName()
         {
             var adesszusatz = "";
@@ -289,11 +309,16 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.IstAktiv = position.IstAktiv;
                 this.Menge = position.Menge;
                 this.MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.ZuschnittLaenge")) != null ? "Stk." : position.MengenEinheit;
-                if (this.MengenEinheit == null || this.MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase)) this.MengenEinheit = "Stk.";
+                if (this.MengenEinheit == null || this.MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    this.MengenEinheit = "Stk.";
+                }
 
                 string einbauort = String.Empty;
                 if (!string.IsNullOrWhiteSpace(position.Einbauort) && !position.Text.StartsWith("Einbauort"))
+                {
                     einbauort = "Einbauort: " + position.Einbauort + " - ";
+                }
 
                 this.Text = einbauort + position.Text;
                 this.AngebotsText = einbauort + position.AngebotsText;
@@ -312,6 +337,5 @@ namespace Gandalan.IDAS.WebApi.DTO
                 }
             }
         }
-
     }
 }
