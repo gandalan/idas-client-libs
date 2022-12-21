@@ -1,14 +1,10 @@
-﻿using System;
+﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client.Settings;
 
-namespace Gandalan.Controls.WPF.Dialogs
+namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 {
     public class LoginWindowViewModel_v2 : INotifyPropertyChanged
     {
@@ -55,11 +51,11 @@ namespace Gandalan.Controls.WPF.Dialogs
 #endif
         }
 
-        public LoginWindowViewModel_v2()
-        {
-#if DEBUG
-            ShowServerSelection = true;
-#endif
-        }
+//        public LoginWindowViewModel_v2()
+//        {
+//#if DEBUG
+//            ShowServerSelection = true;
+//#endif
+//        }
     }
 }

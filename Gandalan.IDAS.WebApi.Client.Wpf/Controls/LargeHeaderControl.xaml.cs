@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PropertyChanged;
 
-namespace Gandalan.IBOS3.Controls
+namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
 {
     /// <summary>
     /// Interaction logic for SmallHeaderControl.xaml

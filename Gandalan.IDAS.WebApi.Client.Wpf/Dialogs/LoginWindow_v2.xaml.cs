@@ -1,22 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Logging;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Gandalan.Client.Common.Dialogs;
-using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client;
-using Gandalan.IDAS.WebApi.Client.Settings;
 
-namespace Gandalan.Controls.WPF.Dialogs
+namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 {
     /// <summary>
     /// Interaktionslogik für LoginWindow_v2.xaml
@@ -26,11 +16,12 @@ namespace Gandalan.Controls.WPF.Dialogs
         private IWebApiConfig _webApiSettings;
         private LoginWindowViewModel_v2 _viewModel;
         private string _statusText;
+        private readonly Logger _logger;
 
-        public LoginWindow_v2()
-        {
-            InitializeComponent();
-        }
+        //public LoginWindow_v2()
+        //{
+        //    InitializeComponent();
+        //}
 
         public LoginWindow_v2(IWebApiConfig webApiSettings)
         {
@@ -48,17 +39,19 @@ namespace Gandalan.Controls.WPF.Dialogs
             }
             InitializeComponent();
             DataContext = _viewModel;
+
+            _logger = Logger.GetInstance();
         }
 
-        public IWebApiConfig Show(IWebApiConfig webApiSettings)
-        {
-            _webApiSettings = webApiSettings;
-            _viewModel = new LoginWindowViewModel_v2();
+        //public IWebApiConfig Show(IWebApiConfig webApiSettings)
+        //{
+        //    _webApiSettings = webApiSettings;
+        //    _viewModel = new LoginWindowViewModel_v2();
             
-            ShowDialog();
+        //    ShowDialog();
 
-            return _webApiSettings;
-        }
+        //    return _webApiSettings;
+        //}
 
         private void switchToLoginFields(object sender, RoutedEventArgs e)
         {
@@ -75,6 +68,8 @@ namespace Gandalan.Controls.WPF.Dialogs
                 _webApiSettings.CopyToThis(settings);
                 DialogResult = true;
                 Close();
+
+                _logger.Log($"Connected to backend URL: {settings.Url}");
             }
             _viewModel.LoginInProgress = false;
             _viewModel.StatusText = "Fehler: " + _statusText;
@@ -83,6 +78,12 @@ namespace Gandalan.Controls.WPF.Dialogs
             {
                 _viewModel.ShowLoggedInEnvironments = false;
                 _viewModel.UserName = settings.UserName;
+            }
+            else if (_statusText != null &&
+                       !_statusText.Contains("Invalid user") &&
+                       !_statusText.Contains("Login Exception")) // Do not log exception twice
+            {
+                _logger.Log($"URL: {settings.Url}: {_statusText}", LogLevel.Fehler);
             }
         }
 
@@ -102,9 +103,19 @@ namespace Gandalan.Controls.WPF.Dialogs
                     _webApiSettings.Save();
                 DialogResult = true;                
                 Close();
+
+                _logger.Log($"Connected to backend URL: {_webApiSettings.Url}");
             }
             _viewModel.LoginInProgress = false;
             _viewModel.StatusText= "Fehler: " + _statusText;
+
+            if (_statusText != null &&
+                _statusText != "Invalid password" &&
+                !_statusText.Contains("Invalid user") &&
+                !_statusText.Contains("Login Exception")) // Do not log exception twice
+            {
+                _logger.Log($"URL: {_webApiSettings.Url}: {_statusText}", LogLevel.Fehler);
+            }
         }
 
         private async Task<bool> testConnection(IWebApiConfig settings)
@@ -132,9 +143,12 @@ namespace Gandalan.Controls.WPF.Dialogs
                     settings.AuthToken = wrb.AuthToken;
                 return result;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _statusText = e.Message;
+                _statusText = ex.Message;
+                var msg = $"Login Exception ({ex.GetType().Name}) Message: {ex.Message}{Environment.NewLine}Stacktrace: {ex.StackTrace}";
+                _logger.Log(msg, LogLevel.Fehler);
+
                 return false;
             }
         }
@@ -162,6 +176,7 @@ namespace Gandalan.Controls.WPF.Dialogs
             var pwVergessenDialog = new PasswordResetDialog();
             pwVergessenDialog.Email = _viewModel.UserName;
             pwVergessenDialog.Settings = _viewModel.ServerEnvironment;
+            pwVergessenDialog.Owner = Application.Current.MainWindow;
             pwVergessenDialog.ShowDialog();
         }
 
@@ -169,6 +184,7 @@ namespace Gandalan.Controls.WPF.Dialogs
         {
             var setupDialog = new SetupDialog();
             setupDialog.Settings = _viewModel.ServerEnvironment;
+            setupDialog.Owner = Application.Current.MainWindow;
             setupDialog.ShowDialog();
         }
 

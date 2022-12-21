@@ -1,19 +1,40 @@
-﻿<Window x:Class="Gandalan.Controls.WPF.Dialogs.LoginWindow_v2"
+﻿<Window x:Class="Gandalan.IDAS.WebApi.Client.Wpf.Dialogs.LoginWindow_v2"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Gandalan.Controls.WPF.Dialogs"
-        xmlns:controls="clr-namespace:Gandalan.IBOS3.Controls"
+        xmlns:local="clr-namespace:Gandalan.IDAS.WebApi.Client.Wpf.Dialogs"
+        xmlns:controls="clr-namespace:Gandalan.IDAS.WebApi.Client.Wpf.Controls"
         mc:Ignorable="d" 
         Title="Neher Cloud - Anmeldung" Height="650" Width="500"  
-        WindowStartupLocation="CenterOwner" SizeToContent="Height" ResizeMode="NoResize" KeyDown="Window_KeyDown">
+        WindowStartupLocation="CenterOwner" SizeToContent="Height" ResizeMode="NoResize" Topmost="True" KeyDown="Window_KeyDown">
     <Window.Resources>
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
             <controls:BoolInvertConverter x:Key="InvertBool" />
+
+            <Style x:Key="ContextButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Height" Value="30" />
+                <Setter Property="Margin" Value="20,15" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Style.Triggers>
+                    <EventTrigger RoutedEvent="Click">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                    </BooleanAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
+        
+       
 
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal" Margin="40,30,40,40">
@@ -71,7 +92,28 @@
 
                 <CheckBox x:Name="checkBoxAuthToken" IsChecked="{Binding SaveCredentials}" Grid.Column="1" Grid.Row="4" Content="Anmeldung merken" VerticalContentAlignment="Center" Margin="5,5,10,5" Padding="2"/>
 
-                <StackPanel Grid.Column="1" Grid.Row="5"  Orientation="Horizontal" Margin="0,10,0,0">
+                <Grid Grid.Column="1" Grid.Row="5" Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="Anmelden" Margin="5,0" IsDefault="True" Click="anmeldenButtonClick" />
+                    <Button Grid.Column="1" Content="Abbrechen"  Margin="5,0"  IsCancel="True" Click="abbrechenButton_Click" />
+
+                    <Button Grid.Column="3" Margin="10,0,0,0" Content="..." Style="{StaticResource ResourceKey=ContextButton}">
+                        <Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Passwort vergessen" Click="pwResetButton_Click" />
+                                <MenuItem Header="Produzent einrichten..." Click="einrichtenButton_Click" />
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
+                </Grid>
+
+
+                <!--<StackPanel Grid.Column="1" Grid.Row="5"  Orientation="Horizontal" Margin="0,10,0,0">
                     <Button Content="Anmelden"  IsDefault="True" Click="anmeldenButtonClick"  Margin="5" Padding="5"/>
                     <Button Content="Abbrechen" IsCancel="True" Click="abbrechenButton_Click"  Margin="5" Padding="5"/>
                 </StackPanel>
@@ -83,7 +125,7 @@
                     <Button BorderThickness="0" Background="Transparent" Padding="0" Click="einrichtenButton_Click" Margin="5">
                         <TextBlock><Run TextDecorations="Underline" Foreground="Blue">Produzent einrichten...</Run></TextBlock>
                     </Button>
-                </StackPanel>
+                </StackPanel>-->
             </Grid>
         </StackPanel>
         <Button Click="switchToLoginFields" Margin="40" Visibility="{Binding ShowLoggedInEnvironments, Converter={StaticResource BoolToVis}}" Padding="15">
