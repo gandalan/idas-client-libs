@@ -17,7 +17,7 @@ namespace Gandalan.IDAS.Crypto
         public static string GetSHA1Hash(string text)
         {
             string result = null;
-            using (var SHA1 = new SHA1CryptoServiceProvider())
+            using (var SHA1 = new SHA1CryptoServiceProvider()) 
             {
                 string temp = null;
 
