@@ -22,11 +22,17 @@ namespace Gandalan.Client.Contracts
         bool CancelPossible { get; }
     }
 
+    public interface IPanelWithNavigation
+    {
+        /// <returns>True, when navigation has been successfully handled.</returns>
+        bool HandleNavigationBack();
+    }
+
     public interface ISaveAndContinue
     {
         Task<bool> SaveAndContinue();
     }
-
+    
     public interface ISaveAndNew
     {
         Task<bool> SaveAndNew();
