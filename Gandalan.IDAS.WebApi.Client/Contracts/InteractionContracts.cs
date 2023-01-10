@@ -56,4 +56,9 @@ namespace Gandalan.Client.Contracts
     {
         bool IsDirty { get; }
     }
+
+    public interface IOnBeforeSave
+    {
+        Task OnBeforeSave();
+    }
 }
