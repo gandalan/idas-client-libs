@@ -24,8 +24,10 @@ namespace Gandalan.Client.Contracts
 
     public interface IPanelWithNavigation
     {
+        bool CanGoBack();
         /// <returns>True, when navigation has been successfully handled.</returns>
         bool HandleNavigationBack();
+        event EventHandler<EventArgs> NavigationOccurred;
     }
 
     public interface ISaveAndContinue
