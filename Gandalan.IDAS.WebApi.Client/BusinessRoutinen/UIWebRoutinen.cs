@@ -19,7 +19,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public UIDefinitionDTO Get(Guid guid)
         {
             if (Login())
-                return Get<UIDefinitionDTO>($"UIDefinition?guid=${guid}&maxlevel=99");
+                return Get<UIDefinitionDTO>($"UIDefinition?guid={guid}&maxlevel=99");
             throw new ApiException("Login fehlgeschlagen");
         }
         public UIDefinitionDTO SaveUIDefinition(UIDefinitionDTO uiDefinition)
