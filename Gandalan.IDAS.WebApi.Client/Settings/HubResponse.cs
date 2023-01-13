@@ -1,6 +1,6 @@
 ﻿namespace Gandalan.IDAS.WebApi.Client.Settings
 {
-    internal class HubResponse
+    public class HubResponse
     {
         public string CMS { get; set; }
         public string Docs { get; set; }
