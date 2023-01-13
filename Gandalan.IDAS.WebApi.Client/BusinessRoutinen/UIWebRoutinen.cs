@@ -16,6 +16,12 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 return Get<UIDefinitionDTO[]>("UIDefinition?maxlevel=99");
             throw new ApiException("Login fehlgeschlagen");
         }
+        public UIDefinitionDTO Get(Guid guid)
+        {
+            if (Login())
+                return Get<UIDefinitionDTO>($"UIDefinition?guid=${guid}&maxlevel=99");
+            throw new ApiException("Login fehlgeschlagen");
+        }
         public UIDefinitionDTO SaveUIDefinition(UIDefinitionDTO uiDefinition)
         {
             if (Login())
@@ -23,6 +29,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             throw new ApiException("Login fehlgeschlagen");
         }
         public async Task SaveUIDefinitionAsync(UIDefinitionDTO uiDefinition) => await Task.Run(() => SaveUIDefinition(uiDefinition));
+        public async Task<UIDefinitionDTO> GetAsync(Guid guid) => await Task.Run(() => { return Get(guid); });
         public async Task<UIDefinitionDTO[]> GetAllAsync() => await Task.Run(() => { return GetAll(); });
 
         [Obsolete("Funktion 'SaveUIDefinition()' verwenden")]
