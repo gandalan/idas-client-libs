@@ -140,7 +140,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 Status = apiex.Message;
                 if (Status.ToLower().Contains("<title>"))
                 {
-                    Status = internalStripHtml(Status);
+                    Status = InternalStripHtml(Status);
                 }
 
                 if (apiex.InnerException != null)
@@ -205,7 +205,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 Status = apiex.Message;
                 if (Status.ToLower().Contains("<title>"))
                 {
-                    Status = internalStripHtml(Status);
+                    Status = InternalStripHtml(Status);
                 }
 
                 if (apiex.InnerException != null)
@@ -653,7 +653,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        private string internalStripHtml(string htmlString)
+        private static string InternalStripHtml(string htmlString)
         {
             var result = htmlString;
             if (result.ToLower().Contains("<title>") && result.ToLower().Contains("</title>"))
@@ -713,7 +713,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 Status = apiex.Message;
                 if (Status.ToLower().Contains("<title>"))
                 {
-                    Status = internalStripHtml(Status);
+                    Status = InternalStripHtml(Status);
                 }
 
                 if (apiex.InnerException != null)
@@ -751,7 +751,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 Status = apiex.Message;
                 if (Status.ToLower().Contains("<title>"))
                 {
-                    Status = internalStripHtml(Status);
+                    Status = InternalStripHtml(Status);
                 }
 
                 if (apiex.InnerException != null)
