@@ -1,5 +1,6 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
+using Gandalan.IDAS.WebApi.Data;
 using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
@@ -254,6 +255,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             if (Login())
             {
                 return await PutAsync<string>($"BelegPositionenAVBulk/AVBerechnung", guids);
+            }
+            return "Not logged in";
+        }
+
+        public async Task<string> BelegPositionenSerienZuordnen(Guid belegGuid, List<PositionSerieItemDTO> positionSerieItems)
+        {
+            if (Login())
+            {
+                return await PutAsync($"BelegPositionenAVBulk/SerienZuorden/{belegGuid}", positionSerieItems);
             }
             return "Not logged in";
         }
