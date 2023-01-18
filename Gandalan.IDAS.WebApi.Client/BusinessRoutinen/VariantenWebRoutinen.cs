@@ -16,6 +16,14 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 return Get<VarianteDTO[]>("Variante?includeUIDefs=true&maxLevel=99");
             throw new ApiException("Login fehlgeschlagen");
         }
+
+        public VarianteDTO Get(Guid varianteGuid, bool includeUIDefs = true)
+        {
+            if (Login())
+                return Get<VarianteDTO>($"Variante/{varianteGuid}?includeUIDefs={includeUIDefs}&maxLevel=99");
+            throw new ApiException("Login fehlgeschlagen");
+        }
+
         public VarianteDTO SaveVariante(VarianteDTO variante)
         {
             if (Login())
@@ -42,7 +50,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         [Obsolete("Funktion 'SaveVarianteAsync()' verwenden")]
         public async Task SaveAsync(VarianteDTO dto)
         {
-             await Task.Run(() => Save(dto));
+            await Task.Run(() => Save(dto));
         }
     }
 }

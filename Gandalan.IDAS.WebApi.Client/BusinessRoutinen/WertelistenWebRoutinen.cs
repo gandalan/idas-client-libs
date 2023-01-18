@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
@@ -16,6 +17,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             if (Login())
             {
                 return Get<WerteListeDTO[]>("WerteListe?includeAutoWerteListen=" + includeAutoWerteListen.ToString());
+            }
+            return null;
+        }
+
+        public WerteListeDTO Get(Guid wertelisteGuid, bool includeAutoWerteListen = true)
+        {
+            if (Login())
+            {
+                return Get<WerteListeDTO>($"WerteListe/{wertelisteGuid}?includeAutoWerteListen=" + includeAutoWerteListen.ToString());
             }
             return null;
         }
