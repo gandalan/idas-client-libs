@@ -1,126 +1,40 @@
 import axios from "axios";
-import jwt_decode from "jwt-decode";
-
-/*export let AppToken = "66B70E0B-F7C4-4829-B12A-18AD309E3970";
-export let AuthToken = localStorage.getItem("AuthToken");
-export let MandantGuid = localStorage.getItem("MandantGuid");
-export let ApiBaseUrl = localStorage.getItem("ApiBaseUrl") || "https://api.dev.idas-cloudservices.net/api";
-export let SiteBaseUrl = window.location.origin;
-export let SSOAuthUrl = ApiBaseUrl.replace("/api", '') + "/SSO?a=" + AppToken + "&r=%target%?t=%token%%26m=%mandant%";*/
-
-let authJwtRefreshToken = localStorage.getItem("IDAS_AuthJwtRefreshToken");
+import { jwtTokenInvalid, jwtTokenRenew } from "./authUtils";
 
 export class RESTClient {
     lastError = "";
-    token = "";
-    baseurl = "";
+    settings = {};
+    axiosInstance = null;
 
-    constructor(url, token, isJWT = false) {
-        this.lastError = "";
-        this.baseurl = url;
-        this.token = token;
-        this.isJWT = isJWT;
+    constructor(settings) {
+        this.settings = settings;
 
-        if (this.token && !isJWT) {
-            axios.defaults.headers.common["X-Gdl-AuthToken"] = this.token;
-        }
+        this.axiosInstance = axios.create({
+            baseURL: settings.apiBaseurl,
+            headers: {
+                "Authorization" : `Bearer ${ settings.jwtToken }`
+            }
+        });
 
-        if (this.token && isJWT) {
-            this.updateJwtToken(token);
-        }
-
-        axios.interceptors.request.use(async (config) => {
-            await this.checkAuthorizationHeader(config);
+        this.axiosInstance.interceptors.request.use(async (config) => {
+            await this.checkTokenBeforeRequest(config);
             return config;
         });
     }
 
-    async checkAuthorizationHeader(config) {
-        let authHeader = config.headers["Authorization"];
-        if (authHeader && authHeader.toString().startsWith("Bearer ")) {
-            let parts = authHeader.toString().split(" ");
-            let jwt = parts[1];
-            if (!this.isJwtTokenExpired(jwt)) {
-                // JWT token is not expired
-                return;
-            }
-
-            // expired token - refresh
-            await this.checkRefreshToken(jwt);
+    async checkTokenBeforeRequest(config) {
+        if (this.settings.jwtToken && jwtTokenInvalid(this.settings)) { // ignore custom/different JWT tokens
+            await jwtTokenRenew(this.settings);
         }
     }
 
-    async checkRefreshToken(jwt, authCallback) {
-        if (!jwt && authJwtRefreshToken) {
-            this.onError = (error, message) => {
-                // LoginJwt/Refresh failed, which means "refresh token" is expired/invalid...
-                if (message.indexOf("401") != -1 || message.indexOf("403") != -1) {
-                    authJwtRefreshToken = undefined;
-                    localStorage.removeItem("IDAS_AuthJwtRefreshToken");
-                    // ... so repeat authenticate
-                    authCallback && authCallback();
-                }
-            };
-
-            // fetch fresh JWT
-            await this.refreshToken();
-            return;
-        }
-        this.token = jwt;
-        this.isJWT = true;
+    getUrlOptions() {
+        return { withCredentials: false };
     }
 
-    isJwtTokenExpired(jwt) {
-        if (!jwt) {
-            return true;
-        }
-
-        let decoded = jwt_decode(jwt);
-        const utcNow = Date.parse(new Date().toUTCString()) / 1000;
-
-        if (decoded && decoded.exp >= utcNow) {
-            return false;
-        }
-
-        return true;
-    }
-
-    updateJwtToken(jwt) {
-        let decoded = jwt_decode(jwt);
-        let refreshToken = decoded["refreshToken"] || "";
-        localStorage.setItem("IDAS_AuthJwtRefreshToken", refreshToken);
-        authJwtRefreshToken = refreshToken;
-        this.token = jwt;
-        this.isJWT = true;
-    }
-
-    async refreshToken() {
+    async get(uri) {
         try {
-            await axios.put(`${this.baseurl}/LoginJwt/Refresh`, { token: localStorage.getItem("IDAS_AuthJwtRefreshToken") })
-                .then(resp => {
-                    this.updateJwtToken(resp.data);
-                });
-        } catch (error) {
-            this.handleError(error);
-        }
-    }
-
-    updateToken(token) {
-        this.token = token;
-    }
-
-    getUrlOptions(noJWT = false) {
-        let options = { withCredentials: false }
-        if (this.isJWT && !noJWT) {
-            options.headers = { Authorization: `Bearer ${this.token}` }
-        }
-
-        return options
-    }
-
-    async get(uri, noJWT = false) {
-        try {
-            const response = await axios.get(this.baseurl + uri, this.getUrlOptions(noJWT));
+            const response = await this.axiosInstance.get(uri, this.getUrlOptions());
             this.lastError = "";
             return response.data;
         } catch (error) {
@@ -130,7 +44,7 @@ export class RESTClient {
 
     async getFile(uri) {
         try {
-            const response = await axios.get(this.baseurl + uri, { responseType: "blob" });
+            const response = await this.axiosInstance.get(uri, { responseType: "blob" });
             let fileName = "1000.pdf";
             if (response.headers["content-disposition"]) {
                 fileName = response.headers["content-disposition"].split(";")[1];
@@ -143,10 +57,10 @@ export class RESTClient {
         }
     }
 
-    async getRaw(uri, noJWT = false) {
+    async getRaw(uri) {
         let response = {};
         try {
-            response = await axios.get(this.baseurl + uri, this.getUrlOptions(noJWT))
+            response = await this.axiosInstance.get(uri, this.getUrlOptions())
             this.lastError = "";
         } catch (error) {
             this.handleError(error);
@@ -154,9 +68,9 @@ export class RESTClient {
         return response;
     }
 
-    async post(uri, formData, noJWT = false) {
+    async post(uri, formData) {
         try {
-            const response = await axios.post(this.baseurl + uri, formData, this.getUrlOptions(noJWT));
+            const response = await this.axiosInstance.post(uri, formData, this.getUrlOptions());
             this.lastError = "";
             return response;
         } catch (error) {
@@ -164,9 +78,9 @@ export class RESTClient {
         }
     }
 
-    async put(uri, formData, noJWT = false) {
+    async put(uri, formData) {
         try {
-            const response = await axios.put(this.baseurl + uri, formData, this.getUrlOptions(noJWT));
+            const response = await this.axiosInstance.put(uri, formData, this.getUrlOptions());
             this.lastError = "";
             return response;
         } catch (error) {
@@ -174,9 +88,9 @@ export class RESTClient {
         }
     }
 
-    async delete(uri, noJWT = false) {
+    async delete(uri) {
         try {
-            const response = await axios.delete(this.baseurl + uri, this.getUrlOptions(noJWT));
+            const response = await this.axiosInstance.delete(uri, this.getUrlOptions());
             this.lastError = "";
             return response;
         } catch (error) {

@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
-namespace Gandalan.IBOS3.Controls
+namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
 {
     public partial class CircularProgressBar : ProgressBar
     {

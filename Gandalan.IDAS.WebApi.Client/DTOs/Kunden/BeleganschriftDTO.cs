@@ -136,7 +136,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 sb.AppendLine(Anrede);
             if (!string.IsNullOrEmpty(Firmenname))
                 sb.AppendLine(Firmenname);
-            if (!string.IsNullOrEmpty(Titel) || !string.IsNullOrEmpty(Vorname) || !string.IsNullOrEmpty(Nachname))
+            else if (!string.IsNullOrEmpty(Titel) || !string.IsNullOrEmpty(Vorname) || !string.IsNullOrEmpty(Nachname))
                 sb.AppendLine($"{Titel} {Vorname} {Nachname}".Trim());
             if (!string.IsNullOrEmpty(AdressZusatz1))
                 sb.AppendLine(AdressZusatz1);

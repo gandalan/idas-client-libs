@@ -4,7 +4,7 @@ using Gandalan.IDAS.WebApi.Client.Settings;
 using System.ComponentModel;
 using System.Windows;
 
-namespace Gandalan.Client.Common.Dialogs
+namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 {
     /// <summary>
     /// Interaction logic for PasswordResetDialog.xaml

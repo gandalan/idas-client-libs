@@ -18,7 +18,7 @@ using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.Client;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 
-namespace Gandalan.Client.Common.Dialogs
+namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 {
     /// <summary>
     /// Interaction logic for SetupDialog.xaml
