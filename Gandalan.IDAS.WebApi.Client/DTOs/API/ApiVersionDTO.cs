@@ -7,9 +7,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.API
         public string Version { get; set; }
         public string Environment { get; set; }
         
-        public static ApiVersionDTO FromThis()
+        public static ApiVersionDTO FromAssembly(Assembly assembly)
         {
-            var assembly = Assembly.GetEntryAssembly();
             var version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? $"No informational version found for {assembly.FullName}";
             var env = System.Environment.GetEnvironmentVariable("GDL_ENVIRONMENT") ?? "Development";
             return new ApiVersionDTO() { Version = version, Environment = env };
