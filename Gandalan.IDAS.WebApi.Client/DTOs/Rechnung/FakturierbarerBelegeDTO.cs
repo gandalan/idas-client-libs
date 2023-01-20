@@ -12,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
 
         public long Vorgangsnummer { get; set; }
         public int PosAnzahl { get; set; }
-        public double GesamtBetrag { get; set; }
+        public decimal GesamtBetrag { get; set; }
         public string Kundennummer { get; set; }
         public string Kundenname { get; set; }
 
