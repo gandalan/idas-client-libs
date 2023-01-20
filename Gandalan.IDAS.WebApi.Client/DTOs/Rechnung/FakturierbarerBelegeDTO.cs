@@ -11,6 +11,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public Guid KontaktGuid { get; set; }
 
         public long Vorgangsnummer { get; set; }
+        public DateTime BelegDatum { get; set; }
         public int PosAnzahl { get; set; }
         public decimal GesamtBetrag { get; set; }
         public string Kundennummer { get; set; }
