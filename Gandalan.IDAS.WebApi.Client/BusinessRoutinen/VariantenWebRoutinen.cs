@@ -17,10 +17,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             throw new ApiException("Login fehlgeschlagen");
         }
 
-        public string[] GetAllNamen()
+        public Guid[] GetAllGuids()
         {
             if (Login())
-                return Get<string[]>("Variante/GetAllNamen");
+                return Get<Guid[]>("Variante/GetAllGuids");
             throw new ApiException("Login fehlgeschlagen");
         }
 
@@ -38,7 +38,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             throw new ApiException("Login fehlgeschlagen");
         }
         public async Task<VarianteDTO[]> GetAllAsync() => await Task.Run(() => GetAll());
-        public async Task<string[]> GetAllNamenAsync() => await Task.Run(() => GetAllNamen());
+        public async Task<Guid[]> GetAllGuidsAsync() => await Task.Run(() => GetAllGuids());
         public async Task<VarianteDTO> SaveVarianteAsync(VarianteDTO variante) => await Task.Run(() => SaveVariante(variante));
 
         public string CacheWebJob()
