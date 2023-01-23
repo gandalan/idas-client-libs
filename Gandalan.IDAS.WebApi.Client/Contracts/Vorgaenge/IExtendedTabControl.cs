@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
 {
-    internal interface IExtendedTabControl
+    public interface IExtendedTabControl
     {
     }
 }
