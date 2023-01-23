@@ -17,6 +17,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             throw new ApiException("Login fehlgeschlagen");
         }
 
+        public string[] GetAllNamen()
+        {
+            if (Login())
+                return Get<string[]>("Variante/GetAllNamen");
+            throw new ApiException("Login fehlgeschlagen");
+        }
+
         public VarianteDTO Get(Guid varianteGuid, bool includeUIDefs = true)
         {
             if (Login())

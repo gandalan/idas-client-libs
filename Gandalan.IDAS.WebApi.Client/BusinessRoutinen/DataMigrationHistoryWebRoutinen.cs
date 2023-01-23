@@ -19,11 +19,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public string SetHistoryVersion(long newVersion)
         {
             if (Login())
-                return Put($"DataMigrationHistory", newVersion);
+                return Put("DataMigrationHistory", newVersion.ToString());
             throw new ApiException("Login fehlgeschlagen");
         }
         public async Task SetHistoryVersionAsync(long newVersion) => await Task.Run(() => SetHistoryVersion(newVersion));
         public async Task<long> GetHistoryVersionAsync() => await Task.Run(() => { return GetHistoryVersion(); });
-        
+
     }
 }
