@@ -61,6 +61,6 @@ namespace Gandalan.Client.Contracts
 
     public interface IOnBeforeSave
     {
-        Task OnBeforeSave();
+        Task<bool> OnBeforeSave();
     }
 }
