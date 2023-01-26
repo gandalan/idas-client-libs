@@ -12,5 +12,11 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Nachrichten
         public bool IstAktiv { get; set; }
         public DateTime? GueltigAb { get; set; }
         public DateTime? GueltigBis { get; set; }
+
+        public bool IsValid()
+        {
+            var now = DateTime.Now;
+            return now >= (GueltigAb ?? now) && now <= (GueltigBis ?? now).AddDays(1) && IstAktiv;
+        }
     }
 }
