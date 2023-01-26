@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.Tiles
 {
@@ -11,8 +10,9 @@ namespace Gandalan.Client.Contracts.Tiles
 		string Name { get; set; }
 		object Control { get; set; }
         string Group { get; set; }
-        Color StateColor { get; set; }
+        object StateColor { get; set; }
 		int Order { get; set; }
+		bool IsVisible { get; set; }
 
 		Task Load();
         Task UnLoad();
