@@ -1,16 +1,20 @@
 import { jwtTokenInvalid } from "./authUtils";
 import { RESTClient } from "./RESTClient";
+import jwt_decode from 'jwt-decode';
 
-export function IDASFactory(settings = {
-        appToken : localStorage.getItem("IDAS_AppToken"),
-        mandantGuid : localStorage.getItem("IDAS_MandantGuid"),
-        apiBaseurl : localStorage.getItem("IDAS_ApiBaseUrl"),
-        jwtRefreshToken : localStorage.getItem("IDAS_AuthJwtRefreshToken"),
-        jwtCallbackPath : localStorage.getItem("IDAS_AuthJwtCallbackPath")
-      }) 
+export function IDASFactory(settings)
 {
+    let defaultSettings = {
+        appToken: localStorage.getItem("IDAS_AppToken"),
+        mandantGuid: localStorage.getItem("IDAS_MandantGuid"),
+        apiBaseurl: localStorage.getItem("IDAS_ApiBaseUrl"),
+        authUrl : localStorage.getItem("IDAS_ApiBaseUrl"),
+        jwtRefreshToken: localStorage.getItem("IDAS_AuthJwtRefreshToken"),
+        jwtCallbackPath: localStorage.getItem("IDAS_AuthJwtCallbackPath"),
+    };
+    settings = { ...defaultSettings, ...settings };
     let idas = undefined;
-    if (!jwtTokenInvalid(settings)) 
+    if (!jwtTokenInvalid(settings))
     { 
         console.log("init: with JWT token");
         idas = new IDAS(settings);
@@ -30,42 +34,40 @@ class IDAS
         this.restClient = new RESTClient(settings);
     }
 
-    claims = {
-        hasClaim(key) {
-            if (!authJwtToken) {
-                return false;
-            }
-
-            try {
-                let decoded = jwt_decode(authJwtToken);
-                let val = decoded[key];
-                return val !== undefined;
-            // eslint-disable-next-line no-empty
-            } catch {}
-
-            return false;
-        },
-
-        getClaim(key) {
-            if (!authJwtToken) {
-                return;
-            }
-
-            try {
-                let decoded = jwt_decode(authJwtToken);
-                return decoded[key];
-            // eslint-disable-next-line no-empty
-            } catch {}
-
-            return;
-        },
-    }
-
     auth = {
         _self: this,
-        async getCurrentAuthToken() {
-            return await this._self.restClient.put("/Login/Update/", { Token: authToken })
+        getCurrentAuthToken() {
+            return this._self.settings.jwtToken;
         },
+        getRights() {
+            const token = this._self.settings.jwtToken;
+            if (!token)
+                return [];
+            const decoded = jwt_decode(token);
+            return decoded.rights;
+        },
+        getRoles() {
+            const token = this._self.settings.jwtToken;
+            if (!token)
+                return [];
+            const decoded = jwt_decode(token);
+            return decoded.role;
+        },
+        hasRight(code)
+        {
+            return this.getRights().some(r => r === code);
+        },
+        hasRole(code)
+        {
+            return this.getRoles().some(r => r === code);
+        },
+        getUsername() {
+            const token = this._self.settings.jwtToken;
+            if (!token)
+                return undefined;
+            const decoded = jwt_decode(token);
+            return decoded.id;
+        }
     };
 
     mandanten = {
@@ -91,28 +93,6 @@ class IDAS
         },
         async save(m) {
             await this._self.restClient.put("/Benutzer", m);
-        },
-    };
-
-    feedback = {
-        _self: this,
-        async getAll() {
-            return await this._self.restClient.get("/Feedback/");
-        },
-        async get(guid) {
-            return await this._self.restClient.get(`/Feedback/${guid}`);
-        },
-        async save(m) {
-            await this._self.restClient.put("/Feedback", m);
-        },
-        async comment(guid, commentData) {
-            await this._self.restClient.put(`/FeedbackKommentar/${guid}`, commentData);
-        },
-        async attachFile(guid, filename, data) {
-            await this._self.restClient.put(`/FeedbackAttachment/?feedbackGuid=${guid}&filename=${filename}`, data);
-        },
-        async deleteFile(guid) {
-            await this._self.restClient.delete(`/FeedbackAttachment/${guid}`);
         },
     };
 

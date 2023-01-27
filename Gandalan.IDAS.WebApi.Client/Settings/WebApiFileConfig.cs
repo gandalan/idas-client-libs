@@ -81,6 +81,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                             DocUrl = response.Docs,
                             FeedbackUrl = response.Feedback,
                             NotifyUrl = response.Notify,
+                            HelpCenterUrl = response.HelpCenter,
                             StoreUrl = response.Store,
                             FriendlyName = env,
                             AppToken = appToken

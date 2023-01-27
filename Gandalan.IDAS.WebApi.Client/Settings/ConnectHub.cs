@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
-    internal class ConnectHub
+    public class ConnectHub
     {
         private static readonly string _hubURL = "https://connect.idas-cloudservices.net/api/EndPoints";
 

@@ -49,8 +49,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public int MicroAnschriftPositionY { get; set; }
         public bool ShowMicroAnschrift { get; set; }
 
-        public int BelegkopfPositionX { get; set; }  //Belegnummer/Belegdatum/Kundennr. e.c.t
-        public int BelegkopfPositionY { get; set; }
+        public int BelegKopfPositionX { get; set; }  //Belegnummer/Belegdatum/Kundennr. e.c.t
+        public int BelegKopfPositionY { get; set; }
         public int BelegKopfPositionY_AbSeite2 { get; set; }
 
         public bool ShowHistorie { get; set; }

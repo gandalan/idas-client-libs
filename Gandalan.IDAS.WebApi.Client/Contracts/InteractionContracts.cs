@@ -22,11 +22,19 @@ namespace Gandalan.Client.Contracts
         bool CancelPossible { get; }
     }
 
+    public interface IPanelWithNavigation
+    {
+        bool CanGoBack();
+        /// <returns>True, when navigation has been successfully handled.</returns>
+        bool HandleNavigationBack();
+        event EventHandler<EventArgs> NavigationOccurred;
+    }
+
     public interface ISaveAndContinue
     {
         Task<bool> SaveAndContinue();
     }
-
+    
     public interface ISaveAndNew
     {
         Task<bool> SaveAndNew();
@@ -49,5 +57,10 @@ namespace Gandalan.Client.Contracts
     public interface IDirtyFlag
     {
         bool IsDirty { get; }
+    }
+
+    public interface IOnBeforeSave
+    {
+        Task<bool> OnBeforeSave();
     }
 }

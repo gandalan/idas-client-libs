@@ -1,12 +1,12 @@
-﻿<Window x:Class="Gandalan.Client.Common.Dialogs.SetupDialog"
-        xmlns:ctl="clr-namespace:Gandalan.IBOS3.Controls"
+﻿<Window x:Class="Gandalan.IDAS.WebApi.Client.Wpf.Dialogs.SetupDialog"
+        xmlns:ctl="clr-namespace:Gandalan.IDAS.WebApi.Client.Wpf.Controls"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Gandalan.Client.Common.Dialogs"
+        xmlns:local="clr-namespace:Gandalan.IDAS.WebApi.Client.Wpf.Dialogs"
         mc:Ignorable="d"
-        Title="Einrichtung" Width="350" Loaded="Window_Loaded" WindowStartupLocation="CenterOwner" SizeToContent="Height" WindowStyle="ToolWindow">
+        Title="Einrichtung" Width="350" Loaded="Window_Loaded" WindowStartupLocation="CenterOwner" SizeToContent="Height" WindowStyle="ToolWindow" Topmost="True">
     <Window.Resources>
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />

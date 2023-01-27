@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Gandalan.IBOS3.Controls
+namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
 {
     public class BoolInvertConverter : IValueConverter
     {

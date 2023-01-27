@@ -51,6 +51,10 @@ namespace Gandalan.IDAS.Web
         /// User-Agent Header. Wird bei jeder Anfrage mitgeschickt.
         /// </summary>
         public string UserAgent { get; set; }
+        /// <summary>
+        /// AcceptEncoding Header wird auf GZIP gesetzt.
+        /// </summary>
+        public bool UseCompression{ get; set; }
         #endregion
 
         #region public Methods
@@ -415,6 +419,8 @@ namespace Gandalan.IDAS.Web
         private WebClient createWebClient()
         {
             GDLWebClient client = new GDLWebClient();
+            client.UseCompression = UseCompression;
+            
             if (this.Credentials != null)
                 client.Credentials = this.Credentials;
             client.BaseAddress = BaseUrl;
@@ -422,6 +428,8 @@ namespace Gandalan.IDAS.Web
             if (!string.IsNullOrEmpty(UserAgent))
                 client.Headers.Add("user-agent", UserAgent);
             AdditionalHeaders.ForEach(h => client.Headers.Add(h));
+            if (UseCompression)
+                client.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
 
             if (Proxy != null)
                 client.Proxy = Proxy;
