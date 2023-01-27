@@ -176,7 +176,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                     var key = konfig.KonfigName.Replace("Konfig.", "");
                     if (konfig.Wert == null ||
                         konfig.Wert == "object Object" ||
-                        konfig.Wert.Trim().StartsWith("{"))
+                        (konfig.Wert.Trim().StartsWith("{") && key != "ProfileNichtSaegen"))
                     {
                         continue;
                     }
