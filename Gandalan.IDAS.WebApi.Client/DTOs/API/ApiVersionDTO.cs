@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Reflection;
 
 namespace Gandalan.IDAS.WebApi.Client.DTOs.API
@@ -7,26 +8,25 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.API
     {
         public string Version { get; set; }
         public string Environment { get; set; }
-        public string BuildDate { get; set; }
+        public string BuildTime { get; set; }
+        public string ReleaseTime { get; set; }
 
         public static ApiVersionDTO FromAssembly(Assembly assembly)
         {
-            var version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? $"Keine Version gefunden für: {assembly.FullName}";
-            var env = System.Environment.GetEnvironmentVariable("GDL_ENVIRONMENT") ?? "Development";
-            var buildDate = ExtractBuildDateFromAssembly(assembly) ?? "Build-Datum nicht verfügbar";
-
-            return new ApiVersionDTO() {
-                Version = version,
-                Environment = env,
-                BuildDate = buildDate,
+            return new ApiVersionDTO()
+            {
+                Version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? $"Keine Version gefunden für: {assembly.FullName}",
+                Environment = System.Environment.GetEnvironmentVariable("GDL_ENVIRONMENT") ?? "Development",
+                BuildTime = ExtractBuildTimeFromAssembly(assembly) ?? "-",
+                ReleaseTime = System.Environment.GetEnvironmentVariable("RELEASE_DEPLOYMENT_STARTTIME") ?? "-",
             };
         }
 
         #region private methods
         /// <summary>
-        /// Assembly description should contain the build date in following format: <code>"BuildDate=2023-01-30T09:00:00;"</code>
+        /// Assembly description should contain the build date in following format: <code>"BuildDate=2023-01-11 16:09:51Z;"</code>
         /// </summary>
-        private static string ExtractBuildDateFromAssembly(Assembly assembly)
+        private static string ExtractBuildTimeFromAssembly(Assembly assembly)
         {
             var description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
 
@@ -40,10 +40,10 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.API
 
             var substring = description.Substring(startIndex, endIndex - startIndex);
             var split = substring.Split('=')[1].Split(';')[0];
-            if (!DateTime.TryParse(split, out var date))
+            if (!DateTime.TryParse(split, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var date))
                 return null;
 
-            return date.ToString("dd.MM.yyyy hh:mm"); ;
+            return date.ToString("yyyy-MM-dd HH:mm:ssK");
         }
         #endregion
     }
