@@ -15,7 +15,11 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.API
             var env = System.Environment.GetEnvironmentVariable("GDL_ENVIRONMENT") ?? "Development";
             var buildDate = ExtractBuildDateFromAssembly(assembly) ?? "Build-Datum nicht verfügbar";
 
-            return new ApiVersionDTO() { Version = version, Environment = env, BuildDate = buildDate };
+            return new ApiVersionDTO() {
+                Version = version,
+                Environment = env,
+                BuildDate = buildDate,
+            };
         }
 
         #region private methods
