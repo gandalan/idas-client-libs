@@ -11,5 +11,6 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.DataServices
     {
         Task ErstelleRechnungenAsync(List<BelegartWechselDTO> belegeWechsel);
         Task<List<FakturierbarerBelegeDTO>> GetABFakturierbarListeAsync();
+        Task<List<FakturierbarerBelegeDTO>> GetDruckbareRechnungenListeAsync();
     }
 }

@@ -22,6 +22,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public List<FakturierbarerBelegeDTO> GetAllRechnungenDruckbar()
+        {
+            if (Login())
+            {
+                return Get<List<FakturierbarerBelegeDTO>>("Rechnungen/GetNotPrintedRechnungen");
+            }
+            return null;
+        }
+
         public void ErstelleRechnungen(List<BelegartWechselDTO> belegeWechsel)
         {
             if (Login())
@@ -38,6 +47,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task ErstelleRechnungenAsync(List<DTO.BelegartWechselDTO> belegeWechsel)
         {
             await Task.Run(() => ErstelleRechnungen(belegeWechsel));
+        }
+
+        public async Task<List<FakturierbarerBelegeDTO>> GetAllRechnungenDruckbarAsync()
+        {
+            return await Task.Run(() => GetAllRechnungenDruckbar());
         }
     }
 }
