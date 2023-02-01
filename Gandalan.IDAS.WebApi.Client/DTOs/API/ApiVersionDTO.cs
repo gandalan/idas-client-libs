@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Globalization;
+using System.Reflection;
 
 namespace Gandalan.IDAS.WebApi.Client.DTOs.API
 {
@@ -6,12 +8,43 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.API
     {
         public string Version { get; set; }
         public string Environment { get; set; }
-        
+        public string BuildTime { get; set; }
+        public string ReleaseTime { get; set; }
+
         public static ApiVersionDTO FromAssembly(Assembly assembly)
         {
-            var version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? $"No informational version found for {assembly.FullName}";
-            var env = System.Environment.GetEnvironmentVariable("GDL_ENVIRONMENT") ?? "Development";
-            return new ApiVersionDTO() { Version = version, Environment = env };
+            return new ApiVersionDTO()
+            {
+                Version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? $"Keine Version gefunden für: {assembly.FullName}",
+                Environment = System.Environment.GetEnvironmentVariable("GDL_ENVIRONMENT") ?? System.Environment.GetEnvironmentVariable("GDL.ENVIRONMENT") ?? "Development",
+                BuildTime = ExtractBuildTimeFromAssembly(assembly) ?? "-",
+                ReleaseTime = System.Environment.GetEnvironmentVariable("RELEASE_DEPLOYMENT_STARTTIME") ?? "-",
+            };
         }
+
+        #region private methods
+        /// <summary>
+        /// Assembly description should contain the build date in following format: <code>"BuildDate=2023-01-11 16:09:51Z;"</code>
+        /// </summary>
+        private static string ExtractBuildTimeFromAssembly(Assembly assembly)
+        {
+            var description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
+
+            if (string.IsNullOrEmpty(description) || !description.Contains("BuildDate="))
+                return null;
+
+            var startIndex = description.IndexOf("BuildDate=");
+            var endIndex = description.IndexOf(';', startIndex);
+            if (startIndex < 0 || endIndex < 0)
+                return null;
+
+            var substring = description.Substring(startIndex, endIndex - startIndex);
+            var split = substring.Split('=')[1].Split(';')[0];
+            if (!DateTime.TryParse(split, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var date))
+                return null;
+
+            return date.ToString("yyyy-MM-dd HH:mm:ssK");
+        }
+        #endregion
     }
 }
