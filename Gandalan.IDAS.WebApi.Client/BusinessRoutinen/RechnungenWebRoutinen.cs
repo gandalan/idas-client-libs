@@ -13,20 +13,20 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public List<FakturierbarerBelegeDTO> GetAllABFakturierbar()
+        public List<BelegeInfoDTO> GetAllABFakturierbar()
         {
             if (Login())
             {
-                return Get<List<FakturierbarerBelegeDTO>>("Rechnungen/GetABFakturierbar");
+                return Get<List<BelegeInfoDTO>>("Rechnungen/GetABFakturierbar");
             }
             return null;
         }
 
-        public List<FakturierbarerBelegeDTO> GetAllRechnungenDruckbar()
+        public List<BelegeInfoDTO> GetAllRechnungenDruckbar()
         {
             if (Login())
             {
-                return Get<List<FakturierbarerBelegeDTO>>("Rechnungen/GetNotPrintedRechnungen");
+                return Get<List<BelegeInfoDTO>>("Rechnungen/GetNotPrintedRechnungen");
             }
             return null;
         }
@@ -39,7 +39,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
         }
 
-        public async Task<List<FakturierbarerBelegeDTO>> GetAllABFakturierbarAsync()
+        public async Task<List<BelegeInfoDTO>> GetAllABFakturierbarAsync()
         {
             return await Task.Run(() => GetAllABFakturierbar());
         }
@@ -49,7 +49,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             await Task.Run(() => ErstelleRechnungen(belegeWechsel));
         }
 
-        public async Task<List<FakturierbarerBelegeDTO>> GetAllRechnungenDruckbarAsync()
+        public async Task<List<BelegeInfoDTO>> GetAllRechnungenDruckbarAsync()
         {
             return await Task.Run(() => GetAllRechnungenDruckbar());
         }

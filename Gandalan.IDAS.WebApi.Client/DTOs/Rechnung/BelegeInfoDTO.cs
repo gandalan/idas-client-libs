@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
 {
-    public class FakturierbarerBelegeDTO
+    public class BelegeInfoDTO
     {
         public Guid VorgangGuid { get; set; }
         public Guid BelegGuid { get; set; }
