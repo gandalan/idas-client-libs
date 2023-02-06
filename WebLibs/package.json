@@ -1,6 +1,6 @@
 {
   "name": "@gandalan/weblibs",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "description": "WebLibs for Gandalan JS/TS/Svelte projects",
   "keywords": [
     "gandalan"
