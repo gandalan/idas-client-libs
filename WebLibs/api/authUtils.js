@@ -41,7 +41,7 @@ export function jwtTokenInvalid(settings)
 export async function jwtTokenRenew(settings) 
 {
     console.log("try to refresh");
-    const renewSettings = { ...settings, jwtToken : undefined, apiBaseurl : settings.authUrl || settings.apiBaseurl };
+    const renewSettings = { ...settings, jwtToken : undefined };
     let api = new RESTClient(renewSettings);
     const payload = { "Token" : settings.jwtRefreshToken };
     const response = await api.put("LoginJwt/Refresh", payload);
