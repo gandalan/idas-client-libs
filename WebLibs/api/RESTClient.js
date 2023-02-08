@@ -25,6 +25,10 @@ export class RESTClient {
     async checkTokenBeforeRequest(config) {
         if (this.settings.jwtToken && jwtTokenInvalid(this.settings)) { // ignore custom/different JWT tokens
             await jwtTokenRenew(this.settings);
+            console.log(`Updating Header with new JWT Token: ${this.settings.jwtToken}`);
+            this.axiosInstance.headers = {
+                "Authorization" : `Bearer ${ this.settings.jwtToken }`
+            }
         }
     }
 

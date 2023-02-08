@@ -30,7 +30,8 @@ namespace Gandalan.Client.Contracts.AppServices
         AdminTool,
         UserAdmin,
         AlleBelegeEinsehen,
-        AppAdmin
+        AppAdmin, 
+        SettingsSchreiben
     }
 
     public interface IPermissions

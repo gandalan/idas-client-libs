@@ -26,6 +26,8 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public Guid InstallationId { get; set; }
         [JsonIgnore]
         public string UserAgent { get; set; }
+        [JsonIgnore]
+        public bool UseCompression { get; set; }
         /// <summary>
         /// CMSUrl für Dokumente
         /// </summary>

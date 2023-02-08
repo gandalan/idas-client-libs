@@ -16,6 +16,21 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 return Get<VarianteDTO[]>("Variante?includeUIDefs=true&maxLevel=99");
             throw new ApiException("Login fehlgeschlagen");
         }
+
+        public Guid[] GetAllGuids()
+        {
+            if (Login())
+                return Get<Guid[]>("Variante/GetAllGuids");
+            throw new ApiException("Login fehlgeschlagen");
+        }
+
+        public VarianteDTO Get(Guid varianteGuid, bool includeUIDefs = true)
+        {
+            if (Login())
+                return Get<VarianteDTO>($"Variante/{varianteGuid}?includeUIDefs={includeUIDefs}&maxLevel=99");
+            throw new ApiException("Login fehlgeschlagen");
+        }
+
         public VarianteDTO SaveVariante(VarianteDTO variante)
         {
             if (Login())
@@ -23,6 +38,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             throw new ApiException("Login fehlgeschlagen");
         }
         public async Task<VarianteDTO[]> GetAllAsync() => await Task.Run(() => GetAll());
+        public async Task<Guid[]> GetAllGuidsAsync() => await Task.Run(() => GetAllGuids());
         public async Task<VarianteDTO> SaveVarianteAsync(VarianteDTO variante) => await Task.Run(() => SaveVariante(variante));
 
         public string CacheWebJob()
@@ -42,7 +58,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         [Obsolete("Funktion 'SaveVarianteAsync()' verwenden")]
         public async Task SaveAsync(VarianteDTO dto)
         {
-             await Task.Run(() => Save(dto));
+            await Task.Run(() => Save(dto));
         }
     }
 }

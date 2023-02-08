@@ -59,7 +59,8 @@ namespace Gandalan.IDAS.WebApi.Client
                     Url = settings.Url,
                     UserName = settings.UserName,
                     InstallationId = settings.InstallationId,
-                    UserAgent = settings.UserAgent
+                    UserAgent = settings.UserAgent,
+                    UseCompression = settings.UseCompression
                 };
 
                 if (settings is IJwtWebApiConfig)
@@ -140,7 +141,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 Status = apiex.Message;
                 if (Status.ToLower().Contains("<title>"))
                 {
-                    Status = internalStripHtml(Status);
+                    Status = InternalStripHtml(Status);
                 }
 
                 if (apiex.InnerException != null)
@@ -205,7 +206,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 Status = apiex.Message;
                 if (Status.ToLower().Contains("<title>"))
                 {
-                    Status = internalStripHtml(Status);
+                    Status = InternalStripHtml(Status);
                 }
 
                 if (apiex.InnerException != null)
@@ -653,7 +654,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        private string internalStripHtml(string htmlString)
+        private static string InternalStripHtml(string htmlString)
         {
             var result = htmlString;
             if (result.ToLower().Contains("<title>") && result.ToLower().Contains("</title>"))
@@ -692,6 +693,11 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 cl.UserAgent = Settings.UserAgent;
             }
+
+            if (Settings.UseCompression)
+            {
+                cl.UseCompression = Settings.UseCompression;
+            }
         }
 
         private bool CheckJwtToken()
@@ -713,7 +719,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 Status = apiex.Message;
                 if (Status.ToLower().Contains("<title>"))
                 {
-                    Status = internalStripHtml(Status);
+                    Status = InternalStripHtml(Status);
                 }
 
                 if (apiex.InnerException != null)
@@ -751,7 +757,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 Status = apiex.Message;
                 if (Status.ToLower().Contains("<title>"))
                 {
-                    Status = internalStripHtml(Status);
+                    Status = InternalStripHtml(Status);
                 }
 
                 if (apiex.InnerException != null)

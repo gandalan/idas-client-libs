@@ -9,7 +9,7 @@ on:
     types: [synchronize]
 
 jobs:
-  main:
+  check-conflicts:
     runs-on: ubuntu-latest
     steps:
       - name: check if PRs are dirty

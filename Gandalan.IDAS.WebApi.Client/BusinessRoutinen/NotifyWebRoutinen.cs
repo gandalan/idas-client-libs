@@ -1,9 +1,8 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client.DTOs.UI;
-using Gandalan.IDAS.WebApi.DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Client.DTOs.Nachrichten;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -27,18 +26,5 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             return await Task.Run(() => GetAllNotifications());
         }
-
-    }
-
-    public class NachrichtenDTO
-    {
-        public Guid NachrichtGuid { get; set; }
-        public Guid MandantGuid { get; set; }
-        public Guid BesitzerMandantGuid { get; set; }
-        public string Context { get; set; }
-        public string Nachricht { get; set; }
-        public bool IstAktiv { get; set; }
-        public DateTime? GueltigAb { get; set; }
-        public DateTime? GueltigBis { get; set; }
     }
 }
