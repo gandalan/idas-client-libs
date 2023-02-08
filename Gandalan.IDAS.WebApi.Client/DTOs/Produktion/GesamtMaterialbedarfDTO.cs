@@ -14,6 +14,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public MaterialbedarfDTO ProduktionsMaterialbedarf { get; set; }
         public Guid SerieGuid { get; set; }
         public SerieDTO Serie { get; set; }
+        public string SerienName { get; set; }
         public Guid BelegPositionGuid { get; set; }
         public BelegPositionDTO BelegPosition { get; set; }
         public Guid BelegPositionAVGuid { get; set; }
