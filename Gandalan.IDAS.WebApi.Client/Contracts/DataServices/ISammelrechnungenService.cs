@@ -9,7 +9,7 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.DataServices
 {
     public interface ISammelrechnungenService
     {
-        Task ErstelleSammelrechnungenAsync(CreateSammelrechnungDTO dto);
+        Task<SammelrechnungListItemDTO> ErstelleSammelrechnungenAsync(CreateSammelrechnungDTO dto);
         Task<List<SammelrechnungListItemDTO>> GetSammelrechnungenAsync();
         Task<SammelrechnungDTO> GetSammelrechnungAsync(Guid guid);
         Task<List<BelegeInfoDTO>> GetPossibleSammelrechnungRechnungenAsync();
