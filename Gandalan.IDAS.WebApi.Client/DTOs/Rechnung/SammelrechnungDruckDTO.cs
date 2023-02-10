@@ -37,7 +37,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public Guid SammelrechnungGuid { get; set; }
         public long SammelrechnungNummer { get; set; }
         public KontaktDTO Kunde { get; set; }
-        public DateTime ErstellDatum { get; set; }
+        public string ErstellDatum { get; set; }
         public string Kopfzeile { get; set; }
         public string Fusszeile { get; set; }
         public string Schlusstext { get; set; }
@@ -60,8 +60,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
     {
         public int LaufendeNummer { get; set; }
         public string RechnungNummer { get; set; }
-        public DateTime RechnungDatum { get; set; }
-        public string RechnungKommision { get; set; }
+        public string RechnungDatum { get; set; }
+        public string RechnungKommission { get; set; }
         public string RechnungBetrag { get; set; }
         public IList<SammelrechnungSaldoDruckDTO> RechnungSalden { get; set; }
     }
