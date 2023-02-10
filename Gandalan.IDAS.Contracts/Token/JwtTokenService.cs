@@ -17,6 +17,7 @@ namespace Gandalan.IDAS.Contracts.Token
         public Guid AppToken { get; set; }
         public Guid AuthToken { get; set; }
         public Guid? RefreshToken { get; set; }
+        public TokenType TokenType { get; set; }
         public List<string> Roles { get; set; }
         public List<string> Rights { get; set; }
     }
@@ -35,6 +36,13 @@ namespace Gandalan.IDAS.Contracts.Token
         Valid,
     }
 
+    public enum TokenType
+    {
+        Normal,
+        Function,
+        Service,
+    }
+
     public class JwtTokenService
     {
         public const string TOKEN_COOKIE_NAME = "jwt-token";
@@ -47,6 +55,7 @@ namespace Gandalan.IDAS.Contracts.Token
         private string _claimAppToken = "appToken";
         private string _claimIdasAuthToken = "idasAuthToken";
         private string _claimRefreshToken = "refreshToken";
+        private string _claimTokenType = "type";
         private string _claimRole = "role";
         private string _claimRights = "rights";
 
@@ -65,8 +74,9 @@ namespace Gandalan.IDAS.Contracts.Token
         /// <param name="mandantId">MandantId</param>
         /// <param name="privateKey">Private key</param>
         /// <param name="expireDateTime">Expiry date (optional, default: 7 days)</param>
+        /// <param name="tokenType">Token type, default: Normal</param>
         /// <returns>Token string</returns>
-        public string GenerateToken(UserAuthTokenDTO authToken, RefreshTokenDTO refreshToken, string privateKey, DateTime? expireDateTime = null)
+        public string GenerateToken(UserAuthTokenDTO authToken, RefreshTokenDTO refreshToken, string privateKey, DateTime? expireDateTime = null, TokenType tokenType = TokenType.Normal)
         {
             if (string.IsNullOrWhiteSpace(privateKey))
             {
@@ -95,6 +105,7 @@ namespace Gandalan.IDAS.Contracts.Token
             rights.Add(new Claim(_claimBenutzerGuid, authToken.Benutzer.BenutzerGuid.ToString()));
             rights.Add(new Claim(_claimIdasAuthToken, authToken.Token.ToString()));
             rights.Add(new Claim(_claimRefreshToken, refreshToken.Token.ToString()));
+            rights.Add(new Claim(_claimTokenType, tokenType.ToString()));
 
             expireDateTime = expireDateTime ?? DateTime.UtcNow.AddMinutes(5);
 
@@ -141,6 +152,7 @@ namespace Gandalan.IDAS.Contracts.Token
                 var appTokenClaim = jwtToken.Claims.First(x => x.Type == _claimAppToken);
                 var authTokenClaim = jwtToken.Claims.First(x => x.Type == _claimIdasAuthToken);
                 var refreshTokenClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == _claimRefreshToken);
+                var tokenTypeClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == _claimTokenType);
                 var roles = jwtToken.Claims
                     .Where(x => x.Type == _claimRole)
                     .Select(x => x.Value)
@@ -161,6 +173,7 @@ namespace Gandalan.IDAS.Contracts.Token
                         AppToken = appTokenClaim == null ? Guid.Empty : Guid.Parse(appTokenClaim.Value),
                         AuthToken = authTokenClaim == null ? Guid.Empty : Guid.Parse(authTokenClaim.Value),
                         RefreshToken = refreshTokenClaim == null ? Guid.Empty : Guid.Parse(refreshTokenClaim.Value),
+                        TokenType = tokenTypeClaim == null ? TokenType.Normal : (TokenType)Enum.Parse(typeof(TokenType), tokenTypeClaim.Value),
                         Roles = roles,
                         Rights = rights,
                     }

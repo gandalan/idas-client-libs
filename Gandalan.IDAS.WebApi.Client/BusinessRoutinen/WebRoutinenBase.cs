@@ -795,11 +795,20 @@ namespace Gandalan.IDAS.WebApi.Client
                 return true;
             }
 
+            var tokenType = "Normal";
+            var tokenTypeClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "type");
+            if (tokenTypeClaim != null)
+            {
+                tokenType = tokenTypeClaim.Value;
+            }
+
             var refreshTokenClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "refreshToken");
             refreshToken = refreshTokenClaim?.Value;
             Guid.TryParse(refreshToken, out Guid refreshTokenGuid);
 
-            if (refreshTokenClaim == null ||
+            // Service tokens can have refreshTokenGuid empty
+            if (tokenType != "Service" &&
+                refreshTokenClaim == null ||
                 refreshTokenGuid == Guid.Empty)
             {
                 // JWT is expired and has no refreshToken
