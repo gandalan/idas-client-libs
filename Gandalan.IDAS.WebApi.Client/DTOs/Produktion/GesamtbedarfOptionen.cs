@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.WebApi.DTO.Gesamtbedarf
         Keine = 0,
         Lieferdatum = 1,
         Serienzuordnung = 2,
-        Artikelnummer_Frabe_Oberflaeche = 4,
+        ArtikelnummerFrabeOberflaeche = 4,
         Vorgang = 8
     }
 
@@ -20,6 +20,6 @@ namespace Gandalan.IDAS.WebApi.DTO.Gesamtbedarf
         Keine = 0,
         Lieferdatum = 1,
         Serie = 2,
-        Frabe_Oberflaeche = 4,
+        FrabeOberflaeche = 4,
     }
 }
