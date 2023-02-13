@@ -11,6 +11,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.AV
         public bool AVPosAnzahlPruefen { get; set; }
 
         public bool AVDatenBerechnen { get; set; }
+        
+        public bool AVDatenAktualisieren { get; set; }
 
         public DateTime ChangedDate { get; set; }
     }
