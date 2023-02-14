@@ -1,39 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using Gandalan.IDAS.WebApi.DTO;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
 {
     public class SammelrechnungDruckDTO
     {
-        public SammelrechnungDruckDTO(/*SammelrechnungDTO sammelrechnung*/)
-        {
-            Salden = new List<SammelrechnungSaldoDruckDTO>();
-            RechnungPositionen = new List<SammelrechnungPositionDruckDTO>();
-
-            // TODO: Set values from DTO
-            //SammelrechnungGuid;
-            //SammelrechnungNummer;
-            //Kunde;
-            //ErstellDatum;
-            //Kopfzeile;
-            //Fusszeile;
-            //Schlusstext;
-            //PageTitle;
-            //PageSubtitle1;
-            //PageSubtitle2;
-            //Ansprechpartner;
-            //Telefonnummer;
-            //Lieferzeit;
-            //RechnungsAdresse;
-            //RechnungsAdresseString;
-            //RechnungPositionen;
-            //Salden;
-            //CountValuePositionen;
-            //CountValueSalden;
-            //IsEndkunde;
-        }
-
         public Guid SammelrechnungGuid { get; set; }
         public long SammelrechnungNummer { get; set; }
         public KontaktDTO Kunde { get; set; }
@@ -54,6 +29,33 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public int CountValuePositionen { get; set; }
         public int CountValueSalden { get; set; }
         public bool IsEndkunde { get; set; }
+
+        public SammelrechnungDruckDTO(SammelrechnungDTO sammelrechnung)
+        {
+            var culture = new CultureInfo("de-de");
+
+            SammelrechnungGuid = sammelrechnung.SammelrechnungGuid;
+            SammelrechnungNummer = sammelrechnung.SammelrechnungsNummer;
+            Kunde = sammelrechnung.Kontakt;
+            ErstellDatum = sammelrechnung.ErstellDatum.ToString("d", culture);
+            Kopfzeile = sammelrechnung.Kopfzeile;
+            Fusszeile = sammelrechnung.Fusszeile;
+            Schlusstext = sammelrechnung.Schlusstext;
+            PageTitle = sammelrechnung.PageTitle;
+            PageSubtitle1 = sammelrechnung.PageSubtitle1;
+            PageSubtitle2 = sammelrechnung.PageSubtitle2;
+            Ansprechpartner = sammelrechnung.Ansprechpartner;
+            Telefonnummer = sammelrechnung.Telefonnummer;
+            Lieferzeit = sammelrechnung.Liefertermin;
+            RechnungsAdresseString = sammelrechnung.RechnungsAdresse.ToString();
+            RechnungPositionen = SammelrechnungPositionDruckDTO.ListFromDTOs(sammelrechnung.Positionen);
+            Salden = SammelrechnungSaldoDruckDTO.ListFromDTOs(sammelrechnung.Salden);
+
+            CountValuePositionen = sammelrechnung.Positionen.Count;
+            CountValueSalden = sammelrechnung.Salden.Count;
+            IsEndkunde = sammelrechnung.Kontakt.IstEndkunde;
+        }
+
     }
 
     public class SammelrechnungPositionDruckDTO
@@ -64,6 +66,30 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public string RechnungKommission { get; set; }
         public string RechnungBetrag { get; set; }
         public IList<SammelrechnungSaldoDruckDTO> RechnungSalden { get; set; }
+
+        public SammelrechnungPositionDruckDTO(SammelrechnungPositionenDTO position)
+        {
+            var culture = new CultureInfo("de-de");
+
+            LaufendeNummer = position.LaufendeNummer;
+            RechnungNummer = position.RechnungNummer.ToString();
+            RechnungDatum = position.RechnungDatum.ToString("d", culture);
+            RechnungKommission = position.RechnungKommision;
+            RechnungBetrag = position.RechnungBetrag.ToString(culture);
+            RechnungSalden = SammelrechnungSaldoDruckDTO.ListFromDTOs(position.Salden);
+        }
+        public static List<SammelrechnungPositionDruckDTO> ListFromDTOs(IList<SammelrechnungPositionenDTO> positionen)
+        {
+            var druckPositionen = new List<SammelrechnungPositionDruckDTO>();
+            if (!positionen.IsNullOrEmpty())
+            {
+                foreach (var position in positionen)
+                {
+                    druckPositionen.Add(new SammelrechnungPositionDruckDTO(position));
+                }
+            }
+            return druckPositionen;
+        }
     }
 
     public class SammelrechnungSaldoDruckDTO
@@ -72,5 +98,29 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public string Text { get; set; }
         public string Betrag { get; set; }
         public bool IsLastElement { get; set; } = false;
+
+        public SammelrechnungSaldoDruckDTO(SammelrechnungSaldenDTO saldo, bool isLastElement)
+        {
+            var culture = new CultureInfo("de-de");
+
+            Reihenfolge = saldo.Reihenfolge;
+            Text = saldo.Text;
+            Betrag = saldo.Betrag.ToString(culture);
+            IsLastElement = isLastElement;
+        }
+
+        public static List<SammelrechnungSaldoDruckDTO> ListFromDTOs(IList<SammelrechnungSaldenDTO> salden)
+        {
+            var druckSalden = new List<SammelrechnungSaldoDruckDTO>();
+            if (!salden.IsNullOrEmpty())
+            {
+                var maxReihenfolge = salden.Max(p => p.Reihenfolge);
+                foreach (var saldo in salden)
+                {
+                    druckSalden.Add(new SammelrechnungSaldoDruckDTO(saldo, isLastElement: saldo.Reihenfolge == maxReihenfolge));
+                }
+            }
+            return druckSalden;
+        }
     }
 }
