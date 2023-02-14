@@ -13,6 +13,7 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Update
         public string ChangeType { get; set; }
         public string ChangeOperation { get; set; }
         public long? MandantId { get; set; }
+        public Guid? MandantGuid { get; set; }
         public string Data { get; set; }
     }
 }
