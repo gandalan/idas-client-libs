@@ -41,9 +41,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             Kopfzeile = sammelrechnung.Kopfzeile;
             Fusszeile = sammelrechnung.Fusszeile;
             Schlusstext = sammelrechnung.Schlusstext;
-            PageTitle = sammelrechnung.PageTitle;
-            PageSubtitle1 = sammelrechnung.PageSubtitle1;
-            PageSubtitle2 = sammelrechnung.PageSubtitle2;
+            SetTitleAndSubtitle(sammelrechnung, culture);
             Ansprechpartner = sammelrechnung.Ansprechpartner;
             Telefonnummer = sammelrechnung.Telefonnummer;
             Lieferzeit = sammelrechnung.Liefertermin;
@@ -56,6 +54,20 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             IsEndkunde = sammelrechnung.Kontakt.IstEndkunde;
         }
 
+        private void SetTitleAndSubtitle(SammelrechnungDTO dto, CultureInfo culture)
+        {
+            if (dto.PageTitle.IsNullOrEmpty())
+            {
+                PageTitle = "Sammelrechnung";
+                PageSubtitle1 = $"Nr. {dto.SammelrechnungsNummer} vom {dto.ErstellDatum.ToString(culture.DateTimeFormat.ShortDatePattern, culture)}";
+            }
+            else
+            {
+                PageTitle = dto.PageTitle;
+                PageSubtitle1 = dto.PageSubtitle1;
+                PageSubtitle2 = dto.PageSubtitle2;
+            }
+        }
     }
 
     public class SammelrechnungPositionDruckDTO
