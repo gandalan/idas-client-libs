@@ -4,7 +4,7 @@ import jwt_decode from 'jwt-decode';
 
 export function IDASFactory(settings)
 {
-    let defaultSettings = {
+    /*let defaultSettings = {
         appToken: localStorage.getItem("IDAS_AppToken"),
         mandantGuid: localStorage.getItem("IDAS_MandantGuid"),
         apiBaseurl: localStorage.getItem("IDAS_ApiBaseUrl"),
@@ -12,7 +12,7 @@ export function IDASFactory(settings)
         jwtRefreshToken: localStorage.getItem("IDAS_AuthJwtRefreshToken"),
         jwtCallbackPath: localStorage.getItem("IDAS_AuthJwtCallbackPath"),
     };
-    settings = { ...defaultSettings, ...settings };
+    settings = { ...defaultSettings, ...settings };*/
     let idas = undefined;
     if (!isInvalid(settings))
     { 

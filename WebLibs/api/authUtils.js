@@ -58,6 +58,9 @@ export async function setup(settings)
             settings.jwtRefreshToken = refreshToken;
             localStorage.setItem("IDAS_AuthJwtRefreshToken", refreshToken);
         }
+        let mandantGuid = decoded["mandantGuid"] || "";
+        if (mandantGuid)
+            settings.mandantGuid = mandantGuid;
     }
     console.log("Setup finished", settings);
 }
