@@ -86,6 +86,10 @@ export async function tryRenew(settings)
         localStorage.setItem("IDAS_AuthJwtRefreshToken", refreshToken);
     }
 
+    let mandantGuid = decoded["mandantGuid"] || "";
+    if (mandantGuid)
+        settings.mandantGuid = mandantGuid;
+
     if (isInvalid(settings))
         console.log("Token is already expired!");
 }
