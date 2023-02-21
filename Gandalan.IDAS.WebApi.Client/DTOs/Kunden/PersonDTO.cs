@@ -34,6 +34,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Telefonnummer { get; set; }
         public string Durchwahl { get; set; }
         public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
-        
+        /// <summary>
+        /// Inaktiv Kennzeichen
+        /// </summary>
+        public bool IstInaktiv { get; set; }
     }
 }
