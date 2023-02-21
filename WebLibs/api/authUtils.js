@@ -14,15 +14,7 @@ export async function initIDAS(appToken) {
     if (urlParams.has("j")) jwtToken = urlParams.get("j");
     if (urlParams.has("t")) jwtRefreshToken = urlParams.get("t");
 
-    let settings = {
-        appToken,
-        mandantGuid,
-        apiBaseurl,
-        jwtToken: jwtToken,
-        jwtRefreshToken,
-        //jwtCallbackPath: localStorage.getItem("IDAS_AuthJwtCallbackPath")
-    }
-
+    let settings = { appToken, mandantGuid, apiBaseurl, jwtToken, jwtRefreshToken };
     try {
         await setup(settings);
         if (isInvalid(settings))
@@ -34,7 +26,6 @@ export async function initIDAS(appToken) {
     }
     return settings;
 }
-
 
 export async function setup(settings)
 {
@@ -101,7 +92,6 @@ export async function tryRenew(settings)
 
 export function redirectToLogin(settings, authPath) 
 {
-    //localStorage.setItem("IDAS_AuthJwtCallbackPath", authPath || "");
     const authEndpoint = (new URL(window.location.href).origin) + authPath;
     let authUrlCallback = `${authEndpoint}?r=%target%&j=%jwt%&m=%mandant%`;
     authUrlCallback = authUrlCallback.replace("%target%", encodeURIComponent(window.location.href));
