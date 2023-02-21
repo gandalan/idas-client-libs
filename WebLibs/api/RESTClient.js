@@ -1,5 +1,5 @@
 import axios from "axios";
-import { jwtTokenInvalid, jwtTokenRenew } from "./authUtils";
+import { isInvalid, tryRenew } from "./authUtils";
 
 export class RESTClient {
     lastError = "";
@@ -23,8 +23,8 @@ export class RESTClient {
     }
 
     async checkTokenBeforeRequest(config) {
-        if (this.settings.jwtToken && jwtTokenInvalid(this.settings)) { // ignore custom/different JWT tokens
-            await jwtTokenRenew(this.settings);
+        if (this.settings.jwtToken && isInvalid(this.settings)) { // ignore custom/different JWT tokens
+            await tryRenew(this.settings);
             console.log(`Updating Header with new JWT Token: ${this.settings.jwtToken}`);
             this.axiosInstance.headers = {
                 "Authorization" : `Bearer ${ this.settings.jwtToken }`

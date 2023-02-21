@@ -1,4 +1,4 @@
-import { jwtTokenInvalid } from "./authUtils";
+import { isInvalid } from "./authUtils";
 import { RESTClient } from "./RESTClient";
 import jwt_decode from 'jwt-decode';
 
@@ -14,7 +14,7 @@ export function IDASFactory(settings)
     };
     settings = { ...defaultSettings, ...settings };
     let idas = undefined;
-    if (!jwtTokenInvalid(settings))
+    if (!isInvalid(settings))
     { 
         console.log("init: with JWT token");
         idas = new IDAS(settings);
