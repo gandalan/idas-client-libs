@@ -13,11 +13,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public List<GesamtMaterialbedarfDTO> Get(DateTime? stichTag = null, bool offenOnly = false)
+        public GesamtMaterialbedarfGetReturn Get(DateTime? stichTag = null)
         {
             if (Login())
             {
-                return Get<List<GesamtMaterialbedarfDTO>>($"GesamtMaterialbedarf?stichTag={stichTag?.ToString("o")}&offenOnly={offenOnly}");
+                return Get<GesamtMaterialbedarfGetReturn>($"GesamtMaterialbedarf?stichTag={stichTag?.ToString("o")}");
             }
 
             return null;
@@ -39,8 +39,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
         }
 
-        public async Task<List<GesamtMaterialbedarfDTO>> GetAsync(DateTime? stichTag = null, bool offenOnly = false) =>
-            await Task.Run(() => Get(stichTag, offenOnly));
+        public async Task<GesamtMaterialbedarfGetReturn> GetAsync(DateTime? stichTag = null) =>
+            await Task.Run(() => Get(stichTag));
         public async Task DeleteAsync(Guid guid) => await Task.Run(() => Delete(guid));
 
         public async Task ZusammenfassenAsync(List<GesamtMaterialbedarfDTO> dtos, ZusammenfassungsOptionen optionen) =>
