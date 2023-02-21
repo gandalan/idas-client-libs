@@ -21,6 +21,16 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             await Task.Run(() => RunBelegPositionAVLogic(mandantId, belegPositionGuid));
         }
+        
+        public void UpdateBelegPositionAVData(long mandantId, Guid belegPositionGuid)
+        {
+            Post("BelegPositionen/UpdateBelegPositionAVData?mandantId=" + mandantId + "&belegPositionGuid=" + belegPositionGuid, null);
+        }
+
+        public async Task UpdateBelegPositionAVDataAsync(long mandantId, Guid belegPositionGuid)
+        {
+            await PostAsync("BelegPositionen/UpdateBelegPositionAVData?mandantId=" + mandantId + "&belegPositionGuid=" + belegPositionGuid, null);
+        }
 
         public List<Guid> SetBelegPositionGesperrtStatus(bool gesperrtStatus, List<Guid> positionen)
         {

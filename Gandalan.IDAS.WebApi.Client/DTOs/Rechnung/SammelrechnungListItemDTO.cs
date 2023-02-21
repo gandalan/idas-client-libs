@@ -13,5 +13,6 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public DateTime ErstellDatum { get; set; }
         public int AnzahlPositionen { get; set; }
         public decimal GesamtBetrag { get; set; }
+        public Guid KundenGuid { get; set; }
     }
 }

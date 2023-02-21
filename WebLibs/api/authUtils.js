@@ -1,16 +1,42 @@
 import { RESTClient } from "./RESTClient";
 import jwt_decode from "jwt-decode";
 
+export async function initIDAS(appToken) {
+    
+    let jwtToken = "";
+    let mandantGuid = "";
+    let apiBaseurl = "https://api.dev.idas-cloudservices.net/api/";
+    let jwtRefreshToken = localStorage.getItem("IDAS_AuthJwtRefreshToken");
+
+    let urlParams = new URLSearchParams(location.search);
+    if (urlParams.has("m")) mandantGuid = urlParams.get("m");
+    if (urlParams.has("a")) apiBaseurl = urlParams.get("a");
+    if (urlParams.has("j")) jwtToken = urlParams.get("j");
+    if (urlParams.has("t")) jwtRefreshToken = urlParams.get("t");
+
+    let settings = { appToken, mandantGuid, apiBaseurl, jwtToken, jwtRefreshToken };
+    try {
+        await setup(settings);
+        if (isInvalid(settings))
+            redirectToLogin(settings, "/");
+    }
+    catch
+    {
+        redirectToLogin(settings, "/");
+    }
+    return settings;
+}
+
 export async function setup(settings)
 {
-    console.log("Setup");
+    console.log("Setup IDAS");
     if (!settings.jwtToken && !settings.jwtRefreshToken)
         throw("Either jwtToken or jwtRefreshToken must be set to authenticate");
 
-    if (settings.jwtRefreshToken && jwtTokenInvalid(settings))
+    if (settings.jwtRefreshToken && isInvalid(settings))
     {
-        await jwtTokenRenew(settings);
-        if (jwtTokenInvalid(settings))
+        await tryRenew(settings);
+        if (isInvalid(settings))
             console.log("Refresh failed, invalid JWT token!");
 
     } else {
@@ -23,11 +49,14 @@ export async function setup(settings)
             settings.jwtRefreshToken = refreshToken;
             localStorage.setItem("IDAS_AuthJwtRefreshToken", refreshToken);
         }
+        let mandantGuid = decoded["mandantGuid"] || "";
+        if (mandantGuid)
+            settings.mandantGuid = mandantGuid;
     }
     console.log("Setup finished", settings);
 }
 
-export function jwtTokenInvalid(settings)
+export function isInvalid(settings)
 {
     if (!settings.jwtToken) 
         return true;
@@ -38,7 +67,7 @@ export function jwtTokenInvalid(settings)
     return true;
 }
 
-export async function jwtTokenRenew(settings) 
+export async function tryRenew(settings) 
 {
     console.log("try to refresh");
     const renewSettings = { ...settings, jwtToken : undefined };
@@ -57,13 +86,12 @@ export async function jwtTokenRenew(settings)
         localStorage.setItem("IDAS_AuthJwtRefreshToken", refreshToken);
     }
 
-    if (jwtTokenInvalid(settings))
+    if (isInvalid(settings))
         console.log("Token is already expired!");
 }
 
-export function jwtAuthenticateOnBackend(settings, authPath) 
+export function redirectToLogin(settings, authPath) 
 {
-    localStorage.setItem("IDAS_AuthJwtCallbackPath", authPath || "");
     const authEndpoint = (new URL(window.location.href).origin) + authPath;
     let authUrlCallback = `${authEndpoint}?r=%target%&j=%jwt%&m=%mandant%`;
     authUrlCallback = authUrlCallback.replace("%target%", encodeURIComponent(window.location.href));
