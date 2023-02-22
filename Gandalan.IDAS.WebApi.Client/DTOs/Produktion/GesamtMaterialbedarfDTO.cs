@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
-    public class GesamtMaterialbedarfDTO
+    public class GesamtMaterialbedarfDTO : ICloneable
     {
         public Guid GesamtMaterialbedarfGuid { get; set; }
         public Guid MandantGuid { get; set; }
-        public bool IsGruppe { get { return Children != null && Children.Any(); } }
+        public bool IsGruppe => Children != null && Children.Any();
         public List<GesamtMaterialbedarfDTO> Children { get; set; }
         public Guid ProduktionsMaterialbedarfGuid { get; set; }
         public MaterialbedarfDTO ProduktionsMaterialbedarf { get; set; }
@@ -39,6 +39,44 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string ZuschnittWinkel { get; set; }
         public bool IstSonderfarbe { get; set; }
         public KatalogArtikelArt KatalogArtikelArt { get; set; }
+        public object Clone()
+        {
+            return new GesamtMaterialbedarfDTO()
+            {
+                GesamtMaterialbedarfGuid = GesamtMaterialbedarfGuid,
+                MandantGuid = MandantGuid,
+                ArtikelBezeichnung = ArtikelBezeichnung,
+                BelegPosition = BelegPosition,
+                BelegPositionGuid = BelegPositionGuid,
+                BelegPositionAV = BelegPositionAV,
+                BelegPositionAVGuid = BelegPositionAVGuid,
+                Serie = Serie,
+                SerieGuid = SerieGuid,
+                SerienName = SerienName,
+                Children = Children,
+                ProduktionsMaterialbedarf = ProduktionsMaterialbedarf,
+                ProduktionsMaterialbedarfGuid = ProduktionsMaterialbedarfGuid,
+                Einheit = Einheit,
+                Liefertermin = Liefertermin,
+                KatalogNummer = KatalogNummer,
+                Vorgangsnummer = Vorgangsnummer,
+                Stueckzahl = Stueckzahl,
+                Laufmeter = Laufmeter,
+                FarbBezeichnung = FarbBezeichnung,
+                FarbKuerzel = FarbKuerzel,
+                FarbKuerzelGuid = FarbKuerzelGuid,
+                FarbCode = FarbCode,
+                FarbeItem = FarbeItem,
+                FarbItemGuid = FarbItemGuid,
+                OberFlaeche = OberFlaeche,
+                OberFlaecheGuid = OberFlaecheGuid,
+                IstZuschnitt = IstZuschnitt,
+                ZuschnittLaenge = ZuschnittLaenge,
+                ZuschnittWinkel = ZuschnittWinkel,
+                IstSonderfarbe = IstSonderfarbe,
+                KatalogArtikelArt = KatalogArtikelArt
+            };
+        }
     }
 }
 

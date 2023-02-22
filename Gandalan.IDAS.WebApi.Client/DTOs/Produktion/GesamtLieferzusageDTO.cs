@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
-    public class GesamtLieferzusageDTO
+    public class GesamtLieferzusageDTO : ICloneable
     {
         public Guid GesamtLieferzusageGuid { get; set; }
         public Guid MandantGuid { get; set; }        
@@ -23,6 +21,29 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string OberFlaeche { get; set; }
         public Guid OberFlaecheGuid { get; set; }
         public bool IstSonderfarbe { get; set; }
+        public object Clone()
+        {
+            return new GesamtLieferzusageDTO()
+            {
+                GesamtLieferzusageGuid = GesamtLieferzusageGuid,
+                MandantGuid = MandantGuid,
+                Liefertermin = Liefertermin,
+                KatalogNummer = KatalogNummer,
+                BestellNummer = BestellNummer,
+                Einheit = Einheit,
+                Stueckzahl = Stueckzahl,
+                Laufmeter = Laufmeter,
+                FarbBezeichnung = FarbBezeichnung,
+                FarbKuerzel = FarbKuerzel,
+                FarbKuerzelGuid = FarbKuerzelGuid,
+                FarbCode = FarbCode,
+                FarbeItem = FarbeItem,
+                FarbItemGuid = FarbItemGuid,
+                OberFlaeche = OberFlaeche,
+                OberFlaecheGuid = OberFlaecheGuid,
+                IstSonderfarbe = IstSonderfarbe
+            };
+        }
     }
 }
 
