@@ -1,11 +1,14 @@
-import { RESTClient } from "./RESTClient";
 import jwt_decode from "jwt-decode";
+
+export let currentToken = undefined;
+export let currentRefreshToken = undefined;
 
 export async function initIDAS(appToken) {
     
     let jwtToken = "";
     let mandantGuid = "";
     let apiBaseurl = "https://api.dev.idas-cloudservices.net/api/";
+    let authUrl = apiBaseurl;
     let jwtRefreshToken = localStorage.getItem("IDAS_AuthJwtRefreshToken");
 
     let urlParams = new URLSearchParams(location.search);
@@ -14,7 +17,12 @@ export async function initIDAS(appToken) {
     if (urlParams.has("j")) jwtToken = urlParams.get("j");
     if (urlParams.has("t")) jwtRefreshToken = urlParams.get("t");
 
-    let settings = { appToken, mandantGuid, apiBaseurl, jwtToken, jwtRefreshToken };
+    authUrl = apiBaseurl;
+    currentToken = jwtToken;
+    currentRefreshToken = jwtRefreshToken;
+    localStorage.setItem("IDAS_AuthJwtRefreshToken", jwtRefreshToken);
+
+    let settings = { appToken, mandantGuid, apiBaseurl, authUrl };
     try {
         await setup(settings);
         if (isInvalid(settings))
@@ -30,10 +38,10 @@ export async function initIDAS(appToken) {
 export async function setup(settings)
 {
     console.log("Setup IDAS");
-    if (!settings.jwtToken && !settings.jwtRefreshToken)
-        throw("Either jwtToken or jwtRefreshToken must be set to authenticate");
+    if (!currentToken && !currentRefreshToken)
+        throw("Either currentToken or currentRefreshToken must be set to authenticate");
 
-    if (settings.jwtRefreshToken && isInvalid(settings))
+    if (currentRefreshToken && isInvalid(settings))
     {
         await tryRenew(settings);
         if (isInvalid(settings))
@@ -41,13 +49,14 @@ export async function setup(settings)
 
     } else {
         console.log("Settings already have a valid JWT token, nothing to do");
-        let decoded = jwt_decode(settings.jwtToken);
+        let decoded = jwt_decode(currentToken);
         let refreshToken = decoded["refreshToken"] || "";
         if (refreshToken)
         {
             console.log("Got new refresh token:", refreshToken);
-            settings.jwtRefreshToken = refreshToken;
             localStorage.setItem("IDAS_AuthJwtRefreshToken", refreshToken);
+            currentRefreshToken = refreshToken;
+            startRefreshTimer(settings);
         }
         let mandantGuid = decoded["mandantGuid"] || "";
         if (mandantGuid)
@@ -56,11 +65,30 @@ export async function setup(settings)
     console.log("Setup finished", settings);
 }
 
+let timerRef = undefined;
+function startRefreshTimer(settings)
+{
+    if (timerRef)
+        clearInterval(timerRef);
+    timerRef = setInterval(() => {
+        if (currentToken) 
+        {
+            let decoded = jwt_decode(currentToken);
+            const utcNow = Date.parse(new Date().toUTCString()) / 1000;
+            console.log(utcNow, decoded.exp);
+            if (decoded && utcNow > decoded.exp - 120) 
+            {
+                tryRenew(settings);
+            }
+        }
+    }, 5000);
+}
+
 export function isInvalid(settings)
 {
-    if (!settings.jwtToken) 
+    if (!currentToken) 
         return true;
-    let decoded = jwt_decode(settings.jwtToken);
+    let decoded = jwt_decode(currentToken);
     const utcNow = Date.parse(new Date().toUTCString()) / 1000;
     if (decoded && decoded.exp > utcNow) 
         return false;
@@ -70,20 +98,26 @@ export function isInvalid(settings)
 export async function tryRenew(settings) 
 {
     console.log("try to refresh");
-    const renewSettings = { ...settings, jwtToken : undefined };
-    let api = new RESTClient(renewSettings);
-    const payload = { "Token" : settings.jwtRefreshToken };
-    const response = await api.put("LoginJwt/Refresh", payload);
-    settings.jwtToken = response.data;
-    console.log("Got JWT token:", response.data);
 
-    let decoded = jwt_decode(settings.jwtToken);
+    const url = settings.authUrl || settings.apiBaseurl;
+    const payload = { "Token" : currentRefreshToken };    
+    const response = await fetch(url+"LoginJwt/Refresh", {
+            method : "PUT",
+            body : JSON.stringify(payload),
+            headers: { 'Content-Type': 'application/json' }
+        });
+    const token = await response.json();
+    currentToken = token;
+    //console.log("Got JWT token:", currentToken);
+
+    let decoded = jwt_decode(currentToken);
     let refreshToken = decoded["refreshToken"] || "";
     if (refreshToken)
     {
         console.log("Got new refresh token:", refreshToken);
-        settings.jwtRefreshToken = refreshToken;
+        currentRefreshToken = refreshToken;
         localStorage.setItem("IDAS_AuthJwtRefreshToken", refreshToken);
+        startRefreshTimer(settings);
     }
 
     let mandantGuid = decoded["mandantGuid"] || "";

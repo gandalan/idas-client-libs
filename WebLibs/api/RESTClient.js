@@ -1,5 +1,5 @@
 import axios from "axios";
-import { isInvalid, tryRenew } from "./authUtils";
+import { isInvalid, tryRenew, currentToken, currentRefreshToken } from "./authUtils";
 
 export class RESTClient {
     lastError = "";
@@ -12,25 +12,26 @@ export class RESTClient {
         this.axiosInstance = axios.create({
             baseURL: settings.apiBaseurl,
             headers: {
-                "Authorization" : `Bearer ${ settings.jwtToken }`
+                "Authorization" : `Bearer ${currentToken}`
             }
         });
 
-        this.axiosInstance.interceptors.request.use(async (config) => {
+        /*this.axiosInstance.interceptors.request.use(async (config) => {
+            console.log("intercept", config.baseURL, config.url);
             await this.checkTokenBeforeRequest(config);
             return config;
-        });
+        });*/
     }
 
-    async checkTokenBeforeRequest(config) {
-        if (this.settings.jwtToken && isInvalid(this.settings)) { // ignore custom/different JWT tokens
+    /*async checkTokenBeforeRequest(config) {
+        if (currentToken && isInvalid(this.settings)) { // ignore custom/different JWT tokens
             await tryRenew(this.settings);
-            console.log(`Updating Header with new JWT Token: ${this.settings.jwtToken}`);
+            console.log(`Updating Header with new JWT Token: ${currentToken}`);
             this.axiosInstance.headers = {
-                "Authorization" : `Bearer ${ this.settings.jwtToken }`
+                "Authorization" : `Bearer ${currentToken}`
             }
         }
-    }
+    }*/
 
     getUrlOptions() {
         return { withCredentials: false };

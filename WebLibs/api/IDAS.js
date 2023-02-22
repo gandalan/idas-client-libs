@@ -1,4 +1,4 @@
-import { isInvalid } from "./authUtils";
+import { isInvalid, currentToken} from "./authUtils";
 import { RESTClient } from "./RESTClient";
 import jwt_decode from 'jwt-decode';
 
@@ -26,20 +26,18 @@ class IDAS
     auth = {
         _self: this,
         getCurrentAuthToken() {
-            return this._self.settings.jwtToken;
+            return currentToken;
         },
         getRights() {
-            const token = this._self.settings.jwtToken;
-            if (!token)
+            if (!currentToken)
                 return [];
-            const decoded = jwt_decode(token);
+            const decoded = jwt_decode(currentToken);
             return decoded.rights;
         },
         getRoles() {
-            const token = this._self.settings.jwtToken;
-            if (!token)
+            if (!currentToken)
                 return [];
-            const decoded = jwt_decode(token);
+            const decoded = jwt_decode(currentToken);
             return decoded.role;
         },
         hasRight(code)
@@ -51,10 +49,9 @@ class IDAS
             return this.getRoles().some(r => r === code);
         },
         getUsername() {
-            const token = this._self.settings.jwtToken;
-            if (!token)
+            if (!currentToken)
                 return undefined;
-            const decoded = jwt_decode(token);
+            const decoded = jwt_decode(currentToken);
             return decoded.id;
         }
     };
