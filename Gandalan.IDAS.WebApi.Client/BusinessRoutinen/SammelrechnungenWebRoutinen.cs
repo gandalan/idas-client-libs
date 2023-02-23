@@ -52,7 +52,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Post<SammelrechnungDTO>("Sammelrechnungen/UpdateSammelrechnung", dto);
+                return Post<SammelrechnungDTO>($"Sammelrechnungen/UpdateSammelrechnung?sammelrechnungGuid={dto.SammelrechnungGuid}", dto);
             }
             return null;
         }
