@@ -75,10 +75,9 @@ function startRefreshTimer(settings)
         {
             let decoded = jwt_decode(currentToken);
             const utcNow = Date.parse(new Date().toUTCString()) / 1000;
-            console.log(utcNow, decoded.exp);
             if (decoded && utcNow > decoded.exp - 120) 
             {
-                tryRenew(settings);
+                tryRenew(settings); // fire & forget/don't await --pr
             }
         }
     }, 5000);
