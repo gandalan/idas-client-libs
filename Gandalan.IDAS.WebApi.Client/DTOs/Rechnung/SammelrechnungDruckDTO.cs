@@ -100,7 +100,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
                     druckPositionen.Add(new SammelrechnungPositionDruckDTO(position));
                 }
             }
-            return druckPositionen;
+            return druckPositionen.OrderBy(p => p.LaufendeNummer).ToList();
         }
     }
 
@@ -132,7 +132,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
                     druckSalden.Add(new SammelrechnungSaldoDruckDTO(saldo, isLastElement: saldo.Reihenfolge == maxReihenfolge));
                 }
             }
-            return druckSalden;
+            return druckSalden.OrderBy(s => s.Reihenfolge).ToList();
         }
     }
 }
