@@ -76,6 +76,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal ArtikelRabattVorgabe { get; set; }
         public decimal ElementRabattVorgabe { get; set; }
         public string UmsatzSteuerId { get; set; }
+        public bool ShowSonderetikett { get; set; }
         public string Sonderetikett { get; set; }
         public string Branche { get; set; }
         public string Briefanrede { get; set; }
@@ -188,6 +189,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool ErbtAuswahlOhneSprosse { get; set; } = false;
         public bool DigitalerRechnungsversand { get; set; }
         public bool IstSammelrechnungsKunde { get; set; }
+        /// <summary>
+        /// Inaktiv Kennzeichen
+        /// </summary>
+        public bool IstInaktiv { get; set; }
 
         public KontaktDTO()
         {

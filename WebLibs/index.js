@@ -9,10 +9,10 @@ import SaveButton from "./components/SaveButton.svelte";
 
 export {
     DataGrid, Datepicker, Inputbox, Dialog, GanTable,
-    AddButton, RemoveButton, SaveButton,
+    AddButton, RemoveButton, SaveButton
 }
 
 import { IDASFactory } from "./api/IDAS";
 import { RESTClient } from "./api/RESTClient";
-
-export { IDASFactory, RESTClient };
+import { initIDAS } from "./api/authUtils";
+export { IDASFactory, RESTClient, initIDAS };

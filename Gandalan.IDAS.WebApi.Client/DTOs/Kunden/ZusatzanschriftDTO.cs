@@ -82,7 +82,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Intern
         /// </summary>
         public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
-
+        /// <summary>
+        /// Inaktiv Kennzeichen
+        /// </summary>
+        public bool IstInaktiv { get; set; }
         public ZusatzanschriftDTO()
         {
             ApplicationSpecificProperties = new Dictionary<string, PropertyValueCollection>();

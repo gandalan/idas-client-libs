@@ -52,7 +52,16 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Post<SammelrechnungDTO>("Sammelrechnungen/UpdateSammelrechnung", dto);
+                return Post<SammelrechnungDTO>($"Sammelrechnungen/UpdateSammelrechnung?sammelrechnungGuid={dto.SammelrechnungGuid}", dto);
+            }
+            return null;
+        }
+        public SammelrechnungListItemDTO AddRechnungToSammelrechnungen(Guid belegGuid, Guid sammelrechnungGuid)
+        {
+            if (Login())
+            {
+                var dto = new AddRechnungSammelrechnungDTO() { BelegGuid = belegGuid, SammelrechnungGuid = sammelrechnungGuid };
+                return Post<SammelrechnungListItemDTO>($"Sammelrechnungen/AddRechnungToSammelrechnungen", dto);
             }
             return null;
         }
@@ -80,6 +89,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<SammelrechnungDTO> UpdateSammelrechnungAsync(SammelrechnungDTO dto)
         {
             return await Task.Run(() => UpdateSammelrechnung(dto));
+        }
+
+        public async Task<SammelrechnungListItemDTO> AddRechnungToSammelrechnungenAsync(Guid belegGuid, Guid sammelrechnungGuid)
+        {
+            return await Task.Run(() => AddRechnungToSammelrechnungen(belegGuid, sammelrechnungGuid));
         }
     }
 }
