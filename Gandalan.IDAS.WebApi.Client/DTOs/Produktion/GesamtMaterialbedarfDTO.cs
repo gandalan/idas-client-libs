@@ -53,7 +53,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 Serie = Serie,
                 SerieGuid = SerieGuid,
                 SerienName = SerienName,
-                Children = Children,
+                Children = Children.Select(x => (GesamtMaterialbedarfDTO)x.Clone()).ToList(),
                 ProduktionsMaterialbedarf = ProduktionsMaterialbedarf,
                 ProduktionsMaterialbedarfGuid = ProduktionsMaterialbedarfGuid,
                 Einheit = Einheit,
