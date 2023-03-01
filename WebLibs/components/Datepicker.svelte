@@ -44,15 +44,15 @@
         let localTag = inhalt[0];
         let localMonat = inhalt[1];
 
-        if (inhalt.length == 1 && Value.length == 2) {
+        if (inhalt.length === 1 && Value.length === 2) {
             Value = Value + allowedSonderzeichen;
         }
-        if (inhalt.length == 2 && localMonat.toLocaleString().length >= 2) {
+        if (inhalt.length === 2 && localMonat.toLocaleString().length >= 2) {
             Value = Value + allowedSonderzeichen;
         }
 
         // Prüfung, ob der Monat korrekt eingegeben wurde
-        if (localMonat != "undefined" && (localMonat < 1 || localMonat > 12)) {
+        if (localMonat !== "undefined" && (localMonat < 1 || localMonat > 12)) {
             error = true;
         } else {
             error = false;
@@ -63,9 +63,9 @@
             error = true;
         }
 
-        if (localMonat != "undefined") {
+        if (localMonat !== "undefined") {
             let localAllowedTage = allowedTage[inhalt[1]];
-            if (localAllowedTage == "undefined") {
+            if (localAllowedTage === "undefined") {
                 error = true;
             }
             if (localTag > localAllowedTage) {
@@ -81,14 +81,14 @@
     }
     function daysInMonth() {
         wochenImMonat = [];
-        monatIndex = monate.findIndex(item => item == currentMonat) + 1;
+        monatIndex = monate.findIndex(item => item === currentMonat) + 1;
         let tageImMonat = new Date(currentJahr, monatIndex, 0).getDate();
         let localTagIndex = 0;
         let woche = [];
 
         for (let counter = 0; counter < tageImMonat; counter++) {
             localTagIndex = new Date(currentJahr, monatIndex - 1, counter).getDay();
-            if (counter == 0) {
+            if (counter === 0) {
                 // Am Anfang müssen erstmal x Leertage in die Woche eingefügt werden, damit der Monat
                 // am passenden Wochentag startet => das macht es in der Anzeigeschleife leichter
                 for (let bufferCounter = 0; bufferCounter < localTagIndex; bufferCounter++) {
@@ -101,7 +101,7 @@
                 wochenImMonat = [...wochenImMonat, woche]
                 woche = [];
             }
-            if (counter == tageImMonat - 1) {
+            if (counter === tageImMonat - 1) {
                 wochenImMonat = [...wochenImMonat, woche]
                 woche = [];
             }
@@ -125,7 +125,7 @@
         daysInMonth();
     }
     function setPlaceholder(tag) {
-        if (tag != "") {
+        if (tag !== "") {
             //Placeholder = getFormattedDate(tag);
         }
     }
@@ -135,17 +135,17 @@
         backToNormal();
     }
     function thisKeyDown(e) {
-        if (allowedNumbers.includes(e.key) == true) {
+        if (allowedNumbers.includes(e.key) === true) {
             if (Value.length >= 10) {
                 ignoreInput(e);
             }
             checkGueltigesDatum();
-        } else if (e.key == allowedSonderzeichen) {
+        } else if (e.key === allowedSonderzeichen) {
             // Kann nicht mit einer && Verknüpfung in die else if-Bedingung gepackt werden, da sonst gar kein Sonderzeichen mehr erlaubt ist... warum auch immer.
             if (Value.split(allowedSonderzeichen).length >= 3) {
                 ignoreInput(e);
             }
-        } else if (allowedFunctionalKeys.includes(e.key) == true) {
+        } else if (allowedFunctionalKeys.includes(e.key) === true) {
 			return;
 		} else {
             ignoreInput(e);

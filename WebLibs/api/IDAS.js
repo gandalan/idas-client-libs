@@ -1,23 +1,20 @@
 import { isInvalid, currentToken} from "./authUtils";
 import { RESTClient } from "./RESTClient";
-import jwt_decode from 'jwt-decode';
+import jwt_decode from "jwt-decode";
 
-export function IDASFactory(settings)
-{
-    if (!isInvalid(settings))
-    { 
+export function IDASFactory(settings) {
+    if (!isInvalid(settings)) {
         return new IDAS(settings);
-    } 
-    else throw("Invalid settings: call initIDAS() first to obtain a valid settings!");
+    }
+
+    throw ("Invalid settings: call initIDAS() first to obtain a valid settings!");
 }
 
-class IDAS 
-{
+class IDAS {
     restClient = undefined;
     mandantGuid = undefined;
 
-    constructor(settings) 
-    {
+    constructor(settings) {
         this.settings = settings;
         this.mandantGuid = settings.mandantGuid; // for backwards compatiblity only
         this.restClient = new RESTClient(settings);
@@ -29,31 +26,35 @@ class IDAS
             return currentToken;
         },
         getRights() {
-            if (!currentToken)
+            if (!currentToken) {
                 return [];
+            }
+
             const decoded = jwt_decode(currentToken);
             return decoded.rights;
         },
         getRoles() {
-            if (!currentToken)
+            if (!currentToken) {
                 return [];
+            }
+
             const decoded = jwt_decode(currentToken);
             return decoded.role;
         },
-        hasRight(code)
-        {
+        hasRight(code) {
             return this.getRights().some(r => r === code);
         },
-        hasRole(code)
-        {
+        hasRole(code) {
             return this.getRoles().some(r => r === code);
         },
         getUsername() {
-            if (!currentToken)
+            if (!currentToken) {
                 return undefined;
+            }
+
             const decoded = jwt_decode(currentToken);
             return decoded.id;
-        }
+        },
     };
 
     mandanten = {

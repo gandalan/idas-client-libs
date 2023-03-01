@@ -40,25 +40,25 @@
         let localValueString = Value.toLocaleString();
 
         // Prüfung auf Ziffern
-        if (allowedNumbers.includes(e.key) == true) {
+        if (allowedNumbers.includes(e.key) === true) {
             if (isBetweenMinMax(e)) {
                 let positionDezimalTrenner = localValueString.indexOf(DecimalTrenner)
                 if (positionDezimalTrenner > -1) {
                     let decimals = localValueString.substring(positionDezimalTrenner);
-                    if (decimals.length > AllowedDecimals || (Type == "currency" && decimals.length > 2)) {
+                    if (decimals.length > AllowedDecimals || (Type === "currency" && decimals.length > 2)) {
                         ignoreInput(e);
                     }
                 }
             } else {
                 ignoreInput(e);
             }
-        } else if (allowedDecimalTrenner.includes(e.key) == true) { // Prüfung auf Dezimaltrenner
+        } else if (allowedDecimalTrenner.includes(e.key) === true) { // Prüfung auf Dezimaltrenner
             if (localValueString.split(DecimalTrenner).length >= 2) {
                 ignoreInput(e);
-            } else if (e.key != DecimalTrenner) {
+            } else if (e.key !== DecimalTrenner) {
                 ignoreInput(e);
             }
-        } else if (IsVorzeichenErlaubt && e.key == allowedVorzeichen) { // Prüfung auf Vorzeichen
+        } else if (IsVorzeichenErlaubt && e.key === allowedVorzeichen) { // Prüfung auf Vorzeichen
             if (!isBetweenMinMax(e)) {
                 ignoreInput(e);
             } else if (localValueString.startsWith(e.key)) {
@@ -67,7 +67,7 @@
                 Value = e.key + Value;
                 ignoreInput(e);
             }
-        } else if (allowedFunctionalKeys.includes(e.key) == true) { // Prüfung auf Funktionstasten wie [ENTF], [DEL], usw.
+        } else if (allowedFunctionalKeys.includes(e.key) === true) { // Prüfung auf Funktionstasten wie [ENTF], [DEL], usw.
 			return;
 		} else { // Alles andere soll nicht erlaubt sein
             ignoreInput(e);
@@ -87,7 +87,7 @@
             errorMessage = "Die E-Mail Adresse darf mit einem Punkt weder beginnen noch enden."
         } else if (Value.startsWith("@") || Value.endsWith("@")) {
             errorMessage = "Die E-Mail Adresse darf mit einem @-Zeichen weder beginnen noch enden."
-        } else if (!Value.includes("@") && e.key != "@") {
+        } else if (!Value.includes("@") && e.key !== "@") {
             errorMessage = "@-Zeichen muss enthalten sein."
         } else if (Value.length > 253) {
             errorMessage = "Maximallänge: 254 Zeichen.";
@@ -120,7 +120,7 @@
         let isBetween = true;
         let localValueString = Value.toLocaleString()
 
-        if (e.key == allowedVorzeichen) {
+        if (e.key === allowedVorzeichen) {
             localValueString = e.key + localValueString;
         } else {
             localValueString = localValueString + e.key;
@@ -129,7 +129,7 @@
         // Replace wird benötigt, da sonst der Vergleich das deutsche "," als Dezimaltrenner nicht erkennt und ignoriert.
         localValueString = localValueString.replaceAll(",", ".");
 
-        if (MinValue == MaxValue || MinValue > MaxValue) {
+        if (MinValue === MaxValue || MinValue > MaxValue) {
             return isBetween;
         } if (localValueString < MinValue) {
             Value = MinValue;
@@ -144,9 +144,9 @@
         setFieldStyle();
     }
     function setFieldStyle() {
-        if (IsPflichtfeld && Value != "") {
+        if (IsPflichtfeld && Value !== "") {
             style = `${style} background: #f5fc99;`
-        } else if (IsPflichtfeld && Value == "") {
+        } else if (IsPflichtfeld && Value === "") {
             style = `${style} background: #fc5d5d;`
         }
     }
@@ -166,25 +166,25 @@
 </script>
 
 <!-- Datum -->
-{#if (Type == "date")}
+{#if (Type === "date")}
     <input type="date" style={style} on:keydown={checkInput} on:keyup={thisKeyUp} on bind:value={Value}/>
 {/if}
 
 <!-- Nummerisch -->
-{#if (Type == "number")}
+{#if (Type === "number")}
     <input style={style} on:keydown={checkInput} on:keyup={thisKeyUp} bind:value={Value}/>
 {/if}
 
 <!-- Text -->
-{#if (Type == "text" && !Multiline) || (Type == "email")}
+{#if (Type === "text" && !Multiline) || (Type === "email")}
     <input style={style} on:keydown={checkInput} on:keyup={thisKeyUp} bind:value={Value}/>
 {/if}
-{#if (Type == "text" && Multiline)}
+{#if (Type === "text" && Multiline)}
     <textarea style={style} on:keydown={checkInput} bind:value={Value}/>
 {/if}
 
 <!-- Währung -->
-{#if (Type == "currency")}
+{#if (Type === "currency")}
     <input style={style} on:keydown={checkInput} on:keyup={thisKeyUp} bind:value={Value}/>
 {/if}
 

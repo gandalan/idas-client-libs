@@ -1,5 +1,5 @@
 import axios from "axios";
-import { isInvalid, tryRenew, currentToken, currentRefreshToken } from "./authUtils";
+import { currentToken } from "./authUtils";
 
 export class RESTClient {
     lastError = "";
@@ -12,8 +12,8 @@ export class RESTClient {
         this.axiosInstance = axios.create({
             baseURL: settings.apiBaseurl,
             headers: {
-                "Authorization" : `Bearer ${currentToken}`
-            }
+                "Authorization": `Bearer ${currentToken}`,
+            },
         });
 
         /*this.axiosInstance.interceptors.request.use(async (config) => {
