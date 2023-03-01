@@ -28,138 +28,179 @@
     let wochenImMonat = [];
     let monatIndex = 0;
 
-    function alertFalschesDatum() {
+    function alertFalschesDatum()
+    {
         background = backgroundFalschesDatum;
         errorHidden = false;
         setFieldStyle();
     }
-    function backToNormal() {
+    function backToNormal()
+    {
         background = backgroundNormal;
         errorHidden = true;
         setFieldStyle();
     }
-    function checkGueltigesDatum() {
+    function checkGueltigesDatum()
+    {
         let error = false;
         let inhalt = Value.split(allowedSonderzeichen);
         let localTag = inhalt[0];
         let localMonat = inhalt[1];
 
-        if (inhalt.length === 1 && Value.length === 2) {
+        if (inhalt.length === 1 && Value.length === 2)
+        {
             Value = Value + allowedSonderzeichen;
         }
-        if (inhalt.length === 2 && localMonat.toLocaleString().length >= 2) {
+        if (inhalt.length === 2 && localMonat.toLocaleString().length >= 2)
+        {
             Value = Value + allowedSonderzeichen;
         }
 
         // Prüfung, ob der Monat korrekt eingegeben wurde
-        if (localMonat !== "undefined" && (localMonat < 1 || localMonat > 12)) {
+        if (localMonat !== "undefined" && (localMonat < 1 || localMonat > 12))
+        {
             error = true;
-        } else {
+        }
+        else
+        {
             error = false;
         }
 
         // Prüfung, ob der Tag korrekt eingegeben wurde
-        if (localTag < 1 || localTag > 31) {
+        if (localTag < 1 || localTag > 31)
+        {
             error = true;
         }
 
-        if (localMonat !== "undefined") {
+        if (localMonat !== "undefined")
+        {
             let localAllowedTage = allowedTage[inhalt[1]];
-            if (localAllowedTage === "undefined") {
+            if (localAllowedTage === "undefined")
+            {
                 error = true;
             }
-            if (localTag > localAllowedTage) {
+            if (localTag > localAllowedTage)
+            {
                 error = true;
             }
         }
 
-        if (error) {
+        if (error)
+        {
             alertFalschesDatum();
-        } else {
+        }
+        else
+        {
             backToNormal();
         }
     }
-    function daysInMonth() {
+    function daysInMonth()
+    {
         wochenImMonat = [];
         monatIndex = monate.findIndex(item => item === currentMonat) + 1;
         let tageImMonat = new Date(currentJahr, monatIndex, 0).getDate();
         let localTagIndex = 0;
         let woche = [];
 
-        for (let counter = 0; counter < tageImMonat; counter++) {
+        for (let counter = 0; counter < tageImMonat; counter++)
+        {
             localTagIndex = new Date(currentJahr, monatIndex - 1, counter).getDay();
-            if (counter === 0) {
+            if (counter === 0)
+            {
                 // Am Anfang müssen erstmal x Leertage in die Woche eingefügt werden, damit der Monat
                 // am passenden Wochentag startet => das macht es in der Anzeigeschleife leichter
-                for (let bufferCounter = 0; bufferCounter < localTagIndex; bufferCounter++) {
+                for (let bufferCounter = 0; bufferCounter < localTagIndex; bufferCounter++)
+                {
                     woche = [...woche, ""];
                 }
             }
             woche = [...woche, counter + 1];
 
-            if (woche.length >= 7) {
+            if (woche.length >= 7)
+            {
                 wochenImMonat = [...wochenImMonat, woche]
                 woche = [];
             }
-            if (counter === tageImMonat - 1) {
+            if (counter === tageImMonat - 1)
+            {
                 wochenImMonat = [...wochenImMonat, woche]
                 woche = [];
             }
         }
     }
-    function ignoreInput(e) {
+    function ignoreInput(e)
+    {
         e.preventDefault();
         e.returnValue = false;
     }
-    function setFieldStyle() {
+    function setFieldStyle()
+    {
         buttonStyle = `background: transparent; border: 0px; height: ${buttonHeight}px; margin-left: 10px; margin-right: 8px; margin-top: 0px; width: ${buttonHeight}px;`;
         divStyle = `background: white; border: 0.5px solid lightgray; border-radius: 5px; display: flex; height: ${Height}px; width: ${Width}px;`;
         inputStyle = `background: ${background}; border: 0px; height: ${inputHeight}px; width: ${inputWidth}px;`;
     }
-    function setJahr(selectedJahr) {
+    function setJahr(selectedJahr)
+    {
         currentJahr = selectedJahr.currentJahr;
         daysInMonth();
     }
-    function setMonat(selectedMonat) {
+    function setMonat(selectedMonat)
+    {
         currentMonat = selectedMonat.currentMonat;
         daysInMonth();
     }
-    function setPlaceholder(tag) {
-        if (tag !== "") {
+    function setPlaceholder(tag)
+    {
+        if (tag !== "")
+        {
             //Placeholder = getFormattedDate(tag);
         }
     }
-    function setValue(tag) {
+    function setValue(tag)
+    {
         Value = new Date(`${currentJahr}-${currentMonat}-${tag}`);
         datePickerHidden = true;
         backToNormal();
     }
-    function thisKeyDown(e) {
-        if (allowedNumbers.includes(e.key) === true) {
-            if (Value.length >= 10) {
+    function thisKeyDown(e)
+    {
+        if (allowedNumbers.includes(e.key) === true)
+        {
+            if (Value.length >= 10)
+            {
                 ignoreInput(e);
             }
             checkGueltigesDatum();
-        } else if (e.key === allowedSonderzeichen) {
+        }
+        else if (e.key === allowedSonderzeichen)
+        {
             // Kann nicht mit einer && Verknüpfung in die else if-Bedingung gepackt werden, da sonst gar kein Sonderzeichen mehr erlaubt ist... warum auch immer.
-            if (Value.split(allowedSonderzeichen).length >= 3) {
+            if (Value.split(allowedSonderzeichen).length >= 3)
+            {
                 ignoreInput(e);
             }
-        } else if (allowedFunctionalKeys.includes(e.key) === true) {
+        }
+        else if (allowedFunctionalKeys.includes(e.key) === true)
+        {
 			return;
-		} else {
+		}
+        else
+        {
             ignoreInput(e);
         }
 	}
-    function getValueFormatted(oldValue) {
+    function getValueFormatted(oldValue)
+    {
         let localTag = (new Date(oldValue).getUTCDate()).toString();
         let localMonat = (new Date(oldValue).getMonth() + 1).toString();
         let localJahr = new Date(oldValue).getUTCFullYear().toString();
 
-        if (localMonat.length < 2) {
+        if (localMonat.length < 2)
+        {
             localMonat = `0${localMonat}`;
         }
-        if (localTag.length < 2) {
+        if (localTag.length < 2)
+        {
             localTag = `0${localTag}`;
         }
         return `${localTag }.${localMonat}.${localJahr}`;
@@ -168,7 +209,8 @@
     setFieldStyle();
     daysInMonth(currentMonat, currentJahr);
 
-    $:if (Value) {
+    $:if (Value)
+    {
         Value = getValueFormatted(Value);
     }
 </script>

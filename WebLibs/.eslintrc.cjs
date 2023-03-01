@@ -23,7 +23,7 @@ module.exports = {
 		"no-multi-spaces": ["error", { ignoreEOLComments: true }],
 		"curly": "error",
 		"comma-spacing": "error",
-		"brace-style": "error",
+		"brace-style": ["error", "allman"],
 		"no-var": "error",
 		"key-spacing": "warn",
 		"keyword-spacing": "warn",
