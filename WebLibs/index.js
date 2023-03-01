@@ -9,7 +9,7 @@ import SaveButton from "./components/SaveButton.svelte";
 
 export {
     DataGrid, Datepicker, Inputbox, Dialog, GanTable,
-    AddButton, RemoveButton, SaveButton
+    AddButton, RemoveButton, SaveButton,
 }
 
 import { IDASFactory } from "./api/IDAS";

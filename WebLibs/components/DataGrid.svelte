@@ -12,7 +12,8 @@
     export let marker = null;
     export let markerField = "";
 
-    function setCurrent(item) {
+    function setCurrent(item)
+    {
         selectedItem = item;
         dispatch("selectedItemChanged", item);
     }
