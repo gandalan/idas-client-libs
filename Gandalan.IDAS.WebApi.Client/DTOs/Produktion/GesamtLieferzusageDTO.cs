@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -11,7 +13,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string BestellNummer { get; set; }
         public string Einheit { get; set; }
         public decimal Stueckzahl { get; set; }
+        public decimal UngedeckteStueckzahl { get; set; }
         public decimal Laufmeter { get; set; }
+        public decimal UngedeckteLaufmeter { get; set; }
         public string FarbBezeichnung { get; set; }
         public string FarbKuerzel { get; set; }
         public Guid FarbKuerzelGuid { get; set; }
@@ -21,6 +25,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string OberFlaeche { get; set; }
         public Guid OberFlaecheGuid { get; set; }
         public bool IstSonderfarbe { get; set; }
+        public List<GesamtLieferzusageBuchungDTO> Buchungen { get; set; }
         public object Clone()
         {
             return new GesamtLieferzusageDTO()
@@ -41,7 +46,10 @@ namespace Gandalan.IDAS.WebApi.DTO
                 FarbItemGuid = FarbItemGuid,
                 OberFlaeche = OberFlaeche,
                 OberFlaecheGuid = OberFlaecheGuid,
-                IstSonderfarbe = IstSonderfarbe
+                IstSonderfarbe = IstSonderfarbe,
+                UngedeckteStueckzahl = UngedeckteStueckzahl,
+                UngedeckteLaufmeter = UngedeckteLaufmeter,
+                Buchungen = Buchungen.Select(x => (GesamtLieferzusageBuchungDTO)x.Clone()).ToList()
             };
         }
     }

@@ -11,7 +11,8 @@ namespace Gandalan.IDAS.WebApi.DTO.Gesamtbedarf
         Lieferdatum = 1,
         Serienzuordnung = 2,
         ArtikelnummerFrabeOberflaeche = 4,
-        Vorgang = 8
+        Vorgang = 8,
+        FrabeOberflaeche = 16
     }
 
     [Flags]

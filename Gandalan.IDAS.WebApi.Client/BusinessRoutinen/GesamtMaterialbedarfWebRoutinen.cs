@@ -31,11 +31,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
         }
 
-        public void Zusammenfassen(List<GesamtMaterialbedarfDTO> dtos, ZusammenfassungsOptionen optionen)
+        public void Zusammenfassen(List<GesamtMaterialbedarfDTO> dtos, ZusammenfassungsOptionen optionen, bool stangenoptimierung)
         {
             if (Login())
             {
-                Post($"GesamtMaterialbedarf/Zusammenfassen?optionen={optionen}", dtos);
+                Post($"GesamtMaterialbedarf/Zusammenfassen?optionen={optionen}&stangenoptimierung={stangenoptimierung}", dtos);
             }
         }
 
@@ -43,8 +43,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             await Task.Run(() => Get(stichTag));
         public async Task DeleteAsync(Guid guid) => await Task.Run(() => Delete(guid));
 
-        public async Task ZusammenfassenAsync(List<GesamtMaterialbedarfDTO> dtos, ZusammenfassungsOptionen optionen) =>
-            await Task.Run(() => Zusammenfassen(dtos, optionen));
+        public async Task ZusammenfassenAsync(List<GesamtMaterialbedarfDTO> dtos, ZusammenfassungsOptionen optionen, bool stangenoptimierung) =>
+            await Task.Run(() => Zusammenfassen(dtos, optionen, stangenoptimierung));
 
     }
 }

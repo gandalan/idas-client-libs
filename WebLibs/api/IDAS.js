@@ -1,22 +1,23 @@
 import { isInvalid, currentToken} from "./authUtils";
 import { RESTClient } from "./RESTClient";
-import jwt_decode from 'jwt-decode';
+import jwt_decode from "jwt-decode";
 
 export function IDASFactory(settings)
 {
     if (!isInvalid(settings))
-    { 
+    {
         return new IDAS(settings);
-    } 
-    else throw("Invalid settings: call initIDAS() first to obtain a valid settings!");
+    }
+
+    throw ("Invalid settings: call initIDAS() first to obtain a valid settings!");
 }
 
-class IDAS 
+class IDAS
 {
     restClient = undefined;
     mandantGuid = undefined;
 
-    constructor(settings) 
+    constructor(settings)
     {
         this.settings = settings;
         this.mandantGuid = settings.mandantGuid; // for backwards compatiblity only
@@ -25,18 +26,27 @@ class IDAS
 
     auth = {
         _self: this,
-        getCurrentAuthToken() {
+        getCurrentAuthToken()
+        {
             return currentToken;
         },
-        getRights() {
+        getRights()
+        {
             if (!currentToken)
+            {
                 return [];
+            }
+
             const decoded = jwt_decode(currentToken);
             return decoded.rights;
         },
-        getRoles() {
+        getRoles()
+        {
             if (!currentToken)
+            {
                 return [];
+            }
+
             const decoded = jwt_decode(currentToken);
             return decoded.role;
         },
@@ -48,66 +58,82 @@ class IDAS
         {
             return this.getRoles().some(r => r === code);
         },
-        getUsername() {
+        getUsername()
+        {
             if (!currentToken)
+            {
                 return undefined;
+            }
+
             const decoded = jwt_decode(currentToken);
             return decoded.id;
-        }
+        },
     };
 
     mandanten = {
         _self: this,
-        async getAll() {
+        async getAll()
+        {
             return await this._self.restClient.get("/Mandanten");
         },
-        async get(guid) {
+        async get(guid)
+        {
             return await this._self.restClient.get(`/Mandanten/${guid}`);
         },
-        async save(m) {
+        async save(m)
+        {
             await this._self.restClient.put("/Mandanten", m);
         },
     };
 
     benutzer = {
         _self: this,
-        async getAll(mandantGuid) {
+        async getAll(mandantGuid)
+        {
             return await this._self.restClient.get(`/BenutzerListe/${mandantGuid }/?mitRollenUndRechten=true`);
         },
-        async get(guid) {
+        async get(guid)
+        {
             return await this._self.restClient.get(`/Benutzer/${guid}`);
         },
-        async save(m) {
+        async save(m)
+        {
             await this._self.restClient.put("/Benutzer", m);
         },
     };
 
     rollen = {
         _self: this,
-        async getAll() {
+        async getAll()
+        {
             return await this._self.restClient.get("/Rollen");
         },
-        async save(m) {
+        async save(m)
+        {
             await this._self.restClient.put("/Rollen", m);
         },
     };
 
     vorgaenge = {
         _self: this,
-        async getByVorgangsnummer(vorgangsNummer, jahr) {
+        async getByVorgangsnummer(vorgangsNummer, jahr)
+        {
             return await this._self.restClient.get(`/Vorgang/${vorgangsNummer}/${jahr}`);
         },
-        async getByGuid(guid) {
+        async getByGuid(guid)
+        {
             return await this._self.restClient.get(`/Vorgang/${guid}`);
         },
     };
 
     positionen = {
         _self: this,
-        async getByPcode(pcode) {
+        async getByPcode(pcode)
+        {
             return await this._self.restClient.get(`/BelegPositionen/GetByPcode/${pcode}`);
         },
-        async get(guid) {
+        async get(guid)
+        {
             return await this._self.restClient.get(`/BelegPositionen/Get/${guid}`);
         },
     };
