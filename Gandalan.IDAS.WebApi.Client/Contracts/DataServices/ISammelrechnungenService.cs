@@ -11,7 +11,7 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.DataServices
     {
         Task<SammelrechnungListItemDTO> ErstelleSammelrechnungenAsync(CreateSammelrechnungDTO dto);
         Task<List<SammelrechnungListItemDTO>> GetSammelrechnungenAsync();
-        Task<SammelrechnungDTO> GetSammelrechnungAsync(Guid guid);
+        Task<SammelrechnungDTO> GetSammelrechnungAsync(Guid guid, bool includebelegDruckDTO = false);
         Task<List<BelegeInfoDTO>> GetPossibleSammelrechnungRechnungenAsync();
         Task<SammelrechnungDTO> UpdateSammelrechnungAsync(SammelrechnungDTO dto);
         Task AddRechnungToSammelrechnungenAsync(Guid belegGuid, Guid sammelrechnungGuid);

@@ -31,11 +31,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public SammelrechnungDTO GetSammelrechnung(Guid guid)
+        public SammelrechnungDTO GetSammelrechnung(Guid guid, bool includeBelegDruckDTO)
         {
             if (Login())
             {
-                return Get<SammelrechnungDTO>($"Sammelrechnungen/GetSammelrechnung?guid={guid}");
+                return Get<SammelrechnungDTO>($"Sammelrechnungen/GetSammelrechnung?guid={guid}&includeBelegDruckDTO={includeBelegDruckDTO}");
             }
             return null;
         }
@@ -76,9 +76,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await Task.Run(() => GetSammelrechnungen());
         }
 
-        public async Task<SammelrechnungDTO> GetSammelrechnungAsync(Guid guid)
+        public async Task<SammelrechnungDTO> GetSammelrechnungAsync(Guid guid, bool includeBelegDruckDTO)
         {
-            return await Task.Run(() => GetSammelrechnung(guid));
+            return await Task.Run(() => GetSammelrechnung(guid, includeBelegDruckDTO));
         }
 
         public async Task<List<BelegeInfoDTO>> GetPossibleSammelrechnungRechnungenAsync()
