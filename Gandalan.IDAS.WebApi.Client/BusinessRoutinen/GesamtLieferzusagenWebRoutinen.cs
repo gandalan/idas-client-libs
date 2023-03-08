@@ -22,7 +22,16 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
+        public void SerieBuchen(Guid serieGuid)
+        {
+            if (Login())
+            {
+                Post($"GesamtLieferzusagen/SerieBuchen?serieGuid={serieGuid}", null);
+            }
+        }
+
         public async Task<List<GesamtLieferzusageDTO>> GetAsync(DateTime? stichTag = null) => await Task.Run(() => Get(stichTag));
+        public async Task SerieBuchenAsync(Guid serieGuid) => await Task.Run(() => SerieBuchen(serieGuid));
 
     }
 }
