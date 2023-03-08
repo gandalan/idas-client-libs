@@ -29,6 +29,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public int CountValuePositionen { get; set; }
         public int CountValueSalden { get; set; }
         public bool IsEndkunde { get; set; }
+        public IList<BelegDruckDTO> EinzelrechnungDTOs { get; set; }
 
         public SammelrechnungDruckDTO(SammelrechnungDTO sammelrechnung)
         {
@@ -52,6 +53,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             CountValuePositionen = sammelrechnung.Positionen.Count;
             CountValueSalden = sammelrechnung.Salden.Count;
             IsEndkunde = sammelrechnung.Kontakt.IstEndkunde;
+            EinzelrechnungDTOs = sammelrechnung.EinzelrechnungDTOs;
         }
 
         private void SetTitleAndSubtitle(SammelrechnungDTO dto, CultureInfo culture)

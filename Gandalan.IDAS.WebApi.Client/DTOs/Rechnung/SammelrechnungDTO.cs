@@ -11,6 +11,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         {
             Positionen = new List<SammelrechnungPositionenDTO>();
             Salden = new List<SammelrechnungSaldenDTO>();
+            EinzelrechnungDTOs = new List<BelegDruckDTO>();
         }
 
         public Guid SammelrechnungGuid { get; set; }
@@ -30,6 +31,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public BeleganschriftDTO RechnungsAdresse { get; set; }
         public IList<SammelrechnungPositionenDTO> Positionen { get; set; }
         public IList<SammelrechnungSaldenDTO> Salden { get; set; }
+
+        public IList<BelegDruckDTO> EinzelrechnungDTOs { get; set; }
     }
 
     public class SammelrechnungPositionenDTO
