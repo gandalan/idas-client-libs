@@ -25,6 +25,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string ArtikelBezeichnung { get; set; }
         public string Einheit { get; set; }
         public decimal Stueckzahl { get; set; }
+        public decimal GedeckteStueckzahl { get; set; }
+        public decimal UngedeckteStueckzahl => Stueckzahl - GedeckteStueckzahl;
         public decimal Laufmeter { get; set; }
         public string FarbBezeichnung { get; set; }
         public string FarbKuerzel { get; set; }
@@ -36,9 +38,12 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid OberFlaecheGuid { get; set; }
         public bool IstZuschnitt { get; set; }
         public float ZuschnittLaenge { get; set; }
+        public float GedeckteZuschnittLaenge { get; set; }
+        public float UngedeckteZuschnittLaenge => ZuschnittLaenge - GedeckteZuschnittLaenge;
         public string ZuschnittWinkel { get; set; }
         public bool IstSonderfarbe { get; set; }
         public KatalogArtikelArt KatalogArtikelArt { get; set; }
+        public float DeckungInPercent => Einheit == "St" ? (float)(GedeckteStueckzahl / Stueckzahl) : GedeckteZuschnittLaenge / ZuschnittLaenge;
         public object Clone()
         {
             return new GesamtMaterialbedarfDTO()
@@ -74,7 +79,9 @@ namespace Gandalan.IDAS.WebApi.DTO
                 ZuschnittLaenge = ZuschnittLaenge,
                 ZuschnittWinkel = ZuschnittWinkel,
                 IstSonderfarbe = IstSonderfarbe,
-                KatalogArtikelArt = KatalogArtikelArt
+                KatalogArtikelArt = KatalogArtikelArt,
+                GedeckteStueckzahl = GedeckteStueckzahl,
+                GedeckteZuschnittLaenge = GedeckteZuschnittLaenge
             };
         }
     }
