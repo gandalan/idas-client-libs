@@ -50,6 +50,8 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public string ExterneReferenznummer { get; set; }
         public Guid? ExterneMandantenGuid { get; set; }
+        public long? SammelbelegNummer { get; set; }
+        public Guid? SammelbelegGuid { get; set; }
 
         public BelegDTO()
         {
