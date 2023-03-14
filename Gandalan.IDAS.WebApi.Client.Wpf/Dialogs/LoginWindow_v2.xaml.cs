@@ -74,7 +74,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             _viewModel.LoginInProgress = false;
             _viewModel.StatusText = "Fehler: " + _statusText;
 
-            if (_statusText == "Invalid password")
+            if (_statusText == "Invalid password" || _statusText == "Error")
             {
                 _viewModel.ShowLoggedInEnvironments = false;
                 _viewModel.UserName = settings.UserName;
