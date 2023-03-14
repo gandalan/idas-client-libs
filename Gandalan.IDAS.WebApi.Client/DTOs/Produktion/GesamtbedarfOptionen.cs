@@ -12,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.DTO.Gesamtbedarf
         Serienzuordnung = 2,
         ArtikelnummerFrabeOberflaeche = 4,
         Vorgang = 8,
-        FrabeOberflaeche = 16
+        FarbeOberflaeche = 16
     }
 
     [Flags]
@@ -21,6 +21,6 @@ namespace Gandalan.IDAS.WebApi.DTO.Gesamtbedarf
         Keine = 0,
         Lieferdatum = 1,
         Serie = 2,
-        FrabeOberflaeche = 4,
+        FarbeOberflaeche = 4,
     }
 }
