@@ -9,7 +9,7 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.DataServices
 {
     public interface IRechnungenService
     {
-        Task ErstelleRechnungenAsync(List<BelegartWechselDTO> belegeWechsel);
+        Task<Dictionary<Guid, Guid>> ErstelleRechnungenAsync(List<BelegartWechselDTO> belegeWechsel);
         Task<List<BelegeInfoDTO>> GetABFakturierbarListeAsync();
         Task<List<BelegeInfoDTO>> GetDruckbareRechnungenListeAsync();
     }

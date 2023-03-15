@@ -31,12 +31,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public void ErstelleRechnungen(List<BelegartWechselDTO> belegeWechsel)
+        public Dictionary<Guid, Guid> ErstelleRechnungen(List<BelegartWechselDTO> belegeWechsel)
         {
             if (Login())
             {
-                Post("Rechnungen/ErstelleRechnungen", belegeWechsel);
+                return Post<Dictionary<Guid, Guid>>("Rechnungen/ErstelleRechnungen", belegeWechsel);
             }
+            return null;
         }
 
         public async Task<List<BelegeInfoDTO>> GetAllABFakturierbarAsync()
@@ -44,9 +45,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await Task.Run(() => GetAllABFakturierbar());
         }
 
-        public async Task ErstelleRechnungenAsync(List<DTO.BelegartWechselDTO> belegeWechsel)
+        public async Task<Dictionary<Guid, Guid>> ErstelleRechnungenAsync(List<BelegartWechselDTO> belegeWechsel)
         {
-            await Task.Run(() => ErstelleRechnungen(belegeWechsel));
+            return await Task.Run(() => ErstelleRechnungen(belegeWechsel));
         }
 
         public async Task<List<BelegeInfoDTO>> GetAllRechnungenDruckbarAsync()
