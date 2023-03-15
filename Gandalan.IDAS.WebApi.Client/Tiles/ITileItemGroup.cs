@@ -7,5 +7,6 @@ namespace Gandalan.Client.Contracts.Tiles
 		List<ITileItem> Tiles { get; set; }
 		string Name { get; set; }
 		int Order { get; set; }
+		bool StretchVertically { get; set; }
 	}
 }

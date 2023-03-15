@@ -13,6 +13,7 @@ namespace Gandalan.Client.Contracts.Tiles
         object StateColor { get; set; }
         int Order { get; set; }
         bool IsVisible { get; set; }
+        bool StrechVertically { get; set; }
 
         Task Load();
         Task UnLoad();
