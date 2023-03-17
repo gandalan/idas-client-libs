@@ -91,10 +91,10 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
         {
             _viewModel.LoginInProgress = true;
             _viewModel.StatusText = null;
-            _webApiSettings.Url = _viewModel.ServerEnvironment.Url;
+            // reflect change to env as from selected dropdown
+            _webApiSettings.CopyToThis(_viewModel.ServerEnvironment);
             _webApiSettings.UserName = _viewModel.UserName;
             _webApiSettings.Passwort = passwordBox.Password;
-            _webApiSettings.FriendlyName = _viewModel.ServerEnvironment.FriendlyName;
             _webApiSettings.AuthToken = null;
 
             if (await testConnection(_webApiSettings))
