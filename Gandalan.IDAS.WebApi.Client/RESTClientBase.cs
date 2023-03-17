@@ -16,23 +16,26 @@ namespace Gandalan.IDAS.Web
 
                 if (!string.IsNullOrWhiteSpace(info))
                 {
-                    try
-                    {
-                        Exception original = JsonConvert.DeserializeObject<Exception>(info, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
-                        return new ApiException(original.Message, code, original, payload);
-                    }
-                    catch
+                    // Newtonsoft TypeNameInfo - try to restore original exception from Backend
+                    if (info.Contains("$type")) 
                     {
                         try
                         {
-                            dynamic infoObject = JsonConvert.DeserializeObject<dynamic>(info);
-                            string status = infoObject.status;
-                            return new ApiException(status, code, payload) { ExceptionString = infoObject.exception.ToString() };
+                            Exception original = JsonConvert.DeserializeObject<Exception>(info, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+                            return new ApiException(original.Message, code, original, payload);
                         }
-                        catch
-                        {
-                            return new ApiException(info, code, payload);
-                        }
+                        catch { }
+                    }
+
+                    try
+                    {
+                        dynamic infoObject = JsonConvert.DeserializeObject<dynamic>(info);
+                        string status = infoObject.status;
+                        return new ApiException(status, code, payload) { ExceptionString = infoObject.exception.ToString() };
+                    }
+                    catch
+                    {
+                        return new ApiException(info, code, payload);
                     }
                 }
 

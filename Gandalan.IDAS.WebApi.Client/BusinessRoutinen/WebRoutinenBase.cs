@@ -169,13 +169,16 @@ namespace Gandalan.IDAS.WebApi.Client
                 UserAuthTokenDTO result = null;
                 if (AuthToken == null || AuthToken.Expires < DateTime.UtcNow)
                 {
-                    var ldto = new LoginDTO()
+                    if (!string.IsNullOrEmpty(Settings.UserName) && !string.IsNullOrEmpty(Settings.Passwort))
                     {
-                        Email = Settings.UserName,
-                        Password = Settings.Passwort,
-                        AppToken = Settings.AppToken
-                    };
-                    result = await PostAsync<UserAuthTokenDTO>("/api/Login/Authenticate", ldto);
+                        var ldto = new LoginDTO()
+                        {
+                            Email = Settings.UserName,
+                            Password = Settings.Passwort,
+                            AppToken = Settings.AppToken
+                        };
+                        result = await PostAsync<UserAuthTokenDTO>("/api/Login/Authenticate", ldto);
+                    }
                 }
                 else
                 {
