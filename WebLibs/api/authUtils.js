@@ -8,7 +8,7 @@ export async function initIDAS(appToken)
 {
     let jwtToken = "";
     let mandantGuid = "";
-    let apiBaseurl = "https://api.dev.idas-cloudservices.net/api/";
+    let apiBaseurl = window.document.body.dataset.apiBaseUrl || "https://api.dev.idas-cloudservices.net/api/";
     let authUrl = apiBaseurl;
     let jwtRefreshToken = localStorage.getItem("IDAS_AuthJwtRefreshToken");
 

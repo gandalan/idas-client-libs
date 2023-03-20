@@ -15,5 +15,6 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.DataServices
         Task<List<BelegeInfoDTO>> GetPossibleSammelrechnungRechnungenAsync();
         Task<SammelrechnungDTO> UpdateSammelrechnungAsync(SammelrechnungDTO dto);
         Task AddRechnungToSammelrechnungenAsync(Guid belegGuid, Guid sammelrechnungGuid);
+        Task SetRechnungenAlsGedrucktAsync(Guid sammelrechnungGuid);
     }
 }
