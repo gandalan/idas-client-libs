@@ -13,7 +13,16 @@ namespace Gandalan.Client.Contracts.Tiles
         object StateColor { get; set; }
         int Order { get; set; }
         bool IsVisible { get; set; }
-        bool StrechVertically { get; set; }
+        /// <summary>
+        /// Streckt das Tile in der Höhe. Wie <see cref="System.Windows.GridUnitType.Star"/>.
+        /// Alle Tiles in einer Gruppe müssen diese Flag gesetzt haben.
+        /// </summary>
+        bool StretchVertically { get; set; } 
+        /// <summary>
+        /// Minimale Höhe für Tile, wenn StretchVertically gesetzt ist.
+        /// Der Gröste Wert innerhalb der Gruppe wird verwendet.
+        /// </summary>
+        double MinHeight { get; set; }
 
         Task Load();
         Task UnLoad();
