@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
 {

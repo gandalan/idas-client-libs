@@ -1,5 +1,4 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Threading.Tasks;
 

@@ -1,6 +1,5 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Data.DTOs.Produktion;
-using System;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {

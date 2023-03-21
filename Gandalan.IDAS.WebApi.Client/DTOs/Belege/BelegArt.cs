@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gandalan.IDAS.WebApi.Data.DTOs.Belege
+﻿namespace Gandalan.IDAS.WebApi.Data.DTOs.Belege
 {
     public enum BelegArt
     {

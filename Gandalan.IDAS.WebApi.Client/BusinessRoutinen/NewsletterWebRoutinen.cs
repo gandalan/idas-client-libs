@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Gandalan.IDAS.WebApi.DTO;
-using System.Diagnostics;
-using Gandalan.IDAS.WebApi.Client.Settings;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 

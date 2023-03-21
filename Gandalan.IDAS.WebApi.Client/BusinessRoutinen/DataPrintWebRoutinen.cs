@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.Jobs.Contracts;
-using Gandalan.IDAS.WebApi.Client.Settings;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {

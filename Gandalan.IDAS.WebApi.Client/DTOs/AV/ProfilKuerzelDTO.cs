@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gandalan.IDAS.WebApi.Data
+﻿namespace Gandalan.IDAS.WebApi.Data
 {
     public class ProfilKuerzelDTO
     {        
