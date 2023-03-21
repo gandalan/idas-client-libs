@@ -1,17 +1,24 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Gandalan.IDAS.WebApi.Data.DTOs.Produktion
 {
     public class BerechnungParameterDTO : ICloneable
     {
         public Guid MandantGuid { get; set; } = Guid.Empty;
+        /// <summary>
+        /// Default: true
+        /// </summary>
         public bool SaveResultData { get; set; } = true;
         public BelegPositionAVDTO BelegPositionAVDTO { get; set; }
+        /// <summary>
+        /// Default: -999
+        /// </summary>
         public long VorgangsNummer { get; set; } = -999;
+        /// <summary>
+        /// Default: -999
+        /// </summary>
         public long BelegNummer { get; set; } = -999;
         public bool IgnoreSonderwuensche { get; set; }
         public bool ReturnRawDataFile { get; set; }
