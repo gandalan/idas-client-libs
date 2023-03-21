@@ -1,6 +1,4 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client;
-using Gandalan.IDAS.WebApi.Client.Settings;
 using System.ComponentModel;
 using System.Windows;
 

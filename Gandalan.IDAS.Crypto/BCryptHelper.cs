@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gandalan.IDAS.Crypto
+﻿namespace Gandalan.IDAS.Crypto
 {
     /// <summary>
     /// Klasse für die Ver-/Entschlüsselung von Strings mit BCrypt

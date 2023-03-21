@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gandalan.IDAS.WebApi.Data.Visitor
+﻿namespace Gandalan.IDAS.WebApi.Data.Visitor
 {
     /// <summary>
     /// Einfaches Visitor-Pattern. Wir implementieren aber hier noch eine Variante der Visit-Methode, die 

@@ -3,7 +3,6 @@ using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Gandalan.IDAS.Logging;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {

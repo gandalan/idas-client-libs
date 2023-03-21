@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices
+﻿namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices
 {
     /// <summary>
     /// Service for collection end user feedback, for instance via the 

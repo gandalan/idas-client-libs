@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gandalan.IDAS.WebApi.DTO
+﻿namespace Gandalan.IDAS.WebApi.DTO
 {
     /// <summary>
     /// Informativ: Artikel-Arten
