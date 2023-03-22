@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Gandalan.IDAS.WebApi.Util;
-using PropertyChanged;
 using System.Linq;
 
 namespace Gandalan.IDAS.WebApi.DTO

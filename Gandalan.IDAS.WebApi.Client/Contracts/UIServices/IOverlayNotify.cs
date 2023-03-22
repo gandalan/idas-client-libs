@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-
-namespace Gandalan.Client.Contracts.UIServices
+﻿namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IOverlayNotify
     {

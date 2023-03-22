@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.Data.DTOs.AV;
 using Gandalan.IDAS.WebApi.DTO;
-using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {

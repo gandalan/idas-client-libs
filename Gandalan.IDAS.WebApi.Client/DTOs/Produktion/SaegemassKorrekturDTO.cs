@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Gandalan.IDAS.WebApi.DTO
+﻿namespace Gandalan.IDAS.WebApi.DTO
 {
     /// <summary>
     /// DTO für die Verwaltung der Sägemaßkorrekturen

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gandalan.IDAS.WebApi.DTO
+﻿namespace Gandalan.IDAS.WebApi.DTO
 {
     public enum MaterialbedarfStatiDTO
     {
