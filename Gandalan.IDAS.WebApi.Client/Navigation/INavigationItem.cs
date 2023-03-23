@@ -9,7 +9,7 @@ namespace Gandalan.Client.Contracts.Navigation
         string Caption { get; }
         object Icon { get; }
         int Order { get; }
-        bool IsVisible { get; }
+        bool IsVisible { get; set; }
 
         Func<Task> Execute { get; } 
     }
