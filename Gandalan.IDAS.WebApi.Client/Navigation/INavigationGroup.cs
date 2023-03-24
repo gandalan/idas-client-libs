@@ -7,5 +7,6 @@ namespace Gandalan.Client.Contracts.Navigation
         string Caption { get; set; }
         ObservableCollection<INavigationItem> Items { get; set; }
         int Order { get; set; }
+        bool IsVisible { get; set; }
     }
 }
