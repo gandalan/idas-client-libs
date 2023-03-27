@@ -8,9 +8,11 @@ namespace Gandalan.Client.Contracts
     {
         bool HasErrors { get; }
         void Validate();
+        void InvokeCancelledSave();
 
         event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
+        event EventHandler CancelledSave;
+        
         ValidationMessage GetErrors(string propertyName);
     }
 
@@ -24,7 +26,13 @@ namespace Gandalan.Client.Contracts
     {
         public bool HasErrors => false;
 
+        public void InvokeCancelledSave()
+        {
+            CancelledSave?.Invoke(this, null);
+        }
+
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        public event EventHandler CancelledSave;
 
         public ValidationMessage GetErrors(string propertyName)
         {
