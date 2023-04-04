@@ -11,9 +11,11 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// Information zur Säge (Hersteller, Modellnummer usw.)
         /// </summary>
         string Modell { get; }
+
         /// <summary>
         /// Erzeugt die Sägedaten.
         /// </summary>
+        /// <param name="saegeKonfiguration"></param>
         /// <param name="avData">AV Daten zum Sägematerial</param>
         /// <param name="material"></param>
         /// <returns>Modellabhängige Daten zur Übermittlung an die Maschine</returns>
