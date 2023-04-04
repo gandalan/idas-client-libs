@@ -14,7 +14,7 @@ namespace Gandalan.Client.Contracts.Tiles
         int Order { get; set; }
         bool IsVisible { get; set; }
         /// <summary>
-        /// Streckt das Tile in der Höhe. Wie <see cref="System.Windows.GridUnitType.Star"/>.
+        /// Streckt das Tile in der Höhe. Wie System.Windows.GridUnitType.Star.
         /// Alle Tiles in einer Gruppe müssen diese Flag gesetzt haben.
         /// </summary>
         bool StretchVertically { get; set; } 
