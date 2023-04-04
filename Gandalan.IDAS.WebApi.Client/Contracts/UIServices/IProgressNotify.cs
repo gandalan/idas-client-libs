@@ -30,12 +30,13 @@ namespace Gandalan.Client.Contracts.UIServices
         /// Function to display the progress value for determinate progress tasks
         /// </summary>
         /// <param name="percent">value</param>
+        /// <param name="text"></param>
         /// <returns></returns>
         Task UpdateProgress(int percent, string text);
         /// <summary>
         /// Function to display the progress value for determinate progress tasks
         /// </summary>
-        /// <param name="percent">value</param>
+        /// <param name="text">value</param>
         /// <returns></returns>
         Task UpdateProgress(string text);
     }
