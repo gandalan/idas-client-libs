@@ -9,5 +9,6 @@
         public string HelpCenter { get; set; }
         public string Feedback { get; set; }
         public string Notify { get; set; }
+        public string WebhookService { get; set; }
     }
 }
