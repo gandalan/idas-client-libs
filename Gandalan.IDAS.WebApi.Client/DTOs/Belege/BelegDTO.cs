@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Gandalan.IDAS.WebApi.Util;
 using Newtonsoft.Json;
-using PropertyChanged;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices

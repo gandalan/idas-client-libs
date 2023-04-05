@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gandalan.IDAS.WebApi.Data.DTOs.Produktion
+﻿namespace Gandalan.IDAS.WebApi.Data.DTOs.Produktion
 {
     /// <summary>
     /// DTO für die Konfiguration von Sägen in IBOS3

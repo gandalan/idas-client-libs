@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Gandalan.Client.Contracts.RemoteControl
+﻿namespace Gandalan.Client.Contracts.RemoteControl
 {
     public interface IRemoteControlServer
     {

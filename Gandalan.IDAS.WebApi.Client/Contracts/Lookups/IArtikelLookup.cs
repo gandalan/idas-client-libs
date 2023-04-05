@@ -1,4 +1,3 @@
-using Gandalan.Client.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.Client.Contracts

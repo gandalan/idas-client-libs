@@ -6,6 +6,7 @@
         object Control { get; }
         bool HasErrors();
         void SetData(object data);
+        void OnCancelledSave();
         int OrderId { get; }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {

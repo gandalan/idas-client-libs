@@ -1,5 +1,4 @@
 ﻿using System;
-using PropertyChanged;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gandalan.IDAS.Client.Contracts.AV
+﻿namespace Gandalan.IDAS.Client.Contracts.AV
 {
     public class TagesKapazitaetInfo
     {

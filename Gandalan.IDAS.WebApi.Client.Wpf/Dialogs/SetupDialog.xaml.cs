@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
-using Gandalan.IDAS.WebApi.Client.Settings;
 using System.ComponentModel;
 using Gandalan.IDAS.Web;
-using Gandalan.IDAS.WebApi.Client;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 
 namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs

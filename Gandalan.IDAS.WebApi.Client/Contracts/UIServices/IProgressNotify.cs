@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace Gandalan.Client.Contracts.UIServices
 {
@@ -34,12 +30,13 @@ namespace Gandalan.Client.Contracts.UIServices
         /// Function to display the progress value for determinate progress tasks
         /// </summary>
         /// <param name="percent">value</param>
+        /// <param name="text"></param>
         /// <returns></returns>
         Task UpdateProgress(int percent, string text);
         /// <summary>
         /// Function to display the progress value for determinate progress tasks
         /// </summary>
-        /// <param name="percent">value</param>
+        /// <param name="text">value</param>
         /// <returns></returns>
         Task UpdateProgress(string text);
     }
