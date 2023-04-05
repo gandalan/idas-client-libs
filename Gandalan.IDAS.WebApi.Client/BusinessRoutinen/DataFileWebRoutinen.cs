@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
@@ -24,11 +25,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public FileInfoDTO[] GetFileList()
+        public FileInfoDTO[] GetFileList(string directory = "/")
         {
             if (Login())
             {
-                return Get<FileInfoDTO[]>("DataFile/");
+                return Get<FileInfoDTO[]>($"DataFile/?subdir={Uri.EscapeDataString(directory)}");
             }
             return null;
         }
@@ -55,9 +56,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             await Task.Run(() => SaveFile(fileName, data));
         }
 
-        public async Task<FileInfoDTO[]> GetFileListAsync()
+        public async Task<FileInfoDTO[]> GetFileListAsync(string directory = "/")
         {
-            return await Task.Run(() => GetFileList());
+            return await Task.Run(() => GetFileList(directory));
         }
 
         public async Task<byte[]> GetFileAsync(string filename)

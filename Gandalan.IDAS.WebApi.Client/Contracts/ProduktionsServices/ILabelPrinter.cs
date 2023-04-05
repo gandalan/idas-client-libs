@@ -1,6 +1,4 @@
-﻿
-
-using Gandalan.IDAS.WebApi.DTO;
+﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 
@@ -45,11 +43,11 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <param name="data">Liste mit Datenobjekten für zu druckende Etiketten</param>
         void Print(string titel, IEnumerable<EtikettDTO> data);
 
-
         /// <summary>
         /// Druckt die angegebenen Daten auf dem Gerät aus.
         /// Es wird das übergebene Template genutzt.
         /// </summary>
+        /// <param name="data"></param>
         /// <param name="template">Druck Template (muss zum ausgewählten Drucker passen)</param>
         void PrintCustom(EtikettDTO data, object template);
 

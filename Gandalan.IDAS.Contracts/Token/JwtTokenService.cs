@@ -70,8 +70,8 @@ namespace Gandalan.IDAS.Contracts.Token
         /// <summary>
         /// Generate JWT token
         /// </summary>
-        /// <param name="userId">User ID/email</param>
-        /// <param name="mandantId">MandantId</param>
+        /// <param name="authToken">User token</param>
+        /// <param name="refreshToken">RefreshTokenDTO</param>
         /// <param name="privateKey">Private key</param>
         /// <param name="expireDateTime">Expiry date (optional, default: 7 days)</param>
         /// <param name="tokenType">Token type, default: Normal</param>
@@ -129,6 +129,7 @@ namespace Gandalan.IDAS.Contracts.Token
         /// </summary>
         /// <param name="token">Token string</param>
         /// <param name="publicKey">Public key</param>
+        /// <param name="allowExpired">Default: false</param>
         /// <returns>Token data or null if token is invalid or expired</returns>
         public TokenParseResult ParseToken(string token, string publicKey, bool allowExpired = false)
         {
@@ -201,6 +202,7 @@ namespace Gandalan.IDAS.Contracts.Token
         /// Get token validation parameters
         /// </summary>
         /// <param name="publicKey">Public key</param>
+        /// <param name="allowExpired">Default: false</param>
         /// <returns>Token validation parameters</returns>
         public TokenValidationParameters ValidationParams(string publicKey, bool allowExpired = false)
         {

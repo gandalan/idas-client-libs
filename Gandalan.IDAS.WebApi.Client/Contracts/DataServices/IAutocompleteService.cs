@@ -25,7 +25,7 @@ namespace Gandalan.Client.Contracts.DataServices
         /// <summary>
         /// Lädt die Einstellungen / Wörter
         /// </summary>
-        /// <param name="word">Schlüssel, anhand dem die Einstellungen geladen werden sollen</param>
+        /// <param name="settingsKey">Schlüssel, anhand dem die Einstellungen geladen werden sollen</param>
         Task Load(string settingsKey);
         /// <summary>
         /// Speichert die Einstellungen / Wörter
