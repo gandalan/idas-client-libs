@@ -43,6 +43,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts
         string FeedbackUrl { get; set; }
         string NotifyUrl { get; set; }
         string HelpCenterUrl { get; set; }
+        string WebhookServiceUrl { get; set; }
 
         void Save();
 

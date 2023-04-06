@@ -83,6 +83,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                             NotifyUrl = response.Notify,
                             HelpCenterUrl = response.HelpCenter,
                             StoreUrl = response.Store,
+                            WebhookServiceUrl = response.WebhookService,
                             FriendlyName = env,
                             AppToken = appToken
                         };
