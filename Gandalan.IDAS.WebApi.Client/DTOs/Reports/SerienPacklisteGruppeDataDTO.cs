@@ -9,6 +9,7 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
         public string Kommission { get; set; }
         public string VorgangsNummer { get; set; }
         public string PositionsNummer { get; set; }
+        public string LaufendeNummer { get; set; }
         public string Einbauort { get; set; }
         public string SerienKennzeichen { get; set; }
         public string VorgangsGruppenKennzeichen { get; set; }
