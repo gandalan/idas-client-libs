@@ -13,7 +13,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public ProduktGruppeDTO[] GetAll(bool includeFamilien)
         {
             if (Login())
-                return Get<ProduktGruppeDTO[]>($"ProduktGruppe?includeFamilien={includeFamilien}&includeVarianten = {includeFamilien} &includeUIDefs={includeFamilien}&maxLevel=99");
+                return Get<ProduktGruppeDTO[]>($"ProduktGruppe?includeFamilien={includeFamilien}&includeVarianten={includeFamilien}&includeUIDefs={includeFamilien}&maxLevel=99");
             throw new ApiException("Login fehlgeschlagen");
         }
         public ProduktGruppeDTO SaveProduktGruppe(ProduktGruppeDTO produktGruppe)
