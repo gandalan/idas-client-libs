@@ -46,6 +46,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public string FeedbackUrl { get; set; }
         public string NotifyUrl { get; set; }
         public string HelpCenterUrl { get; set; }
+        public string WebhookServiceUrl { get; set; }
 
         public WebApiSettings(Guid appToken, string env)
         {
