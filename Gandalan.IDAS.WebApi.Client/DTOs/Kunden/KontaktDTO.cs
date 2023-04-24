@@ -76,9 +76,21 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal ArtikelRabattVorgabe { get; set; }
         public decimal ElementRabattVorgabe { get; set; }
         public string UmsatzSteuerId { get; set; }
+        public string Branche { get; set; }
+
+        // Disposition
+
+        /// <summary>
+        /// Kunden-Nummernkreis, z.B. 600
+        /// </summary>
+        public long Nummernkreis { get; set; } 
+        /// <summary>
+        /// Liefertage, Montag bis Freitag
+        /// </summary>
+        public string[] Liefertage { get; set; }
+
         public bool ShowSonderetikett { get; set; }
         public string Sonderetikett { get; set; }
-        public string Branche { get; set; }
         public string Briefanrede { get; set; }
         public string Titel { get; set; }
         /// <summary>
