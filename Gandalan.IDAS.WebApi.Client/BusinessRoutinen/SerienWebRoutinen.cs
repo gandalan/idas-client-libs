@@ -184,7 +184,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<IList<SerieAuslastungDTO>> GetAuslastungAsync(Guid serie)
         {
-            if (await LoginAsync())
+            if (Login())
             {
                 return await GetAsync<IList<SerieAuslastungDTO>>($"Auslastung/{serie}");
             }
@@ -192,25 +192,24 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public IDictionary<Guid, IList<SerieAuslastungDTO>> GetGesamtAuslastung(bool includeAbgelaufene = false,
-            DateTime? startDate = null, DateTime? endDate = null)
+        public IDictionary<Guid, IList<SerieAuslastungDTO>> GetGesamtAuslastung(bool includeAbgelaufene = false)
         {
             if (Login())
             {
                 return Get<IDictionary<Guid, IList<SerieAuslastungDTO>>>(
-                    $"Auslastung/?includeAbgelaufene={includeAbgelaufene}&startDate={startDate}&endDate={endDate}");
+                    $"Auslastung/?includeAbgelaufene={includeAbgelaufene}");
             }
 
             return null;
         }
 
         public async Task<IDictionary<Guid, IList<SerieAuslastungDTO>>> GetGesamtAuslastungAsync(
-            bool includeAbgelaufene = false, DateTime? startDate = null, DateTime? endDate = null)
+            bool includeAbgelaufene = false)
         {
-            if (await LoginAsync())
+            if (Login())
             {
                 return await GetAsync<IDictionary<Guid, IList<SerieAuslastungDTO>>>(
-                    $"Auslastung/?includeAbgelaufene={includeAbgelaufene}&startDate={startDate}&endDate={endDate}");
+                    $"Auslastung/?includeAbgelaufene={includeAbgelaufene}");
             }
 
             return null;
