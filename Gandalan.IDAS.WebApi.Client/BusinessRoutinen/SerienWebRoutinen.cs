@@ -214,5 +214,29 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
             return null;
         }
+
+        public IDictionary<Guid, IList<SerieAuslastungDTO>> GetSerienKapazitaeten(
+            DateTime? startDate = null, DateTime? endDate = null, bool includeStaendige = false)
+        {
+            if (Login())
+            {
+                return Get<IDictionary<Guid, IList<SerieAuslastungDTO>>>(
+                    $"SerieKapazitaet/?startDate={startDate}&endDate={endDate}&includeStaendige={includeStaendige}");
+            }
+
+            return null;
+        }
+        
+        public async Task<IDictionary<Guid, IList<SerieAuslastungDTO>>> GetSerienKapazitaetenAsync(
+            DateTime? startDate = null, DateTime? endDate = null, bool includeStaendige = false)
+        {
+            if (await LoginAsync())
+            {
+                return await GetAsync<IDictionary<Guid, IList<SerieAuslastungDTO>>>(
+                    $"SerieKapazitaet/?startDate={startDate:o}&endDate={endDate:o}&includeStaendige={includeStaendige}");
+            }
+
+            return null;
+        }
     }
 }

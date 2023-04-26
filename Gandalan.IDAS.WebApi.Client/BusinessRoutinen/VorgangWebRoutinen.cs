@@ -34,7 +34,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}");
+                return Get<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince:o}");
             }
             return null;
         }
