@@ -18,6 +18,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return Get<SerieDTO[]>("Serie");
             }
+
             return null;
         }
 
@@ -27,15 +28,17 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return Get<SerieDTO[]>($"Serie/?changedSince={changedSince.ToString("o")}");
             }
+
             return null;
         }
-               
+
         public SerieDTO GetSerie(Guid guid)
         {
             if (Login())
             {
                 return Get<SerieDTO>("Serie/" + guid.ToString());
             }
+
             return null;
         }
 
@@ -45,6 +48,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return Put<string>("Serie", serie);
             }
+
             return "Not logged in";
         }
 
@@ -54,6 +58,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return Delete($"Serie/{guid}");
             }
+
             return "Not logged in";
         }
 
@@ -63,6 +68,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return Get<string>($"Serie/ReleaseElemente?fromSerie={fromSerie}");
             }
+
             return null;
         }
 
@@ -72,6 +78,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return await GetAsync<string>($"Serie/ReleaseElemente?fromSerie={fromSerie}");
             }
+
             return null;
         }
 
@@ -81,6 +88,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return Get<string>($"Serie/MoveElemente?fromSerie={fromSerie}&toSerie={toSerie}");
             }
+
             return null;
         }
 
@@ -90,6 +98,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return await GetAsync<string>($"Serie/MoveElemente?fromSerie={fromSerie}&toSerie={toSerie}");
             }
+
             return null;
         }
 
@@ -99,6 +108,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return Get<string>($"Serie/RedistributeElemente?fromSerie={fromSerie}");
             }
+
             return null;
         }
 
@@ -108,6 +118,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return await GetAsync<string>($"Serie/RedistributeElemente?fromSerie={fromSerie}");
             }
+
             return null;
         }
 
@@ -117,6 +128,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return await GetAsync<SerieDTO[]>("Serie");
             }
+
             return null;
         }
 
@@ -126,6 +138,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return await GetAsync<SerieDTO[]>($"Serie/?changedSince={changedSince.ToString("o")}");
             }
+
             return null;
         }
 
@@ -135,6 +148,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return await GetAsync<SerieDTO>("Serie/" + guid.ToString());
             }
+
             return null;
         }
 
@@ -144,6 +158,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return await PutAsync<string>("Serie", serie);
             }
+
             return "Not logged in";
         }
 
@@ -153,6 +168,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return await DeleteAsync($"Serie/{guid}");
             }
+
             return "Not logged in";
         }
 
@@ -162,6 +178,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return Get<IList<SerieAuslastungDTO>>($"Auslastung/{serie}");
             }
+
             return null;
         }
 
@@ -171,6 +188,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return await GetAsync<IList<SerieAuslastungDTO>>($"Auslastung/{serie}");
             }
+
             return null;
         }
 
@@ -178,19 +196,47 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<IDictionary<Guid, IList<SerieAuslastungDTO>>>($"Auslastung/?includeAbgelaufene={includeAbgelaufene}");
+                return Get<IDictionary<Guid, IList<SerieAuslastungDTO>>>(
+                    $"Auslastung/?includeAbgelaufene={includeAbgelaufene}");
             }
+
             return null;
         }
 
-        public async Task<IDictionary<Guid, IList<SerieAuslastungDTO>>> GetGesamtAuslastungAsync(bool includeAbgelaufene = false)
+        public async Task<IDictionary<Guid, IList<SerieAuslastungDTO>>> GetGesamtAuslastungAsync(
+            bool includeAbgelaufene = false)
         {
             if (Login())
             {
-                return await GetAsync<IDictionary<Guid, IList<SerieAuslastungDTO>>>($"Auslastung/?includeAbgelaufene={includeAbgelaufene}");
+                return await GetAsync<IDictionary<Guid, IList<SerieAuslastungDTO>>>(
+                    $"Auslastung/?includeAbgelaufene={includeAbgelaufene}");
             }
+
+            return null;
+        }
+
+        public IDictionary<Guid, IList<SerieAuslastungDTO>> GetSerienKapazitaeten(
+            DateTime? startDate = null, DateTime? endDate = null, bool includeStaendige = false)
+        {
+            if (Login())
+            {
+                return Get<IDictionary<Guid, IList<SerieAuslastungDTO>>>(
+                    $"SerieKapazitaet/?startDate={startDate}&endDate={endDate}&includeStaendige={includeStaendige}");
+            }
+
+            return null;
+        }
+        
+        public async Task<IDictionary<Guid, IList<SerieAuslastungDTO>>> GetSerienKapazitaetenAsync(
+            DateTime? startDate = null, DateTime? endDate = null, bool includeStaendige = false)
+        {
+            if (await LoginAsync())
+            {
+                return await GetAsync<IDictionary<Guid, IList<SerieAuslastungDTO>>>(
+                    $"SerieKapazitaet/?startDate={startDate:o}&endDate={endDate:o}&includeStaendige={includeStaendige}");
+            }
+
             return null;
         }
     }
-
 }
