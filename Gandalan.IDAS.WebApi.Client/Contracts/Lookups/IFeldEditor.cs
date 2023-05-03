@@ -6,7 +6,7 @@ namespace Gandalan.Client.Contracts.Lookups
 {
     public interface IFeldEditor
     {
-        bool CanHandle(string tag, bool initGroup = false);
+        bool CanHandle(BelegPositionDTO data, string tag, bool initGroup = false);
         Task<Dictionary<string, string>> ExecuteAsync(BelegPositionDTO data);
     }
 }
