@@ -81,9 +81,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         // Disposition
 
         /// <summary>
-        /// Kunden-Nummernkreis, z.B. 600
+        /// Kunden-Nummernkreis, z.B. 600, 0000, 000
         /// </summary>
-        public long Nummernkreis { get; set; } 
+        public string Nummernkreis { get; set; } 
         /// <summary>
         /// Liefertage, Montag bis Freitag
         /// </summary>

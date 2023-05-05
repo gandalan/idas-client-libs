@@ -34,7 +34,16 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (Login())
             {
-                return Get<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}");
+                return Get<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince:o}");
+            }
+            return null;
+        }
+
+        public VorgangListItemDTO[] LadeVorgangsListe(DateTime changedSince, int jahr = 0, string status = "Alle", string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
+        {
+            if (Login())
+            {
+                return Get<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
             }
             return null;
         }
@@ -164,6 +173,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr, DateTime changedSince)
         {
             return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr, changedSince); });
+        }
+
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(DateTime changedSince, int jahr = 0, string status = "Alle", string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
+        {
+            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(changedSince, jahr, status, art, includeArchive, includeOthersData, search); });
         }
 
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")

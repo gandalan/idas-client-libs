@@ -11,6 +11,14 @@ namespace Gandalan.IDAS.WebApi.DTO
     /// </summary>
     public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
     {
+        public KapazitaetsvorgabenDTO()
+        {
+        }
+
+        public KapazitaetsvorgabenDTO(IEnumerable<Kapazitaetsvorgabe> collection) : base(collection)
+        {
+        }
+
         // Creating the Kapazitaetsvorgabe collection in this way enables data binding from XAML.
         public void init()
         {
@@ -56,7 +64,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
             Add(new Kapazitaetsvorgabe() { GroupName = "Terresa", Label = "TE1", Produktgruppe = new List<string>() { "TE1" }, IstBasisregel = true, Order = Count });
 
-            Add(new Kapazitaetsvorgabe() { GroupName = "Schiebetüren", Label = "1 flg. Anlage", Produktgruppe = new List<string>() { "ST" }, IstBasisregel = true });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Schiebetüren", Label = "1 flg. Anlage", Produktgruppe = new List<string>() { "ST" }, IstBasisregel = true, Order = Count });
             Add(new Kapazitaetsvorgabe() { GroupName = "Schiebetüren", Label = "2 flg. Anlage mit 1-fach. LS", Produktgruppe = new List<string>() { "ST" }, IstBasisregel = true, Order = Count });
             Add(new Kapazitaetsvorgabe() { GroupName = "Schiebetüren", Label = "2 flg. Anlage mit geschl. LS", Produktgruppe = new List<string>() { "ST" }, IstBasisregel = true, Order = Count });
             Add(new Kapazitaetsvorgabe() { GroupName = "Schiebetüren", Label = "3 flg. Anlage mit geschl. LS", Produktgruppe = new List<string>() { "ST" }, IstBasisregel = true, Order = Count });
@@ -67,20 +75,20 @@ namespace Gandalan.IDAS.WebApi.DTO
             Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL1, PL2", Label = "mit Montagerahmen", Produktgruppe = new List<string>() { "PL" }, IstBasisregel = true, Order = Count });
             Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL1, PL2", Label = "doppelfl. mit Montagerahmen", Produktgruppe = new List<string>() { "PL" }, IstBasisregel = true, Order = Count });
 
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Metallgewebe" });
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Einhandbedienung beim Rollo" });
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Mehraufwand für Sonderfarbe" });
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Mehraufwand Sonderfarbe bei Plissee" });
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Katzenklappe" });
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Hundeklappe" });
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Schiebeverschluss" });
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Türschließer bei Drehrahmen" });
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Drehstabfeder bei Drehrahmen" });
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Griffleiste für Schiebeanlagen" });
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Fussbedienung mit Sockelblech" });
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Sockelblech für Schiebeanlage" });
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Sprossenpaneel", Artikelliste = new List<string>() { "123456" } });
-            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Montagebohrungen", Bearbeitungen = new List<string>() { "MB" } });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Metallgewebe", Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Einhandbedienung beim Rollo", Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Mehraufwand für Sonderfarbe", Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Mehraufwand Sonderfarbe bei Plissee", Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Katzenklappe", Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Hundeklappe", Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Schiebeverschluss", Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Türschließer bei Drehrahmen", Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Drehstabfeder bei Drehrahmen", Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Griffleiste für Schiebeanlagen", Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Fussbedienung mit Sockelblech", Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Sockelblech für Schiebeanlage", Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Sprossenpaneel", Artikelliste = new List<string>() { "123456" }, Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Montagebohrungen", Bearbeitungen = new List<string>() { "MB" }, Order = Count });
 
         }
     }
