@@ -86,7 +86,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL2", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PL2" }, IstBasisregel = true, Order = Count });
             Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL2", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PL2/25", "PL2/29.AMB", "PL2/25.LMM" }, IstBasisregel = true, Order = Count });
 
-            Add(new Kapazitaetsvorgabe() { GroupName = "Zusatzrahmen", Label = "ZR", Produktgruppe = new List<string>() { "TZR" }, IstBasisregel = true, Order = Count });
+            Add(new Kapazitaetsvorgabe() { GroupName = "Zusatzrahmen", Label = "ZR", Produktgruppe = new List<string>() { "ZR" }, IstBasisregel = true, Order = Count });
 
             Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Metallgewebe", Order = Count });
             Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Einhandbedienung beim Rollo", Order = Count });
