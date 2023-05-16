@@ -35,7 +35,10 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.AnsprechpartnerKunde = beleg.AnsprechpartnerKunde ?? "";
                 this.Ansprechpartner = ""; //??? _apiSettings?.AuthToken?.Benutzer?.Vorname + " " + _apiSettings?.AuthToken?.Benutzer?.Nachname;
                 this.Telefonnummer = ""; //??? _apiSettings?.AuthToken?.Benutzer?.TelefonNummer ?? "";
-                this.Bestelldatum = !String.IsNullOrEmpty(beleg.BelegDatum.ToString("d", culture)) ? beleg.BelegDatum.ToString("d", culture) : "";
+
+                var abBelege = vorgang.Belege.Where(b => b.BelegArt == "AB" || b.BelegArt == "Auftragsbestätigung");
+                this.Bestelldatum = abBelege.Count() > 0 ? abBelege.Last().BelegDatum.ToString("d", culture) : "";
+                this.Belegdatum = beleg.BelegDatum.ToString("d", culture);
                 this.Lieferzeit = ""; //???
                 this.IsEndkunde = vorgang.Kunde?.IstEndkunde != null ? vorgang.Kunde.IstEndkunde : false;
                 this.IsRabatt = beleg.PositionsObjekte?.Any(i => !i.Equals(0m)) ?? false;
@@ -146,6 +149,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Ansprechpartner { get; set; }
         public string Telefonnummer { get; set; }
         public string Bestelldatum { get; set; }
+        public string Belegdatum { get; set; }
         public AdresseDruckDTO BelegAdresse { get; set; }
         public string BelegAdresseString { get; set; }
         public AdresseDruckDTO VersandAdresse { get; set; }
