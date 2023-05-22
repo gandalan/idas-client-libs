@@ -5,7 +5,7 @@ using Gandalan.IDAS.WebApi.Client.DTOs.Belege;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
-    internal class SerienInfoWebRoutinen : WebRoutinenBase
+    public class SerienInfoWebRoutinen : WebRoutinenBase
     {
         public SerienInfoWebRoutinen(IWebApiConfig settings) : base(settings)
         {
