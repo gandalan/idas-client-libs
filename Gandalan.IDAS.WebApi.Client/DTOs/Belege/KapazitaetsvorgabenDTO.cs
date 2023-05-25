@@ -91,20 +91,25 @@ namespace Gandalan.IDAS.WebApi.DTO
 
                 Add(new Kapazitaetsvorgabe() { GroupName = "Zusatzrahmen", Label = "ZR", Produktgruppe = new List<string>() { "ZR" }, IstBasisregel = true, Order = Count });
 
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Metallgewebe", Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Einhandbedienung beim Rollo", Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Mehraufwand für Sonderfarbe", Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Mehraufwand Sonderfarbe bei Plissee", Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Katzenklappe", Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Hundeklappe", Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Schiebeverschluss", Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Türschließer bei Drehrahmen", Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Drehstabfeder bei Drehrahmen", Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Griffleiste für Schiebeanlagen", Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Fussbedienung mit Sockelblech", Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Sockelblech für Schiebeanlage", Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Sprossenpaneel", Artikelliste = new List<string>() { "123456" }, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Montagebohrungen", Bearbeitungen = new List<string>() { "MB" }, Order = Count });
+                
+            }
+            if (Version < 2)
+            {
+                //Version = 2;
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Metallgewebe", Order = Count });
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Einhandbedienung beim Rollo", Order = Count });
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Mehraufwand für Sonderfarbe", Order = Count });
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Mehraufwand Sonderfarbe bei Plissee", Order = Count });
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Katzenklappe", Order = Count });
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Hundeklappe", Order = Count });
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Schiebeverschluss", Order = Count });
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Türschließer bei Drehrahmen", Order = Count });
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Drehstabfeder bei Drehrahmen", Order = Count });
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Griffleiste für Schiebeanlagen", Order = Count });
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Fussbedienung mit Sockelblech", Order = Count });
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Sockelblech für Schiebeanlage", Order = Count });
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Sprossenpaneel", Artikelliste = new List<string>() { "123456" }, Order = Count });
+                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Montagebohrungen", Bearbeitungen = new List<string>() { "MB" }, Order = Count });
             }
         }
     }
