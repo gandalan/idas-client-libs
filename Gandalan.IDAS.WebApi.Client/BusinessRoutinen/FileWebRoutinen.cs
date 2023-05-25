@@ -11,25 +11,25 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public byte[] GetFile(string name, Guid? mandantGuid = null)
+        public byte[] GetFile(string name)
+        {
+            if (Login())
+            {
+                return GetData("StaticFile/?name=" + name);
+            }
+            return null;
+        }
+
+        public FileInfoDTO[] GetFileList(Guid? mandantGuid = null)
         {
             if (Login())
             {
                 var mandantURI = "";
                 if (mandantGuid.HasValue)
                 {
-                    mandantURI = "&mandantGuid=" + mandantGuid;
+                    mandantURI = "?mandantGuid=" + mandantGuid;
                 }
-                return GetData("StaticFile/?name=" + name + mandantURI);
-            }
-            return null;
-        }
-
-        public FileInfoDTO[] GetFileList()
-        {
-            if (Login())
-            {
-                return Get<FileInfoDTO[]>("StaticFile/");
+                return Get<FileInfoDTO[]>("StaticFile" + mandantURI);
             }
             return null;
         }
@@ -49,14 +49,14 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             await Task.Run(() => SaveFile(fileName, data));
         }
 
-        public async Task<FileInfoDTO[]> GetFileListAsync()
+        public async Task<FileInfoDTO[]> GetFileListAsync(Guid? mandantGuid = null)
         {
-            return await Task.Run(() => GetFileList());
+            return await Task.Run(() => GetFileList(mandantGuid));
         }
 
-        public async Task<byte[]> GetFileAsync(string name, Guid? mandantGuid = null)
+        public async Task<byte[]> GetFileAsync(string name)
         {
-            return await Task.Run(() => GetFile(name, mandantGuid));
+            return await Task.Run(() => GetFile(name));
         }
     }
 }
