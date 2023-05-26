@@ -53,5 +53,14 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             };
             AppToken = Guid.Parse(appTokenClaim.Value);
         }
+
+        public override void CopyToThis(IWebApiConfig settings)
+        {
+            base.CopyToThis(settings);
+            if (settings is JwtWebApiSettings jwtSettings)
+            {
+                JwtToken = jwtSettings.JwtToken;
+            }
+        }
     }
 }

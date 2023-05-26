@@ -74,7 +74,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             return WebApiFileConfig.GetAll();
         }
 
-        public void CopyToThis(IWebApiConfig settings)
+        public virtual void CopyToThis(IWebApiConfig settings)
         {
             this.AppToken = settings.AppToken;
             this.AuthToken = settings.AuthToken;
