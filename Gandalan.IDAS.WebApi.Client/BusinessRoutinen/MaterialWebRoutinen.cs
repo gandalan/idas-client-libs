@@ -11,33 +11,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             this.Settings.Url = this.Settings.Url.Replace("/api/", "/ModellDaten/");
         }
 
-        public MaterialDTO[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<MaterialDTO[]>("Material");
-            }
-            return null;
-        }
+        public async Task<MaterialDTO[]> GetAllAsync() 
+            => await GetAsync<MaterialDTO[]>("Material");
 
-        public string SaveMaterial(MaterialDTO dto)
-        {
-            if (Login())
-            {
-                return Put("Material", dto);
-            }
-            return null;
-        }
-
-
-        public async Task<MaterialDTO[]> GetAllAsync()
-        {
-            return await Task.Run(() => GetAll());
-        }
-
-        public async Task SaveMaterialAsync(MaterialDTO dto)
-        {
-            await Task.Run(() => SaveMaterial(dto));
-        }
+        public async Task SaveMaterialAsync(MaterialDTO dto) 
+            => await PutAsync("Material", dto);
     }
 }

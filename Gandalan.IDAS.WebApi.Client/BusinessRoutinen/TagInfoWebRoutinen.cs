@@ -12,134 +12,52 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public IList<TagInfoDTO> GetAllTagInfo(DateTime? changedSince = null)
-        {
-            if (Login())
-            {
-                if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
-                {
-                    return Get<List<TagInfoDTO>>("GetAllTagInfo?changedSince=" + changedSince.Value.ToString("o"));
-                }
-                else
-                {
-                    return Get<List<TagInfoDTO>>("GetAllTagInfo");
-                }
-            }
-            return null;
-        }
-
         public async Task<IList<TagInfoDTO>> GetAllTagInfoAsync(DateTime? changedSince = null)
         {
-            return await Task.Run(() => GetAllTagInfo(changedSince));
-        }
-
-        public IList<TagInfoDTO> GetTagInfoSuggestions(DateTime? changedSince = null)
-        {
-            if (Login())
+            if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
             {
-                if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
-                {
-                    return Get<List<TagInfoDTO>>("GetTagInfoSuggestions?changedSince=" + changedSince.Value.ToString("o"));
-                }
-                else
-                {
-                    return Get<List<TagInfoDTO>>("GetTagInfoSuggestions");
-                }
+                return await GetAsync<List<TagInfoDTO>>("GetAllTagInfo?changedSince=" + changedSince.Value.ToString("o"));
             }
-            return null;
+            else
+            {
+                return await GetAsync<List<TagInfoDTO>>("GetAllTagInfo");
+            }
         }
 
         public async Task<IList<TagInfoDTO>> GetTagInfoSuggestionsAsync(DateTime? changedSince = null)
         {
-            return await Task.Run(() => GetTagInfoSuggestions(changedSince));
-        }
-
-        public IList<TagInfoDTO> GetTagInfo(Guid objectGuid)
-        {
-            if (Login())
+            if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
             {
-                return Get<List<TagInfoDTO>>($"GetTagInfo?objectGuid={objectGuid}");
+                return await GetAsync<List<TagInfoDTO>>("GetTagInfoSuggestions?changedSince=" + changedSince.Value.ToString("o"));
             }
-            return null;
+            else
+            {
+                return await GetAsync<List<TagInfoDTO>>("GetTagInfoSuggestions");
+            }
         }
 
         public async Task<IList<TagInfoDTO>> GetTagInfoAsync(Guid objectGuid)
-        {
-            return await Task.Run(() => GetTagInfo(objectGuid));
-        }
-
-        public IDictionary<Guid, IEnumerable<TagInfoDTO>> GetTagInfo(IEnumerable<Guid> guidList)
-        {
-            if (Login())
-            {
-                return Put<Dictionary<Guid, IEnumerable<TagInfoDTO>>>($"GetTagInfoForGuidList", guidList);
-            }
-            return null;
-        }
+            => await GetAsync<List<TagInfoDTO>>($"GetTagInfo?objectGuid={objectGuid}");
 
         public async Task<IDictionary<Guid, IEnumerable<TagInfoDTO>>> GetTagInfoAsync(IEnumerable<Guid> guidList)
-        {
-            return await Task.Run(() => GetTagInfo(guidList));
-        }
-
-        public void AddOrUpdateTagInfo(TagInfoDTO dto)
-        {
-            if (Login())
-            {
-                Post($"TagInfo", dto);
-            }
-        }
+            => await PutAsync<Dictionary<Guid, IEnumerable<TagInfoDTO>>>($"GetTagInfoForGuidList", guidList);
 
         public async Task AddOrUpdateTagInfoAsync(TagInfoDTO dto)
-        {
-            await Task.Run(() => AddOrUpdateTagInfo(dto));
-        }
+            => await PostAsync($"TagInfo", dto);
 
-        public void DeleteTagInfo(TagInfoDTO dto)
-        {
-            if (Login())
-            {
-                Delete<TagInfoDTO>($"TagInfo", dto);
-            }
-        }
+        public async Task DeleteTagInfoAsync(TagInfoDTO dto) 
+            => await DeleteAsync<TagInfoDTO>($"TagInfo", dto);
 
-        public async Task DeleteTagInfoAsync(TagInfoDTO dto)
-        {
-            await Task.Run(() => DeleteTagInfo(dto));
-        }
+        public async Task<IList<TagInfoDTO>> GetTagInfoForFunction(Guid objectGuid, long mandantID) 
+            => await GetAsync<List<TagInfoDTO>>($"GetTagInfoForFunction?objectGuid={objectGuid}&mandantID={mandantID}");
 
-        public IList<TagInfoDTO> GetTagInfoForFunction(Guid objectGuid, long mandantID)
-        {
-            if (Login())
-            {
-                return Get<List<TagInfoDTO>>($"GetTagInfoForFunction?objectGuid={objectGuid}&mandantID={mandantID}");
-            }
-            return null;
-        }
+        public async Task<IDictionary<Guid, IEnumerable<TagInfoDTO>>> GetTagInfoListForFunction(IEnumerable<Guid> guidList, long mandantID) 
+            => await PutAsync<Dictionary<Guid, IEnumerable<TagInfoDTO>>>($"GetTagInfoListForFunction?mandantID={mandantID}", guidList);
 
-        public IDictionary<Guid, IEnumerable<TagInfoDTO>> GetTagInfoListForFunction(IEnumerable<Guid> guidList, long mandantID)
-        {
-            if (Login())
-            {
-                return Put<Dictionary<Guid, IEnumerable<TagInfoDTO>>>($"GetTagInfoListForFunction?mandantID={mandantID}", guidList);
-            }
-            return null;
-        }
+        public async Task AddTagInfoForFunction(TagInfoDTO dto, long mandantID) 
+            => await PostAsync($"AddTagInfoForFunction?mandantID={mandantID}", dto);
 
-        public void AddTagInfoForFunction(TagInfoDTO dto, long mandantID)
-        {
-            if (Login())
-            {
-                Post($"AddTagInfoForFunction?mandantID={mandantID}", dto);
-            }
-        }
-
-        public void DeleteTagInfoForFunction(TagInfoDTO dto, long mandantID)
-        {
-            if (Login())
-            {
-                Delete<TagInfoDTO>($"DeleteTagInfoForFunction?mandantID={mandantID}", dto);
-            }
-        }
+        public async Task DeleteTagInfoForFunction(TagInfoDTO dto, long mandantID) 
+            => await DeleteAsync($"DeleteTagInfoForFunction?mandantID={mandantID}", dto);
     }
 }

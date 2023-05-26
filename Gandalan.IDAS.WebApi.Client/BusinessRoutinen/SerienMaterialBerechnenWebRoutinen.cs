@@ -12,69 +12,26 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public string MaterialBerechnen(Guid serieGuid, bool sfZusammenfassen = false, bool serieZusammenfassen = false)
+        public async Task MaterialBerechnenAsync(Guid serieGuid, bool sfZusammenfassen = false, bool serieZusammenfassen = false)
         {
-            if (Login())
+            if (sfZusammenfassen)
             {
-                if (sfZusammenfassen)
-                {
-                    if (serieZusammenfassen)
-                        return Post<string>("SerieMaterialbedarfBerechnen/SFZusammenfassen", serieGuid);
-                    else
-                        return Post<string>("SerieMaterialbedarfBerechnen/SFZusammenfassenVorgang", serieGuid);
-                }
+                if (serieZusammenfassen)
+                    await PostAsync("SerieMaterialbedarfBerechnen/SFZusammenfassen", serieGuid);
                 else
-                    return Post<string>("SerieMaterialbedarfBerechnen", serieGuid);
+                    await PostAsync("SerieMaterialbedarfBerechnen/SFZusammenfassenVorgang", serieGuid);
             }
-            return null;
+            else
+                await PostAsync("SerieMaterialbedarfBerechnen", serieGuid);
         }
-
-        public List<MaterialbedarfDTO> GetMaterial(Guid serieGuid)
-        {
-            if (Login())
-            {
-
-                return Get<List<MaterialbedarfDTO>>("SerieMaterialbedarfBerechnen?serieGuid=" + serieGuid.ToString());
-            }
-            return null;
-        }
-
-        public List<MaterialbedarfDTO> GetOffenerMaterialBedarf(Guid serieGuid)
-        {
-            if (Login())
-            {
-                return Get<List<MaterialbedarfDTO>>("SerieOffenerMaterialbedarf?serieGuid=" + serieGuid.ToString());
-            }
-            return null;
-        }
-
-        public string ResetMaterial(Guid serieGuid)
-        {
-            if (Login())
-            {
-                return Delete<string>("SerieMaterialbedarfBerechnen?serieGuid=" + serieGuid.ToString());
-            }
-            return null;
-        }
-
 
         public async Task<List<MaterialbedarfDTO>> GetMaterialAsync(Guid serieGuid)
-        {
-            return await Task.Run(() => { return GetMaterial(serieGuid); });
-        }
+            => await GetAsync<List<MaterialbedarfDTO>>("SerieMaterialbedarfBerechnen?serieGuid=" + serieGuid.ToString());
+
         public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfAsync(Guid serieGuid)
-        {
-            return await Task.Run(() => { return GetOffenerMaterialBedarf(serieGuid); });
-        }
+            => await GetAsync<List<MaterialbedarfDTO>>("SerieOffenerMaterialbedarf?serieGuid=" + serieGuid.ToString());
 
-        public async Task<string> ResetMaterialAsync(Guid serieGuid)
-        {
-            return await Task.Run(() => { return ResetMaterial(serieGuid); });
-        }
-
-        public async Task<string> MaterialBerechnenAsync(Guid serieGuid, bool sfZusammenfassen = false, bool serieZusammenfassen = false)
-        {
-            return await Task.Run(() => { return MaterialBerechnen(serieGuid, sfZusammenfassen, serieZusammenfassen); });
-        }
+        public async Task ResetMaterialAsync(Guid serieGuid) 
+            => await DeleteAsync("SerieMaterialbedarfBerechnen?serieGuid=" + serieGuid.ToString());
     }
 }

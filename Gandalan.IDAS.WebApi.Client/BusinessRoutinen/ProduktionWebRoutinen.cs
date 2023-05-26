@@ -12,48 +12,14 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public string ProduktionBerechnen(Guid belegPositionsGuid)
-        {
-            if (Login())
-            {
-                return Get<string>("Script/PosBerechnen?pguid=" + belegPositionsGuid.ToString());
-            }
-            return null;
-        }
-        
-        public List<BearbeitungDTO> GetProduktion(Guid belegPositionsGuid)
-        {
-            //throw new Exception("TODO: DTOs definieren, Endpunkt MaterialBedarf aufrufen!");
-            if (Login())
-            {
-                return Get<List<BearbeitungDTO>>("Produktion/?posguid=" + belegPositionsGuid.ToString());
-            }
-            return null;
-        }
+        public async Task<string> ProduktionBerechnenAsync(Guid belegPositionsGuid) 
+            => await GetAsync<string>($"Script/PosBerechnen?pguid={belegPositionsGuid}");
 
-        public List<MaterialbedarfDTO> GetMaterialBedarf(Guid belegPositionsGuid)
-        {
-            if (Login())
-            {
-                return Get<List<MaterialbedarfDTO>>("MaterialBedarf/?posguid=" + belegPositionsGuid.ToString());
-            }
-            return null;
-        }
-
-
-        public async Task<List<BearbeitungDTO>> GetProduktionAsync(Guid belegPositionsGuid)
-        {
-            return await Task<List<BearbeitungDTO>>.Run(() => { return GetProduktion(belegPositionsGuid); });
-        }
+        public async Task<List<BearbeitungDTO>> GetProduktionAsync(Guid belegPositionsGuid) 
+            => await GetAsync<List<BearbeitungDTO>>($"Produktion/?posguid={belegPositionsGuid}");
 
         public async Task<List<MaterialbedarfDTO>> GetMaterialBedarfAsync(Guid belegPositionsGuid)
-        {
-            return await Task<List<MaterialbedarfDTO>>.Run(() => { return GetMaterialBedarf(belegPositionsGuid); });
-        }
-        
-        public async Task<string> ProduktionBerechnenAsync(Guid belegPositionsGuid)
-        {
-            return await Task<string>.Run(() => { return ProduktionBerechnen(belegPositionsGuid); });
-        }
+            => await GetAsync<List<MaterialbedarfDTO>>($"MaterialBedarf/?posguid={belegPositionsGuid}");
+
     }
 }

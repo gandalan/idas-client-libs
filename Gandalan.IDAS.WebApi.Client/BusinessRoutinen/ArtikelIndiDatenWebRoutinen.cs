@@ -18,41 +18,20 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public KatalogArtikelIndiDatenDTO[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<KatalogArtikelIndiDatenDTO[]>("ArtikelIndiDaten");
-            }
-            return null;
-        }
-
-        public string SaveArtikelIndiDaten(KatalogArtikelIndiDatenDTO daten)
-        {
-            if (Login())
-            {
-                return Put<string>($"ArtikelIndiDaten/{daten.KatalogArtikelGuid}", daten);
-            }
-            return "Not logged in";
-        }
-
-        public string DeleteArtikelIndiDaten(KatalogArtikelIndiDatenDTO daten)
-        {
-            if (Login())
-            {
-                return Delete($"ArtikelIndiDaten/{daten.KatalogArtikelGuid}");
-            }
-            return "Not logged in";
-        }
-
         public async Task<KatalogArtikelIndiDatenDTO[]> GetAllAsync()
         {
-            return await Task.Run(() => GetAll());
+            return await GetAsync<KatalogArtikelIndiDatenDTO[]>("ArtikelIndiDaten");
         }
 
-        public async Task<string> SaveArtikelIndiDatenAsync(KatalogArtikelIndiDatenDTO daten)
+        public async Task SaveArtikelIndiDaten(KatalogArtikelIndiDatenDTO daten)
         {
-            return await Task.Run(() => SaveArtikelIndiDaten(daten));
+            await PutAsync($"ArtikelIndiDaten/{daten.KatalogArtikelGuid}", daten);
         }
+
+        public async Task DeleteArtikelIndiDaten(KatalogArtikelIndiDatenDTO daten)
+        {
+            return await DeleteAsync($"ArtikelIndiDaten/{daten.KatalogArtikelGuid}");
+        }
+
     }
 }

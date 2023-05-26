@@ -10,18 +10,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public ChangeInfoDTO GetChangeInfo()
-        {
-            if (Login())
-            {
-                return Get<ChangeInfoDTO>("ChangeInfo");
-            }
-            return null;
-        }
-
-        public async Task<ChangeInfoDTO> GetChangeInfoAsync()
-        {
-            return await Task.Run(() => GetChangeInfo());
-        }
+        public async Task<ChangeInfoDTO> GetChangeInfo() 
+            => await GetAsync<ChangeInfoDTO>("ChangeInfo");
     }
 }

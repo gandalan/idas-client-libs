@@ -10,36 +10,21 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public KontaktWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
-        public KontaktListItemDTO[] GetKontakte()
+        public async Task<KontaktListItemDTO[]> GetKontakteAsync() 
+            => await GetAsync<KontaktListItemDTO[]>("Kontakt");
+
+        public async Task<KontaktListItemDTO[]> GetKontakteAsync(DateTime? changedSince)
         {
-            if (Login())
-                return Get<KontaktListItemDTO[]>("Kontakt");
-            throw new ApiException("Login fehlgeschlagen");
+            if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+                return await GetAsync<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value.ToString("o")}");
+            else
+                return await GetAsync<KontaktListItemDTO[]>("Kontakt");
         }
-        public KontaktListItemDTO[] GetKontakte(DateTime? changedSince)
-        {
-            if (Login())
-                if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
-                    return Get<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value.ToString("o")}");
-                else
-                    return Get<KontaktListItemDTO[]>("Kontakt");
-            throw new ApiException("Login fehlgeschlagen");
-        }
-        public KontaktDTO GetKontakt(Guid kontaktGuid)
-        {
-            if (Login())
-                return Get<KontaktDTO>($"Kontakt/{kontaktGuid}");
-            throw new ApiException("Login fehlgeschlagen");
-        }
-        public KontaktDTO SaveKontakt(KontaktDTO kontakt)
-        {
-            if (Login())
-                return Put<KontaktDTO>("Kontakt", kontakt);
-            throw new ApiException("Login fehlgeschlagen");
-        }
-        public async Task<KontaktListItemDTO[]> GetKontakteAsync() => await Task.Run(() => GetKontakte());
-        public async Task<KontaktListItemDTO[]> GetKontakteAsync(DateTime? changedSince) => await Task.Run(() => GetKontakte(changedSince));
-        public async Task<KontaktDTO> SaveKontaktAsync(KontaktDTO kontakt) => await Task.Run(() => SaveKontakt(kontakt));
-        public async Task<KontaktDTO> GetKontaktAsync(Guid kontaktGuid) => await Task.Run(() => GetKontakt(kontaktGuid));
+
+        public async Task<KontaktDTO> GetKontaktAsync(Guid kontaktGuid) 
+            => await GetAsync<KontaktDTO>($"Kontakt/{kontaktGuid}");
+
+        public async Task<KontaktDTO> SaveKontaktAsync(KontaktDTO kontakt) 
+            => await PutAsync<KontaktDTO>("Kontakt", kontakt);
     }
 }

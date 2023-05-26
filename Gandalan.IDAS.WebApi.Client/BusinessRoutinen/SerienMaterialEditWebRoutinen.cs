@@ -11,42 +11,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public SerienMaterialEditWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
-   
-        public SerienMaterialEditDTO AddOrUpdate(SerienMaterialEditDTO dto)
-        {
-            if (Login())
-            {
-                return Put<SerienMaterialEditDTO>("SerieMaterialbedarfEdit", dto);
-            }
-            return null;
-        }
 
-        public string DeleteMaterial(Guid materialbedarfGuid)
-        {
-            if (Login())
-            {
-                return Delete<string>("SerieMaterialbedarfEdit?bedarfGuid=" + materialbedarfGuid.ToString());
-            }
-            return null;
-        }
+        public async Task<SerienMaterialEditDTO> AddOrUpdateAsync(MaterialbedarfDTO dto) 
+            => await PutAsync<SerienMaterialEditDTO>("SerieMaterialbedarfEdit", dto);
 
-
-        public async Task<SerienMaterialEditDTO> AddOrUpdateAsync(MaterialbedarfDTO dto)
-        {
-            if (Login())
-            {
-                return await PutAsync<SerienMaterialEditDTO>("SerieMaterialbedarfEdit", dto);
-            }
-            return null;
-        }
-
-        public async Task<string> DeleteMaterialAsync(Guid materialbedarfGuid)
-        {
-            if (Login())
-            {
-                return await DeleteAsync<string>("SerieMaterialbedarfEdit?bedarfGuid=" + materialbedarfGuid.ToString());
-            }
-            return null;
-        }
+        public async Task DeleteMaterialAsync(Guid materialbedarfGuid) 
+            => await DeleteAsync($"SerieMaterialbedarfEdit?bedarfGuid={materialbedarfGuid}");
     }
 }

@@ -14,18 +14,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public VorgangDTO BelegWechsel(BelegartWechselDTO dto)
-        {
-            if (Login())
-            {
-                return Put<VorgangDTO>("BelegArtPos", dto);
-            }
-            return null;
-        }
-
-        public async Task<VorgangDTO> BelegWechselAsync(BelegartWechselDTO dto)
-        {
-            return await Task<VorgangDTO>.Run(() => { return BelegWechsel(dto); });
-        }
+        public async Task<VorgangDTO> BelegWechselAsync(BelegartWechselDTO dto) => await PutAsync<VorgangDTO>("BelegArtPos", dto);
     }
 }

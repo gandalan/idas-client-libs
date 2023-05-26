@@ -10,47 +10,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public ContractDTO[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<ContractDTO[]>("Contracts");
-            }
-            return null;
-        }
-
-        public ContractDTO SaveContract(ContractDTO dto)
-        {
-            if (Login())
-            {
-                return Put<ContractDTO>("Contracts", dto);
-            }
-            return null;
-        }
-
-        public string DeleteContract(ContractDTO dto)
-        {
-            if (Login())
-            {
-                return Delete<string>("Contracts/" + dto.ContractGuid);
-            }
-            return null;
-        }
-
-
         public async Task<ContractDTO[]> GetAllAsync()
-        {
-            return await Task.Run(() => GetAll());
-        }
+            => await GetAsync<ContractDTO[]>("Contracts");
 
-        public async Task SaveContractAsync(ContractDTO dto)
-        {
-            await Task.Run(() => SaveContract(dto));
-        }
+        public async Task<ContractDTO> SaveContractAsync(ContractDTO dto) 
+            => await PutAsync<ContractDTO>("Contracts", dto);
 
-        public async Task DeleteContractAsync(ContractDTO dto)
-        {
-            await Task.Run(() => DeleteContract(dto));
-        }
+        public async Task DeleteContractAsync(ContractDTO dto) 
+            => await DeleteAsync("Contracts/" + dto.ContractGuid);
     }
 }

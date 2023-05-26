@@ -12,35 +12,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public List<GesamtLieferzusageDTO> Get(DateTime? stichTag = null)
-        {
-            if (Login())
-            {
-                return Get<List<GesamtLieferzusageDTO>>($"GesamtLieferzusagen?stichTag={stichTag?.ToString("o")}");
-            }
+        public async Task<List<GesamtLieferzusageDTO>> GetAsync(DateTime? stichTag = null) 
+            => await GetAsync<List<GesamtLieferzusageDTO>>($"GesamtLieferzusagen?stichTag={stichTag?.ToString("o")}");
 
-            return null;
-        }
+        public async Task PutAsync(GesamtLieferzusageDTO dto)
+            => await PutAsync($"GesamtLieferzusagen", dto); 
 
-        public void Put(GesamtLieferzusageDTO dto)
-        {
-            if (Login())
-            {
-                Put($"GesamtLieferzusagen", dto);
-            }
-        }
-
-        public void SerieBuchen(Guid serieGuid)
-        {
-            if (Login())
-            {
-                Post($"GesamtLieferzusagen/SerieBuchen?serieGuid={serieGuid}", null);
-            }
-        }
-
-        public async Task<List<GesamtLieferzusageDTO>> GetAsync(DateTime? stichTag = null) => await Task.Run(() => Get(stichTag));
-        public async Task SerieBuchenAsync(Guid serieGuid) => await Task.Run(() => SerieBuchen(serieGuid));
-        public async Task PutAsync(GesamtLieferzusageDTO dto) => await Task.Run(() => Put(dto));
-
+        public async Task SerieBuchenAsync(Guid serieGuid)
+            => await PostAsync($"GesamtLieferzusagen/SerieBuchen?serieGuid={serieGuid}", null);
     }
 }

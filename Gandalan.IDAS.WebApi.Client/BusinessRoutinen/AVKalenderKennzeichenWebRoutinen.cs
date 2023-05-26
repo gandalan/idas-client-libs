@@ -12,49 +12,19 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public List<AVKalenderKennzeichenDTO> GetAllKennzeichen(DateTime fromDate, DateTime toDate)
-        {
-            if (Login())
-            {
-                return Get<List<AVKalenderKennzeichenDTO>>($"AVKalenderkennzeichen/?fromDate={fromDate:yyyy-MM-dd}&toDate={toDate:yyyy-MM-dd}");
-            }
-            return null;
-        }
-
-        public AVKalenderKennzeichenDTO SaveKennzeichen(AVKalenderKennzeichenDTO kennzeichen)
-        {
-            if (Login())
-            {
-                return Put<AVKalenderKennzeichenDTO>("AVKalenderkennzeichen", kennzeichen);
-            }
-            return null;
-        }
-
-        public string DeleteKennzeichen(Guid guid)
-        {
-            if (Login())
-            {
-                return Delete($"AVKalenderkennzeichen/{guid}");
-            }
-            return "Not logged in";
-        }
-
-        
-
         public async Task<List<AVKalenderKennzeichenDTO>> GetAllKennzeichenAsync(DateTime fromDate, DateTime toDate)
         {
-            return await Task.Run(() => GetAllKennzeichen(fromDate, toDate));
+            return await GetAsync<List<AVKalenderKennzeichenDTO>>($"AVKalenderkennzeichen/?fromDate={fromDate:yyyy-MM-dd}&toDate={toDate:yyyy-MM-dd}");
         }
 
-        
         public async Task<AVKalenderKennzeichenDTO> SaveKennzeichenAsync(AVKalenderKennzeichenDTO kennzeichen)
         {
-            return await Task.Run(() => SaveKennzeichen(kennzeichen));
+            return await PutAsync<AVKalenderKennzeichenDTO>("AVKalenderkennzeichen", kennzeichen);
         }
 
-        public async Task<string> DeleteKennzeichenAsync(Guid guid)
+        public async Task DeleteKennzeichen(Guid guid)
         {
-            return await Task.Run(() => DeleteKennzeichen(guid));
+            await DeleteAsync($"AVKalenderkennzeichen/{guid}");
         }
     }
 }

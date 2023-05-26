@@ -11,19 +11,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public VarianteDTO[] GetBenutzerVarianten(Guid benutzer, bool mitSperrliste)
-        {
-            if (Login())
-            {
-                return Get<VarianteDTO[]>($"BenutzerVarianten?id={benutzer.ToString()}&mitSperrliste={mitSperrliste}");
-            }
-            return null;
-        }
-
-
-        public async Task<VarianteDTO[]> GetBenutzerVariantenAsync(Guid benutzer, bool mitSperrliste)
-        {
-            return await Task.Run(() => GetBenutzerVarianten(benutzer, mitSperrliste));
-        }
+        public async Task<VarianteDTO[]> GetBenutzerVariantenAsync(Guid benutzer, bool mitSperrliste) 
+            => await GetAsync<VarianteDTO[]>($"BenutzerVarianten?id={benutzer}&mitSperrliste={mitSperrliste}");
     }
 }

@@ -10,32 +10,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public FarbKuerzelGruppeDTO[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<FarbKuerzelGruppeDTO[]>("FarbKuerzelGruppe");
-            }
-            return null;
-        }
+        public async Task<FarbKuerzelGruppeDTO[]> GetAllAsync() 
+            => await GetAsync<FarbKuerzelGruppeDTO[]>("FarbKuerzelGruppe");
 
-        public string SaveFarbKuerzelGruppe(FarbKuerzelGruppeDTO dto)
-        {
-            if (Login())
-            {
-                return Put("FarbKuerzelGruppe/", dto);
-            }
-            return null;
-        }
-
-
-        public async Task<FarbKuerzelGruppeDTO[]> GetAllAsync()
-        {
-            return await Task.Run(() => GetAll());
-        }
-        public async Task SaveFarbKuerzelAsync(FarbKuerzelGruppeDTO dto)
-        {
-            await Task.Run(() => SaveFarbKuerzelGruppe(dto));
-        }
+        public async Task SaveFarbKuerzelAsync(FarbKuerzelGruppeDTO dto) 
+            => await PutAsync("FarbKuerzelGruppe/", dto);
     }
 }

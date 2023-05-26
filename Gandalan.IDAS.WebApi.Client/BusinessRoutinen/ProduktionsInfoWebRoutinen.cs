@@ -12,31 +12,22 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public ProduktionsInfoDTO GetProduktionsInfo(Guid vorgangGuid)
-        {
-            if (Login())
-            {
-                try
-                {
-                    return Get<ProduktionsInfoDTO>("ProduktionsInfo?vorgangGuid=" + vorgangGuid.ToString());
-                }
-                catch (WebException wex)
-                {
-                    if (wex.Response is HttpWebResponse)
-                    {
-                        HttpStatusCode code = (wex.Response as HttpWebResponse).StatusCode;
-                        if (code == HttpStatusCode.NotFound)
-                            return null;
-                    }
-                    throw;
-                }
-            }
-            return null;
-        }
-
         public async Task<ProduktionsInfoDTO> GetProduktionsInfoAsync(Guid vorgangGuid)
         {
-            return await Task.Run(() => GetProduktionsInfo(vorgangGuid));
+            try
+            {
+                return await GetAsync<ProduktionsInfoDTO>("ProduktionsInfo?vorgangGuid=" + vorgangGuid.ToString());
+            }
+            catch (WebException wex)
+            {
+                if (wex.Response is HttpWebResponse)
+                {
+                    HttpStatusCode code = (wex.Response as HttpWebResponse).StatusCode;
+                    if (code == HttpStatusCode.NotFound)
+                        return null;
+                }
+                throw;
+            }
         }
     }
 }

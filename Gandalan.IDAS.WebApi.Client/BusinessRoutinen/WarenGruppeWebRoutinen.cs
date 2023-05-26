@@ -10,32 +10,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public WarenGruppeDTO[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<WarenGruppeDTO[]>("WarenGruppe");
-            }
-            return null;
-        }
+        public async Task<WarenGruppeDTO[]> GetAllAsync() 
+            => await GetAsync<WarenGruppeDTO[]>("WarenGruppe");
 
-        public string SaveWarenGruppe(WarenGruppeDTO dto)
-        {
-            if (Login())
-            {
-                return Put("WarenGruppe/" + dto.WarenGruppeGuid, dto);
-            }
-            return null;
-        }
-
-
-        public async Task<WarenGruppeDTO[]> GetAllAsync()
-        {
-            return await Task.Run(() => GetAll());
-        }
-        public async Task SaveWarenGruppeAsync(WarenGruppeDTO dto)
-        {
-            await Task.Run(() => SaveWarenGruppe(dto));
-        }
+        public async Task SaveWarenGruppeAsync(WarenGruppeDTO dto) 
+            => await PutAsync($"WarenGruppe/{dto.WarenGruppeGuid}", dto);
     }
 }

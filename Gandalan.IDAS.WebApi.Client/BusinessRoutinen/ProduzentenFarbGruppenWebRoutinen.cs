@@ -11,44 +11,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public ProduzentenFarbGruppeDTO[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<ProduzentenFarbGruppeDTO[]>("ProduzentenFarbGruppen");
-            }
-            return null;
-        }
+        public async Task<ProduzentenFarbGruppeDTO[]> GetAllAsync() 
+            => await GetAsync<ProduzentenFarbGruppeDTO[]>("ProduzentenFarbGruppen");
 
-        public string SaveProduzentenFarbGruppe(ProduzentenFarbGruppeDTO dto)
-        {
-            if (Login())
-            {
-                return Put("ProduzentenFarbGruppen/" + dto.ProduzentenFarbGruppeGuid, dto);
-            }
-            return null;
-        }
+        public async Task SaveProduzentenFarbGruppeAsync(ProduzentenFarbGruppeDTO dto) 
+            => await PutAsync("ProduzentenFarbGruppen/" + dto.ProduzentenFarbGruppeGuid, dto);
 
-        public void DeleteProduzentenFarbGruppe(Guid produzentenFarbGruppeGuid)
-        {
-            if (Login())
-            {
-                Delete("ProduzentenFarbGruppen/" + produzentenFarbGruppeGuid);
-            }
-        }
-
-
-        public async Task<ProduzentenFarbGruppeDTO[]> GetAllAsync()
-        {
-            return await Task.Run(() => GetAll());
-        }
-        public async Task SaveProduzentenFarbGruppeAsync(ProduzentenFarbGruppeDTO dto)
-        {
-            await Task.Run(() => SaveProduzentenFarbGruppe(dto));
-        }
-        public async Task DeleteProduzentenFarbGruppeAsync(Guid produzentenFarbGruppeGuid)
-        {
-            await Task.Run(() => DeleteProduzentenFarbGruppe(produzentenFarbGruppeGuid));
-        }
+        public async Task DeleteProduzentenFarbGruppeAsync(Guid produzentenFarbGruppeGuid) 
+            => await DeleteAsync("ProduzentenFarbGruppen/" + produzentenFarbGruppeGuid);
     }
 }

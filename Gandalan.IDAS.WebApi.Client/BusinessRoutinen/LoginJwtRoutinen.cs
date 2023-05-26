@@ -1,6 +1,7 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 using System;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -10,19 +11,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public string Authenticate(LoginDTO dto)
-        {
-            return Post<string>("LoginJwt/Authenticate", dto);
-        }
+        public async Task<string> AuthenticateAsync(LoginDTO dto) 
+            => await PostAsync<string>("LoginJwt/Authenticate", dto);
 
-        public string AuthenticateForFunction(string email)
-        {
-            return Post<string>("LoginJwt/AuthenticateForFunction/?email=" + Uri.EscapeDataString(email), null);
-        }
+        public async Task<string> AuthenticateForFunctionAsync(string email) 
+            => await PostAsync<string>("LoginJwt/AuthenticateForFunction/?email=" + Uri.EscapeDataString(email), null);
 
-        public string Refresh(string token)
-        {
-            return Put<string>("LoginJwt/Refresh", token);
-        }
+        public async Task<string> RefreshAsync(string token) 
+            => await PutAsync<string>("LoginJwt/Refresh", token);
     }
 }

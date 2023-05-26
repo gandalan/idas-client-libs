@@ -13,85 +13,31 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public LagerbestandDTO Get(Guid guid)
-        {
-            if (Login())
-            {
-                return Get<LagerbestandDTO>("Lagerbestand/?id=" + guid.ToString());
-            }
-            return null;
-        }
-
-        public List<LagerbestandDTO> GetAll(DateTime? changedSince)
-        {
-            if (Login())
-            {
-                if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
-                {
-                    return Get<List<LagerbestandDTO>>("Lagerbestand?changedSince=" + changedSince.Value.ToString("o"));
-                }
-                else
-                {
-                    return Get<List<LagerbestandDTO>>("Lagerbestand");
-                }
-            }
-            return null;
-        }
-
-        public LagerbestandDTO Lagerbuchung(LagerbuchungDTO buchung)
-        {
-            if(Login())
-            {
-                return Put<LagerbestandDTO>("Lagerbuchung", buchung);
-            }
-            return null;
-        }
-                
-        public string Save(LagerbestandDTO dto)
-        {
-            if (Login())
-            {
-                return Put("Lagerbestand/", dto);
-            }
-            return null;
-        }
-
-        public string Delete(Guid guid)
-        {
-            if (Login())
-            {
-                return Delete("Lagerbestand/?id=" + guid.ToString());
-            }
-            return "Not logged in";
-        }
-
-        public List<LagerbuchungDTO> GetLagerhistorie(DateTime vonDatum, DateTime bisDatum)
-        {
-            // DateTime[] vonBisDatum = { vonDatum, bisDatum };
-
-            if (Login())
-                return Get<List<LagerbuchungDTO>>("Lagerbuchung");
-
-            return null;
-        }
-        public async Task<LagerbestandDTO> GetAsync(Guid guid)
-        {
-            return await Task.Run(() => Get(guid));
-        }
+        public async Task<LagerbestandDTO> GetAsync(Guid guid) 
+            => await GetAsync<LagerbestandDTO>("Lagerbestand/?id=" + guid.ToString());
 
         public async Task<List<LagerbestandDTO>> GetAllAsync(DateTime? changedSince)
         {
-            return await Task.Run(() => GetAll(changedSince));
+            if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+            {
+                return await GetAsync<List<LagerbestandDTO>>("Lagerbestand?changedSince=" + changedSince.Value.ToString("o"));
+            }
+            else
+            {
+                return await GetAsync<List<LagerbestandDTO>>("Lagerbestand");
+            }
         }
+
+        public async Task<LagerbestandDTO> LagerbuchungAsync(LagerbuchungDTO buchung) 
+            => await PutAsync<LagerbestandDTO>("Lagerbuchung", buchung);
 
         public async Task SaveAsync(LagerbestandDTO dto)
-        {
-            await Task.Run(() => Save(dto));
-        }
+            => await PutAsync("Lagerbestand/", dto);
 
-        public async Task<string> DeleteAsync(Guid guid)
-        {
-            return await Task.Run(() => Delete(guid));
-        }
+        public async Task DeleteAsync(Guid guid) 
+            => await DeleteAsync($"Lagerbestand/?id={guid}");
+
+        public async Task<List<LagerbuchungDTO>> GetLagerhistorieAsync(DateTime vonDatum, DateTime bisDatum)
+            => await GetAsync<List<LagerbuchungDTO>>("Lagerbuchung");
     }
 }

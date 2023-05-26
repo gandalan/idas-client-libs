@@ -11,95 +11,28 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public VorgangHistorienDTO GetVorgangHistorie(Guid vorgangGuid, bool includeBelege = false, bool includePositionen = false)
-        {
-            if (Login())
-            {
-                return Get<VorgangHistorienDTO>($"HistorieVorgang?vorgangGuid={vorgangGuid}&includeBelege={includeBelege}&includePositionen={includePositionen}");
-            }
-            return null;
-        }
-        public async Task<VorgangHistorienDTO> GetVorgangHistorieAsync(Guid vorgangGuid, bool includeBelege = false, bool includePositionen = false)
-        {
-            return await Task.Run(() => { return GetVorgangHistorie(vorgangGuid, includeBelege, includePositionen); });
-        }
+        public async Task<VorgangHistorienDTO> GetVorgangHistorieAsync(Guid vorgangGuid, bool includeBelege = false, bool includePositionen = false) 
+            => await GetAsync<VorgangHistorienDTO>($"HistorieVorgang?vorgangGuid={vorgangGuid}&includeBelege={includeBelege}&includePositionen={includePositionen}");
 
-        public BelegHistorienDTO GetBelegHistorie(Guid belegGuid, bool includePositionen = false)
-        {
-            if (Login())
-            {
-                return Get<BelegHistorienDTO>($"HistorieBeleg?belegGuid={belegGuid}&includePositionen={includePositionen}");
-            }
-            return null;
-        }
         public async Task<BelegHistorienDTO> GetBelegHistorieAsync(Guid belegGuid, bool includePositionen = false)
-        {
-            return await Task.Run(() => { return GetBelegHistorie(belegGuid, includePositionen); });
-        }
+            => await GetAsync<BelegHistorienDTO>($"HistorieBeleg?belegGuid={belegGuid}&includePositionen={includePositionen}");
 
-        public BelegPositionHistorienDTO GetBelegPositionHistorie(Guid positionGuid)
-        {
-            if (Login())
-            {
-                return Get<BelegPositionHistorienDTO>($"HistorieBelegPosition?positionGuid={positionGuid}");
-            }
-            return null;
-        }
-        public async Task<BelegPositionHistorienDTO> GetBelegPositionHistorieAsync(Guid positionGuid)
-        {
-            return await Task.Run(() => { return GetBelegPositionHistorie(positionGuid); });
-        }
+        public async Task<BelegPositionHistorienDTO> GetBelegPositionHistorieAsync(Guid positionGuid) 
+            => await GetAsync<BelegPositionHistorienDTO>($"HistorieBelegPosition?positionGuid={positionGuid}");
 
-        public void AddVorgangHistorie(Guid vorgangGuid, VorgangHistorieDTO historyDto)
-        {
-            if (Login())
-            {
-                Post($"HistorieVorgang?vorgangGuid={vorgangGuid}", historyDto);
-            }
-        }
         public async Task AddVorgangHistorieAsync(Guid vorgangGuid, VorgangHistorieDTO historyDto)
-        {
-            await Task.Run(() => AddVorgangHistorie(vorgangGuid, historyDto));
-        }
+            => await PostAsync($"HistorieVorgang?vorgangGuid={vorgangGuid}", historyDto);
 
-        public void AddBelegHistorie(Guid belegGuid, BelegHistorieDTO historyDto)
-        {
-            if (Login())
-            {
-                Post($"HistorieBeleg?belegGuid={belegGuid}", historyDto);
-            }
-        }
-        public async Task AddBelegHistorieAsync(Guid belegGuid, BelegHistorieDTO historyDto)
-        {
-            await Task.Run(() => AddBelegHistorie(belegGuid, historyDto));
-        }
+        public async Task AddBelegHistorieAsync(Guid belegGuid, BelegHistorieDTO historyDto) 
+            => await PostAsync($"HistorieBeleg?belegGuid={belegGuid}", historyDto);
 
-        public void AddBelegPositionHistorie(Guid positionGuid, BelegPositionHistorieDTO historyDto)
-        {
-            if (Login())
-            {
-                Post($"HistorieBelegPosition?positionGuid={positionGuid}", historyDto);
-            }
-        }
-        public async Task AddBelegPositionHistorieAsync(Guid positionGuid, BelegPositionHistorieDTO historyDto)
-        {
-            await Task.Run(() => AddBelegPositionHistorie(positionGuid, historyDto));
-        }
+        public async Task AddBelegPositionHistorieAsync(Guid positionGuid, BelegPositionHistorieDTO historyDto) 
+            => await PostAsync($"HistorieBelegPosition?positionGuid={positionGuid}", historyDto);
 
-        public void AddVorgangHistorieFromFunction(Guid vorgangGuid, VorgangHistorieDTO historyDto, long mandantID)
-        {
-            if (Login())
-            {
-                Post($"AddVorgangHistorieFromFunction?vorgangGuid={vorgangGuid}&mandantID={mandantID}", historyDto);
-            }
-        }
+        public async Task AddVorgangHistorieFromFunctionAsync(Guid vorgangGuid, VorgangHistorieDTO historyDto, long mandantID) 
+            => await PostAsync($"AddVorgangHistorieFromFunction?vorgangGuid={vorgangGuid}&mandantID={mandantID}", historyDto);
 
-        public void AddBelegPositionHistorieFromFunction(Guid positionGuid, BelegPositionHistorieDTO historyDto, long mandantID)
-        {
-            if (Login())
-            {
-                Post($"AddBelegPositionHistorieFromFunction?positionGuid={positionGuid}&mandantID={mandantID}", historyDto);
-            }
-        }
+        public async Task AddBelegPositionHistorieFromFunctionAsync(Guid positionGuid, BelegPositionHistorieDTO historyDto, long mandantID) 
+            => await PostAsync($"AddBelegPositionHistorieFromFunction?positionGuid={positionGuid}&mandantID={mandantID}", historyDto);
     }
 }

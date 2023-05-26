@@ -12,86 +12,47 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public ProduktionsStatusDTO[] GetAll()
+        public async Task<ProduktionsStatusDTO[]> GetAllAsync()
         {
-            if (Login())
+            try
             {
-                try
-                {
-                    return Get<ProduktionsStatusDTO[]>("ProduktionsStatus");
-                }
-                catch (WebException wex)
-                {
-                    if (wex.Response is HttpWebResponse)
-                    {
-                        HttpStatusCode code = (wex.Response as HttpWebResponse).StatusCode;
-                        if (code == HttpStatusCode.NotFound)
-                            return null;
-                    }
-                    throw;
-                }
+                return await GetAsync<ProduktionsStatusDTO[]>("ProduktionsStatus");
             }
-            return null;
-        }
-
-        public ProduktionsStatusDTO GetProduktionsStatus(Guid guid)
-        {
-            if (Login())
+            catch (WebException wex)
             {
-                try
+                if (wex.Response is HttpWebResponse)
                 {
-                    return Get<ProduktionsStatusDTO>("ProduktionsStatus/" + guid.ToString());
+                    HttpStatusCode code = (wex.Response as HttpWebResponse).StatusCode;
+                    if (code == HttpStatusCode.NotFound)
+                        return null;
                 }
-                catch (WebException wex)
-                {
-                    if (wex.Response is HttpWebResponse)
-                    {
-                        HttpStatusCode code = (wex.Response as HttpWebResponse).StatusCode;
-                        if (code == HttpStatusCode.NotFound)
-                            return null;
-                    }
-                    throw;
-                }
+                throw;
             }
-            return null;
-        }
-
-        public string SaveProduktionsStatus(ProduktionsStatusDTO status)
-        {
-            if (Login())
-            {
-                return Put<string>("ProduktionsStatus", status);
-            }
-            return "Not logged in";
-        }
-
-        public string SaveProduktionsStatusHistorie(Guid avGuid, ProduktionsStatusHistorieDTO historie)
-        {
-            if (Login())
-            {
-                return Put<string>($"ProduktionsStatus/AddHistorie/{avGuid}", historie);
-            }
-            return "Not logged in";
-        }
-
-        public async Task<ProduktionsStatusDTO[]> GetAllProduktionsStatusAsync()
-        {
-            return await Task.Run(() => GetAll());
         }
 
         public async Task<ProduktionsStatusDTO> GetProduktionsStatusAsync(Guid guid)
         {
-            return await Task.Run(() => GetProduktionsStatus(guid));
+            try
+            {
+                return await GetAsync<ProduktionsStatusDTO>("ProduktionsStatus/" + guid.ToString());
+            }
+            catch (WebException wex)
+            {
+                if (wex.Response is HttpWebResponse)
+                {
+                    HttpStatusCode code = (wex.Response as HttpWebResponse).StatusCode;
+                    if (code == HttpStatusCode.NotFound)
+                        return null;
+                }
+                throw;
+            }
         }
 
-        public async Task<string> SaveProduktionsStatusAsync(ProduktionsStatusDTO status)
-        {
-            return await Task.Run(() => SaveProduktionsStatus(status));
-        }
+        public async Task SaveProduktionsStatus(ProduktionsStatusDTO status) 
+            => await PutAsync("ProduktionsStatus", status);
 
-        public async Task<string> SaveProduktionsStatusHistorieAsync(Guid avGuid, ProduktionsStatusHistorieDTO historie)
-        {
-            return await Task.Run(() => SaveProduktionsStatusHistorie(avGuid, historie));
-        }
+        public async Task SaveProduktionsStatusHistorieAsync(Guid avGuid, ProduktionsStatusHistorieDTO historie) 
+            => await PutAsync($"ProduktionsStatus/AddHistorie/{avGuid}", historie);
+
     }
 }

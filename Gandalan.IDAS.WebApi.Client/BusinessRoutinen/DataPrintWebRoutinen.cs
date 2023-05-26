@@ -11,41 +11,30 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public bool DruckErzeugen(IDataPrintJobData data)
-        {
-            if (Login())
-            {
-                Post("DataPrint", data);
-
-                DataPrintJobData daten = null;
-                IgnoreOnErrorOccured = true;
-                for (int i = 0; i < 10; i++)
-                {
-                    Thread.Sleep(2000);
-                    try
-                    {
-                        daten = Get<DataPrintJobData>("DataPrint/" + data.PrintGuid.ToString());
-                    }
-                    catch { }
-
-                    if (daten != null)
-                    {
-                        data.ResultAsBase64String = daten.ResultAsBase64String;
-                        break;
-                    }
-                }
-                IgnoreOnErrorOccured = false;
-
-                if (!string.IsNullOrEmpty(data.ResultAsBase64String))
-                    return true;
-            }
-            return false;
-        }
-        
-
         public async Task<bool> DruckErzeugenAsync(IDataPrintJobData data)
         {
-            return await Task<string>.Run(() => { return DruckErzeugen(data); });
+            await PostAsync("DataPrint", data);
+
+            DataPrintJobData daten = null;
+            IgnoreOnErrorOccured = true;
+            for (int i = 0; i < 10; i++)
+            {
+                Thread.Sleep(2000);
+                try
+                {
+                    daten = await GetAsync<DataPrintJobData>($"DataPrint/{data.PrintGuid}");
+                }
+                catch { }
+
+                if (daten != null)
+                {
+                    data.ResultAsBase64String = daten.ResultAsBase64String;
+                    break;
+                }
+            }
+            IgnoreOnErrorOccured = false;
+
+            return !string.IsNullOrEmpty(data.ResultAsBase64String));
         }
     }
 }

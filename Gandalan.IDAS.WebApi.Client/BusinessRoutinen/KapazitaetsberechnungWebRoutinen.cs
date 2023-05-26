@@ -11,19 +11,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public KapazitaetsberechnungWebRoutinen(IWebApiConfig settings) : base(settings)
         {
         }
-                
-        public string CalculateKapazitaetForFunction(Guid positionGuid, long mandantID)
-        {
-            if (Login())
-            {
-                return Post($"Kapaziaetsberechnung/RunKapBerechnung?id={positionGuid}&mandantId={mandantID}", null);
-            }
-            return null;
-        }
 
-        public async Task CalculateKapazitaetForFunctionAsync(Guid positionGuid, long mandantID)
-        {
-            await Task.Run(() => CalculateKapazitaetForFunction(positionGuid, mandantID));
-        }
+        public async Task CalculateKapazitaetForFunctionAsync(Guid positionGuid, long mandantID) 
+            => await PostAsync($"Kapaziaetsberechnung/RunKapBerechnung?id={positionGuid}&mandantId={mandantID}", null);
     }
 }

@@ -9,29 +9,18 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public BelegStatusWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
-        public BelegStatusDTO GetStatus(Guid belegGuid)
+        public async Task<BelegStatusDTO> GetStatusAsync(Guid belegGuid) 
+            => await GetAsync<BelegStatusDTO>($"BelegStatus?id={belegGuid}");
+        
+        public async Task<BelegStatusDTO> SetStatusAsync(Guid belegGuid, string statusCode, string statusText = "")
         {
-            if(Login())
-                return Get<BelegStatusDTO>($"BelegStatus?id={belegGuid}");
-            return null;
-        }
-        public async Task<BelegStatusDTO> GetStatusAsync(Guid belegGuid) => await Task.Run(() => GetStatus(belegGuid));
-
-        public BelegStatusDTO SetStatus(Guid belegGuid, string statusCode, string statusText = "")
-        {
-            if (Login())
+            BelegStatusDTO set = new BelegStatusDTO()
             {
-                BelegStatusDTO set = new BelegStatusDTO()
-                {
-                    BelegGuid = belegGuid,
-                    NeuerStatus = statusCode,
-                    NeuerStatusText = statusText
-                };
-                return Put<BelegStatusDTO>($"BelegStatus", set);
-            }
-            return null;
+                BelegGuid = belegGuid,
+                NeuerStatus = statusCode,
+                NeuerStatusText = statusText
+            };
+            return await PutAsync<BelegStatusDTO>($"BelegStatus", set);
         }
-
-        public async Task<BelegStatusDTO> SetStatusAsync(Guid belegGuid, string statusCode, string statusText) => await Task.Run(() => SetStatus(belegGuid, statusCode, statusText));
     }
 }

@@ -9,20 +9,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public byte[] BriefbogenLaden()
-        {
-            if (Login())
-            {
-                return GetData("Briefbogen");
-
-            }
-            return null;
-        }
-
-
-        public async Task<byte[]> BriefbogenLadenAsync()
-        {
-            return await Task<string>.Run(() => { return BriefbogenLaden(); });
-        }
+        public async Task<byte[]> BriefbogenLadenAsync() 
+            => await GetDataAsync("Briefbogen");
     }
 }

@@ -10,47 +10,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public string ProduktionBerechnen(Guid belegPositionsGuid)
-        {
-            if (Login())
-            {
-                return Get<string>("IBOS1/Print?bguid=" + belegPositionsGuid.ToString());
-            }
-            return null;
-        }
-
-        public string PositionTesten(Guid belegPositionsGuid)
-        {
-            if (Login())
-            {
-                return Get<string>("Test?bguid=" + belegPositionsGuid.ToString());
-            }
-            return null;
-        }
-
-        public string GetProduktion(Guid guid)
-        {
-            if (Login())
-            {
-                return Get("Produktion/?posguid=" + guid.ToString());
-            }
-            return null;
-        }
-
-
-        public async Task<string> GetProduktionAsync(Guid guid)
-        {
-            return await Task<string>.Run(() => { return GetProduktion(guid); });
-        }
-        
-        public async Task<string> PositionTestenAsync(Guid belegPositionsGuid)
-        {
-            return await Task<string>.Run(() => { return PositionTesten(belegPositionsGuid); });
-        }
-
         public async Task<string> ProduktionBerechnenAsync(Guid belegPositionsGuid)
-        {
-            return await Task<string>.Run(() => { return ProduktionBerechnen(belegPositionsGuid); });
-        }
+            => await GetAsync<string>("IBOS1/Print?bguid=" + belegPositionsGuid.ToString());
+
+        public async Task<string> PositionTestenAsync(Guid belegPositionsGuid) 
+            => await GetAsync<string>("Test?bguid=" + belegPositionsGuid.ToString());
+
+        public async Task<string> GetProduktionAsync(Guid guid) 
+            => await GetAsync<string>("Produktion/?posguid=" + guid.ToString());
     }
 }

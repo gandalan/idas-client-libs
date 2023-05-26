@@ -15,22 +15,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public VorgangDTO BelegLoeschen(Guid bguid)
+        public async Task BelegLoeschenAsync(Guid bguid)
         {
-            if (Login())
-            {
-                return Delete<VorgangDTO>("Vorgang/DeleteBeleg/" + bguid.ToString());
-            }
-            return null;
-        }
-
-        public async Task<VorgangDTO> BelegLoeschenAsync(Guid bguid)
-        {
-            if (await LoginAsync())
-            {
-                return await DeleteAsync<VorgangDTO>("Vorgang/DeleteBeleg/" + bguid.ToString());
-            }
-            return null;
+            await DeleteAsync("Vorgang/DeleteBeleg/" + bguid.ToString());
         }
     }
 }

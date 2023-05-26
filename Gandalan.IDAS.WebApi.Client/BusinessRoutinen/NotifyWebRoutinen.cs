@@ -15,16 +15,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             Settings.Url = uri.ToString();
         }
 
-        public IList<NachrichtenDTO> GetAllNotifications()
+        public async Task<IList<NachrichtenDTO>> GetAllNotificationsAsync()
         {
             var mandant = Settings.AuthToken.Mandant.MandantGuid;
             var produzent = Settings.AuthToken.Mandant.ProduzentMandantGuid;
-            return Get<List<NachrichtenDTO>>($"Nachrichten?mandantGuid={mandant}&produzentGuid={produzent}");
-        }
-
-        public async Task<IList<NachrichtenDTO>> GetAllNotificationsAsync()
-        {
-            return await Task.Run(() => GetAllNotifications());
+            return await GetAsync<List<NachrichtenDTO>>($"Nachrichten?mandantGuid={mandant}&produzentGuid={produzent}");
         }
     }
 }
