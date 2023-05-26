@@ -1,6 +1,6 @@
 // Gandalan GmbH & Co. KG - (c) 2019
 // Middleware//Gandalan.IDAS.WebApi.Client//BelegArtWebRoutinen.cs
-// Created: 13.06.2019 Konstantin Tümmler
+// Created: 13.06.2019 Konstantin TÃ¼mmler
 
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;

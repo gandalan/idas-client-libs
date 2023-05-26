@@ -3,9 +3,8 @@ using System;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
-
     /// <summary>
-    /// DTO für die Zeilen in der InfoScreen Konfiguration
+    /// DTO fÃ¼r die Zeilen in der InfoScreen Konfiguration
     /// </summary>
     public class InfoScreenRowDTO
     {
