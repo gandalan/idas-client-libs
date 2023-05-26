@@ -9,5 +9,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public DateTime Modified { get; set; }
         public DateTime Created { get; set; }
         public DateTime? GueltigBis { get; set; }
+        public Guid? MandantGuid { get; set; }
     }
 }

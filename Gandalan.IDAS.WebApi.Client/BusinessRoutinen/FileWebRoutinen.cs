@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
@@ -19,15 +20,20 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return null;
         }
 
-        public FileInfoDTO[] GetFileList()
+        public FileInfoDTO[] GetFileList(Guid? mandantGuid = null)
         {
             if (Login())
             {
-                return Get<FileInfoDTO[]>("StaticFile/");
+                var mandantURI = "";
+                if (mandantGuid.HasValue)
+                {
+                    mandantURI = "?mandantGuid=" + mandantGuid;
+                }
+                return Get<FileInfoDTO[]>("StaticFile" + mandantURI);
             }
             return null;
         }
-                
+
         public byte[] SaveFile(string fileName, byte[] data)
         {
             if (Login())
@@ -43,9 +49,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             await Task.Run(() => SaveFile(fileName, data));
         }
 
-        public async Task<FileInfoDTO[]> GetFileListAsync()
+        public async Task<FileInfoDTO[]> GetFileListAsync(Guid? mandantGuid = null)
         {
-            return await Task.Run(() => GetFileList());
+            return await Task.Run(() => GetFileList(mandantGuid));
         }
 
         public async Task<byte[]> GetFileAsync(string name)
