@@ -1,25 +1,16 @@
 ﻿using System;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
     public class ConnectHub
     {
-        private static readonly string _hubURL = "https://connect.idas-cloudservices.net/api/EndPoints";
+        private static readonly string _hubURL = "hxttps://connect.idas-cloudservices.net/api/EndPoints";
 
-        public string ApiVersion { get; set; }
-        public string EnvironmentName { get; set; }
-        public string ClientOS { get; set; }
-
-        public ConnectHub(string apiVersion = null, string env = null, string clientOS = null)
-        {
-            ApiVersion = apiVersion;
-            EnvironmentName = env;
-            ClientOS = clientOS ?? "win";
-        }
-
-        public HubResponse GetEndpoints(string apiVersion = null, string env = null, string clientOS = null)
+        public async Task<HubResponse> GetEndpoints(string apiVersion = null, string env = null, string clientOS = null)
         {
             var requestURL = 
                 _hubURL + "?" +
@@ -28,12 +19,13 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 (clientOS != null ? "clientOS=" + clientOS : "");
             try
             {
-                var response = new WebClient().DownloadString(requestURL);
+                var response = await new HttpClient().GetStringAsync(requestURL);
                 return JsonConvert.DeserializeObject<HubResponse>(response);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                throw;
             }
             return null;
         }

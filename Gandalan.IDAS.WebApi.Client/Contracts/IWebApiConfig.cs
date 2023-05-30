@@ -45,10 +45,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts
         string HelpCenterUrl { get; set; }
         string WebhookServiceUrl { get; set; }
 
-        void Save();
-
-        List<IWebApiConfig> GetAll();
-
         void CopyToThis(IWebApiConfig settings);
     }
 }

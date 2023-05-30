@@ -10,21 +10,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
     {
         public string JwtToken { get; set; }
 
-        public JwtWebApiSettings(Guid appToken, string env, string jwt)
-            : base(appToken, env)
-        {
-            Initialize(jwt);
-            JwtToken = jwt;
-        }
-
-        public JwtWebApiSettings(string jwt)
-            : base()
-        {
-            Initialize(jwt);
-            JwtToken = jwt;
-        }
-
-        private void Initialize(string jwt)
+        public void Initialize(string jwt)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 

@@ -1,5 +1,6 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.Logging;
+using Gandalan.IDAS.WebApi.Client.Settings;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -100,7 +101,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             if (await testConnection(_webApiSettings))
             {
                 if (_viewModel.SaveCredentials)
-                    _webApiSettings.Save();
+                    WebApiConfigurations.Save(_webApiSettings);
                 DialogResult = true;                
                 Close();
 

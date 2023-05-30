@@ -1,4 +1,5 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Client.Settings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,7 +42,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
         
         public LoginWindowViewModel_v2(IWebApiConfig webApiSettings)
         {
-            AlleEnvironments = webApiSettings.GetAll();
+            AlleEnvironments = WebApiConfigurations.GetAll();
             LoggedInEnvironments = AlleEnvironments.Where(e => e.AuthToken != null && e.AuthToken.Token != Guid.Empty);
             ShowLoggedInEnvironments = LoggedInEnvironments.Any();
             ServerEnvironment = AlleEnvironments.FirstOrDefault(e => e.FriendlyName.Equals(webApiSettings.FriendlyName, StringComparison.InvariantCultureIgnoreCase));
