@@ -48,7 +48,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
         }
 
-        public async Task SaveProduktionsStatus(ProduktionsStatusDTO status) 
+        public async Task SaveProduktionsStatusAsync(ProduktionsStatusDTO status) 
             => await PutAsync("ProduktionsStatus", status);
 
         public async Task SaveProduktionsStatusHistorieAsync(Guid avGuid, ProduktionsStatusHistorieDTO historie) 

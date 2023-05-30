@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<BerechnungParameterDTO> Process(BerechnungParameterDTO parameter)
+        public async Task<BerechnungParameterDTO> ProcessAsync(BerechnungParameterDTO parameter)
         {
             return await PostAsync<BerechnungParameterDTO>($"ProcessIbos/Process", parameter);
         }

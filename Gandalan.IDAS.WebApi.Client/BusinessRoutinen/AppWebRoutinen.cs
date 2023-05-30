@@ -29,7 +29,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await GetAsync<List<MandantDTO>>($"AppMandant/");
         }
 
-        public async Task<List<BenutzerDTO>> GetBenutzerByKunde(Guid kundeGuid)
+        public async Task<List<BenutzerDTO>> GetBenutzerByKundeAsync(Guid kundeGuid)
         {
             return await GetAsync<List<BenutzerDTO>>($"AppBenutzer/{kundeGuid}");
         }

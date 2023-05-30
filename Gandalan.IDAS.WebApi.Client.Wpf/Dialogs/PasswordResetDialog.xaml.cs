@@ -39,8 +39,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             BenutzerWebRoutinen service = new BenutzerWebRoutinen(Settings);
             try
             {
-                var info = await service.PasswortResetAsync(Email);
-
+                await service.PasswortResetAsync(Email);
                 MessageBox.Show("Passwort erfolgreich zurückgesetzt.", "Info vom System", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (System.Exception ex)

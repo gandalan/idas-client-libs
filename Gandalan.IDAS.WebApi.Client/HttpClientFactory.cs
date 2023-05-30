@@ -40,11 +40,17 @@ namespace Gandalan.IDAS.WebApi.Client
         
         private HttpClientFactory() { }
 
-        public static HttpClient GetInstance(string baseUrl, HttpClientConfig config)
+        public static HttpClient GetInstance(HttpClientConfig config)
         {
-            if (!_clients.ContainsKey(baseUrl))
-                _clients[baseUrl] = createWebClient(config);
-            return _clients[baseUrl];
+            return createWebClient(config); // this is not best practice!!
+            /*
+            if (!_clients.ContainsKey(config.BaseUrl))
+            {
+                var client = createWebClient(config);
+                _clients[client.BaseAddress.ToString()] = client;
+            }
+            return _clients[config.BaseUrl];
+            */
         }
 
         /// <summary>
@@ -61,14 +67,14 @@ namespace Gandalan.IDAS.WebApi.Client
             };
 
             HttpClient client = new HttpClient(handler);
-            config.BaseUrl = config.BaseUrl.TrimEnd('/');
+            client.BaseAddress = new Uri(config.BaseUrl);
+            //config.BaseUrl = config.BaseUrl.TrimEnd('/');
             client.DefaultRequestHeaders.Add("Accept-Charset", "utf-8");
             client.DefaultRequestHeaders.Add("Accept", "application/json");
-            client.DefaultRequestHeaders.Add("Content-Type", "application/json");
             client.Timeout = new TimeSpan(0, 1, 0); // 1 Minute
 
             if (!string.IsNullOrEmpty(config.UserAgent))
-                client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(config.UserAgent));
+                client.DefaultRequestHeaders.UserAgent.TryParseAdd(config.UserAgent);
 
             foreach (var key in config.AdditionalHeaders.Keys)
                 client.DefaultRequestHeaders.Add(key, config.AdditionalHeaders[key]);

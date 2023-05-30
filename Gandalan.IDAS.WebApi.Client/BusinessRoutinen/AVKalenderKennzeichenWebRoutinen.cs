@@ -22,7 +22,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await PutAsync<AVKalenderKennzeichenDTO>("AVKalenderkennzeichen", kennzeichen);
         }
 
-        public async Task DeleteKennzeichen(Guid guid)
+        public async Task DeleteKennzeichenAsync(Guid guid)
         {
             await DeleteAsync($"AVKalenderkennzeichen/{guid}");
         }

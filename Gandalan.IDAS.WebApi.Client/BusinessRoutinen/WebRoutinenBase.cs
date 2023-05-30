@@ -1,9 +1,9 @@
 // *****************************************************************************
-// Gandalan GmbH & Co. KG - (c) 2017
+// Gandalan GmbH & Co. KG - (c) 2023
 // *****************************************************************************
 // Middleware//Gandalan.IDAS.WebApi.Client//WebRoutinenBase.cs
 // Created: 27.01.2016
-// Edit: phil - 21.02.2017
+// Edit: phil - 31.05.2023 11:57
 // *****************************************************************************
 
 using Gandalan.IDAS.Client.Contracts.Contracts;
@@ -78,6 +78,7 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             var config = new HttpClientConfig()
             {
+                BaseUrl = Settings.Url,
                 UseCompression = Settings.UseCompression,
                 UserAgent = Settings.UserAgent
             };
@@ -96,7 +97,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 config.AdditionalHeaders.Add("X-Gdl-InstallationId", Settings.InstallationId.ToString());
             }
 
-            _restRoutinen = new RESTRoutinen(Settings.Url, config);
+            _restRoutinen = new RESTRoutinen(config);
         }
 
         protected virtual void OnErrorOccured(ApiErrorArgs e)
@@ -317,6 +318,32 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 await runPreRequestChecks(skipAuth);
                 await _restRoutinen.DeleteAsync(uri);
+            }
+            catch (WebException ex)
+            {
+                throw HandleWebException(ex, uri);
+            }
+        }
+
+        public async Task DeleteAsync(string uri, object data, bool skipAuth = false)
+        {
+            try
+            {
+                await runPreRequestChecks(skipAuth);
+                await _restRoutinen.DeleteAsync(uri, data);
+            }
+            catch (WebException ex)
+            {
+                throw HandleWebException(ex, uri);
+            }
+        }
+
+        public async Task<T> DeleteAsync<T>(string uri, object data, bool skipAuth = false)
+        {
+            try
+            {
+                await runPreRequestChecks(skipAuth);
+                return await _restRoutinen.DeleteAsync<T>(uri, data);
             }
             catch (WebException ex)
             {

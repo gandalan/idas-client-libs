@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Web
@@ -21,23 +22,23 @@ namespace Gandalan.IDAS.Web
         #region Constructors
         public RESTRoutinen(string baseUrl) 
         {
-            _client = HttpClientFactory.GetInstance(baseUrl, new HttpClientConfig() {
+            _client = HttpClientFactory.GetInstance(new HttpClientConfig() {
                 BaseUrl = baseUrl
             });
         }
 
         public RESTRoutinen(string baseUrl, IWebProxy proxy)
         {
-            _client = HttpClientFactory.GetInstance(baseUrl, new HttpClientConfig()
+            _client = HttpClientFactory.GetInstance(new HttpClientConfig()
             {
                 BaseUrl = baseUrl,
                 Proxy = proxy
             });
         }
 
-        public RESTRoutinen(string baseUrl, HttpClientConfig config)
+        public RESTRoutinen(HttpClientConfig config)
         {
-            _client = HttpClientFactory.GetInstance(baseUrl, config);
+            _client = HttpClientFactory.GetInstance(config);
         }
         #endregion Constructors
 
@@ -106,7 +107,7 @@ namespace Gandalan.IDAS.Web
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
-                var response = await _client.PostAsync(url, new StringContent(json));
+                var response = await _client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
                 return await response.Content?.ReadAsStringAsync();
             }
             catch (Exception ex)
@@ -152,7 +153,7 @@ namespace Gandalan.IDAS.Web
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
-                var response = await _client.PutAsync(url, new StringContent(json));
+                var response = await _client.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
                 response.EnsureSuccessStatusCode();
                 return await response.Content?.ReadAsStringAsync() ?? null;
             }
@@ -198,6 +199,32 @@ namespace Gandalan.IDAS.Web
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
+        }
+
+        public async Task<string> DeleteAsync(string url, object data, JsonSerializerSettings settings = null)
+        {
+            try
+            {
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Delete,
+                    RequestUri = new Uri(url),
+                    Content = new StringContent(JsonConvert.SerializeObject(data, settings), Encoding.UTF8, "application/json")
+                };
+                var response = await _client.SendAsync(request);
+                return await response.Content?.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                AddInfoToException(ex, url, GetCurrentMethodName());
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+        }
+
+        public async Task<T> DeleteAsync<T>(string url, object data, JsonSerializerSettings settings = null)
+        {
+            return JsonConvert.DeserializeObject<T>(await DeleteAsync(url, data, settings), settings);
         }
         #endregion
 

@@ -125,7 +125,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             {
                 if (settings.AuthToken != null)
                 {
-                    var refreshResult = wrb.RefreshToken(settings.AuthToken.Token);
+                    var refreshResult = await wrb.RefreshTokenAsync(settings.AuthToken.Token);
                     if (refreshResult != null)
                     {
                         settings.AuthToken = refreshResult;

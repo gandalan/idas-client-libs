@@ -46,7 +46,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await PostAsync($"TagInfo", dto);
 
         public async Task DeleteTagInfoAsync(TagInfoDTO dto) 
-            => await DeleteAsync<TagInfoDTO>($"TagInfo", dto);
+            => await DeleteAsync($"TagInfo", dto);
 
         public async Task<IList<TagInfoDTO>> GetTagInfoForFunction(Guid objectGuid, long mandantID) 
             => await GetAsync<List<TagInfoDTO>>($"GetTagInfoForFunction?objectGuid={objectGuid}&mandantID={mandantID}");

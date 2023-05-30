@@ -30,7 +30,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task DeleteArtikelIndiDaten(KatalogArtikelIndiDatenDTO daten)
         {
-            return await DeleteAsync($"ArtikelIndiDaten/{daten.KatalogArtikelGuid}");
+            await DeleteAsync($"ArtikelIndiDaten/{daten.KatalogArtikelGuid}");
         }
 
     }

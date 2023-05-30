@@ -11,12 +11,12 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<AVReserviertItemDTO[]> GetAllAVReserviertItems()
+        public async Task<AVReserviertItemDTO[]> GetAllAVReserviertItemsAsync()
         {
             return await GetAsync<AVReserviertItemDTO[]>("AVReserviert");
         }
 
-        public async Task<AVReserviertItemDTO[]> GetAllAVReserviertItemsBySerie(Guid serieGuid)
+        public async Task<AVReserviertItemDTO[]> GetAllAVReserviertItemsBySerieAsync(Guid serieGuid)
         {
             return await GetAsync<AVReserviertItemDTO[]>($"AVReserviert/?serieGuid={serieGuid}");
         }

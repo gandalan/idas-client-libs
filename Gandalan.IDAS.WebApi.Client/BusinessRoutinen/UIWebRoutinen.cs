@@ -20,9 +20,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await PutAsync<UIDefinitionDTO>($"UIDefinition/{uiDefinition.UIDefinitionGuid}", uiDefinition);
 
         [Obsolete("Funktion 'SaveUIDefinitionAsync()' verwenden")]
-        public async Task SaveAsync(UIDefinitionDTO dto)
-        {
-                return Put("UIDefinition/" + dto.UIDefinitionGuid.ToString(), dto);
-        }
+        public async Task SaveAsync(UIDefinitionDTO dto) 
+            => await PutAsync("UIDefinition/" + dto.UIDefinitionGuid.ToString(), dto);
     }
 }

@@ -16,12 +16,12 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await GetAsync<AnpassungDTO[]>("Anpassungen");
         }
 
-        public async Task SaveAnpassung(AnpassungDTO dto)
+        public async Task SaveAnpassungAsync(AnpassungDTO dto)
         {
             await PutAsync("Anpassungen/" + dto.AnpassungGuid, dto);
         }
 
-        public async Task DeleteAnpassung(Guid anpassungGuid)
+        public async Task DeleteAnpassungAsync(Guid anpassungGuid)
         {
             await DeleteAsync("Anpassungen/" + anpassungGuid);
         }

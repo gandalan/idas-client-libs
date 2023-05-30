@@ -15,7 +15,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<List<LieferzusageDTO>> GetAllZusagenAsync(Guid serie, string lieferant = "") 
             => await GetAsync<List<LieferzusageDTO>>($"Lieferzusage/?serieGuid={serie}&lieferant={lieferant}");
 
-        public async Task<int> GetZusagenCount(Guid serie, string lieferant = "") 
+        public async Task<int> GetZusagenCountAsync(Guid serie, string lieferant = "") 
             => await GetAsync<int>($"Lieferzusage/GetCount/{serie}/{lieferant}");
 
         public async Task<string> MaterialZusagenAsync(LieferzusageDTO lieferzusage) 

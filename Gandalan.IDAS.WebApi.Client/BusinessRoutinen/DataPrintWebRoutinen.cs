@@ -34,7 +34,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             IgnoreOnErrorOccured = false;
 
-            return !string.IsNullOrEmpty(data.ResultAsBase64String));
+            return !string.IsNullOrEmpty(data.ResultAsBase64String);
         }
     }
 }

@@ -31,12 +31,18 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 
         private async void speichernButton_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(Email))
+            {
+                MessageBox.Show("Geben Sie im Feld \"E-Mail\" Eine gültige E-Mail Adresse ein und klicken Sie diesen Button erneut, um den Produzenten zu aktivieren.",
+                    "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             InProgress = true;
             AppWebRoutinen service = new AppWebRoutinen(Settings);
-            string serviceResult;
             try
             {
-                serviceResult = await Task<string>.Factory.StartNew(() => service.AktiviereMandant(Email?.Trim()));
+                await service.AktiviereMandantAsync(Email.Trim());
             }
             catch (ApiException)
             {

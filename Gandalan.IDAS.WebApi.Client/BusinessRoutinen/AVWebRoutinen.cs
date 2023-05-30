@@ -90,7 +90,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task DeleteBelegPositionenAVAsync(List<Guid> guids)
         {
-            await DeleteAsync($"BelegPositionenAVBulk", guids);
+            //await DeleteAsync($"BelegPositionenAVBulk", guids);
         }
 
         public async Task BelegPositionenSerienZuordnen(Guid belegGuid, List<PositionSerieItemDTO> positionSerieItems)

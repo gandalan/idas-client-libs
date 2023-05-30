@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<ChangeInfoDTO> GetChangeInfo() 
+        public async Task<ChangeInfoDTO> GetChangeInfoAsync() 
             => await GetAsync<ChangeInfoDTO>("ChangeInfo");
     }
 }

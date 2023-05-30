@@ -11,14 +11,14 @@ namespace Gandalan.IDAS.WebApi.Client
         {            
         }
 
-        public async Task ErzeugeVorgangBeiBeschichterAsync(VorgangDTO vorgang, Guid mGuid, string produzentenKundenNummer) 
-            => await PutAsync($"MaterialBestellung?mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", vorgang);
+        public async Task<VorgangDTO> ErzeugeVorgangBeiBeschichterAsync(VorgangDTO vorgang, Guid mGuid, string produzentenKundenNummer) 
+            => await PutAsync<VorgangDTO>($"MaterialBestellung?mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", vorgang);
 
-        public async Task ErzeugeBestellVorgang(VorgangDTO vorgang) 
-            => await PutAsync($"MaterialBestellung/BestellungSpeichern", vorgang);
+        public async Task<VorgangDTO> ErzeugeBestellVorgang(VorgangDTO vorgang) 
+            => await PutAsync<VorgangDTO>($"MaterialBestellung/BestellungSpeichern", vorgang);
 
-        public async Task ErzeugeReklamationBeiBeschichterAsync(VorgangDTO vorgang, Guid quellVorgang, Guid mGuid, string produzentenKundenNummer) 
-            => await PutAsync($"MaterialBestellungReklamation?quellVorgangGuid={quellVorgang}&mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", vorgang);
+        public async Task<VorgangDTO> ErzeugeReklamationBeiBeschichterAsync(VorgangDTO vorgang, Guid quellVorgang, Guid mGuid, string produzentenKundenNummer) 
+            => await PutAsync<VorgangDTO>($"MaterialBestellungReklamation?quellVorgangGuid={quellVorgang}&mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", vorgang);
 
         public async Task UpdateStatusBeimProduzentenAsync(Guid vorgangGuid, string status, string externeReferenz = "") 
             => await PostAsync($"MaterialBestellungStatus?vorgangGuid={vorgangGuid}&status={status}&externeReferenz={externeReferenz}", null);
