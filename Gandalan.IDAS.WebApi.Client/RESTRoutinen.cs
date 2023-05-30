@@ -42,8 +42,14 @@ namespace Gandalan.IDAS.Web
         }
         #endregion Constructors
 
-        #region public Properties
-        #endregion
+        public string UserAgent
+        {
+            set
+            {
+                _client.DefaultRequestHeaders.UserAgent.Clear();
+                _client.DefaultRequestHeaders.UserAgent.TryParseAdd(value);
+            }
+        }
 
         #region public Methods
         /// <summary>
@@ -108,6 +114,7 @@ namespace Gandalan.IDAS.Web
             {
                 string json = JsonConvert.SerializeObject(data, settings);
                 var response = await _client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                response.EnsureSuccessStatusCode();
                 return await response.Content?.ReadAsStringAsync();
             }
             catch (Exception ex)
@@ -123,6 +130,7 @@ namespace Gandalan.IDAS.Web
             try
             {
                 var response = await _client.PostAsync(url, new ByteArrayContent(data));
+                response.EnsureSuccessStatusCode();
                 return await response.Content?.ReadAsByteArrayAsync();
             }
             catch (Exception ex)
@@ -212,6 +220,7 @@ namespace Gandalan.IDAS.Web
                     Content = new StringContent(JsonConvert.SerializeObject(data, settings), Encoding.UTF8, "application/json")
                 };
                 var response = await _client.SendAsync(request);
+                response.EnsureSuccessStatusCode();
                 return await response.Content?.ReadAsStringAsync();
             }
             catch (Exception ex)

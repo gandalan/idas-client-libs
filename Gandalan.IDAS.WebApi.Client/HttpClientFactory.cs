@@ -68,7 +68,6 @@ namespace Gandalan.IDAS.WebApi.Client
 
             HttpClient client = new HttpClient(handler);
             client.BaseAddress = new Uri(config.BaseUrl);
-            //config.BaseUrl = config.BaseUrl.TrimEnd('/');
             client.DefaultRequestHeaders.Add("Accept-Charset", "utf-8");
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             client.Timeout = new TimeSpan(0, 1, 0); // 1 Minute

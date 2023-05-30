@@ -13,7 +13,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<FarbGruppeDTO[]> GetAllAsync() 
             => await GetAsync<FarbGruppeDTO[]>("FarbGruppen");
 
-        public async Task SaveFarbItemAsync(FarbGruppeDTO dto)
+        public async Task SaveFarbItemGruppeAsync(FarbGruppeDTO dto)
             => await PutAsync("FarbGruppen/" + dto.FarbItemGroupGuid.ToString(), dto);
     }
 }

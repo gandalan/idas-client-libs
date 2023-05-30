@@ -21,7 +21,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await GetAsync<BauteilDTO[]>("Bauteil");
         }
 
-        public async Task SaveBauteil(BauteilDTO dto)
+        public async Task SaveBauteilAsync(BauteilDTO dto)
         {
             await PutAsync("Bauteil", dto);
         }
