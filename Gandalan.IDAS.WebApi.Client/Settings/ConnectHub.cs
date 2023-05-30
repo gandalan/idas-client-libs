@@ -8,7 +8,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 {
     public class ConnectHub
     {
-        private static readonly string _hubURL = "hxttps://connect.idas-cloudservices.net/api/EndPoints";
+        private static readonly string _hubURL = "https://connect.idas-cloudservices.net/api/EndPoints";
 
         public async Task<HubResponse> GetEndpoints(string apiVersion = null, string env = null, string clientOS = null)
         {
