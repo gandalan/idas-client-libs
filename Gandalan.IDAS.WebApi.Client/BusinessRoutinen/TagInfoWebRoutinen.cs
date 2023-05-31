@@ -48,16 +48,16 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task DeleteTagInfoAsync(TagInfoDTO dto) 
             => await DeleteAsync($"TagInfo", dto);
 
-        public async Task<IList<TagInfoDTO>> GetTagInfoForFunction(Guid objectGuid, long mandantID) 
+        public async Task<IList<TagInfoDTO>> GetTagInfoForFunctionAsync(Guid objectGuid, long mandantID) 
             => await GetAsync<List<TagInfoDTO>>($"GetTagInfoForFunction?objectGuid={objectGuid}&mandantID={mandantID}");
 
-        public async Task<IDictionary<Guid, IEnumerable<TagInfoDTO>>> GetTagInfoListForFunction(IEnumerable<Guid> guidList, long mandantID) 
+        public async Task<IDictionary<Guid, IEnumerable<TagInfoDTO>>> GetTagInfoListForFunctionAsync(IEnumerable<Guid> guidList, long mandantID) 
             => await PutAsync<Dictionary<Guid, IEnumerable<TagInfoDTO>>>($"GetTagInfoListForFunction?mandantID={mandantID}", guidList);
 
-        public async Task AddTagInfoForFunction(TagInfoDTO dto, long mandantID) 
+        public async Task AddTagInfoForFunctionAsync(TagInfoDTO dto, long mandantID) 
             => await PostAsync($"AddTagInfoForFunction?mandantID={mandantID}", dto);
 
-        public async Task DeleteTagInfoForFunction(TagInfoDTO dto, long mandantID) 
+        public async Task DeleteTagInfoForFunctionAsync(TagInfoDTO dto, long mandantID) 
             => await DeleteAsync($"DeleteTagInfoForFunction?mandantID={mandantID}", dto);
     }
 }

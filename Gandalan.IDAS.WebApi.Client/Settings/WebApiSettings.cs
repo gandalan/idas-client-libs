@@ -49,7 +49,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public string HelpCenterUrl { get; set; }
         public string WebhookServiceUrl { get; set; }
 
-        public async Task Initialize(Guid appToken, string env)
+        public virtual async Task Initialize(Guid appToken, string env)
         {
             if (appToken.Equals(Guid.Empty))
                 throw new ArgumentException("WebApiSettings: AppToken must not be Guid.Empty");
@@ -57,10 +57,12 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             if (string.IsNullOrEmpty(env))
                 throw new ArgumentNullException("WebApiSettings: Environment must not be null or empty");
 
-            await WebApiConfigurations.Initialize(appToken);
+            //await WebApiConfigurations.Initialize(appToken);
             IWebApiConfig settings = WebApiConfigurations.ByName(env);
             if (settings != null)
                 CopyToThis(settings);
+
+            await Task.CompletedTask;
         }
 
         public virtual void CopyToThis(IWebApiConfig settings)
