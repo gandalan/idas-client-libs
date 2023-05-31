@@ -24,15 +24,15 @@ namespace Gandalan.IDAS.Logging
 
         public Logger()
         {
-            LogLevels = new Dictionary<LogContext, Logging.LogLevel>();
+            LogLevels = new Dictionary<LogContext, LogLevel>();
             SetLogDateiPfad();
         }
 
         public void SetLogDateiPfad(string pfad = null)
         {
-            string datum = DateTime.Today.ToString("dd-MM-yyy");
-            string app = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.CodeBase ?? "WebApi");
-            string user = Environment.UserName;
+            var datum = DateTime.Today.ToString("yyyy-MM-dd");
+            var app = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.Location ?? "WebApi");
+            var user = Environment.UserName;
 
             try
             {
@@ -44,11 +44,11 @@ namespace Gandalan.IDAS.Logging
                 }
 
                 _traceListener = new TextWriterTraceListener(LogDateiName);
-                Debug.WriteLine($"Logfile: {LogDateiName}");
+                LogConsoleDebug($"Logfile: {LogDateiName}");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Logging in Datei nicht möglich: {ex.Message}");
+                LogConsoleDebug($"Logging in Datei nicht möglich: {ex}");
             }
         }
 
@@ -96,9 +96,13 @@ namespace Gandalan.IDAS.Logging
             OnLogStringAdded?.Invoke(log);
 
             // Debug-Console ausgeben
-            Debug.WriteLine(log);
+            LogConsoleDebug(log);
+        }
 
-            Console.WriteLine(log);
+        private static void LogConsoleDebug(string message)
+        {
+            Debug.WriteLine(message);
+            Console.WriteLine(message);
         }
     }
 }
