@@ -31,7 +31,7 @@ namespace Gandalan.IDAS.Logging
         public void SetLogDateiPfad(string pfad = null)
         {
             var datum = DateTime.Today.ToString("yyyy-MM-dd");
-            var app = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.CodeBase ?? "WebApi");
+            var app = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.Location ?? "WebApi");
             var user = Environment.UserName;
 
             try
