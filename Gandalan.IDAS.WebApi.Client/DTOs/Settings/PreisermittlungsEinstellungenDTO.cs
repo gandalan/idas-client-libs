@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Gandalan.IDAS.WebApi.Client.DTOs.Anpassungen;
 using Gandalan.IDAS.WebApi.Data.Visitor;
 
 namespace Gandalan.IDAS.WebApi.DTO
@@ -13,7 +14,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string SonderfarbZuschlaege { get; set; }
         public bool BruttoPreisErmitteln { get; set; }
         public Dictionary<Guid, List<AufpreisAnpassungDTO>> AufpreisAnpassungen { get; set; }
-        public Dictionary<Guid, decimal> PreisfaktorAnpassungen { get; set; }
+        public Dictionary<Guid, PreisfaktorDTO> PreisfaktorAnpassungen { get; set; }
         public Dictionary<Guid, bool> GrenzfreigabeAnpassungen { get; set; }
         public decimal MbAufpreis { get; set; }
         public DateTime ChangedDate { get; set; }
