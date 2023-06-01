@@ -7,7 +7,9 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
     public abstract class IBelegPositionCommand : ICommand, INotifyPropertyChanged
     {
         public abstract event EventHandler CanExecuteChanged;
+#pragma warning disable CS0067 // The event 'IBelegPositionCommand.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067 // The event 'IBelegPositionCommand.PropertyChanged' is never used
 
         public abstract bool CanExecute(IBelegPositionItem parameter);
         public bool CanExecute(object parameter)

@@ -35,7 +35,9 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register("ImageSource", typeof(Uri), typeof(LargeHeaderControl), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnImageSourceChanged)));
         
         public event RoutedEventHandler Click;
+#pragma warning disable CS0067 // The event 'LargeHeaderControl.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067 // The event 'LargeHeaderControl.PropertyChanged' is never used
 
         public Visibility ButtonVisible { get { return Click != null ? Visibility.Visible : Visibility.Hidden; } }
 

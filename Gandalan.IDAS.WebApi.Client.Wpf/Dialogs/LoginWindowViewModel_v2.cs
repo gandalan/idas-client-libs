@@ -13,7 +13,9 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
         private string _userName;
         private string _passwort;
 
+#pragma warning disable CS0067 // The event 'LoginWindowViewModel_v2.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067 // The event 'LoginWindowViewModel_v2.PropertyChanged' is never used
 
         public string Title => "Neher Cloud - Anmeldung";
         public bool LoginInProgress { get; set; } = false;

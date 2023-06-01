@@ -116,7 +116,9 @@ namespace Gandalan.IDAS.WebApi.DTO
 
     public class Kapazitaetsvorgabe : INotifyPropertyChanged
     {
+#pragma warning disable CS0067 // The event 'Kapazitaetsvorgabe.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067 // The event 'Kapazitaetsvorgabe.PropertyChanged' is never used
         public string GroupName { get; set; }
         public string Label { get;set; }
         public List<string> Produktgruppe { get; set; } = new List<string>();

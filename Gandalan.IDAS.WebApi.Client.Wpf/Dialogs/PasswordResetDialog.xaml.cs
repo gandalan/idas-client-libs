@@ -18,7 +18,9 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             InitializeComponent();
         }
 
+#pragma warning disable CS0067 // The event 'PasswordResetDialog.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067 // The event 'PasswordResetDialog.PropertyChanged' is never used
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

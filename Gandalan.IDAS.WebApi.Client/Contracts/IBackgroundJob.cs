@@ -18,6 +18,6 @@ namespace Gandalan.IDAS.Jobs.Contracts
     {
         new TJobData JobData { get; }
 
-        new Task RunAsync(TJobData jobData);        
+        Task RunAsync(TJobData jobData);        
     }
 }

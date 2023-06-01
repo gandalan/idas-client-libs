@@ -121,7 +121,9 @@ namespace Gandalan.IDAS.WebApi.DTO
             AdressGuid = Guid.NewGuid();
         }
 
+#pragma warning disable CS0067 // The event 'BeleganschriftDTO.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067 // The event 'BeleganschriftDTO.PropertyChanged' is never used
 
         public string GetText()
         {

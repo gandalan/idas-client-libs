@@ -27,7 +27,6 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 Console.WriteLine(e);
                 throw;
             }
-            return null;
         }
     }
 }

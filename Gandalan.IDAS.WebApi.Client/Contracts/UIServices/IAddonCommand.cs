@@ -7,7 +7,9 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.UIServices
     public abstract class IAddonCommand : ICommand, INotifyPropertyChanged
     {
         public abstract event EventHandler CanExecuteChanged;
+#pragma warning disable CS0067 // The event 'IAddonCommand.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067 // The event 'IAddonCommand.PropertyChanged' is never used
         public string Caption { get; set; } = "?";
         public string Tooltip { get; set; } = "";
         public string Context { get; set; } = "";
