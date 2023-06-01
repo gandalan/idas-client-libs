@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.WebApi.Client.DTOs.Settings;
+﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 

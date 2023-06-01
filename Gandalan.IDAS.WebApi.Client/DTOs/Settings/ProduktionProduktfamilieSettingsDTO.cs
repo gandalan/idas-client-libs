@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Gandalan.IDAS.WebApi.Client.DTOs.Settings
+namespace Gandalan.IDAS.WebApi.DTO
 {
     public class ProduktionProduktfamilieSettingsDTO
     {
