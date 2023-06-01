@@ -14,12 +14,13 @@ namespace Gandalan.IDAS.Crypto
         public static string GetSHA1Hash(string text)
         {
             string result = null;
-            using (var SHA1 = new SHA1CryptoServiceProvider()) 
+
+            using (var hash = SHA1.Create()) 
             {
                 string temp = null;
 
                 var arrayData = Encoding.ASCII.GetBytes(text);
-                var arrayResult = SHA1.ComputeHash(arrayData);
+                var arrayResult = hash.ComputeHash(arrayData);
                 for (int i = 0; i < arrayResult.Length; i++)
                 {
                     temp = Convert.ToString(arrayResult[i], 16);

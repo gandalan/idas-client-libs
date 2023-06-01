@@ -52,7 +52,7 @@ namespace Gandalan.IDAS.Crypto
             if (password == null)
                 throw new ArgumentNullException("password");
             PasswordDeriveBytes pdb = new PasswordDeriveBytes(password, Encoding.UTF8.GetBytes("Salt"));
-            RijndaelManaged rm = new RijndaelManaged();
+            var rm = Aes.Create();
             rm.Padding = paddingMode;
             ICryptoTransform encryptor = rm.CreateEncryptor(pdb.GetBytes(16), pdb.GetBytes(16));
             using (MemoryStream msEncrypt = new MemoryStream())
@@ -71,7 +71,7 @@ namespace Gandalan.IDAS.Crypto
             if (password == null)
                 throw new ArgumentNullException("password");
             PasswordDeriveBytes pdb = new PasswordDeriveBytes(password, Encoding.UTF8.GetBytes("Salt"));
-            RijndaelManaged rm = new RijndaelManaged();
+            var rm = Aes.Create();
             rm.Padding = paddingMode;
             ICryptoTransform decryptor = rm.CreateDecryptor(pdb.GetBytes(16), pdb.GetBytes(16));
             using (MemoryStream msDecrypt = new MemoryStream(data))

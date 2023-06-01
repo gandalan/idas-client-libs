@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Gandalan.IDAS.WebApi.Client.Contracts.Vorgaenge;
 using Gandalan.IDAS.WebApi.DTO;
+using PropertyChanged;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.Vorgaenge
 {
@@ -17,7 +18,9 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.Vorgaenge
         public event PropertyChangedEventHandler PropertyChanged;
 #pragma warning restore CS0067 // The event 'IVorgangCommand.PropertyChanged' is never used
 
+        [SuppressPropertyChangedWarnings]
         public abstract string Caption { get; set; }
+        [SuppressPropertyChangedWarnings]
         public abstract string ToolTip { get; set; }
 
         public bool IsExecuting { get; set; } = false;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PropertyChanged;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,6 +47,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
             Click?.Invoke(sender, e);
         }
 
+        [SuppressPropertyChangedWarnings]
         private static void OnImageSourceChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             LargeHeaderControl userControl = (LargeHeaderControl)sender;
