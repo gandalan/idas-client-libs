@@ -2,11 +2,17 @@
 {
     public enum CallMode
     {
-        // retry until success or max retries reached, then throw exception if still not successful
+        /// <summary>
+        /// retry until success or max retries reached, then throw exception if still not successful
+        /// </summary>
         Guaranteed,
-        // retry until success or max retries reached
+        /// <summary>
+        /// retry until success or max retries reached
+        /// </summary>
         BestEffort,
-        // try once, ignore failures
+        /// <summary>
+        /// try once, ignore failures
+        /// </summary>
         FireAndForget
     };
 
