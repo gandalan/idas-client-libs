@@ -34,7 +34,9 @@ namespace Gandalan.IDAS.WebApi.DTO
             GesperrteVarianten = new ObservableCollection<Guid>();
         }
 
+#pragma warning disable CS0067 // The event 'BenutzerDTO.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067 // The event 'BenutzerDTO.PropertyChanged' is never used
 
         public bool HatBerechtigung(string code)
         {

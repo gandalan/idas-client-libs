@@ -19,30 +19,22 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public ArtikelWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
-        public WarenGruppeDTO[] GetAll(DateTime? changedSince = null)
+        public async Task<WarenGruppeDTO[]> GetAllAsync(DateTime? changedSince = null)
         {
-            if (Login())
-            {
-                if(changedSince.HasValue && changedSince.Value > DateTime.MinValue)
-                    return Get<WarenGruppeDTO[]>("Artikel?changedSince=" + changedSince.Value.ToString("o"));
-                else
-                    return Get<WarenGruppeDTO[]>("Artikel");
-            }
-            throw new ApiException("Login fehlgeschlagen");
+            if(changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+                return await GetAsync<WarenGruppeDTO[]>("Artikel?changedSince=" + changedSince.Value.ToString("o"));
+            else
+                return await GetAsync<WarenGruppeDTO[]>("Artikel");
         }
-        public KatalogArtikelDTO SaveArtikel(KatalogArtikelDTO artikel)
+
+        public async Task<KatalogArtikelDTO> SaveArtikelAsync(KatalogArtikelDTO artikel)
         {
-            if (Login())
-                return Put<KatalogArtikelDTO>($"Artikel/{artikel.KatalogArtikelGuid}", artikel);
-            throw new ApiException("Login fehlgeschlagen");
+            return await PutAsync<KatalogArtikelDTO>($"Artikel/{artikel.KatalogArtikelGuid}", artikel);
         }
-        public string DeleteArtikel(KatalogArtikelDTO artikel)
+
+        public async Task DeleteArtikelAsync(KatalogArtikelDTO artikel)
         {
-            if (Login())
-                return Delete($"Artikel/{artikel.KatalogArtikelGuid}");
-            throw new ApiException("Login fehlgeschlagen");
+            await DeleteAsync($"Artikel/{artikel.KatalogArtikelGuid}");
         }
-        public async Task<WarenGruppeDTO[]> GetAllAsync(DateTime? changedSince = null) => await Task.Run(() => GetAll(changedSince));
-        public async Task<KatalogArtikelDTO> SaveArtikelAsync(KatalogArtikelDTO artikel) => await Task.Run(() => SaveArtikel(artikel));
     }
 }

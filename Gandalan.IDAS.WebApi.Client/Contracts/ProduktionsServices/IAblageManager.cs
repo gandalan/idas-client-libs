@@ -1,6 +1,7 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
@@ -48,14 +49,14 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <param name="positionen">Liste von Positionen, die das abzulegende Material enthalten</param>
         /// <param name="materialListe">Liste von MaterialbedarfDTOs, die abgelegt werden sollen</param>
         /// <param name="standort">Standort der Ablagen, die berücksichtigt werden</param>
-        void PutMaterial(List<BelegPositionAVDTO> positionen, List<MaterialbedarfDTO> materialListe, string standort = "Werkstatt");
+        Task PutMaterialAsync(List<BelegPositionAVDTO> positionen, List<MaterialbedarfDTO> materialListe, string standort = "Werkstatt");
 
         /// <summary>
         /// Legt Material für eine Serie in mehreren Ablagefächern ab
         /// </summary>
         /// <param name="serie">Sortiert alles Material in der Serie und weist allem Fächer zu</param>
         /// <param name="standort">Standort der Ablagen, die berücksichtigt werden</param>
-        void PutMaterial(SerieDTO serie, string standort = "Werkstatt");
+        Task PutMaterialAsync(SerieDTO serie, string standort = "Werkstatt");
 
         /// <summary>
         /// Entfernt übergebene MaterialbedarfDTOs aus ihren Fächern

@@ -10,35 +10,14 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public KonfigSatzInfoWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
-        public KonfigSatzInfoDTO[] GetAll()
-        {
-            if (Login())
-                return Get<KonfigSatzInfoDTO[]>("KonfigSatzInfo");
-            throw new ApiException("Login fehlgeschlagen");
-        }
+        public async Task<KonfigSatzInfoDTO[]> GetAllAsync() 
+            => await GetAsync<KonfigSatzInfoDTO[]>("KonfigSatzInfo");
 
-        public KonfigSatzInfoDTO SaveKonfigSatzInfo(KonfigSatzInfoDTO konfigSatzInfo)
-        {
-            if (Login())
-                return Put<KonfigSatzInfoDTO>("KonfigSatzInfo", konfigSatzInfo);
-            throw new ApiException("Login fehlgeschlagen");
-        }
-        public async Task SaveKonfigSatzInfoAsync(KonfigSatzInfoDTO konfigSatzInfo) => await Task.Run(() => SaveKonfigSatzInfo(konfigSatzInfo));
-        public async Task<KonfigSatzInfoDTO[]> GetAllAsync() => await Task.Run(() => GetAll());
+        public async Task SaveKonfigSatzInfoAsync(KonfigSatzInfoDTO konfigSatzInfo) 
+            => await PutAsync<KonfigSatzInfoDTO>("KonfigSatzInfo", konfigSatzInfo);
 
-        [Obsolete("Funktion 'SaveKonfigSatzInfo()' verwenden")]
-        public string Save(KonfigSatzInfoDTO dto)
-        {
-            if (Login())
-            {
-                return Put("KonfigSatzInfo", dto);
-            }
-            return null;
-        }
         [Obsolete("Funktion 'SaveKonfigSatzInfoAsync()' verwenden")]
-        public async Task SaveAsync(KonfigSatzInfoDTO dto)
-        {
-            await Task.Run(() => Save(dto));
-        }
+        public async Task SaveAsync(KonfigSatzInfoDTO dto) 
+            => await PutAsync("KonfigSatzInfo", dto);
     }
 }

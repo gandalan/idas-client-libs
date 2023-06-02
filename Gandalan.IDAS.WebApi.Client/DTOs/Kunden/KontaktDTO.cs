@@ -212,7 +212,9 @@ namespace Gandalan.IDAS.WebApi.DTO
             Personen = new ObservableCollection<PersonDTO>();
         }
 
+#pragma warning disable CS0067 // The event 'KontaktDTO.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067 // The event 'KontaktDTO.PropertyChanged' is never used
 
         public override string ToString()
         {

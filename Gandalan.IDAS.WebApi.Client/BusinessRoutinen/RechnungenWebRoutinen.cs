@@ -13,46 +13,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public List<BelegeInfoDTO> GetAllABFakturierbar()
-        {
-            if (Login())
-            {
-                return Get<List<BelegeInfoDTO>>("Rechnungen/GetABFakturierbar");
-            }
-            return null;
-        }
-
-        public List<BelegeInfoDTO> GetAllRechnungenDruckbar()
-        {
-            if (Login())
-            {
-                return Get<List<BelegeInfoDTO>>("Rechnungen/GetNotPrintedRechnungen");
-            }
-            return null;
-        }
-
-        public Dictionary<Guid, Guid> ErstelleRechnungen(List<BelegartWechselDTO> belegeWechsel)
-        {
-            if (Login())
-            {
-                return Post<Dictionary<Guid, Guid>>("Rechnungen/ErstelleRechnungen", belegeWechsel);
-            }
-            return null;
-        }
-
         public async Task<List<BelegeInfoDTO>> GetAllABFakturierbarAsync()
-        {
-            return await Task.Run(() => GetAllABFakturierbar());
-        }
-
-        public async Task<Dictionary<Guid, Guid>> ErstelleRechnungenAsync(List<BelegartWechselDTO> belegeWechsel)
-        {
-            return await Task.Run(() => ErstelleRechnungen(belegeWechsel));
-        }
+            => await GetAsync<List<BelegeInfoDTO>>("Rechnungen/GetABFakturierbar");
 
         public async Task<List<BelegeInfoDTO>> GetAllRechnungenDruckbarAsync()
-        {
-            return await Task.Run(() => GetAllRechnungenDruckbar());
-        }
+            => await GetAsync<List<BelegeInfoDTO>>("Rechnungen/GetNotPrintedRechnungen");
+
+        public async Task<Dictionary<Guid, Guid>> ErstelleRechnungenAsync(List<BelegartWechselDTO> belegeWechsel) 
+            => await PostAsync<Dictionary<Guid, Guid>>("Rechnungen/ErstelleRechnungen", belegeWechsel);
     }
 }

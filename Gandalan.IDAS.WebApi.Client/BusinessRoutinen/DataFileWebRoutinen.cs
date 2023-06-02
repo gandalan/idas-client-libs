@@ -16,59 +16,17 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public byte[] GetFile(string filename)
-        {
-            if (Login())
-            {
-                return GetData("DataFile/?filename=" + filename);
-            }
-            return null;
-        }
-
-        public FileInfoDTO[] GetFileList(string directory = "/")
-        {
-            if (Login())
-            {
-                return Get<FileInfoDTO[]>($"DataFile/?subdir={Uri.EscapeDataString(directory)}");
-            }
-            return null;
-        }
-                
-        public void SaveFile(string fileName, byte[] data)
-        {
-            if (Login())
-            {
-                PutData("DataFile/?filename=" + fileName, data);
-            }
-        }
-
-        public string DeleteFile(string fileName)
-        {
-            if (Login())
-            {
-                return Delete("DataFile/?filename=" + fileName);
-            }
-            return "Not logged in";
-        }
-
-        public async Task SaveFileAsync(string fileName, byte[] data)
-        {
-            await Task.Run(() => SaveFile(fileName, data));
-        }
-
-        public async Task<FileInfoDTO[]> GetFileListAsync(string directory = "/")
-        {
-            return await Task.Run(() => GetFileList(directory));
-        }
-
         public async Task<byte[]> GetFileAsync(string filename)
-        {
-            return await Task.Run(() => GetFile(filename));
-        }
+            => await GetDataAsync("DataFile/?filename=" + filename);
 
-        public async Task<string> DeleteFileAsync(string filename)
-        {
-            return await Task.Run(() => DeleteFile(filename));
-        }
+        public async Task<FileInfoDTO[]> GetFileListAsync(string directory = "/") 
+            => await GetAsync<FileInfoDTO[]>($"DataFile/?subdir={Uri.EscapeDataString(directory)}");
+
+        public async Task SaveFileAsync(string fileName, byte[] data) 
+            => await PutDataAsync("DataFile/?filename=" + fileName, data);
+
+        public async Task DeleteFileAsync(string filename)
+            => await DeleteAsync($"DataFile/?filename={filename}");
+
     }
 }

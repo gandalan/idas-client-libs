@@ -10,55 +10,23 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public VariantenWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
-        public VarianteDTO[] GetAll()
-        {
-            if (Login())
-                return Get<VarianteDTO[]>("Variante?includeUIDefs=true&maxLevel=99");
-            throw new ApiException("Login fehlgeschlagen");
-        }
+        public async Task<VarianteDTO[]> GetAllAsync() 
+            => await GetAsync<VarianteDTO[]>("Variante?includeUIDefs=true&maxLevel=99");
 
-        public Guid[] GetAllGuids()
-        {
-            if (Login())
-                return Get<Guid[]>("Variante/GetAllGuids");
-            throw new ApiException("Login fehlgeschlagen");
-        }
+        public async Task<Guid[]> GetAllGuidsAsync()
+            => await GetAsync<Guid[]>("Variante/GetAllGuids");
 
-        public VarianteDTO Get(Guid varianteGuid, bool includeUIDefs = true)
-        {
-            if (Login())
-                return Get<VarianteDTO>($"Variante/{varianteGuid}?includeUIDefs={includeUIDefs}&maxLevel=99");
-            throw new ApiException("Login fehlgeschlagen");
-        }
+        public async Task<VarianteDTO> GetAsync(Guid varianteGuid, bool includeUIDefs = true) 
+            => await GetAsync<VarianteDTO>($"Variante/{varianteGuid}?includeUIDefs={includeUIDefs}&maxLevel=99");
 
-        public VarianteDTO SaveVariante(VarianteDTO variante)
-        {
-            if (Login())
-                return Put<VarianteDTO>($"Variante/{variante.VarianteGuid}", variante);
-            throw new ApiException("Login fehlgeschlagen");
-        }
-        public async Task<VarianteDTO[]> GetAllAsync() => await Task.Run(() => GetAll());
-        public async Task<Guid[]> GetAllGuidsAsync() => await Task.Run(() => GetAllGuids());
-        public async Task<VarianteDTO> SaveVarianteAsync(VarianteDTO variante) => await Task.Run(() => SaveVariante(variante));
+        public async Task<VarianteDTO> SaveVarianteAsync(VarianteDTO variante) 
+            => await PutAsync<VarianteDTO>($"Variante/{variante.VarianteGuid}", variante);
 
-        public string CacheWebJob()
-        {
-            return Post("Variante/CacheWebJob", null);
-        }
+        public async Task CacheWebJob() 
+            => await PostAsync("Variante/CacheWebJob", null);
 
-        [Obsolete("Funktion 'SaveVariante()' verwenden")]
-        public string Save(VarianteDTO dto)
-        {
-            if (Login())
-            {
-                return Put("Variante/" + dto.VarianteGuid.ToString(), dto);
-            }
-            return null;
-        }
         [Obsolete("Funktion 'SaveVarianteAsync()' verwenden")]
-        public async Task SaveAsync(VarianteDTO dto)
-        {
-            await Task.Run(() => Save(dto));
-        }
+        public async Task SaveAsync(VarianteDTO dto) 
+            => await PutAsync("Variante/" + dto.VarianteGuid.ToString(), dto);
     }
 }

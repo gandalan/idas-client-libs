@@ -21,6 +21,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool ErbtAuswahlOhneSprosse { get; set; } = false;
         public bool StammdatenbearbeitungGesperrt { get; set; } = false;
 
+#pragma warning disable CS0067 // The event 'MandantDTO.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067 // The event 'MandantDTO.PropertyChanged' is never used
     }
 }

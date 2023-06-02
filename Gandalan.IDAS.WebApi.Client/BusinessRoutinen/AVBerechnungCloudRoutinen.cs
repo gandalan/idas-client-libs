@@ -1,5 +1,6 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Data.DTOs.Produktion;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -9,9 +10,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public BerechnungParameterDTO Process(BerechnungParameterDTO parameter)
+        public async Task<BerechnungParameterDTO> ProcessAsync(BerechnungParameterDTO parameter)
         {
-            return Post<BerechnungParameterDTO>($"ProcessIbos/Process", parameter);
+            return await PostAsync<BerechnungParameterDTO>($"ProcessIbos/Process", parameter);
         }
     }
 }

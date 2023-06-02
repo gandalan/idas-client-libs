@@ -31,7 +31,9 @@ namespace Gandalan.Client.Contracts
             CancelledSave?.Invoke(this, null);
         }
 
+#pragma warning disable CS0067 // The event 'NullValidator<T>.ErrorsChanged' is never used
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+#pragma warning restore CS0067 // The event 'NullValidator<T>.ErrorsChanged' is never used
         public event EventHandler CancelledSave;
 
         public ValidationMessage GetErrors(string propertyName)

@@ -10,19 +10,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
    
-        public ProduktionsDatenDTO Berechnen(BelegPositionAVDTO dto)
-        {
-            if (Login())
-            {
-                return Put<ProduktionsDatenDTO>("AVPostProcess", dto);
-            }
-            return null;
-        }
-
-
         public async Task<ProduktionsDatenDTO> BerechnenAsync(BelegPositionAVDTO dto)
         {
-            return await Task.Run(() => { return Berechnen(dto); });
+            return await PutAsync<ProduktionsDatenDTO>("AVPostProcess", dto);
         }
     }
 }

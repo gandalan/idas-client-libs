@@ -11,42 +11,14 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public AVReserviertItemDTO[] GetAllAVReserviertItems()
-        {
-            if (Login())
-            {
-                return Get<AVReserviertItemDTO[]>("AVReserviert");
-            }
-            return null;
-        }
-
-        public AVReserviertItemDTO[] GetAllAVReserviertItemsBySerie(Guid serieGuid)
-        {
-            if (Login())
-            {
-                return Get<AVReserviertItemDTO[]>($"AVReserviert/?serieGuid={serieGuid}");
-            }
-            return null;
-        }
-
-
-
         public async Task<AVReserviertItemDTO[]> GetAllAVReserviertItemsAsync()
         {
-            if (Login())
-            {
-                return await GetAsync<AVReserviertItemDTO[]>("AVReserviert");
-            }
-            return null;
+            return await GetAsync<AVReserviertItemDTO[]>("AVReserviert");
         }
 
         public async Task<AVReserviertItemDTO[]> GetAllAVReserviertItemsBySerieAsync(Guid serieGuid)
         {
-            if (Login())
-            {
-                return await GetAsync<AVReserviertItemDTO[]>($"AVReserviert/?serieGuid={serieGuid}");
-            }
-            return null;
+            return await GetAsync<AVReserviertItemDTO[]>($"AVReserviert/?serieGuid={serieGuid}");
         }
     }
 }

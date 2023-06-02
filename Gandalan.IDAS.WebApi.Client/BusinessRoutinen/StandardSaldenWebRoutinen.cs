@@ -11,43 +11,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public StandardSaldoDTO[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<StandardSaldoDTO[]>("StandardSalden");
-            }
-            return null;
-        }
+        public async Task<StandardSaldoDTO[]> GetAllAsync() 
+            => await GetAsync<StandardSaldoDTO[]>("StandardSalden");
 
-        public string SaveSaldo(StandardSaldoDTO dto)
-        {
-            if (Login())
-            {
-                return Put("StandardSalden/", dto);
-            }
-            return null;
-        }
-
-        public void DeleteSaldo(Guid saldoGuid)
-        {
-            if (Login())
-            {
-                Delete("StandardSalden/" + saldoGuid);
-            }
-        }
-
-        public async Task<StandardSaldoDTO[]> GetAllAsync()
-        {
-            return await Task.Run(() => GetAll());
-        }
         public async Task SaveSaldoAsync(StandardSaldoDTO dto)
-        {
-            await Task.Run(() => SaveSaldo(dto));
-        }
-        public async Task DeleteSaldoAsync(Guid saldoGuid)
-        {
-            await Task.Run(() => DeleteSaldo(saldoGuid));
-        }
+            => await PutAsync("StandardSalden/", dto);
+
+        public async Task DeleteSaldoAsync(Guid saldoGuid) 
+            => await DeleteAsync("StandardSalden/" + saldoGuid);
     }
 }

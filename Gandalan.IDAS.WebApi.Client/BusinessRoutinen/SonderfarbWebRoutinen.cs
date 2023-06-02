@@ -11,19 +11,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public BelegDTO BerechneSonderfarben(Guid belegGuid)
-        {
-            if (Login())
-            {
-                return Post<BelegDTO>("BelegSonderfarben?bguid=" + belegGuid.ToString(), null);
-            }
-            return null;
-        }
-
-
-        public async Task<BelegDTO> BerechneSonderfarbenAsync(Guid belegGuid)
-        {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return BerechneSonderfarben(belegGuid); });
-        }        
+        public async Task<BelegDTO> BerechneSonderfarbenAsync(Guid belegGuid) 
+            => await PostAsync<BelegDTO>($"BelegSonderfarben?bguid={belegGuid}", null);
     }
 }

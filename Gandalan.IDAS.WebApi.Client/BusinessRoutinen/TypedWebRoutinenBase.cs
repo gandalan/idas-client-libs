@@ -14,59 +14,21 @@ namespace Gandalan.IDAS.WebApi.Client
             _endPoint = endPoint;
             _getGuid = getGuid;
         }
-        
-        public T[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<T[]>(_endPoint);
-            }
-            return null;
-        }
 
-        public T Get(Guid guid)
-        {
-            if (Login())
-            {
-                return Get<T>(_endPoint + "/" + guid);
-            }
-            return default(T);
-        }
+        public async Task<T[]> GetAllAsync() 
+            => await GetAsync<T[]>(_endPoint);
+
+        public async Task<T> GetAsync(Guid guid) 
+            => await GetAsync<T>(_endPoint + "/" + guid);
+
+        public async Task SaveAsync(T dto) 
+            => await PutAsync(_endPoint + "/" + _getGuid(dto), dto);
+
+        public async Task DeleteAsync(Guid guid) 
+            => await DeleteAsync(_endPoint + "/" + guid);
 
 
-        public string Save(T dto)
-        {
-            if (Login())
-            {
-                return Put(_endPoint + "/" + _getGuid(dto), dto);
-            }
-            return null;
-        }
-
-        public void Delete(Guid guid)
-        {
-            if (Login())
-            {
-                Delete(_endPoint + "/" + guid);
-            }
-        }
 
 
-        public async Task<T[]> GetAllAsync()
-        {
-            return await Task.Run(() => GetAll());
-        }
-        public async Task SaveAsync(T dto)
-        {
-            await Task.Run(() => Save(dto));
-        }
-        public async Task DeleteAsync(Guid guid)
-        {
-            await Task.Run(() => Delete(guid));
-        }
-        public async Task<T> GetAsync(Guid guid)
-        {
-            return await Task.Run(() => Get(guid));
-        }
     }
 }

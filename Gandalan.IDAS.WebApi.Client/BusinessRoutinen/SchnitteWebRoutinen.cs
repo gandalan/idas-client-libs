@@ -11,33 +11,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             this.Settings.Url = this.Settings.Url.Replace("/api/", "/ModellDaten/");
         }
 
-        public SchnittDTO[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<SchnittDTO[]>("Schnitt");
-            }
-            return null;
-        }
+        public async Task<SchnittDTO[]> GetAllAsync() 
+            => await GetAsync<SchnittDTO[]>("Schnitt");
 
-        public string SaveSchnitt(SchnittDTO dto)
-        {
-            if (Login())
-            {
-                return Put("Schnitt", dto);
-            }
-            return null;
-        }
-
-
-        public async Task<SchnittDTO[]> GetAllAsync()
-        {
-            return await Task.Run(() => GetAll());
-        }
-
-        public async Task SaveSchnittAsync(SchnittDTO dto)
-        {
-            await Task.Run(() => SaveSchnitt(dto));
-        }
+        public async Task SaveSchnittAsync(SchnittDTO dto) 
+            => await PutAsync("Schnitt", dto);
     }
 }

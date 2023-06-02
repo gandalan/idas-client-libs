@@ -12,231 +12,40 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public SerieDTO[] GetAllSerien()
-        {
-            if (Login())
-            {
-                return Get<SerieDTO[]>("Serie");
-            }
+        public async Task ReleaseElementeAsync(Guid fromSerie)
+            => await GetAsync($"Serie/ReleaseElemente?fromSerie={fromSerie}");
 
-            return null;
-        }
-
-        public SerieDTO[] GetAllSerien(DateTime changedSince)
-        {
-            if (Login())
-            {
-                return Get<SerieDTO[]>($"Serie/?changedSince={changedSince.ToString("o")}");
-            }
-
-            return null;
-        }
-
-        public SerieDTO GetSerie(Guid guid)
-        {
-            if (Login())
-            {
-                return Get<SerieDTO>("Serie/" + guid.ToString());
-            }
-
-            return null;
-        }
-
-        public string SaveSerie(SerieDTO serie)
-        {
-            if (Login())
-            {
-                return Put<string>("Serie", serie);
-            }
-
-            return "Not logged in";
-        }
-
-        public string DeleteSerie(Guid guid)
-        {
-            if (Login())
-            {
-                return Delete($"Serie/{guid}");
-            }
-
-            return "Not logged in";
-        }
-
-        public string ReleaseElemente(Guid fromSerie)
-        {
-            if (Login())
-            {
-                return Get<string>($"Serie/ReleaseElemente?fromSerie={fromSerie}");
-            }
-
-            return null;
-        }
-
-        public async Task<string> ReleaseElementeAsync(Guid fromSerie)
-        {
-            if (Login())
-            {
-                return await GetAsync<string>($"Serie/ReleaseElemente?fromSerie={fromSerie}");
-            }
-
-            return null;
-        }
-
-        public string MoveElemente(Guid fromSerie, Guid toSerie)
-        {
-            if (Login())
-            {
-                return Get<string>($"Serie/MoveElemente?fromSerie={fromSerie}&toSerie={toSerie}");
-            }
-
-            return null;
-        }
-
+        
         public async Task<string> MoveElementeAsync(Guid fromSerie, Guid toSerie)
-        {
-            if (Login())
-            {
-                return await GetAsync<string>($"Serie/MoveElemente?fromSerie={fromSerie}&toSerie={toSerie}");
-            }
-
-            return null;
-        }
-
-        public string RedistributeElemente(Guid fromSerie)
-        {
-            if (Login())
-            {
-                return Get<string>($"Serie/RedistributeElemente?fromSerie={fromSerie}");
-            }
-
-            return null;
-        }
+            => await GetAsync<string>($"Serie/MoveElemente?fromSerie={fromSerie}&toSerie={toSerie}");
 
         public async Task<string> RedistributeElementeAsync(Guid fromSerie)
-        {
-            if (Login())
-            {
-                return await GetAsync<string>($"Serie/RedistributeElemente?fromSerie={fromSerie}");
-            }
+            => await GetAsync<string>($"Serie/RedistributeElemente?fromSerie={fromSerie}");
 
-            return null;
-        }
-
-        public async Task<SerieDTO[]> GetAllSerienAsync()
-        {
-            if (Login())
-            {
-                return await GetAsync<SerieDTO[]>("Serie");
-            }
-
-            return null;
-        }
+        public async Task<SerieDTO[]> GetAllSerienAsync() 
+            => await GetAsync<SerieDTO[]>("Serie");
 
         public async Task<SerieDTO[]> GetAllSerienAsync(DateTime changedSince)
-        {
-            if (Login())
-            {
-                return await GetAsync<SerieDTO[]>($"Serie/?changedSince={changedSince.ToString("o")}");
-            }
-
-            return null;
-        }
+            => await GetAsync<SerieDTO[]>($"Serie/?changedSince={changedSince:o}");
 
         public async Task<SerieDTO> GetSerieAsync(Guid guid)
-        {
-            if (Login())
-            {
-                return await GetAsync<SerieDTO>("Serie/" + guid.ToString());
-            }
+            => await GetAsync<SerieDTO>($"Serie/{guid}");
 
-            return null;
-        }
+        public async Task SaveSerieAsync(SerieDTO serie) 
+            => await PutAsync("Serie", serie);
 
-        public async Task<string> SaveSerieAsync(SerieDTO serie)
-        {
-            if (Login())
-            {
-                return await PutAsync<string>("Serie", serie);
-            }
+        public async Task DeleteSerieAsync(Guid guid) 
+            => await DeleteAsync($"Serie/{guid}");
 
-            return "Not logged in";
-        }
+        public async Task<IList<SerieAuslastungDTO>> GetAuslastungAsync(Guid serie) 
+            => await GetAsync<IList<SerieAuslastungDTO>>($"Auslastung/{serie}");
 
-        public async Task<string> DeleteSerieAsync(Guid guid)
-        {
-            if (Login())
-            {
-                return await DeleteAsync($"Serie/{guid}");
-            }
+        public async Task<IDictionary<Guid, IList<SerieAuslastungDTO>>> GetGesamtAuslastungAsync(bool includeAbgelaufene = false)
+            => await GetAsync<IDictionary<Guid, IList<SerieAuslastungDTO>>>($"Auslastung/?includeAbgelaufene={includeAbgelaufene}");
 
-            return "Not logged in";
-        }
-
-        public IList<SerieAuslastungDTO> GetAuslastung(Guid serie)
-        {
-            if (Login())
-            {
-                return Get<IList<SerieAuslastungDTO>>($"Auslastung/{serie}");
-            }
-
-            return null;
-        }
-
-        public async Task<IList<SerieAuslastungDTO>> GetAuslastungAsync(Guid serie)
-        {
-            if (Login())
-            {
-                return await GetAsync<IList<SerieAuslastungDTO>>($"Auslastung/{serie}");
-            }
-
-            return null;
-        }
-
-        public IDictionary<Guid, IList<SerieAuslastungDTO>> GetGesamtAuslastung(bool includeAbgelaufene = false)
-        {
-            if (Login())
-            {
-                return Get<IDictionary<Guid, IList<SerieAuslastungDTO>>>(
-                    $"Auslastung/?includeAbgelaufene={includeAbgelaufene}");
-            }
-
-            return null;
-        }
-
-        public async Task<IDictionary<Guid, IList<SerieAuslastungDTO>>> GetGesamtAuslastungAsync(
-            bool includeAbgelaufene = false)
-        {
-            if (Login())
-            {
-                return await GetAsync<IDictionary<Guid, IList<SerieAuslastungDTO>>>(
-                    $"Auslastung/?includeAbgelaufene={includeAbgelaufene}");
-            }
-
-            return null;
-        }
-
-        public IDictionary<Guid, IList<SerieAuslastungDTO>> GetSerienKapazitaeten(
-            DateTime? startDate = null, DateTime? endDate = null, bool includeStaendige = false)
-        {
-            if (Login())
-            {
-                return Get<IDictionary<Guid, IList<SerieAuslastungDTO>>>(
-                    $"SerieKapazitaet/?startDate={startDate}&endDate={endDate}&includeStaendige={includeStaendige}");
-            }
-
-            return null;
-        }
-        
-        public async Task<IDictionary<Guid, IList<SerieAuslastungDTO>>> GetSerienKapazitaetenAsync(
-            DateTime? startDate = null, DateTime? endDate = null, bool includeStaendige = false)
-        {
-            if (await LoginAsync())
-            {
-                return await GetAsync<IDictionary<Guid, IList<SerieAuslastungDTO>>>(
+        public async Task<IDictionary<Guid, IList<SerieAuslastungDTO>>> GetSerienKapazitaetenAsync(DateTime? startDate = null, 
+            DateTime? endDate = null, bool includeStaendige = false) 
+            => await GetAsync<IDictionary<Guid, IList<SerieAuslastungDTO>>>(
                     $"SerieKapazitaet/?startDate={startDate:o}&endDate={endDate:o}&includeStaendige={includeStaendige}");
-            }
-
-            return null;
-        }
     }
 }

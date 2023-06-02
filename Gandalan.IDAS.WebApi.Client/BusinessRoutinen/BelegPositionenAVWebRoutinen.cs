@@ -1,5 +1,6 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using System;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -7,14 +8,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public BelegPositionenAVWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
-        public string RunAVBerechnung(Guid id, long mandantId)
-        {
-            return Post("BelegPositionenAV/RunAVBerechnung/" + id + "?mandantId=" + mandantId, null);
-        }
+        public async Task RunAVBerechnungAsync(Guid id, long mandantId) 
+            => await PostAsync("BelegPositionenAV/RunAVBerechnung/" + id + "?mandantId=" + mandantId, null);
 
-        public string CalculateItems()
-        {
-            return Post("BelegPositionenAV/CalculateItems", null);
-        }
+        public async Task CalculateItems() 
+            => await PostAsync("BelegPositionenAV/CalculateItems", null);
     }
 }

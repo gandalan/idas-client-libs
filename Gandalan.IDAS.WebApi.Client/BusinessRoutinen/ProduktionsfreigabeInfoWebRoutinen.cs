@@ -11,18 +11,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public Dictionary<Guid, DateTime> GetProduktionsfreigabeInfo(IList<Guid> belegGuids)
-        {
-            if (Login())
-            {
-                return Put<Dictionary<Guid, DateTime>>("ProduktionsfreigabeInfo", belegGuids);
-            }
-            return null;
-        }
-
-        public async Task<Dictionary<Guid, DateTime>> GetProduktionsfreigabeInfoAsync(IList<Guid> belegGuids)
-        {
-            return await Task.Run(() => GetProduktionsfreigabeInfo(belegGuids));
-        }
+        public async Task<Dictionary<Guid, DateTime>> GetProduktionsfreigabeInfoAsync(IList<Guid> belegGuids) 
+            => await PutAsync<Dictionary<Guid, DateTime>>("ProduktionsfreigabeInfo", belegGuids);
     }
 }

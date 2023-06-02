@@ -11,42 +11,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public WerteListeDTO[] GetAll(bool includeAutoWerteListen)
-        {
-            if (Login())
-            {
-                return Get<WerteListeDTO[]>("WerteListe?includeAutoWerteListen=" + includeAutoWerteListen.ToString());
-            }
-            return null;
-        }
+        public async Task<WerteListeDTO[]> GetAllAsync(bool includeAutoWerteListen) 
+            => await GetAsync<WerteListeDTO[]>("WerteListe?includeAutoWerteListen=" + includeAutoWerteListen.ToString());
 
-        public WerteListeDTO Get(Guid wertelisteGuid, bool includeAutoWerteListen = true)
-        {
-            if (Login())
-            {
-                return Get<WerteListeDTO>($"WerteListe/{wertelisteGuid}?includeAutoWerteListen=" + includeAutoWerteListen.ToString());
-            }
-            return null;
-        }
-
-        public string Save(WerteListeDTO dto)
-        {
-            if (Login())
-            {
-                return Put("WerteListe/" + dto.WerteListeGuid.ToString(), dto);
-            }
-            return null;
-        }
-
-
-        public async Task<WerteListeDTO[]> GetAllAsync(bool includeAutoWerteListen)
-        {
-            return await Task.Run(() => GetAll(includeAutoWerteListen));
-        }
+        public async Task<WerteListeDTO> GetAsync(Guid wertelisteGuid, bool includeAutoWerteListen = true)
+            => await GetAsync<WerteListeDTO>($"WerteListe/{wertelisteGuid}?includeAutoWerteListen=" + includeAutoWerteListen.ToString());
 
         public async Task SaveAsync(WerteListeDTO dto)
-        {
-            await Task.Run(() => Save(dto));
-        }
+            => await PutAsync("WerteListe/" + dto.WerteListeGuid.ToString(), dto);
     }
 }

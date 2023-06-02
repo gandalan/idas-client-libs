@@ -10,32 +10,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public OberflaecheDTO[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<OberflaecheDTO[]>("Oberflaeche");
-            }
-            return null;
-        }
+        public async Task<OberflaecheDTO[]> GetAllAsync() 
+            => await GetAsync<OberflaecheDTO[]>("Oberflaeche");
 
-        public string SaveOberflaeche(OberflaecheDTO dto)
-        {
-            if (Login())
-            {
-                return Put("Oberflaeche/" + dto.OberflaecheGuid, dto);
-            }
-            return null;
-        }
-
-
-        public async Task<OberflaecheDTO[]> GetAllAsync()
-        {
-            return await Task.Run(() => GetAll());
-        }
-        public async Task SaveOberflaecheAsync(OberflaecheDTO dto)
-        {
-            await Task.Run(() => SaveOberflaeche(dto));
-        }
+        public async Task SaveOberflaecheAsync(OberflaecheDTO dto) 
+            => await PutAsync("Oberflaeche/" + dto.OberflaecheGuid, dto);
     }
 }

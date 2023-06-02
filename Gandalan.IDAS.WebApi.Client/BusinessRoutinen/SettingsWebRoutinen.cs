@@ -11,34 +11,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public Dictionary<string, ExpandoObject> GetAll()
-        {
-            if (Login())
-            {
-                return Get<Dictionary<string, ExpandoObject>>("Settings");
-            }
-            return null;
-        }
-
-        public string Save(string key, ExpandoObject expandoObject)
-        {
-            if (Login())
-            {
-                return Put("Settings/" + key, expandoObject);
-            }
-            return null;
-        }
-
-
-        public async Task<Dictionary<string, ExpandoObject>> GetAllAsync()
-        {
-            return await Task.Run(() => { return GetAll(); });
-        }
-
+        public async Task<Dictionary<string, ExpandoObject>> GetAllAsync() 
+            => await GetAsync<Dictionary<string, ExpandoObject>>("Settings");
 
         public async Task SaveAsync(string key, ExpandoObject expandoObject)
-        {
-            await Task.Run(() => Save(key, expandoObject));
-        }
+            => await PutAsync($"Settings/{key}", expandoObject);
     }
 }

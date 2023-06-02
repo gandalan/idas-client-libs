@@ -12,91 +12,23 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public ReportDTO[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<ReportDTO[]>("Reports");
-            }
-            return null;
-        }
+        public async Task<ReportDTO[]> GetAllAsync() 
+            => await GetAsync<ReportDTO[]>("Reports");
 
-        public ReportDTO[] GetAll(DateTime changedSince)
-        {
-            if (Login())
-            {
-                return Get<ReportDTO[]>($"Reports/?changedSince={changedSince.ToString("o")}");
-            }
-            return null;
-        }
+        public async Task<ReportDTO[]> GetAllAsync(DateTime changedSince) 
+            => await GetAsync<ReportDTO[]>($"Reports/?changedSince={changedSince:o}");
 
-        public ReportDTO GetReport(Guid id)
-        {
-            if (Login())
-            {
-                try
-                {
-                    return Get<ReportDTO>("Reports?id=" + id.ToString());
-                }
-                catch
-                {
-                    if (!IgnoreOnErrorOccured)
-                        throw;
-                }
-            }
-            return null;
-        }
+        public async Task<ReportDTO> GetReportAsync(Guid id) 
+            => await GetAsync<ReportDTO>($"Reports?id={id}");
 
-        public string SaveReport(ReportDTO dto)
-        {
-            if (Login())
-            {
-                return Put("Reports/" + dto.ReportGuid, dto);
-            }
-            return null;
-        }
+        public async Task SaveReportAsync(ReportDTO dto) 
+            => await PutAsync($"Reports/{dto.ReportGuid}", dto);
 
-        public void DeleteReport(Guid reportGuid)
-        {
-            if (Login())
-            {
-                Delete("Reports/" + reportGuid);
-            }
-        }
-
-        public string CopyReport(Guid ZielMandantGuid, List<Guid> reportGuids)
-        {
-            if (Login())
-            {
-                return Put("Reports?ZielMandantGuid=" + ZielMandantGuid, reportGuids);
-            }
-            return null;
-        }
-
-
-        public async Task<ReportDTO[]> GetAllAsync()
-        {
-            return await Task.Run(() => GetAll());
-        }
-        public async Task<ReportDTO[]> GetAllAsync(DateTime changedSince)
-        {
-            return await Task.Run(() => GetAll(changedSince));
-        }
-        public async Task<ReportDTO> GetReportAsync(Guid id)
-        {
-            return await Task.Run(() => GetReport(id));
-        }
-        public async Task SaveReportAsync(ReportDTO dto)
-        {
-            await Task.Run(() => SaveReport(dto));
-        }
         public async Task DeleteReportAsync(Guid reportGuid)
-        {
-            await Task.Run(() => DeleteReport(reportGuid));
-        }
+            => await DeleteAsync($"Reports/{reportGuid}");
+
         public async Task CopyReportAsync(Guid ZielMandantGuid, List<Guid> reportGuids)
-        {
-            await Task.Run(() => CopyReport(ZielMandantGuid, reportGuids));
-        }
+            => await PutAsync($"Reports?ZielMandantGuid={ZielMandantGuid}", reportGuids);
+
     }
 }

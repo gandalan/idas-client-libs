@@ -10,23 +10,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public VorgangDTO AddProduktionsfreigabe(BelegartWechselDTO dto)
-        {
-            if (Login())
-            {
-                return Put<VorgangDTO>("Produktionsfreigabe", dto);
-            }
-            return null;
-        }
-
         public async Task<VorgangDTO> AddProduktionsfreigabeAsync(BelegartWechselDTO dto)
-        {
-            return await Task.Run(() => AddProduktionsfreigabe(dto));
-        }
+            => await PutAsync<VorgangDTO>("Produktionsfreigabe", dto);
 
-        public string WebJob()
-        {
-            return Post("Produktionsfreigabe/WebJob", null);
-        }
+        public async Task WebJob() 
+            => await PostAsync("Produktionsfreigabe/WebJob", null);
     }
 }

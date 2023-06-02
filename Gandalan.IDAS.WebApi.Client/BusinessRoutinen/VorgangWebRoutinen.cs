@@ -12,246 +12,75 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public VorgangListItemDTO[] LadeVorgangsListe(int jahr)
-        {
-            if (Login())
-            {
-                return Get<VorgangListItemDTO[]>("Vorgang/?jahr=" + jahr);
-            }
-            return null;
-        }
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr) 
+            => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?jahr={jahr}");
 
-        public VorgangListItemDTO[] LadeVorgangsListe(string status, int jahr)
-        {
-            if (Login())
-            {
-                return Get<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}");
-            }
-            return null;
-        }
-
-        public VorgangListItemDTO[] LadeVorgangsListe(string status, int jahr, DateTime changedSince)
-        {
-            if (Login())
-            {
-                return Get<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince:o}");
-            }
-            return null;
-        }
-
-        public VorgangListItemDTO[] LadeVorgangsListe(DateTime changedSince, int jahr = 0, string status = "Alle", string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
-        {
-            if (Login())
-            {
-                return Get<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
-            }
-            return null;
-        }
-
-        public VorgangListItemDTO[] LadeVorgangsListe(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
-        {
-            if (Login())
-            {
-                return Get<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
-            }
-            return null;
-        }
-
-        public VorgangListItemDTO[] LadeVorgangsListe(Guid kundeGuid)
-        {
-            if (Login())
-            {
-                return Get<VorgangListItemDTO[]>($"Vorgang/?kundeGuid={kundeGuid}");
-            }
-            return null;
-        }
-
-        public void SendeVorgaenge(VorgangDTO[] list)
-        {
-            foreach (VorgangDTO v in list)
-                SendeVorgang(v);
-        }
-
-        public VorgangDTO SendeVorgang(VorgangDTO vorgang)
-        {
-            if (Login())
-            {
-                return Put<VorgangDTO>("Vorgang", vorgang);
-            }
-            return null;
-        }
-
-        public VorgangDTO LadeVorgang(Guid vorgangGuid, bool mitKunde)
-        {
-            if (Login())
-            {
-                return Get<VorgangDTO>("Vorgang/" + vorgangGuid.ToString() + "?includeKunde=" + mitKunde.ToString());
-            }
-            return null;
-        }
-
-        public VorgangDTO LadeVorgang(long vorgangsNummer, int jahr, bool mitKunde = false)
-        {
-            if (Login())
-            {
-                return Get<VorgangDTO>($"Vorgang/{vorgangsNummer}/{jahr}?includeKunde={mitKunde}");
-            }
-            return null;
-        }
-
-        public VorgangStatusDTO GetStatus(Guid vorgangGuid)
-        {
-            if (Login())
-            {
-                return Get<VorgangStatusDTO>("VorgangStatus/" + vorgangGuid.ToString());
-            }
-            return null;
-        }
-
-        public VorgangStatusDTO SetStatus(Guid vorgangGuid, string statusCode)
-        {
-            if (Login())
-            {
-                VorgangStatusDTO set = new VorgangStatusDTO()
-                {
-                    VorgangGuid = vorgangGuid,
-                    NeuerStatus = statusCode
-                };
-                return Put<VorgangStatusDTO>("VorgangStatus", set);
-            }
-            return null;
-        }
-
-        public void SetTextStatus(List<Guid> vorgangGuids, string textStatus)
-        {
-            if (Login())
-            {
-                VorgangTextStatusDTO set = new VorgangTextStatusDTO()
-                {
-                    VorgangGuids = vorgangGuids,
-                    NeuerTextStatus = textStatus
-                };
-                Post("VorgangTextStatus", set);
-            }
-        }
-
-        public void ArchiviereVorgang(Guid vorgangGuid)
-        {
-            if (Login())
-            {
-                Post("Archivierung/?vguid=" + vorgangGuid.ToString(), null);
-            }
-        }
-
-        public void ArchiviereVorgangList(List<Guid> vorgangGuidList)
-        {
-            if (Login())
-            {
-                Post("Archivierung/", vorgangGuidList);
-            }
-        }
-
-        public void AendereBelegArt(Guid belegGuid, string neueBelegArt)
-        {
-            if (Login())
-            {
-                Post("BelegArt/?bguid=" + belegGuid.ToString() + "&neueBelegArt=" + neueBelegArt, null);
-            }
-        }
-
-
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr)
-        {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(jahr); });
-        }
-
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr)
-        {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr); });
-        }
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr) 
+            => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}");
 
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr, DateTime changedSince)
-        {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(status, jahr, changedSince); });
-        }
+            => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince:o}");
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(DateTime changedSince, int jahr = 0, string status = "Alle", string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
-        {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(changedSince, jahr, status, art, includeArchive, includeOthersData, search); });
-        }
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(DateTime changedSince, int jahr = 0, string status = "Alle", string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "") 
+            => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince:o}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
 
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
-        {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(jahr, status, changedSince, art, includeArchive, includeOthersData, search); });
-        }
+            => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(Guid kundeGuid)
-        {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeVorgangsListe(kundeGuid); });
-        }
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(Guid kundeGuid) 
+            => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?kundeGuid={kundeGuid}");
 
-        public async void SendeVorgaengeAsync(VorgangDTO[] list)
+        public async Task SendeVorgaengeAsync(VorgangDTO[] list)
         {
             foreach (VorgangDTO v in list)
                 await SendeVorgangAsync(v);
         }
 
-        public async Task<VorgangDTO> SendeVorgangAsync(VorgangDTO vorgang)
-        {
-            return await Task<VorgangDTO>.Run(() => { return SendeVorgang(vorgang); });
-        }
+        public async Task<VorgangDTO> SendeVorgangAsync(VorgangDTO vorgang) 
+            => await PutAsync<VorgangDTO>("Vorgang", vorgang);
 
         public async Task<VorgangDTO> LadeVorgangAsync(Guid vorgangGuid, bool mitKunde)
-        {
-            return await Task<VorgangDTO>.Run(() => { return LadeVorgang(vorgangGuid, mitKunde); });
-        }
+            => await GetAsync<VorgangDTO>("Vorgang/" + vorgangGuid.ToString() + "?includeKunde=" + mitKunde.ToString());
 
-        public async Task AendereBelegArtAsync(Guid belegGuid, string neueBelegArt)
-        {
-            await Task.Run(() => { AendereBelegArt(belegGuid, neueBelegArt); });
-        }
-
-        public async Task ArchiviereVorgangAsync(Guid vorgangGuid)
-        {
-            await Task.Run(() => { ArchiviereVorgang(vorgangGuid); });
-        }
-
-        public async Task ArchiviereVorgangListAsync(List<Guid> vorgangGuidList)
-        {
-            await Task.Run(() => { ArchiviereVorgangList(vorgangGuidList); });
-        }
+        public async Task<VorgangDTO> LadeVorgangAsync(long vorgangsNummer, int jahr, bool mitKunde = false)
+            => await GetAsync<VorgangDTO>($"Vorgang/{vorgangsNummer}/{jahr}?includeKunde={mitKunde}");
 
         public async Task<VorgangStatusDTO> GetStatusAsync(Guid vorgangGuid)
-        {
-            return await Task<VorgangStatusDTO>.Run(() => { return GetStatus(vorgangGuid); });
-        }
+            => await GetAsync<VorgangStatusDTO>("VorgangStatus/" + vorgangGuid.ToString());
 
         public async Task<VorgangStatusDTO> SetStatusAsync(Guid vorgangGuid, string statusCode)
         {
-            return await Task<VorgangStatusDTO>.Run(() => { return SetStatus(vorgangGuid, statusCode); });
+            VorgangStatusDTO set = new VorgangStatusDTO()
+            {
+                VorgangGuid = vorgangGuid,
+                NeuerStatus = statusCode
+            };
+            return await PutAsync<VorgangStatusDTO>("VorgangStatus", set);
         }
 
         public async Task SetTextStatusAsync(List<Guid> vorgangGuids, string textStatus)
         {
-            await Task.Run(() => { SetTextStatus(vorgangGuids, textStatus); });
+            VorgangTextStatusDTO set = new VorgangTextStatusDTO()
+            {
+                VorgangGuids = vorgangGuids,
+                NeuerTextStatus = textStatus
+            };
+            await PostAsync("VorgangTextStatus", set);
         }
 
-        public Dictionary<long, List<VorgangListItemDTO>> GetAllVorgangForFunction(DateTime changedSince)
-        {
-            if (Login())
-            {
-                return Get<Dictionary<long, List<VorgangListItemDTO>>>($"GetAllVorgangForFunction/?changedSince={changedSince.ToString("o")}");
-            }
-            return null;
-        }
+        public async Task ArchiviereVorgangAsync(Guid vorgangGuid) 
+            => await PostAsync("Archivierung/?vguid=" + vorgangGuid.ToString(), null);
 
-        public VorgangDTO GetVorgangForFunction(Guid vorgangGuid, long mandantId)
-        {
-            if (Login())
-            {
-                return Get<VorgangDTO>("GetVorgangForFunction?id=" + vorgangGuid.ToString() + "&mandantID=" + mandantId.ToString());
-            }
-            return null;
-        }
+        public async Task ArchiviereVorgangListAsync(List<Guid> vorgangGuidList)
+            => await PostAsync("Archivierung/", vorgangGuidList);
+
+        public async Task AendereBelegArtAsync(Guid belegGuid, string neueBelegArt)
+            => await PostAsync("BelegArt/?bguid=" + belegGuid.ToString() + "&neueBelegArt=" + neueBelegArt, null);
+
+        public async Task<Dictionary<long, List<VorgangListItemDTO>>> GetAllVorgangForFunctionAsync(DateTime changedSince)
+            => await GetAsync<Dictionary<long, List<VorgangListItemDTO>>>($"GetAllVorgangForFunction/?changedSince={changedSince:o}");
+
+        public async Task<VorgangDTO> GetVorgangForFunctionAsync(Guid vorgangGuid, long mandantId)
+            => await GetAsync<VorgangDTO>($"GetVorgangForFunction?id={vorgangGuid.ToString()}&mandantID={mandantId}");
     }
 }

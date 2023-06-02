@@ -3,6 +3,7 @@ using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
@@ -10,22 +11,14 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
     {
         public string JwtToken { get; set; }
 
-        public JwtWebApiSettings(Guid appToken, string env, string jwt)
-            : base(appToken, env)
+        public override Task Initialize(Guid appToken, string env)
         {
-            Initialize(jwt);
-            JwtToken = jwt;
+            throw new NotSupportedException("JWT:string parameter missing");
         }
 
-        public JwtWebApiSettings(string jwt)
-            : base()
+        public async Task Initialize(Guid appToken, string env, string jwt)
         {
-            Initialize(jwt);
-            JwtToken = jwt;
-        }
-
-        private void Initialize(string jwt)
-        {
+            await base.Initialize(appToken, env);
             var tokenHandler = new JwtSecurityTokenHandler();
 
             if (!tokenHandler.CanReadToken(jwt))

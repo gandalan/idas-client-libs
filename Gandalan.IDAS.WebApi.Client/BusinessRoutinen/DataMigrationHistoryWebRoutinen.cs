@@ -8,20 +8,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public DataMigrationHistoryWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
-        public long GetHistoryVersion()
-        {
-            if (Login())
-                return Get<long>("DataMigrationHistory");
-            throw new ApiException("Login fehlgeschlagen");
-        }
-        public string SetHistoryVersion(long newVersion)
-        {
-            if (Login())
-                return Put("DataMigrationHistory", newVersion.ToString());
-            throw new ApiException("Login fehlgeschlagen");
-        }
-        public async Task SetHistoryVersionAsync(long newVersion) => await Task.Run(() => SetHistoryVersion(newVersion));
-        public async Task<long> GetHistoryVersionAsync() => await Task.Run(() => { return GetHistoryVersion(); });
+        public async Task<long> GetHistoryVersionAsync() 
+            => await GetAsync<long>("DataMigrationHistory");
 
+        public async Task SetHistoryVersionAsync(long newVersion) 
+            => await PutAsync("DataMigrationHistory", newVersion.ToString());
     }
 }

@@ -12,19 +12,14 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             var uri = new UriBuilder(settings.NotifyUrl);
             uri.Path = "/api/";
-            Settings.Url = uri.ToString();
-        }
-
-        public IList<NachrichtenDTO> GetAllNotifications()
-        {
-            var mandant = Settings.AuthToken.Mandant.MandantGuid;
-            var produzent = Settings.AuthToken.Mandant.ProduzentMandantGuid;
-            return Get<List<NachrichtenDTO>>($"Nachrichten?mandantGuid={mandant}&produzentGuid={produzent}");
+            Settings.Url = uri.Uri.ToString(); // use Uri member!! to be identical to createWebClient later on - otherwise includes port etc
         }
 
         public async Task<IList<NachrichtenDTO>> GetAllNotificationsAsync()
         {
-            return await Task.Run(() => GetAllNotifications());
+            var mandant = Settings.AuthToken.Mandant.MandantGuid;
+            var produzent = Settings.AuthToken.Mandant.ProduzentMandantGuid;
+            return await GetAsync<List<NachrichtenDTO>>($"Nachrichten?mandantGuid={mandant}&produzentGuid={produzent}");
         }
     }
 }
