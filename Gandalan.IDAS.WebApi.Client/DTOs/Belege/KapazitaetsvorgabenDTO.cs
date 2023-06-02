@@ -35,14 +35,13 @@ namespace Gandalan.IDAS.WebApi.DTO
                 Add(new Kapazitaetsvorgabe() { GroupName = "Spannrahmen", Label = "SP7", Produktgruppe = new List<string>() { "SP7" }, IstBasisregel = true, Order = Count });
 
                 Add(new Kapazitaetsvorgabe() { GroupName = "Drehfenster DF3, DF4", Label = "1 flg. ohne Rahmen", Produktgruppe = new List<string>() { "DF3/1", "DF3/3", "DF4" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Drehfenster DF3, DF4", Label = "2 flg. ohne Rahmen", Produktgruppe = new List<string>() { "" }, IstBasisregel = true, Order = Count });
                 Add(new Kapazitaetsvorgabe() { GroupName = "Drehfenster DF3, DF4", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DF3/7", "DF3/8", "DF3/9", "DF3/10" }, IstBasisregel = true, Order = Count });
                 Add(new Kapazitaetsvorgabe() { GroupName = "Drehfenster DF3, DF4", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DF3/16" }, IstBasisregel = true, Order = Count });
 
                 Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT3, DT4", Label = "1 flg. ohne Rahmen", Produktgruppe = new List<string>() { "DT3/1", "DT3/3", "DT3/31", "DT3/37", "DT3/38", "DT4/2", "DT4/4" }, IstBasisregel = true, Order = Count });
                 Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT3, DT4", Label = "2 flg. ohne Rahmen", Produktgruppe = new List<string>() { "DT3/11", "DT3/36", "DT4/12" }, IstBasisregel = true, Order = Count });
                 Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT3, DT4", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DT3", "DT4" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT3, DT4", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DT3/13", "DT3/15", "DT3/16", "DT3/26", "DT3/27", "DT3/30", "DT3/40", "DT4/9" }, IstBasisregel = true, Order = Count });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT3, DT4", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DT3/13", "DT3/15", "DT3/16", "DT3/26", "DT3/27", "DT3/30", "DT3/40", "DT3/41", "DT4/9" }, IstBasisregel = true, Order = Count });
 
                 Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT6", Label = "1 flg. ohne Rahmen", Produktgruppe = new List<string>() { "DT6/1", "DT6/11", "DT6/3", "DT6/38" }, IstBasisregel = true, Order = Count });
                 Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT6", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DT6/8", "DT6/10", "DT6/13", "DT6/16", "DT6/42" }, IstBasisregel = true, Order = Count });
