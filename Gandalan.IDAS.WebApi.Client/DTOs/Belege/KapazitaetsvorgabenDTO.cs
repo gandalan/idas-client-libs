@@ -94,21 +94,243 @@ namespace Gandalan.IDAS.WebApi.DTO
             }
             if (Version < 2)
             {
-                //Version = 2;
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Metallgewebe", Order = Count });
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Einhandbedienung beim Rollo", Order = Count });
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Mehraufwand für Sonderfarbe", Order = Count });
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Mehraufwand Sonderfarbe bei Plissee", Order = Count });
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Katzenklappe", Order = Count });
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Hundeklappe", Order = Count });
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Schiebeverschluss", Order = Count });
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Türschließer bei Drehrahmen", Order = Count });
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Drehstabfeder bei Drehrahmen", Order = Count });
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Griffleiste für Schiebeanlagen", Order = Count });
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Fussbedienung mit Sockelblech", Order = Count });
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Sockelblech für Schiebeanlage", Order = Count });
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Sprossenpaneel", Artikelliste = new List<string>() { "123456" }, Order = Count });
-                //Add(new Kapazitaetsvorgabe() { GroupName = "Sonstiges", Label = "Montagebohrungen", Bearbeitungen = new List<string>() { "MB" }, Order = Count });
+                Version = 2;
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Metallgewebe (nicht bei Lichtschächten)",
+                    Produktgruppe = new List<string>() { "SP1", "SP2", "SP4", "SP5", "SP6", "SP7", "PF2", "DF3", "DF4", "PT2", "DT3", "DT4", "ST3", "ST4" },
+                    Artikelliste = new List<string>() { "142627", "142632" },
+                    Etikettentext = new List<string>() { "V4", "V2AA" },
+                    Order = Count
+                }); 
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Sondergewebe (nicht bei Lichtschächten)",
+                    Produktgruppe = new List<string>() { "SP1", "SP2", "SP4", "SP5", "SP6", "SP7", "PF2", "DF3", "DF4", "PT2", "DT3", "DT4", "ST3", "ST4" },
+                    Artikelliste = new List<string>() { "142628", "142638", "142680" },
+                    Etikettentext = new List<string>() { "PA", "PAE", "PIA" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Transpatecgewebe (nicht bei Lichtschächten)",
+                    Produktgruppe = new List<string>() { "SP1", "SP2", "SP4", "SP5", "SP6", "SP7", "PF2", "DF3", "DF4", "PT2", "DT3", "DT4", "ST3", "ST4" },
+                    Artikelliste = new List<string>() { "142519", "142520", "142521", "142523" },
+                    Etikettentext = new List<string>() { "TTA", "TFM", "TFP" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Polyestergewebe unterhalb der Sprosse",
+                    Produktgruppe = new List<string>() { "PT2", "DT3", "DT4", "ST3", "ST4" },
+                    Artikelliste = new List<string>() { "142628", "142638"},
+                    Etikettentext = new List<string>() { "/ PA", "/ PAE" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Vorbiegen",
+                    Produktgruppe = new List<string>() { "SP1", "SP2", "SP4", "SP5", "SP6", "SP7", "ST3", "ST4" },
+                    Etikettentext = new List<string>() { "v_Kw_" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Seitenarretierung SP1",
+                    Produktgruppe = new List<string>() { "SP1"},
+                    Artikelliste = new List<string>() { "132466" },
+                    Etikettentext = new List<string>() { "SA_" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Seitenarretierung SP5",
+                    Produktgruppe = new List<string>() { "SP5" },
+                    Artikelliste = new List<string>() { "132466", "132272" },
+                    Etikettentext = new List<string>() { "SA_", "mW_" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Seitenarretierung SP2, SP4, SP6, SP7",
+                    Produktgruppe = new List<string>() { "SP2", "SP4", "SP6", "SP7"},
+                    Artikelliste = new List<string>() { "132472" },
+                    Etikettentext = new List<string>() { "mW_" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Sprosse (im Spannrahmen)",
+                    Produktgruppe = new List<string>() { "SP1", "SP2", "SP4", "SP5", "SP6", "SP7" },
+                    Etikettentext = new List<string>() { "SpB_" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Sprosse (im Lichtschacht)",
+                    Produktgruppe = new List<string>() { "LI1", "LI2" },
+                    Artikelliste = new List<string>() { "103313" },
+                    Etikettentext = new List<string>() { "SpB_" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Sprossenpaneel",
+                    Produktgruppe = new List<string>() { "PT2", "DT3", "DT4", "ST3", "ST4" },
+                    Etikettentext = new List<string>() { "Pan_" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Montagebohrung",
+                    Produktgruppe = new List<string>() { "SP1", "PF2", "DF3", "DF4", "PT2", "DT3", "DT4", "RO4", "RO5", "RO6", "ER1", "ER2", "PL1", "PL2", "ST3", "ST4", "LI4" },
+                    Etikettentext = new List<string>() { "MB_s", "MB_v" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Katzen-/Hundeklappe",
+                    Produktgruppe = new List<string>() { "PT2", "DT3", "DT4", "ST3", "ST4" },
+                    Artikelliste = new List<string>() { "222501", "223510", "223520" },
+                    Etikettentext = new List<string>() { "KP", "NeKP", "NeHP" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Standflügelarretierung",
+                    Produktgruppe = new List<string>() { "PF2", "PT2" },
+                    Artikelliste = new List<string>() { "133470" },
+                    Etikettentext = new List<string>() { "ExV_" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Schiebeverschluss",
+                    Produktgruppe = new List<string>() { "DT3", "PT2" },
+                    Artikelliste = new List<string>() { "166460.02", "133460.05" },
+                    Etikettentext = new List<string>() { "SchiebVs_" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "gedämpfte Tür",
+                    Produktgruppe = new List<string>() { "DT3" },
+                    Artikelliste = new List<string>() { "133510" },
+                    Etikettentext = new List<string>() { "Mag" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Türschliesser",
+                    Produktgruppe = new List<string>() { "DT3", "DT4" },
+                    Artikelliste = new List<string>() { "133540" },
+                    Etikettentext = new List<string>() { "TD" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Einhandbedienung RO5",
+                    Produktgruppe = new List<string>() { "RO5" },
+                    Artikelliste = new List<string>() { "153925" },
+                    Etikettentext = new List<string>() { "Stab" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Aussenbedienung",
+                    Produktgruppe = new List<string>() { "RO4", "RO5", "RO6" },
+                    Artikelliste = new List<string>() { "143920" },
+                    Etikettentext = new List<string>() { "ABf_" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Zusatzbedienung",
+                    Produktgruppe = new List<string>() { "RO4", "RO5", "RO6" },
+                    Artikelliste = new List<string>() { "144080", "143981" },
+                    Etikettentext = new List<string>() { "ZiehSch", "EinhSch" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Flügelspaltdichtung",
+                    Produktgruppe = new List<string>() { "ST3", "ST4" },
+                    Artikelliste = new List<string>() { "124860" },
+                    Etikettentext = new List<string>() { "FSp__D" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Griffleiste",
+                    Produktgruppe = new List<string>() { "ST3" },
+                    Artikelliste = new List<string>() { "104850" },
+                    Etikettentext = new List<string>() { "GL" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Fußbedienmulde",
+                    Produktgruppe = new List<string>() { "ST3", "ST4" },
+                    Artikelliste = new List<string>() { "103518", "134852" },
+                    Etikettentext = new List<string>() { "SpSoB", "Fb_" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Sockelblech",
+                    Produktgruppe = new List<string>() { "ST3", "ST4" },
+                    Artikelliste = new List<string>() { "103518" },
+                    Etikettentext = new List<string>() { "SpSoB" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Trittschutzdistanzstück",
+                    Produktgruppe = new List<string>() { "LI2/2" },
+                    Artikelliste = new List<string>() { "143311" },
+                    Etikettentext = new List<string>() { "TsDs" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "symmetrischer Gitterrost",
+                    Produktgruppe = new List<string>() { "LI3", "TE1" },
+                    Etikettentext = new List<string>() { "GR_sym" },
+                    Order = Count
+                });
+                Add(new Kapazitaetsvorgabe()
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Mehraufwand durch Sonderfarbe",
+                    Etikettentext = new List<string>() { "Kunst.Farbe:" },
+                    Order = Count
+                });
             }
         }
     }
