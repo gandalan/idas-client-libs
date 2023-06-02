@@ -26,7 +26,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 // JWT token has not a valid form
                 return;
             }
-
+            JwtToken = jwt;
             var jwtToken = tokenHandler.ReadJwtToken(jwt);
             var userId = jwtToken.Claims.First(x => x.Type == "id").Value;
             var appTokenClaim = jwtToken.Claims.First(x => x.Type == "appToken");
