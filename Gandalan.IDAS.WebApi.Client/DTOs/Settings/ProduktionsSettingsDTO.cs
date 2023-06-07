@@ -45,5 +45,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool SP_Z_Mass_inkl_Buerstendichtung { get; set; } = true;
         public bool SP5_Sprosse_ausklinken { get; set; } = false;
         public bool UseKleinteileFarbersatzTabelle { get; set; } = false;
+        public bool ST3_BeidseitigeGriffleiste_GL_B { get; set; } = false;
     }
 }

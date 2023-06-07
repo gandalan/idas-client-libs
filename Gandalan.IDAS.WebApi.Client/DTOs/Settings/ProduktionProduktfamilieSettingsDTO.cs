@@ -11,5 +11,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Buerste { get; set; }
         public bool FederkraftErhoeht { get; set; }
         public bool VerschlussGegenstueckVor2022 { get; set; }
+        public bool IndividuelleSeitenarretierung { get; set; } = false;
+        public int? HoeheFuerSeitenarretierung { get; set; }
     }
 }
