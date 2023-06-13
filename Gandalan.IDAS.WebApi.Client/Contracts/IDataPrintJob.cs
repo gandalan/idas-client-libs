@@ -17,6 +17,7 @@ namespace Gandalan.IDAS.Jobs.Contracts
         string DruckerName { get; set; }
         bool AdvancedPrint { get; set; }
         long MandantId { get; set; }
+        int Copies { get; set; }
     }
 
 
@@ -33,11 +34,13 @@ namespace Gandalan.IDAS.Jobs.Contracts
         public string DruckerName { get; set; }
         public bool AdvancedPrint { get; set; }
         public long MandantId { get; set; }
+        public int Copies { get; set; }
 
-        public DataPrintJobData(Object daten, Guid reportGuid)
+        public DataPrintJobData(Object daten, Guid reportGuid, int copies = 1)
         {
             Data = daten;
             ReportGuid = reportGuid;
+            Copies = copies;
         }
     }
 

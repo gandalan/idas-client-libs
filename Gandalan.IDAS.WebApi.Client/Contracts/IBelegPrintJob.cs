@@ -15,6 +15,7 @@ namespace Gandalan.IDAS.Jobs.Contracts
         byte[] Result { get; set; }
         bool SavePDF { get; set; }
         string DefaultPrinter { get; set; }
+        int Copies { get; set; }
     }
 
 }
