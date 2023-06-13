@@ -10,6 +10,7 @@ namespace Gandalan.Client.Contracts.UIServices
         bool PrintSelectedData { get; set; }
         bool ShowPrintSelectedData { get; set; }
         string PrinterName { get; set; }
+        int Copies { get; set; }
     }
 
     public class PrintWorkflowData : IPrintWorkflowData
@@ -20,5 +21,6 @@ namespace Gandalan.Client.Contracts.UIServices
         public bool PrintSelectedData { get; set; }
         public bool ShowPrintSelectedData { get; set; } = true;
         public string PrinterName { get; set; }
+        public int Copies { get; set; }
     }
 }
