@@ -8,5 +8,6 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.Report
         ReportAction Action { get; set; }
         string PrinterName { get; set; }
         string FileName { get; set; }
+        int Copies { get; set; }
     }
 }
