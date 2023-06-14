@@ -32,12 +32,18 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?vorgangGuid={vorgangGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
         }
-                
+
+        public async Task<BelegPositionAVDTO[]> GetVorgaengeBelegPositionenAVAsync(List<Guid> vorgangGuids, bool includeOriginalBeleg = true, bool includeProdDaten = true)
+        {
+            var vorgangGuidsString = string.Join("&vorgangGuids=", vorgangGuids);
+            return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAVByVorgangIds/?vorgangGuids={vorgangGuidsString}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
+        }
+
         public async Task<List<BelegPositionAVDTO>> GetBelegPositionenAVAsync(Guid belegpositionGuid)
         {
             return await GetAsync<List<BelegPositionAVDTO>>($"BelegPositionenAV/{belegpositionGuid}");
         }
-               
+
         public async Task SaveBelegPositionenAVAsync(BelegPositionAVDTO position)
         {
             await PutAsync("BelegPositionenAV", position);
