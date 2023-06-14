@@ -15,6 +15,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool BruttoPreisErmitteln { get; set; }
         public Dictionary<Guid, List<AufpreisAnpassungDTO>> AufpreisAnpassungen { get; set; }
         public Dictionary<Guid, decimal> PreisfaktorAnpassungen { get; set; }
+        public Dictionary<Guid, decimal> ZuschnittpreisfaktorAnpassungen { get; set; }
         public Dictionary<Guid, decimal> AufpreisfaktorAnpassungen { get; set; }
         public Dictionary<Guid, bool> GrenzfreigabeAnpassungen { get; set; }
         public decimal MbAufpreis { get; set; }
