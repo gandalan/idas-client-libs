@@ -154,6 +154,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 if (result != null)
                 {
                     AuthToken = result;
+                    initRestRoutinen();
                     Status = "OK";
                     return true;
                 }
