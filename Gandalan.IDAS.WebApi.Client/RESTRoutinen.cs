@@ -216,7 +216,7 @@ namespace Gandalan.IDAS.Web
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Delete,
-                    RequestUri = new Uri(url),
+                    RequestUri = new Uri(_client.BaseAddress, url),
                     Content = new StringContent(JsonConvert.SerializeObject(data, settings), Encoding.UTF8, "application/json")
                 };
                 var response = await _client.SendAsync(request);
