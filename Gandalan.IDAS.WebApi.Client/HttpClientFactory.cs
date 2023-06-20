@@ -70,7 +70,7 @@ namespace Gandalan.IDAS.WebApi.Client
             client.BaseAddress = new Uri(config.BaseUrl);
             client.DefaultRequestHeaders.Add("Accept-Charset", "utf-8");
             client.DefaultRequestHeaders.Add("Accept", "application/json");
-            client.Timeout = new TimeSpan(0, 1, 0); // 1 Minute
+            client.Timeout = new TimeSpan(0, 5, 0); // 5 Minute
 
             if (!string.IsNullOrEmpty(config.UserAgent))
                 client.DefaultRequestHeaders.UserAgent.TryParseAdd(config.UserAgent);
