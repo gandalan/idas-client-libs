@@ -1,8 +1,8 @@
-﻿using System;
-using System.Net;
+﻿using Gandalan.IDAS.Logging;
+using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
@@ -12,10 +12,10 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 
         public async Task<HubResponse> GetEndpoints(string apiVersion = null, string env = null, string clientOS = null)
         {
-            var requestURL = 
+            var requestURL =
                 _hubURL + "?" +
-                (apiVersion != null ? "apiVersion=" + apiVersion + "&" : "") + 
-                (env != null ? "env=" + env + "&" : "") + 
+                (apiVersion != null ? "apiVersion=" + apiVersion + "&" : "") +
+                (env != null ? "env=" + env + "&" : "") +
                 (clientOS != null ? "clientOS=" + clientOS : "");
             try
             {
@@ -24,7 +24,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Logger.LogConsoleDebug($"{e}");
                 throw;
             }
         }

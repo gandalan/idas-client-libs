@@ -1,9 +1,9 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,6 +39,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             {
                 return _settings[name];
             }
+
             return null;
         }
 
@@ -94,9 +95,10 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                             _settings.Add(friendlyName, localEnvironment);
                             internalLoadSavedAuthToken(friendlyName, localEnvironment);
                         }
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
-                        Debug.WriteLine($"Loading local env {friendlyName}: {ex.Message}");
+                        Logger.LogConsoleDebug($"Loading local env {friendlyName}: {ex}");
                     }
                 }
             }
@@ -160,6 +162,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                     // damaged file, ignore saved token
                 }
             }
+
             return null;
         }
 

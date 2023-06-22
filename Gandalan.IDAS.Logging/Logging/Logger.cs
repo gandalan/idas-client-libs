@@ -99,7 +99,11 @@ namespace Gandalan.IDAS.Logging
             LogConsoleDebug(log);
         }
 
-        private static void LogConsoleDebug(string message)
+        /// <summary>
+        /// Write to Console and Debug output. Does not write anything to file.
+        /// </summary>
+        /// <param name="message">Message to print</param>
+        public static void LogConsoleDebug(string message)
         {
             Debug.WriteLine(message);
             Console.WriteLine(message);
