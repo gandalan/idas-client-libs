@@ -248,12 +248,12 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task GetAsync(string uri, bool skipAuth = false)
+        public async Task<string> GetAsync(string uri, bool skipAuth = false)
         {
             try
             {
                 await runPreRequestChecks(skipAuth);
-                await _restRoutinen.GetAsync(uri);
+                return await _restRoutinen.GetAsync(uri);
             }
             catch (WebException ex)
             {
