@@ -20,7 +20,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task ResetBestellungenAsync(DateTime resetAb)
             => await GetAsync($"BestellungenReset?resetAb={resetAb.ToString("o")}");
 
-        public async Task<MaterialBestellungListItemDTO[]> LadeMaterialBestellungen(int jahr = -1, bool includeAbegholte = false) 
+        public async Task<MaterialBestellungListItemDTO[]> LadeMaterialBestellungenAsync(int jahr = -1, bool includeAbegholte = false) 
             => await GetAsync<MaterialBestellungListItemDTO[]>($"MaterialBestellungen?jahr={jahr}&includeAbegholte={includeAbegholte}");
 
         public async Task ResetMaterialBestellungenAsync(DateTime resetAb) 
