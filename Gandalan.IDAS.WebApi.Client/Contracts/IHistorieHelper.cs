@@ -5,6 +5,8 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts
 {
     public interface IHistorieHelper
     {
+        void ProgressInfo(Func<Task> action);
+        void ProgressInfo(string label, Func<Task> action);
         void ProgressInfo(Action action);
         void ProgressInfo(string label, Action action);
         void ProgressTaskInfo(string label, Task task);
