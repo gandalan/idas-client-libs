@@ -75,5 +75,10 @@ namespace Gandalan.IDAS.WebApi.DTO
             Daten = new ObservableCollection<BelegPositionDatenDTO>();
             Historie = new ObservableCollection<BelegPositionHistorieDTO>();
         }
+        
+        public BelegPositionDTO Clone()
+        {
+            return ObjectCloner.Clone(this);
+        }
     }
 }
