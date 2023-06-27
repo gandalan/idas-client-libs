@@ -18,6 +18,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client
@@ -203,9 +204,9 @@ namespace Gandalan.IDAS.WebApi.Client
                 await runPreRequestChecks(skipAuth);
                 return await _restRoutinen.PostAsync<T>(uri, data, settings);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri, data);
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
@@ -216,9 +217,9 @@ namespace Gandalan.IDAS.WebApi.Client
                 await runPreRequestChecks(skipAuth);
                 await _restRoutinen.PostAsync(uri, data, settings);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri, data);
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
@@ -229,9 +230,9 @@ namespace Gandalan.IDAS.WebApi.Client
                 await runPreRequestChecks(skipAuth);
                 return await _restRoutinen.PostDataAsync(uri, data);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri, data);
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
@@ -242,9 +243,9 @@ namespace Gandalan.IDAS.WebApi.Client
                 await runPreRequestChecks(skipAuth); 
                 return await _restRoutinen.GetDataAsync(uri);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri);
+                throw await HandleWebException(ex, uri);
             }
         }
 
@@ -255,9 +256,9 @@ namespace Gandalan.IDAS.WebApi.Client
                 await runPreRequestChecks(skipAuth);
                 return await _restRoutinen.GetAsync(uri);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri);
+                throw await HandleWebException(ex, uri);
             }
         }
 
@@ -268,9 +269,9 @@ namespace Gandalan.IDAS.WebApi.Client
                 await runPreRequestChecks(skipAuth);
                 return await _restRoutinen.GetAsync<T>(uri, settings);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri);
+                throw await HandleWebException(ex, uri);
             }
         }
 
@@ -281,9 +282,9 @@ namespace Gandalan.IDAS.WebApi.Client
                 await runPreRequestChecks(skipAuth);
                 await _restRoutinen.PutAsync(uri, data, settings);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri, data);
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
@@ -294,9 +295,9 @@ namespace Gandalan.IDAS.WebApi.Client
                 await runPreRequestChecks(skipAuth);
                 return await _restRoutinen.PutAsync<T>(uri, data, settings);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri, data);
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
@@ -307,9 +308,9 @@ namespace Gandalan.IDAS.WebApi.Client
                 await runPreRequestChecks(skipAuth);
                 return await _restRoutinen.PutDataAsync(uri, data);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri, data);
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
@@ -320,9 +321,9 @@ namespace Gandalan.IDAS.WebApi.Client
                 await runPreRequestChecks(skipAuth);
                 await _restRoutinen.DeleteAsync(uri);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri);
+                throw await HandleWebException(ex, uri);
             }
         }
 
@@ -333,9 +334,9 @@ namespace Gandalan.IDAS.WebApi.Client
                 await runPreRequestChecks(skipAuth);
                 await _restRoutinen.DeleteAsync(uri, data);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri);
+                throw await HandleWebException(ex, uri);
             }
         }
 
@@ -346,9 +347,9 @@ namespace Gandalan.IDAS.WebApi.Client
                 await runPreRequestChecks(skipAuth);
                 return await _restRoutinen.DeleteAsync<T>(uri, data);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri);
+                throw await HandleWebException(ex, uri);
             }
         }
 
@@ -448,15 +449,15 @@ namespace Gandalan.IDAS.WebApi.Client
             return false;
         }
 
-        private ApiException HandleWebException(WebException ex, string url)
+        private async Task<ApiException> HandleWebException(HttpRequestException ex, string url)
         {
-            ApiException exception = TranslateException(ex);
+            ApiException exception = await TranslateException(ex);
             return InternalHandleWebException(exception, url);
         }
 
-        private ApiException HandleWebException(WebException ex, string url, object data)
+        private async Task<ApiException> HandleWebException(HttpRequestException ex, string url, object data)
         {
-            ApiException exception = TranslateException(ex, data);
+            ApiException exception = await TranslateException(ex, data);
             return InternalHandleWebException(exception, url);
         }
 
@@ -517,21 +518,21 @@ namespace Gandalan.IDAS.WebApi.Client
             return exception;
         }
 
-        protected static ApiException TranslateException(WebException ex, object payload)
+        protected static async Task<ApiException> TranslateException(HttpRequestException ex, object payload)
         {
-            if (ex.Response is HttpWebResponse)
+            if (ex.Data.Contains("Response"))
             {
-                HttpStatusCode code = (ex.Response as HttpWebResponse).StatusCode;
-                string info = new StreamReader((ex.Response as HttpWebResponse).GetResponseStream()).ReadToEnd();
+                HttpStatusCode code = (HttpStatusCode)ex.Data["StatusCode"];
+                var responseString = (string)ex.Data["Response"];
 
-                if (!string.IsNullOrWhiteSpace(info))
+                if (!string.IsNullOrWhiteSpace(responseString))
                 {
                     // Newtonsoft TypeNameInfo - try to restore original exception from Backend
-                    if (info.Contains("$type"))
+                    if (responseString.Contains("$type"))
                     {
                         try
                         {
-                            Exception original = JsonConvert.DeserializeObject<Exception>(info, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+                            Exception original = JsonConvert.DeserializeObject<Exception>(responseString, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
                             return new ApiException(original.Message, code, original, payload);
                         }
                         catch { }
@@ -539,13 +540,13 @@ namespace Gandalan.IDAS.WebApi.Client
 
                     try
                     {
-                        dynamic infoObject = JsonConvert.DeserializeObject<dynamic>(info);
+                        dynamic infoObject = JsonConvert.DeserializeObject<dynamic>(responseString);
                         string status = infoObject.status;
                         return new ApiException(status, code, payload) { ExceptionString = infoObject.exception.ToString() };
                     }
                     catch
                     {
-                        return new ApiException(info, code, payload);
+                        return new ApiException(responseString, code, payload);
                     }
                 }
 
@@ -555,31 +556,31 @@ namespace Gandalan.IDAS.WebApi.Client
             return new ApiException(ex.Message, ex, payload);
         }
 
-        protected static ApiException TranslateException(WebException ex)
+        protected static async Task<ApiException> TranslateException(HttpRequestException ex)
         {
-            if (ex.Response is HttpWebResponse)
+            if (ex.Data.Contains("Response"))
             {
-                HttpStatusCode code = (ex.Response as HttpWebResponse).StatusCode;
-                string info = new StreamReader((ex.Response as HttpWebResponse).GetResponseStream()).ReadToEnd();
+                HttpStatusCode code = (HttpStatusCode)ex.Data["StatusCode"];
+                var response = (string)ex.Data["Response"];
 
-                if (!string.IsNullOrWhiteSpace(info))
+                if (!string.IsNullOrWhiteSpace(response))
                 {
                     try
                     {
-                        Exception original = JsonConvert.DeserializeObject<Exception>(info, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+                        Exception original = JsonConvert.DeserializeObject<Exception>(response, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
                         return new ApiException(original.Message, code, original);
                     }
                     catch
                     {
                         try
                         {
-                            dynamic infoObject = JsonConvert.DeserializeObject<dynamic>(info);
+                            dynamic infoObject = JsonConvert.DeserializeObject<dynamic>(response);
                             string status = infoObject.status;
                             return new ApiException(status, code) { ExceptionString = infoObject.exception.ToString() };
                         }
                         catch
                         {
-                            return new ApiException(info, code);
+                            return new ApiException(response, code);
                         }
                     }
                 }
