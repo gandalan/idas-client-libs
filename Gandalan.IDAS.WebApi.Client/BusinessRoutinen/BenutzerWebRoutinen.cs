@@ -26,7 +26,7 @@ namespace Gandalan.IDAS.WebApi.Client
             => await PutAsync("Benutzer", benutzer);
 
         public async Task PasswortResetAsync(string benutzerName) => 
-            await GetAsync("PasswortReset?email=" + Uri.EscapeDataString(benutzerName));
+            await GetAsync("PasswortReset?email=" + Uri.EscapeDataString(benutzerName), true);
 
 
         public async Task SICSyncWebJob()
