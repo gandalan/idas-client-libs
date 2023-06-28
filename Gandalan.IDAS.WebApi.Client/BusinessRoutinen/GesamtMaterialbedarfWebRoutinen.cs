@@ -13,38 +13,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public GesamtMaterialbedarfGetReturn Get(DateTime? stichTag = null)
-        {
-            if (Login())
-            {
-                return Get<GesamtMaterialbedarfGetReturn>($"GesamtMaterialbedarf?stichTag={stichTag?.ToString("o")}");
-            }
+        public async Task<GesamtMaterialbedarfGetReturn> GetAsync(DateTime? stichTag = null) 
+            => await GetAsync<GesamtMaterialbedarfGetReturn>($"GesamtMaterialbedarf?stichTag={stichTag?.ToString("o")}");
 
-            return null;
-        }
+        public async Task DeleteAsync(Guid guid) 
+            => await DeleteAsync($"GesamtMaterialbedarf/{guid}");
 
-        public void Delete(Guid guid)
-        {
-            if (Login())
-            {
-                Delete($"GesamtMaterialbedarf/{guid}");
-            }
-        }
-
-        public void Zusammenfassen(List<GesamtMaterialbedarfDTO> dtos, ZusammenfassungsOptionen optionen, bool stangenoptimierung)
-        {
-            if (Login())
-            {
-                Post($"GesamtMaterialbedarf/Zusammenfassen?optionen={optionen}&stangenoptimierung={stangenoptimierung}", dtos);
-            }
-        }
-
-        public async Task<GesamtMaterialbedarfGetReturn> GetAsync(DateTime? stichTag = null) =>
-            await Task.Run(() => Get(stichTag));
-        public async Task DeleteAsync(Guid guid) => await Task.Run(() => Delete(guid));
-
-        public async Task ZusammenfassenAsync(List<GesamtMaterialbedarfDTO> dtos, ZusammenfassungsOptionen optionen, bool stangenoptimierung) =>
-            await Task.Run(() => Zusammenfassen(dtos, optionen, stangenoptimierung));
-
+        public async Task ZusammenfassenAsync(List<GesamtMaterialbedarfDTO> dtos, ZusammenfassungsOptionen optionen, bool stangenoptimierung) 
+            => await PostAsync($"GesamtMaterialbedarf/Zusammenfassen?optionen={optionen}&stangenoptimierung={stangenoptimierung}", dtos);
     }
 }

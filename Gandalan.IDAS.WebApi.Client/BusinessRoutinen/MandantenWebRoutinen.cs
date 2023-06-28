@@ -12,47 +12,13 @@ namespace Gandalan.IDAS.WebApi.Client
         {            
         }
 
-        public void MandantenAbgleichen(List<MandantDTO> list)
-        {
-            if (Login())
-            {
-                list.ForEach(m =>
-                {
-                    string responseStr = Put<string>("Mandanten", m);
-                    Debug.WriteLine(responseStr);
-                });
-            }
-        }
+        public async Task MandantenAbgleichen(List<MandantDTO> list) 
+            => await Task.Run(() => list.ForEach(async (m) => await PutAsync("Mandanten", m)));
 
-        public MandantDTO MandantenAnlegen(MandantDTO mandant)
-        {
-            if (Login())
-            {
-                return Put<MandantDTO>("Mandanten", mandant);
-            }
+        public async Task<MandantDTO> MandantenAnlegenAsync(MandantDTO mandant) 
+            => await PutAsync<MandantDTO>("Mandanten", mandant);
 
-            return null;
-        }
-
-        public List<MandantDTO> LadeMandantenMitFilter(string filter)
-        {
-            if (Login())
-            {
-                return Get<List<MandantDTO>>("Mandanten?filter=" + System.Uri.EscapeDataString(filter));
-            }
-
-            return null;
-        }
-
-        public void GetLoginByDongleNummer(string dongleNummer)
-        {
-            
-        }
-
-
-        public async Task<MandantDTO> MandantenAnlegenAsync(MandantDTO mandant)
-        {
-            return await Task.Run(() => MandantenAnlegen(mandant));
-        }
+        public async Task<List<MandantDTO>> LadeMandantenMitFilterAsync(string filter) 
+            => await GetAsync<List<MandantDTO>>("Mandanten?filter=" + System.Uri.EscapeDataString(filter));
     }
 }

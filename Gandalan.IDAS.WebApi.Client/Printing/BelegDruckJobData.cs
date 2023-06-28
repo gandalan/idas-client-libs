@@ -24,6 +24,7 @@ namespace Gandalan.IDAS.WebApi.Client.Printing
         public bool IncludeBriefkopf { get; set; }
         public bool SavePDF { get; set; }
         public string DefaultPrinter { get; set; }
+        public int Copies { get; set; }
         public Guid VorgangGuid { get; set; }
     }
 

@@ -1,9 +1,9 @@
 // *****************************************************************************
-// Gandalan GmbH & Co. KG - (c) 2017
+// Gandalan GmbH & Co. KG - (c) 2023
 // *****************************************************************************
 // Middleware//Gandalan.IDAS.WebApi.Client//WebRoutinenBase.cs
 // Created: 27.01.2016
-// Edit: phil - 21.02.2017
+// Edit: phil - 31.05.2023 11:57
 // *****************************************************************************
 
 using Gandalan.IDAS.Client.Contracts.Contracts;
@@ -15,18 +15,21 @@ using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
-    public class WebRoutinenBase : RESTClientBase
+    public class WebRoutinenBase 
     {
         #region  Felder
 
         public IWebApiConfig Settings;
         public bool IsJwt;
+        private RESTRoutinen _restRoutinen;
 
         #endregion
 
@@ -49,31 +52,53 @@ namespace Gandalan.IDAS.WebApi.Client
             // ändern können (vor allem z.B. Base-URL)
             if (settings != null)
             {
-                Settings = new WebApiSettings()
-                {
-                    AppToken = settings.AppToken,
-                    AuthToken = settings.AuthToken,
-                    FriendlyName = settings.FriendlyName,
-                    Mandant = settings.Mandant,
-                    Passwort = settings.Passwort,
-                    Url = settings.Url,
-                    UserName = settings.UserName,
-                    InstallationId = settings.InstallationId,
-                    UserAgent = settings.UserAgent,
-                    UseCompression = settings.UseCompression
-                };
-
-                if (settings is IJwtWebApiConfig)
+                Settings = new WebApiSettings();
+                Settings.CopyToThis(settings);
+                if (settings is IJwtWebApiConfig jc)
                 {
                     IsJwt = true;
-                    JwtToken = ((IJwtWebApiConfig)settings).JwtToken;
+                    JwtToken = jc.JwtToken;
+                }
+                if (settings.AuthToken?.Token != Guid.Empty && settings.AuthToken?.Expires > DateTime.UtcNow)
+                {
+                    AuthToken = settings.AuthToken;
                 }
             }
+        }
 
-            if (settings?.AuthToken?.Token != Guid.Empty && settings?.AuthToken?.Expires > DateTime.UtcNow)
+        private async Task runPreRequestChecks(bool skipAuth = false)
+        {
+            if (_restRoutinen == null)
+                initRestRoutinen();
+
+            if (!skipAuth && !await LoginAsync())
+                throw new ApiUnauthorizedException("You are not authorized.");
+        }
+
+        private void initRestRoutinen()
+        {
+            var config = new HttpClientConfig()
             {
-                AuthToken = settings.AuthToken;
+                BaseUrl = Settings.Url,
+                UseCompression = Settings.UseCompression,
+                UserAgent = Settings.UserAgent
+            };
+
+            if (IsJwt && !string.IsNullOrEmpty(JwtToken))
+            {
+                config.AdditionalHeaders.Add("Authorization", "Bearer " + JwtToken);
             }
+            else if (AuthToken != null)
+            {
+                config.AdditionalHeaders.Add("X-Gdl-AuthToken", AuthToken.Token.ToString());
+            }
+
+            if (Settings.InstallationId != Guid.Empty)
+            {
+                config.AdditionalHeaders.Add("X-Gdl-InstallationId", Settings.InstallationId.ToString());
+            }
+
+            _restRoutinen = new RESTRoutinen(config);
         }
 
         protected virtual void OnErrorOccured(ApiErrorArgs e)
@@ -82,7 +107,6 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 throw new ApiUnauthorizedException(Status = e.Message);
             }
-
             ErrorOccured?.Invoke(this, e);
         }
 
@@ -92,76 +116,11 @@ namespace Gandalan.IDAS.WebApi.Client
         /// Passwort aus den Settings.
         /// </summary>
         /// <returns>Status des Logins</returns>
-        public bool Login()
-        {
-            if (IsJwt)
-            {
-                return CheckJwtToken();
-            }
-
-            try
-            {
-                UserAuthTokenDTO result = null;
-                if (AuthToken == null || AuthToken.Expires < DateTime.UtcNow)
-                {
-                    var ldto = new LoginDTO()
-                    {
-                        Email = Settings.UserName,
-                        Password = Settings.Passwort,
-                        AppToken = Settings.AppToken
-                    };
-                    result = Post<UserAuthTokenDTO>("/api/Login/Authenticate", ldto);
-                }
-                else
-                {
-                    if (AuthToken.Expires < DateTime.UtcNow.AddHours(6))
-                    {
-                        result = Put<UserAuthTokenDTO>("/api/Login/Update", AuthToken);
-                    }
-                    else
-                    {
-                        Status = "OK (Cached)";
-                        return true;
-                    }
-                }
-
-                if (result != null)
-                {
-                    AuthToken = result;
-                    Status = "OK";
-                    return true;
-                }
-
-                AuthToken = null;
-                Status = "Error";
-                return false;
-            }
-            catch (ApiException apiex)
-            {
-                Status = apiex.Message;
-                if (Status.ToLower().Contains("<title>"))
-                {
-                    Status = InternalStripHtml(Status);
-                }
-
-                if (apiex.InnerException != null)
-                    Status += " - " + apiex.InnerException.Message;
-                AuthToken = null;
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Status = ex.Message;
-                AuthToken = null;
-                return false;
-            }
-        }
-
         public async Task<bool> LoginAsync()
         {
             if (IsJwt)
             {
-                return await CheckJwtTokenAsync();
+                return await checkJwtTokenAsync();
             }
 
             try
@@ -177,14 +136,14 @@ namespace Gandalan.IDAS.WebApi.Client
                             Password = Settings.Passwort,
                             AppToken = Settings.AppToken
                         };
-                        result = await PostAsync<UserAuthTokenDTO>("/api/Login/Authenticate", ldto);
+                        result = await PostAsync<UserAuthTokenDTO>("/api/Login/Authenticate", ldto, null, true);
                     }
                 }
                 else
                 {
                     if (AuthToken.Expires < DateTime.UtcNow.AddHours(6))
                     {
-                        result = await PutAsync<UserAuthTokenDTO>("/api/Login/Update", AuthToken);
+                        result = await RefreshTokenAsync(AuthToken.Token);
                     }
                     else
                     {
@@ -196,6 +155,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 if (result != null)
                 {
                     AuthToken = result;
+                    initRestRoutinen();
                     Status = "OK";
                     return true;
                 }
@@ -209,7 +169,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 Status = apiex.Message;
                 if (Status.ToLower().Contains("<title>"))
                 {
-                    Status = InternalStripHtml(Status);
+                    Status = internalStripHtml(Status);
                 }
 
                 if (apiex.InnerException != null)
@@ -225,23 +185,11 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public UserAuthTokenDTO RefreshToken(Guid authTokenGuid)
-        {
-            try
-            {
-                return Put<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO() {Token = authTokenGuid});
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
         public async Task<UserAuthTokenDTO> RefreshTokenAsync(Guid authTokenGuid)
         {
             try
             {
-                return await PutAsync<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO() { Token = authTokenGuid });
+                return await PutAsync<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO() { Token = authTokenGuid }, null, true);
             }
             catch (Exception)
             {
@@ -249,415 +197,163 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public T Post<T>(string uri, object data, JsonSerializerSettings settings = null)
+        public async Task<T> PostAsync<T>(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false)
         {
-            using (var cl = new RESTRoutinen(Settings.Url))
+            try
             {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return cl.Post<T>(uri, data, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
+                await runPreRequestChecks(skipAuth);
+                return await _restRoutinen.PostAsync<T>(uri, data, settings);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
-        public async Task<T> PostAsync<T>(string uri, object data, JsonSerializerSettings settings = null)
+        public async Task PostAsync(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false)
         {
-            using (var cl = new RESTRoutinen(Settings.Url))
+            try
             {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return await cl.PostAsync<T>(uri, data, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
+                await runPreRequestChecks(skipAuth);
+                await _restRoutinen.PostAsync(uri, data, settings);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
-        public string Post(string uri, object data, JsonSerializerSettings settings = null)
+        public async Task<byte[]> PostDataAsync(string uri, byte[] data, bool skipAuth = false)
         {
-            using (var cl = new RESTRoutinen(Settings.Url))
+            try
             {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return cl.Post(uri, data, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
+                await runPreRequestChecks(skipAuth);
+                return await _restRoutinen.PostDataAsync(uri, data);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
-        public async Task<string> PostAsync(string uri, object data, JsonSerializerSettings settings = null)
+        public async Task<byte[]> GetDataAsync(string uri, bool skipAuth = false)
         {
-            using (var cl = new RESTRoutinen(Settings.Url))
+            try
             {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return await cl.PostAsync(uri, data, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
+                await runPreRequestChecks(skipAuth); 
+                return await _restRoutinen.GetDataAsync(uri);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw await HandleWebException(ex, uri);
             }
         }
 
-        public byte[] PostData(string uri, byte[] data)
+        public async Task<string> GetAsync(string uri, bool skipAuth = false)
         {
-            using (var cl = new RESTRoutinen(Settings.Url))
+            try
             {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return cl.PostData(uri, data);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
+                await runPreRequestChecks(skipAuth);
+                return await _restRoutinen.GetAsync(uri);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw await HandleWebException(ex, uri);
             }
         }
 
-        public async Task<byte[]> PostDataAsync(string uri, byte[] data)
+        public async Task<T> GetAsync<T>(string uri, JsonSerializerSettings settings = null, bool skipAuth = false)
         {
-            using (var cl = new RESTRoutinen(Settings.Url))
+            try
             {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return await cl.PostDataAsync(uri, data);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
+                await runPreRequestChecks(skipAuth);
+                return await _restRoutinen.GetAsync<T>(uri, settings);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw await HandleWebException(ex, uri);
             }
         }
 
-        public string Get(string uri)
+        public async Task PutAsync(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false)
         {
-            using (var cl = new RESTRoutinen(Settings.Url))
+            try
             {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return cl.Get(uri);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri);
-                }
+                await runPreRequestChecks(skipAuth);
+                await _restRoutinen.PutAsync(uri, data, settings);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
-        public async Task<string> GetAsync(string uri)
+        public async Task<T> PutAsync<T>(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false)
         {
-            using (var cl = new RESTRoutinen(Settings.Url))
+            try
             {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return await cl.GetAsync(uri);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri);
-                }
+                await runPreRequestChecks(skipAuth);
+                return await _restRoutinen.PutAsync<T>(uri, data, settings);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
-        public byte[] GetData(string uri)
+        public async Task<byte[]> PutDataAsync(string uri, byte[] data, bool skipAuth = false)
         {
-            using (var cl = new RESTRoutinen(Settings.Url))
+            try
             {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return cl.GetData(uri);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri);
-                }
+                await runPreRequestChecks(skipAuth);
+                return await _restRoutinen.PutDataAsync(uri, data);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
-        public async Task<byte[]> GetDataAsync(string uri)
+        public async Task DeleteAsync(string uri, bool skipAuth = false)
         {
-            using (var cl = new RESTRoutinen(Settings.Url))
+            try
             {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return await cl.GetDataAsync(uri);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri);
-                }
+                await runPreRequestChecks(skipAuth);
+                await _restRoutinen.DeleteAsync(uri);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw await HandleWebException(ex, uri);
             }
         }
 
-        public T Get<T>(string uri, JsonSerializerSettings settings = null)
+        public async Task DeleteAsync(string uri, object data, bool skipAuth = false)
         {
-            using (var cl = new RESTRoutinen(Settings.Url))
+            try
             {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return cl.Get<T>(uri, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri);
-                }
+                await runPreRequestChecks(skipAuth);
+                await _restRoutinen.DeleteAsync(uri, data);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw await HandleWebException(ex, uri);
             }
         }
 
-        public async Task<T> GetAsync<T>(string uri, JsonSerializerSettings settings = null)
+        public async Task<T> DeleteAsync<T>(string uri, object data, bool skipAuth = false)
         {
-            using (var cl = new RESTRoutinen(Settings.Url))
+            try
             {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return await cl.GetAsync<T>(uri, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri);
-                }
+                await runPreRequestChecks(skipAuth);
+                return await _restRoutinen.DeleteAsync<T>(uri, data);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw await HandleWebException(ex, uri);
             }
         }
 
-        public T Put<T>(string uri, object data, JsonSerializerSettings settings = null)
-        {
-            using (var cl = new RESTRoutinen(Settings.Url))
-            {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return cl.Put<T>(uri, data, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
-            }
-        }
-
-        public async Task<T> PutAsync<T>(string uri, object data, JsonSerializerSettings settings = null)
-        {
-            using (var cl = new RESTRoutinen(Settings.Url))
-            {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return await cl.PutAsync<T>(uri, data, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
-            }
-        }
-
-        public string Put(string uri, object data, JsonSerializerSettings settings = null)
-        {
-            using (var cl = new RESTRoutinen(Settings.Url))
-            {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return cl.Put(uri, data, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
-            }
-        }
-
-        public async Task<string> PutAsync(string uri, object data, JsonSerializerSettings settings = null)
-        {
-            using (var cl = new RESTRoutinen(Settings.Url))
-            {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return await cl.PutAsync(uri, data, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
-            }
-        }
-
-        public byte[] PutData(string uri, byte[] data)
-        {
-            using (var cl = new RESTRoutinen(Settings.Url))
-            {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return cl.PutData(uri, data);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
-            }
-        }
-
-        public async Task<byte[]> PutDataAsync(string uri, byte[] data)
-        {
-            using (var cl = new RESTRoutinen(Settings.Url))
-            {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return await cl.PutDataAsync(uri, data);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
-            }
-        }
-
-        public T Delete<T>(string uri, object data, JsonSerializerSettings settings = null)
-        {
-            using (var cl = new RESTRoutinen(Settings.Url))
-            {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return cl.Delete<T>(uri, data, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
-            }
-        }
-
-        public async Task<T> DeleteAsync<T>(string uri, object data, JsonSerializerSettings settings = null)
-        {
-            using (var cl = new RESTRoutinen(Settings.Url))
-            {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return await cl.DeleteAsync<T>(uri, data, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri, data);
-                }
-            }
-        }
-
-        public T Delete<T>(string uri, JsonSerializerSettings settings = null)
-        {
-            using (var cl = new RESTRoutinen(Settings.Url))
-            {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return cl.Delete<T>(uri, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri);
-                }
-            }
-        }
-
-        public async Task<T> DeleteAsync<T>(string uri, JsonSerializerSettings settings = null)
-        {
-            using (var cl = new RESTRoutinen(Settings.Url))
-            {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return await cl.DeleteAsync<T>(uri, settings);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri);
-                }
-            }
-        }
-
-        public string Delete(string uri)
-        {
-            using (var cl = new RESTRoutinen(Settings.Url))
-            {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return cl.Delete(uri);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri);
-                }
-            }
-        }
-
-        public async Task<string> DeleteAsync(string uri)
-        {
-            using (var cl = new RESTRoutinen(Settings.Url))
-            {
-                try
-                {
-                    SetupRestRoutinen(cl);
-
-                    return await cl.DeleteAsync(uri);
-                }
-                catch (WebException ex)
-                {
-                    throw HandleWebException(ex, uri);
-                }
-            }
-        }
-
-        private static string InternalStripHtml(string htmlString)
+        private static string internalStripHtml(string htmlString)
         {
             var result = htmlString;
             if (result.ToLower().Contains("<title>") && result.ToLower().Contains("</title>"))
@@ -670,42 +366,9 @@ namespace Gandalan.IDAS.WebApi.Client
             return result;
         }
 
-        private void SetupRestRoutinen(RESTRoutinen cl)
+        private async Task<bool> checkJwtTokenAsync()
         {
-            if (IsJwt)
-            {
-                if (!string.IsNullOrEmpty(JwtToken))
-                {
-                    cl.AdditionalHeaders.Add("Authorization: Bearer " + JwtToken);
-                }
-            }
-            else
-            {
-                if (AuthToken != null)
-                {
-                    cl.AdditionalHeaders.Add("X-Gdl-AuthToken: " + AuthToken.Token);
-                }
-            }
-
-            if (Settings.InstallationId != Guid.Empty)
-            {
-                cl.AdditionalHeaders.Add("X-Gdl-InstallationId: " + Settings.InstallationId);
-            }
-
-            if (!string.IsNullOrEmpty(Settings.UserAgent))
-            {
-                cl.UserAgent = Settings.UserAgent;
-            }
-
-            if (Settings.UseCompression)
-            {
-                cl.UseCompression = Settings.UseCompression;
-            }
-        }
-
-        private bool CheckJwtToken()
-        {
-            if (CheckJwtTokenInternal(out var refreshToken, out bool checkResult))
+            if (internalCheckJwtToken(out var refreshToken, out bool checkResult))
             {
                 return checkResult;
             }
@@ -713,7 +376,7 @@ namespace Gandalan.IDAS.WebApi.Client
             try
             {
                 // refresh JWT using refresh token
-                var newJwt = Put<string>("/api/LoginJwt/Refresh", new { Token = refreshToken });
+                var newJwt = await PutAsync<string>("/api/LoginJwt/Refresh", new { Token = refreshToken }, null, true);
                 JwtToken = newJwt;
                 return true;
             }
@@ -722,7 +385,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 Status = apiex.Message;
                 if (Status.ToLower().Contains("<title>"))
                 {
-                    Status = InternalStripHtml(Status);
+                    Status = internalStripHtml(Status);
                 }
 
                 if (apiex.InnerException != null)
@@ -741,45 +404,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        private async Task<bool> CheckJwtTokenAsync()
-        {
-            if (CheckJwtTokenInternal(out var refreshToken, out bool checkResult))
-            {
-                return checkResult;
-            }
-
-            try
-            {
-                // refresh JWT using refresh token
-                var newJwt = await PutAsync<string>("/api/LoginJwt/Refresh", new { Token = refreshToken });
-                JwtToken = newJwt;
-                return true;
-            }
-            catch (ApiException apiex)
-            {
-                Status = apiex.Message;
-                if (Status.ToLower().Contains("<title>"))
-                {
-                    Status = InternalStripHtml(Status);
-                }
-
-                if (apiex.InnerException != null)
-                {
-                    Status += " - " + apiex.InnerException.Message;
-                }
-
-                JwtToken = null;
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Status = ex.Message;
-                JwtToken = null;
-                return false;
-            }
-        }
-
-        private bool CheckJwtTokenInternal(out string refreshToken, out bool checkResult)
+        private bool internalCheckJwtToken(out string refreshToken, out bool checkResult)
         {
             refreshToken = null;
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -824,15 +449,15 @@ namespace Gandalan.IDAS.WebApi.Client
             return false;
         }
 
-        private ApiException HandleWebException(WebException ex, string url)
+        private async Task<ApiException> HandleWebException(HttpRequestException ex, string url)
         {
-            ApiException exception = TranslateException(ex);
+            ApiException exception = await TranslateException(ex);
             return InternalHandleWebException(exception, url);
         }
 
-        private ApiException HandleWebException(WebException ex, string url, object data)
+        private async Task<ApiException> HandleWebException(HttpRequestException ex, string url, object data)
         {
-            ApiException exception = TranslateException(ex, data);
+            ApiException exception = await TranslateException(ex, data);
             return InternalHandleWebException(exception, url);
         }
 
@@ -891,6 +516,79 @@ namespace Gandalan.IDAS.WebApi.Client
             L.Fehler(exception, $"Exception data: BaseUrl: {dataBaseUrl} URL: {dataUrl} CallMethod: {dataCallMethod}{Environment.NewLine}");
 
             return exception;
+        }
+
+        protected static async Task<ApiException> TranslateException(HttpRequestException ex, object payload)
+        {
+            if (ex.Data.Contains("Response"))
+            {
+                HttpStatusCode code = (HttpStatusCode)ex.Data["StatusCode"];
+                var responseString = (string)ex.Data["Response"];
+
+                if (!string.IsNullOrWhiteSpace(responseString))
+                {
+                    // Newtonsoft TypeNameInfo - try to restore original exception from Backend
+                    if (responseString.Contains("$type"))
+                    {
+                        try
+                        {
+                            Exception original = JsonConvert.DeserializeObject<Exception>(responseString, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+                            return new ApiException(original.Message, code, original, payload);
+                        }
+                        catch { }
+                    }
+
+                    try
+                    {
+                        dynamic infoObject = JsonConvert.DeserializeObject<dynamic>(responseString);
+                        string status = infoObject.status;
+                        return new ApiException(status, code, payload) { ExceptionString = infoObject.exception.ToString() };
+                    }
+                    catch
+                    {
+                        return new ApiException(responseString, code, payload);
+                    }
+                }
+
+                return new ApiException(ex.Message, code, ex, payload);
+            }
+
+            return new ApiException(ex.Message, ex, payload);
+        }
+
+        protected static async Task<ApiException> TranslateException(HttpRequestException ex)
+        {
+            if (ex.Data.Contains("Response"))
+            {
+                HttpStatusCode code = (HttpStatusCode)ex.Data["StatusCode"];
+                var response = (string)ex.Data["Response"];
+
+                if (!string.IsNullOrWhiteSpace(response))
+                {
+                    try
+                    {
+                        Exception original = JsonConvert.DeserializeObject<Exception>(response, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+                        return new ApiException(original.Message, code, original);
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            dynamic infoObject = JsonConvert.DeserializeObject<dynamic>(response);
+                            string status = infoObject.status;
+                            return new ApiException(status, code) { ExceptionString = infoObject.exception.ToString() };
+                        }
+                        catch
+                        {
+                            return new ApiException(response, code);
+                        }
+                    }
+                }
+
+                return new ApiException(ex.Message, code, ex);
+            }
+
+            return new ApiException(ex.Message, ex);
         }
     }
 }

@@ -62,7 +62,9 @@ namespace Gandalan.IDAS.WebApi.DTO
             AenderungsDatum = DateTime.UtcNow;
         }
 
+#pragma warning disable CS0067 // The event 'BelegDTO.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067 // The event 'BelegDTO.PropertyChanged' is never used
 
         public void SetupObjekte(VorgangDTO vorgang)
         {

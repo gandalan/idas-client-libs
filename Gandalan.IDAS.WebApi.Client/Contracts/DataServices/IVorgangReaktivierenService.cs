@@ -5,8 +5,7 @@ namespace Gandalan.Client.Contracts.DataServices
 {
     public interface IVorgangReaktivierenService
     {
-        Task<VorgangDTO> VorgangReaktivierenAsync(BelegartWechselDTO dto);   
-        VorgangDTO VorgangReaktivieren(BelegartWechselDTO dto);   
+        Task<VorgangDTO> VorgangReaktivierenAsync(BelegartWechselDTO dto);
     }
 }
 

@@ -2,6 +2,7 @@
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -11,14 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public Dictionary<string, MaterialbedarfCutOptimization> GetCutOptimization(MaterialbedarfDTO[] materialbedarfDtos)
-        {
-            if (Login())
-            {
-                return Post<Dictionary<string, MaterialbedarfCutOptimization>>("Materialbedarf/CutOptimization", materialbedarfDtos);
-            }
-
-            return null;
-        }
+        public async Task<Dictionary<string, MaterialbedarfCutOptimization>> GetCutOptimization(MaterialbedarfDTO[] materialbedarfDtos) 
+            => await PostAsync<Dictionary<string, MaterialbedarfCutOptimization>>("Materialbedarf/CutOptimization", materialbedarfDtos);
     }
 }

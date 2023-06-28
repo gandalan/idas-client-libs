@@ -11,48 +11,24 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public AnpassungDTO[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<AnpassungDTO[]>("Anpassungen");
-            }
-            return null;
-        }
-
-        public string SaveAnpassung(AnpassungDTO dto)
-        {
-            if (Login())
-            {
-                return Put("Anpassungen/" + dto.AnpassungGuid, dto);
-            }
-            return null;
-        }
-
-        public void DeleteAnpassung(Guid anpassungGuid)
-        {
-            if (Login())
-            {
-                Delete("Anpassungen/" + anpassungGuid);
-            }
-        }
-
         public async Task<AnpassungDTO[]> GetAllAsync()
         {
-            return await Task.Run(() => GetAll());
-        }
-        public async Task SaveAnpassungAsync(AnpassungDTO dto)
-        {
-            await Task.Run(() => SaveAnpassung(dto));
-        }
-        public async Task DeleteAnpassungAsync(Guid anpassungGuid)
-        {
-            await Task.Run(() => DeleteAnpassung(anpassungGuid));
+            return await GetAsync<AnpassungDTO[]>("Anpassungen");
         }
 
-        public string WebJob()
+        public async Task SaveAnpassungAsync(AnpassungDTO dto)
         {
-            return Post("Anpassungen/WebJob", null);
+            await PutAsync("Anpassungen/" + dto.AnpassungGuid, dto);
+        }
+
+        public async Task DeleteAnpassungAsync(Guid anpassungGuid)
+        {
+            await DeleteAsync("Anpassungen/" + anpassungGuid);
+        }
+
+        public async Task WebJob()
+        {
+            await PostAsync<string>("Anpassungen/WebJob", "");
         }
     }
 }

@@ -10,18 +10,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public ProduktionsfreigabeItemDTO[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<ProduktionsfreigabeItemDTO[]>("ProduktionsfreigabeListe");
-            }
-            return null;
-        }
-
-        public async Task<ProduktionsfreigabeItemDTO[]> GetAllAsync()
-        {
-            return await Task.Run(() => GetAll());
-        }
+        public async Task<ProduktionsfreigabeItemDTO[]> GetAllAsync() 
+            => await GetAsync<ProduktionsfreigabeItemDTO[]>("ProduktionsfreigabeListe");
     }
 }

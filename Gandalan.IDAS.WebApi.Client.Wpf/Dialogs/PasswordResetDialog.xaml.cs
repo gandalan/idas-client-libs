@@ -18,7 +18,9 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             InitializeComponent();
         }
 
+#pragma warning disable CS0067 // The event 'PasswordResetDialog.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067 // The event 'PasswordResetDialog.PropertyChanged' is never used
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -39,8 +41,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             BenutzerWebRoutinen service = new BenutzerWebRoutinen(Settings);
             try
             {
-                var info = await service.PasswortResetAsync(Email);
-
+                await service.PasswortResetAsync(Email);
                 MessageBox.Show("Passwort erfolgreich zurückgesetzt.", "Info vom System", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (System.Exception ex)

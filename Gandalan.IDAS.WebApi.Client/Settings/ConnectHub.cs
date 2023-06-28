@@ -1,6 +1,8 @@
-﻿using System;
-using System.Net;
+﻿using Gandalan.IDAS.Logging;
 using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
@@ -8,34 +10,23 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
     {
         private static readonly string _hubURL = "https://connect.idas-cloudservices.net/api/EndPoints";
 
-        public string ApiVersion { get; set; }
-        public string EnvironmentName { get; set; }
-        public string ClientOS { get; set; }
-
-        public ConnectHub(string apiVersion = null, string env = null, string clientOS = null)
+        public async Task<HubResponse> GetEndpoints(string apiVersion = null, string env = null, string clientOS = null)
         {
-            ApiVersion = apiVersion;
-            EnvironmentName = env;
-            ClientOS = clientOS ?? "win";
-        }
-
-        public HubResponse GetEndpoints(string apiVersion = null, string env = null, string clientOS = null)
-        {
-            var requestURL = 
+            var requestURL =
                 _hubURL + "?" +
-                (apiVersion != null ? "apiVersion=" + apiVersion + "&" : "") + 
-                (env != null ? "env=" + env + "&" : "") + 
+                (apiVersion != null ? "apiVersion=" + apiVersion + "&" : "") +
+                (env != null ? "env=" + env + "&" : "") +
                 (clientOS != null ? "clientOS=" + clientOS : "");
             try
             {
-                var response = new WebClient().DownloadString(requestURL);
+                var response = await new HttpClient().GetStringAsync(requestURL);
                 return JsonConvert.DeserializeObject<HubResponse>(response);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Logger.LogConsoleDebug($"{e}");
+                throw;
             }
-            return null;
         }
     }
 }

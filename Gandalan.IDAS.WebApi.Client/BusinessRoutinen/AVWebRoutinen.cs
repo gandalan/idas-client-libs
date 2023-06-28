@@ -13,257 +13,95 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public BelegPositionAVDTO[] GetAllBelegPositionenAV()
+        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync()
         {
-            if (Login())
-            {
-                return Get<BelegPositionAVDTO[]>("BelegPositionenAV");
-            }
-            return null;
+            return await GetAsync<BelegPositionAVDTO[]>("BelegPositionenAV");
         }
 
-        public BelegPositionAVDTO[] GetAllBelegPositionenAV(DateTime changedSince)
+        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(DateTime changedSince)
         {
-            if (Login())
-            {
-                return Get<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("o")}");
-            }
-            return null;
-        }
-
-        public BelegPositionAVDTO[] GetSerieBelegPositionenAV(Guid serieGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
-        {
-            if (Login())
-            {
-                return Get<BelegPositionAVDTO[]>($"BelegPositionenAV/?serieGuid={serieGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
-            }
-            return null;
+            return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("o")}");
         }
 
         public async Task<BelegPositionAVDTO[]> GetSerieBelegPositionenAVAsync(Guid serieGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
-            if (Login())
-            {
-                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?serieGuid={serieGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
-            }
-            return null;
-        }
-
-        public BelegPositionAVDTO[] GetVorgangBelegPositionenAV(Guid vorgangGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
-        {
-            if (Login())
-            {
-                return Get<BelegPositionAVDTO[]>($"BelegPositionenAV/?vorgangGuid={vorgangGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
-            }
-            return null;
+            return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?serieGuid={serieGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
         }
 
         public async Task<BelegPositionAVDTO[]> GetVorgangBelegPositionenAVAsync(Guid vorgangGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
-            if (Login())
-            {
-                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?vorgangGuid={vorgangGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
-            }
-            return null;
-        }
-                
-        public List<BelegPositionAVDTO> GetBelegPositionenAV(Guid belegpositionGuid)
-        {
-            if (Login())
-            {
-                return Get<List<BelegPositionAVDTO>>($"BelegPositionenAV/{belegpositionGuid}");
-            }
-            return null;
-        }
-               
-        public string SaveBelegPositionenAV(BelegPositionAVDTO position)
-        {
-            if (Login())
-            {
-                return Put<string>("BelegPositionenAV", position);
-            }
-            return "Not logged in";
+            return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?vorgangGuid={vorgangGuid}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
         }
 
-        public List<BelegPositionAVDTO> SaveBelegPositionenAV(List<BelegPositionAVDTO> positionen)
+        public async Task<BelegPositionAVDTO[]> GetVorgaengeBelegPositionenAVAsync(List<Guid> vorgangGuids, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
-            if (Login())
-            {
-                return Put<List<BelegPositionAVDTO>>("BelegPositionenAVBulk", positionen);
-            }
-            return null;
+            var vorgangGuidsString = string.Join("&vorgangGuids=", vorgangGuids);
+            return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAVByVorgangIds/?vorgangGuids={vorgangGuidsString}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
         }
 
-        public List<BelegPositionAVDTO> SaveBelegPositionenAVToSerie(Guid serieGuid, List<Guid> positionen)
+        public async Task<List<BelegPositionAVDTO>> GetBelegPositionenAVAsync(Guid belegpositionGuid)
         {
-            if (Login())
-            {
-                return Put<List<BelegPositionAVDTO>>($"BelegPositionenAVBulk/AddToSerie/{serieGuid}", positionen);
-            }
-            return null;
+            return await GetAsync<List<BelegPositionAVDTO>>($"BelegPositionenAV/{belegpositionGuid}");
         }
 
-        public string DeleteBelegPositionenAV(Guid guid)
+        public async Task SaveBelegPositionenAVAsync(BelegPositionAVDTO position)
         {
-            if (Login())
-            {
-                return Delete($"BelegPositionenAV/{guid}");
-            }
-            return "Not logged in";
-        }
-
-        public string DeleteBelegPositionenAV(List<Guid> guids)
-        {
-            if (Login())
-            {
-                return Delete<string>($"BelegPositionenAVBulk", guids);
-            }
-            return "Not logged in";
-        }
-
-
-        public string BelegPositionenAVBerechnen(List<Guid> guids)
-        {
-            if (Login())
-            {
-                return Put<string>($"BelegPositionenAVBulk/AVBerechnung", guids);
-            }
-            return "Not logged in";
-        }
-
-        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(bool includeOriginalBeleg = true, bool includeProdDaten = true)
-        {
-            if (Login())
-            {
-                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV?includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
-            }
-            return null;
-        }
-
-        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(DateTime changedSince, bool includeOriginalBeleg = true, bool includeProdDaten = true)
-        {
-            if (Login())
-            {
-                return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("o")}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
-            }
-            return null;
-        }
-
-        public BelegPositionAVDTO GetBelegPositionAVById(Guid avGuid)
-        {
-            if (Login())
-            {
-                return Get<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid}");
-            }
-            return null;
-        }
-
-        public async Task<BelegPositionAVDTO> GetBelegPositionAVByIdAsync(Guid avGuid)
-        {
-            if (Login())
-            {
-                return await GetAsync<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid.ToString()}");
-            }
-            return null;
-        }
-
-        public IList<BelegPositionAVDTO> GetBelegPositionAVByPCode(string pcode, bool includeOriginalBeleg = true, bool includeProdDaten = true)
-        {
-            if (Login())
-            {
-                return Get<IList<BelegPositionAVDTO>>($"BelegPositionenAVByPCode/{pcode}?includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
-            }
-            return null;
-        }
-
-        public IList<BelegPositionAVDTO> SearchBelegPositionAVByPCode(string search)
-        {
-            if (Login())
-            {
-                return Get<IList<BelegPositionAVDTO>>($"BelegPositionenAVSearchByPCode?search={Uri.EscapeDataString(search)}");
-            }
-            return null;
-        }
-
-        public async Task<IList<BelegPositionAVDTO>> GetBelegPositionAVByPCodeAsync(string pcode, bool includeOriginalBeleg = true, bool includeProdDaten = true)
-        {
-            if (Login())
-            {
-                return await GetAsync<IList<BelegPositionAVDTO>>($"BelegPositionenAVByPCode/{pcode}?includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
-            }
-            return null;
-        }
-
-        public async Task<IList<BelegPositionAVDTO>> SearchBelegPositionAVByPCodeAsync(string search)
-        {
-            if (Login())
-            {
-                return await GetAsync<IList<BelegPositionAVDTO>>($"BelegPositionenAVSearchByPCode?search={Uri.EscapeDataString(search)}");
-            }
-            return null;
-        }
-
-        public async Task<List<BelegPositionAVDTO>> GetBelegPositionenAVAsync(Guid guid)
-        {
-            if (Login())
-            {
-                return await GetAsync<List<BelegPositionAVDTO>>("BelegPositionenAV/" + guid.ToString());
-            }
-            return null;
-        }
-
-        public async Task<string> SaveBelegPositionenAVAsync(BelegPositionAVDTO position)
-        {
-            if (Login())
-            {
-                return await PutAsync<string>("BelegPositionenAV", position);
-            }
-            return "Not logged in";
+            await PutAsync("BelegPositionenAV", position);
         }
 
         public async Task<List<BelegPositionAVDTO>> SaveBelegPositionenAVAsync(List<BelegPositionAVDTO> positionen)
         {
-            if (Login())
-            {
-                return await PutAsync<List<BelegPositionAVDTO>>("BelegPositionenAVBulk", positionen);
-            }
-            return null;
+            return await PutAsync<List<BelegPositionAVDTO>>("BelegPositionenAVBulk", positionen);
         }
 
-        public async Task<string> DeleteBelegPositionenAVAsync(Guid guid)
+        public async Task<List<BelegPositionAVDTO>> SaveBelegPositionenAVToSerieAsync(Guid serieGuid, List<Guid> positionen)
         {
-            if (Login())
-            {
-                return await DeleteAsync($"BelegPositionenAV/{guid}");
-            }
-            return "Not logged in";
+            return await PutAsync<List<BelegPositionAVDTO>>($"BelegPositionenAVBulk/AddToSerie/{serieGuid}", positionen);
         }
 
-        public async Task<string> DeleteBelegPositionenAVAsync(List<Guid> guids)
+        public async Task BelegPositionenAVBerechnenAsync(List<Guid> guids)
         {
-            if (Login())
-            {
-                return await DeleteAsync<string>($"BelegPositionenAVBulk", guids);
-            }
-            return "Not logged in";
+            await PutAsync($"BelegPositionenAVBulk/AVBerechnung", guids);
         }
 
-        public async Task<string> BelegPositionenAVBerechnenAsync(List<Guid> guids)
+        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
-            if (Login())
-            {
-                return await PutAsync<string>($"BelegPositionenAVBulk/AVBerechnung", guids);
-            }
-            return "Not logged in";
+            return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV?includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
         }
 
-        public async Task<string> BelegPositionenSerienZuordnen(Guid belegGuid, List<PositionSerieItemDTO> positionSerieItems)
+        public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(DateTime changedSince, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
-            if (Login())
-            {
-                return await PutAsync($"BelegPositionenAVBulk/SerienZuorden/{belegGuid}", positionSerieItems);
-            }
-            return "Not logged in";
+            return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("o")}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
+        }
+
+        public async Task<BelegPositionAVDTO> GetBelegPositionAVByIdAsync(Guid avGuid)
+        {
+            return await GetAsync<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid}");
+        }
+
+        public async Task<IList<BelegPositionAVDTO>> GetBelegPositionAVByPCodeAsync(string pcode, bool includeOriginalBeleg = true, bool includeProdDaten = true)
+        {
+            return await GetAsync<IList<BelegPositionAVDTO>>($"BelegPositionenAVByPCode/{pcode}?includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
+        }
+
+        public async Task<IList<BelegPositionAVDTO>> SearchBelegPositionAVByPCodeAsync(string search)
+        {
+            return await GetAsync<IList<BelegPositionAVDTO>>($"BelegPositionenAVSearchByPCode?search={Uri.EscapeDataString(search)}");
+        }
+
+        public async Task DeleteBelegPositionenAVAsync(Guid guid)
+        {
+            await DeleteAsync($"BelegPositionenAV/{guid}");
+        }
+
+        public async Task DeleteBelegPositionenAVAsync(List<Guid> guids)
+        {
+            await DeleteAsync($"BelegPositionenAVBulk", guids);
+        }
+
+        public async Task BelegPositionenSerienZuordnen(Guid belegGuid, List<PositionSerieItemDTO> positionSerieItems)
+        {
+            await PutAsync($"BelegPositionenAVBulk/SerienZuorden/{belegGuid}", positionSerieItems);
         }
     }
 }

@@ -11,33 +11,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             this.Settings.Url = this.Settings.Url.Replace("/api/", "/ModellDaten/");
         }
 
-        public KonturDTO[] GetAll()
-        {
-            if (Login())
-            {
-                return Get<KonturDTO[]>("Kontur");
-            }
-            return null;
-        }
+        public async Task<KonturDTO[]> GetAllAsync() 
+            => await GetAsync<KonturDTO[]>("Kontur");
 
-        public string SaveKontur(KonturDTO dto)
-        {
-            if (Login())
-            {
-                return Put("Kontur", dto);
-            }
-            return null;
-        }
-
-
-        public async Task<KonturDTO[]> GetAllAsync()
-        {
-            return await Task.Run(() => GetAll());
-        }
-
-        public async Task SaveKonturAsync(KonturDTO dto)
-        {
-            await Task.Run(() => SaveKontur(dto));
-        }
+        public async Task SaveKonturAsync(KonturDTO dto) 
+            => await PutAsync("Kontur", dto);
     }
 }

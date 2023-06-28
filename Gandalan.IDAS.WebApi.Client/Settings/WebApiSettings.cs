@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
@@ -48,7 +49,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public string HelpCenterUrl { get; set; }
         public string WebhookServiceUrl { get; set; }
 
-        public WebApiSettings(Guid appToken, string env)
+        public virtual async Task Initialize(Guid appToken, string env)
         {
             if (appToken.Equals(Guid.Empty))
                 throw new ArgumentException("WebApiSettings: AppToken must not be Guid.Empty");
@@ -56,22 +57,12 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             if (string.IsNullOrEmpty(env))
                 throw new ArgumentNullException("WebApiSettings: Environment must not be null or empty");
 
-            WebApiFileConfig.Initialize(appToken);
-            IWebApiConfig settings = WebApiFileConfig.ByName(env);
+            //await WebApiConfigurations.Initialize(appToken);
+            IWebApiConfig settings = WebApiConfigurations.ByName(env);
             if (settings != null)
                 CopyToThis(settings);
-        }
 
-        public WebApiSettings() { }
-
-        public void Save()
-        {
-            WebApiFileConfig.Save(this);
-        }
-
-        public List<IWebApiConfig> GetAll()
-        {
-            return WebApiFileConfig.GetAll();
+            await Task.CompletedTask;
         }
 
         public virtual void CopyToThis(IWebApiConfig settings)

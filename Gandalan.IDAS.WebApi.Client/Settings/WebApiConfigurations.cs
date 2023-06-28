@@ -1,38 +1,79 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
-    internal static class WebApiFileConfig
+    public static class WebApiConfigurations
     {
         private static readonly string[] _environments = new[] {"dev", "staging", "produktiv" };
         private static string _settingsPath;
         private static Dictionary<string, IWebApiConfig> _settings;
         private static string _appTokenString;
+        private static bool _isInitialized;
 
-        public static void Initialize(Guid appToken)
+        public static async Task Initialize(Guid appToken)
         {
             _settings = new Dictionary<string, IWebApiConfig>(StringComparer.OrdinalIgnoreCase);
             _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
             _appTokenString = appToken.ToString().Trim('{', '}');
 
-            setupEnvironments(appToken);
+            await setupEnvironments(appToken);
             setupLocalEnvironment(appToken);
+
+            _isInitialized = true;
         }
 
         public static IWebApiConfig ByName(string name)
         {
+            if (!_isInitialized)
+                throw new InvalidOperationException("WebApiConfigurations not initialized - call Initialize() first");
+
             if (_settings.ContainsKey(name))
             {
                 return _settings[name];
             }
+
             return null;
+        }
+
+        public static List<IWebApiConfig> GetAll()
+        {
+            if (!_isInitialized)
+                throw new InvalidOperationException("WebApiConfigurations not initialized - call Initialize() first");
+
+            return new List<IWebApiConfig>(_settings.Values);
+        }
+
+        public static void Save(IWebApiConfig settings)
+        {
+            if (settings == null)
+                return;
+
+            string configPath = Path.Combine(_settingsPath, settings.FriendlyName);
+            string configFile = Path.Combine(configPath, "AuthToken_" + _appTokenString + ".json");
+            if (!Directory.Exists(configPath))
+                Directory.CreateDirectory(configPath);
+
+            try
+            {
+                File.WriteAllText(configFile, JsonConvert.SerializeObject(new SavedAuthToken()
+                {
+                    UserName = settings.UserName,
+                    AuthTokenGuid = settings.AuthToken?.Token ?? Guid.Empty
+                }));
+                _settings[settings.FriendlyName] = settings;
+            }
+            catch (Exception)
+            {
+                // Save went wrong, maybe rights missing. Ignore, no user info for now
+            }
         }
 
         private static void setupLocalEnvironment(Guid appToken)
@@ -54,49 +95,42 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                             _settings.Add(friendlyName, localEnvironment);
                             internalLoadSavedAuthToken(friendlyName, localEnvironment);
                         }
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
-                        Debug.WriteLine($"Loading local env {friendlyName}: {ex.Message}");
+                        Logger.LogConsoleDebug($"Loading local env {friendlyName}: {ex}");
                     }
                 }
             }
         }
 
-        private static void setupEnvironments(Guid appToken)
+        private static async Task setupEnvironments(Guid appToken)
         {
-            var hub = new ConnectHub(apiVersion: "2.1", clientOS: "win");
-            var liste = _environments;
-            foreach (var env in liste)
+            var hub = new ConnectHub();
+            foreach (var env in _environments)
             {
-                try
+                var response = await hub.GetEndpoints("2.1", env, "win");
+                IWebApiConfig environment = null;
+                if (response != null)
                 {
-                    var response = hub.GetEndpoints(env: env);
-                    IWebApiConfig environment = null;
-                    if (response != null)
+                    environment = new WebApiSettings
                     {
-                        environment = new WebApiSettings
-                        {
-                            Url = response.IDAS,
-                            CMSUrl = response.CMS,
-                            DocUrl = response.Docs,
-                            FeedbackUrl = response.Feedback,
-                            NotifyUrl = response.Notify,
-                            HelpCenterUrl = response.HelpCenter,
-                            StoreUrl = response.Store,
-                            WebhookServiceUrl = response.WebhookService,
-                            FriendlyName = env,
-                            AppToken = appToken
-                        };
-                        internalLoadSavedAuthToken(env, environment);
-                    }
+                        Url = response.IDAS,
+                        CMSUrl = response.CMS,
+                        DocUrl = response.Docs,
+                        FeedbackUrl = response.Feedback,
+                        NotifyUrl = response.Notify,
+                        HelpCenterUrl = response.HelpCenter,
+                        StoreUrl = response.Store,
+                        WebhookServiceUrl = response.WebhookService,
+                        FriendlyName = env,
+                        AppToken = appToken
+                    };
+                    internalLoadSavedAuthToken(env, environment);
+                }
 
-                    if (environment != null)
-                        _settings.Add(env, environment);
-                }
-                catch (Exception)
-                {
-                    // No Hub response, discard
-                }
+                if (environment != null)
+                    _settings.Add(env, environment);
             }
         }
 
@@ -128,37 +162,9 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                     // damaged file, ignore saved token
                 }
             }
+
             return null;
         }
 
-        internal static List<IWebApiConfig> GetAll()
-        {
-            return new List<IWebApiConfig>(_settings.Values);
-        }
-
-        internal static void Save(IWebApiConfig settings)
-        {
-            if (settings == null)
-                return;
-
-            string configPath = Path.Combine(_settingsPath, settings.FriendlyName);
-            string configFile = Path.Combine(configPath, "AuthToken_" + _appTokenString + ".json");
-            if (!Directory.Exists(configPath))
-                Directory.CreateDirectory(configPath);
-
-            try
-            {
-                File.WriteAllText(configFile, JsonConvert.SerializeObject(new SavedAuthToken()
-                {
-                    UserName = settings.UserName,
-                    AuthTokenGuid = settings.AuthToken?.Token ?? Guid.Empty
-                }));
-                _settings[settings.FriendlyName] = settings;
-            }
-            catch (Exception)
-            {
-                // Save went wrong, maybe rights missing. Ignore, no user info for now
-            }
-        }
     }
 }

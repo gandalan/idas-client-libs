@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Gandalan.IDAS.WebApi.Client.DTOs.Settings
+namespace Gandalan.IDAS.WebApi.DTO
 {
     public class ProduktionsSettingsDTO
     {
@@ -45,5 +45,6 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Settings
         public bool SP_Z_Mass_inkl_Buerstendichtung { get; set; } = true;
         public bool SP5_Sprosse_ausklinken { get; set; } = false;
         public bool UseKleinteileFarbersatzTabelle { get; set; } = false;
+        public bool ST3_BeidseitigeGriffleiste_GL_B { get; set; } = false;
     }
 }

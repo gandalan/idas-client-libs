@@ -12,100 +12,28 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public SammelrechnungListItemDTO ErstelleSammelrechnungen(CreateSammelrechnungDTO dto)
-        {
-            if (Login())
-            {
-                return Post<SammelrechnungListItemDTO>("Sammelrechnungen/ErstelleSammelrechnungen", dto);
-            }
-            return null;
-        }
+        public async Task<SammelrechnungListItemDTO> ErstelleSammelrechnungenAsync(CreateSammelrechnungDTO dto) 
+            => await PostAsync<SammelrechnungListItemDTO>("Sammelrechnungen/ErstelleSammelrechnungen", dto);
 
-        public List<SammelrechnungListItemDTO> GetSammelrechnungen()
-        {
-            if (Login())
-            {
-                return Get<List<SammelrechnungListItemDTO>>("Sammelrechnungen/GetSammelrechnungen");
-            }
-            return null;
-        }
-
-        public SammelrechnungDTO GetSammelrechnung(Guid guid, bool includeBelegDruckDTO)
-        {
-            if (Login())
-            {
-                return Get<SammelrechnungDTO>($"Sammelrechnungen/GetSammelrechnung?guid={guid}&includeBelegDruckDTO={includeBelegDruckDTO}");
-            }
-            return null;
-        }
-
-        public List<BelegeInfoDTO> GetPossibleSammelrechnungRechnungen()
-        {
-            if (Login())
-            {
-                return Get<List<BelegeInfoDTO>>("Sammelrechnungen/GetPossibleSammelrechnungRechnungen");
-            }
-            return null;
-        }
-        public SammelrechnungDTO UpdateSammelrechnung(SammelrechnungDTO dto)
-        {
-            if (Login())
-            {
-                return Post<SammelrechnungDTO>($"Sammelrechnungen/UpdateSammelrechnung", dto);
-            }
-            return null;
-        }
-        public SammelrechnungListItemDTO AddRechnungToSammelrechnungen(Guid belegGuid, Guid sammelrechnungGuid)
-        {
-            if (Login())
-            {
-                var dto = new AddRechnungSammelrechnungDTO() { BelegGuid = belegGuid, SammelrechnungGuid = sammelrechnungGuid };
-                return Post<SammelrechnungListItemDTO>($"Sammelrechnungen/AddRechnungToSammelrechnungen", dto);
-            }
-            return null;
-        }
-
-        private void SetRechnungenAlsGedruckt(Guid sammelrechnungGuid)
-        {
-            if (Login())
-            {
-                Post($"Sammelrechnungen/SetRechnungenAlsGedruckt?sammelrechnungGuid={sammelrechnungGuid}", null);
-            }
-        }
-
-        public async Task<SammelrechnungListItemDTO> ErstelleSammelrechnungenAsync(CreateSammelrechnungDTO dto)
-        {
-            return await Task.Run(() => ErstelleSammelrechnungen(dto));
-        }
-
-        public async Task<List<SammelrechnungListItemDTO>> GetSammelrechnungenAsync()
-        {
-            return await Task.Run(() => GetSammelrechnungen());
-        }
+        public async Task<List<SammelrechnungListItemDTO>> GetSammelrechnungenAsync() 
+            => await GetAsync<List<SammelrechnungListItemDTO>>("Sammelrechnungen/GetSammelrechnungen");
 
         public async Task<SammelrechnungDTO> GetSammelrechnungAsync(Guid guid, bool includeBelegDruckDTO)
-        {
-            return await Task.Run(() => GetSammelrechnung(guid, includeBelegDruckDTO));
-        }
+            => await GetAsync<SammelrechnungDTO>($"Sammelrechnungen/GetSammelrechnung?guid={guid}&includeBelegDruckDTO={includeBelegDruckDTO}");
 
         public async Task<List<BelegeInfoDTO>> GetPossibleSammelrechnungRechnungenAsync()
-        {
-            return await Task.Run(() => GetPossibleSammelrechnungRechnungen());
-        }
-
+            => await GetAsync<List<BelegeInfoDTO>>("Sammelrechnungen/GetPossibleSammelrechnungRechnungen");
+        
         public async Task<SammelrechnungDTO> UpdateSammelrechnungAsync(SammelrechnungDTO dto)
-        {
-            return await Task.Run(() => UpdateSammelrechnung(dto));
-        }
+            => await PostAsync<SammelrechnungDTO>($"Sammelrechnungen/UpdateSammelrechnung", dto);
 
-        public async Task<SammelrechnungListItemDTO> AddRechnungToSammelrechnungenAsync(Guid belegGuid, Guid sammelrechnungGuid)
-        {
-            return await Task.Run(() => AddRechnungToSammelrechnungen(belegGuid, sammelrechnungGuid));
-        }
+        public async Task<SammelrechnungListItemDTO> AddRechnungToSammelrechnungenAsync(Guid belegGuid, Guid sammelrechnungGuid) 
+            => await PostAsync<SammelrechnungListItemDTO>($"Sammelrechnungen/AddRechnungToSammelrechnungen", 
+                new AddRechnungSammelrechnungDTO() { BelegGuid = belegGuid, SammelrechnungGuid = sammelrechnungGuid });
 
         public async Task SetRechnungenAlsGedrucktAsync(Guid sammelrechnungGuid)
-        {
-            await Task.Run(() => SetRechnungenAlsGedruckt(sammelrechnungGuid));
-        }
+            => await PostAsync($"Sammelrechnungen/SetRechnungenAlsGedruckt?sammelrechnungGuid={sammelrechnungGuid}", null);
+
+        
     }
 }

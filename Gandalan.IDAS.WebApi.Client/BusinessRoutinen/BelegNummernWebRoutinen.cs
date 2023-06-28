@@ -10,33 +10,10 @@ namespace Gandalan.IDAS.WebApi.Client
         {
         }
 
-        public BelegNummerSettingDTO[] GetBelegNummern(bool currentYear = false)
-        {
-            if (Login())
-            {
-                return Get<BelegNummerSettingDTO[]>($"BelegNummern?currentYear={currentYear}");
-            }
-            return null;
-        }
+        public async Task<BelegNummerSettingDTO[]> GetBelegNummernAsync(bool currentYear = false) 
+            => await GetAsync<BelegNummerSettingDTO[]>($"BelegNummern?currentYear={currentYear}");
 
-        public string SaveBelegNummer(BelegNummerSettingDTO setting, bool currentYear = false)
-        {
-            if (Login())
-            {
-                return Put($"BelegNummern?currentYear={currentYear}", setting);
-            }
-            return null;
-        }
-
-
-        public async Task<BelegNummerSettingDTO[]> GetBelegNummernAsync(bool currentYear = false)
-        {
-            return await Task.Run(() => GetBelegNummern(currentYear));
-        }
-
-        public async Task<string> SaveBelegNummerAsync(BelegNummerSettingDTO setting, bool currentYear = false)
-        {
-            return await Task.Run(() => SaveBelegNummer(setting, currentYear));
-        }
+        public async Task SaveBelegNummerAsync(BelegNummerSettingDTO setting, bool currentYear = false) 
+            => await PutAsync($"BelegNummern?currentYear={currentYear}", setting);
     }
 }

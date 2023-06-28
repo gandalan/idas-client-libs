@@ -9,18 +9,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public void Reset()
-        {
-            if (Login())
-            {
-                Put("ResetCacheVariantenListen", null);
-            }
-        }
-
-
         public async Task ResetAsync()
-        {
-            await Task.Run(() => Reset());
-        }
+            => await PutAsync("ResetCacheVariantenListen", null);
     }
 }

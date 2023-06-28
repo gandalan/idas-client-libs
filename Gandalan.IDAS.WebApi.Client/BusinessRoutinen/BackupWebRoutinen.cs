@@ -2,6 +2,7 @@
 using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -11,19 +12,19 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public List<Guid> GetVorgangGuids(string email, int year = 0, bool onlyBills = false)
+        public async Task<List<Guid>> GetVorgangGuidsAsync(string email, int year = 0, bool onlyBills = false)
         {
-            return Get<List<Guid>>("Backup/GetVorgangGuids?email=" + System.Uri.EscapeDataString(email) + "&jahr=" + year + "&nurRechnungen=" + onlyBills, null);
+            return await GetAsync<List<Guid>>("Backup/GetVorgangGuids?email=" + System.Uri.EscapeDataString(email) + "&jahr=" + year + "&nurRechnungen=" + onlyBills, null);
         }
 
-        public VorgangExtendedDTO GetVorgang(string email, Guid guid, bool onlyBills = false)
+        public async Task<VorgangExtendedDTO> GetVorgangAsync(string email, Guid guid, bool onlyBills = false)
         {
-            return Get<VorgangExtendedDTO>("Backup/GetVorgang?email=" + System.Uri.EscapeDataString(email) + "&nurRechnungen=" + onlyBills + "&guid=" + guid);
+            return await GetAsync<VorgangExtendedDTO>("Backup/GetVorgang?email=" + System.Uri.EscapeDataString(email) + "&nurRechnungen=" + onlyBills + "&guid=" + guid);
         }
 
-        public void RequestBackup(string email, bool onlyBills, int year)
+        public async Task RequestBackup(string email, bool onlyBills, int year)
         {
-            Post("Backup/RequestBackup?email=" + System.Uri.EscapeDataString(email) + "&nurRechnungen=" + onlyBills + "&jahr=" + year, null);
+            await PostAsync("Backup/RequestBackup?email=" + System.Uri.EscapeDataString(email) + "&nurRechnungen=" + onlyBills + "&jahr=" + year, null);
         }
     }
 }

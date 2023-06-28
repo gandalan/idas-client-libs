@@ -12,22 +12,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     public class BelegArtWebRoutinen : WebRoutinenBase
     {
         public BelegArtWebRoutinen(IWebApiConfig settings) : base(settings)
-        {
-            //Settings.Url = Settings.Url.Replace("/api/", "/BelegArt/");
+        {   
         }
 
-        public VorgangDTO BelegKopieren(Guid bguid, string neueBelegArt, bool saldenKopieren = false)
-        {
-            if (Login())
-            {
-                return Post<VorgangDTO>($"BelegArt?bguid={bguid}&saldenKopieren={saldenKopieren}&neueBelegArt={neueBelegArt}", new {});
-            }
-            return null;
-        }
-
-        public async Task<VorgangDTO> BelegKopierenAsync(Guid bguid, string neueBelegArt, bool saldenKopieren = false)
-        {
-            return await Task<VorgangDTO>.Run(() => { return BelegKopieren(bguid, neueBelegArt, saldenKopieren); });
-        }
+        public async Task<VorgangDTO> BelegKopierenAsync(Guid bguid, string neueBelegArt, bool saldenKopieren = false) 
+            => await PostAsync<VorgangDTO>($"BelegArt?bguid={bguid}&saldenKopieren={saldenKopieren}&neueBelegArt={neueBelegArt}", new { });
     }
 }

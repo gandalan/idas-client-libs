@@ -11,65 +11,16 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-	    public TemplateDTO[] GetAll()
-	    {
-		    if (Login())
-		    {
-			    return Get<TemplateDTO[]>("Template");
-		    }
-		    return null;
-	    }
+        public async Task<TemplateDTO[]> GetAllAsync() 
+			=> await GetAsync<TemplateDTO[]>("Template");
 
-	    public TemplateDTO GetTemplate(Guid id)
-	    {
-		    if (Login())
-		    {
-			    try
-			    {
-				    return Get<TemplateDTO>("Template?id=" + id.ToString());
-			    }
-			    catch
-			    {
-				    if (!IgnoreOnErrorOccured)
-					    throw;
-			    }
-		    }
-		    return null;
-	    }
+        public async Task<TemplateDTO> GetTemplateAsync(Guid id)
+			=> await GetAsync<TemplateDTO>($"Template?id={id}");
 
-	    public string SaveTemplate(TemplateDTO dto)
-	    {
-		    if (Login())
-		    {
-			    return Put("Template/" + dto.TemplateGuid, dto);
-		    }
-		    return null;
-	    }
+        public async Task SaveTemplateAsync(TemplateDTO dto) 
+            => await PutAsync($"Template/{dto.TemplateGuid}", dto);
 
-	    public void DeleteTemplate(Guid templateGuid)
-	    {
-		    if (Login())
-		    {
-			    Delete("Template/" + templateGuid);
-		    }
-	    }
-
-
-	    public async Task<TemplateDTO[]> GetAllAsync()
-	    {
-		    return await Task.Run(() => GetAll());
-	    }
-	    public async Task<TemplateDTO> GetTemplateAsync(Guid id)
-	    {
-		    return await Task.Run(() => GetTemplate(id));
-	    }
-	    public async Task SaveTemplateAsync(TemplateDTO dto)
-	    {
-		    await Task.Run(() => SaveTemplate(dto));
-	    }
-	    public async Task DeleteTemplateAsync(Guid templateGuid)
-	    {
-		    await Task.Run(() => DeleteTemplate(templateGuid));
-	    }
-	}
+        public async Task DeleteTemplateAsync(Guid templateGuid) 
+            => await DeleteAsync($"Template/{templateGuid}");
+    }
 }

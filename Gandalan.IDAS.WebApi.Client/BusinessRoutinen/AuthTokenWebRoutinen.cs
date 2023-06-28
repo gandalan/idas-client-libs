@@ -1,4 +1,5 @@
 ﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -8,9 +9,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public string RemoveExpiredTokens()
+        public async Task RemoveExpiredTokens()
         {
-            return Post("AuthToken/RemoveExpiredTokens", null);
+            await PostAsync("AuthToken/RemoveExpiredTokens", null);
         }
     }
 }

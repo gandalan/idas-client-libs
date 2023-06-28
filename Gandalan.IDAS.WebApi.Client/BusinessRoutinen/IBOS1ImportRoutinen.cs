@@ -14,60 +14,19 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
         // eigentlich kann man die Funktionen LadeBestellungen() und LadeMaterialBestellungen() sowie ResetBestellungen() und ResetMaterialBestellungen() auch noch zusammenfassen aber da war ich jetzt echt zu faul für...
-        public BestellungListItemDTO[] LadeBestellungen(int jahr = -1, bool includeAbegholte = false)
-        {
-            if (Login())
-            {
-                return Get<BestellungListItemDTO[]>($"Bestellungen?jahr={jahr}&includeAbegholte={includeAbegholte}");
-            }
-            return null;
-        }
-
-        public void ResetBestellungen(DateTime resetAb)
-        {
-            if (Login())
-            {
-                Get($"BestellungenReset?resetAb={resetAb.ToString("o")}");
-            }
-        }
-
-        public MaterialBestellungListItemDTO[] LadeMaterialBestellungen(int jahr = -1, bool includeAbegholte = false)
-        {
-            if (Login())
-                return Get<MaterialBestellungListItemDTO[]>($"MaterialBestellungen?jahr={jahr}&includeAbegholte={includeAbegholte}");
-
-            return null;
-        }
-
-        public void ResetMaterialBestellungen(DateTime resetAb)
-        {
-            if (Login())
-                Get($"MaterialBestellungenReset?resetAb={resetAb.ToString("o")}");
-        }
-
-        public string GetgSQLBeleg(Guid belegGuid)
-        {
-            if (Login())
-            {
-                return Encoding.UTF8.GetString(GetData("Bestellungen/" + belegGuid.ToString()));
-            }
-            return null;
-        }
-
-
-        public async Task<string> GetgSQLBelegAsync(Guid belegGuid)
-        {
-            return await Task<string>.Run(() => { return GetgSQLBeleg(belegGuid); });
-        }
-
-        public async Task<BestellungListItemDTO[]> LadeBestellungenAsync(int jahr = -1)
-        {
-            return await Task<VorgangListItemDTO[]>.Run(() => { return LadeBestellungen(jahr); });
-        }
+        public async Task<BestellungListItemDTO[]> LadeBestellungenAsync(int jahr = -1, bool includeAbegholte = false) 
+            => await GetAsync<BestellungListItemDTO[]>($"Bestellungen?jahr={jahr}&includeAbegholte={includeAbegholte}");
 
         public async Task ResetBestellungenAsync(DateTime resetAb)
-        {
-            await Task.Run(() => { ResetBestellungen(resetAb); });
-        }
+            => await GetAsync($"BestellungenReset?resetAb={resetAb.ToString("o")}");
+
+        public async Task<MaterialBestellungListItemDTO[]> LadeMaterialBestellungenAsync(int jahr = -1, bool includeAbegholte = false) 
+            => await GetAsync<MaterialBestellungListItemDTO[]>($"MaterialBestellungen?jahr={jahr}&includeAbegholte={includeAbegholte}");
+
+        public async Task ResetMaterialBestellungenAsync(DateTime resetAb) 
+            => await GetAsync($"MaterialBestellungenReset?resetAb={resetAb.ToString("o")}");
+
+        public async Task<string> GetgSQLBelegAsync(Guid belegGuid) 
+            => Encoding.UTF8.GetString(await GetDataAsync("Bestellungen/" + belegGuid.ToString()));
     }
 }
