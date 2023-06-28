@@ -6,14 +6,14 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
 {
     public interface ISaegeListeAufbereitenService {
         /// <summary>
-        /// Sortiert und Gruppiert die Eingangsdaten und bereitet sie für den Sägelistendruck vor
+        /// Sortiert und Gruppiert die Eingangsdaten und bereitet sie fÃ¼r den SÃ¤gelistendruck vor
         /// </summary>
         /// <param name="groupedProperty">Property, nachdem groupiert werden soll (Level 1)</param>
         /// <param name="items">Items die aufbereitet werden sollen</param>
         /// <returns></returns>
         Task<IEnumerable<IMaterialReportData>> SortAndGroup(string groupedProperty, IEnumerable<IMaterialReportItem> items);
         /// <summary>
-        /// Sortiert und Gruppiert die Eingangsdaten und bereitet sie für den Sägelistendruck vor
+        /// Sortiert und Gruppiert die Eingangsdaten und bereitet sie fÃ¼r den SÃ¤gelistendruck vor
         /// </summary>
         /// <param name="groupedProperty">Property, nachdem groupiert werden soll (Level 1)</param>
         /// <param name="items">Items die aufbereitet werden sollen</param>
