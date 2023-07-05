@@ -14,10 +14,9 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
     /// </summary>
     public partial class LoginWindow_v2 : Window
     {
-        private IWebApiConfig _webApiSettings;
-        private LoginWindowViewModel_v2 _viewModel;
+        private readonly IWebApiConfig _webApiSettings;
+        private readonly LoginWindowViewModel_v2 _viewModel;
         private string _statusText;
-        private readonly Logger _logger;
 
         //public LoginWindow_v2()
         //{
@@ -38,17 +37,16 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
                     }
 
             }
+
             InitializeComponent();
             DataContext = _viewModel;
-
-            _logger = Logger.GetInstance();
         }
 
         //public IWebApiConfig Show(IWebApiConfig webApiSettings)
         //{
         //    _webApiSettings = webApiSettings;
         //    _viewModel = new LoginWindowViewModel_v2();
-            
+
         //    ShowDialog();
 
         //    return _webApiSettings;
@@ -70,8 +68,9 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
                 DialogResult = true;
                 Close();
 
-                _logger.Log($"Connected to backend URL: {settings.Url}");
+                L.Diagnose($"Connected to backend URL: {settings.Url}");
             }
+
             _viewModel.LoginInProgress = false;
             _viewModel.StatusText = "Fehler: " + _statusText;
 
@@ -81,10 +80,10 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
                 _viewModel.UserName = settings.UserName;
             }
             else if (_statusText != null &&
-                       !_statusText.Contains("Invalid user") &&
-                       !_statusText.Contains("Login Exception")) // Do not log exception twice
+                     !_statusText.Contains("Invalid user") &&
+                     !_statusText.Contains("Login Exception")) // Do not log exception twice
             {
-                _logger.Log($"URL: {settings.Url}: {_statusText}", LogLevel.Fehler);
+                L.Fehler($"URL: {settings.Url}: {_statusText}");
             }
         }
 
@@ -102,20 +101,21 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             {
                 if (_viewModel.SaveCredentials)
                     WebApiConfigurations.Save(_webApiSettings);
-                DialogResult = true;                
+                DialogResult = true;
                 Close();
 
-                _logger.Log($"Connected to backend URL: {_webApiSettings.Url}");
+                L.Diagnose($"Connected to backend URL: {_webApiSettings.Url}");
             }
+
             _viewModel.LoginInProgress = false;
-            _viewModel.StatusText= "Fehler: " + _statusText;
+            _viewModel.StatusText = "Fehler: " + _statusText;
 
             if (_statusText != null &&
                 _statusText != "Invalid password" &&
                 !_statusText.Contains("Invalid user") &&
                 !_statusText.Contains("Login Exception")) // Do not log exception twice
             {
-                _logger.Log($"URL: {_webApiSettings.Url}: {_statusText}", LogLevel.Fehler);
+                L.Fehler($"URL: {_webApiSettings.Url}: {_statusText}");
             }
         }
 
@@ -133,9 +133,9 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
                         return true;
                     }
                 }
-                
+
                 var result = await wrb.LoginAsync();
-               
+
                 _statusText = wrb.Status;
                 if (_statusText.Contains("<title>"))
                     _statusText = internalStripHtml(_statusText);
@@ -147,8 +147,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             catch (Exception ex)
             {
                 _statusText = ex.Message;
-                var msg = $"Login Exception ({ex.GetType().Name}) Message: {ex.Message}{Environment.NewLine}Stacktrace: {ex.StackTrace}";
-                _logger.Log(msg, LogLevel.Fehler);
+                L.Fehler(ex, "Login Exception");
 
                 return false;
             }
@@ -157,12 +156,13 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
         private string internalStripHtml(string htmlString)
         {
             var result = htmlString;
-            if (result.ToLower().Contains("<title>") && result.ToLower().Contains("<title>"))
+            if (result.ToLower().Contains("<title>") && result.ToLower().Contains("</title>"))
             {
                 var start = result.IndexOf("<title>") + 7;
                 var end = result.IndexOf("</title>");
                 result = $"Interner Serverfehler (\"{result.Substring(start, end - start)}\"). Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.";
             }
+
             return result;
         }
 
