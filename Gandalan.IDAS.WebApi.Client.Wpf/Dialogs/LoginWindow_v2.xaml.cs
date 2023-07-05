@@ -14,10 +14,9 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
     /// </summary>
     public partial class LoginWindow_v2 : Window
     {
-        private IWebApiConfig _webApiSettings;
-        private LoginWindowViewModel_v2 _viewModel;
+        private readonly IWebApiConfig _webApiSettings;
+        private readonly LoginWindowViewModel_v2 _viewModel;
         private string _statusText;
-        private readonly Logger _logger;
 
         //public LoginWindow_v2()
         //{
@@ -40,8 +39,6 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             }
             InitializeComponent();
             DataContext = _viewModel;
-
-            _logger = Logger.GetInstance();
         }
 
         //public IWebApiConfig Show(IWebApiConfig webApiSettings)
@@ -69,8 +66,8 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
                 _webApiSettings.CopyToThis(settings);
                 DialogResult = true;
                 Close();
-
-                _logger.Log($"Connected to backend URL: {settings.Url}");
+                
+                L.Diagnose($"Connected to backend URL: {settings.Url}");
             }
             _viewModel.LoginInProgress = false;
             _viewModel.StatusText = "Fehler: " + _statusText;
@@ -84,7 +81,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
                        !_statusText.Contains("Invalid user") &&
                        !_statusText.Contains("Login Exception")) // Do not log exception twice
             {
-                _logger.Log($"URL: {settings.Url}: {_statusText}", LogLevel.Fehler);
+                L.Fehler($"URL: {settings.Url}: {_statusText}");
             }
         }
 
@@ -104,8 +101,8 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
                     WebApiConfigurations.Save(_webApiSettings);
                 DialogResult = true;                
                 Close();
-
-                _logger.Log($"Connected to backend URL: {_webApiSettings.Url}");
+                
+                L.Diagnose($"Connected to backend URL: {_webApiSettings.Url}");
             }
             _viewModel.LoginInProgress = false;
             _viewModel.StatusText= "Fehler: " + _statusText;
@@ -115,7 +112,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
                 !_statusText.Contains("Invalid user") &&
                 !_statusText.Contains("Login Exception")) // Do not log exception twice
             {
-                _logger.Log($"URL: {_webApiSettings.Url}: {_statusText}", LogLevel.Fehler);
+                L.Fehler($"URL: {_webApiSettings.Url}: {_statusText}");
             }
         }
 
@@ -147,8 +144,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             catch (Exception ex)
             {
                 _statusText = ex.Message;
-                var msg = $"Login Exception ({ex.GetType().Name}) Message: {ex.Message}{Environment.NewLine}Stacktrace: {ex.StackTrace}";
-                _logger.Log(msg, LogLevel.Fehler);
+                L.Fehler(ex, "Login Exception");
 
                 return false;
             }
