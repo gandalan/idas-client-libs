@@ -174,18 +174,22 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 
         private void pwResetButton_Click(object sender, RoutedEventArgs e)
         {
-            var pwVergessenDialog = new PasswordResetDialog();
-            pwVergessenDialog.Email = _viewModel.UserName;
-            pwVergessenDialog.Settings = _viewModel.ServerEnvironment;
-            pwVergessenDialog.Owner = Application.Current.MainWindow;
+            var pwVergessenDialog = new PasswordResetDialog
+            {
+                Email = _viewModel.UserName,
+                Settings = _viewModel.ServerEnvironment,
+                Owner = Application.Current.MainWindow,
+            };
             pwVergessenDialog.ShowDialog();
         }
 
         private void einrichtenButton_Click(object sender, RoutedEventArgs e)
         {
-            var setupDialog = new SetupDialog();
-            setupDialog.Settings = _viewModel.ServerEnvironment;
-            setupDialog.Owner = Application.Current.MainWindow;
+            var setupDialog = new SetupDialog
+            {
+                Settings = _viewModel.ServerEnvironment,
+                Owner = Application.Current.MainWindow,
+            };
             setupDialog.ShowDialog();
         }
 
