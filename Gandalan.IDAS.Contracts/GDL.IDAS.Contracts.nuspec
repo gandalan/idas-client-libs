@@ -8,7 +8,7 @@
         <owners>Gandalan GmbH &amp; Co. KG</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Gandalan.IDAS.Contracts</description>
-        <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2020</copyright>
+        <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2023</copyright>
         <license type="expression">MIT</license>
         <dependencies>
           <dependency id="GDL.IDAS.WebApi.Client" version="BUILDVERSION" />
@@ -20,6 +20,7 @@
       <file src="bin\Release\net48\GDL.IDAS.Contracts.dll" target="lib\net48\GDL.IDAS.Contracts.dll" />
       <file src="bin\Release\net48\GDL.IDAS.Contracts.XML" target="lib\net48\GDL.IDAS.Contracts.XML" />
       <file src="bin\Release\net6.0\GDL.IDAS.Contracts.dll" target="lib\net6.0\GDL.IDAS.Contracts.dll" />
+      <file src="bin\Release\net7.0\GDL.IDAS.Contracts.dll" target="lib\net7.0\GDL.IDAS.Contracts.dll" />
       <file src="bin\Release\netstandard2.0\GDL.IDAS.Contracts.dll" target="lib\netstandard2.0\GDL.IDAS.Contracts.dll" />
       <file src="bin\Release\netstandard2.1\GDL.IDAS.Contracts.dll" target="lib\netstandard2.1\GDL.IDAS.Contracts.dll" />
     </files>

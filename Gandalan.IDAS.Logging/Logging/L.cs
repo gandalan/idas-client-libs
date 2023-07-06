@@ -12,28 +12,12 @@ namespace Gandalan.IDAS.Logging
 
         public static void Fehler(Exception ex, string message, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
         {
-            Fehler($"{message} {ex.GetType().FullName}: {ex.Message}{Environment.NewLine}Stacktrace: {ex.StackTrace}", context, sender);
-
-            var innerException = ex.InnerException;
-            while (innerException != null)
-            {
-                Fehler(innerException, $"{message} InnerException", context, sender);
-
-                innerException = innerException.InnerException;
-            }
+            Fehler($"{message} {ex}", context, sender);
         }
 
         public static void Fehler(Exception ex, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
         {
-            Fehler($"{ex.GetType().FullName}: {ex.Message}{Environment.NewLine}Stacktrace: {ex.StackTrace}", context, sender);
-
-            var innerException = ex.InnerException;
-            while (innerException != null)
-            {
-                Fehler(innerException, "InnerException", context, sender);
-
-                innerException = innerException.InnerException;
-            }
+            Fehler($"{ex}", context, sender);
         }
 
         public static void Immer(string message, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)

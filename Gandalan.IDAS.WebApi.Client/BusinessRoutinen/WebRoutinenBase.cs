@@ -206,7 +206,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri, data);
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
@@ -219,7 +219,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri, data);
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
@@ -232,7 +232,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri, data);
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
@@ -245,7 +245,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri);
+                throw await HandleWebException(ex, uri);
             }
         }
 
@@ -258,7 +258,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri);
+                throw await HandleWebException(ex, uri);
             }
         }
 
@@ -271,7 +271,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri);
+                throw await HandleWebException(ex, uri);
             }
         }
 
@@ -284,7 +284,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri, data);
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
@@ -297,7 +297,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri, data);
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
@@ -310,7 +310,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri, data);
+                throw await HandleWebException(ex, uri, data);
             }
         }
 
@@ -323,7 +323,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri);
+                throw await HandleWebException(ex, uri);
             }
         }
 
@@ -336,7 +336,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri);
+                throw await HandleWebException(ex, uri);
             }
         }
 
@@ -349,7 +349,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (HttpRequestException ex)
             {
-                throw HandleWebException(ex, uri);
+                throw await HandleWebException(ex, uri);
             }
         }
 
@@ -449,15 +449,15 @@ namespace Gandalan.IDAS.WebApi.Client
             return false;
         }
 
-        private ApiException HandleWebException(HttpRequestException ex, string url)
+        private async Task<ApiException> HandleWebException(HttpRequestException ex, string url)
         {
-            ApiException exception = TranslateException(ex);
+            ApiException exception = await TranslateException(ex);
             return InternalHandleWebException(exception, url);
         }
 
-        private ApiException HandleWebException(HttpRequestException ex, string url, object data)
+        private async Task<ApiException> HandleWebException(HttpRequestException ex, string url, object data)
         {
-            ApiException exception = TranslateException(ex, data);
+            ApiException exception = await TranslateException(ex, data);
             return InternalHandleWebException(exception, url);
         }
 
@@ -518,7 +518,7 @@ namespace Gandalan.IDAS.WebApi.Client
             return exception;
         }
 
-        protected static ApiException TranslateException(HttpRequestException ex, object payload)
+        protected static async Task<ApiException> TranslateException(HttpRequestException ex, object payload)
         {
             if (ex.Data.Contains("Response"))
             {
@@ -556,7 +556,7 @@ namespace Gandalan.IDAS.WebApi.Client
             return new ApiException(ex.Message, ex, payload);
         }
 
-        protected static ApiException TranslateException(HttpRequestException ex)
+        protected static async Task<ApiException> TranslateException(HttpRequestException ex)
         {
             if (ex.Data.Contains("Response"))
             {

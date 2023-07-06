@@ -48,5 +48,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<string> SetBelegPositionAVKennzeichenAsync(SetFakturaDTO dto) 
             => await PostAsync<string>("Faktura/SetBelegPositionAVKennzeichen", dto);
+
+        public async Task SetFakturaInABAuto()
+            => await PostAsync<string>("Faktura/SetFakturaInABAuto", null);
+        
     }
 }

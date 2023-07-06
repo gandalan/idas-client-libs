@@ -66,14 +66,19 @@ namespace Gandalan.IDAS.Web
 
         public async Task<string> GetAsync(string url)
         {
+            string contentAsString = null;
+            HttpResponseMessage response = null;
             try
             {
-                return await _client.GetStringAsync(url);
+                response = await _client.GetAsync(url);
+                contentAsString = await response.Content?.ReadAsStringAsync();
+                response.EnsureSuccessStatusCode();
+                return contentAsString;
             }
             catch (Exception ex)
             #region Code
             {
-                AddInfoToException(ex, url, GetCurrentMethodName());
+                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -82,14 +87,19 @@ namespace Gandalan.IDAS.Web
 
         public async Task<byte[]> GetDataAsync(string url)
         {
+            string contentAsString = null;
+            HttpResponseMessage response = null;
             try
             {
-                return await _client.GetByteArrayAsync(url);
+                response = await _client.GetAsync(url);
+                contentAsString = await response.Content?.ReadAsStringAsync();
+                response.EnsureSuccessStatusCode();
+                return await response.Content?.ReadAsByteArrayAsync();
             }
             catch (Exception ex)
             #region Code
             {
-                AddInfoToException(ex, url, GetCurrentMethodName());
+                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -110,16 +120,19 @@ namespace Gandalan.IDAS.Web
 
         public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null)
         {
+            string contentAsString = null;
+            HttpResponseMessage response = null;
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
-                var response = await _client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await _client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                contentAsString = await response.Content?.ReadAsStringAsync();
                 response.EnsureSuccessStatusCode();
-                return await response.Content?.ReadAsStringAsync();
+                return contentAsString;
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName());
+                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -127,16 +140,19 @@ namespace Gandalan.IDAS.Web
 
         public async Task<byte[]> PostDataAsync(string url, byte[] data)
         {
+            string contentAsString = null;
+            HttpResponseMessage response = null;
             try
             {
-                var response = await _client.PostAsync(url, new ByteArrayContent(data));
+                response = await _client.PostAsync(url, new ByteArrayContent(data));
+                contentAsString = await response.Content?.ReadAsStringAsync();
                 response.EnsureSuccessStatusCode();
                 return await response.Content?.ReadAsByteArrayAsync();
             }
             catch (Exception ex)
             #region Code
             {
-                AddInfoToException(ex, url, GetCurrentMethodName());
+                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -158,16 +174,19 @@ namespace Gandalan.IDAS.Web
 
         public async Task<string> PutAsync(string url, object data, JsonSerializerSettings settings = null)
         {
+            string contentAsString = null;
+            HttpResponseMessage response = null;
             try
             {
                 string json = JsonConvert.SerializeObject(data, settings);
-                var response = await _client.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await _client.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                contentAsString = await response.Content?.ReadAsStringAsync();
                 response.EnsureSuccessStatusCode();
-                return await response.Content?.ReadAsStringAsync() ?? null;
+                return contentAsString;
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName());
+                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -175,15 +194,18 @@ namespace Gandalan.IDAS.Web
 
         public async Task<byte[]> PutDataAsync(string url, byte[] data)
         {
+            string contentAsString = null;
+            HttpResponseMessage response = null;
             try
             {
-                var response = await _client.PutAsync(url, new ByteArrayContent(data));
+                response = await _client.PutAsync(url, new ByteArrayContent(data));
+                contentAsString = await response.Content?.ReadAsStringAsync();
                 return await response.Content?.ReadAsByteArrayAsync();
             }
             catch (Exception ex)
             #region Code
             {
-                AddInfoToException(ex, url, GetCurrentMethodName());
+                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -197,13 +219,17 @@ namespace Gandalan.IDAS.Web
         /// <returns>Antwort des Servers als String</returns>
         public async Task DeleteAsync(string url)
         {
+            string contentAsString = null;
+            HttpResponseMessage response = null;
             try
             {
-                await _client.DeleteAsync(url);
+                response = await _client.DeleteAsync(url);
+                contentAsString = await response.Content?.ReadAsStringAsync();
+                response.EnsureSuccessStatusCode();
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName());
+                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -211,6 +237,8 @@ namespace Gandalan.IDAS.Web
 
         public async Task<string> DeleteAsync(string url, object data, JsonSerializerSettings settings = null)
         {
+            string contentAsString = null;
+            HttpResponseMessage response = null;
             try
             {
                 var request = new HttpRequestMessage
@@ -219,13 +247,14 @@ namespace Gandalan.IDAS.Web
                     RequestUri = new Uri(_client.BaseAddress, url),
                     Content = new StringContent(JsonConvert.SerializeObject(data, settings), Encoding.UTF8, "application/json")
                 };
-                var response = await _client.SendAsync(request);
+                response = await _client.SendAsync(request);
+                contentAsString = await response.Content?.ReadAsStringAsync();
                 response.EnsureSuccessStatusCode();
                 return await response.Content?.ReadAsStringAsync();
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName());
+                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -238,10 +267,14 @@ namespace Gandalan.IDAS.Web
         #endregion
 
         #region private Methods
-        private void AddInfoToException(Exception ex, string url, string callMethod)
+        private void AddInfoToException(Exception ex, string url, string callMethod, HttpResponseMessage response = null, string responseContent = null)
         {
             ex.Data.Add("URL", url);
             ex.Data.Add("CallMethod", callMethod);
+            ex.Data.Add("StatusCode", response != null ? response.StatusCode : HttpStatusCode.InternalServerError);
+            if (responseContent != null)
+                ex.Data.Add("Response", responseContent);   
+            
         }
 
         public static string GetCurrentMethodName()
