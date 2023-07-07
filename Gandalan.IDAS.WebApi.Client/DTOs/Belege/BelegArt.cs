@@ -11,6 +11,7 @@
         ProduktionsAuftrag = 6,
         ZuschnittAuftrag = 7,
         VersandAuftrag = 8,
-        MaterialBestellschein = 9
+        MaterialBestellschein = 9,
+        ReklamationsBestellschein = 10
     }
 }
