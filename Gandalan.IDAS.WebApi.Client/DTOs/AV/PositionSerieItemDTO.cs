@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Data
 {
@@ -16,5 +18,13 @@ namespace Gandalan.IDAS.WebApi.Data
         public decimal KapBedarf { get; set; }
         public decimal KapBedarfGes { get; set; }
         public bool HatNachfolgeBelegPosition { get; set; }
+        /// <summary>
+        /// currently only used in client
+        /// </summary>
+        public bool VeschiedeneSerien { get; set; }
+        /// <summary>
+        /// only set when <see cref="VeschiedeneSerien"/> is set.
+        /// </summary>
+        public List<Guid> SerienGuids { get; set; }
     }
 }

@@ -1,14 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
     public interface IAVModul
     {
-        Task ShowAVPlanung();
+        Task ShowAVPlanung(Func<Task> onShown = null);
     }
 
     public interface IAVDruckModul
     { 
-        Task ShowAVDruck();
+        Task ShowAVDruck(Func<Task> onShown = null);
     }
 }
