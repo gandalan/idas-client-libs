@@ -332,6 +332,11 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Order = Count
                 });
             }
+            if (Version < 3)
+            {
+                Version = 3;
+                Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT6", Label = "2 flg. ohne Montagerahmen", Produktgruppe = new List<string>() { "DT6/11" }, IstBasisregel = true, Order = Count });
+            }
         }
     }
 
