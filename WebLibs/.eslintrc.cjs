@@ -1,8 +1,16 @@
 module.exports = {
 	root: true,
-	extends: ["eslint:recommended"],
-	plugins: ["svelte3"],
-	overrides: [{ files: ["*.svelte"], processor: "svelte3/svelte3" }],
+	extends: [
+		// add more generic rule sets here, such as:
+		"eslint:recommended",
+		"plugin:svelte/recommended",
+	],
+	overrides: [
+		{
+			files: ["*.svelte"],
+			parser: "svelte-eslint-parser",
+		},
+	],
 	parser: "@babel/eslint-parser",
 	parserOptions: {
 		requireConfigFile: false,
