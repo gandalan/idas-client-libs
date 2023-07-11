@@ -15,10 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\workflows\build-and-publish.yml = .github\workflows\build-and-publish.yml
 		.github\workflows\check-NuGet-Libs.yml = .github\workflows\check-NuGet-Libs.yml
 		nuget_lokal.cmd = nuget_lokal.cmd
+		README.md = README.md
 		UpdateVersionInfo.ps1 = UpdateVersionInfo.ps1
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gandalan.IDAS.Contracts", "Gandalan.IDAS.Contracts\Gandalan.IDAS.Contracts.csproj", "{BC916DBF-1692-47F9-91D3-C158C6AF0E34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.Contracts", "Gandalan.IDAS.Contracts\Gandalan.IDAS.Contracts.csproj", "{BC916DBF-1692-47F9-91D3-C158C6AF0E34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
