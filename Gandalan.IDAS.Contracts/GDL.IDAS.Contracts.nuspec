@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>GDL.IDAS.Contracts</id>
@@ -10,11 +10,13 @@
         <description>Gandalan.IDAS.Contracts</description>
         <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2023</copyright>
         <license type="expression">MIT</license>
+		<readme>README.md</readme>
         <dependencies>
           <dependency id="GDL.IDAS.WebApi.Client" version="BUILDVERSION" />
         </dependencies>
     </metadata>
     <files>
+      <file src="..\README.md" target="\" />
       <file src="bin\Release\net472\GDL.IDAS.Contracts.dll" target="lib\net472\GDL.IDAS.Contracts.dll" />
       <file src="bin\Release\net472\GDL.IDAS.Contracts.XML" target="lib\net472\GDL.IDAS.Contracts.XML" />
       <file src="bin\Release\net48\GDL.IDAS.Contracts.dll" target="lib\net48\GDL.IDAS.Contracts.dll" />
