@@ -1,7 +1,7 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    const dispatch = createEventDispatcher();
     import { Icon } from "svelte-chota";
+    const dispatch = createEventDispatcher();
 
     export let items = [];
     export let selectedItem = {};
@@ -25,10 +25,10 @@
     </div>
     <div>
         {#if standardItem}
-            <div class="dgrow" on:click={setCurrent(standardItem)} on:keypress={e => e.key === "Enter" && setCurrent(standardItem)} class:selected="{selectedItem[key] === standardItem[key]}">{standardItem[displayProperty]}</div>
+            <div class="dgrow" on:click={setCurrent(standardItem)} on:keypress={e => e.key === "Enter" && setCurrent(standardItem)} role="row" tabindex="0" class:selected="{selectedItem[key] === standardItem[key]}">{standardItem[displayProperty]}</div>
         {/if}
-        {#each items as d}
-            <div class="dgrow" on:click={setCurrent(d)} on:keypress={e => e.key === "Enter" && setCurrent(d)} class:selected="{selectedItem[key] === d[key]}">
+        {#each items as d, i}
+            <div class="dgrow" on:click={setCurrent(d)} on:keypress={e => e.key === "Enter" && setCurrent(d)} role="row" tabindex="{i + 1}" class:selected="{selectedItem[key] === d[key]}">
                 {d[displayProperty]}
                 {#if marker && markerField && d[markerField] === true}
                     <Icon src={marker} />
@@ -67,5 +67,4 @@
     background-color: var(--color-selected);
     color: var(--color-selected-text);
 }
-
 </style>
