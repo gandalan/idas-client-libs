@@ -10,6 +10,7 @@
     <FileVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>2099.0.0-alpha</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
 
   </PropertyGroup>
 
@@ -65,4 +66,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0|AnyCPU'">
     <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Link="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>
