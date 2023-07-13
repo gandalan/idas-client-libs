@@ -7,6 +7,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid KontaktGuid { get; set; }
         public Guid KontaktMandantGuid { get; set; }
         /// <summary>
+        /// Der KontaktMandant hat die App-Verwendung aktiv
+        /// </summary>
+        public bool KontaktMandantIstAktiv { get; set; }
+        /// <summary>
         /// Nachname (für Endkunden)
         /// </summary>
         public string Nachname { get; set; }
@@ -55,6 +59,10 @@ namespace Gandalan.IDAS.WebApi.DTO
 		/// Kunde gesperrt?
 		/// </summary>
         public bool IstGesperrt { get; set; }
+        /// <summary>
+        /// Archivierte Kontakte werden nicht angezeigt
+        /// </summary>
+        public bool IstArchiviert { get; set; }
         public string URL { get; set; }
         public DateTime ChangedDate { get; set; }
 
@@ -62,6 +70,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         {
             newkontakt.KontaktGuid = this.KontaktGuid;
             newkontakt.KontaktMandantGuid = this.KontaktMandantGuid;
+            newkontakt.KontaktMandantIstAktiv = this.KontaktMandantIstAktiv;
             newkontakt.Nachname = this.Nachname;
             newkontakt.Vorname = this.Vorname;
             newkontakt.Firmenname = this.Firmenname;
@@ -71,6 +80,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             newkontakt.URL = this.URL;
             newkontakt.Email = this.Email;
             newkontakt.IstGesperrt = this.IstGesperrt;
+            newkontakt.IstArchiviert = this.IstArchiviert;
 	        newkontakt.Strasse = this.Strasse;
 	        newkontakt.Land = this.Land;
 	        newkontakt.Plz = this.Plz;

@@ -2,6 +2,7 @@
 using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.DTO;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
@@ -26,5 +27,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<KontaktDTO> SaveKontaktAsync(KontaktDTO kontakt) 
             => await PutAsync<KontaktDTO>("Kontakt", kontakt);
+
+        public async Task ArchiveKontakteAsync(List<Guid> kontakteIds)
+            => await PutAsync("KontaktArchivieren", kontakteIds);
     }
 }

@@ -55,6 +55,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public bool IstGesperrt { get; set; }
         /// <summary>
+        /// Archiviert, wird nicht mehr angezeigt, restliche Abhängigkeiten bleiben unberührt
+        /// </summary>
+        public bool IstArchiviert { get; set; }
+        /// <summary>
         /// Holt Ware normalerweise ab
         /// </summary>
         public bool IstSelbstabholer { get; set; }
