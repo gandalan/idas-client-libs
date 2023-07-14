@@ -29,6 +29,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await PutAsync<KontaktDTO>("Kontakt", kontakt);
 
         public async Task ArchiveKontakteAsync(List<Guid> kontakteIds)
-            => await PutAsync("KontaktArchivieren", kontakteIds);
+            => await PutAsync("kontakt/archivieren", kontakteIds);
+
+        public async Task UnarchiveKontakteAsync(List<Guid> kontakteIds)
+            => await PutAsync("kontakt/entarchivieren", kontakteIds);
     }
 }

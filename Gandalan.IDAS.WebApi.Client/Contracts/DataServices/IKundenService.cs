@@ -12,5 +12,6 @@ namespace Gandalan.Client.Contracts.DataServices
         Task<KontaktDTO> SaveAsync(KontaktDTO kunde);
         Task<KontaktDTO> LoadAsync(Guid guid);
         Task ArchiveAsync(List<Guid> kundenGuidList);
+        Task UnarchiveAsync(List<Guid> kundenGuidList);
     }
 }
