@@ -17,6 +17,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstProduziert { get; set; }
         public bool IstGeloescht { get; set; }
         public bool HatSonderwuensche { get; set; }
+        public bool CheckGesamtbedarf { get; set; }
         public string SonderwunschText { get; set; }
         public string Variante { get; set; }
         public string ArtikelNummer { get; set; }
