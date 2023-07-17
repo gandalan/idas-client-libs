@@ -21,5 +21,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task ZusammenfassenAsync(List<GesamtMaterialbedarfDTO> dtos, ZusammenfassungsOptionen optionen, bool stangenoptimierung) 
             => await PostAsync($"GesamtMaterialbedarf/Zusammenfassen?optionen={optionen}&stangenoptimierung={stangenoptimierung}", dtos);
+
+        public async Task WebJobAsync()
+            => await PostAsync("GesamtMaterialbedarf/WebJob", null);
     }
 }
