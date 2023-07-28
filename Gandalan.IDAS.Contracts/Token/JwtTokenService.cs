@@ -73,7 +73,7 @@ namespace Gandalan.IDAS.Contracts.Token
         /// <param name="authToken">User token</param>
         /// <param name="refreshToken">RefreshTokenDTO</param>
         /// <param name="privateKey">Private key</param>
-        /// <param name="expireDateTime">Expiry date (optional, default: 7 days)</param>
+        /// <param name="expireDateTime">Expiry date (optional, default: 5 minutes)</param>
         /// <param name="tokenType">Token type, default: Normal</param>
         /// <returns>Token string</returns>
         public string GenerateToken(UserAuthTokenDTO authToken, RefreshTokenDTO refreshToken, string privateKey, DateTime? expireDateTime = null, TokenType tokenType = TokenType.Normal)
