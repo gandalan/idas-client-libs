@@ -63,7 +63,8 @@ namespace Gandalan.IDAS.Contracts.Token
         {
             if (issuedAt != null)
             {
-                _issuedAt = issuedAt;
+                // Convert to UTC if not DateTimeKind.Utc
+                _issuedAt = issuedAt?.Kind == DateTimeKind.Utc ? issuedAt : issuedAt?.ToUniversalTime();
             }
         }
 
@@ -107,7 +108,15 @@ namespace Gandalan.IDAS.Contracts.Token
             rights.Add(new Claim(_claimRefreshToken, refreshToken.Token.ToString()));
             rights.Add(new Claim(_claimTokenType, tokenType.ToString()));
 
-            expireDateTime = expireDateTime ?? DateTime.UtcNow.AddMinutes(5);
+            if (expireDateTime != null)
+            {
+                // Convert to UTC if not DateTimeKind.Utc
+                expireDateTime = expireDateTime?.Kind == DateTimeKind.Utc ? expireDateTime : expireDateTime?.ToUniversalTime();
+            }
+            else
+            {
+                expireDateTime = DateTime.UtcNow.AddMinutes(5);
+            }
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = new SecurityTokenDescriptor
