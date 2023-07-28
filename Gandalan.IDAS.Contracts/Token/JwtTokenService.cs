@@ -113,7 +113,7 @@ namespace Gandalan.IDAS.Contracts.Token
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(rights),
-                NotBefore = DateTime.Parse("2021-01-01 00:00:00"),
+                NotBefore = DateTime.Parse("2021-01-01 00:00:00Z").ToUniversalTime(),
                 IssuedAt = _issuedAt ?? DateTime.UtcNow,
                 Expires = expireDateTime,
                 Issuer = _issuer,
