@@ -83,7 +83,9 @@ namespace Gandalan.IDAS.WebApi.DTO
                 IstSonderfarbe = IstSonderfarbe,
                 KatalogArtikelArt = KatalogArtikelArt,
                 GedeckteStueckzahl = GedeckteStueckzahl,
-                GedeckteZuschnittLaenge = GedeckteZuschnittLaenge
+                GedeckteZuschnittLaenge = GedeckteZuschnittLaenge,
+                IstVE = IstVE,
+                VE_Menge = VE_Menge
             };
         }
     }
