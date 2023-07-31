@@ -44,6 +44,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstSonderfarbe { get; set; }
         public KatalogArtikelArt KatalogArtikelArt { get; set; }
         public float DeckungInPercent => Einheit == "St" ? (float)(GedeckteStueckzahl / Stueckzahl) : GedeckteZuschnittLaenge / ZuschnittLaenge;
+        public bool IstVE { get; set; }
+        public decimal? VE_Menge { get; set; }
         public object Clone()
         {
             return new GesamtMaterialbedarfDTO()
