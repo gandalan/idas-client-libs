@@ -69,6 +69,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string FakturaKennzeichen { get; set; }
         public bool IstAusserhalbGewaehrleistung { get; set; }
+        public bool IstVE { get; set; }
+        public decimal? VE_Menge { get; set; }
 
         public BelegPositionDTO()
         {
