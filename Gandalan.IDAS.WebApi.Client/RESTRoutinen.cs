@@ -78,16 +78,11 @@ namespace Gandalan.IDAS.Web
                 return contentAsString;
             }
             catch (Exception ex)
-
-                #region Code
-
             {
                 AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-
-            #endregion
         }
 
         public async Task<byte[]> GetDataAsync(string url)
@@ -102,16 +97,11 @@ namespace Gandalan.IDAS.Web
                 return await response.Content?.ReadAsByteArrayAsync();
             }
             catch (Exception ex)
-
-                #region Code
-
             {
                 AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-
-            #endregion
         }
 
         /// <summary>
@@ -159,16 +149,11 @@ namespace Gandalan.IDAS.Web
                 return await response.Content?.ReadAsByteArrayAsync();
             }
             catch (Exception ex)
-
-                #region Code
-
             {
                 AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-
-            #endregion
         }
 
         /// <summary>
@@ -215,16 +200,11 @@ namespace Gandalan.IDAS.Web
                 return await response.Content?.ReadAsByteArrayAsync();
             }
             catch (Exception ex)
-
-                #region Code
-
             {
                 AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-
-            #endregion
         }
 
         /// <summary>
@@ -290,7 +270,9 @@ namespace Gandalan.IDAS.Web
             ex.Data.Add("CallMethod", callMethod);
             ex.Data.Add("StatusCode", response != null ? response.StatusCode : HttpStatusCode.InternalServerError);
             if (responseContent != null)
+            {
                 ex.Data.Add("Response", responseContent);
+            }
         }
 
         public static string GetCurrentMethodName()
