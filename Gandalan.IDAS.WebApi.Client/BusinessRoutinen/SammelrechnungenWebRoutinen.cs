@@ -33,6 +33,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task SetRechnungenAlsGedrucktAsync(Guid sammelrechnungGuid)
             => await PostAsync($"Sammelrechnungen/SetRechnungenAlsGedruckt?sammelrechnungGuid={sammelrechnungGuid}", null);
+        
+        public async Task SetRechnungenAlsFibuExportiertAsync(Guid sammelrechnungGuid)
+            => await PostAsync($"Sammelrechnungen/SetRechnungenAlsFibuExportiert?sammelrechnungGuid={sammelrechnungGuid}", null);
 
         
     }
