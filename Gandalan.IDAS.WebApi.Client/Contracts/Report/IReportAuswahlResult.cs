@@ -9,5 +9,6 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.Report
         string PrinterName { get; set; }
         string FileName { get; set; }
         int Copies { get; set; }
+        string Watermark { get; set; }
     }
 }
