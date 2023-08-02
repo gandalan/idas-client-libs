@@ -12,5 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public int AnzahlPositionen { get; set; }
         public decimal GesamtBetrag { get; set; }
         public Guid KundenGuid { get; set; }
+        public decimal MwSt { get; set; }
+        public Lieferungstyp Lieferungstyp { get; set; }
     }
 }
