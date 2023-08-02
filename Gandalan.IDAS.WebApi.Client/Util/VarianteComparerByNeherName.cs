@@ -7,48 +7,48 @@ namespace Gandalan.IDAS.WebApi.Util
 {
     public class VarianteComparerByNeherName : IComparer<VarianteDTO>
     {
-        private static Regex variantenNameRex = new Regex(@"(?:[a-zA-Z]{1,3}|\d{1,3}|\.[a-zA-Z]{1,3})\s*", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private static readonly Regex VariantenNameRex = new Regex(@"(?:[a-zA-Z]{1,3}|\d{1,3}|\.[a-zA-Z]{1,3})\s*", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         public int Compare(VarianteDTO x, VarianteDTO y)
         {
-            string[] partsX = variantenNameRex.Matches(x.Name.ToLower()).Cast<Match>().Select(m => m.Value).ToArray();
-            string[] partsY = variantenNameRex.Matches(y.Name.ToLower()).Cast<Match>().Select(m => m.Value).ToArray();
+            string[] partsX = VariantenNameRex.Matches(x.Name.ToLower()).Cast<Match>().Select(m => m.Value).ToArray();
+            string[] partsY = VariantenNameRex.Matches(y.Name.ToLower()).Cast<Match>().Select(m => m.Value).ToArray();
 
-            int wertA = getFamilienWert(partsX[0]);
-            int wertB = getFamilienWert(partsY[0]);
+            int wertA = GetFamilienWert(partsX[0]);
+            int wertB = GetFamilienWert(partsY[0]);
             if (wertA != wertB) return wertA - wertB;
 
-            if (partsX.Length > 1) wertA += getGruppenWert(partsX[1]);
-            if (partsY.Length > 1) wertB += getGruppenWert(partsY[1]);
+            if (partsX.Length > 1) wertA += GetGruppenWert(partsX[1]);
+            if (partsY.Length > 1) wertB += GetGruppenWert(partsY[1]);
             if (wertA != wertB) return wertA - wertB;
 
-            if (partsX.Length > 2) wertA += getProduktWert(partsX[2]);
-            if (partsY.Length > 2) wertB += getProduktWert(partsY[2]);
+            if (partsX.Length > 2) wertA += GetProduktWert(partsX[2]);
+            if (partsY.Length > 2) wertB += GetProduktWert(partsY[2]);
             if (wertA != wertB) return wertA - wertB;
 
-            if (partsX.Length > 3) wertA += getAbart(partsX[3]);
-            if (partsY.Length > 3) wertB += getAbart(partsY[3]);
+            if (partsX.Length > 3) wertA += GetAbart(partsX[3]);
+            if (partsY.Length > 3) wertB += GetAbart(partsY[3]);
             return wertA - wertB;
         }
 
-        private int getAbart(string p)
+        private static int GetAbart(string p)
         {
             return !string.IsNullOrEmpty(p) ? 50 : 0;
         }
 
-        private int getProduktWert(string p)
+        private static int GetProduktWert(string p)
         {
             return int.TryParse(p, out int result) ? result : 99;
         }
 
-        private int getGruppenWert(string p)
+        private static int GetGruppenWert(string p)
         {
             return int.TryParse(p, out int result) ? result * 100 : 999;
         }
 
-        private int getFamilienWert(string p)
+        private static int GetFamilienWert(string p)
         {
-            int result = 0;
+            int result;
             switch (p.ToLower().Trim())
             {
                 case "sp": result = 1000; break;
@@ -71,6 +71,7 @@ namespace Gandalan.IDAS.WebApi.Util
                     result = 17000;
                     break;
             }
+
             return result;
         }
     }

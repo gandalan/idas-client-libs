@@ -45,19 +45,17 @@ namespace Gandalan.IDAS.Contracts.Token
 
     public class JwtTokenService
     {
-        public const string TOKEN_COOKIE_NAME = "jwt-token";
-
-        private string _issuer = "https://gandalan.de";
-        private DateTime? _issuedAt = null;
-        private string _claimId = "id";
-        private string _claimMandantGuid = "mandantGuid";
-        private string _claimBenutzerGuid = "benutzerGuid";
-        private string _claimAppToken = "appToken";
-        private string _claimIdasAuthToken = "idasAuthToken";
-        private string _claimRefreshToken = "refreshToken";
-        private string _claimTokenType = "type";
-        private string _claimRole = "role";
-        private string _claimRights = "rights";
+        private readonly string _issuer = "https://gandalan.de";
+        private readonly DateTime? _issuedAt;
+        private readonly string _claimId = "id";
+        private readonly string _claimMandantGuid = "mandantGuid";
+        private readonly string _claimBenutzerGuid = "benutzerGuid";
+        private readonly string _claimAppToken = "appToken";
+        private readonly string _claimIdasAuthToken = "idasAuthToken";
+        private readonly string _claimRefreshToken = "refreshToken";
+        private readonly string _claimTokenType = "type";
+        private readonly string _claimRole = "role";
+        private readonly string _claimRights = "rights";
 
         public JwtTokenService(DateTime? issuedAt = null)
         {
@@ -73,7 +71,7 @@ namespace Gandalan.IDAS.Contracts.Token
         /// <param name="authToken">User token</param>
         /// <param name="refreshToken">RefreshTokenDTO</param>
         /// <param name="privateKey">Private key</param>
-        /// <param name="expireDateTime">Expiry date (optional, default: 7 days)</param>
+        /// <param name="expireDateTime">Expiry date (optional, default: 5 minutes)</param>
         /// <param name="tokenType">Token type, default: Normal</param>
         /// <returns>Token string</returns>
         public string GenerateToken(UserAuthTokenDTO authToken, RefreshTokenDTO refreshToken, string privateKey, DateTime? expireDateTime = null, TokenType tokenType = TokenType.Normal)
@@ -84,8 +82,7 @@ namespace Gandalan.IDAS.Contracts.Token
             }
 
             var credentials = GetSigningCredentials(privateKey);
-
-            // roles
+            
             // roles & rights
             var roleCodes = new List<string>();
             var rightCodes = new List<string>();
@@ -117,7 +114,7 @@ namespace Gandalan.IDAS.Contracts.Token
                 IssuedAt = _issuedAt ?? DateTime.UtcNow,
                 Expires = expireDateTime,
                 Issuer = _issuer,
-                SigningCredentials = credentials
+                SigningCredentials = credentials,
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -163,10 +160,10 @@ namespace Gandalan.IDAS.Contracts.Token
                     .Select(x => x.Value)
                     .ToList();
 
-                return new TokenParseResult()
+                return new TokenParseResult
                 {
                     Status = ParseStatus.Valid,
-                    Token = new JwtTokenData()
+                    Token = new JwtTokenData
                     {
                         Id = userId,
                         Expires = validatedToken.ValidTo,
@@ -183,17 +180,17 @@ namespace Gandalan.IDAS.Contracts.Token
             catch (SecurityTokenExpiredException)
             {
                 // token is expired
-                return new TokenParseResult()
+                return new TokenParseResult
                 {
-                    Status = ParseStatus.Expired
+                    Status = ParseStatus.Expired,
                 };
             }
             catch (Exception)
             {
                 // token is invalid
-                return new TokenParseResult()
+                return new TokenParseResult
                 {
-                    Status = ParseStatus.Invalid
+                    Status = ParseStatus.Invalid,
                 };
             }
         }
@@ -206,28 +203,28 @@ namespace Gandalan.IDAS.Contracts.Token
         /// <returns>Token validation parameters</returns>
         public TokenValidationParameters ValidationParams(string publicKey, bool allowExpired = false)
         {
-            RsaSecurityKey issuerSigningKey = GetIssuerSigningKey(publicKey);
+            var issuerSigningKey = GetIssuerSigningKey(publicKey);
 
-            var validationParams = new TokenValidationParameters()
+            var validationParams = new TokenValidationParameters
             {
                 ValidateIssuer = true,
                 ValidateAudience = false,
                 ValidateLifetime = !allowExpired,
                 ValidIssuer = _issuer,
-                IssuerSigningKey = issuerSigningKey
+                IssuerSigningKey = issuerSigningKey,
             };
 
             return validationParams;
         }
 
-        private RsaSecurityKey GetIssuerSigningKey(string publicKey)
+        private static RsaSecurityKey GetIssuerSigningKey(string publicKey)
         {
             var rsa = RSA.Create();
             rsa.FromXmlString(publicKey);
             return new RsaSecurityKey(rsa);
         }
 
-        private SigningCredentials GetSigningCredentials(string privateKey)
+        private static SigningCredentials GetSigningCredentials(string privateKey)
         {
             var rsa = RSA.Create();
             rsa.FromXmlString(privateKey);

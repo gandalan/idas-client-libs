@@ -17,5 +17,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public bool IstSammelrechnungsKunde { get; set; }
         public long? SammelrechnungsNummer { get; set; }
         public bool IstGedruckt { get; set; }
+        public decimal MwSt { get; set; }
+        public Lieferungstyp Lieferungstyp { get; set; }
     }
 }

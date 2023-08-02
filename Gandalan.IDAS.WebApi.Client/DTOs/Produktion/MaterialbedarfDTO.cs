@@ -43,6 +43,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public decimal Laufmeter { get; set; }
 
+        public bool IstVE { get; set; }
+
+        public decimal? VE_Menge { get; set; }
+
         /// <summary>
         /// FarbBezeichnung (Bezeichnung der Farbe)
         /// </summary>

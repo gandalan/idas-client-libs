@@ -1,11 +1,9 @@
 ﻿using Gandalan.IDAS.WebApi.Client;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,12 +15,14 @@ namespace Gandalan.IDAS.Web
     /// </summary>
     public class RESTRoutinen : IDisposable
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         #region Constructors
-        public RESTRoutinen(string baseUrl) 
+
+        public RESTRoutinen(string baseUrl)
         {
-            _client = HttpClientFactory.GetInstance(new HttpClientConfig() {
+            _client = HttpClientFactory.GetInstance(new HttpClientConfig()
+            {
                 BaseUrl = baseUrl
             });
         }
@@ -40,6 +40,7 @@ namespace Gandalan.IDAS.Web
         {
             _client = HttpClientFactory.GetInstance(config);
         }
+
         #endregion Constructors
 
         public string UserAgent
@@ -52,6 +53,7 @@ namespace Gandalan.IDAS.Web
         }
 
         #region public Methods
+
         /// <summary>
         /// Holt ein Objekt per HTTP GET
         /// </summary>
@@ -76,13 +78,11 @@ namespace Gandalan.IDAS.Web
                 return contentAsString;
             }
             catch (Exception ex)
-            #region Code
             {
                 AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-            #endregion
         }
 
         public async Task<byte[]> GetDataAsync(string url)
@@ -97,14 +97,13 @@ namespace Gandalan.IDAS.Web
                 return await response.Content?.ReadAsByteArrayAsync();
             }
             catch (Exception ex)
-            #region Code
             {
                 AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-            #endregion
         }
+
         /// <summary>
         /// Sendet ein Objekt per HTTP POST an die angegebene URL, i.d.R. um es zu speichern
         /// </summary>
@@ -150,13 +149,11 @@ namespace Gandalan.IDAS.Web
                 return await response.Content?.ReadAsByteArrayAsync();
             }
             catch (Exception ex)
-            #region Code
             {
                 AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-            #endregion
         }
 
         /// <summary>
@@ -203,13 +200,11 @@ namespace Gandalan.IDAS.Web
                 return await response.Content?.ReadAsByteArrayAsync();
             }
             catch (Exception ex)
-            #region Code
             {
                 AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
-            #endregion
         }
 
         /// <summary>
@@ -264,17 +259,20 @@ namespace Gandalan.IDAS.Web
         {
             return JsonConvert.DeserializeObject<T>(await DeleteAsync(url, data, settings), settings);
         }
+
         #endregion
 
         #region private Methods
-        private void AddInfoToException(Exception ex, string url, string callMethod, HttpResponseMessage response = null, string responseContent = null)
+
+        private static void AddInfoToException(Exception ex, string url, string callMethod, HttpResponseMessage response = null, string responseContent = null)
         {
             ex.Data.Add("URL", url);
             ex.Data.Add("CallMethod", callMethod);
             ex.Data.Add("StatusCode", response != null ? response.StatusCode : HttpStatusCode.InternalServerError);
             if (responseContent != null)
-                ex.Data.Add("Response", responseContent);   
-            
+            {
+                ex.Data.Add("Response", responseContent);
+            }
         }
 
         public static string GetCurrentMethodName()
@@ -284,6 +282,7 @@ namespace Gandalan.IDAS.Web
 
             return stackFrame?.GetMethod()?.Name;
         }
+
         #endregion
 
         public void Dispose()
