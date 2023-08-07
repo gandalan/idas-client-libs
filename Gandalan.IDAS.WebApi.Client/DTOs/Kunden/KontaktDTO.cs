@@ -227,7 +227,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public BeleganschriftDTO GetRechnungsadresse()
         {
-            var rechnungsAdresse = new BeleganschriftDTO() { AdressGuid = Guid.NewGuid() };
+            var rechnungsAdresse = new BeleganschriftDTO { AdressGuid = Guid.NewGuid() };
             var rechnungsanschrift = Zusatzanschriften?.FirstOrDefault(z => z.Verwendungszweck == "Rechnung" && !string.IsNullOrWhiteSpace(z.ToString()));
             if (rechnungsanschrift != null)
             {
@@ -245,6 +245,8 @@ namespace Gandalan.IDAS.WebApi.DTO
                 rechnungsAdresse.Postleitzahl = rechnungsanschrift.Postleitzahl;
                 rechnungsAdresse.Ort = rechnungsanschrift.Ort;
                 rechnungsAdresse.Land = rechnungsanschrift.Land;
+                rechnungsAdresse.IstInland = string.IsNullOrEmpty(rechnungsanschrift.Land) ||
+                                             rechnungsanschrift.Land == "D" || rechnungsanschrift.Land == "DE";
             }
             else
             {
@@ -262,6 +264,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 rechnungsAdresse.Postleitzahl = Postleitzahl;
                 rechnungsAdresse.Ort = Ort;
                 rechnungsAdresse.Land = Land;
+                rechnungsAdresse.IstInland = string.IsNullOrEmpty(Land) || Land == "D" || Land == "DE";
             }
 
             return rechnungsAdresse;
