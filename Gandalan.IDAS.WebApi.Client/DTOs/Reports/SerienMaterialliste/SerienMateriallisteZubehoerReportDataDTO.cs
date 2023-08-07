@@ -11,5 +11,6 @@
         public string Einheit { get; set; }
         public string Bezeichnung { get; set; }
         public string OberflaecheBezeichnung { get; set; }
+        public decimal? VE_Menge { get; set; }
     }
 }
