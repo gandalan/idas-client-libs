@@ -137,6 +137,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Land als Textkürzel
         /// </summary>
         public string Land { get; set; }
+        public bool IstInland { get; set; }
         /// <summary>
         /// E-Mail-Adresse
         /// </summary>
@@ -245,8 +246,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 rechnungsAdresse.Postleitzahl = rechnungsanschrift.Postleitzahl;
                 rechnungsAdresse.Ort = rechnungsanschrift.Ort;
                 rechnungsAdresse.Land = rechnungsanschrift.Land;
-                rechnungsAdresse.IstInland = string.IsNullOrEmpty(rechnungsanschrift.Land) ||
-                                             rechnungsanschrift.Land == "D" || rechnungsanschrift.Land == "DE";
+                rechnungsAdresse.IstInland = rechnungsanschrift.IstInland;
             }
             else
             {
@@ -264,7 +264,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 rechnungsAdresse.Postleitzahl = Postleitzahl;
                 rechnungsAdresse.Ort = Ort;
                 rechnungsAdresse.Land = Land;
-                rechnungsAdresse.IstInland = string.IsNullOrEmpty(Land) || Land == "D" || Land == "DE";
+                rechnungsAdresse.IstInland = IstInland;
             }
 
             return rechnungsAdresse;

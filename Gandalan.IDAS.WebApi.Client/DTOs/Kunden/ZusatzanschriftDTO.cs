@@ -65,6 +65,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string Land { get; set; }
         /// <summary>
+        /// Bezogen auf den Versender die Angabe, ob die hier ausgefertigte Adresse eine Inlandsadresse ist
+        /// </summary>
+        public bool IstInland { get; set; }
+        /// <summary>
         /// E-Mail-Adresse
         /// </summary>
         public string Mailadresse { get; set; }
