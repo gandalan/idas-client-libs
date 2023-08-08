@@ -14,8 +14,16 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.Rechnungen
         IFibuRecord CreateRecord();
     }
 
+    public enum FibuRecordBelegArt
+    {
+        Rechnung = 0,
+        Sammelrechnung = 1
+    }
+
     public interface IFibuRecord
     {
+        Guid OrginialBelegGuid { get; set; }
+        FibuRecordBelegArt OrginialBelegArt { get; set; }
         IList<PropertyInfo> GetExportProperties();
         void FromSammelrechnung(SammelrechnungListItemDTO sammelrechnung);
         void FromRechnung(BelegeInfoDTO rechnung);
