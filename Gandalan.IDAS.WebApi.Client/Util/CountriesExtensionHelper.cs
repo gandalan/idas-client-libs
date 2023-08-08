@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 
-namespace Gandalan.IDAS.WebApi.Client.Util
+namespace System
 {
     public static class CountriesExtensionHelper
     {
@@ -41,13 +41,13 @@ namespace Gandalan.IDAS.WebApi.Client.Util
             "Zypern", "Κύπρος", "Kıbrıs", "CY"
         };
         #endregion
-        public static bool LandIsEUCountry(string land)
+        public static bool IsEUCountry(this string land)
         {
             return string.IsNullOrEmpty(land) ||
                    _euCountryCodes.Any(t => land.Equals(t, StringComparison.OrdinalIgnoreCase));
         }
 
-        public static bool IsInland(string land, IEnumerable<string> inlandsLaender)
+        public static bool IsInland(this string land, IEnumerable<string> inlandsLaender)
         {
             return string.IsNullOrEmpty(land) ||
                    inlandsLaender.Any(x => land.Equals(x, StringComparison.OrdinalIgnoreCase));
