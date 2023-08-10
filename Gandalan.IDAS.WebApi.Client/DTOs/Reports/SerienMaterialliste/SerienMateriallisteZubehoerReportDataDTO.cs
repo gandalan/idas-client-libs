@@ -2,6 +2,7 @@
 {
     public class SerienMateriallisteZubehoerReportDataDTO
     {
+        public string Serie { get; set; }
         public string Katalognummer { get; set; }
         public string Farbkuerzel { get; set; }
         public string FarbBezeichnung { get; set; }
