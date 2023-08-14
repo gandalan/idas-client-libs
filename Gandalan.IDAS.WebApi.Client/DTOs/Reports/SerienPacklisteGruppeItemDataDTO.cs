@@ -12,7 +12,8 @@
         public float Laenge { get; set; }
         public string Winkel { get; set; }
         public bool IstZuschnitt { get; set; }
-        public decimal? VE_Menge { get; set; }
+        public decimal VE_Menge { get; set; }
+        public decimal Artikel_VE_Menge { get; set; }
 
     }
 }
