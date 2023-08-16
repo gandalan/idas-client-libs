@@ -210,6 +210,17 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Inaktiv Kennzeichen
         /// </summary>
         public bool IstInaktiv { get; set; }
+        /// <summary>
+        /// Erzeugt einen Text aus den Namensfeldern für die Anzeige in 
+        /// Überschriften, Anschriftenfeldern usw. 
+        /// </summary>
+        public string AnzeigeName => string.IsNullOrEmpty(Firmenname)
+            ? $"{Anrede} {Titel} {Vorname} {Nachname}".Trim()
+            : Firmenname;
+
+        public string ProduktionZusatzInfo { get; set; }
+        public bool ProduktionZusatzInfoPrintZusatzEtikett { get; set; }
+        public bool ProduktionZusatzInfoPrintOnReport { get; set; }
 
         public KontaktDTO()
         {
@@ -268,18 +279,6 @@ namespace Gandalan.IDAS.WebApi.DTO
             }
 
             return rechnungsAdresse;
-        }
-
-        /// <summary>
-        /// Erzeugt einen Text aus den Namensfeldern für die Anzeige in 
-        /// Überschriften, Anschriftenfeldern usw. 
-        /// </summary>
-        public string AnzeigeName
-        {
-            get
-            {
-                return string.IsNullOrEmpty(Firmenname) ? $"{Anrede} {Titel} {Vorname} {Nachname}".Trim() : Firmenname;
-            }
         }
     }
 }
