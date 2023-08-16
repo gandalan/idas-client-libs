@@ -14,7 +14,9 @@ namespace Gandalan.IDAS.Contracts.Belege
         ZuschnittAuftrag = 7,
         VersandAuftrag = 8,
         MaterialBestellschein = 9,
-        ReklamationsBestellschein = 10
+        ReklamationsBestellschein = 10,
+        Gutschrift = 11, 
+        Storno = 12
     }
 
     public struct BelegWorkflow
