@@ -277,6 +277,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
     public class BelegPositionDruckDTO
     {
+        public string PositionsKommission { get; set; }
         public int LaufendeNummer { get; set; }
         public string ArtikelNummer { get; set; }
         public string Variante { get; set; }
@@ -306,6 +307,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             CultureInfo culture = new CultureInfo("de-de");
             if (position != null)
             {
+                this.PositionsKommission = position.PositionsKommission;
                 this.LaufendeNummer = position.LaufendeNummer;
                 this.ArtikelNummer = position.ArtikelNummer;
                 this.Variante = position.Variante;
