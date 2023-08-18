@@ -86,6 +86,10 @@
 
                 <Label Grid.Column="0" Grid.Row="3" Content="Passwort:" VerticalAlignment="Center"></Label>
                 <Grid Grid.Column="1" Grid.Row="3" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -95,6 +99,7 @@
                     <Button x:Name="togglePasswordButton" Grid.Column="1" Margin="0,5,5,5" Padding="5" Click="TogglePassword_Click">
                         <Image x:Name="togglePasswordButtonImage" Source="pack://application:,,,/GDL.IDAS.WebApi.Client.WPF;component/Assets/Icons/view-off.png" Width="18" Height="18"></Image>
                     </Button>
+                    <TextBlock Grid.Row="1" Margin="5,0,0,0" Text="{Binding PasswordInputWarning}" Foreground="Orange" d:Text="Feststelltaste ist aktiviert."/>
                 </Grid>
 
                 <CheckBox x:Name="checkBoxAuthToken" IsChecked="{Binding SaveCredentials}" Grid.Column="1" Grid.Row="4" Content="Anmeldung merken" VerticalContentAlignment="Center" Margin="5,5,10,5" Padding="2"/>

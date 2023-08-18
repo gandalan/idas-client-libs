@@ -45,7 +45,8 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
         public string PlainPassword { get; set; }
         public bool ShowPlainPassword { get; set; } = false;
         public bool HidePlainPassword => !ShowPlainPassword;
-
+        public string PasswordInputWarning { get; set; }
+        public bool ShowPasswordInputWarning { get; set; }
 
         public LoginWindowViewModel_v2(IWebApiConfig webApiSettings)
         {

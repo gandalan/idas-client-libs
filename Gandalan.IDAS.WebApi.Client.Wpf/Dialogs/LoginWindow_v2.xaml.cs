@@ -200,6 +200,27 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             {
                 _viewModel.ShowServerSelection = !_viewModel.ShowServerSelection;
             }
+            if (Keyboard.IsKeyToggled(Key.CapsLock) || !Keyboard.IsKeyToggled(Key.NumLock))
+            {
+                _viewModel.ShowPasswordInputWarning = true;
+                _viewModel.PasswordInputWarning = "";
+                if (Keyboard.IsKeyToggled(Key.CapsLock))
+                {
+                    _viewModel.PasswordInputWarning += "Feststelltaste ist aktiviert. ";
+                }
+                if (!Keyboard.IsKeyToggled(Key.NumLock))
+                {
+                    _viewModel.PasswordInputWarning += "Numlock ist nicht aktiviert. ";
+                }
+            }
+            else
+            {
+                if (_viewModel.ShowPasswordInputWarning) // only reset if warning is shown
+                {
+                    _viewModel.ShowPasswordInputWarning = false;
+                    _viewModel.PasswordInputWarning = null;
+                }
+            }
         }
 
         private void TogglePassword_Click(object sender, RoutedEventArgs e)
