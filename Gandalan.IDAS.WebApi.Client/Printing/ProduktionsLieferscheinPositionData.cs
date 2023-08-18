@@ -7,6 +7,7 @@ namespace Gandalan.IDAS.WebApi.Client.Printing
     public class ProduktionsLieferscheinPositionData
     {
         public string Positionsnummer { get; set; }
+        public string PositionsKommission { get; set; }
         public string Variante { get; set; }
         public string Artikel { get; set; }
         public decimal Menge { get; set; }
