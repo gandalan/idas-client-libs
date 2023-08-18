@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 {
@@ -199,6 +200,27 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             {
                 _viewModel.ShowServerSelection = !_viewModel.ShowServerSelection;
             }
+        }
+
+        private void TogglePassword_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.ShowPlainPassword = !_viewModel.ShowPlainPassword;
+            togglePasswordButton.ToolTip = _viewModel.ShowPlainPassword ? "Verbergen" : "Anzeigen";
+            if (!_viewModel.ShowPlainPassword)
+            {
+                passwordBox.Password = _viewModel.PlainPassword;
+                togglePasswordButtonImage.Source = new BitmapImage(new Uri("pack://application:,,,/GDL.IDAS.WebApi.Client.WPF;component/Assets/Icons/view-off.png"));
+            }
+            else
+            {
+                _viewModel.PlainPassword = passwordBox.Password;
+                togglePasswordButtonImage.Source = new BitmapImage(new Uri("pack://application:,,,/GDL.IDAS.WebApi.Client.WPF;component/Assets/Icons/view-1.png"));
+            }
+        }
+
+        private void plainPasswordBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            passwordBox.Password = plainPasswordBox.Text;
         }
     }
 }

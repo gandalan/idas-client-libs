@@ -18,6 +18,8 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\Icons\view-1.png" />
+    <None Remove="Assets\Icons\view-off.png" />
     <None Remove="Assets\Neher\Logo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +38,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Icons\view-1.png" />
+    <Resource Include="Assets\Icons\view-off.png" />
     <Resource Include="Assets\Neher\Logo.png" />
   </ItemGroup>
 </Project>

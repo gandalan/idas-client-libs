@@ -41,7 +41,12 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
         public bool ShowLoggedInEnvironments { get; set; }
         public bool ShowLoginFields => !ShowLoggedInEnvironments;
         public string StatusText { get; set; }
-        
+
+        public string PlainPassword { get; set; }
+        public bool ShowPlainPassword { get; set; } = false;
+        public bool HidePlainPassword => !ShowPlainPassword;
+
+
         public LoginWindowViewModel_v2(IWebApiConfig webApiSettings)
         {
             AlleEnvironments = WebApiConfigurations.GetAll();
