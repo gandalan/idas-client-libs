@@ -38,7 +38,7 @@ jobs:
       uses: NuGet/setup-nuget@v1
     - name: Set release_name
       id: set_release_name
-      run: echo "::set-output name=release_name::$(date +'%-Y.%-m.%-d').$GITHUB_RUN_NUMBER"
+      run: echo "release_name=$(date +'%-Y.%-m.%-d').$GITHUB_RUN_NUMBER" >> $GITHUB_OUTPUT
     - name: Setup .NET Core SDK ${{ env.SDK_VERSION }}
       uses: actions/setup-dotnet@v3
       with:
@@ -61,7 +61,7 @@ jobs:
     - name: Create package ${{ env.PACKAGE_5 }}
       run: nuget pack ${{ env.PACKAGE_5_FULL }}/${{ env.PACKAGE_5 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
     - name: Push packages
-      run: dotnet nuget push "${{ env.OUTPUT_DIR }}/*.nupkg" -k ${NUGET_TOKEN} #--skip-duplicate
+      run: dotnet nuget push "${{ env.OUTPUT_DIR }}/*.nupkg" -k ${ NUGET_TOKEN } #--skip-duplicate
       env:
         NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
     - name: Create tag
