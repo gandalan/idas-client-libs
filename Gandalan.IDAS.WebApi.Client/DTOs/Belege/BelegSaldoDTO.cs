@@ -42,6 +42,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// In diesem Tag können belibige interne Informationen als String gespeichert werden.
         /// </summary>
         public string Tag { get; set; }
+        /// <summary>
+        /// Rabatt, der in der Salde verrechnet wurde
+        /// </summary>
+        public decimal Rabatt { get; set; }
 
         public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
     }

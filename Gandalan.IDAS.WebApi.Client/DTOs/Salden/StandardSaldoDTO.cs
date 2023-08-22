@@ -30,5 +30,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Salden
         public DateTime? GueltigAb { get; set; }
         public DateTime? GueltigBis { get; set; }
         public int Order { get; set; }
+        public bool UseKundenrabatt { get; set; }
     }
 }
