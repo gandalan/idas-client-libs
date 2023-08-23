@@ -121,7 +121,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             Reihenfolge = saldo.Reihenfolge;
             Text = saldo.Text;
             Betrag = saldo.Betrag.ToString(culture);
-            Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString(culture) : "";
+            Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29",culture) : "";
             IsLastElement = isLastElement;
         }
 

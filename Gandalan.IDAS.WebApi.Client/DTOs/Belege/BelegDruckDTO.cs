@@ -266,7 +266,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 Text = saldo.Text;
                 var vorzeichen = saldo.Typ == "Abschlag" ? '-' : ' ';
                 Betrag = vorzeichen + saldo.Betrag.ToString(culture);
-                Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString(culture) : "";
+                Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29",culture) : "";
             }
         }
 
