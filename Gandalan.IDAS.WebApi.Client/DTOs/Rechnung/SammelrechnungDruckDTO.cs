@@ -111,6 +111,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public int Reihenfolge { get; set; }
         public string Text { get; set; }
         public string Betrag { get; set; }
+        public string Rabatt { get; set; }
         public bool IsLastElement { get; set; } = false;
 
         public SammelrechnungSaldoDruckDTO(SammelrechnungSaldenDTO saldo, bool isLastElement)
@@ -120,6 +121,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             Reihenfolge = saldo.Reihenfolge;
             Text = saldo.Text;
             Betrag = saldo.Betrag.ToString(culture);
+            Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString(culture) : "";
             IsLastElement = isLastElement;
         }
 

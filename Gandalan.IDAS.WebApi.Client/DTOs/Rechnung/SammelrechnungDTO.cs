@@ -57,6 +57,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public int Reihenfolge { get; set; }
         public string Text { get; set; }
         public decimal Betrag { get; set; }
+        public decimal Rabatt { get; set; }
         public string Name { get; set; }
     }
 }
