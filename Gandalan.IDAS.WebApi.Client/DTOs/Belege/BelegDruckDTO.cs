@@ -259,19 +259,21 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public BelegSaldoDruckDTO(BelegSaldoDTO saldo)
         {
-            CultureInfo culture = new CultureInfo("de-de");
+            var culture = new CultureInfo("de-de");
             if (saldo != null)
             {
-                this.Reihenfolge = saldo.Reihenfolge;
-                this.Text = saldo.Text;
+                Reihenfolge = saldo.Reihenfolge;
+                Text = saldo.Text;
                 var vorzeichen = saldo.Typ == "Abschlag" ? '-' : ' ';
-                this.Betrag = vorzeichen + saldo.Betrag.ToString(culture);
+                Betrag = vorzeichen + saldo.Betrag.ToString(culture);
+                Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString(culture) : "";
             }
         }
 
         public int Reihenfolge { get; set; }
         public string Text { get; set; }
         public string Betrag { get; set; }
+        public string Rabatt { get; set; }
         public bool IsLastElement { get; set; } = false;
     }
 
