@@ -20,6 +20,7 @@ namespace Gandalan.IDAS.WebApi.Client.Printing
         public string Absendeanschrift { get; set; }
         public string BarCodeTyp { get; set; }
         public string Vorgangsnummer { get; set; }
+        public string DisplayVorgangsnummer { get; set; }
         public string VersandAdresse { get; set; }
         public bool VersandLandIsEUCountry { get; set; }
         public string Kommission { get; set; }
