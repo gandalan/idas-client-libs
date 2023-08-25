@@ -268,7 +268,7 @@ namespace Gandalan.IDAS.Web
         {
             ex.Data.Add("URL", url);
             ex.Data.Add("CallMethod", callMethod);
-            ex.Data.Add("StatusCode", response != null ? response.StatusCode : HttpStatusCode.InternalServerError);
+            ex.Data.Add("StatusCode", response?.StatusCode ?? HttpStatusCode.InternalServerError);
             if (responseContent != null)
             {
                 ex.Data.Add("Response", responseContent);
