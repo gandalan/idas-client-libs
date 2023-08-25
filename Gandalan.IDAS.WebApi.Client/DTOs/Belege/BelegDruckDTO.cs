@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
@@ -37,10 +37,10 @@ namespace Gandalan.IDAS.WebApi.DTO
                 this.Telefonnummer = ""; //??? _apiSettings?.AuthToken?.Benutzer?.TelefonNummer ?? "";
 
                 var abBelege = vorgang.Belege.Where(b => b.BelegArt == "AB" || b.BelegArt == "Auftragsbestätigung");
-                this.Bestelldatum = abBelege.Count() > 0 ? abBelege.Last().BelegDatum.ToString("d", culture) : "";
+                this.Bestelldatum = abBelege.Any() ? abBelege.Last().BelegDatum.ToString("d", culture) : "";
                 this.Belegdatum = beleg.BelegDatum.ToString("d", culture);
                 this.Lieferzeit = ""; //???
-                this.IsEndkunde = vorgang.Kunde?.IstEndkunde != null ? vorgang.Kunde.IstEndkunde : false;
+                this.IsEndkunde = vorgang.Kunde?.IstEndkunde ?? false;
                 this.IsRabatt = beleg.PositionsObjekte?.Any(i => !i.Equals(0m)) ?? false;
                 this.IstSelbstabholer = beleg.IstSelbstabholer;
 
@@ -182,7 +182,9 @@ namespace Gandalan.IDAS.WebApi.DTO
 
     public class AdresseDruckDTO
     {
-        public AdresseDruckDTO() { }
+        public AdresseDruckDTO()
+        {
+        }
 
         public AdresseDruckDTO(BeleganschriftDTO beleganschrift)
         {
@@ -223,7 +225,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             StringBuilder adressText = new StringBuilder();
             {
                 adressText.AppendLine(Anrede);
-                adressText.AppendLine(buildAnschriftsName());
+                adressText.AppendLine(BuildAnschriftsName());
                 if (!string.IsNullOrEmpty(AdressZusatz1))
                 {
                     adressText.AppendLine(AdressZusatz1);
@@ -244,7 +246,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             return adressText.ToString();
         }
 
-        private string buildAnschriftsName()
+        private string BuildAnschriftsName()
         {
             var adesszusatz = "";
             var name1 = string.IsNullOrEmpty(Vorname) ? Nachname : Vorname;
@@ -255,7 +257,9 @@ namespace Gandalan.IDAS.WebApi.DTO
 
     public class BelegSaldoDruckDTO
     {
-        public BelegSaldoDruckDTO() { }
+        public BelegSaldoDruckDTO()
+        {
+        }
 
         public BelegSaldoDruckDTO(BelegSaldoDTO saldo)
         {
@@ -266,7 +270,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 Text = saldo.Text;
                 var vorzeichen = saldo.Typ == "Abschlag" ? '-' : ' ';
                 Betrag = vorzeichen + saldo.Betrag.ToString(culture);
-                Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29",culture) : "";
+                Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29", culture) : "";
             }
         }
 

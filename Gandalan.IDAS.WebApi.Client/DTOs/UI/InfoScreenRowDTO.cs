@@ -15,7 +15,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         {
             get
             {
-                return InfoScreenModule[0] != null ? InfoScreenModule[0].ModuleGuid : Guid.Empty;
+                return InfoScreenModule[0]?.ModuleGuid ?? Guid.Empty;
             }
             set
             {
@@ -31,7 +31,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         {
             get
             {
-                return InfoScreenModule[1] != null ? InfoScreenModule[1].ModuleGuid : Guid.Empty;
+                return InfoScreenModule[1]?.ModuleGuid ?? Guid.Empty;
             }
             set
             {
@@ -41,6 +41,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     InfoScreenModule[1] = null;
             }
         }
+
         public int RowNum { get; set; }
     }
 }
