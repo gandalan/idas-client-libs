@@ -31,6 +31,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstAlternativPosition { get; set; }
         public bool IstAktiv { get; set; }
         public bool IstFehlerhaft { get; set; }
+        public bool IstStorniert { get; set; }
         public bool IstFehlerhaftSFOhnePreis { get; set; }
         public bool IstGesperrt { get; set; }
         public decimal KapazitaetsBedarf { get; set; }
