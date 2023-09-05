@@ -14,6 +14,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public decimal GesamtBetrag { get; set; }
         public string Kundennummer { get; set; }
         public string Kundenname { get; set; }
+        public string Lieferadresse { get; set; }
         public bool IstSammelrechnungsKunde { get; set; }
         public long? SammelrechnungsNummer { get; set; }
         public bool IstGedruckt { get; set; }
