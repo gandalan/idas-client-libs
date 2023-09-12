@@ -16,6 +16,7 @@ namespace Gandalan.IDAS.Contracts.Belege
         }
     }
 
+    [Obsolete("Please use BelegStatus from Gandalan.IDAS.WebApi.Client.DTOs.Belege namespace!")]
     public enum BelegStatus
     {
         Unbekannt = 0,
