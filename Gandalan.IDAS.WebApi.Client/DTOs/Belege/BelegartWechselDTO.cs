@@ -11,6 +11,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public IList<Guid> BelegPositionGuids { get; set; }
         public BelegArt NeueBelegArt { get; set; }
         public bool SaldenKopieren { get; set; } = false;
-        public RechnungsNummer RechnungsNummer{ get; set; }
-}
+        public RechnungsNummer RechnungsNummer { get; set; }
+    }
 }

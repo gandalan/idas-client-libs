@@ -2,6 +2,7 @@
 
 namespace Gandalan.IDAS.Contracts.Belege
 {
+    [Obsolete("Please use BelegArt from Gandalan.IDAS.WebApi.Data.DTOs.Belege namespace!")]
     public enum BelegArt
     {
         Unbekannt = 0,
@@ -15,23 +16,23 @@ namespace Gandalan.IDAS.Contracts.Belege
         VersandAuftrag = 8,
         MaterialBestellschein = 9,
         ReklamationsBestellschein = 10,
-        Gutschrift = 11, 
-        Storno = 12
+        Gutschrift = 11,
+        Storno = 12,
     }
 
+    [Obsolete("Please use BelegWorkflow from Gandalan.IDAS.WebApi.Data.DTOs.Belege namespace!")]
     public struct BelegWorkflow
     {
-        public static BelegArt[] Steps = new BelegArt[]
-        {
-            BelegArt.Angebot,
-            BelegArt.Bestellschein,
-            BelegArt.AB,
-            BelegArt.ProduktionsAuftrag,
-            BelegArt.ZuschnittAuftrag,
-            BelegArt.VersandAuftrag,
-            BelegArt.Lieferschein,
-            BelegArt.ReklamationsBestellschein,
-            BelegArt.Rechnung
+        public static WebApi.Data.DTOs.Belege.BelegArt[] Steps = {
+            WebApi.Data.DTOs.Belege.BelegArt.Angebot,
+            WebApi.Data.DTOs.Belege.BelegArt.Bestellschein,
+            WebApi.Data.DTOs.Belege.BelegArt.AB,
+            WebApi.Data.DTOs.Belege.BelegArt.ProduktionsAuftrag,
+            WebApi.Data.DTOs.Belege.BelegArt.ZuschnittAuftrag,
+            WebApi.Data.DTOs.Belege.BelegArt.VersandAuftrag,
+            WebApi.Data.DTOs.Belege.BelegArt.Lieferschein,
+            WebApi.Data.DTOs.Belege.BelegArt.ReklamationsBestellschein,
+            WebApi.Data.DTOs.Belege.BelegArt.Rechnung,
         };
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace Gandalan.IDAS.Contracts.Belege
         /// <param name="neueBelegArt"></param>
         /// <param name="belegArt"></param>
         /// <returns>true/false</returns>
-        public static bool IsBehind(BelegArt neueBelegArt, BelegArt belegArt)
+        public static bool IsBehind(WebApi.Data.DTOs.Belege.BelegArt neueBelegArt, WebApi.Data.DTOs.Belege.BelegArt belegArt)
         {
             return Array.IndexOf(Steps, neueBelegArt) > Array.IndexOf(Steps, belegArt);
         }
@@ -51,7 +52,7 @@ namespace Gandalan.IDAS.Contracts.Belege
         /// <param name="neueBelegArt"></param>
         /// <param name="belegArt"></param>
         /// <returns>true/false</returns>
-        public static bool IsBefore(BelegArt neueBelegArt, BelegArt belegArt)
+        public static bool IsBefore(WebApi.Data.DTOs.Belege.BelegArt neueBelegArt, WebApi.Data.DTOs.Belege.BelegArt belegArt)
         {
             return Array.IndexOf(Steps, neueBelegArt) < Array.IndexOf(Steps, belegArt);
         }
