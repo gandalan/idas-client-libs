@@ -9,7 +9,7 @@ namespace Gandalan.IDAS.Contracts.Belege
         public virtual Guid BelegGuid { get; set; }
         public long BelegNummer { get; set; }
         public int BelegJahr { get; set; }
-        public BelegArt BelegArt { get; set; }
+        public WebApi.Data.DTOs.Belege.BelegArt BelegArt { get; set; }
         public DateTime BelegDatum { get; set; }
         public string BelegTitelUeberschrift { get; set; }
         public string BelegTitelZeile1 { get; set; }
