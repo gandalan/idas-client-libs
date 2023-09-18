@@ -30,8 +30,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfAsync(Guid serieGuid)
             => await GetAsync<List<MaterialbedarfDTO>>("SerieOffenerMaterialbedarf?serieGuid=" + serieGuid.ToString());
+        public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfv1Async(Guid serieGuid)
+            => await GetAsync<List<MaterialbedarfDTO>>("SerieOffenerMaterialbedarf?serieGuid=" + serieGuid.ToString(), version: "1");
 
-        public async Task ResetMaterialAsync(Guid serieGuid) 
+        public async Task ResetMaterialAsync(Guid serieGuid)
             => await DeleteAsync("SerieMaterialbedarfBerechnen?serieGuid=" + serieGuid.ToString());
     }
 }

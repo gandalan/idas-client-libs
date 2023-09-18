@@ -18,11 +18,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
-    public class WebRoutinenBase 
+    public class WebRoutinenBase
     {
         #region  Felder
 
@@ -239,7 +240,7 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             try
             {
-                await runPreRequestChecks(skipAuth); 
+                await runPreRequestChecks(skipAuth);
                 return await _restRoutinen.GetDataAsync(uri);
             }
             catch (HttpRequestException ex)
@@ -261,12 +262,12 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<T> GetAsync<T>(string uri, JsonSerializerSettings settings = null, bool skipAuth = false)
+        public async Task<T> GetAsync<T>(string uri, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
         {
             try
             {
                 await runPreRequestChecks(skipAuth);
-                return await _restRoutinen.GetAsync<T>(uri, settings);
+                return await _restRoutinen.GetAsync<T>(uri, settings, version: version);
             }
             catch (HttpRequestException ex)
             {
@@ -274,7 +275,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task PutAsync(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false)
+        public async Task PutAsync(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
         {
             try
             {
@@ -287,7 +288,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<T> PutAsync<T>(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false)
+        public async Task<T> PutAsync<T>(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
         {
             try
             {
@@ -300,7 +301,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<byte[]> PutDataAsync(string uri, byte[] data, bool skipAuth = false)
+        public async Task<byte[]> PutDataAsync(string uri, byte[] data, bool skipAuth = false, string version = null)
         {
             try
             {
@@ -313,7 +314,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task DeleteAsync(string uri, bool skipAuth = false)
+        public async Task DeleteAsync(string uri, bool skipAuth = false, string version = null)
         {
             try
             {
@@ -326,7 +327,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task DeleteAsync(string uri, object data, bool skipAuth = false)
+        public async Task DeleteAsync(string uri, object data, bool skipAuth = false, string version = null)
         {
             try
             {
@@ -339,7 +340,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<T> DeleteAsync<T>(string uri, object data, bool skipAuth = false)
+        public async Task<T> DeleteAsync<T>(string uri, object data, bool skipAuth = false, string version = null)
         {
             try
             {
