@@ -32,12 +32,25 @@ namespace Gandalan.IDAS.WebApi.Client
         /// AcceptEncoding Header wird auf GZIP gesetzt.
         /// </summary>
         public bool UseCompression { get; set; }
+
+        public HttpClientConfig Clone()
+        {
+            return new HttpClientConfig()
+            {
+                BaseUrl = this.BaseUrl,
+                Proxy = this.Proxy,
+                Credentials = this.Credentials,
+                UserAgent = this.UserAgent,
+                UseCompression = this.UseCompression,
+                AdditionalHeaders = new Dictionary<string, string>(this.AdditionalHeaders)
+            };
+        }
     }
 
     public class HttpClientFactory
     {
         private static Dictionary<string, HttpClient> _clients = new Dictionary<string, HttpClient>();
-        
+
         private HttpClientFactory() { }
 
         public static HttpClient GetInstance(HttpClientConfig config)

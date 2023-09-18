@@ -310,16 +310,14 @@ namespace Gandalan.IDAS.Web
 
             if (!_versionClients.ContainsKey(version))
             {
-                if (!_config.AdditionalHeaders.ContainsKey("api-version"))
-                    _config.AdditionalHeaders.Add("api-version", version.ToString());
-                else
-                    _config.AdditionalHeaders["api-version"] = version.ToString();
+                var config = _config.Clone();
+                config.AdditionalHeaders.Add("api-version", version.ToString());
 
-                _versionClients.Add(version, HttpClientFactory.GetInstance(_config));
-                return _versionClients.FirstOrDefault(i => i.Key == version).Value;
+                _versionClients.Add(version, HttpClientFactory.GetInstance(config));
+                return _versionClients[version];
             }
             else
-                return _versionClients.FirstOrDefault(i => i.Key == version).Value;
+                return _versionClients[version];
 
         }
     }
