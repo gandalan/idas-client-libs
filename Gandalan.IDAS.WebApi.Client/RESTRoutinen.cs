@@ -310,7 +310,7 @@ namespace Gandalan.IDAS.Web
 
             if (!_versionClients.ContainsKey(version))
             {
-                var config = _config.Clone();
+                var config = (HttpClientConfig)_config.Clone();
                 config.AdditionalHeaders.Add("api-version", version.ToString());
 
                 _versionClients.Add(version, HttpClientFactory.GetInstance(config));

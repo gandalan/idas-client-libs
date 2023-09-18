@@ -7,7 +7,7 @@ using System.Net.Http.Headers;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
-    public class HttpClientConfig
+    public class HttpClientConfig : ICloneable
     {
         /// <summary>
         /// Stammadresse der Web-API. Die Resource-Parameter der einzelnen Übertragungsmethoden
@@ -33,7 +33,7 @@ namespace Gandalan.IDAS.WebApi.Client
         /// </summary>
         public bool UseCompression { get; set; }
 
-        public HttpClientConfig Clone()
+        public object Clone()
         {
             return new HttpClientConfig()
             {

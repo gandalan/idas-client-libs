@@ -28,9 +28,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<List<MaterialbedarfDTO>> GetMaterialAsync(Guid serieGuid)
             => await GetAsync<List<MaterialbedarfDTO>>("SerieMaterialbedarfBerechnen?serieGuid=" + serieGuid.ToString());
 
-        public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfAsync(Guid serieGuid)
+        public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfv2Async(Guid serieGuid)
             => await GetAsync<List<MaterialbedarfDTO>>("SerieOffenerMaterialbedarf?serieGuid=" + serieGuid.ToString()/*, version: "2"*/);
-        public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfv1Async(Guid serieGuid)
+        public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfAsync(Guid serieGuid)
             => await GetAsync<List<MaterialbedarfDTO>>("SerieOffenerMaterialbedarf?serieGuid=" + serieGuid.ToString());
 
         public async Task ResetMaterialAsync(Guid serieGuid)
