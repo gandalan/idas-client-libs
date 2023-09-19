@@ -1,9 +1,9 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
+using System;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {

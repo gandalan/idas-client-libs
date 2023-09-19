@@ -1,10 +1,10 @@
+using Gandalan.IDAS.Logging.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using Gandalan.IDAS.Logging.Contracts;
 
 namespace Gandalan.IDAS.Logging
 {

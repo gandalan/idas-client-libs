@@ -1,6 +1,6 @@
 ### From: https://github.com/dotnet/aspnetcore/blob/main/.editorconfig
 ### Last sync: 7ca3fda
-### Disabled: CA1018, CA1305, CA1507, CA1805, CA2007, CA2208, IDE0011, IDE0073
+### Disabled: dotnet_sort_system_directives_first, CA1018, CA1305, CA1507, CA1805, CA2007, CA2208, IDE0011, IDE0073
 ; EditorConfig to support per-solution formatting.
 ; Use the EditorConfig VS add-in to make this work.
 ; http://editorconfig.org/
@@ -24,7 +24,7 @@ insert_final_newline = true
 
 [*.cs]
 indent_size = 4
-dotnet_sort_system_directives_first = true
+#dotnet_sort_system_directives_first = true
 
 # Don't use this. qualifier
 dotnet_style_qualification_for_field = false:suggestion

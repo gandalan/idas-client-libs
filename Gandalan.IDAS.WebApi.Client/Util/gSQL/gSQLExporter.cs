@@ -1,7 +1,7 @@
+using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.IO;
 using System.Linq;
-using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Util.gSQL
 {
