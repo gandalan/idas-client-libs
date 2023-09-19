@@ -24,6 +24,12 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
         Task Initialize(T data);
     }
 
+    public interface IHTMLReport<T> : IReport<T> where T : class
+    {
+        string WorkingDir { get; set; }
+        bool UseReportRepository { get; set; }
+    }
+
     public enum ReportAction
     {
         Cancel = 0,
