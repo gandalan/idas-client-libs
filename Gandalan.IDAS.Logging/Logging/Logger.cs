@@ -1,10 +1,10 @@
-using Gandalan.IDAS.Logging.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Gandalan.IDAS.Logging.Contracts;
 
 namespace Gandalan.IDAS.Logging
 {
@@ -59,8 +59,8 @@ namespace Gandalan.IDAS.Logging
 
         public void Log(string message, LogLevel level = LogLevel.Diagnose, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
         {
-            if (LogLevels.ContainsKey(context) &&
-                level > LogLevels[context])
+            if (LogLevels.TryGetValue(context, out var logLevelContext) &&
+                level > logLevelContext)
             {
                 return;
             }

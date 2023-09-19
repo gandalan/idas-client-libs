@@ -1,7 +1,7 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.IO;
 using System.Linq;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Util.gSQL
 {
@@ -9,15 +9,15 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
     {
         public static void ExportToFile(string fileName, VorgangDTO vorgang, BelegDTO beleg)
         {
-            gSQLInhalt result = Beleg2GSQL(vorgang, beleg);
+            var result = Beleg2GSQL(vorgang, beleg);
             File.WriteAllText(fileName, result.ToString());
         }
 
         public static gSQLInhalt Beleg2GSQL(VorgangDTO vorgang, BelegDTO beleg)
         {
-            gSQLInhalt result = new gSQLInhalt();
+            var result = new gSQLInhalt();
 
-            gSQLSektion aktuelleSektion = new gSQLSektion("Achtung");
+            var aktuelleSektion = new gSQLSektion("Achtung");
             aktuelleSektion.Items.Add(new gSQLItem("!!!", "Dieses Dateiformat ist nur für interne Abläufe von Gandalan gedacht."));
             aktuelleSektion.Items.Add(new gSQLItem("!!!", "Es unterliegt ständigen Änderungen und wird nicht supported."));
             aktuelleSektion.Items.Add(new gSQLItem("!!!", "Für Anbindungen an kundenspezifische Software verwenden Sie bitte "));
@@ -50,7 +50,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
             aktuelleSektion.Items.Add(new gSQLItem("HaendlerMandantGuid", vorgang.Kunde?.KontaktMandantGuid.ToString()));
             aktuelleSektion.Items.Add(new gSQLItem("VorgangGuid", vorgang.VorgangGuid.ToString()));
             aktuelleSektion.Items.Add(new gSQLItem("OriginalVorgangGuid", vorgang.OriginalVorgangGuid.ToString()));
-            aktuelleSektion.Items.Add(new gSQLItem("OriginalVorgangsNummer", vorgang.OriginalVorgangsNummer?.ToString() ?? String.Empty));
+            aktuelleSektion.Items.Add(new gSQLItem("OriginalVorgangsNummer", vorgang.OriginalVorgangsNummer?.ToString() ?? string.Empty));
             aktuelleSektion.Items.Add(new gSQLItem("Beleg_IstTestBeleg", vorgang.IstTestbeleg.ToString()));
             result.Sektionen.Add(aktuelleSektion);
 
@@ -95,9 +95,9 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
             result.Sektionen.Add(aktuelleSektion);
 
             aktuelleSektion = new gSQLSektion("FussZeilen");
-            aktuelleSektion.Items.Add(new gSQLItem("AnzahlFussZeilen", beleg.Salden.Count().ToString()));
-            int counter = 1;
-            foreach (BelegSaldoDTO saldo in beleg.Salden)
+            aktuelleSektion.Items.Add(new gSQLItem("AnzahlFussZeilen", beleg.Salden.Count.ToString()));
+            var counter = 1;
+            foreach (var saldo in beleg.Salden)
             {
                 aktuelleSektion.Items.Add(new gSQLItem("FussZeilenNummer", counter.ToString()));
                 aktuelleSektion.Items.Add(new gSQLItem("FussZeile_Text1", saldo.Text));
@@ -108,10 +108,11 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                 aktuelleSektion.Items.Add(new gSQLItem("FussZeile_passiv", ""));
                 counter++;
             }
+
             result.Sektionen.Add(aktuelleSektion);
 
             aktuelleSektion = new gSQLSektion("Positionen");
-            foreach (Guid posGuid in beleg.Positionen)
+            foreach (var posGuid in beleg.Positionen)
             {
                 var pos = vorgang.Positionen.FirstOrDefault(p => p.BelegPositionGuid.Equals(posGuid));
 
@@ -165,7 +166,8 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                     {
                         continue;
                     }
-                    if(key.StartsWith("Sonder_"))
+
+                    if (key.StartsWith("Sonder_"))
                         aktuelleSektion.Items.Add(new gSQLItem(key, konfig.Wert));
                     else
                         aktuelleSektion.Items.Add(new gSQLItem("Position_" + key, konfig.Wert));
@@ -193,7 +195,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                 }
 
                 //KederZeigtNachAussen bedeutet dass Fl und Fr in der Produktion getauscht werden (in IBOS1) deshalb muss das hier getauscht werden
-                bool kederZeigtNachAussen = pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert != null ?
+                var kederZeigtNachAussen = pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert != null ?
                     Convert.ToBoolean(pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert) : false;
 
                 foreach (var sw in pos.Sonderwuensche)
@@ -201,15 +203,15 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                     if (sw.InternerName == "KederZeigtNachAussen")
                         continue;
 
-                    var swExportParameter = String.Empty;
+                    var swExportParameter = string.Empty;
 
-                    if (!String.IsNullOrEmpty(sw.InternerName) && sw.InternerName != sw.Kuerzel)
+                    if (!string.IsNullOrEmpty(sw.InternerName) && sw.InternerName != sw.Kuerzel)
                     {
                         swExportParameter = sw.InternerName;
                     }
                     else
                     {
-                        swExportParameter = !String.IsNullOrEmpty(sw.ExportName) ? sw.ExportName : sw.Bezeichnung;
+                        swExportParameter = !string.IsNullOrEmpty(sw.ExportName) ? sw.ExportName : sw.Bezeichnung;
 
                         swExportParameter = swExportParameter.Replace("Ä", "Ae").Replace("Ü", "Ue").Replace("Ö", "Oe");
                         swExportParameter = swExportParameter.Replace("ä", "ae").Replace("ü", "ue").Replace("ö", "oe");
@@ -231,11 +233,13 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                     {
                         aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swExportParameter + "_Laenge", sw.Laenge.ToString()));
                     }
+
                     if (sw.Hoehe > 0)
                     {
                         aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swExportParameter + "_Hoehe", sw.Hoehe.ToString()));
                     }
-                    if (!String.IsNullOrEmpty(sw.Farbe))
+
+                    if (!string.IsNullOrEmpty(sw.Farbe))
                     {
                         aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swExportParameter + "_Farbe", sw.Farbe));
                     }
