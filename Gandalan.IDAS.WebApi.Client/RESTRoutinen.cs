@@ -65,6 +65,7 @@ namespace Gandalan.IDAS.Web
         /// <typeparam name="T">Typsierungsparameter</typeparam>
         /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
         /// <param name="settings"></param>
+        /// <param name="version">API Version</param>
         /// <returns>Objektinstanz</returns>
         public async Task<T> GetAsync<T>(string url, JsonSerializerSettings settings = null, string version = null)
         {
@@ -118,6 +119,7 @@ namespace Gandalan.IDAS.Web
         /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
         /// <param name="data">zu sendendes Objekt</param>
         /// <param name="settings"></param>
+        /// <param name="version">API Version</param>
         /// <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
         public async Task<T> PostAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
         {
@@ -172,6 +174,7 @@ namespace Gandalan.IDAS.Web
         /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
         /// <param name="data">zu sendendes Objekt</param>
         /// <param name="settings"></param>
+        /// <param name="version">API Version</param>
         /// <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
         public async Task<T> PutAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
         {
@@ -222,6 +225,7 @@ namespace Gandalan.IDAS.Web
         /// Löscht ein Objekt per HTTP DELETE an die angegebene URL
         /// </summary>
         /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
+        /// <param name="version">API Version</param>
         /// <returns>Antwort des Servers als String</returns>
         public async Task DeleteAsync(string url, string version = null)
         {
