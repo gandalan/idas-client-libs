@@ -5,29 +5,35 @@ using Gandalan.IDAS.WebApi.DTO.DTOs.Reports;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
 {
-    public interface IReport
+    public abstract class IReport
     {
-        string Name { get; set; }
-        ReportTypeDTO ReportType { get; set; }
-        ReportAction[] AllowedActions { get; }
-        ReportCapability[] Capabilities { get; }
+        protected string WorkingDir { get; set; }
+        protected string DataDir { get; set; }
+        //private bool UseReportRepository { get; set; }
 
-        bool CanHandle(object data = null);
+        public string Name { get; set; }
+        public ReportTypeDTO ReportType { get; set; }
+        public ReportAction[] AllowedActions { get; }
+        public ReportCapability[] Capabilities { get; }
+
+        public abstract bool CanHandle(object data = null);
+
         [Obsolete("Use Execute(ReportExecuteSettings) instead")]
-        Task Execute(ReportAction action, string printerName = null, string fileName = null, int copies = 1);
-        Task Execute(ReportExecuteSettings reportSettings);
+        public Task Execute(ReportAction action, string printerName = null, string fileName = null, int copies = 1)
+            => Execute(new ReportExecuteSettings() { ReportAction = action, PrinterName = printerName, FileName = fileName, Copies = copies });
+
+        public abstract Task Execute(ReportExecuteSettings reportSettings);
+
+        public async virtual Task InitializeFolders(ReportAction action, bool copyCommomHtmlData = true)
+        {
+            // TODO: Setup folders
+        }
     }
 
-    public interface IReport<T> : IReport where T : class
+    public abstract class IReport<T> : IReport where T : class
     {
-        T Data { get; set; }
-        Task Initialize(T data);
-    }
-
-    public interface IHTMLReport<T> : IReport<T> where T : class
-    {
-        string WorkingDir { get; set; }
-        bool UseReportRepository { get; set; }
+        public T Data { get; set; }
+        public abstract Task Initialize(T data);
     }
 
     public enum ReportAction
