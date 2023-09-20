@@ -10,10 +10,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<FarbKuerzelGruppeDTO[]> GetAllAsync() 
+        public async Task<FarbKuerzelGruppeDTO[]> GetAllAsync()
             => await GetAsync<FarbKuerzelGruppeDTO[]>("FarbKuerzelGruppe");
 
-        public async Task SaveFarbKuerzelGruppeAsync(FarbKuerzelGruppeDTO dto) 
+        public async Task SaveFarbKuerzelGruppeAsync(FarbKuerzelGruppeDTO dto)
             => await PutAsync("FarbKuerzelGruppe/", dto);
     }
 }
