@@ -16,7 +16,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid WarenGruppeGuid { get; set; }
         public string ImageFileName { get; set; }
         public string Einheit { get; set; }
-        
+
         // Regeln für die Bestellung
         public bool MengeMussGanzZahligSein { get; set; }
         public bool NurAlsVEBestellbar { get; set; }
@@ -50,7 +50,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Preis des Artikels (pro VE?)
         /// </summary>
-        public decimal  Preis { get; set; }
+        public decimal Preis { get; set; }
         public decimal StaffelPreis { get; set; }
         public decimal StaffelMenge { get; set; }
         public decimal VEMenge { get; set; }
@@ -70,7 +70,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Internes Feld - mappt den Machine/UI-Bezeichner auf die Frontend-Anzeige
         /// </summary>
-        public string FrontendLogik { get; set; }
+        public Guid? FrontendLogik { get; set; }
         /// <summary>
         /// Für Art = FertigElementArtikel
         /// </summary>
