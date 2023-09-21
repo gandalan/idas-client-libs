@@ -5,6 +5,6 @@ namespace Gandalan.Client.Contracts.UIServices
 {
     public interface IVorgangDisplay
     {
-        Task DisplayVorgang(Guid vorgangGuid);
+        Task DisplayVorgang(Guid vorgangGuid, bool clearHistory = false);
     }
 }
