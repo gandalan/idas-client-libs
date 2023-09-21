@@ -72,7 +72,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstAusserhalbGewaehrleistung { get; set; }
         public bool IstVE { get; set; }
         public decimal? VE_Menge { get; set; }
-        public string FrontendLogik { get; set; }
+        public Guid? FrontendLogik { get; set; }
 
         public BelegPositionDTO()
         {
