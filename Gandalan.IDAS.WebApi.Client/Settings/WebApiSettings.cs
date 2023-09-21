@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
+using System;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
@@ -58,7 +57,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 throw new ArgumentNullException("WebApiSettings: Environment must not be null or empty");
 
             //await WebApiConfigurations.Initialize(appToken);
-            IWebApiConfig settings = WebApiConfigurations.ByName(env);
+            var settings = WebApiConfigurations.ByName(env);
             if (settings != null)
                 CopyToThis(settings);
 
@@ -67,22 +66,22 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 
         public virtual void CopyToThis(IWebApiConfig settings)
         {
-            this.AppToken = settings.AppToken;
-            this.AuthToken = settings.AuthToken;
-            this.FriendlyName = settings.FriendlyName;
-            this.Mandant = settings.Mandant;
-            this.Passwort = settings.Passwort;
-            this.UserName = settings.UserName;
-            this.InstallationId = settings.InstallationId;
-            this.UserAgent = settings.UserAgent;
+            AppToken = settings.AppToken;
+            AuthToken = settings.AuthToken;
+            FriendlyName = settings.FriendlyName;
+            Mandant = settings.Mandant;
+            Passwort = settings.Passwort;
+            UserName = settings.UserName;
+            InstallationId = settings.InstallationId;
+            UserAgent = settings.UserAgent;
 
-            this.Url = settings.Url;
-            this.CMSUrl = settings.CMSUrl;
-            this.DocUrl = settings.DocUrl;
-            this.FeedbackUrl = settings.FeedbackUrl;
-            this.StoreUrl = settings.StoreUrl;
-            this.NotifyUrl = settings.NotifyUrl;
-            this.HelpCenterUrl = settings.HelpCenterUrl;
+            Url = settings.Url;
+            CMSUrl = settings.CMSUrl;
+            DocUrl = settings.DocUrl;
+            FeedbackUrl = settings.FeedbackUrl;
+            StoreUrl = settings.StoreUrl;
+            NotifyUrl = settings.NotifyUrl;
+            HelpCenterUrl = settings.HelpCenterUrl;
         }
     }
 }
