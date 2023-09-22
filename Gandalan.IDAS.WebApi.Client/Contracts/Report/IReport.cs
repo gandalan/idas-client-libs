@@ -35,10 +35,9 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
 
         virtual public string GetDataDir(ReportAction action)
         {
-            var baseDir = action == ReportAction.Design
-                ? AppConfig.StandardReportsDevDir
-                : AppConfig.StandardReportsDir;
-            return Path.Combine(baseDir, action == ReportAction.Design ? "public/data" : "data");
+            return action == ReportAction.Design
+             ? Path.Combine(GetWorkingDir(action), "public", "data")
+             : Path.Combine(GetWorkingDir(action), "data");
         }
 
         virtual public async Task InitializeFolders(ReportAction action, bool copyCommomHtmlData = true)
