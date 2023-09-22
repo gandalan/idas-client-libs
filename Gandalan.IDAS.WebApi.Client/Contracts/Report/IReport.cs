@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
+using Gandalan.Client.Contracts.AppServices;
 using Gandalan.IDAS.WebApi.Client.Contracts.Report;
 using Gandalan.IDAS.WebApi.DTO.DTOs.Reports;
 
@@ -7,31 +9,74 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
 {
     public abstract class IReport
     {
-        protected string WorkingDir { get; set; }
-        protected string DataDir { get; set; }
-        //private bool UseReportRepository { get; set; }
+        protected readonly IApplicationConfig AppConfig;
+        protected abstract string ReportFolderName { get; set; }
 
-        public string Name { get; set; }
-        public ReportTypeDTO ReportType { get; set; }
-        public ReportAction[] AllowedActions { get; }
-        public ReportCapability[] Capabilities { get; }
+        public abstract string Name { get; set; }
+        public abstract ReportTypeDTO ReportType { get; set; }
+        public abstract ReportAction[] AllowedActions { get; }
+        public abstract ReportCapability[] Capabilities { get; }
 
         public abstract bool CanHandle(object data = null);
 
-        [Obsolete("Use Execute(ReportExecuteSettings) instead")]
-        public Task Execute(ReportAction action, string printerName = null, string fileName = null, int copies = 1)
-            => Execute(new ReportExecuteSettings() { ReportAction = action, PrinterName = printerName, FileName = fileName, Copies = copies });
+        public IReport(IApplicationConfig appConfig)
+        {
+            AppConfig = appConfig;
+        }
+
+        virtual public string GetWorkingDir(ReportAction action)
+        {
+            var baseDir = action == ReportAction.Design
+                ? AppConfig.StandardReportsDevDir
+                : AppConfig.StandardReportsDir;
+            return Path.Combine(baseDir, ReportFolderName);
+
+        }
+
+        virtual public string GetDataDir(ReportAction action)
+        {
+            var baseDir = action == ReportAction.Design
+                ? AppConfig.StandardReportsDevDir
+                : AppConfig.StandardReportsDir;
+            return Path.Combine(baseDir, action == ReportAction.Design ? "public/data" : "data");
+        }
+
+        virtual public async Task InitializeFolders(ReportAction action, bool copyCommomHtmlData = true)
+        {
+            var workingDir = GetWorkingDir(action);
+            var dataDir = GetDataDir(action);
+
+            if (!Directory.Exists(workingDir))
+                throw new InvalidOperationException($"Reportverzeichnis '{workingDir}' nicht gefunden.");
+
+            if (!Directory.Exists(dataDir))
+                Directory.CreateDirectory(dataDir);
+
+            if (!copyCommomHtmlData)
+            {
+                return;
+            }
+
+            var sourceDir = Path.Combine(AppConfig.DataDir, "HTMLReportCommon");
+            if (Directory.Exists(sourceDir))
+            {
+                foreach (var document in new DirectoryInfo(sourceDir).GetFiles())
+                {
+                    File.Copy(document.FullName, $"{workingDir}/{document.Name}", true);
+                }
+            }
+            await Task.CompletedTask;
+        }
 
         public abstract Task Execute(ReportExecuteSettings reportSettings);
-
-        public async virtual Task InitializeFolders(ReportAction action, bool copyCommomHtmlData = true)
-        {
-            // TODO: Setup folders
-        }
     }
 
     public abstract class IReport<T> : IReport where T : class
     {
+        public IReport(IApplicationConfig appConfig) : base(appConfig)
+        {
+        }
+
         public T Data { get; set; }
         public abstract Task Initialize(T data);
     }
