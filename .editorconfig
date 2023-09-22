@@ -1,6 +1,6 @@
 ### From: https://github.com/dotnet/aspnetcore/blob/main/.editorconfig
 ### Last sync: 7ca3fda
-### Disabled: dotnet_sort_system_directives_first, CA1018, CA1305, CA1507, CA1805, CA2007, CA2208, IDE0011, IDE0073
+### Disabled: dotnet_sort_system_directives_first, CA1018, CA1305, CA1507, CA2007, CA2208, IDE0011, IDE0073, IDE0161
 ; EditorConfig to support per-solution formatting.
 ; Use the EditorConfig VS add-in to make this work.
 ; http://editorconfig.org/
@@ -114,7 +114,7 @@ dotnet_diagnostic.CA1725.severity = suggestion
 dotnet_diagnostic.CA1802.severity = warning
 
 # CA1805: Do not initialize unnecessarily
-#dotnet_diagnostic.CA1805.severity = warning
+dotnet_diagnostic.CA1805.severity = warning
 
 # CA1810: Do not initialize unnecessarily
 dotnet_diagnostic.CA1810.severity = warning
@@ -313,7 +313,7 @@ dotnet_diagnostic.IDE0062.severity = warning
 #file_header_template = Licensed to the .NET Foundation under one or more agreements.\nThe .NET Foundation licenses this file to you under the MIT license.
 
 # IDE0161: Convert to file-scoped namespace
-dotnet_diagnostic.IDE0161.severity = warning
+#dotnet_diagnostic.IDE0161.severity = warning
 
 # IDE0200: Lambda expression can be removed
 dotnet_diagnostic.IDE0200.severity = warning

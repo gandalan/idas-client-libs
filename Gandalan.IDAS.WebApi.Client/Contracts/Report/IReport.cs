@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.Client.Contracts.Report;
 using Gandalan.IDAS.WebApi.DTO.DTOs.Reports;
+using System;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
 {
@@ -41,10 +41,10 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
     public class ReportExecuteSettings
     {
         public ReportAction ReportAction { get; set; }
-        public string PrinterName { get; set; } = null;
-        public string FileName { get; set; } = null;
+        public string PrinterName { get; set; }
+        public string FileName { get; set; }
         public int Copies { get; set; } = 1;
-        public string Watermark { get; set; } = null;
+        public string Watermark { get; set; }
 
         public static ReportExecuteSettings FromReportAuswahlResult(IReportAuswahlResult result)
         {

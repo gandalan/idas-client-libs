@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Gandalan.IDAS.WebApi.Client.Contracts.Vorgaenge;
 using Gandalan.IDAS.WebApi.DTO;
 using PropertyChanged;
+using System;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.Vorgaenge
 {
@@ -23,7 +18,7 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.Vorgaenge
         [SuppressPropertyChangedWarnings]
         public abstract string ToolTip { get; set; }
 
-        public bool IsExecuting { get; set; } = false;
+        public bool IsExecuting { get; set; }
 
         public bool CanExecute(object parameter)
         {
