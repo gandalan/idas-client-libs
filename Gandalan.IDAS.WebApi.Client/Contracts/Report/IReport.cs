@@ -96,6 +96,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
 
     public class ReportExecuteSettings
     {
+        public string ReportName { get; set; }
         public ReportAction ReportAction { get; set; }
         public string PrinterName { get; set; } = null;
         public string FileName { get; set; } = null;
