@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -16,7 +16,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid WarenGruppeGuid { get; set; }
         public string ImageFileName { get; set; }
         public string Einheit { get; set; }
-        
+
         // Regeln für die Bestellung
         public bool MengeMussGanzZahligSein { get; set; }
         public bool NurAlsVEBestellbar { get; set; }
@@ -50,7 +50,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Preis des Artikels (pro VE?)
         /// </summary>
-        public decimal  Preis { get; set; }
+        public decimal Preis { get; set; }
         public decimal StaffelPreis { get; set; }
         public decimal StaffelMenge { get; set; }
         public decimal VEMenge { get; set; }
@@ -68,10 +68,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public List<Guid> ErsatzArtikel { get; set; }
         /// <summary>
-        /// Internes Feld - mappt den Machine/UI-Bezeichner auf die Frontend-Anzeige
-        /// </summary>
-        public string FrontendLogik { get; set; }
-        /// <summary>
         /// Für Art = FertigElementArtikel
         /// </summary>
         public Guid VarianteGuid { get; set; }
@@ -79,6 +75,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public long Version { get; set; }
         public bool IstTechnischerArtikel { get; set; }
         public decimal BasisBestellMenge { get; set; }
+        public Guid? FrontendLogikGuid { get; set; }
 
         public bool IsIndiArtikel { get; set; }
 

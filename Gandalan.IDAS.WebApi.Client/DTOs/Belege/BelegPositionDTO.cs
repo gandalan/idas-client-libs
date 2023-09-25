@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Gandalan.IDAS.WebApi.Data.DTO;
@@ -72,7 +72,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstAusserhalbGewaehrleistung { get; set; }
         public bool IstVE { get; set; }
         public decimal? VE_Menge { get; set; }
-        public string FrontendLogik { get; set; }
+        public Guid? FrontendLogikGuid { get; set; }
 
         public BelegPositionDTO()
         {

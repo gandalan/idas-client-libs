@@ -1,9 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Net;
-using System.Text;
-using System.Net.Http.Headers;
+using System.Net.Http;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
@@ -37,25 +35,23 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             return new HttpClientConfig()
             {
-                BaseUrl = this.BaseUrl,
-                Proxy = this.Proxy,
-                Credentials = this.Credentials,
-                UserAgent = this.UserAgent,
-                UseCompression = this.UseCompression,
-                AdditionalHeaders = new Dictionary<string, string>(this.AdditionalHeaders)
+                BaseUrl = BaseUrl,
+                Proxy = Proxy,
+                Credentials = Credentials,
+                UserAgent = UserAgent,
+                UseCompression = UseCompression,
+                AdditionalHeaders = new Dictionary<string, string>(AdditionalHeaders)
             };
         }
     }
 
     public class HttpClientFactory
     {
-        private static Dictionary<string, HttpClient> _clients = new Dictionary<string, HttpClient>();
-
         private HttpClientFactory() { }
 
         public static HttpClient GetInstance(HttpClientConfig config)
         {
-            return createWebClient(config); // this is not best practice!!
+            return CreateWebClient(config); // this is not best practice!!
             /*
             if (!_clients.ContainsKey(config.BaseUrl))
             {
@@ -70,7 +66,7 @@ namespace Gandalan.IDAS.WebApi.Client
         /// Erstellt und konfiguriert eine neue WebClient-Instanz
         /// </summary>
         /// <returns></returns>
-        private static HttpClient createWebClient(HttpClientConfig config)
+        private static HttpClient CreateWebClient(HttpClientConfig config)
         {
             var handler = new HttpClientHandler()
             {
@@ -79,7 +75,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 Proxy = config.Proxy
             };
 
-            HttpClient client = new HttpClient(handler);
+            var client = new HttpClient(handler);
             client.BaseAddress = new Uri(config.BaseUrl);
             client.DefaultRequestHeaders.Add("Accept-Charset", "utf-8");
             client.DefaultRequestHeaders.Add("Accept", "application/json");
@@ -93,7 +89,5 @@ namespace Gandalan.IDAS.WebApi.Client
 
             return client;
         }
-
-
     }
 }
