@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Gandalan.IDAS.WebApi.Client.Contracts.Settings
 {
-    public interface Inheritense
+    public interface Inheritance
     {
-        InheritenseMode Mode { get; set; }
+        InheritanceMode Mode { get; set; }
     }
 
-    public enum InheritenseMode
+    public enum InheritanceMode
     {
         Default = 0,
         ReadOnly = 1,
