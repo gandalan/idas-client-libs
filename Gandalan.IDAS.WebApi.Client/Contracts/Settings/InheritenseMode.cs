@@ -1,11 +1,11 @@
 namespace Gandalan.IDAS.WebApi.Client.Contracts.Settings
 {
-    public interface Inheritanse
+    public interface Inheritance
     {
-        InheritanseMode Mode { get; set; }
+        InheritanceMode Mode { get; set; }
     }
 
-    public enum InheritanseMode
+    public enum InheritanceMode
     {
         Default = 0,
         ReadOnly = 1,
