@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -68,10 +68,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public List<Guid> ErsatzArtikel { get; set; }
         /// <summary>
-        /// Internes Feld - mappt den Machine/UI-Bezeichner auf die Frontend-Anzeige
-        /// </summary>
-        public Guid? FrontendLogik { get; set; }
-        /// <summary>
         /// Für Art = FertigElementArtikel
         /// </summary>
         public Guid VarianteGuid { get; set; }
@@ -79,6 +75,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public long Version { get; set; }
         public bool IstTechnischerArtikel { get; set; }
         public decimal BasisBestellMenge { get; set; }
+        public Guid? FrontendLogikGuid { get; set; }
 
         public bool IsIndiArtikel { get; set; }
 
