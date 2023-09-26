@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -19,7 +18,7 @@ namespace Gandalan.IDAS.Web
     {
         private readonly HttpClientConfig _config;
         private readonly HttpClient _client;
-        private Dictionary<string, HttpClient> _versionClients = new Dictionary<string, HttpClient>();
+        private readonly Dictionary<string, HttpClient> _versionClients = new Dictionary<string, HttpClient>();
 
         #region Constructors
 
@@ -312,17 +311,16 @@ namespace Gandalan.IDAS.Web
             if (version == null || _config == null)
                 return _client;
 
-            if (!_versionClients.ContainsKey(version))
+            if (!_versionClients.TryGetValue(version, out var versionClient))
             {
                 var config = (HttpClientConfig)_config.Clone();
-                config.AdditionalHeaders.Add("api-version", version.ToString());
+                config.AdditionalHeaders.Add("api-version", version);
 
                 _versionClients.Add(version, HttpClientFactory.GetInstance(config));
                 return _versionClients[version];
             }
-            else
-                return _versionClients[version];
 
+            return versionClient;
         }
     }
 }
