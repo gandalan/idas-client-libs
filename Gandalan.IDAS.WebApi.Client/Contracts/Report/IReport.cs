@@ -1,9 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
 using Gandalan.Client.Contracts.AppServices;
 using Gandalan.IDAS.WebApi.Client.Contracts.Report;
 using Gandalan.IDAS.WebApi.DTO.DTOs.Reports;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
 {
@@ -24,7 +24,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
             AppConfig = appConfig;
         }
 
-        virtual public string GetWorkingDir(ReportAction action)
+        public virtual string GetWorkingDir(ReportAction action)
         {
             var baseDir = action == ReportAction.Design
                 ? AppConfig.StandardReportsDevDir
@@ -33,14 +33,14 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
 
         }
 
-        virtual public string GetDataDir(ReportAction action)
+        public virtual string GetDataDir(ReportAction action)
         {
             return action == ReportAction.Design
              ? Path.Combine(GetWorkingDir(action), "public", "data")
              : Path.Combine(GetWorkingDir(action), "data");
         }
 
-        virtual public async Task InitializeFolders(ReportAction action, bool copyCommomHtmlData = true)
+        public virtual async Task InitializeFolders(ReportAction action, bool copyCommomHtmlData = true)
         {
             var workingDir = GetWorkingDir(action);
             var dataDir = GetDataDir(action);
@@ -98,10 +98,10 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
     {
         public string ReportName { get; set; }
         public ReportAction ReportAction { get; set; }
-        public string PrinterName { get; set; } = null;
-        public string FileName { get; set; } = null;
+        public string PrinterName { get; set; }
+        public string FileName { get; set; }
         public int Copies { get; set; } = 1;
-        public string Watermark { get; set; } = null;
+        public string Watermark { get; set; }
 
         public static ReportExecuteSettings FromReportAuswahlResult(IReportAuswahlResult result)
         {

@@ -160,8 +160,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public int CountValueSalden { get; set; }
         public string Lieferzeit { get; set; }
         public bool IsEndkunde { get; set; }
-        public bool IsRabatt { get; set; } = false;
-        public bool IstSelbstabholer { get; set; } = false;
+        public bool IsRabatt { get; set; }
+        public bool IstSelbstabholer { get; set; }
 
         public void SetTextBausteine(object textBausteine)
         {
@@ -278,7 +278,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Text { get; set; }
         public string Betrag { get; set; }
         public string Rabatt { get; set; }
-        public bool IsLastElement { get; set; } = false;
+        public bool IsLastElement { get; set; }
     }
 
     public class BelegPositionDruckDTO

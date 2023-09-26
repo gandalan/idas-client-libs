@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.Client.Printing
@@ -8,11 +8,11 @@ namespace Gandalan.IDAS.WebApi.Client.Printing
 
         public DateTime Liefertermin { get; set; }
         public bool ShowLiefertermin { get; set; } = true;
-        public bool ShowAbsendeanschrift { get; set; } = false;
-        public bool ShowKommissionBarcode { get; set; } = false;
+        public bool ShowAbsendeanschrift { get; set; }
+        public bool ShowKommissionBarcode { get; set; }
         public bool UseTerminwunschAsLiefertermin { get; set; }
         public string Terminwunsch { get; set; }
-        public bool ShowKommission2 { get; set; } = false;
+        public bool ShowKommission2 { get; set; }
         public bool IstSelbstabholer { get; set; }
         public string Serie { get; set; }
         public string Vorgangsliste { get; set; }

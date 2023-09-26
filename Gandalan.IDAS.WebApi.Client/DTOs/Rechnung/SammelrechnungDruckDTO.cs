@@ -1,9 +1,9 @@
-﻿using System;
+using Gandalan.IDAS.WebApi.DTO;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Gandalan.IDAS.WebApi.DTO;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
 {
@@ -112,7 +112,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public string Text { get; set; }
         public string Betrag { get; set; }
         public string Rabatt { get; set; }
-        public bool IsLastElement { get; set; } = false;
+        public bool IsLastElement { get; set; }
 
         public SammelrechnungSaldoDruckDTO(SammelrechnungSaldenDTO saldo, bool isLastElement)
         {
@@ -121,7 +121,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             Reihenfolge = saldo.Reihenfolge;
             Text = saldo.Text;
             Betrag = saldo.Betrag.ToString(culture);
-            Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29",culture) : "";
+            Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29", culture) : "";
             IsLastElement = isLastElement;
         }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 
 namespace Gandalan.IDAS.WebApi.DTO
@@ -18,8 +18,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstAktiv { get; set; }
         public bool IstHaendler { get; set; }
         public bool IstProduzent { get; set; }
-        public bool ErbtAuswahlOhneSprosse { get; set; } = false;
-        public bool StammdatenbearbeitungGesperrt { get; set; } = false;
+        public bool ErbtAuswahlOhneSprosse { get; set; }
+        public bool StammdatenbearbeitungGesperrt { get; set; }
 
 #pragma warning disable CS0067 // The event 'MandantDTO.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;

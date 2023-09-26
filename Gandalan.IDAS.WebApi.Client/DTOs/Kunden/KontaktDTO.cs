@@ -1,8 +1,8 @@
-﻿using System.ComponentModel;
+using Gandalan.IDAS.WebApi.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Gandalan.IDAS.WebApi.Util;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Gandalan.IDAS.WebApi.DTO
@@ -87,7 +87,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Kunden-Nummernkreis, z.B. 600, 0000, 000
         /// </summary>
-        public string Nummernkreis { get; set; } 
+        public string Nummernkreis { get; set; }
         /// <summary>
         /// Liefertage, Montag bis Freitag
         /// </summary>
@@ -203,7 +203,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public bool HatWinterrabatt { get; set; }
         public bool KeineAutofreigabe { get; set; }
-        public bool ErbtAuswahlOhneSprosse { get; set; } = false;
+        public bool ErbtAuswahlOhneSprosse { get; set; }
         public bool DigitalerRechnungsversand { get; set; }
         public bool IstSammelrechnungsKunde { get; set; }
         /// <summary>
