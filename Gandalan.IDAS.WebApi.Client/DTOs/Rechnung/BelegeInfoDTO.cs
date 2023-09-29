@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
 {
@@ -9,6 +9,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public Guid KontaktGuid { get; set; }
 
         public long Vorgangsnummer { get; set; }
+        public long BelegNummer { get; set; }
         public DateTime BelegDatum { get; set; }
         public int PosAnzahl { get; set; }
         public decimal GesamtBetrag { get; set; }
