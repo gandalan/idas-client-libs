@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.WebApi.Client;
+using Gandalan.IDAS.WebApi.Client;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -131,7 +131,7 @@ namespace Gandalan.IDAS.Web
             HttpResponseMessage response = null;
             try
             {
-                string json = JsonConvert.SerializeObject(data, settings);
+                var json = JsonConvert.SerializeObject(data, settings);
                 var client = GetClientByVersion(version);
                 response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
                 contentAsString = await response.Content?.ReadAsStringAsync();
@@ -186,7 +186,7 @@ namespace Gandalan.IDAS.Web
             HttpResponseMessage response = null;
             try
             {
-                string json = JsonConvert.SerializeObject(data, settings);
+                var json = JsonConvert.SerializeObject(data, settings);
                 var client = GetClientByVersion(version);
                 response = await client.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
                 contentAsString = await response.Content?.ReadAsStringAsync();

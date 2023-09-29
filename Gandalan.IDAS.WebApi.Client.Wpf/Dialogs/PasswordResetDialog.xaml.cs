@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using System.ComponentModel;
 using System.Windows;
 
@@ -18,9 +18,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             InitializeComponent();
         }
 
-#pragma warning disable CS0067 // The event 'PasswordResetDialog.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'PasswordResetDialog.PropertyChanged' is never used
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -38,7 +36,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
                 return;
             }
 
-            BenutzerWebRoutinen service = new BenutzerWebRoutinen(Settings);
+            var service = new BenutzerWebRoutinen(Settings);
             try
             {
                 await service.PasswortResetAsync(Email);
@@ -53,7 +51,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             {
                 InProgress = false;
             }
-            
+
             DialogResult = true;
             Close();
         }

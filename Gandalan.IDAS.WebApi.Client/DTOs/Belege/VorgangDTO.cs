@@ -1,10 +1,10 @@
-﻿using System.ComponentModel;
+using Gandalan.IDAS.WebApi.Util;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
-using Gandalan.IDAS.WebApi.Util;
-using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -66,7 +66,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public virtual KontaktDTO Kunde { get; set; }
         public Guid KundeGuid { get; set; }
-        
+
         public string AktuellerStatus { get; set; }
 
         /// <summary>
@@ -97,9 +97,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             ErstellDatum = DateTime.UtcNow;
         }
 
-#pragma warning disable CS0067 // The event 'VorgangDTO.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'VorgangDTO.PropertyChanged' is never used
 
         public void Dump()
         {

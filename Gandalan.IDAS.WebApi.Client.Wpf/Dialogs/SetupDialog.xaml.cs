@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
 using System.ComponentModel;
-using Gandalan.IDAS.Web;
-using Gandalan.IDAS.Client.Contracts.Contracts;
+using System.Windows;
 
 namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 {
@@ -22,9 +21,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             InitializeComponent();
         }
 
-#pragma warning disable CS0067 // The event 'SetupDialog.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'SetupDialog.PropertyChanged' is never used
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -41,7 +38,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             }
 
             InProgress = true;
-            AppWebRoutinen service = new AppWebRoutinen(Settings);
+            var service = new AppWebRoutinen(Settings);
             try
             {
                 await service.AktiviereMandantAsync(Email.Trim());
@@ -54,6 +51,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             {
                 InProgress = false;
             }
+
             MessageBox.Show("Produzent wurde erfolgreich eingerichtet.", "Info vom System", MessageBoxButton.OK, MessageBoxImage.Information);
             DialogResult = true;
             Close();

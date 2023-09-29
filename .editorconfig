@@ -321,3 +321,10 @@ dotnet_diagnostic.IDE0200.severity = warning
 # IDE2000: Disallow multiple blank lines
 dotnet_style_allow_multiple_blank_lines_experimental = false
 dotnet_diagnostic.IDE2000.severity = warning
+
+###### End of EditorConfig from dotnet/aspnetcore repository
+
+### Gandalan rules
+
+# CS0067: The event 'Datensaetze.PropertyChanged' is never used
+dotnet_diagnostic.CS0067.severity = silent
