@@ -1,10 +1,10 @@
-﻿using System.ComponentModel;
+using Gandalan.IDAS.WebApi.Util;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using Gandalan.IDAS.WebApi.Util;
-using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -62,9 +62,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             AenderungsDatum = DateTime.UtcNow;
         }
 
-#pragma warning disable CS0067 // The event 'BelegDTO.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'BelegDTO.PropertyChanged' is never used
 
         public void SetupObjekte(VorgangDTO vorgang)
         {
@@ -73,10 +71,8 @@ namespace Gandalan.IDAS.WebApi.DTO
             {
                 var pos = vorgang.Positionen.FirstOrDefault(pp => pp.BelegPositionGuid == p);
                 if (pos != null)
-                    this.PositionsObjekte.Add(pos);
+                    PositionsObjekte.Add(pos);
             });
         }
-
-
     }
 }
