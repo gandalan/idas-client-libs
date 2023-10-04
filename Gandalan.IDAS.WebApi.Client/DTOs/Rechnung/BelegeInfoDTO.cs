@@ -8,6 +8,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public Guid BelegGuid { get; set; }
         public Guid KontaktGuid { get; set; }
 
+        public string Belegart { get; set; }
         public long Vorgangsnummer { get; set; }
         public long BelegNummer { get; set; }
         public DateTime BelegDatum { get; set; }
