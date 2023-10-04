@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-using System.Collections.Generic;
-using System;
 using Gandalan.IDAS.WebApi.Util;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -96,9 +96,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             ZusatzanschriftGuid = Guid.NewGuid();
         }
 
-#pragma warning disable CS0067 // The event 'ZusatzanschriftDTO.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'ZusatzanschriftDTO.PropertyChanged' is never used
 
         public string GetText()
         {

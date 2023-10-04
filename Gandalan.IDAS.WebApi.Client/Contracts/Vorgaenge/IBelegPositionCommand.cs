@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -7,21 +7,18 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
     public abstract class IBelegPositionCommand : ICommand, INotifyPropertyChanged
     {
         public abstract event EventHandler CanExecuteChanged;
-#pragma warning disable CS0067 // The event 'IBelegPositionCommand.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'IBelegPositionCommand.PropertyChanged' is never used
 
         public abstract bool CanExecute(IBelegPositionItem parameter);
         public bool CanExecute(object parameter)
         {
-            var pos = parameter as IBelegPositionItem;
-            if (pos == null)
+            if (!(parameter is IBelegPositionItem pos))
                 return false;
             return CanExecute(pos);
         }
 
         /// <summary>
-        /// Returns wherever this command should be shown or not. 
+        /// Returns wherever this command should be shown or not.
         /// Sometimes a position should not show some commands if they are not allowed
         /// </summary>
         /// <param name="parameter"></param>
@@ -29,8 +26,7 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         public abstract bool CanHandle(IBelegPositionItem parameter);
         public bool CanHandle(object parameter)
         {
-            var pos = parameter as IBelegPositionItem;
-            if (pos == null)
+            if (!(parameter is IBelegPositionItem pos))
                 return false;
             return CanExecute(pos);
         }
@@ -38,8 +34,7 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         public abstract void Execute(IBelegPositionItem parameter);
         public void Execute(object parameter)
         {
-            var pos = parameter as IBelegPositionItem;
-            if (pos == null)
+            if (!(parameter is IBelegPositionItem pos))
                 throw new ArgumentNullException("Parameter muss eine Belegposition sein");
             Execute(pos);
         }

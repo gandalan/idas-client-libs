@@ -211,8 +211,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public bool IstInaktiv { get; set; }
         /// <summary>
-        /// Erzeugt einen Text aus den Namensfeldern für die Anzeige in 
-        /// Überschriften, Anschriftenfeldern usw. 
+        /// Erzeugt einen Text aus den Namensfeldern für die Anzeige in
+        /// Überschriften, Anschriftenfeldern usw.
         /// </summary>
         public string AnzeigeName => string.IsNullOrEmpty(Firmenname)
             ? $"{Anrede} {Titel} {Vorname} {Nachname}".Trim()
@@ -228,9 +228,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             Personen = new ObservableCollection<PersonDTO>();
         }
 
-#pragma warning disable CS0067 // The event 'KontaktDTO.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'KontaktDTO.PropertyChanged' is never used
 
         public override string ToString()
         {

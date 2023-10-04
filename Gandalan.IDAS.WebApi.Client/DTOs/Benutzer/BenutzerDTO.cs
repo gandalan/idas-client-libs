@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Gandalan.IDAS.WebApi.DTO
@@ -34,9 +34,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             GesperrteVarianten = new ObservableCollection<Guid>();
         }
 
-#pragma warning disable CS0067 // The event 'BenutzerDTO.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'BenutzerDTO.PropertyChanged' is never used
 
         public bool HatBerechtigung(string code)
         {
@@ -50,7 +48,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public void RemoveRolle(RolleDTO rolle)
         {
-            for (int i = Rollen.Count - 1; i >= 0; i--)
+            for (var i = Rollen.Count - 1; i >= 0; i--)
             {
                 if (Rollen[i].Name.Equals(rolle.Name, StringComparison.InvariantCultureIgnoreCase))
                     Rollen.RemoveAt(i);
