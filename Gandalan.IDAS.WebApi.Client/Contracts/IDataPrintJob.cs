@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.Jobs.Contracts
 {
@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.Jobs.Contracts
     public interface IDataPrintJobData : IJobData
     {
         Guid PrintGuid { get; set; }
-        Object Data { get; set; }
+        object Data { get; set; }
         Guid ReportGuid { get; set; }
         string FileFormat { get; set; }
         string ResultAsBase64String { get; set; }
@@ -24,7 +24,7 @@ namespace Gandalan.IDAS.Jobs.Contracts
     public class DataPrintJobData : IDataPrintJobData
     {
         public Guid PrintGuid { get; set; } = Guid.NewGuid();
-        public Object Data { get; set; }
+        public object Data { get; set; }
         public Guid ReportGuid { get; set; }
         public bool ReportsProgress { get; set; } = true;
         public int ProgressPercent { get; set; }
@@ -36,12 +36,11 @@ namespace Gandalan.IDAS.Jobs.Contracts
         public long MandantId { get; set; }
         public int Copies { get; set; }
 
-        public DataPrintJobData(Object daten, Guid reportGuid, int copies = 1)
+        public DataPrintJobData(object daten, Guid reportGuid, int copies = 1)
         {
             Data = daten;
             ReportGuid = reportGuid;
             Copies = copies;
         }
     }
-
 }
