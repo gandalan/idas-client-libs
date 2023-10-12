@@ -24,8 +24,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
 
-        public async Task<VarianteDTO> GetAsync(Guid varianteGuid, bool includeUIDefs = true)
-            => await GetAsync<VarianteDTO>($"Variante/{varianteGuid}?includeUIDefs={includeUIDefs}&maxLevel=99");
+        public async Task<VarianteDTO> GetAsync(Guid varianteGuid, bool includeUIDefs = true, bool includeKonfigs = true)
+            => await GetAsync<VarianteDTO>($"Variante/{varianteGuid}?includeUIDefs={includeUIDefs}&maxLevel=99&includeKonfigs={includeKonfigs}");
 
         public async Task<VarianteDTO> SaveVarianteAsync(VarianteDTO variante)
             => await PutAsync<VarianteDTO>($"Variante/{variante.VarianteGuid}", variante);
