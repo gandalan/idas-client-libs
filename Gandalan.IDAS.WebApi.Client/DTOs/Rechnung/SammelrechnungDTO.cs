@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
+using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +16,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public Guid SammelrechnungGuid { get; set; }
         public long SammelrechnungsNummer { get; set; }
         public DateTime ErstellDatum { get; set; }
+        public DateTime? LastPrintDate { get; set; }
+        public DateTime? LastExportDate { get; set; }
         public string Ansprechpartner { get; set; }
         public string Telefonnummer { get; set; }
         public string Liefertermin { get; set; }

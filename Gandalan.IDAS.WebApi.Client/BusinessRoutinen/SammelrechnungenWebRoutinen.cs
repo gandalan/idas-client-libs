@@ -35,9 +35,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 new AddRechnungSammelrechnungDTO() { BelegGuid = belegGuid, SammelrechnungGuid = sammelrechnungGuid });
 
         public async Task SetRechnungenAlsGedrucktAsync(List<Guid> guidListe, bool setEinzel = false)
-            => await PostAsync($"Sammelrechnungen/SetSammelrechnungPrinted?guidListe={guidListe}&setEinzel={setEinzel}", null);
+            => await PostAsync($"Sammelrechnungen/SetSammelrechnungPrinted?setEinzel={setEinzel}", guidListe);
         
         public async Task SetRechnungenAlsFibuUebergebenAsync(List<Guid> guidListe, bool setEinzel = false)
-            => await PostAsync($"Sammelrechnungen/SetSammelrechnungExported?guidListe={guidListe}&setEinzel={setEinzel}", null);
+            => await PostAsync($"Sammelrechnungen/SetSammelrechnungExported?setEinzel={setEinzel}", guidListe);
     }
 }
