@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.DataServices
     {
         Task<List<BelegeInfoDTO>> GetABFakturierbarListeAsync();
         Task<List<BelegeInfoDTO>> GetDruckbareRechnungenListeAsync(DateTime? printedSince = null);
-        Task<List<BelegeInfoDTO>> GetExportierbareRechnungenListeAsync(DateTime? printedSince = null);
+        Task<List<BelegeInfoDTO>> GetExportierbareRechnungenListeAsync(DateTime? exportedSince = null);
         Task SetBelegePrintedAsync(List<Guid> belegListe);
         Task SetBelegeExportedAsync(List<Guid> belegListe);
         Task<Dictionary<Guid, Guid>> ErstelleRechnungenAsync(List<BelegartWechselDTO> belegeWechsel);

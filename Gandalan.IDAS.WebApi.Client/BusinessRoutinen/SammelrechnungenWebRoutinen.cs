@@ -16,10 +16,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await PostAsync<SammelrechnungListItemDTO>("Sammelrechnungen/ErstelleSammelrechnungen", dto);
 
         public async Task<List<SammelrechnungListItemDTO>> GetNotPrintedSammelrechnungenAsync(DateTime? printedSince = null) 
-            => await GetAsync<List<SammelrechnungListItemDTO>>($"Sammelrechnungen/GetNotPrintedSammelrechnungen?printedSince={printedSince}");
+            => await GetAsync<List<SammelrechnungListItemDTO>>($"Sammelrechnungen/GetNotPrintedSammelrechnungen?printedSince={printedSince?.ToString("o")}");
 
         public async Task<List<SammelrechnungListItemDTO>> GetNotExportedSammelrechnungenAsync(DateTime? exportedSince = null)
-            => await GetAsync<List<SammelrechnungListItemDTO>>($"Sammelrechnungen/GetNotExportedSammelrechnungen?exportedSince={exportedSince}");
+            => await GetAsync<List<SammelrechnungListItemDTO>>($"Sammelrechnungen/GetNotExportedSammelrechnungen?exportedSince={exportedSince?.ToString("o")}");
 
         public async Task<SammelrechnungDTO> GetSammelrechnungAsync(Guid guid, bool includeBelegDruckDTO)
             => await GetAsync<SammelrechnungDTO>($"Sammelrechnungen/GetSammelrechnung?guid={guid}&includeBelegDruckDTO={includeBelegDruckDTO}");
