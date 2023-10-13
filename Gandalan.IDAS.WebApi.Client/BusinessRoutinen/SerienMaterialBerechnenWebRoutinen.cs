@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
@@ -29,7 +29,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await GetAsync<List<MaterialbedarfDTO>>("SerieMaterialbedarfBerechnen?serieGuid=" + serieGuid.ToString());
 
         public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfv2Async(Guid serieGuid)
-            => await GetAsync<List<MaterialbedarfDTO>>("SerieOffenerMaterialbedarf?serieGuid=" + serieGuid.ToString()/*, version: "2"*/);
+            => await GetAsync<List<MaterialbedarfDTO>>("SerieOffenerMaterialbedarf?serieGuid=" + serieGuid.ToString(), version: "2");
         public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfAsync(Guid serieGuid)
             => await GetAsync<List<MaterialbedarfDTO>>("SerieOffenerMaterialbedarf?serieGuid=" + serieGuid.ToString());
 
