@@ -17,9 +17,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await GetAsync<List<BelegeInfoDTO>>("Rechnungen/GetABFakturierbar");
 
         public async Task<List<BelegeInfoDTO>> GetAllRechnungenDruckbarAsync(DateTime? printedSince = null)
-            => await GetAsync<List<BelegeInfoDTO>>($"Rechnungen/GetNotPrintedRechnungen?printedSince={printedSince}");
+            => await GetAsync<List<BelegeInfoDTO>>($"Rechnungen/GetNotPrintedRechnungen?printedSince={printedSince?.ToString("o")}");
         public async Task<List<BelegeInfoDTO>> GetAllRechnungenExportierbarAsync(DateTime? exportedSince = null)
-            => await GetAsync<List<BelegeInfoDTO>>($"Rechnungen/GetNotExportedRechnungen?exportedSince={exportedSince}");
+            => await GetAsync<List<BelegeInfoDTO>>($"Rechnungen/GetNotExportedRechnungen?exportedSince={exportedSince?.ToString("o")}");
         public async Task SetBelegePrintedAsync(List<Guid> belegListe)
             => await PostAsync($"Rechnungen/SetBelegePrinted", belegListe);
         public async Task SetBelegeExportedAsync(List<Guid> belegListe)
