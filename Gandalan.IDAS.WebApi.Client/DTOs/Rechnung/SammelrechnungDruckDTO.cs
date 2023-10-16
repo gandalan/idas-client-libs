@@ -11,6 +11,9 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
     {
         public Guid SammelrechnungGuid { get; set; }
         public long SammelrechnungNummer { get; set; }
+
+        // Wird nur für den Druck verwendet, damit beim automatischen Export die Rechnungsnummer mit im Dateinamen ausgegeben wird
+        public long Vorgangnummer { get; set; }
         public KontaktDTO Kunde { get; set; }
         public string ErstellDatum { get; set; }
         public string Kopfzeile { get; set; }
@@ -30,6 +33,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public int CountValueSalden { get; set; }
         public bool IsEndkunde { get; set; }
         public IList<BelegDruckDTO> EinzelrechnungDTOs { get; set; }
+        public string Belegart { get; set; } = "Sammelrechnung";
 
         public SammelrechnungDruckDTO(SammelrechnungDTO sammelrechnung)
         {
@@ -37,6 +41,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
 
             SammelrechnungGuid = sammelrechnung.SammelrechnungGuid;
             SammelrechnungNummer = sammelrechnung.SammelrechnungsNummer;
+            Vorgangnummer = sammelrechnung.SammelrechnungsNummer;
             Kunde = sammelrechnung.Kontakt;
             ErstellDatum = sammelrechnung.ErstellDatum.ToString("d", culture);
             Kopfzeile = sammelrechnung.Kopfzeile;
@@ -53,6 +58,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             CountValuePositionen = sammelrechnung.Positionen.Count;
             CountValueSalden = sammelrechnung.Salden.Count;
             IsEndkunde = sammelrechnung.Kontakt.IstEndkunde;
+
             EinzelrechnungDTOs = sammelrechnung.EinzelrechnungDTOs;
         }
 
