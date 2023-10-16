@@ -23,5 +23,6 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public DateTime? LastExportDate { get; set; }
         public decimal MwSt { get; set; }
         public Lieferungstyp Lieferungstyp { get; set; }
+        public bool HatRechnungUndRechNrIstVorgangNr { get; set; }
     }
 }
