@@ -30,6 +30,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 AenderungsDatum = beleg.AenderungsDatum;
                 BelegJahr = beleg.BelegJahr;
                 Schlusstext = beleg.Schlusstext;
+                SammelbelegNummer = beleg.SammelbelegNummer;
                 Kommission = string.IsNullOrEmpty(vorgang.Kommission) ? string.Empty : "Kommission: " + vorgang.Kommission;
                 Ausfuehrungsdatum = string.IsNullOrEmpty(beleg.AusfuehrungsDatum) ? string.Empty : "Ausführungsdatum: " + beleg.AusfuehrungsDatum;
                 AnsprechpartnerKunde = beleg.AnsprechpartnerKunde ?? "";
@@ -162,6 +163,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IsEndkunde { get; set; }
         public bool IsRabatt { get; set; }
         public bool IstSelbstabholer { get; set; }
+        public long? SammelbelegNummer { get; set; }
 
         public void SetTextBausteine(object textBausteine)
         {
