@@ -43,6 +43,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             SammelrechnungNummer = sammelrechnung.SammelrechnungsNummer;
             Vorgangnummer = sammelrechnung.SammelrechnungsNummer;
             Kunde = sammelrechnung.Kontakt;
+            Kunde.SchlussTextRechnung = sammelrechnung.Schlusstext;
+            Kunde.Zahlungsbedingung = sammelrechnung.ZahlungsBedingungen;
             ErstellDatum = sammelrechnung.ErstellDatum.ToString("d", culture);
             Kopfzeile = sammelrechnung.Kopfzeile;
             Fusszeile = sammelrechnung.Fusszeile;
