@@ -236,6 +236,19 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
+        public async Task<byte[]> PostDataAsync(string uri, HttpContent data, bool skipAuth = false, string version = null)
+        {
+            try
+            {
+                await runPreRequestChecks(skipAuth);
+                return await _restRoutinen.PostDataAsync(uri, data, version: version);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw HandleWebException(ex, uri, data);
+            }
+        }
+
         public async Task<byte[]> GetDataAsync(string uri, bool skipAuth = false, string version = null)
         {
             try
@@ -302,6 +315,19 @@ namespace Gandalan.IDAS.WebApi.Client
         }
 
         public async Task<byte[]> PutDataAsync(string uri, byte[] data, bool skipAuth = false, string version = null)
+        {
+            try
+            {
+                await runPreRequestChecks(skipAuth);
+                return await _restRoutinen.PutDataAsync(uri, data);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw HandleWebException(ex, uri, data);
+            }
+        }
+
+        public async Task<byte[]> PutDataAsync(string uri, HttpContent data, bool skipAuth = false, string version = null)
         {
             try
             {

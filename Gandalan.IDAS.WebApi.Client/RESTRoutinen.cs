@@ -166,6 +166,26 @@ namespace Gandalan.IDAS.Web
             }
         }
 
+        public async Task<byte[]> PostDataAsync(string url, HttpContent data, string version = null)
+        {
+            string contentAsString = null;
+            HttpResponseMessage response = null;
+            try
+            {
+                var client = GetClientByVersion(version);
+                response = await client.PostAsync(url, data);
+                contentAsString = await response.Content?.ReadAsStringAsync();
+                response.EnsureSuccessStatusCode();
+                return await response.Content?.ReadAsByteArrayAsync();
+            }
+            catch (Exception ex)
+            {
+                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+        }
+
         /// <summary>
         /// Sendet ein Objekt per HTTP PUT an die angegebene URL, i.d.R. um es anzulegen
         /// </summary>
@@ -209,6 +229,25 @@ namespace Gandalan.IDAS.Web
             {
                 var client = GetClientByVersion(version);
                 response = await client.PutAsync(url, new ByteArrayContent(data));
+                contentAsString = await response.Content?.ReadAsStringAsync();
+                return await response.Content?.ReadAsByteArrayAsync();
+            }
+            catch (Exception ex)
+            {
+                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+        }
+
+        public async Task<byte[]> PutDataAsync(string url, HttpContent data, string version = null)
+        {
+            string contentAsString = null;
+            HttpResponseMessage response = null;
+            try
+            {
+                var client = GetClientByVersion(version);
+                response = await client.PutAsync(url, data);
                 contentAsString = await response.Content?.ReadAsStringAsync();
                 return await response.Content?.ReadAsByteArrayAsync();
             }
