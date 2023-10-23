@@ -14,6 +14,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
 
         // Wird nur für den Druck verwendet, damit beim automatischen Export die Rechnungsnummer mit im Dateinamen ausgegeben wird
         public long Vorgangnummer { get; set; }
+        public long Belegnummer { get; set; }
         public KontaktDTO Kunde { get; set; }
         public string ErstellDatum { get; set; }
         public string Kopfzeile { get; set; }
@@ -41,7 +42,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
 
             SammelrechnungGuid = sammelrechnung.SammelrechnungGuid;
             SammelrechnungNummer = sammelrechnung.SammelrechnungsNummer;
-            Vorgangnummer = sammelrechnung.SammelrechnungsNummer;
+            Belegnummer = Vorgangnummer = sammelrechnung.SammelrechnungsNummer;
             Kunde = sammelrechnung.Kontakt;
             Kunde.SchlussTextRechnung = sammelrechnung.Schlusstext;
             Kunde.Zahlungsbedingung = sammelrechnung.ZahlungsBedingungen;
