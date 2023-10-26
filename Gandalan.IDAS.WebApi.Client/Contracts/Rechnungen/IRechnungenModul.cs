@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+using System;
+using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.Rechnungen
 {
@@ -9,6 +10,7 @@ namespace Gandalan.Client.Contracts.Rechnungen
 
     public interface IRechnungAusgabeModul
     {
+        Task ShowPrintedRechnungAusgabe(Guid sammelrechnungGuid, DateTime? lastPrintDate);
         Task ShowRechnungAusgabe();
     }
 }

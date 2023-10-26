@@ -16,5 +16,6 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.DataServices
         Task AddRechnungToSammelrechnungenAsync(Guid belegGuid, Guid sammelrechnungGuid);
         Task SetSammelRechnungenAlsGedrucktAsync(List<Guid> sammelrechnungGuid, bool setEinzel = false);
         Task SetSammelRechnungenExportedAsync(List<Guid> sammelrechungGuid, bool setEinzel = false);
+        Task<List<SammelrechnungListItemDTO>> SearchSammelrechnungAsync(string term);
     }
 }

@@ -39,5 +39,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         
         public async Task SetRechnungenAlsFibuUebergebenAsync(List<Guid> guidListe, bool setEinzel = false)
             => await PostAsync($"Sammelrechnungen/SetSammelrechnungExported?setEinzel={setEinzel}", guidListe);
+
+        public async Task<List<SammelrechnungListItemDTO>> SearchSammelrechnungAsync(string term)
+            => await GetAsync<List<SammelrechnungListItemDTO>>($"Sammelrechnungen/SearchSammelrechnung?term={term}");
     }
 }
