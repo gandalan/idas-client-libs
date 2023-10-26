@@ -10,17 +10,14 @@
         <description>Gandalan.IDAS.Logging</description>
         <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2023</copyright>
         <license type="expression">MIT</license>
-		<readme>README.md</readme>
+        <readme>README.md</readme>
         <dependencies>
         </dependencies>
     </metadata>
     <files>
       <file src="..\README.md" target="\" />
-      <file src="bin\Release\net472\GDL.IDAS.Logging.dll" target="lib\net472\GDL.IDAS.Logging.dll" />
       <file src="bin\Release\net48\GDL.IDAS.Logging.dll" target="lib\net48\GDL.IDAS.Logging.dll" />
       <file src="bin\Release\net6.0\GDL.IDAS.Logging.dll" target="lib\net6.0\GDL.IDAS.Logging.dll" />
       <file src="bin\Release\net7.0\GDL.IDAS.Logging.dll" target="lib\net7.0\GDL.IDAS.Logging.dll" />
-      <file src="bin\Release\netstandard2.0\GDL.IDAS.Logging.dll" target="lib\netstandard2.0\GDL.IDAS.Logging.dll" />
-      <file src="bin\Release\netstandard2.1\GDL.IDAS.Logging.dll" target="lib\netstandard2.1\GDL.IDAS.Logging.dll" />
     </files>
 </package>
