@@ -24,12 +24,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 foreach (var attachment in attachments)
                 {
                     // read each file and add it to the multipart form data
-                    var fileContent = new ByteArrayContent(File.ReadAllBytes(attachment));
-                    fileContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
-                    {
-                        FileName = Path.GetFileName(attachment)
-                    };
-                    content.Add(fileContent, "files", Path.GetFileName(attachment));
+                    var fileStream = File.OpenRead(attachment);
+                    var fileContentStream = new StreamContent(fileStream);
+                    content.Add(fileContentStream, "files", Path.GetFileName(attachment));
                 }
             }
             await PostDataAsync("Mail", content, version : "2.0");
