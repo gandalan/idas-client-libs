@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -13,6 +13,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public DateTime? GueltigBis { get; set; }
         public long Version { get; set; }
         public DateTime ChangedDate { get; set; }
+        public int Reihenfolge { get; set; }
 
         public IList<Guid> FarbItemGuids { get; set; }
         public IList<Guid> OberflaecheGuids { get; set; }
