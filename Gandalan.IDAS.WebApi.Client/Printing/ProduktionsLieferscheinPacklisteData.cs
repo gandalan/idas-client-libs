@@ -1,4 +1,4 @@
-﻿namespace Gandalan.IDAS.WebApi.Client.Printing
+namespace Gandalan.IDAS.WebApi.Client.Printing
 {
     public class ProduktionsLieferscheinPacklisteData
     {
@@ -10,6 +10,8 @@
         public string Laenge { get; set; }
         public string Winkel { get; set; }
         public string Einheit { get; set; }
+        public decimal? VE_Menge { get; set; }
+        public bool IstVE { get; set; }
 
     }
 }

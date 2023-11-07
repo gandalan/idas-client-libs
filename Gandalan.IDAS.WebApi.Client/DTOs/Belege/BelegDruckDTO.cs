@@ -305,6 +305,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string ProduktionZusatzInfo { get; set; }
         public bool ProduktionZusatzInfoPrintOnReport { get; set; }
         public bool ProduktionZusatzInfoPrintZusatzEtikett { get; set; }
+        public bool IstVE { get; set; }
+        public decimal? VE_Menge { get; set; }
 
         public BelegPositionDruckDTO()
         {
@@ -323,6 +325,14 @@ namespace Gandalan.IDAS.WebApi.DTO
                 IstAktiv = position.IstAktiv;
                 Menge = position.Menge;
                 MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.ZuschnittLaenge")) != null ? "Stk." : position.MengenEinheit;
+
+                if (position.IstVE)
+                {
+                    MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.Artikel_VE_Einheit"))?.Wert;
+                    VE_Menge = position.VE_Menge;
+                    IstVE = position.IstVE;
+                }
+
                 if (MengenEinheit == null || MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase))
                 {
                     MengenEinheit = "Stk.";
