@@ -1,6 +1,6 @@
 {
   "name": "@gandalan/weblibs",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "WebLibs for Gandalan JS/TS/Svelte projects",
   "keywords": [
     "gandalan"
@@ -20,7 +20,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@mdi/js": "^7.2.96",
+    "@mdi/js": "^7.3.67",
     "axios": "^0.27.2",
     "jwt-decode": "^3.1.2",
     "svelte-table": "^0.6.1"
@@ -28,9 +28,9 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.22.15",
     "chota": "^0.9.2",
-    "eslint": "^8.50.0",
-    "eslint-plugin-svelte": "^2.33.2",
-    "svelte": "^4.2.1",
+    "eslint": "^8.52.0",
+    "eslint-plugin-svelte": "^2.34.0",
+    "svelte": "^4.2.2",
     "svelte-check": "^3.5.2",
     "svelte-chota": "^1.8.6"
   },
