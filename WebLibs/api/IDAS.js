@@ -1,6 +1,6 @@
 import { isInvalid, currentToken} from "./authUtils";
 import { RESTClient } from "./RESTClient";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export function IDASFactory(settings)
 {
@@ -37,7 +37,7 @@ class IDAS
                 return [];
             }
 
-            const decoded = jwt_decode(currentToken);
+            const decoded = jwtDecode(currentToken);
             return decoded.rights;
         },
         getRoles()
@@ -47,7 +47,7 @@ class IDAS
                 return [];
             }
 
-            const decoded = jwt_decode(currentToken);
+            const decoded = jwtDecode(currentToken);
             return decoded.role;
         },
         hasRight(code)
@@ -65,7 +65,7 @@ class IDAS
                 return undefined;
             }
 
-            const decoded = jwt_decode(currentToken);
+            const decoded = jwtDecode(currentToken);
             return decoded.id;
         },
     };
