@@ -1,3 +1,4 @@
+using Gandalan.IDAS.WebApi.Client.DTOs.Allgemein;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -307,6 +308,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool ProduktionZusatzInfoPrintZusatzEtikett { get; set; }
         public bool IstVE { get; set; }
         public decimal? VE_Menge { get; set; }
+        public IList<ZusatztextDTO> Zusatztexte { get; set; }
 
         public BelegPositionDruckDTO()
         {
@@ -351,6 +353,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 ProduktionZusatzInfo = position.ProduktionZusatzInfo;
                 ProduktionZusatzInfoPrintOnReport = position.ProduktionZusatzInfoPrintOnReport;
                 ProduktionZusatzInfoPrintZusatzEtikett = position.ProduktionZusatzInfoPrintZusatzEtikett;
+                Zusatztexte = position.Zusatztexte;
                 if (preiseAnzeigen)
                 {
                     Farbzuschlag = position.Farbzuschlag.ToString(culture);
