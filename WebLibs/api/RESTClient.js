@@ -42,7 +42,7 @@ export class RESTClient {
 
     async get(uri) {
         try {
-            this.axiosInstance = getNewAxiosInstance();
+            this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.get(uri, this.getUrlOptions());
             this.lastError = "";
             return response.data;
@@ -54,7 +54,7 @@ export class RESTClient {
 
     async getFile(uri) {
         try {
-            this.axiosInstance = getNewAxiosInstance();
+            this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.get(uri, { responseType: "blob" });
             let fileName = "1000.pdf";
             if (response.headers["content-disposition"]) {
@@ -72,7 +72,7 @@ export class RESTClient {
     async getRaw(uri) {
         let response = {};
         try {
-            this.axiosInstance = getNewAxiosInstance();
+            this.axiosInstance = this.getNewAxiosInstance();
             response = await this.axiosInstance.get(uri, this.getUrlOptions())
             this.lastError = "";
         }
@@ -84,7 +84,7 @@ export class RESTClient {
 
     async post(uri, formData) {
         try {
-            this.axiosInstance = getNewAxiosInstance();
+            this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.post(uri, formData, this.getUrlOptions());
             this.lastError = "";
             return response;
@@ -96,7 +96,7 @@ export class RESTClient {
 
     async put(uri, formData) {
         try {
-            this.axiosInstance = getNewAxiosInstance();
+            this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.put(uri, formData, this.getUrlOptions());
             this.lastError = "";
             return response;
@@ -108,7 +108,7 @@ export class RESTClient {
 
     async delete(uri) {
         try {
-            this.axiosInstance = getNewAxiosInstance();
+            this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.delete(uri, this.getUrlOptions());
             this.lastError = "";
             return response;
