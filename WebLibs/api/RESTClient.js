@@ -8,7 +8,7 @@ export class RESTClient
     axiosInstance = null;
 
     constructor(settings)
-{
+    {
         this.settings = settings;
 
         this.axiosInstance = axios.create({
@@ -39,34 +39,34 @@ export class RESTClient
     }*/
 
     getUrlOptions()
-{
+    {
         return { withCredentials: false };
     }
 
     async get(uri)
-{
+    {
         try
-{
+        {
             this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.get(uri, this.getUrlOptions());
             this.lastError = "";
             return response.data;
-        }
+            }
         catch (error)
-{
+        {
             this.handleError(error);
         }
     }
 
     async getFile(uri)
-{
+    {
         try
-{
+        {
             this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.get(uri, { responseType: "blob" });
             let fileName = "1000.pdf";
             if (response.headers["content-disposition"])
-{
+            {
                 fileName = response.headers["content-disposition"].split(";")[1];
                 fileName = fileName.replace("filename=", "").trim();
             }
@@ -74,74 +74,74 @@ export class RESTClient
             return { data: response.data, filename: fileName, contentType: "application/pdf" };
         }
         catch (error)
-{
+        {
             this.handleError(error);
         }
     }
 
     async getRaw(uri)
-{
+    {
         let response = {};
         try
-{
+        {
             this.axiosInstance = this.getNewAxiosInstance();
             response = await this.axiosInstance.get(uri, this.getUrlOptions())
             this.lastError = "";
         }
         catch (error)
-{
+        {
             this.handleError(error);
         }
         return response;
     }
 
     async post(uri, formData)
-{
+    {
         try
-{
+        {
             this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.post(uri, formData, this.getUrlOptions());
             this.lastError = "";
             return response;
         }
         catch (error)
-{
+        {
             this.handleError(error);
         }
     }
 
     async put(uri, formData)
-{
+    {
         try
-{
+        {
             this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.put(uri, formData, this.getUrlOptions());
             this.lastError = "";
             return response;
         }
         catch (error)
-{
+        {
             this.handleError(error);
         }
     }
 
     async delete(uri)
-{
+    {
         try
-{
+        {
             this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.delete(uri, this.getUrlOptions());
             this.lastError = "";
             return response;
         }
         catch (error)
-{
+        {
             this.handleError(error);
         }
     }
 
     getNewAxiosInstance()
-{
+    {
         return axios.create({
             baseURL: this.settings.apiBaseurl,
             headers: {
@@ -151,9 +151,9 @@ export class RESTClient
     }
 
     handleError(error)
-{
+    {
         if (error.response)
-{
+        {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
             console.log(error.response.data);
@@ -161,14 +161,14 @@ export class RESTClient
             console.log(error.response.headers);
         }
         else if (error.request)
-{
+        {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
             // http.ClientRequest in node.js
             console.log(error.request);
         }
         else
-{
+        {
             // Something happened in setting up the request that triggered an Error
             console.log("Error", error.message);
         }
