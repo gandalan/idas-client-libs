@@ -38,7 +38,12 @@ class IDAS
             }
 
             const decoded = jwtDecode(currentToken);
-            return decoded.rights;
+            if(!decoded.rights)
+            {
+                return [];
+            }
+
+            return Array.isArray(decoded.rights) ? decoded.rights : [decoded.rights];
         },
         getRoles()
         {
@@ -48,7 +53,12 @@ class IDAS
             }
 
             const decoded = jwtDecode(currentToken);
-            return decoded.role;
+            if(!decoded.role)
+            {
+                return [];
+            }
+
+            return Array.isArray(decoded.role) ? decoded.role : [decoded.role];
         },
         hasRight(code)
         {
