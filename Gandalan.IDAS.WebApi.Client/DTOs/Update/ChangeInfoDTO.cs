@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -13,6 +13,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public DateTime BelegPositionen { get; set; }
         public DateTime KalenderKennzeichen { get; set; }
         public DateTime ProduktionsStati { get; set; }
+        [Obsolete]
         public DateTime Reports { get; set; }
         public DateTime TagInfos { get; set; }
     }

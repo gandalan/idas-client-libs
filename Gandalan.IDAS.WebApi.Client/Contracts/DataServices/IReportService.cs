@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.DTO.DTOs.Reports;
 
 namespace Gandalan.Client.Contracts.DataServices
 {
+    [Obsolete]
     public interface IReportService
     {
         Task<ReportDTO[]> GetAllAsync();

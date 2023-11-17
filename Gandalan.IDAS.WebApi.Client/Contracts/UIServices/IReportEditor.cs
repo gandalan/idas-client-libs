@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using Gandalan.IDAS.WebApi.DTO.DTOs.Reports;
 
 namespace Gandalan.Client.Contracts.UIServices
 {
+    [Obsolete]
     public interface IReportEditor
     {
         void EditReport(Guid guid);

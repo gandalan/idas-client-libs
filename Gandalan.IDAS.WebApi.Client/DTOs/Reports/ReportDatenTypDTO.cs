@@ -1,5 +1,8 @@
-﻿namespace Gandalan.IDAS.WebApi.DTO.DTOs.Reports
+using System;
+
+namespace Gandalan.IDAS.WebApi.DTO.DTOs.Reports
 {
+    [Obsolete]
     public enum ReportDatenTypDTO
     {
         Unbekannt = 0,
