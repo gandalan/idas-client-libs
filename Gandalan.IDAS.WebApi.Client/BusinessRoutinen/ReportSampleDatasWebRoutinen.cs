@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO.DTOs.Reports;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
+    [Obsolete]
     public class ReportSampleDatasWebRoutinen : WebRoutinenBase
     {
         public ReportSampleDatasWebRoutinen(IWebApiConfig settings) : base(settings)

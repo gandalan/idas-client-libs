@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO.DTOs.Reports
 {
+    [Obsolete]
     public class ReportSampleDataDTO
     {
         public Guid ReportSampleDataGuid { get; set; }
