@@ -47,10 +47,11 @@ export class RESTClient
     {
         try
         {
+            this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.get(uri, this.getUrlOptions());
             this.lastError = "";
             return response.data;
-        }
+            }
         catch (error)
         {
             this.handleError(error);
@@ -61,6 +62,7 @@ export class RESTClient
     {
         try
         {
+            this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.get(uri, { responseType: "blob" });
             let fileName = "1000.pdf";
             if (response.headers["content-disposition"])
@@ -82,6 +84,7 @@ export class RESTClient
         let response = {};
         try
         {
+            this.axiosInstance = this.getNewAxiosInstance();
             response = await this.axiosInstance.get(uri, this.getUrlOptions())
             this.lastError = "";
         }
@@ -96,6 +99,7 @@ export class RESTClient
     {
         try
         {
+            this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.post(uri, formData, this.getUrlOptions());
             this.lastError = "";
             return response;
@@ -110,6 +114,7 @@ export class RESTClient
     {
         try
         {
+            this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.put(uri, formData, this.getUrlOptions());
             this.lastError = "";
             return response;
@@ -124,6 +129,7 @@ export class RESTClient
     {
         try
         {
+            this.axiosInstance = this.getNewAxiosInstance();
             const response = await this.axiosInstance.delete(uri, this.getUrlOptions());
             this.lastError = "";
             return response;
@@ -134,17 +140,39 @@ export class RESTClient
         }
     }
 
-    // eslint-disable-next-line no-unused-vars
-    onError = (error, message) =>
-{ };
+    getNewAxiosInstance()
+    {
+        return axios.create({
+            baseURL: this.settings.apiBaseurl,
+            headers: {
+                "Authorization": `Bearer ${currentToken}`,
+            },
+        });
+    }
 
     handleError(error)
     {
-        let message = error ? error.message : "?";
-        // eslint-disable-next-line no-console
-        console.error(`API Error: ${message}`);
-        this.lastError = message;
-        this.onError(error, message);
-        throw error;
+        if (error.response)
+        {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+        }
+        else if (error.request)
+        {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+        }
+        else
+        {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+        }
+        console.log(error.config);
+        this.lastError = error;
     }
 }
