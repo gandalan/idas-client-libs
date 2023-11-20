@@ -38,7 +38,7 @@ class IDAS
             }
 
             const decoded = jwtDecode(currentToken);
-            if(!decoded.rights)
+            if (!decoded.rights)
             {
                 return [];
             }
@@ -53,7 +53,7 @@ class IDAS
             }
 
             const decoded = jwtDecode(currentToken);
-            if(!decoded.role)
+            if (!decoded.role)
             {
                 return [];
             }
