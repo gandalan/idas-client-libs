@@ -14,7 +14,7 @@
         <dependencies>
           <dependency id="GDL.IDAS.Logging" version="BUILDVERSION" />
           <dependency id="Newtonsoft.Json" version="13.0.3" />
-          <dependency id="System.IdentityModel.Tokens.Jwt" version="6.31.0" />
+          <dependency id="System.IdentityModel.Tokens.Jwt" version="6.32.3" />
         </dependencies>
     </metadata>
     <files>
