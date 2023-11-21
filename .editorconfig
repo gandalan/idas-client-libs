@@ -1,6 +1,6 @@
 ### From: https://github.com/dotnet/aspnetcore/blob/main/.editorconfig
 ### Last sync: 7ca3fda
-### Disabled: dotnet_sort_system_directives_first, CA1018, CA1305, CA1507, CA2007, CA2208, IDE0011, IDE0073, IDE0161
+### Disabled: dotnet_sort_system_directives_first, CA1018, CA1305, CA1507, CA1510, CA2007, CA2208, IDE0011, IDE0073, IDE0161
 ; EditorConfig to support per-solution formatting.
 ; Use the EditorConfig VS add-in to make this work.
 ; http://editorconfig.org/
@@ -96,7 +96,8 @@ dotnet_diagnostic.CA1047.severity = warning
 #dotnet_diagnostic.CA1507.severity = warning
 
 # CA1510: Use ArgumentNullException throw helper
-dotnet_diagnostic.CA1510.severity = warning
+# Disabled: ArgumentNullException.ThrowIfNull method not available in .NET Framework 4.8
+#dotnet_diagnostic.CA1510.severity = warning
 
 # CA1511: Use ArgumentException throw helper
 dotnet_diagnostic.CA1511.severity = warning
