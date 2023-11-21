@@ -1,6 +1,6 @@
 ### From: https://github.com/dotnet/aspnetcore/blob/main/.editorconfig
 ### Last sync: 7ca3fda
-### Disabled: dotnet_sort_system_directives_first, CA1018, CA1305, CA1507, CA2007, CA2208, IDE0011, IDE0073, IDE0161
+### Disabled: dotnet_sort_system_directives_first, CA1018, CA1305, CA1507, CA1510, CA2007, CA2208, IDE0011, IDE0073, IDE0161
 ; EditorConfig to support per-solution formatting.
 ; Use the EditorConfig VS add-in to make this work.
 ; http://editorconfig.org/
