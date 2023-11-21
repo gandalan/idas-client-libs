@@ -42,3 +42,14 @@ jobs:
       working-directory: ${{ env.WEBLIBS_DIR }}
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - name: Send mail if job failed
+      if: ${{ failure() }}
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: ${{secrets.MAIL_SERVER}}
+        username: ${{secrets.MAIL_USERNAME}}
+        password: ${{secrets.MAIL_PASSWORD}}
+        subject: GitHub Action failed for workflow '${{ github.workflow }}'!
+        to: ${{ secrets.DEV_EMAIL }}
+        from: GH Actions
+        body: Job '${{ github.job }}' failed! Triggered by ${{ github.triggering_actor }}. Ref ${{ github.ref }}
