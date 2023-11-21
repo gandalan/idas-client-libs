@@ -174,7 +174,6 @@ export class RESTClient
             console.error("Error", error.message);
         }
 
-        // eslint-disable-next-line
         console.info("Config", error.config);
         this.lastError = error;
     }
