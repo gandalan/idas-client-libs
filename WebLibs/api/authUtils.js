@@ -131,10 +131,10 @@ export async function tryRenew(settings)
     const url = settings.authUrl || settings.apiBaseurl;
     const payload = { "Token": currentRefreshToken };
     const response = await fetch(`${url}LoginJwt/Refresh`, {
-            method: "PUT",
-            body: JSON.stringify(payload),
-            headers: { "Content-Type": "application/json" },
-        });
+        method: "PUT",
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
+    });
     const token = await response.json();
     currentToken = token;
     //console.log("Got JWT token:", currentToken);
