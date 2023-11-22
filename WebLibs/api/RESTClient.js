@@ -168,7 +168,7 @@ export class RESTClient
             console.log(error.request);
         }
         else
-            console.log("Error", error.message);
+            console.log("Errorr", error.message);
         console.log(error.config);
         this.lastError = error;
     }
