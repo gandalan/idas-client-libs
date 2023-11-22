@@ -19,10 +19,10 @@ jobs:
 
     - uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: 20
     - run: npm ci
       working-directory: ${{ env.WEBLIBS_DIR }}
     - run: npm run svelte-check
       working-directory: ${{ env.WEBLIBS_DIR }}
-    - run: npm run lint
+    - run: npm run lint:prod
       working-directory: ${{ env.WEBLIBS_DIR }}

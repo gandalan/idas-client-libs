@@ -25,7 +25,7 @@ module.exports = {
     rules: {
         "yoda": "error",
         eqeqeq: ["warn", "smart"],
-        //indent: ['error', 4],
+        indent: ["error", 4, { "SwitchCase": 1 }],
         quotes: ["error", "double"],
         semi: ["off", "never"],
         "no-multi-spaces": ["error", { ignoreEOLComments: true }],
@@ -51,6 +51,7 @@ module.exports = {
         "array-bracket-newline": ["error", "consistent"],
         "eol-last": ["error", "always"],
         "prefer-template": "error",
+        "template-curly-spacing": ["warn", "never"],
         "comma-dangle": ["warn", "always-multiline"],
     },
 };

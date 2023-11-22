@@ -100,7 +100,7 @@ class IDAS
         _self: this,
         async getAll(mandantGuid)
         {
-            return await this._self.restClient.get(`/BenutzerListe/${mandantGuid }/?mitRollenUndRechten=true`);
+            return await this._self.restClient.get(`/BenutzerListe/${mandantGuid}/?mitRollenUndRechten=true`);
         },
         async get(guid)
         {
