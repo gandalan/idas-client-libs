@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Automated Version Bump for ${{ env.WEBLIBS_DIR }}
       uses: phips28/gh-action-bump-version@master
@@ -28,7 +28,7 @@ jobs:
         tag-prefix: WebLibs_
         commit-message: 'CI: WebLibs version bump to {{version}}'
     # Setup .npmrc file to publish to npm
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version: 18
         registry-url: 'https://registry.npmjs.org'

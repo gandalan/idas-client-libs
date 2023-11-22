@@ -44,8 +44,7 @@
     export let classNameExpandedContent = "";
     export let classNameCellExpand = "";
 
-    const asStringArray = v =>
-        []
+    const asStringArray = v => []
         .concat(v)
         .filter(v => v !== null && typeof v === "string" && v !== "")
         .join(" ");
