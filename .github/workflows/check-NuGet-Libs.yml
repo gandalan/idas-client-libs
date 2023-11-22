@@ -59,14 +59,3 @@ jobs:
       run: nuget pack ${{ env.PACKAGE_4_FULL }}/${{ env.PACKAGE_4 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
     - name: Create package ${{ env.PACKAGE_5 }}
       run: nuget pack ${{ env.PACKAGE_5_FULL }}/${{ env.PACKAGE_5 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
-    - name: Send mail if job failed
-      if: ${{ failure() && github.repository_owner == 'gandalan' }}
-      uses: dawidd6/action-send-mail@v3
-      with:
-        server_address: ${{secrets.MAIL_SERVER}}
-        username: ${{secrets.MAIL_USERNAME}}
-        password: ${{secrets.MAIL_PASSWORD}}
-        subject: GitHub Action failed for workflow '${{ github.workflow }}'!
-        to: ${{ secrets.DEV_EMAIL }}
-        from: GH Actions
-        body: Job '${{ github.job }}' failed! Triggered by ${{ github.triggering_actor }}. Ref ${{ github.ref }}

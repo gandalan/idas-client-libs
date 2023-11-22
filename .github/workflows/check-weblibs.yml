@@ -26,14 +26,3 @@ jobs:
       working-directory: ${{ env.WEBLIBS_DIR }}
     - run: npm run lint:prod
       working-directory: ${{ env.WEBLIBS_DIR }}
-    - name: Send mail if job failed
-      if: ${{ failure() && github.repository_owner == 'gandalan' }}
-      uses: dawidd6/action-send-mail@v3
-      with:
-        server_address: ${{secrets.MAIL_SERVER}}
-        username: ${{secrets.MAIL_USERNAME}}
-        password: ${{secrets.MAIL_PASSWORD}}
-        subject: GitHub Action failed for workflow '${{ github.workflow }}'!
-        to: ${{ secrets.DEV_EMAIL }}
-        from: GH Actions
-        body: Job '${{ github.job }}' failed! Triggered by ${{ github.triggering_actor }}. Ref ${{ github.ref }}
