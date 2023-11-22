@@ -98,7 +98,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             RechnungNummer = position.RechnungNummer.ToString();
             RechnungDatum = position.RechnungDatum.ToString("d", culture);
             RechnungKommission = position.RechnungKommision;
-            RechnungBetrag = position.RechnungBetrag.ToString(culture);
+            var warenwertSalde = position.Salden.FirstOrDefault(s => s.Name == "Warenwert");
+            RechnungBetrag = warenwertSalde.Betrag.ToString(culture);
             RechnungSalden = SammelrechnungSaldoDruckDTO.ListFromDTOs(position.Salden);
         }
         public static List<SammelrechnungPositionDruckDTO> ListFromDTOs(IList<SammelrechnungPositionenDTO> positionen)
@@ -142,6 +143,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
                 var maxReihenfolge = salden.Max(p => p.Reihenfolge);
                 foreach (var saldo in salden)
                 {
+                    if (saldo.Name == "Warenwert") continue;
                     druckSalden.Add(new SammelrechnungSaldoDruckDTO(saldo, isLastElement: saldo.Reihenfolge == maxReihenfolge));
                 }
             }
