@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -16,5 +16,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string ArtosUser { get; set; }
         public string WindowsUser { get; set; }
         public DateTime ChangedDate { get; set; }
+        public decimal BestandAlt { get; set; }
+        public decimal BestandNeu { get; set; }
     }
 }
