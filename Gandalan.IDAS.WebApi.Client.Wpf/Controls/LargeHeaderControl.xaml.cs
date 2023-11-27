@@ -1,4 +1,4 @@
-﻿using PropertyChanged;
+using PropertyChanged;
 using System;
 using System.ComponentModel;
 using System.Windows;
@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
     /// <summary>
     /// Interaction logic for SmallHeaderControl.xaml
     /// </summary>
-    
+
     public partial class LargeHeaderControl : UserControl, INotifyPropertyChanged
     {
         public LargeHeaderControl()
@@ -34,11 +34,9 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
             set { SetValue(ImageProperty, value); }
         }
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register("ImageSource", typeof(Uri), typeof(LargeHeaderControl), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnImageSourceChanged)));
-        
+
         public event RoutedEventHandler Click;
-#pragma warning disable CS0067 // The event 'LargeHeaderControl.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'LargeHeaderControl.PropertyChanged' is never used
 
         public Visibility ButtonVisible { get { return Click != null ? Visibility.Visible : Visibility.Hidden; } }
 
@@ -50,7 +48,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
         [SuppressPropertyChangedWarnings]
         private static void OnImageSourceChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            LargeHeaderControl userControl = (LargeHeaderControl)sender;
+            var userControl = (LargeHeaderControl)sender;
             userControl.ButtonImage.Source = new BitmapImage((Uri)e.NewValue);
         }
     }

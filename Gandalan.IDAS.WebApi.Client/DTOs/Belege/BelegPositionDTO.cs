@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Gandalan.IDAS.WebApi.Client.DTOs.Allgemein;
 using Gandalan.IDAS.WebApi.Data.DTO;
 using Gandalan.IDAS.WebApi.Util;
 
@@ -31,6 +32,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstAlternativPosition { get; set; }
         public bool IstAktiv { get; set; }
         public bool IstFehlerhaft { get; set; }
+        public bool IstStorniert { get; set; }
         public bool IstFehlerhaftSFOhnePreis { get; set; }
         public bool IstGesperrt { get; set; }
         public decimal KapazitaetsBedarf { get; set; }
@@ -46,6 +48,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public virtual IList<BelegPositionDatenDTO> Daten { get; set; }
         public virtual IList<BelegPositionSonderwunschDTO> Sonderwuensche { get; set; }
         public virtual IList<BelegPositionHistorieDTO> Historie { get; set; }
+        public virtual IList<ZusatztextDTO> Zusatztexte { get; set; }
         public string Besonderheiten { get; set; }
         public string ProduktionZusatzInfo { get; set; }
         public bool ProduktionZusatzInfoPrintOnReport { get; set; }
@@ -71,13 +74,15 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstAusserhalbGewaehrleistung { get; set; }
         public bool IstVE { get; set; }
         public decimal? VE_Menge { get; set; }
+        public Guid? FrontendLogikGuid { get; set; }
 
         public BelegPositionDTO()
         {
             Daten = new ObservableCollection<BelegPositionDatenDTO>();
             Historie = new ObservableCollection<BelegPositionHistorieDTO>();
+            Zusatztexte = new ObservableCollection<ZusatztextDTO>();
         }
-        
+
         public BelegPositionDTO Clone()
         {
             return ObjectCloner.Clone(this);

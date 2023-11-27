@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using System;
 using System.Collections.Generic;
@@ -13,9 +13,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
         private string _userName;
         private string _passwort;
 
-#pragma warning disable CS0067 // The event 'LoginWindowViewModel_v2.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'LoginWindowViewModel_v2.PropertyChanged' is never used
 
         public string Title => "Neher Cloud - Anmeldung";
         public bool LoginInProgress { get; set; } = false;
@@ -41,7 +39,13 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
         public bool ShowLoggedInEnvironments { get; set; }
         public bool ShowLoginFields => !ShowLoggedInEnvironments;
         public string StatusText { get; set; }
-        
+
+        public string PlainPassword { get; set; }
+        public bool ShowPlainPassword { get; set; } = false;
+        public bool HidePlainPassword => !ShowPlainPassword;
+        public string PasswordInputWarning { get; set; }
+        public bool ShowPasswordInputWarning { get; set; }
+
         public LoginWindowViewModel_v2(IWebApiConfig webApiSettings)
         {
             AlleEnvironments = WebApiConfigurations.GetAll();
@@ -54,11 +58,11 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 #endif
         }
 
-//        public LoginWindowViewModel_v2()
-//        {
-//#if DEBUG
-//            ShowServerSelection = true;
-//#endif
-//        }
+        /*public LoginWindowViewModel_v2()
+        {
+#if DEBUG
+            ShowServerSelection = true;
+#endif
+        }*/
     }
 }

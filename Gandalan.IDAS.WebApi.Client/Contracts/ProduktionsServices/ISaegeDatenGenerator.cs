@@ -11,6 +11,10 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// Information zur Säge (Hersteller, Modellnummer usw.)
         /// </summary>
         string Modell { get; }
+        /// <summary>
+        /// Dateiendung für die Sägedateien
+        /// </summary>
+        string DateiEndung { get; }
 
         /// <summary>
         /// Erzeugt die Sägedaten.

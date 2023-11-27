@@ -182,13 +182,13 @@
         }
         else if (allowedFunctionalKeys.includes(e.key) === true)
         {
-			return;
-		}
+            return;
+        }
         else
         {
             ignoreInput(e);
         }
-	}
+    }
     function getValueFormatted(oldValue)
     {
         let localTag = (new Date(oldValue).getUTCDate()).toString();
@@ -203,7 +203,7 @@
         {
             localTag = `0${localTag}`;
         }
-        return `${localTag }.${localMonat}.${localJahr}`;
+        return `${localTag}.${localMonat}.${localJahr}`;
     }
 
     setFieldStyle();

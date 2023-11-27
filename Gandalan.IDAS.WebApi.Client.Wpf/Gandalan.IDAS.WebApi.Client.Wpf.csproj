@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFrameworks>net48;net472</TargetFrameworks>
+    <TargetFrameworks>net48</TargetFrameworks>
     <UseWPF>true</UseWPF>
 
     <AssemblyName>GDL.IDAS.WebApi.Client.Wpf</AssemblyName>
@@ -8,7 +8,6 @@
     <AssemblyVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</AssemblyVersion>
     <FileVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</FileVersion>
     <FileVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</FileVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>2099.0.0-alpha</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
 
@@ -18,6 +17,8 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\Icons\view-1.png" />
+    <None Remove="Assets\Icons\view-off.png" />
     <None Remove="Assets\Neher\Logo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +37,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Icons\view-1.png" />
+    <Resource Include="Assets\Icons\view-off.png" />
     <Resource Include="Assets\Neher\Logo.png" />
   </ItemGroup>
 </Project>

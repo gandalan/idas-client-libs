@@ -1,8 +1,6 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -11,7 +9,7 @@ namespace Gandalan.IDAS.WebApi.DTO
     /// </summary>
     public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
     {
-        public int Version { get; set; } = 0;
+        public int Version { get; set; }
 
         public KapazitaetsvorgabenDTO()
         {
@@ -89,9 +87,8 @@ namespace Gandalan.IDAS.WebApi.DTO
                 Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL2", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PL2/25", "PL2/29.AMB", "PL2/25.LMM" }, IstBasisregel = true, Order = Count });
 
                 Add(new Kapazitaetsvorgabe() { GroupName = "Zusatzrahmen", Label = "ZR", Produktgruppe = new List<string>() { "ZR" }, IstBasisregel = true, Order = Count });
-
-                
             }
+
             if (Version < 2)
             {
                 Version = 2;
@@ -103,7 +100,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Artikelliste = new List<string>() { "142627", "142632" },
                     Etikettentext = new List<string>() { "V4", "V2AA" },
                     Order = Count
-                }); 
+                });
                 Add(new Kapazitaetsvorgabe()
                 {
                     GroupName = "Sonstiges",
@@ -127,7 +124,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     GroupName = "Sonstiges",
                     Label = "Polyestergewebe unterhalb der Sprosse",
                     Produktgruppe = new List<string>() { "PT2", "DT3", "DT4", "ST3", "ST4" },
-                    Artikelliste = new List<string>() { "142628", "142638"},
+                    Artikelliste = new List<string>() { "142628", "142638" },
                     Etikettentext = new List<string>() { "/ PA", "/ PAE" },
                     Order = Count
                 });
@@ -143,7 +140,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 {
                     GroupName = "Sonstiges",
                     Label = "Seitenarretierung SP1",
-                    Produktgruppe = new List<string>() { "SP1"},
+                    Produktgruppe = new List<string>() { "SP1" },
                     Artikelliste = new List<string>() { "132466" },
                     Etikettentext = new List<string>() { "SA_" },
                     Order = Count
@@ -161,7 +158,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 {
                     GroupName = "Sonstiges",
                     Label = "Seitenarretierung SP2, SP4, SP6, SP7",
-                    Produktgruppe = new List<string>() { "SP2", "SP4", "SP6", "SP7"},
+                    Produktgruppe = new List<string>() { "SP2", "SP4", "SP6", "SP7" },
                     Artikelliste = new List<string>() { "132472" },
                     Etikettentext = new List<string>() { "mW_" },
                     Order = Count
@@ -332,6 +329,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Order = Count
                 });
             }
+
             if (Version < 3)
             {
                 Version = 3;
@@ -342,16 +340,14 @@ namespace Gandalan.IDAS.WebApi.DTO
 
     public class Kapazitaetsvorgabe : INotifyPropertyChanged
     {
-#pragma warning disable CS0067 // The event 'Kapazitaetsvorgabe.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'Kapazitaetsvorgabe.PropertyChanged' is never used
         public string GroupName { get; set; }
-        public string Label { get;set; }
+        public string Label { get; set; }
         public List<string> Produktgruppe { get; set; } = new List<string>();
         public List<string> Artikelliste { get; set; } = new List<string>();
         public List<string> Bearbeitungen { get; set; } = new List<string>();
         public List<string> Etikettentext { get; set; } = new List<string>();
-        public decimal Zeitvorgabe { get;set; }
+        public decimal Zeitvorgabe { get; set; }
         public decimal Gewicht { get; set; }
         public bool IstBasisregel { get; set; }
         public int Order { get; set; }

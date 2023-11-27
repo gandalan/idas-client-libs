@@ -1,9 +1,9 @@
-﻿using System;
+using Gandalan.IDAS.WebApi.DTO;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Gandalan.IDAS.WebApi.DTO;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
 {
@@ -11,6 +11,10 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
     {
         public Guid SammelrechnungGuid { get; set; }
         public long SammelrechnungNummer { get; set; }
+
+        // Wird nur für den Druck verwendet, damit beim automatischen Export die Rechnungsnummer mit im Dateinamen ausgegeben wird
+        public long Vorgangnummer { get; set; }
+        public long Belegnummer { get; set; }
         public KontaktDTO Kunde { get; set; }
         public string ErstellDatum { get; set; }
         public string Kopfzeile { get; set; }
@@ -30,6 +34,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public int CountValueSalden { get; set; }
         public bool IsEndkunde { get; set; }
         public IList<BelegDruckDTO> EinzelrechnungDTOs { get; set; }
+        public string Belegart { get; set; } = "Sammelrechnung";
 
         public SammelrechnungDruckDTO(SammelrechnungDTO sammelrechnung)
         {
@@ -37,7 +42,10 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
 
             SammelrechnungGuid = sammelrechnung.SammelrechnungGuid;
             SammelrechnungNummer = sammelrechnung.SammelrechnungsNummer;
+            Belegnummer = Vorgangnummer = sammelrechnung.SammelrechnungsNummer;
             Kunde = sammelrechnung.Kontakt;
+            Kunde.SchlussTextRechnung = sammelrechnung.Schlusstext;
+            Kunde.Zahlungsbedingung = sammelrechnung.ZahlungsBedingungen;
             ErstellDatum = sammelrechnung.ErstellDatum.ToString("d", culture);
             Kopfzeile = sammelrechnung.Kopfzeile;
             Fusszeile = sammelrechnung.Fusszeile;
@@ -53,6 +61,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             CountValuePositionen = sammelrechnung.Positionen.Count;
             CountValueSalden = sammelrechnung.Salden.Count;
             IsEndkunde = sammelrechnung.Kontakt.IstEndkunde;
+
             EinzelrechnungDTOs = sammelrechnung.EinzelrechnungDTOs;
         }
 
@@ -89,7 +98,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             RechnungNummer = position.RechnungNummer.ToString();
             RechnungDatum = position.RechnungDatum.ToString("d", culture);
             RechnungKommission = position.RechnungKommision;
-            RechnungBetrag = position.RechnungBetrag.ToString(culture);
+            var warenwertSalde = position.Salden.FirstOrDefault(s => s.Name == "Warenwert");
+            RechnungBetrag = warenwertSalde.Betrag.ToString(culture);
             RechnungSalden = SammelrechnungSaldoDruckDTO.ListFromDTOs(position.Salden);
         }
         public static List<SammelrechnungPositionDruckDTO> ListFromDTOs(IList<SammelrechnungPositionenDTO> positionen)
@@ -111,7 +121,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public int Reihenfolge { get; set; }
         public string Text { get; set; }
         public string Betrag { get; set; }
-        public bool IsLastElement { get; set; } = false;
+        public string Rabatt { get; set; }
+        public bool IsLastElement { get; set; }
 
         public SammelrechnungSaldoDruckDTO(SammelrechnungSaldenDTO saldo, bool isLastElement)
         {
@@ -120,6 +131,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             Reihenfolge = saldo.Reihenfolge;
             Text = saldo.Text;
             Betrag = saldo.Betrag.ToString(culture);
+            Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29", culture) : "";
             IsLastElement = isLastElement;
         }
 
@@ -131,6 +143,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
                 var maxReihenfolge = salden.Max(p => p.Reihenfolge);
                 foreach (var saldo in salden)
                 {
+                    if (saldo.Name == "Warenwert") continue;
                     druckSalden.Add(new SammelrechnungSaldoDruckDTO(saldo, isLastElement: saldo.Reihenfolge == maxReihenfolge));
                 }
             }

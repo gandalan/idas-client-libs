@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export let currentToken = undefined;
 export let currentRefreshToken = undefined;
@@ -70,7 +70,7 @@ export async function setup(settings)
     else
     {
         console.log("Settings already have a valid JWT token, nothing to do");
-        let decoded = jwt_decode(currentToken);
+        let decoded = jwtDecode(currentToken);
         let refreshToken = decoded["refreshToken"] || "";
         if (refreshToken)
         {
@@ -99,7 +99,7 @@ function startRefreshTimer(settings)
     {
         if (currentToken)
         {
-            let decoded = jwt_decode(currentToken);
+            let decoded = jwtDecode(currentToken);
             const utcNow = Date.parse(new Date().toUTCString()) / 1000;
             if (decoded && utcNow > decoded.exp - 120)
             {
@@ -115,7 +115,7 @@ export function isInvalid(settings)
     {
         return true;
     }
-    let decoded = jwt_decode(currentToken);
+    let decoded = jwtDecode(currentToken);
     const utcNow = Date.parse(new Date().toUTCString()) / 1000;
     if (decoded && decoded.exp > utcNow)
     {
@@ -131,15 +131,15 @@ export async function tryRenew(settings)
     const url = settings.authUrl || settings.apiBaseurl;
     const payload = { "Token": currentRefreshToken };
     const response = await fetch(`${url}LoginJwt/Refresh`, {
-            method: "PUT",
-            body: JSON.stringify(payload),
-            headers: { "Content-Type": "application/json" },
-        });
+        method: "PUT",
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
+    });
     const token = await response.json();
     currentToken = token;
     //console.log("Got JWT token:", currentToken);
 
-    let decoded = jwt_decode(currentToken);
+    let decoded = jwtDecode(currentToken);
     let refreshToken = decoded["refreshToken"] || "";
     if (refreshToken)
     {

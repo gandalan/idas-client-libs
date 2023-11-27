@@ -46,7 +46,7 @@ namespace Gandalan.Client.Contracts
 
     public interface ILookupDialog<T, U>
     {
-        T Execute(U data);
+        Task<T> Execute(U data);
     }
 
     public interface IQuickEditDialog<T>

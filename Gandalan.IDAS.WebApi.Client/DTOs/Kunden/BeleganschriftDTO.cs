@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-using System.Collections.Generic;
-using System;
 using Gandalan.IDAS.WebApi.Util;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Gandalan.IDAS.WebApi.DTO
@@ -36,7 +36,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Zusätzliche Information zur Firma
         /// </summary>
-        public string Zusatz { get; set; }        
+        public string Zusatz { get; set; }
         /// <summary>
         /// Adresszusatz, z.B. "c/o" (belegbezogen)
         /// </summary>
@@ -121,9 +121,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             AdressGuid = Guid.NewGuid();
         }
 
-#pragma warning disable CS0067 // The event 'BeleganschriftDTO.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'BeleganschriftDTO.PropertyChanged' is never used
 
         public string GetText()
         {
@@ -132,7 +130,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             if (!string.IsNullOrEmpty(Anrede))
                 sb.AppendLine(Anrede);
@@ -159,8 +157,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         }
 
         /// <summary>
-        /// Erzeugt einen Text aus den Namensfeldern für die Anzeige in 
-        /// Überschriften, Anschriftenfeldern usw. 
+        /// Erzeugt einen Text aus den Namensfeldern für die Anzeige in
+        /// Überschriften, Anschriftenfeldern usw.
         /// </summary>
         public string AnzeigeName
         {

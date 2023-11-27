@@ -11,6 +11,8 @@ namespace Gandalan.Client.Contracts.AppServices
         string CurrentUser { get; set; }
         Guid InstallationId { get; }
         string DataDir { get; }
+        string StandardReportsDir { get; }
+        string StandardReportsDevDir { get; }
         string AddOnDir { get; }
         string CacheDir { get; }
         string SettingsDir { get; }

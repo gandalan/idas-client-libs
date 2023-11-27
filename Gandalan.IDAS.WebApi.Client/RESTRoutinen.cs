@@ -1,6 +1,7 @@
-﻿using Gandalan.IDAS.WebApi.Client;
+using Gandalan.IDAS.WebApi.Client;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
@@ -15,7 +16,9 @@ namespace Gandalan.IDAS.Web
     /// </summary>
     public class RESTRoutinen : IDisposable
     {
+        private readonly HttpClientConfig _config;
         private readonly HttpClient _client;
+        private readonly Dictionary<string, HttpClient> _versionClients = new Dictionary<string, HttpClient>();
 
         #region Constructors
 
@@ -38,6 +41,7 @@ namespace Gandalan.IDAS.Web
 
         public RESTRoutinen(HttpClientConfig config)
         {
+            _config = config;
             _client = HttpClientFactory.GetInstance(config);
         }
 
@@ -60,19 +64,21 @@ namespace Gandalan.IDAS.Web
         /// <typeparam name="T">Typsierungsparameter</typeparam>
         /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
         /// <param name="settings"></param>
+        /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
         /// <returns>Objektinstanz</returns>
-        public async Task<T> GetAsync<T>(string url, JsonSerializerSettings settings = null)
+        public async Task<T> GetAsync<T>(string url, JsonSerializerSettings settings = null, string version = null)
         {
-            return JsonConvert.DeserializeObject<T>(await GetAsync(url), settings);
+            return JsonConvert.DeserializeObject<T>(await GetAsync(url, version), settings);
         }
 
-        public async Task<string> GetAsync(string url)
+        public async Task<string> GetAsync(string url, string version = null)
         {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
             {
-                response = await _client.GetAsync(url);
+                var client = GetClientByVersion(version);
+                response = await client.GetAsync(url);
                 contentAsString = await response.Content?.ReadAsStringAsync();
                 response.EnsureSuccessStatusCode();
                 return contentAsString;
@@ -85,13 +91,14 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        public async Task<byte[]> GetDataAsync(string url)
+        public async Task<byte[]> GetDataAsync(string url, string version = null)
         {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
             {
-                response = await _client.GetAsync(url);
+                var client = GetClientByVersion(version);
+                response = await client.GetAsync(url);
                 contentAsString = await response.Content?.ReadAsStringAsync();
                 response.EnsureSuccessStatusCode();
                 return await response.Content?.ReadAsByteArrayAsync();
@@ -111,20 +118,22 @@ namespace Gandalan.IDAS.Web
         /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
         /// <param name="data">zu sendendes Objekt</param>
         /// <param name="settings"></param>
+        /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
         /// <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
-        public async Task<T> PostAsync<T>(string url, object data, JsonSerializerSettings settings = null)
+        public async Task<T> PostAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
         {
-            return JsonConvert.DeserializeObject<T>(await PostAsync(url, data, settings), settings);
+            return JsonConvert.DeserializeObject<T>(await PostAsync(url, data, settings, version: version), settings);
         }
 
-        public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null)
+        public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
         {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
             {
-                string json = JsonConvert.SerializeObject(data, settings);
-                response = await _client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                var json = JsonConvert.SerializeObject(data, settings);
+                var client = GetClientByVersion(version);
+                response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
                 contentAsString = await response.Content?.ReadAsStringAsync();
                 response.EnsureSuccessStatusCode();
                 return contentAsString;
@@ -137,13 +146,34 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        public async Task<byte[]> PostDataAsync(string url, byte[] data)
+        public async Task<byte[]> PostDataAsync(string url, byte[] data, string version = null)
         {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
             {
-                response = await _client.PostAsync(url, new ByteArrayContent(data));
+                var client = GetClientByVersion(version);
+                response = await client.PostAsync(url, new ByteArrayContent(data));
+                contentAsString = await response.Content?.ReadAsStringAsync();
+                response.EnsureSuccessStatusCode();
+                return await response.Content?.ReadAsByteArrayAsync();
+            }
+            catch (Exception ex)
+            {
+                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+        }
+
+        public async Task<byte[]> PostDataAsync(string url, HttpContent data, string version = null)
+        {
+            string contentAsString = null;
+            HttpResponseMessage response = null;
+            try
+            {
+                var client = GetClientByVersion(version);
+                response = await client.PostAsync(url, data);
                 contentAsString = await response.Content?.ReadAsStringAsync();
                 response.EnsureSuccessStatusCode();
                 return await response.Content?.ReadAsByteArrayAsync();
@@ -163,20 +193,22 @@ namespace Gandalan.IDAS.Web
         /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
         /// <param name="data">zu sendendes Objekt</param>
         /// <param name="settings"></param>
+        /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
         /// <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
-        public async Task<T> PutAsync<T>(string url, object data, JsonSerializerSettings settings = null)
+        public async Task<T> PutAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
         {
-            return JsonConvert.DeserializeObject<T>(await PutAsync(url, data, settings), settings);
+            return JsonConvert.DeserializeObject<T>(await PutAsync(url, data, settings, version: version), settings);
         }
 
-        public async Task<string> PutAsync(string url, object data, JsonSerializerSettings settings = null)
+        public async Task<string> PutAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
         {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
             {
-                string json = JsonConvert.SerializeObject(data, settings);
-                response = await _client.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+                var json = JsonConvert.SerializeObject(data, settings);
+                var client = GetClientByVersion(version);
+                response = await client.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
                 contentAsString = await response.Content?.ReadAsStringAsync();
                 response.EnsureSuccessStatusCode();
                 return contentAsString;
@@ -189,13 +221,33 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        public async Task<byte[]> PutDataAsync(string url, byte[] data)
+        public async Task<byte[]> PutDataAsync(string url, byte[] data, string version = null)
         {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
             {
-                response = await _client.PutAsync(url, new ByteArrayContent(data));
+                var client = GetClientByVersion(version);
+                response = await client.PutAsync(url, new ByteArrayContent(data));
+                contentAsString = await response.Content?.ReadAsStringAsync();
+                return await response.Content?.ReadAsByteArrayAsync();
+            }
+            catch (Exception ex)
+            {
+                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
+                throw;
+            }
+        }
+
+        public async Task<byte[]> PutDataAsync(string url, HttpContent data, string version = null)
+        {
+            string contentAsString = null;
+            HttpResponseMessage response = null;
+            try
+            {
+                var client = GetClientByVersion(version);
+                response = await client.PutAsync(url, data);
                 contentAsString = await response.Content?.ReadAsStringAsync();
                 return await response.Content?.ReadAsByteArrayAsync();
             }
@@ -211,14 +263,16 @@ namespace Gandalan.IDAS.Web
         /// Löscht ein Objekt per HTTP DELETE an die angegebene URL
         /// </summary>
         /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
+        /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
         /// <returns>Antwort des Servers als String</returns>
-        public async Task DeleteAsync(string url)
+        public async Task DeleteAsync(string url, string version = null)
         {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
             {
-                response = await _client.DeleteAsync(url);
+                var client = GetClientByVersion(version);
+                response = await client.DeleteAsync(url);
                 contentAsString = await response.Content?.ReadAsStringAsync();
                 response.EnsureSuccessStatusCode();
             }
@@ -230,19 +284,21 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        public async Task<string> DeleteAsync(string url, object data, JsonSerializerSettings settings = null)
+        public async Task<string> DeleteAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
         {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
             {
+                var client = GetClientByVersion(version);
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Delete,
-                    RequestUri = new Uri(_client.BaseAddress, url),
+                    RequestUri = new Uri(client.BaseAddress, url),
                     Content = new StringContent(JsonConvert.SerializeObject(data, settings), Encoding.UTF8, "application/json")
                 };
-                response = await _client.SendAsync(request);
+
+                response = await client.SendAsync(request);
                 contentAsString = await response.Content?.ReadAsStringAsync();
                 response.EnsureSuccessStatusCode();
                 return await response.Content?.ReadAsStringAsync();
@@ -255,9 +311,9 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        public async Task<T> DeleteAsync<T>(string url, object data, JsonSerializerSettings settings = null)
+        public async Task<T> DeleteAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
         {
-            return JsonConvert.DeserializeObject<T>(await DeleteAsync(url, data, settings), settings);
+            return JsonConvert.DeserializeObject<T>(await DeleteAsync(url, data, settings, version: version), settings);
         }
 
         #endregion
@@ -268,7 +324,7 @@ namespace Gandalan.IDAS.Web
         {
             ex.Data.Add("URL", url);
             ex.Data.Add("CallMethod", callMethod);
-            ex.Data.Add("StatusCode", response != null ? response.StatusCode : HttpStatusCode.InternalServerError);
+            ex.Data.Add("StatusCode", response?.StatusCode ?? HttpStatusCode.InternalServerError);
             if (responseContent != null)
             {
                 ex.Data.Add("Response", responseContent);
@@ -287,6 +343,23 @@ namespace Gandalan.IDAS.Web
 
         public void Dispose()
         {
+        }
+
+        public HttpClient GetClientByVersion(string version = null)
+        {
+            if (version == null || _config == null)
+                return _client;
+
+            if (!_versionClients.TryGetValue(version, out var versionClient))
+            {
+                var config = (HttpClientConfig)_config.Clone();
+                config.AdditionalHeaders.Add("api-version", version);
+
+                _versionClients.Add(version, HttpClientFactory.GetInstance(config));
+                return _versionClients[version];
+            }
+
+            return versionClient;
         }
     }
 }

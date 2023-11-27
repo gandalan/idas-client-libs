@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
-    public class WebRoutinenBase 
+    public class WebRoutinenBase
     {
         #region  Felder
 
@@ -65,7 +65,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        private async Task runPreRequestChecks(bool skipAuth = false)
+        private async Task RunPreRequestChecks(bool skipAuth = false)
         {
             if (_restRoutinen == null)
                 initRestRoutinen();
@@ -171,8 +171,13 @@ namespace Gandalan.IDAS.WebApi.Client
                     Status = InternalStripHtml(Status);
                 }
 
-                if (apiex.InnerException != null)
-                    Status += " - " + apiex.InnerException.Message;
+                var innerException = apiex.InnerException;
+                while (innerException != null)
+                {
+                    Status += " - " + innerException.Message;
+                    innerException = innerException.InnerException;
+                }
+
                 AuthToken = null;
                 return false;
             }
@@ -196,12 +201,12 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<T> PostAsync<T>(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false)
+        public async Task<T> PostAsync<T>(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
         {
             try
             {
-                await runPreRequestChecks(skipAuth);
-                return await _restRoutinen.PostAsync<T>(uri, data, settings);
+                await RunPreRequestChecks(skipAuth);
+                return await _restRoutinen.PostAsync<T>(uri, data, settings, version: version);
             }
             catch (HttpRequestException ex)
             {
@@ -209,12 +214,12 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task PostAsync(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false)
+        public async Task PostAsync(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
         {
             try
             {
-                await runPreRequestChecks(skipAuth);
-                await _restRoutinen.PostAsync(uri, data, settings);
+                await RunPreRequestChecks(skipAuth);
+                await _restRoutinen.PostAsync(uri, data, settings, version: version);
             }
             catch (HttpRequestException ex)
             {
@@ -222,12 +227,12 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<byte[]> PostDataAsync(string uri, byte[] data, bool skipAuth = false)
+        public async Task<byte[]> PostDataAsync(string uri, byte[] data, bool skipAuth = false, string version = null)
         {
             try
             {
-                await runPreRequestChecks(skipAuth);
-                return await _restRoutinen.PostDataAsync(uri, data);
+                await RunPreRequestChecks(skipAuth);
+                return await _restRoutinen.PostDataAsync(uri, data, version: version);
             }
             catch (HttpRequestException ex)
             {
@@ -235,12 +240,25 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<byte[]> GetDataAsync(string uri, bool skipAuth = false)
+        public async Task<byte[]> PostDataAsync(string uri, HttpContent data, bool skipAuth = false, string version = null)
         {
             try
             {
-                await runPreRequestChecks(skipAuth); 
-                return await _restRoutinen.GetDataAsync(uri);
+                await RunPreRequestChecks(skipAuth);
+                return await _restRoutinen.PostDataAsync(uri, data, version: version);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw HandleWebException(ex, uri, data);
+            }
+        }
+
+        public async Task<byte[]> GetDataAsync(string uri, bool skipAuth = false, string version = null)
+        {
+            try
+            {
+                await RunPreRequestChecks(skipAuth);
+                return await _restRoutinen.GetDataAsync(uri, version: version);
             }
             catch (HttpRequestException ex)
             {
@@ -248,12 +266,12 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<string> GetAsync(string uri, bool skipAuth = false)
+        public async Task<string> GetAsync(string uri, bool skipAuth = false, string version = null)
         {
             try
             {
-                await runPreRequestChecks(skipAuth);
-                return await _restRoutinen.GetAsync(uri);
+                await RunPreRequestChecks(skipAuth);
+                return await _restRoutinen.GetAsync(uri, version: version);
             }
             catch (HttpRequestException ex)
             {
@@ -261,12 +279,12 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<T> GetAsync<T>(string uri, JsonSerializerSettings settings = null, bool skipAuth = false)
+        public async Task<T> GetAsync<T>(string uri, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
         {
             try
             {
-                await runPreRequestChecks(skipAuth);
-                return await _restRoutinen.GetAsync<T>(uri, settings);
+                await RunPreRequestChecks(skipAuth);
+                return await _restRoutinen.GetAsync<T>(uri, settings, version: version);
             }
             catch (HttpRequestException ex)
             {
@@ -274,12 +292,12 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task PutAsync(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false)
+        public async Task PutAsync(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
         {
             try
             {
-                await runPreRequestChecks(skipAuth);
-                await _restRoutinen.PutAsync(uri, data, settings);
+                await RunPreRequestChecks(skipAuth);
+                await _restRoutinen.PutAsync(uri, data, settings, version: version);
             }
             catch (HttpRequestException ex)
             {
@@ -287,12 +305,12 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<T> PutAsync<T>(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false)
+        public async Task<T> PutAsync<T>(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
         {
             try
             {
-                await runPreRequestChecks(skipAuth);
-                return await _restRoutinen.PutAsync<T>(uri, data, settings);
+                await RunPreRequestChecks(skipAuth);
+                return await _restRoutinen.PutAsync<T>(uri, data, settings, version: version);
             }
             catch (HttpRequestException ex)
             {
@@ -300,11 +318,11 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<byte[]> PutDataAsync(string uri, byte[] data, bool skipAuth = false)
+        public async Task<byte[]> PutDataAsync(string uri, byte[] data, bool skipAuth = false, string version = null)
         {
             try
             {
-                await runPreRequestChecks(skipAuth);
+                await RunPreRequestChecks(skipAuth);
                 return await _restRoutinen.PutDataAsync(uri, data);
             }
             catch (HttpRequestException ex)
@@ -313,11 +331,24 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task DeleteAsync(string uri, bool skipAuth = false)
+        public async Task<byte[]> PutDataAsync(string uri, HttpContent data, bool skipAuth = false, string version = null)
         {
             try
             {
-                await runPreRequestChecks(skipAuth);
+                await RunPreRequestChecks(skipAuth);
+                return await _restRoutinen.PutDataAsync(uri, data);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw HandleWebException(ex, uri, data);
+            }
+        }
+
+        public async Task DeleteAsync(string uri, bool skipAuth = false, string version = null)
+        {
+            try
+            {
+                await RunPreRequestChecks(skipAuth);
                 await _restRoutinen.DeleteAsync(uri);
             }
             catch (HttpRequestException ex)
@@ -326,12 +357,12 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task DeleteAsync(string uri, object data, bool skipAuth = false)
+        public async Task DeleteAsync(string uri, object data, bool skipAuth = false, string version = null)
         {
             try
             {
-                await runPreRequestChecks(skipAuth);
-                await _restRoutinen.DeleteAsync(uri, data);
+                await RunPreRequestChecks(skipAuth);
+                await _restRoutinen.DeleteAsync(uri, data, version: version);
             }
             catch (HttpRequestException ex)
             {
@@ -339,12 +370,12 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        public async Task<T> DeleteAsync<T>(string uri, object data, bool skipAuth = false)
+        public async Task<T> DeleteAsync<T>(string uri, object data, bool skipAuth = false, string version = null)
         {
             try
             {
-                await runPreRequestChecks(skipAuth);
-                return await _restRoutinen.DeleteAsync<T>(uri, data);
+                await RunPreRequestChecks(skipAuth);
+                return await _restRoutinen.DeleteAsync<T>(uri, data, version: version);
             }
             catch (HttpRequestException ex)
             {
@@ -367,7 +398,7 @@ namespace Gandalan.IDAS.WebApi.Client
 
         private async Task<bool> CheckJwtTokenAsync()
         {
-            if (internalCheckJwtToken(out var refreshToken, out bool checkResult))
+            if (InternalCheckJwtToken(out var refreshToken, out bool checkResult))
             {
                 return checkResult;
             }
@@ -387,9 +418,11 @@ namespace Gandalan.IDAS.WebApi.Client
                     Status = InternalStripHtml(Status);
                 }
 
-                if (apiex.InnerException != null)
+                var innerException = apiex.InnerException;
+                while (innerException != null)
                 {
-                    Status += " - " + apiex.InnerException.Message;
+                    Status += " - " + innerException.Message;
+                    innerException = innerException.InnerException;
                 }
 
                 JwtToken = null;
@@ -403,7 +436,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        private bool internalCheckJwtToken(out string refreshToken, out bool checkResult)
+        private bool InternalCheckJwtToken(out string refreshToken, out bool checkResult)
         {
             refreshToken = null;
             var tokenHandler = new JwtSecurityTokenHandler();

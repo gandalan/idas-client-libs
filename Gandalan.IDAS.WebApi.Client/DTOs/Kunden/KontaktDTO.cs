@@ -1,8 +1,8 @@
-﻿using System.ComponentModel;
+using Gandalan.IDAS.WebApi.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Gandalan.IDAS.WebApi.Util;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Gandalan.IDAS.WebApi.DTO
@@ -87,7 +87,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Kunden-Nummernkreis, z.B. 600, 0000, 000
         /// </summary>
-        public string Nummernkreis { get; set; } 
+        public string Nummernkreis { get; set; }
         /// <summary>
         /// Liefertage, Montag bis Freitag
         /// </summary>
@@ -203,7 +203,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public bool HatWinterrabatt { get; set; }
         public bool KeineAutofreigabe { get; set; }
-        public bool ErbtAuswahlOhneSprosse { get; set; } = false;
+        public bool ErbtAuswahlOhneSprosse { get; set; }
         public bool DigitalerRechnungsversand { get; set; }
         public bool IstSammelrechnungsKunde { get; set; }
         /// <summary>
@@ -211,8 +211,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public bool IstInaktiv { get; set; }
         /// <summary>
-        /// Erzeugt einen Text aus den Namensfeldern für die Anzeige in 
-        /// Überschriften, Anschriftenfeldern usw. 
+        /// Erzeugt einen Text aus den Namensfeldern für die Anzeige in
+        /// Überschriften, Anschriftenfeldern usw.
         /// </summary>
         public string AnzeigeName => string.IsNullOrEmpty(Firmenname)
             ? $"{Anrede} {Titel} {Vorname} {Nachname}".Trim()
@@ -228,9 +228,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             Personen = new ObservableCollection<PersonDTO>();
         }
 
-#pragma warning disable CS0067 // The event 'KontaktDTO.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'KontaktDTO.PropertyChanged' is never used
 
         public override string ToString()
         {

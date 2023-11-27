@@ -1,4 +1,5 @@
-﻿using System;
+using Gandalan.IDAS.WebApi.Client.DTOs.Allgemein;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
@@ -12,7 +13,7 @@ namespace Gandalan.IDAS.WebApi.DTO
     {
         public BelegDruckDTO(VorgangDTO vorgang, BelegDTO beleg)
         {
-            CultureInfo culture = new CultureInfo("de-de");
+            var culture = new CultureInfo("de-de");
             Salden = new ObservableCollection<BelegSaldoDruckDTO>();
             PositionsObjekte = new ObservableCollection<BelegPositionDruckDTO>();
 
@@ -20,29 +21,30 @@ namespace Gandalan.IDAS.WebApi.DTO
             {
                 beleg.SetupObjekte(vorgang);
 
-                this.BelegGuid = beleg.BelegGuid;
-                this.VorgangGuid = vorgang.VorgangGuid;
-                this.BelegArt = beleg.BelegArt;
-                this.BelegNummer = vorgang.VorgangsNummer;
-                this.VorgangsNummer = vorgang.VorgangsNummer;
-                this.BelegDatum = beleg.BelegDatum;
-                this.VorgangErstellDatum = vorgang.ErstellDatum.ToString("d", culture);
-                this.AenderungsDatum = beleg.AenderungsDatum;
-                this.BelegJahr = beleg.BelegJahr;
-                this.Schlusstext = beleg.Schlusstext;
-                this.Kommission = string.IsNullOrEmpty(vorgang.Kommission) ? String.Empty : "Kommission: " + vorgang.Kommission;
-                this.Ausfuehrungsdatum = string.IsNullOrEmpty(beleg.AusfuehrungsDatum) ? String.Empty : "Ausführungsdatum: " + beleg.AusfuehrungsDatum;
-                this.AnsprechpartnerKunde = beleg.AnsprechpartnerKunde ?? "";
-                this.Ansprechpartner = ""; //??? _apiSettings?.AuthToken?.Benutzer?.Vorname + " " + _apiSettings?.AuthToken?.Benutzer?.Nachname;
-                this.Telefonnummer = ""; //??? _apiSettings?.AuthToken?.Benutzer?.TelefonNummer ?? "";
+                BelegGuid = beleg.BelegGuid;
+                VorgangGuid = vorgang.VorgangGuid;
+                BelegArt = beleg.BelegArt;
+                BelegNummer = vorgang.VorgangsNummer;
+                VorgangsNummer = vorgang.VorgangsNummer;
+                BelegDatum = beleg.BelegDatum;
+                VorgangErstellDatum = vorgang.ErstellDatum.ToString("d", culture);
+                AenderungsDatum = beleg.AenderungsDatum;
+                BelegJahr = beleg.BelegJahr;
+                Schlusstext = beleg.Schlusstext;
+                SammelbelegNummer = beleg.SammelbelegNummer;
+                Kommission = string.IsNullOrEmpty(vorgang.Kommission) ? string.Empty : "Kommission: " + vorgang.Kommission;
+                Ausfuehrungsdatum = string.IsNullOrEmpty(beleg.AusfuehrungsDatum) ? string.Empty : "Ausführungsdatum: " + beleg.AusfuehrungsDatum;
+                AnsprechpartnerKunde = beleg.AnsprechpartnerKunde ?? "";
+                Ansprechpartner = ""; //??? _apiSettings?.AuthToken?.Benutzer?.Vorname + " " + _apiSettings?.AuthToken?.Benutzer?.Nachname;
+                Telefonnummer = ""; //??? _apiSettings?.AuthToken?.Benutzer?.TelefonNummer ?? "";
 
                 var abBelege = vorgang.Belege.Where(b => b.BelegArt == "AB" || b.BelegArt == "Auftragsbestätigung");
-                this.Bestelldatum = abBelege.Count() > 0 ? abBelege.Last().BelegDatum.ToString("d", culture) : "";
-                this.Belegdatum = beleg.BelegDatum.ToString("d", culture);
-                this.Lieferzeit = ""; //???
-                this.IsEndkunde = vorgang.Kunde?.IstEndkunde != null ? vorgang.Kunde.IstEndkunde : false;
-                this.IsRabatt = beleg.PositionsObjekte?.Any(i => !i.Equals(0m)) ?? false;
-                this.IstSelbstabholer = beleg.IstSelbstabholer;
+                Bestelldatum = abBelege.Any() ? abBelege.Last().BelegDatum.ToString("d", culture) : "";
+                Belegdatum = beleg.BelegDatum.ToString("d", culture);
+                Lieferzeit = ""; //???
+                IsEndkunde = vorgang.Kunde?.IstEndkunde ?? false;
+                IsRabatt = beleg.PositionsObjekte?.Any(i => !i.Equals(0m)) ?? false;
+                IstSelbstabholer = beleg.IstSelbstabholer;
 
                 if (string.IsNullOrEmpty(beleg.BelegTitelUeberschrift))
                 {
@@ -81,27 +83,27 @@ namespace Gandalan.IDAS.WebApi.DTO
                     BelegTitelZeile2 = beleg.BelegTitelZeile2;
                 }
 
-                this.TextFuerAnschreiben = beleg.TextFuerAnschreiben;
-                this.BelegAdresse = new AdresseDruckDTO(beleg.BelegAdresse);
-                this.BelegAdresseString = BelegAdresse.ToString();
-                this.VersandAdresse = new AdresseDruckDTO(beleg.VersandAdresse);
-                this.VersandAdresseString = VersandAdresse.ToString();
+                TextFuerAnschreiben = beleg.TextFuerAnschreiben;
+                BelegAdresse = new AdresseDruckDTO(beleg.BelegAdresse);
+                BelegAdresseString = BelegAdresse.ToString();
+                VersandAdresse = new AdresseDruckDTO(beleg.VersandAdresse);
+                VersandAdresseString = VersandAdresse.ToString();
 
-                bool preiseAnzeigen = beleg.BelegArt != "Lieferschein" && beleg.BelegArt != "Bestellschein";
+                var preiseAnzeigen = beleg.BelegArt != "Lieferschein" && beleg.BelegArt != "Bestellschein";
 
                 if (beleg.PositionsObjekte.Any(p => p.IstSonderfarbPosition && p.Farbzuschlag == -1))
                 {
                     preiseAnzeigen = false;
                 }
 
-                foreach (BelegPositionDTO dto in beleg.PositionsObjekte)
+                foreach (var dto in beleg.PositionsObjekte)
                 {
                     if (!dto.IstAktiv && !dto.IstAlternativPosition)
                     {
                         continue;
                     }
 
-                    this.PositionsObjekte.Add(new BelegPositionDruckDTO(dto, preiseAnzeigen));
+                    PositionsObjekte.Add(new BelegPositionDruckDTO(dto, preiseAnzeigen));
                 }
 
                 if (preiseAnzeigen)
@@ -110,20 +112,20 @@ namespace Gandalan.IDAS.WebApi.DTO
                     if (saldenSorted.Any())
                     {
                         var lastActivSalde = saldenSorted.Last(s => !s.IstInaktiv);
-                        foreach (BelegSaldoDTO dto in saldenSorted)
+                        foreach (var dto in saldenSorted)
                         {
                             if (dto.IstInaktiv)
                             {
                                 continue;
                             }
 
-                            this.Salden.Add(new BelegSaldoDruckDTO(dto) { IsLastElement = lastActivSalde != null && lastActivSalde == dto });
+                            Salden.Add(new BelegSaldoDruckDTO(dto) { IsLastElement = lastActivSalde != null && lastActivSalde == dto });
                         }
                     }
                 }
 
-                CountValuePositionen = PositionsObjekte.Count();
-                CountValueSalden = Salden.Count();
+                CountValuePositionen = PositionsObjekte.Count;
+                CountValueSalden = Salden.Count;
             }
         }
 
@@ -160,8 +162,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public int CountValueSalden { get; set; }
         public string Lieferzeit { get; set; }
         public bool IsEndkunde { get; set; }
-        public bool IsRabatt { get; set; } = false;
-        public bool IstSelbstabholer { get; set; } = false;
+        public bool IsRabatt { get; set; }
+        public bool IstSelbstabholer { get; set; }
+        public long? SammelbelegNummer { get; set; }
 
         public void SetTextBausteine(object textBausteine)
         {
@@ -182,25 +185,27 @@ namespace Gandalan.IDAS.WebApi.DTO
 
     public class AdresseDruckDTO
     {
-        public AdresseDruckDTO() { }
+        public AdresseDruckDTO()
+        {
+        }
 
         public AdresseDruckDTO(BeleganschriftDTO beleganschrift)
         {
             if (beleganschrift != null)
             {
-                this.Anrede = beleganschrift.Anrede;
-                this.Nachname = beleganschrift.Nachname;
-                this.Vorname = beleganschrift.Vorname;
-                this.Firmenname = beleganschrift.Firmenname;
-                this.Zusatz = beleganschrift.Zusatz;
-                this.AdressZusatz1 = beleganschrift.AdressZusatz1;
-                this.Strasse = beleganschrift.Strasse;
-                this.Hausnummer = beleganschrift.Hausnummer;
-                this.Postleitzahl = beleganschrift.Postleitzahl;
-                this.Ort = beleganschrift.Ort;
-                this.Ortsteil = beleganschrift.Ortsteil;
-                this.Land = beleganschrift.Land;
-                this.IstInland = beleganschrift.IstInland;
+                Anrede = beleganschrift.Anrede;
+                Nachname = beleganschrift.Nachname;
+                Vorname = beleganschrift.Vorname;
+                Firmenname = beleganschrift.Firmenname;
+                Zusatz = beleganschrift.Zusatz;
+                AdressZusatz1 = beleganschrift.AdressZusatz1;
+                Strasse = beleganschrift.Strasse;
+                Hausnummer = beleganschrift.Hausnummer;
+                Postleitzahl = beleganschrift.Postleitzahl;
+                Ort = beleganschrift.Ort;
+                Ortsteil = beleganschrift.Ortsteil;
+                Land = beleganschrift.Land;
+                IstInland = beleganschrift.IstInland;
             }
         }
 
@@ -220,10 +225,10 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public override string ToString()
         {
-            StringBuilder adressText = new StringBuilder();
+            var adressText = new StringBuilder();
             {
                 adressText.AppendLine(Anrede);
-                adressText.AppendLine(buildAnschriftsName());
+                adressText.AppendLine(BuildAnschriftsName());
                 if (!string.IsNullOrEmpty(AdressZusatz1))
                 {
                     adressText.AppendLine(AdressZusatz1);
@@ -244,7 +249,7 @@ namespace Gandalan.IDAS.WebApi.DTO
             return adressText.ToString();
         }
 
-        private string buildAnschriftsName()
+        private string BuildAnschriftsName()
         {
             var adesszusatz = "";
             var name1 = string.IsNullOrEmpty(Vorname) ? Nachname : Vorname;
@@ -255,28 +260,33 @@ namespace Gandalan.IDAS.WebApi.DTO
 
     public class BelegSaldoDruckDTO
     {
-        public BelegSaldoDruckDTO() { }
+        public BelegSaldoDruckDTO()
+        {
+        }
 
         public BelegSaldoDruckDTO(BelegSaldoDTO saldo)
         {
-            CultureInfo culture = new CultureInfo("de-de");
+            var culture = new CultureInfo("de-de");
             if (saldo != null)
             {
-                this.Reihenfolge = saldo.Reihenfolge;
-                this.Text = saldo.Text;
+                Reihenfolge = saldo.Reihenfolge;
+                Text = saldo.Text;
                 var vorzeichen = saldo.Typ == "Abschlag" ? '-' : ' ';
-                this.Betrag = vorzeichen + saldo.Betrag.ToString(culture);
+                Betrag = vorzeichen + saldo.Betrag.ToString(culture);
+                Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29", culture) : "";
             }
         }
 
         public int Reihenfolge { get; set; }
         public string Text { get; set; }
         public string Betrag { get; set; }
-        public bool IsLastElement { get; set; } = false;
+        public string Rabatt { get; set; }
+        public bool IsLastElement { get; set; }
     }
 
     public class BelegPositionDruckDTO
     {
+        public string PositionsKommission { get; set; }
         public int LaufendeNummer { get; set; }
         public string ArtikelNummer { get; set; }
         public string Variante { get; set; }
@@ -296,6 +306,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string ProduktionZusatzInfo { get; set; }
         public bool ProduktionZusatzInfoPrintOnReport { get; set; }
         public bool ProduktionZusatzInfoPrintZusatzEtikett { get; set; }
+        public bool IstVE { get; set; }
+        public decimal? VE_Menge { get; set; }
+        public IList<ZusatztextDTO> Zusatztexte { get; set; }
 
         public BelegPositionDruckDTO()
         {
@@ -303,41 +316,51 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public BelegPositionDruckDTO(BelegPositionDTO position, bool preiseAnzeigen = true)
         {
-            CultureInfo culture = new CultureInfo("de-de");
+            var culture = new CultureInfo("de-de");
             if (position != null)
             {
-                this.LaufendeNummer = position.LaufendeNummer;
-                this.ArtikelNummer = position.ArtikelNummer;
-                this.Variante = position.Variante;
-                this.IstAlternativPosition = position.IstAlternativPosition;
-                this.IstAktiv = position.IstAktiv;
-                this.Menge = position.Menge;
-                this.MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.ZuschnittLaenge")) != null ? "Stk." : position.MengenEinheit;
-                if (this.MengenEinheit == null || this.MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase))
+                PositionsKommission = position.PositionsKommission;
+                LaufendeNummer = position.LaufendeNummer;
+                ArtikelNummer = position.ArtikelNummer;
+                Variante = position.Variante;
+                IstAlternativPosition = position.IstAlternativPosition;
+                IstAktiv = position.IstAktiv;
+                Menge = position.Menge;
+                MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.ZuschnittLaenge")) != null ? "Stk." : position.MengenEinheit;
+
+                if (position.IstVE)
                 {
-                    this.MengenEinheit = "Stk.";
+                    MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.Artikel_VE_Einheit"))?.Wert;
+                    VE_Menge = position.VE_Menge;
+                    IstVE = position.IstVE;
                 }
 
-                string einbauort = String.Empty;
+                if (MengenEinheit == null || MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    MengenEinheit = "Stk.";
+                }
+
+                var einbauort = string.Empty;
                 if (!string.IsNullOrWhiteSpace(position.Einbauort) && !position.Text.StartsWith("Einbauort"))
                 {
                     einbauort = "Einbauort: " + position.Einbauort + " - ";
                 }
 
-                this.Text = einbauort + position.Text;
-                this.AngebotsText = einbauort + position.AngebotsText;
-                this.SonderwunschText = position.SonderwunschText;
-                this.SonderwunschAngebotsText = position.SonderwunschAngebotsText;
-                this.ProduktionZusatzInfo = position.ProduktionZusatzInfo;
-                this.ProduktionZusatzInfoPrintOnReport = position.ProduktionZusatzInfoPrintOnReport;
-                this.ProduktionZusatzInfoPrintZusatzEtikett = position.ProduktionZusatzInfoPrintZusatzEtikett;
+                Text = einbauort + position.Text;
+                AngebotsText = einbauort + position.AngebotsText;
+                SonderwunschText = position.SonderwunschText;
+                SonderwunschAngebotsText = position.SonderwunschAngebotsText;
+                ProduktionZusatzInfo = position.ProduktionZusatzInfo;
+                ProduktionZusatzInfoPrintOnReport = position.ProduktionZusatzInfoPrintOnReport;
+                ProduktionZusatzInfoPrintZusatzEtikett = position.ProduktionZusatzInfoPrintZusatzEtikett;
+                Zusatztexte = position.Zusatztexte;
                 if (preiseAnzeigen)
                 {
-                    this.Farbzuschlag = position.Farbzuschlag.ToString(culture);
-                    this.EinzelpreisOhneFarbzuschlag = position.Einzelpreis.ToString(culture);
-                    this.Rabatt = position.Rabatt.Equals(0m) ? String.Empty : position.Rabatt.ToString(culture);
-                    this.Gesamtpreis = position.Gesamtpreis.ToString(culture);
-                    this.Einzelpreis = (position.Einzelpreis + position.Farbzuschlag).ToString(culture);
+                    Farbzuschlag = position.Farbzuschlag.ToString(culture);
+                    EinzelpreisOhneFarbzuschlag = position.Einzelpreis.ToString(culture);
+                    Rabatt = position.Rabatt.Equals(0m) ? string.Empty : position.Rabatt.ToString(culture);
+                    Gesamtpreis = position.Gesamtpreis.ToString(culture);
+                    Einzelpreis = (position.Einzelpreis + position.Farbzuschlag).ToString(culture);
                 }
             }
         }

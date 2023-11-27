@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,8 +12,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public virtual List<JobStatusDTO> Stati { get; set; }
         public virtual List<JobParameterDTO> Parameter { get; set; }
 
-        public DateTime Erstellt { get { return Stati != null && Stati.Count() > 0 ? Stati.First().Zeitstempel : DateTime.MinValue; } }
-        public DateTime Geaendert { get { return Stati != null && Stati.Count() > 0 ? Stati.Last().Zeitstempel : DateTime.MinValue; } }
+        public DateTime Erstellt { get { return Stati != null && Stati.Any() ? Stati.First().Zeitstempel : DateTime.MinValue; } }
+        public DateTime Geaendert { get { return Stati != null && Stati.Any() ? Stati.Last().Zeitstempel : DateTime.MinValue; } }
 
         public JobDTO()
         {
@@ -41,7 +41,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         {
             if (string.IsNullOrEmpty(name) || value == null)
                 return this;
-            Parameter.Add(new JobParameterDTO() { Richtung = richtung, Name = name, Wert = value.ToString(), DatenTyp = value.GetType().Name });                
+            Parameter.Add(new JobParameterDTO() { Richtung = richtung, Name = name, Wert = value.ToString(), DatenTyp = value.GetType().Name });
             return this;
         }
 
@@ -51,9 +51,10 @@ namespace Gandalan.IDAS.WebApi.DTO
             {
                 AddParameter(richtung, k, parameter[k]);
             }
+
             return this;
         }
-        
+
         public List<JobStatusDTO> GetOrderedStati()
         {
             return Stati.ToList().OrderBy(ts => ts.StatusCodeAsInt).ToList();

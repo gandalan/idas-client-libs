@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Gandalan.IDAS.WebApi.Util;
 
@@ -42,6 +42,14 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// In diesem Tag können belibige interne Informationen als String gespeichert werden.
         /// </summary>
         public string Tag { get; set; }
+        /// <summary>
+        /// Rabatt, der in der Salde verrechnet wurde
+        /// </summary>
+        public decimal Rabatt { get; set; }
+        /// <summary>
+        /// TemplateText mit z.B. Platzhalter aus der Standardsalde der benötigt wird um beim ändern einer Salde den Text neu zu generieren.
+        /// </summary>
+        public string TemplateText { get; set; }
 
         public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
     }

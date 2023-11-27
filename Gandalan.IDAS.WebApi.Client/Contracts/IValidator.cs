@@ -1,4 +1,4 @@
-﻿using Gandalan.Client.Contracts.UIServices;
+using Gandalan.Client.Contracts.UIServices;
 using System;
 using System.ComponentModel;
 
@@ -12,7 +12,7 @@ namespace Gandalan.Client.Contracts
 
         event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
         event EventHandler CancelledSave;
-        
+
         ValidationMessage GetErrors(string propertyName);
     }
 
@@ -31,28 +31,26 @@ namespace Gandalan.Client.Contracts
             CancelledSave?.Invoke(this, null);
         }
 
-#pragma warning disable CS0067 // The event 'NullValidator<T>.ErrorsChanged' is never used
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-#pragma warning restore CS0067 // The event 'NullValidator<T>.ErrorsChanged' is never used
         public event EventHandler CancelledSave;
 
         public ValidationMessage GetErrors(string propertyName)
         {
-            return default(ValidationMessage);
+            return default;
         }
 
         public void Monitor(T data)
-        {   
+        {
         }
 
         public void SetData(T data)
         {
-            
+
         }
 
         public void Validate()
         {
-            
+
         }
 
         public void Validate(T model)

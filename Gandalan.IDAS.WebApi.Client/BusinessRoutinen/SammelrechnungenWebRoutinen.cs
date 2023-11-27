@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
 using System;
 using System.Collections.Generic;
@@ -15,8 +15,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<SammelrechnungListItemDTO> ErstelleSammelrechnungenAsync(CreateSammelrechnungDTO dto) 
             => await PostAsync<SammelrechnungListItemDTO>("Sammelrechnungen/ErstelleSammelrechnungen", dto);
 
-        public async Task<List<SammelrechnungListItemDTO>> GetSammelrechnungenAsync() 
-            => await GetAsync<List<SammelrechnungListItemDTO>>("Sammelrechnungen/GetSammelrechnungen");
+        public async Task<List<SammelrechnungListItemDTO>> GetNotPrintedSammelrechnungenAsync(DateTime? printedSince = null) 
+            => await GetAsync<List<SammelrechnungListItemDTO>>($"Sammelrechnungen/GetNotPrintedSammelrechnungen?printedSince={printedSince?.ToString("o")}");
+
+        public async Task<List<SammelrechnungListItemDTO>> GetNotExportedSammelrechnungenAsync(DateTime? exportedSince = null)
+            => await GetAsync<List<SammelrechnungListItemDTO>>($"Sammelrechnungen/GetNotExportedSammelrechnungen?exportedSince={exportedSince?.ToString("o")}");
 
         public async Task<SammelrechnungDTO> GetSammelrechnungAsync(Guid guid, bool includeBelegDruckDTO)
             => await GetAsync<SammelrechnungDTO>($"Sammelrechnungen/GetSammelrechnung?guid={guid}&includeBelegDruckDTO={includeBelegDruckDTO}");
@@ -31,12 +34,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await PostAsync<SammelrechnungListItemDTO>($"Sammelrechnungen/AddRechnungToSammelrechnungen", 
                 new AddRechnungSammelrechnungDTO() { BelegGuid = belegGuid, SammelrechnungGuid = sammelrechnungGuid });
 
-        public async Task SetRechnungenAlsGedrucktAsync(Guid sammelrechnungGuid)
-            => await PostAsync($"Sammelrechnungen/SetRechnungenAlsGedruckt?sammelrechnungGuid={sammelrechnungGuid}", null);
+        public async Task SetRechnungenAlsGedrucktAsync(List<Guid> guidListe, bool setEinzel = false)
+            => await PostAsync($"Sammelrechnungen/SetSammelrechnungPrinted?setEinzel={setEinzel}", guidListe);
         
-        public async Task SetRechnungenAlsFibuUebergebenAsync(Guid sammelrechnungGuid)
-            => await PostAsync($"Sammelrechnungen/SetRechnungenAlsFibuUebergeben?sammelrechnungGuid={sammelrechnungGuid}", null);
+        public async Task SetRechnungenAlsFibuUebergebenAsync(List<Guid> guidListe, bool setEinzel = false)
+            => await PostAsync($"Sammelrechnungen/SetSammelrechnungExported?setEinzel={setEinzel}", guidListe);
 
-        
+        public async Task<List<SammelrechnungListItemDTO>> SearchSammelrechnungAsync(string term)
+            => await GetAsync<List<SammelrechnungListItemDTO>>($"Sammelrechnungen/SearchSammelrechnung?term={term}");
     }
 }

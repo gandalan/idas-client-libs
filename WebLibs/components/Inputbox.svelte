@@ -91,8 +91,8 @@
         }
         else if (allowedFunctionalKeys.includes(e.key) === true)
         { // Prüfung auf Funktionstasten wie [ENTF], [DEL], usw.
-			return;
-		}
+            return;
+        }
         else
         { // Alles andere soll nicht erlaubt sein
             ignoreInput(e);
@@ -145,19 +145,19 @@
     {
         switch (e.key)
         {
-			case "Enter":
+            case "Enter":
                 if (typeof(KeyDownFunctionOnEnter) != "undefined")
                 {
                     KeyDownFunctionOnEnter();
                 }
-				break;
-			case "Tab":
+                break;
+            case "Tab":
                 if (typeof(KeyDownFunctionOnTab) != "undefined")
                 {
                     KeyDownFunctionOnTab();
                 }
-				break;
-		}
+                break;
+        }
     }
     function ignoreInput(e)
     {

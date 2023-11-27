@@ -10,13 +10,13 @@
         <description>Gandalan.IDAS.WebApi.Client.Wpf</description>
         <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2023</copyright>
         <license type="expression">MIT</license>
-		<readme>README.md</readme>
+        <readme>README.md</readme>
         <dependencies>
           <dependency id="GDL.IDAS.WebApi.Client" version="BUILDVERSION" />
         </dependencies>
     </metadata>
     <files>
       <file src="..\README.md" target="\" />
-	  <file src="bin\Release\**" target="lib\" />
+      <file src="bin\Release\**" target="lib\" />
     </files>
 </package>
