@@ -19,10 +19,10 @@ public static class Gueltigkeit
         if (referenceDate == null)
             referenceDate = DateTime.UtcNow;
 
-        if (gueltig.GueltigAb != null && gueltig.GueltigBis > referenceDate)
+        if (gueltig.GueltigAb != null && gueltig.GueltigAb.Value.Date < referenceDate.Value.Date)
             return false;
 
-        if (gueltig.GueltigBis != null && gueltig.GueltigBis < referenceDate)
+        if (gueltig.GueltigBis != null && gueltig.GueltigBis.Value.Date > referenceDate.Value.Date)
             return false;
 
         return true;
