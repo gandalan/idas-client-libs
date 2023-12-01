@@ -1,4 +1,5 @@
 using Gandalan.IDAS.WebApi.Client.DTOs.Allgemein;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,6 +38,9 @@ namespace Gandalan.IDAS.WebApi.DTO
                 AnsprechpartnerKunde = beleg.AnsprechpartnerKunde ?? "";
                 Ansprechpartner = ""; //??? _apiSettings?.AuthToken?.Benutzer?.Vorname + " " + _apiSettings?.AuthToken?.Benutzer?.Nachname;
                 Telefonnummer = ""; //??? _apiSettings?.AuthToken?.Benutzer?.TelefonNummer ?? "";
+
+                if (vorgang.ApplicationSpecificProperties != null && vorgang.ApplicationSpecificProperties.Count != 0 && vorgang.ApplicationSpecificProperties.ContainsKey("settings") && vorgang.ApplicationSpecificProperties["settings"].ContainsKey("Kontrollkuerzel"))
+                    Kontrollkuerzel = vorgang.ApplicationSpecificProperties["settings"]["Kontrollkuerzel"] as string;
 
                 var abBelege = vorgang.Belege.Where(b => b.BelegArt == "AB" || b.BelegArt == "Auftragsbestätigung");
                 Bestelldatum = abBelege.Any() ? abBelege.Last().BelegDatum.ToString("d", culture) : "";
@@ -165,6 +169,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IsRabatt { get; set; }
         public bool IstSelbstabholer { get; set; }
         public long? SammelbelegNummer { get; set; }
+        public string Kontrollkuerzel { get; set; }
 
         public void SetTextBausteine(object textBausteine)
         {
