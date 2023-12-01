@@ -46,5 +46,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool SP5_Sprosse_ausklinken { get; set; }
         public bool UseKleinteileFarbersatzTabelle { get; set; }
         public bool ST3_BeidseitigeGriffleiste_GL_B { get; set; }
+        public bool Gewebeeinzugsarm_122415 { get; set; }
+        public bool RO4_143908 { get; set; }
     }
 }
