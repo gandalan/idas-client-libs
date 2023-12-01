@@ -13,7 +13,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string VorbiegenGrenzwert { get; set; }
         public List<string> SonderGewebe { get; set; }
         public bool SaegedatenAufEtiketten { get; set; }
-        public bool MaschinenkederVerwenden { get; set; }
         public bool PacklistenEtikettenZusammengefasst { get; set; } = true;
         public string EtikettSerienkennzeichen { get; set; } = "Ohne";
         public string PackEtikettSerienkennzeichen { get; set; } = "Kürzel";
