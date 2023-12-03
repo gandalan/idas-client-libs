@@ -47,5 +47,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool ST3_BeidseitigeGriffleiste_GL_B { get; set; }
         public bool Gewebeeinzugsarm_122415 { get; set; }
         public bool RO4_143908 { get; set; }
+        public bool PacklisteZusammengefasst { get; set; }
     }
 }
