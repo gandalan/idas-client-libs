@@ -12,12 +12,12 @@ namespace Gandalan.IDAS.Logging
 
         public static void Fehler(Exception ex, string message, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
         {
-            Fehler($"{message}{Environment.NewLine}{DetailedStringException(ex)}", context, sender);
+            Fehler($"{message}{Environment.NewLine}{DetailedException(ex)}", context, sender);
         }
 
         public static void Fehler(Exception ex, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
         {
-            Fehler($"{DetailedStringException(ex)}", context, sender);
+            Fehler($"{DetailedException(ex)}", context, sender);
         }
 
         public static void Immer(string message, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
@@ -45,7 +45,7 @@ namespace Gandalan.IDAS.Logging
         /// </summary>
         /// <param name="ex">Exception</param>
         /// <returns>String with Data and exception</returns>
-        private static string DetailedStringException(Exception ex)
+        private static string DetailedException(Exception ex)
         {
             // Use default exception formatting
             var exString = $"{ex}";
