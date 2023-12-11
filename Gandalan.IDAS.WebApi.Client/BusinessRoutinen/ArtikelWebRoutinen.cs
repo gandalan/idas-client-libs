@@ -1,4 +1,4 @@
-﻿// *****************************************************************************
+// *****************************************************************************
 // Gandalan GmbH & Co. KG - (c) 2017
 // *****************************************************************************
 // Middleware//Gandalan.IDAS.WebApi.Client//ArtikelWebRoutinen.cs
@@ -22,9 +22,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<WarenGruppeDTO[]> GetAllAsync(DateTime? changedSince = null)
         {
             if(changedSince.HasValue && changedSince.Value > DateTime.MinValue)
-                return await GetAsync<WarenGruppeDTO[]>("Artikel?changedSince=" + changedSince.Value.ToString("o"));
+                return await GetAsync<WarenGruppeDTO[]>("Artikel?changedSince=" + changedSince.Value.ToString("o"), version : "2.0");
             else
-                return await GetAsync<WarenGruppeDTO[]>("Artikel");
+                return await GetAsync<WarenGruppeDTO[]>("Artikel", version: "2.0");
         }
 
         public async Task<KatalogArtikelDTO> SaveArtikelAsync(KatalogArtikelDTO artikel)
