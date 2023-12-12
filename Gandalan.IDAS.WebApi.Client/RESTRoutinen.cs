@@ -2,9 +2,9 @@ using Gandalan.IDAS.WebApi.Client;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -85,7 +85,7 @@ namespace Gandalan.IDAS.Web
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                AddInfoToException(ex, url, response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -105,7 +105,7 @@ namespace Gandalan.IDAS.Web
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                AddInfoToException(ex, url, response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -140,7 +140,7 @@ namespace Gandalan.IDAS.Web
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                AddInfoToException(ex, url, response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -160,7 +160,7 @@ namespace Gandalan.IDAS.Web
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                AddInfoToException(ex, url, response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -180,7 +180,7 @@ namespace Gandalan.IDAS.Web
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                AddInfoToException(ex, url, response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -215,7 +215,7 @@ namespace Gandalan.IDAS.Web
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                AddInfoToException(ex, url, response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -234,7 +234,7 @@ namespace Gandalan.IDAS.Web
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                AddInfoToException(ex, url, response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -253,7 +253,7 @@ namespace Gandalan.IDAS.Web
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                AddInfoToException(ex, url, response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -278,7 +278,7 @@ namespace Gandalan.IDAS.Web
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                AddInfoToException(ex, url, response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -305,7 +305,7 @@ namespace Gandalan.IDAS.Web
             }
             catch (Exception ex)
             {
-                AddInfoToException(ex, url, GetCurrentMethodName(), response, contentAsString);
+                AddInfoToException(ex, url, response, contentAsString);
                 // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
@@ -320,23 +320,15 @@ namespace Gandalan.IDAS.Web
 
         #region private Methods
 
-        private static void AddInfoToException(Exception ex, string url, string callMethod, HttpResponseMessage response = null, string responseContent = null)
+        private static void AddInfoToException(Exception ex, string url, HttpResponseMessage response = null, string responseContent = null, [CallerMemberName] string sender = null)
         {
             ex.Data.Add("URL", url);
-            ex.Data.Add("CallMethod", callMethod);
+            ex.Data.Add("CallMethod", sender);
             ex.Data.Add("StatusCode", response?.StatusCode ?? HttpStatusCode.InternalServerError);
             if (responseContent != null)
             {
                 ex.Data.Add("Response", responseContent);
             }
-        }
-
-        public static string GetCurrentMethodName()
-        {
-            var stackTrace = new StackTrace();
-            var stackFrame = stackTrace.GetFrame(1);
-
-            return stackFrame?.GetMethod()?.Name;
         }
 
         #endregion

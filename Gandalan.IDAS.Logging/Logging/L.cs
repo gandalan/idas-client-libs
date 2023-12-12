@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace Gandalan.IDAS.Logging
 {
@@ -49,17 +51,26 @@ namespace Gandalan.IDAS.Logging
         {
             // Use default exception formatting
             var exString = $"{ex}";
-            if (ex.Data.Contains("URL") && ex.Data.Contains("CallMethod") && ex.Data.Contains("StatusCode"))
+            if (ex.Data.Count > 0)
             {
-                var newLine = Environment.NewLine;
-                object response = null;
-                if (ex.Data.Contains("Response"))
+                var dataDetails = new StringBuilder();
+                foreach (DictionaryEntry entry in ex.Data)
                 {
-                    response = $"{newLine}Response: {ex.Data["Response"]}";
+                    dataDetails.Append($"{entry.Key}: {entry.Value}{Environment.NewLine}");
                 }
 
-                exString = $"URL: {ex.Data["URL"]}{newLine}CallMethod: {ex.Data["CallMethod"]}{newLine}StatusCode: {ex.Data["StatusCode"]}{response}{newLine}{ex}";
+                // Append the data details to the exception string
+                exString = $"{dataDetails}{exString}";
             }
+
+            if (ex.InnerException == null)
+            {
+                return exString;
+            }
+
+            // Recursively call DetailedException for inner exceptions
+            var innerExceptionDetails = DetailedException(ex.InnerException);
+            exString = $"Inner Exception Data:{innerExceptionDetails}{Environment.NewLine}Exception Data:{Environment.NewLine}{exString}";
 
             return exString;
         }
