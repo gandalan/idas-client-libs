@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Threading.Tasks;

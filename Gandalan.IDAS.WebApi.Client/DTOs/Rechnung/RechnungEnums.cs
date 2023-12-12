@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
+﻿namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
 {
     public enum RechnungsNummer
     {

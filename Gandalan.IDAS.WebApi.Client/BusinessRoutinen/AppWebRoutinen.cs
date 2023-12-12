@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
-using Gandalan.IDAS.WebApi.DTO.API;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
