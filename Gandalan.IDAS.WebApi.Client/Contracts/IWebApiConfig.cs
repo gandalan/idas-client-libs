@@ -1,7 +1,6 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts
 {
