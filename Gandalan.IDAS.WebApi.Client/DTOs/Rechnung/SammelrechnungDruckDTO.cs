@@ -87,6 +87,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public int LaufendeNummer { get; set; }
         public string RechnungNummer { get; set; }
         public string RechnungDatum { get; set; }
+        public string VorgangsDatum { get; set; }
         public string RechnungKommission { get; set; }
         public string RechnungBetrag { get; set; }
         public string Ueberschrift { get; set; }
@@ -99,6 +100,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             LaufendeNummer = position.LaufendeNummer;
             RechnungNummer = position.RechnungNummer.ToString();
             RechnungDatum = position.RechnungDatum.ToString("d", culture);
+            VorgangsDatum = position.VorgangsDatum.ToString("d", culture);
             RechnungKommission = position.RechnungKommision;
             var warenwertSalde = position.Salden.FirstOrDefault(s => s.Name == "Warenwert");
             RechnungBetrag = warenwertSalde.Betrag.ToString(culture);
