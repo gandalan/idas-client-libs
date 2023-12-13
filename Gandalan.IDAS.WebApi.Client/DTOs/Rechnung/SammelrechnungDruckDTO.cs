@@ -35,6 +35,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public bool IsEndkunde { get; set; }
         public IList<BelegDruckDTO> EinzelrechnungDTOs { get; set; }
         public string Belegart { get; set; } = "Sammelrechnung";
+        public string Ueberschrift { get; set; }
 
         public SammelrechnungDruckDTO(SammelrechnungDTO sammelrechnung)
         {
@@ -88,6 +89,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public string RechnungDatum { get; set; }
         public string RechnungKommission { get; set; }
         public string RechnungBetrag { get; set; }
+        public string Ueberschrift { get; set; }
         public IList<SammelrechnungSaldoDruckDTO> RechnungSalden { get; set; }
 
         public SammelrechnungPositionDruckDTO(SammelrechnungPositionenDTO position)
