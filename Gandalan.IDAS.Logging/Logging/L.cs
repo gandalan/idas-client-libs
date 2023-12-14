@@ -47,7 +47,7 @@ namespace Gandalan.IDAS.Logging
         /// </summary>
         /// <param name="ex">Exception</param>
         /// <returns>String with Data and exception</returns>
-        private static string DetailedException(Exception ex)
+        public static string DetailedException(Exception ex)
         {
             // Use default exception formatting
             var exString = $"{ex}";
