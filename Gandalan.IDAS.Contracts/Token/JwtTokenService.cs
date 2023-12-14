@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
+using Gandalan.IDAS.WebApi.DTO;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -82,7 +82,7 @@ namespace Gandalan.IDAS.Contracts.Token
             }
 
             var credentials = GetSigningCredentials(privateKey);
-            
+
             // roles & rights
             var roleCodes = new List<string>();
             var rightCodes = new List<string>();
@@ -142,7 +142,7 @@ namespace Gandalan.IDAS.Contracts.Token
             {
                 var validations = ValidationParams(publicKey, allowExpired);
                 var tokenHandler = new JwtSecurityTokenHandler();
-                tokenHandler.ValidateToken(token, validations, out SecurityToken validatedToken);
+                tokenHandler.ValidateToken(token, validations, out var validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 var userId = jwtToken.Claims.First(x => x.Type == _claimId).Value;
