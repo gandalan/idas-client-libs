@@ -1,10 +1,11 @@
+using Gandalan.IDAS.WebApi.Client.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
-    public class KatalogArtikelDTO
+    public class KatalogArtikelDTO : IWithGueltigkeitsZeitraum
     {
         public Guid KatalogArtikelGuid { get; set; }
         public string KatalogNummer { get; set; }

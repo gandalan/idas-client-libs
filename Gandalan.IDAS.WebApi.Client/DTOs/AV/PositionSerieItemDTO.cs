@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Data
 {

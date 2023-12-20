@@ -49,6 +49,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public DateTime RechnungDatum { get; set; }
         public string RechnungKommision { get; set; }
         public decimal RechnungBetrag { get; set; }
+        public DateTime VorgangsDatum { get; set; }
 
         public IList<SammelrechnungSaldenDTO> Salden { get; set; }
     }

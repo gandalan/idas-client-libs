@@ -31,6 +31,7 @@ namespace Gandalan.IDAS.WebApi.Client.Printing
         public List<string> AblagefachList { get; set; } = new List<string>();
         public string Besonderheiten { get; set; }
         public Guid BelegPositionGuid { get; set; }
+        public bool IstMontiert { get; set; }
 
     }
 }

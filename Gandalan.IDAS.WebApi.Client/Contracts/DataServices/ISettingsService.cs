@@ -7,25 +7,42 @@ namespace Gandalan.Client.Contracts.DataServices
     {        
         Task<T> Load<T>() where T : new();
         Task Load<T>(T settingsObject);
-        Task Save(object settingsObject);
+        Task Save<T>(T settingsObject);
         bool IstReady();
     }
 
-    public class LocalSettingsObjectAttribute : Attribute
+    public class UserSettingsObjectAttribute : Attribute
     {
-        private readonly bool _isLocalObject;
+        private readonly bool _isUserSettingsObject;
 
-        public LocalSettingsObjectAttribute()
+        public UserSettingsObjectAttribute()
         {
-            _isLocalObject = true;
+            _isUserSettingsObject = true;
         }
 
-        public LocalSettingsObjectAttribute(bool isLocalObject)
+        public UserSettingsObjectAttribute(bool isLocalObject)
         {
-            _isLocalObject = isLocalObject;
+            _isUserSettingsObject = isLocalObject;
         }
 
-        public bool IsLocalObject => _isLocalObject;
+        public bool IsLocalObject => _isUserSettingsObject;
+    }
+
+    public class AppSettingsObjectAttribute : Attribute
+    {
+        private readonly bool _isAppSettingObject;
+
+        public AppSettingsObjectAttribute()
+        {
+            _isAppSettingObject = true;
+        }
+
+        public AppSettingsObjectAttribute(bool isLocalObject)
+        {
+            _isAppSettingObject = isLocalObject;
+        }
+
+        public bool IsAppSettingObject => _isAppSettingObject;
     }
 
     public class SettingsKeyAttribute : Attribute

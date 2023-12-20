@@ -69,6 +69,10 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public bool IstUmsatzsteuerPflichtig { get; set; } = true;
         /// <summary>
+        /// Wenn der Kontakt ein Innergemeinschaftlicher Kontakt ist, kann durch dieses Flag ide MwSt. Berechnung abgeschaltet werden.
+        /// </summary>
+        public bool InnergemeinschaftOhneMwSt { get; set; }
+        /// <summary>
         /// Zugeordnete Personen
         /// </summary>
         public virtual IList<PersonDTO> Personen { get; set; }
