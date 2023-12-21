@@ -70,7 +70,7 @@ namespace Gandalan.IDAS.Logging
 
             // Recursively call DetailedException for inner exceptions
             var innerExceptionDetails = DetailedException(ex.InnerException);
-            exString = $"Inner Exception Data:{innerExceptionDetails}{Environment.NewLine}Exception Data:{Environment.NewLine}{exString}";
+            exString = $"Inner Exception Data:{Environment.NewLine}{innerExceptionDetails}{Environment.NewLine}Exception Data:{Environment.NewLine}{exString}";
 
             return exString;
         }
