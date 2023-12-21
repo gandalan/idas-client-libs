@@ -15,7 +15,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>C:\Projects\idas-client-libs\Gandalan.IDAS.WebApi.Client.Wpf\GDL.IDAS.WebApi.Client.Wpf.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
-	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets\Icons\view-1.png" />

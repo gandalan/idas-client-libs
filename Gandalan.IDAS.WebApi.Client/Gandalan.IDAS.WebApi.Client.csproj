@@ -16,7 +16,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>C:\projects\Repos\idas-client-libs\Gandalan.IDAS.WebApi.Client\GDL.IDAS.WebApi.Client.xml</DocumentationFile>
     <NoWarn>1591;CS0067</NoWarn>
-	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.1|AnyCPU'">
