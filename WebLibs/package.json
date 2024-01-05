@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@mdi/js": "^7.3.67",
-    "axios": "^1.6.3",
+    "axios": "^1.6.4",
     "jwt-decode": "^4.0.0",
     "svelte-table": "^0.6.1"
   },
