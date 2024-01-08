@@ -7,12 +7,12 @@ export let currentRefreshToken = undefined;
 
 export async function initIDAS(appToken)
 {
-	if (!validator.isUUID(apptoken))
+    if (!validator.isUUID(appToken))
     {
         console.error("AppToken is not valid GUID");
         return null;
     }
-	
+
     let jwtToken = "";
     let mandantGuid = "";
     let apiBaseurl = window.document.body.dataset.apiBaseUrl || "https://api.dev.idas-cloudservices.net/api/";
@@ -55,7 +55,7 @@ export async function initIDAS(appToken)
     {
         redirectToLogin(settings, "/");
     }
-	
+
     return settings;
 }
 
@@ -93,7 +93,7 @@ export async function setup(settings)
             settings.mandantGuid = mandantGuid;
         }
     }
-	
+
     console.log("Setup finished", settings);
 }
 
@@ -104,7 +104,7 @@ function startRefreshTimer(settings)
     {
         clearInterval(timerRef);
     }
-	
+
     timerRef = setInterval(() =>
     {
         if (currentToken)
@@ -125,14 +125,14 @@ export function isInvalid(settings)
     {
         return true;
     }
-	
+
     let decoded = jwtDecode(currentToken);
     const utcNow = Date.parse(new Date().toUTCString()) / 1000;
     if (decoded && decoded.exp > utcNow)
     {
         return false;
     }
-	
+
     return true;
 }
 
@@ -169,7 +169,7 @@ export async function tryRenew(settings)
 
     if (isInvalid(settings))
     {
-        console.warning("Token is already expired!");
+        console.warn("Token is already expired!");
     }
 }
 
