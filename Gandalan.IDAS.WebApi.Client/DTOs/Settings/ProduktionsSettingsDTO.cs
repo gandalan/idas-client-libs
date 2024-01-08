@@ -50,7 +50,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool PacklisteZusammengefasst { get; set; }
         public bool Drehbandmontage { get; set; } = true;
         public bool STmitLSo_LSu_Mb85mm { get; set; }
-        public bool SP_WL_mit_Schraube_150329_06 { get; set; } = true;
+        public bool SP_WL_mit_Schraube_150329 { get; set; } = true;
         public bool LI_TE_Winkelprofil_mit_Schraube_150329_06 { get; set; } = true;
     }
 }
