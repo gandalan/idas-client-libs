@@ -11,9 +11,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
         public async Task<byte[]> PDFErzeugenAsync(Guid belegGuid)
-            => await PostDataAsync("Print/?bguid=" + belegGuid.ToString(), Array.Empty<byte>());
+            => await PostDataAsync("Print/?bguid=" + belegGuid, Array.Empty<byte>());
 
         public async Task<byte[]> XPSErzeugenAsync(Guid belegGuid)
-            => await PostDataAsync("Print/?bguid=" + belegGuid.ToString() + "&fileFormat=XPS", Array.Empty<byte>());
+            => await PostDataAsync("Print/?bguid=" + belegGuid + "&fileFormat=XPS", Array.Empty<byte>());
     }
 }

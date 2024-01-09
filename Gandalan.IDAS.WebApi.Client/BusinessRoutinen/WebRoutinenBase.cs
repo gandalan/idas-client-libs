@@ -106,6 +106,7 @@ namespace Gandalan.IDAS.WebApi.Client
             {
                 throw new ApiUnauthorizedException(Status = e.Message);
             }
+
             ErrorOccured?.Invoke(this, e);
         }
 
@@ -163,15 +164,16 @@ namespace Gandalan.IDAS.WebApi.Client
                 Status = "Error";
                 return false;
             }
-            catch (ApiException apiex)
+            catch (ApiException apiEx)
             {
-                Status = apiex.Message;
+                L.Fehler(apiEx);
+                Status = apiEx.Message;
                 if (Status.ToLower().Contains("<title>"))
                 {
                     Status = InternalStripHtml(Status);
                 }
 
-                var innerException = apiex.InnerException;
+                var innerException = apiEx.InnerException;
                 while (innerException != null)
                 {
                     Status += " - " + innerException.Message;
@@ -183,6 +185,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (Exception ex)
             {
+                L.Fehler(ex);
                 Status = ex.Message;
                 AuthToken = null;
                 return false;
@@ -410,15 +413,16 @@ namespace Gandalan.IDAS.WebApi.Client
                 JwtToken = newJwt;
                 return true;
             }
-            catch (ApiException apiex)
+            catch (ApiException apiEx)
             {
-                Status = apiex.Message;
+                L.Fehler(apiEx);
+                Status = apiEx.Message;
                 if (Status.ToLower().Contains("<title>"))
                 {
                     Status = InternalStripHtml(Status);
                 }
 
-                var innerException = apiex.InnerException;
+                var innerException = apiEx.InnerException;
                 while (innerException != null)
                 {
                     Status += " - " + innerException.Message;
@@ -430,6 +434,7 @@ namespace Gandalan.IDAS.WebApi.Client
             }
             catch (Exception ex)
             {
+                L.Fehler(ex);
                 Status = ex.Message;
                 JwtToken = null;
                 return false;

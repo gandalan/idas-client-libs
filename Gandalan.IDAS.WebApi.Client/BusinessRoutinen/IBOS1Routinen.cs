@@ -11,12 +11,12 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
         public async Task<string> ProduktionBerechnenAsync(Guid belegPositionsGuid)
-            => await GetAsync<string>("IBOS1/Print?bguid=" + belegPositionsGuid.ToString());
+            => await GetAsync<string>("IBOS1/Print?bguid=" + belegPositionsGuid);
 
         public async Task<string> PositionTestenAsync(Guid belegPositionsGuid) 
-            => await GetAsync<string>("Test?bguid=" + belegPositionsGuid.ToString());
+            => await GetAsync<string>("Test?bguid=" + belegPositionsGuid);
 
         public async Task<string> GetProduktionAsync(Guid guid) 
-            => await GetAsync<string>("Produktion/?posguid=" + guid.ToString());
+            => await GetAsync<string>("Produktion/?posguid=" + guid);
     }
 }

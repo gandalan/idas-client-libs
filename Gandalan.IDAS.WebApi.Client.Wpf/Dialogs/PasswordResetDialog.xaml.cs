@@ -1,4 +1,5 @@
 using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Logging;
 using System.ComponentModel;
 using System.Windows;
 
@@ -44,6 +45,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             }
             catch (System.Exception ex)
             {
+                L.Fehler(ex);
                 MessageBox.Show(ex.Message, "Info vom System", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
