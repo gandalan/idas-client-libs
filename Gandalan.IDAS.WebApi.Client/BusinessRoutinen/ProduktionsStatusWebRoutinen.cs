@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Net;
@@ -20,12 +20,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             }
             catch (WebException wex)
             {
-                if (wex.Response is HttpWebResponse)
+                if (wex.Response is HttpWebResponse response)
                 {
-                    HttpStatusCode code = (wex.Response as HttpWebResponse).StatusCode;
+                    var code = response.StatusCode;
                     if (code == HttpStatusCode.NotFound)
                         return null;
                 }
+
                 throw;
             }
         }
@@ -34,25 +35,25 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             try
             {
-                return await GetAsync<ProduktionsStatusDTO>("ProduktionsStatus/" + guid.ToString());
+                return await GetAsync<ProduktionsStatusDTO>("ProduktionsStatus/" + guid);
             }
             catch (WebException wex)
             {
-                if (wex.Response is HttpWebResponse)
+                if (wex.Response is HttpWebResponse response)
                 {
-                    HttpStatusCode code = (wex.Response as HttpWebResponse).StatusCode;
+                    var code = response.StatusCode;
                     if (code == HttpStatusCode.NotFound)
                         return null;
                 }
+
                 throw;
             }
         }
 
-        public async Task SaveProduktionsStatusAsync(ProduktionsStatusDTO status) 
+        public async Task SaveProduktionsStatusAsync(ProduktionsStatusDTO status)
             => await PutAsync("ProduktionsStatus", status);
 
-        public async Task SaveProduktionsStatusHistorieAsync(Guid avGuid, ProduktionsStatusHistorieDTO historie) 
+        public async Task SaveProduktionsStatusHistorieAsync(Guid avGuid, ProduktionsStatusHistorieDTO historie)
             => await PutAsync($"ProduktionsStatus/AddHistorie/{avGuid}", historie);
-
     }
 }

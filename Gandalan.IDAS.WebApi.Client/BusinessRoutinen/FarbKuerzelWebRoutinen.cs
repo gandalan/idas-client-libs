@@ -14,6 +14,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await GetAsync<FarbKuerzelDTO[]>("FarbKuerzel");
 
         public async Task SaveFarbKuerzelAsync(FarbKuerzelDTO dto) 
-            => await PutAsync("FarbKuerzel/" + dto.FarbKuerzelGuid.ToString(), dto);
+            => await PutAsync("FarbKuerzel/" + dto.FarbKuerzelGuid, dto);
     }
 }
