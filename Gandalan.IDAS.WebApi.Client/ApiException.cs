@@ -1,6 +1,5 @@
-﻿using System;
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System;
 using System.Net;
 
 namespace Gandalan.IDAS.Web
@@ -57,11 +56,5 @@ namespace Gandalan.IDAS.Web
             StatusCode = statusCode;
             Payload = JsonConvert.SerializeObject(payload);
         }
-
-        protected ApiException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
-
-
     }
 }

@@ -27,6 +27,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await GetAsync($"MaterialBestellungenReset?resetAb={resetAb.ToString("o")}");
 
         public async Task<string> GetgSQLBelegAsync(Guid belegGuid) 
-            => Encoding.UTF8.GetString(await GetDataAsync("Bestellungen/" + belegGuid.ToString()));
+            => Encoding.UTF8.GetString(await GetDataAsync("Bestellungen/" + belegGuid));
     }
 }

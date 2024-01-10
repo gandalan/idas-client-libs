@@ -24,10 +24,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await GetAsync<BaseListItemDTO[]>($"Lieferscheine/?status={status}&jahr={jahr}&changedSince={changedSince:o}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
 
         public async Task<VorgangDTO> GetAsyncVorgangByLieferscheinGuidAsync(Guid lieferscheinGuid)
-            => await GetAsync<VorgangDTO>("Lieferscheine/" + lieferscheinGuid.ToString());
+            => await GetAsync<VorgangDTO>("Lieferscheine/" + lieferscheinGuid);
 
         public async Task<VorgangStatusDTO> GetAsyncStatusAsync(Guid vorgangGuid) 
-            => await GetAsync<VorgangStatusDTO>("VorgangStatus/" + vorgangGuid.ToString());
+            => await GetAsync<VorgangStatusDTO>("VorgangStatus/" + vorgangGuid);
 
         public async Task<VorgangStatusDTO> SetStatusAsync(Guid vorgangGuid, string statusCode)
         {

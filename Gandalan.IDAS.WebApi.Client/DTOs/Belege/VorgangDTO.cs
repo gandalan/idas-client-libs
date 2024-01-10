@@ -87,6 +87,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid OriginalMandantGuid { get; set; }
         public long? OriginalVorgangsNummer { get; set; }
         public Guid OriginalAppGuid { get; set; }
+        public bool InnergemeinschaftlichOhneMwSt { get; set; }
 
         public VorgangDTO()
         {
