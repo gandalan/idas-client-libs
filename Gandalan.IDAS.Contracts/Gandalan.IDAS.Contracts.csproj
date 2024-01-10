@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net7.0;net6.0;net48</TargetFrameworks>
+    <TargetFrameworks>net8.0;net7.0;net6.0;net48</TargetFrameworks>
     <AssemblyName>GDL.IDAS.Contracts</AssemblyName>
 
     <AssemblyVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</AssemblyVersion>
@@ -18,51 +18,11 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.1|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.1|AnyCPU'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net472|AnyCPU'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|AnyCPU'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0|AnyCPU'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
   </PropertyGroup>
 

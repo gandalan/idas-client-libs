@@ -1,4 +1,4 @@
-﻿// *****************************************************************************
+// *****************************************************************************
 // Gandalan GmbH & Co. KG - (c) 2017
 // *****************************************************************************
 // Middleware//Gandalan.IDAS.WebApi.Client//WebRoutinenBase.cs
@@ -7,7 +7,6 @@
 // *****************************************************************************
 
 using System;
-using System.Runtime.Serialization;
 
 namespace Gandalan.IDAS.WebApi.Client
 {
@@ -23,10 +22,6 @@ namespace Gandalan.IDAS.WebApi.Client
         }
 
         public ApiUnauthorizedException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected ApiUnauthorizedException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }
