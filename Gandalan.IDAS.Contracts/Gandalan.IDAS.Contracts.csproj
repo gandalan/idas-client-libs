@@ -10,13 +10,12 @@
     <FileVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</FileVersion>
     <Version>2099.0.0-alpha</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>C:\projects\Repos\idas-client-libs\Gandalan.IDAS.Contracts\GDL.IDAS.Contracts.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -34,5 +33,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Gandalan.IDAS.WebApi.Client\Gandalan.IDAS.WebApi.Client.csproj" />
   </ItemGroup>
-
 </Project>

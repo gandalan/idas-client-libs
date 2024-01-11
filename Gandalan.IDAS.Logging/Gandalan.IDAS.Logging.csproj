@@ -10,13 +10,12 @@
     <FileVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</FileVersion>
     <Version>2099.0.0-alpha</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>C:\Projects\idas-client-libs\Gandalan.IDAS.Logging\GDL.IDAS.Logging.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
