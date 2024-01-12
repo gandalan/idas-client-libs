@@ -25,68 +25,68 @@ namespace Gandalan.IDAS.WebApi.DTO
             if (Version < 1)
             {
                 Version = 1;
-                Add(new Kapazitaetsvorgabe() { GroupName = "Spannrahmen", Label = "SP1", Produktgruppe = new List<string>() { "SP1" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Spannrahmen", Label = "SP2", Produktgruppe = new List<string>() { "SP2" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Spannrahmen", Label = "SP4", Produktgruppe = new List<string>() { "SP4" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Spannrahmen", Label = "SP5", Produktgruppe = new List<string>() { "SP5" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Spannrahmen", Label = "SP6", Produktgruppe = new List<string>() { "SP6" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Spannrahmen", Label = "SP7", Produktgruppe = new List<string>() { "SP7" }, IstBasisregel = true, Order = Count });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Spannrahmen", Label = "SP1", Produktgruppe = new List<string>() { "SP1" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 27 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Spannrahmen", Label = "SP2", Produktgruppe = new List<string>() { "SP2" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 25 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Spannrahmen", Label = "SP4", Produktgruppe = new List<string>() { "SP4" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 25 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Spannrahmen", Label = "SP5", Produktgruppe = new List<string>() { "SP5" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 25 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Spannrahmen", Label = "SP6", Produktgruppe = new List<string>() { "SP6" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 28 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Spannrahmen", Label = "SP7", Produktgruppe = new List<string>() { "SP7" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 28 });
 
-                Add(new Kapazitaetsvorgabe() { GroupName = "Drehfenster DF3, DF4", Label = "1 flg. ohne Rahmen", Produktgruppe = new List<string>() { "DF3/1", "DF3/3", "DF4" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Drehfenster DF3, DF4", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DF3/7", "DF3/8", "DF3/9", "DF3/10" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Drehfenster DF3, DF4", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DF3/16" }, IstBasisregel = true, Order = Count });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Drehfenster DF3, DF4", Label = "1 flg. ohne Rahmen", Produktgruppe = new List<string>() { "DF3/1", "DF3/3", "DF4" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 33 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Drehfenster DF3, DF4", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DF3/7", "DF3/8", "DF3/9", "DF3/10" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 40 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Drehfenster DF3, DF4", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DF3/16" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 65 });
 
-                Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT3, DT4", Label = "1 flg. ohne Rahmen", Produktgruppe = new List<string>() { "DT3/1", "DT3/3", "DT3/31", "DT3/37", "DT3/38", "DT4/2", "DT4/4" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT3, DT4", Label = "2 flg. ohne Rahmen", Produktgruppe = new List<string>() { "DT3/11", "DT3/36", "DT4/12" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT3, DT4", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DT3", "DT4" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT3, DT4", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DT3/13", "DT3/15", "DT3/16", "DT3/26", "DT3/27", "DT3/30", "DT3/40", "DT3/41", "DT4/9" }, IstBasisregel = true, Order = Count });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT3, DT4", Label = "1 flg. ohne Rahmen", Produktgruppe = new List<string>() { "DT3/1", "DT3/3", "DT3/31", "DT3/37", "DT3/38", "DT4/2", "DT4/4" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 55 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT3, DT4", Label = "2 flg. ohne Rahmen", Produktgruppe = new List<string>() { "DT3/11", "DT3/36", "DT4/12" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 102 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT3, DT4", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DT3", "DT4" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 62 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT3, DT4", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DT3/13", "DT3/15", "DT3/16", "DT3/26", "DT3/27", "DT3/30", "DT3/40", "DT3/41", "DT4/9" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 109 });
 
                 Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT6", Label = "1 flg. ohne Rahmen", Produktgruppe = new List<string>() { "DT6/1", "DT6/11", "DT6/3", "DT6/38" }, IstBasisregel = true, Order = Count });
                 Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT6", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DT6/8", "DT6/10", "DT6/13", "DT6/16", "DT6/42" }, IstBasisregel = true, Order = Count });
                 Add(new Kapazitaetsvorgabe() { GroupName = "Drehtüren DT6", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "DT6/40", "DT6/41" }, IstBasisregel = true, Order = Count });
 
-                Add(new Kapazitaetsvorgabe() { GroupName = "Pendeltüren PT2", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PT2" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Pendeltüren PT2", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PT2/71", "PT2/72", "PT2/73", "PT2/74", "PT2/75", "PT2/76", "PT2/77", "PT2/78", "PT2/79", "PT2/80" }, IstBasisregel = true, Order = Count });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Pendeltüren PT2", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PT2" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 63 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Pendeltüren PT2", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PT2/71", "PT2/72", "PT2/73", "PT2/74", "PT2/75", "PT2/76", "PT2/77", "PT2/78", "PT2/79", "PT2/80" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 118 });
 
-                Add(new Kapazitaetsvorgabe() { GroupName = "Pendelfenster PF2", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PF2" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Pendelfenster PF2", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PF2/71", "PF2/76", "PF2/78" }, IstBasisregel = true, Order = Count });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Pendelfenster PF2", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PF2" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 53 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Pendelfenster PF2", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PF2/71", "PF2/76", "PF2/78" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 98 });
 
-                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "RO4", Produktgruppe = new List<string>() { "RO4" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "RO4 quer", Produktgruppe = new List<string>() { "RO4/10" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "RO4 quer (2-fach)", Produktgruppe = new List<string>() { "RO4/12" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "RO5", Produktgruppe = new List<string>() { "RO5" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "RO6", Produktgruppe = new List<string>() { "RO6" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "SD1", Produktgruppe = new List<string>() { "SD1" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "ER1", Produktgruppe = new List<string>() { "ER1" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "ER2", Produktgruppe = new List<string>() { "ER2" }, IstBasisregel = true, Order = Count });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "RO4", Produktgruppe = new List<string>() { "RO4" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 44 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "RO4 quer", Produktgruppe = new List<string>() { "RO4/10" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 54 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "RO4 quer (2-fach)", Produktgruppe = new List<string>() { "RO4/12" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 105 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "RO5", Produktgruppe = new List<string>() { "RO5" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 38 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "RO6", Produktgruppe = new List<string>() { "RO6" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 44 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "SD1", Produktgruppe = new List<string>() { "SD1" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 92 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "ER1", Produktgruppe = new List<string>() { "ER1" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 120 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Rollo", Label = "ER2", Produktgruppe = new List<string>() { "ER2" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 180 });
 
-                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI1", Produktgruppe = new List<string>() { "LI1" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI1 2tlg.", Produktgruppe = new List<string>() { "LI1/4" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI2", Produktgruppe = new List<string>() { "LI2" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI2 2tlg.", Produktgruppe = new List<string>() { "LI2/4" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI3", Produktgruppe = new List<string>() { "LI3" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI3 2tlg.", Produktgruppe = new List<string>() { "LI3/4", "LI3/14", "LI3/54", "LI3/64" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI4", Produktgruppe = new List<string>() { "LI4" }, IstBasisregel = true, Order = Count });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI1", Produktgruppe = new List<string>() { "LI1" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 26 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI1 2tlg.", Produktgruppe = new List<string>() { "LI1/4" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 49 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI2", Produktgruppe = new List<string>() { "LI2" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 32 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI2 2tlg.", Produktgruppe = new List<string>() { "LI2/4" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 49 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI3", Produktgruppe = new List<string>() { "LI3" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 62 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI3 2tlg.", Produktgruppe = new List<string>() { "LI3/4", "LI3/14", "LI3/54", "LI3/64" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 84 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Lichtschachtabdeckung", Label = "LI4", Produktgruppe = new List<string>() { "LI4" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 49 });
 
-                Add(new Kapazitaetsvorgabe() { GroupName = "Terresa", Label = "TE1", Produktgruppe = new List<string>() { "TE1" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Terresa", Label = "TE1 2tlg.", Produktgruppe = new List<string>() { "TE1/14" }, IstBasisregel = true, Order = Count });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Terresa", Label = "TE1", Produktgruppe = new List<string>() { "TE1" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 62 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Terresa", Label = "TE1 2tlg.", Produktgruppe = new List<string>() { "TE1/14" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 84 });
 
-                Add(new Kapazitaetsvorgabe() { GroupName = "Schiebeanlage ST3, ST4", Label = "1 flg. mit Lso/Lsu", Produktgruppe = new List<string>() { "ST3/1", "ST3/2", "ST3/3", "ST3/4", "ST3/5", "ST3/6", "ST3/7", "ST3/8", "ST3/9", "ST4/1", "ST4/2", "ST4/4", "ST4/6" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Schiebeanlage ST3, ST4", Label = "2 flg. mit Lso/Lsu", Produktgruppe = new List<string>() { "ST3/21", "ST3/22", "ST3/23", "ST3/24", "ST3/25", "ST3/26", "ST3/29", "ST3/52", "ST4/21", "ST4/22", "ST4/24", "ST4/26", "ST4/52" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Schiebeanlage ST3, ST4", Label = "1 flg. mit Rahmen", Produktgruppe = new List<string>() { "ST3", "ST4" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Schiebeanlage ST3, ST4", Label = "2 flg. mit Rahmen", Produktgruppe = new List<string>() { "ST3/50.AMB", "ST3/50.LMM", "ST3/51.AMB", "ST3/51.LMM", "ST3/55", "ST3/56", "ST4/50.AMB", "ST4/50.LMM", "ST4/51.AMB", "ST4/51.LMM", "ST4/55", "ST4/56" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Schiebeanlage ST3, ST4", Label = "3 flg. mit Rahmen", Produktgruppe = new List<string>() { "ST3/80", "ST3/81", "ST4/80", "ST4/81" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Schiebeanlage ST3, ST4", Label = "4 flg. mit Rahmen", Produktgruppe = new List<string>() { "ST3/57", "ST3/58" }, IstBasisregel = true, Order = Count });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Schiebeanlage ST3, ST4", Label = "1 flg. mit Lso/Lsu", Produktgruppe = new List<string>() { "ST3/1", "ST3/2", "ST3/3", "ST3/4", "ST3/5", "ST3/6", "ST3/7", "ST3/8", "ST3/9", "ST4/1", "ST4/2", "ST4/4", "ST4/6" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 42 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Schiebeanlage ST3, ST4", Label = "2 flg. mit Lso/Lsu", Produktgruppe = new List<string>() { "ST3/21", "ST3/22", "ST3/23", "ST3/24", "ST3/25", "ST3/26", "ST3/29", "ST3/52", "ST4/21", "ST4/22", "ST4/24", "ST4/26", "ST4/52" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 76 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Schiebeanlage ST3, ST4", Label = "1 flg. mit Rahmen", Produktgruppe = new List<string>() { "ST3", "ST4" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 52 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Schiebeanlage ST3, ST4", Label = "2 flg. mit Rahmen", Produktgruppe = new List<string>() { "ST3/50.AMB", "ST3/50.LMM", "ST3/51.AMB", "ST3/51.LMM", "ST3/55", "ST3/56", "ST4/50.AMB", "ST4/50.LMM", "ST4/51.AMB", "ST4/51.LMM", "ST4/55", "ST4/56" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 86 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Schiebeanlage ST3, ST4", Label = "3 flg. mit Rahmen", Produktgruppe = new List<string>() { "ST3/80", "ST3/81", "ST4/80", "ST4/81" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 109 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Schiebeanlage ST3, ST4", Label = "4 flg. mit Rahmen", Produktgruppe = new List<string>() { "ST3/57", "ST3/58" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 158 });
 
-                Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL1", Label = "1 flg. ohne Rahmen", Produktgruppe = new List<string>() { "PL1/1" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL1", Label = "2 flg. ohne Rahmen", Produktgruppe = new List<string>() { "PL1/2" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL1", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PL1/5", "PL1/9" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL1", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PL1/6", "PL1/10" }, IstBasisregel = true, Order = Count });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL1", Label = "1 flg. ohne Rahmen", Produktgruppe = new List<string>() { "PL1/1" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 38 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL1", Label = "2 flg. ohne Rahmen", Produktgruppe = new List<string>() { "PL1/2" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 68 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL1", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PL1/5", "PL1/9" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 45 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL1", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PL1/6", "PL1/10" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 82 });
 
-                Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL2", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PL2" }, IstBasisregel = true, Order = Count });
-                Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL2", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PL2/25", "PL2/29.AMB", "PL2/25.LMM" }, IstBasisregel = true, Order = Count });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL2", Label = "1 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PL2" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 45 });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Plissee PL2", Label = "2 flg. mit Montagerahmen", Produktgruppe = new List<string>() { "PL2/25", "PL2/29.AMB", "PL2/25.LMM" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 82 });
 
-                Add(new Kapazitaetsvorgabe() { GroupName = "Zusatzrahmen", Label = "ZR", Produktgruppe = new List<string>() { "ZR" }, IstBasisregel = true, Order = Count });
+                Add(new Kapazitaetsvorgabe() { GroupName = "Zusatzrahmen", Label = "ZR", Produktgruppe = new List<string>() { "ZR" }, IstBasisregel = true, Order = Count, Zeitvorgabe = 14 });
             }
 
             if (Version < 2)
@@ -99,6 +99,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "SP1", "SP2", "SP4", "SP5", "SP6", "SP7", "PF2", "DF3", "DF4", "PT2", "DT3", "DT4", "ST3", "ST4" },
                     Artikelliste = new List<string>() { "142627", "142632" },
                     Etikettentext = new List<string>() { "V4", "V2AA" },
+                    Zeitvorgabe = 5,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -108,6 +109,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "SP1", "SP2", "SP4", "SP5", "SP6", "SP7", "PF2", "DF3", "DF4", "PT2", "DT3", "DT4", "ST3", "ST4" },
                     Artikelliste = new List<string>() { "142628", "142638", "142680" },
                     Etikettentext = new List<string>() { "PA", "PAE", "PIA" },
+                    Zeitvorgabe = 4,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -117,6 +119,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "SP1", "SP2", "SP4", "SP5", "SP6", "SP7", "PF2", "DF3", "DF4", "PT2", "DT3", "DT4", "ST3", "ST4" },
                     Artikelliste = new List<string>() { "142519", "142520", "142521", "142523" },
                     Etikettentext = new List<string>() { "TTA", "TFM", "TFP" },
+                    Zeitvorgabe = 2,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -126,6 +129,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "PT2", "DT3", "DT4", "ST3", "ST4" },
                     Artikelliste = new List<string>() { "142628", "142638" },
                     Etikettentext = new List<string>() { "/ PA", "/ PAE" },
+                    Zeitvorgabe = 3,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -134,6 +138,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Label = "Vorbiegen",
                     Produktgruppe = new List<string>() { "SP1", "SP2", "SP4", "SP5", "SP6", "SP7", "ST3", "ST4" },
                     Etikettentext = new List<string>() { "v_Kw_" },
+                    Zeitvorgabe = 4,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -143,6 +148,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "SP1" },
                     Artikelliste = new List<string>() { "132466" },
                     Etikettentext = new List<string>() { "SA_" },
+                    Zeitvorgabe = 1,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -152,6 +158,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "SP5" },
                     Artikelliste = new List<string>() { "132466", "132272" },
                     Etikettentext = new List<string>() { "SA_", "mW_" },
+                    Zeitvorgabe = 1,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -161,6 +168,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "SP2", "SP4", "SP6", "SP7" },
                     Artikelliste = new List<string>() { "132472" },
                     Etikettentext = new List<string>() { "mW_" },
+                    Zeitvorgabe = 1,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -169,6 +177,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Label = "Sprosse (im Spannrahmen)",
                     Produktgruppe = new List<string>() { "SP1", "SP2", "SP4", "SP5", "SP6", "SP7" },
                     Etikettentext = new List<string>() { "SpB_" },
+                    Zeitvorgabe = 2,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -178,6 +187,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "LI1", "LI2" },
                     Artikelliste = new List<string>() { "103313" },
                     Etikettentext = new List<string>() { "SpB_" },
+                    Zeitvorgabe = 6,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -186,6 +196,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Label = "Sprossenpaneel",
                     Produktgruppe = new List<string>() { "PT2", "DT3", "DT4", "ST3", "ST4" },
                     Etikettentext = new List<string>() { "Pan_" },
+                    Zeitvorgabe = 5,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -194,6 +205,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Label = "Montagebohrung",
                     Produktgruppe = new List<string>() { "SP1", "PF2", "DF3", "DF4", "PT2", "DT3", "DT4", "RO4", "RO5", "RO6", "ER1", "ER2", "PL1", "PL2", "ST3", "ST4", "LI4" },
                     Etikettentext = new List<string>() { "MB_s", "MB_v" },
+                    Zeitvorgabe = 4,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -203,6 +215,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "PT2", "DT3", "DT4", "ST3", "ST4" },
                     Artikelliste = new List<string>() { "222501", "223510", "223520" },
                     Etikettentext = new List<string>() { "KP", "NeKP", "NeHP" },
+                    Zeitvorgabe = 20,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -212,6 +225,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "PF2", "PT2" },
                     Artikelliste = new List<string>() { "133470" },
                     Etikettentext = new List<string>() { "ExV_" },
+                    Zeitvorgabe = 12,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -221,6 +235,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "DT3", "PT2" },
                     Artikelliste = new List<string>() { "166460.02", "133460.05" },
                     Etikettentext = new List<string>() { "SchiebVs_" },
+                    Zeitvorgabe = 14,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -230,6 +245,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "DT3" },
                     Artikelliste = new List<string>() { "133510" },
                     Etikettentext = new List<string>() { "Mag" },
+                    Zeitvorgabe = 2,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -239,6 +255,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "DT3", "DT4" },
                     Artikelliste = new List<string>() { "133540" },
                     Etikettentext = new List<string>() { "TD" },
+                    Zeitvorgabe = 19,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -248,6 +265,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "RO5" },
                     Artikelliste = new List<string>() { "153925" },
                     Etikettentext = new List<string>() { "Stab" },
+                    Zeitvorgabe = 5,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -257,6 +275,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "RO4", "RO5", "RO6" },
                     Artikelliste = new List<string>() { "143920" },
                     Etikettentext = new List<string>() { "ABf_" },
+                    Zeitvorgabe = 4,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -266,6 +285,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "RO4", "RO5", "RO6" },
                     Artikelliste = new List<string>() { "144080", "143981" },
                     Etikettentext = new List<string>() { "ZiehSch", "EinhSch" },
+                    Zeitvorgabe = 1,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -275,6 +295,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "ST3", "ST4" },
                     Artikelliste = new List<string>() { "124860" },
                     Etikettentext = new List<string>() { "FSp__D" },
+                    Zeitvorgabe = 2,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -284,6 +305,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "ST3" },
                     Artikelliste = new List<string>() { "104850" },
                     Etikettentext = new List<string>() { "GL" },
+                    Zeitvorgabe = 13,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -293,6 +315,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "ST3", "ST4" },
                     Artikelliste = new List<string>() { "103518", "134852" },
                     Etikettentext = new List<string>() { "SpSoB", "Fb_" },
+                    Zeitvorgabe = 10,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -302,6 +325,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "ST3", "ST4" },
                     Artikelliste = new List<string>() { "103518" },
                     Etikettentext = new List<string>() { "SpSoB" },
+                    Zeitvorgabe = 5,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -311,6 +335,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Produktgruppe = new List<string>() { "LI2/2" },
                     Artikelliste = new List<string>() { "143311" },
                     Etikettentext = new List<string>() { "TsDs" },
+                    Zeitvorgabe = 2,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -319,6 +344,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Label = "symmetrischer Gitterrost",
                     Produktgruppe = new List<string>() { "LI3", "TE1" },
                     Etikettentext = new List<string>() { "GR_sym" },
+                    Zeitvorgabe = 2,
                     Order = Count
                 });
                 Add(new Kapazitaetsvorgabe()
@@ -326,6 +352,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     GroupName = "Sonstiges",
                     Label = "Mehraufwand durch Sonderfarbe",
                     Etikettentext = new List<string>() { "Kunst.Farbe:" },
+                    Zeitvorgabe = 5,
                     Order = Count
                 });
             }
