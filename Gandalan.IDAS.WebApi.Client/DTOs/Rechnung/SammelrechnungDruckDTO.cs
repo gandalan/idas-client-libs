@@ -35,6 +35,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public bool IsEndkunde { get; set; }
         public IList<BelegDruckDTO> EinzelrechnungDTOs { get; set; }
         public string Belegart { get; set; } = "Sammelrechnung";
+        public string Ueberschrift { get; set; }
 
         public SammelrechnungDruckDTO(SammelrechnungDTO sammelrechnung)
         {
@@ -86,8 +87,10 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public int LaufendeNummer { get; set; }
         public string RechnungNummer { get; set; }
         public string RechnungDatum { get; set; }
+        public string VorgangsDatum { get; set; }
         public string RechnungKommission { get; set; }
         public string RechnungBetrag { get; set; }
+        public string Ueberschrift { get; set; }
         public IList<SammelrechnungSaldoDruckDTO> RechnungSalden { get; set; }
 
         public SammelrechnungPositionDruckDTO(SammelrechnungPositionenDTO position)
@@ -97,8 +100,10 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             LaufendeNummer = position.LaufendeNummer;
             RechnungNummer = position.RechnungNummer.ToString();
             RechnungDatum = position.RechnungDatum.ToString("d", culture);
+            VorgangsDatum = position.VorgangsDatum.ToString("d", culture);
             RechnungKommission = position.RechnungKommision;
-            RechnungBetrag = position.RechnungBetrag.ToString(culture);
+            var warenwertSalde = position.Salden.FirstOrDefault(s => s.Name == "Warenwert");
+            RechnungBetrag = warenwertSalde.Betrag.ToString(culture);
             RechnungSalden = SammelrechnungSaldoDruckDTO.ListFromDTOs(position.Salden);
         }
         public static List<SammelrechnungPositionDruckDTO> ListFromDTOs(IList<SammelrechnungPositionenDTO> positionen)
@@ -142,6 +147,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
                 var maxReihenfolge = salden.Max(p => p.Reihenfolge);
                 foreach (var saldo in salden)
                 {
+                    if (saldo.Name == "Warenwert") continue;
                     druckSalden.Add(new SammelrechnungSaldoDruckDTO(saldo, isLastElement: saldo.Reihenfolge == maxReihenfolge));
                 }
             }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.Client.Contracts.AppServices
 {
@@ -15,7 +15,8 @@ namespace Gandalan.Client.Contracts.AppServices
         string StandardReportsDevDir { get; }
         string AddOnDir { get; }
         string CacheDir { get; }
-        string SettingsDir { get; }
+        string UserSettingsDir { get; }
+        string AppSettingsDir { get; }
         bool DeveloperModeEnabled { get; }
         string ApplicationName { get; }
         string IconPath { get; }

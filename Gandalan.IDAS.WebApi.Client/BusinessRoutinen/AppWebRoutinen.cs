@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
-using Gandalan.IDAS.WebApi.DTO.API;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -47,12 +46,12 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<BenutzerDTO> CreateOrUpdateBenutzerByKundeAsync(Guid kundeGuid, BenutzerDTO data, bool pwSenden = false, string passwort = "")
         {
-            return await PostAsync<BenutzerDTO>("AppBenutzer/?kundeGuid=" + kundeGuid.ToString() + "&pwSenden=" + pwSenden + "&passwort=" + passwort, data);
+            return await PostAsync<BenutzerDTO>("AppBenutzer/?kundeGuid=" + kundeGuid + "&pwSenden=" + pwSenden + "&passwort=" + passwort, data);
         }
 
         public async Task DeleteBenutzerByKundeAsync(Guid kundeGuid, BenutzerDTO data)
         {
-            await DeleteAsync("AppBenutzer/?kundeGuid=" + kundeGuid.ToString() + "&benutzerGuid=" + data.BenutzerGuid);
+            await DeleteAsync("AppBenutzer/?kundeGuid=" + kundeGuid + "&benutzerGuid=" + data.BenutzerGuid);
         }
 
         public async Task AktiviereMandantAsync(string adminEmail)

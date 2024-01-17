@@ -16,7 +16,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await GetAsync<ReportDTO[]>("ReportDefaults");
 
         public async Task<ReportDTO> GetReportDefaultAsync(Guid id)
-            => await GetAsync<ReportDTO>("ReportDefaults?id=" + id.ToString());
+            => await GetAsync<ReportDTO>("ReportDefaults?id=" + id);
 
         public async Task SaveReportDefaultAsync(ReportDTO dto) 
             => await PutAsync("ReportDefaults/" + dto.ReportGuid, dto);

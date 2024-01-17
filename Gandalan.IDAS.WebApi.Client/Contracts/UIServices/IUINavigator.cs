@@ -6,13 +6,13 @@ namespace Gandalan.Client.Contracts.UIServices
     public interface IUINavigator
     {
         void SetContainerControl(object control);
-        void NavigateTo(object control, bool clearHistory = false, Func<Task> onShown = null);
-        void NavigateTo<T>(bool clearHistory = false, Func<T, IInteractivePanel, Task> onShown = null) where T : class;
+        void NavigateTo(object control, bool clearHistory = false, Func<Task> onShown = null, Func<Task> historyOverride = null);
+        void NavigateTo<T>(bool clearHistory = false, Func<T, IInteractivePanel, Task> onShown = null, Func<Task> historyOverride = null) where T : class;
         void NavigateBack();
 
         string CurrentCaption { get; }
         bool NavigationAllowed { get; }
-        
+
         event EventHandler NavigationOccurred;
     }
 }

@@ -40,13 +40,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await PutAsync<VorgangDTO>("Vorgang", vorgang);
 
         public async Task<VorgangDTO> LadeVorgangAsync(Guid vorgangGuid, bool mitKunde)
-            => await GetAsync<VorgangDTO>("Vorgang/" + vorgangGuid.ToString() + "?includeKunde=" + mitKunde.ToString());
+            => await GetAsync<VorgangDTO>("Vorgang/" + vorgangGuid + "?includeKunde=" + mitKunde);
 
         public async Task<VorgangDTO> LadeVorgangAsync(long vorgangsNummer, int jahr, bool mitKunde = false)
             => await GetAsync<VorgangDTO>($"Vorgang/{vorgangsNummer}/{jahr}?includeKunde={mitKunde}");
 
         public async Task<VorgangStatusDTO> GetStatusAsync(Guid vorgangGuid)
-            => await GetAsync<VorgangStatusDTO>("VorgangStatus/" + vorgangGuid.ToString());
+            => await GetAsync<VorgangStatusDTO>("VorgangStatus/" + vorgangGuid);
 
         public async Task<VorgangStatusDTO> SetStatusAsync(Guid vorgangGuid, string statusCode)
         {
@@ -69,13 +69,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
         public async Task ArchiviereVorgangAsync(Guid vorgangGuid) 
-            => await PostAsync("Archivierung/?vguid=" + vorgangGuid.ToString(), null);
+            => await PostAsync("Archivierung/?vguid=" + vorgangGuid, null);
 
         public async Task ArchiviereVorgangListAsync(List<Guid> vorgangGuidList)
             => await PostAsync("Archivierung/", vorgangGuidList);
 
         public async Task AendereBelegArtAsync(Guid belegGuid, string neueBelegArt)
-            => await PostAsync("BelegArt/?bguid=" + belegGuid.ToString() + "&neueBelegArt=" + neueBelegArt, null);
+            => await PostAsync("BelegArt/?bguid=" + belegGuid + "&neueBelegArt=" + neueBelegArt, null);
 
         public async Task<Dictionary<long, List<VorgangListItemDTO>>> GetAllVorgangForFunctionAsync(DateTime changedSince)
             => await GetAsync<Dictionary<long, List<VorgangListItemDTO>>>($"GetAllVorgangForFunction/?changedSince={changedSince:o}");

@@ -23,6 +23,7 @@
         public string ZuschnittWinkel { get; set; }
         public string FachNummer { get; set; }
         public string InternerName { get; set; }
+        public string Ablagefach { get; set; }
 
     }
 }

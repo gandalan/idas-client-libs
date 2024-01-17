@@ -22,7 +22,7 @@ namespace Gandalan.IDAS.WebApi.Client
         }
 
         public async Task<MandantDTO> LadeMandantAsync(Guid guid) 
-            => await GetAsync<MandantDTO>("MandantenAdmin?guid=" + guid.ToString());
+            => await GetAsync<MandantDTO>("MandantenAdmin?guid=" + guid);
 
         public async Task MandantenUmziehenAsync(Guid mandant, Guid zielMandant) 
             => await PutAsync("MandantenAdmin", new List<Guid> { mandant, zielMandant });

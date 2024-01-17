@@ -38,6 +38,11 @@ namespace Gandalan.IDAS.WebApi.DTO
                 Ansprechpartner = ""; //??? _apiSettings?.AuthToken?.Benutzer?.Vorname + " " + _apiSettings?.AuthToken?.Benutzer?.Nachname;
                 Telefonnummer = ""; //??? _apiSettings?.AuthToken?.Benutzer?.TelefonNummer ?? "";
 
+                if (vorgang.ApplicationSpecificProperties != null && vorgang.ApplicationSpecificProperties.Count != 0 && vorgang.ApplicationSpecificProperties.TryGetValue("settings", out var settings) && settings.TryGetValue("Kontrollkuerzel", out var kontrollkuerzel))
+                {
+                    Kontrollkuerzel = kontrollkuerzel as string;
+                }
+
                 var abBelege = vorgang.Belege.Where(b => b.BelegArt == "AB" || b.BelegArt == "Auftragsbestätigung");
                 Bestelldatum = abBelege.Any() ? abBelege.Last().BelegDatum.ToString("d", culture) : "";
                 Belegdatum = beleg.BelegDatum.ToString("d", culture);
@@ -165,6 +170,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IsRabatt { get; set; }
         public bool IstSelbstabholer { get; set; }
         public long? SammelbelegNummer { get; set; }
+        public string Kontrollkuerzel { get; set; }
 
         public void SetTextBausteine(object textBausteine)
         {
@@ -309,6 +315,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstVE { get; set; }
         public decimal? VE_Menge { get; set; }
         public IList<ZusatztextDTO> Zusatztexte { get; set; }
+        public Guid BelegPositionGuid { get; set; }
 
         public BelegPositionDruckDTO()
         {
@@ -354,6 +361,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 ProduktionZusatzInfoPrintOnReport = position.ProduktionZusatzInfoPrintOnReport;
                 ProduktionZusatzInfoPrintZusatzEtikett = position.ProduktionZusatzInfoPrintZusatzEtikett;
                 Zusatztexte = position.Zusatztexte;
+                BelegPositionGuid = position.BelegPositionGuid;
                 if (preiseAnzeigen)
                 {
                     Farbzuschlag = position.Farbzuschlag.ToString(culture);

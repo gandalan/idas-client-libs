@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.DTOs.Produktion;
 using System;
 using System.Net;
@@ -16,16 +16,17 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             try
             {
-                return await GetAsync<ProduktionsInfoDTO>("ProduktionsInfo?vorgangGuid=" + vorgangGuid.ToString());
+                return await GetAsync<ProduktionsInfoDTO>("ProduktionsInfo?vorgangGuid=" + vorgangGuid);
             }
             catch (WebException wex)
             {
-                if (wex.Response is HttpWebResponse)
+                if (wex.Response is HttpWebResponse response)
                 {
-                    HttpStatusCode code = (wex.Response as HttpWebResponse).StatusCode;
+                    var code = response.StatusCode;
                     if (code == HttpStatusCode.NotFound)
                         return null;
                 }
+
                 throw;
             }
         }

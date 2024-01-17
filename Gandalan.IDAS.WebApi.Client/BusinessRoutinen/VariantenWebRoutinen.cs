@@ -1,5 +1,4 @@
 using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Threading.Tasks;
@@ -35,6 +34,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         [Obsolete("Funktion 'SaveVarianteAsync()' verwenden")]
         public async Task SaveAsync(VarianteDTO dto)
-            => await PutAsync("Variante/" + dto.VarianteGuid.ToString(), dto);
+            => await PutAsync("Variante/" + dto.VarianteGuid, dto);
     }
 }

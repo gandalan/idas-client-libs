@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
@@ -9,6 +9,10 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
         public string Ort { get; set; }
         public string Kommission { get; set; }
         public string VorgangsNummer { get; set; }
+        /// <summary>
+        /// Variants of vorgang. Only for zusammengefasste Packliste.
+        /// </summary>
+        public List<string> VorgangsVarianten { get; set; }
         [Obsolete("Use LaufendeNummer instead.")]
         public string PositionsNummer { get; set; }
         public string LaufendeNummer { get; set; }

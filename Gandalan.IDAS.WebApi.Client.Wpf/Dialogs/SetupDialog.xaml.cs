@@ -1,4 +1,5 @@
 using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
 using System.ComponentModel;
@@ -43,8 +44,9 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             {
                 await service.AktiviereMandantAsync(Email.Trim());
             }
-            catch (ApiException)
+            catch (ApiException ex)
             {
+                L.Fehler(ex);
                 return;
             }
             finally
