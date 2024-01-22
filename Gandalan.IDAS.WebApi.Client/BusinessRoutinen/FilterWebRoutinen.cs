@@ -14,7 +14,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await GetAsync<FilterItemDTO[]>("Filter");
 
         public async Task<FilterItemDTO> GetFilterItemAsync(Guid id)
-            => await GetAsync<FilterItemDTO>("Filter?id=" + id.ToString());
+            => await GetAsync<FilterItemDTO>("Filter?id=" + id);
 
         public async Task<FilterItemDTO[]> GetFilterItemsByContextAsync(string context) 
             => await GetAsync<FilterItemDTO[]>("Filter?context=" + context);

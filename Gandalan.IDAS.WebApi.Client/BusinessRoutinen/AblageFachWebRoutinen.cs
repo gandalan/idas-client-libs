@@ -15,7 +15,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<AblageFachDTO> Get(Guid guid)
         {
-            return await GetAsync<AblageFachDTO>("AblageFach/?id=" + guid.ToString());
+            return await GetAsync<AblageFachDTO>("AblageFach/?id=" + guid);
         }
 
         public async Task<List<AblageFachDTO>> GetAll(DateTime? changedSince, bool includeDetails = true)
@@ -37,13 +37,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task Delete(Guid guid)
         {
-            await DeleteAsync("AblageFach/?id=" + guid.ToString());
+            await DeleteAsync("AblageFach/?id=" + guid);
         }
 
 
         public async Task<AblageFachDTO> GetAsync(Guid guid)
         {
-            return await GetAsync<AblageFachDTO>("AblageFach/?id=" + guid.ToString());
+            return await GetAsync<AblageFachDTO>("AblageFach/?id=" + guid);
         }
 
         public async Task<List<AblageFachDTO>> GetAllAsync(DateTime? changedSince, bool includeDetails = true)
@@ -66,7 +66,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task DeleteAsync(Guid guid)
         {
-            await DeleteAsync("AblageFach/?id=" + guid.ToString());
+            await DeleteAsync("AblageFach/?id=" + guid);
         }
     }
 }

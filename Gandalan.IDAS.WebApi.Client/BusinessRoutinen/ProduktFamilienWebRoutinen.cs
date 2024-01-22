@@ -17,6 +17,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         [Obsolete("Funktion 'SaveProduktFamilieAsync()' verwenden")]
         public async Task SaveAsync(ProduktFamilieDTO dto) 
-            => await PutAsync("ProduktFamilie/" + dto.ProduktFamilieGuid.ToString(), dto);
+            => await PutAsync("ProduktFamilie/" + dto.ProduktFamilieGuid, dto);
     }
 }

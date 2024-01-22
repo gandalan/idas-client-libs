@@ -11,6 +11,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool Freigabe_IBOS { get; set; }
         public bool Freigabe_BestellFix { get; set; }
         public bool Freigabe_ARTOS { get; set; }
+        public string FarbArt { get; set; }
 
         public decimal VEMenge { get; set; }
         public int MengeGrossVE { get; set; }

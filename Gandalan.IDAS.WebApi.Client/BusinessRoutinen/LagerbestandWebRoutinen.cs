@@ -14,7 +14,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
         public async Task<LagerbestandDTO> GetAsync(Guid guid) 
-            => await GetAsync<LagerbestandDTO>("Lagerbestand/?id=" + guid.ToString());
+            => await GetAsync<LagerbestandDTO>("Lagerbestand/?id=" + guid);
 
         public async Task<List<LagerbestandDTO>> GetAllAsync(DateTime? changedSince)
         {

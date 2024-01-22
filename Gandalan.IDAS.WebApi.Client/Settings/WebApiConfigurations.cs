@@ -70,9 +70,10 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 }));
                 _settings[settings.FriendlyName] = settings;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Save went wrong, maybe rights missing. Ignore, no user info for now
+                L.Fehler(ex);
             }
         }
 
@@ -165,6 +166,5 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 
             return null;
         }
-
     }
 }
