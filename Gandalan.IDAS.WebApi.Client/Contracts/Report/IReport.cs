@@ -9,6 +9,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
 {
     public abstract class IReport
     {
+        public abstract Guid Guid { get; }
         protected readonly IApplicationConfig AppConfig;
         protected abstract string ReportFolderName { get; set; }
 
