@@ -14,7 +14,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.API
         public static ApiVersionDTO FromAssembly(Assembly assembly)
         {
             var deploymentTime = System.Environment.GetEnvironmentVariable("RELEASE_DEPLOYMENT_STARTTIME");
-            var informationalVersion = System.Environment.GetEnvironmentVariable("GDL.InformationalVersion");
+            var informationalVersion = System.Environment.GetEnvironmentVariable("GDL_InformationalVersion") ?? System.Environment.GetEnvironmentVariable("GDL.InformationalVersion");
 
             return new ApiVersionDTO
             {
