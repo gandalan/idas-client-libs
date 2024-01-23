@@ -18,7 +18,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.API
 
             return new ApiVersionDTO
             {
-                Version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? informationalVersion ?? $"Keine Version gefunden für: {assembly.FullName}",
+                Version = informationalVersion ?? assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? $"Keine Version gefunden für: {assembly.FullName}",
                 Environment = System.Environment.GetEnvironmentVariable("GDL_ENVIRONMENT") ?? System.Environment.GetEnvironmentVariable("GDL.ENVIRONMENT") ?? System.Environment.GetEnvironmentVariable("GDL.Environment") ?? "Development",
                 BuildTime = ExtractBuildTimeFromAssembly(assembly) ?? deploymentTime ?? "-",
                 ReleaseTime = deploymentTime ?? "-",
