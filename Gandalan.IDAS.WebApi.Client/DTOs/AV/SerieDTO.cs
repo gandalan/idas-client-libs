@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,9 +36,13 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public IList<Guid> AVBelegPositionen { get; set; } = new List<Guid>();
         /// <summary>
-        /// Kapazität dieser Serie in neutralen Kapazitätseinheiten
+        /// Kapazität dieser Serie in neutralen Kapazitätseinheiten (alt)
         /// </summary>
         public decimal Kapazitaet { get; set; }
+        /// <summary>
+        /// Kapazität der Serie in Minuten
+        /// </summary>
+        public decimal KapazitaetInMin { get; set; }
         /// <summary>
         /// Belegung der Serie in neutralen Kapazitätseinheiten. Muss beim Hinzfügen/Entfernen 
         /// durch den entsprechenden Algorithmus ermittelt und gesetzt werden.
