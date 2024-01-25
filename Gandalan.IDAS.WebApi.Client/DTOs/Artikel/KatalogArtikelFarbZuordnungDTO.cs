@@ -4,6 +4,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 {
     public class KatalogArtikelFarbZuordnungDTO
     {
+        public Guid FarbKuerzelGuid { get; set; }
         public Guid FarbItemGuid { get; set; }
 
         public decimal Preis { get; set; }

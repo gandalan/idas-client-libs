@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -11,6 +11,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid KatalogArtikelGuid { get; set; }
         public string KatalogNummer { get; set; }
         public Guid FarbGuid { get; set; }
+        public Guid FarbKuerzelGuid { get; set; }
         public string FarbKuerzel { get; set; }
         public decimal Lagerbestand { get; set; }
         public decimal Bestellbestand { get; set; }

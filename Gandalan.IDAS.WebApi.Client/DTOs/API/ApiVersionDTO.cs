@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Reflection;
 
@@ -14,17 +14,16 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.API
         public static ApiVersionDTO FromAssembly(Assembly assembly)
         {
             var deploymentTime = System.Environment.GetEnvironmentVariable("RELEASE_DEPLOYMENT_STARTTIME");
+            var informationalVersion = System.Environment.GetEnvironmentVariable("GDL_InformationalVersion") ?? System.Environment.GetEnvironmentVariable("GDL.InformationalVersion");
 
-            return new ApiVersionDTO()
+            return new ApiVersionDTO
             {
-                Version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? $"Keine Version gefunden für: {assembly.FullName}",
+                Version = informationalVersion ?? assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? $"Keine Version gefunden für: {assembly.FullName}",
                 Environment = System.Environment.GetEnvironmentVariable("GDL_ENVIRONMENT") ?? System.Environment.GetEnvironmentVariable("GDL.ENVIRONMENT") ?? System.Environment.GetEnvironmentVariable("GDL.Environment") ?? "Development",
                 BuildTime = ExtractBuildTimeFromAssembly(assembly) ?? deploymentTime ?? "-",
                 ReleaseTime = deploymentTime ?? "-",
             };
         }
-
-        #region private methods
 
         /// <summary>
         /// Assembly description should contain the build date in following format: <code>"BuildDate=2023-01-11 16:09:51Z;"</code>
@@ -48,7 +47,5 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.API
 
             return date.ToString("yyyy-MM-dd HH:mm:ssK");
         }
-
-        #endregion
     }
 }
