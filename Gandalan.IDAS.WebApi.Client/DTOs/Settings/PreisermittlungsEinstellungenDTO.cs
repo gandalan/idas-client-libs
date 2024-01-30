@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Gandalan.IDAS.WebApi.Data.Visitor;
 
@@ -20,12 +20,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal MbAufpreis { get; set; }
         public DateTime ChangedDate { get; set; }
 
-        #region Public Methods
         public void Accept(IVisitor visitor)
         {
             visitor.Visit(this);
         }
-
-        #endregion
     }
 }

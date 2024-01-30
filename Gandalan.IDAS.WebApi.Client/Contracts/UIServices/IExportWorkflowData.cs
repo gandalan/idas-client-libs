@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices
 {
@@ -16,7 +16,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices
         public string FileFormat { get; set; }
         public string FilePath { get; set; }
 
-        public ExportWorkflowData(Object daten, Guid reportGuid)
+        public ExportWorkflowData(object daten, Guid reportGuid)
         {
             Daten = daten;
             ReportGuid = reportGuid;

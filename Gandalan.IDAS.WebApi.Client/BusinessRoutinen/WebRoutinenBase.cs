@@ -6,12 +6,6 @@
 // Edit: phil - 31.05.2023 11:57
 // *****************************************************************************
 
-using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.Logging;
-using Gandalan.IDAS.Web;
-using Gandalan.IDAS.WebApi.Client.Settings;
-using Gandalan.IDAS.WebApi.DTO;
-using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -19,6 +13,12 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Logging;
+using Gandalan.IDAS.Web;
+using Gandalan.IDAS.WebApi.Client.Settings;
+using Gandalan.IDAS.WebApi.DTO;
+using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client
 {

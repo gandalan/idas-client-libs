@@ -65,7 +65,6 @@ namespace Gandalan.IDAS.WebApi.Client
         /// <summary>
         /// Erstellt und konfiguriert eine neue WebClient-Instanz
         /// </summary>
-        /// <returns></returns>
         private static HttpClient CreateWebClient(HttpClientConfig config)
         {
             var handler = new HttpClientHandler()
@@ -82,10 +81,14 @@ namespace Gandalan.IDAS.WebApi.Client
             client.Timeout = new TimeSpan(0, 5, 0); // 5 Minute
 
             if (!string.IsNullOrEmpty(config.UserAgent))
+            {
                 client.DefaultRequestHeaders.UserAgent.TryParseAdd(config.UserAgent);
+            }
 
             foreach (var key in config.AdditionalHeaders.Keys)
+            {
                 client.DefaultRequestHeaders.Add(key, config.AdditionalHeaders[key]);
+            }
 
             return client;
         }

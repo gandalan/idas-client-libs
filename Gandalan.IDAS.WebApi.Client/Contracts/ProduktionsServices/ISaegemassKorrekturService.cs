@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices
 {
@@ -12,14 +12,12 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices
         /// </summary>
         /// <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
         /// <param name="material">MaterialbedarfDTO, für das das Korrekturmaß abgerufen werden soll</param>
-        /// <returns></returns>
         float GetKorrekturmass(string korrekturSatz, MaterialbedarfDTO material);
 
         /// <summary>
         /// Ruft das (summierte) Korrekturmaß für ein MaterialbedarfDTO, abhängig von Winkel links/rechts, ab. Nutzt den Korrektursatz, der an der Säge "Serie" hinterlegt ist-
         /// </summary>
         /// <param name="material">MaterialbedarfDTO, für das das Korrekturmaß abgerufen werden soll</param>
-        /// <returns></returns>
         float GetKorrekturmass(MaterialbedarfDTO material);
 
         /// <summary>
@@ -28,7 +26,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices
         /// <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
         /// <param name="katalogNummer">Katalognummer des Profils</param>
         /// <param name="winkel">Winkel, für den das Korrekturmaß abgerufen werden soll</param>
-        /// <returns></returns>
         float GetKorrekturmass(string korrekturSatz, string katalogNummer, int winkel);
 
         /// <summary>
@@ -36,7 +33,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices
         /// </summary>
         /// <param name="katalogNummer">Katalognummer des Profils</param>
         /// <param name="winkel">Winkel, für den das Korrekturmaß abgerufen werden soll</param>
-        /// <returns></returns>
         float GetKorrekturmass(string katalogNummer, int winkel);
 
         /// <summary>
@@ -44,16 +40,13 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices
         /// </summary>
         /// <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
         /// <param name="material">MaterialbedarfDTO, für das die korrigierte Zuschnittslänge abgerufen werden soll</param>
-        /// <returns></returns>
         float GetZuschnittKorrigiert(string korrekturSatz, MaterialbedarfDTO material);
 
         /// <summary>
         /// Liefert das korrigierte Zuschnittsmaß für ein MaterialbedarfDTO (ZuschnittLaenge + Korrekturmaß). Nutzt den Korrektursatz, der an der Säge "Serie" hinterlegt ist.
         /// </summary>
         /// <param name="material">MaterialbedarfDTO, für das die korrigierte Zuschnittslänge abgerufen werden soll</param>
-        /// <returns></returns>
         float GetZuschnittKorrigiert(MaterialbedarfDTO material);
-
 
         //Winkelmaßkorrektur
         /// <summary>
@@ -62,7 +55,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices
         /// <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
         /// <param name="katalogNummer">Katalognummer des Profils</param>
         /// <param name="winkel">Winkel, für den das Korrekturmaß abgerufen werden soll</param>
-        /// <returns></returns>
         float GetWinkelKorrekturmass(string korrekturSatz, string katalogNummer, int winkel);
 
         /// <summary>
@@ -70,7 +62,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices
         /// </summary>
         /// <param name="katalogNummer">Katalognummer des Profils</param>
         /// <param name="winkel">Winkel, für den das Korrekturmaß abgerufen werden soll</param>
-        /// <returns></returns>
         float GetWinkelKorrekturmass(string katalogNummer, int winkel);
 
         /// <summary>
@@ -79,7 +70,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices
         /// <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
         /// <param name="material">MaterialbedarfDTO, für das die korrigierte Zuschnittslänge abgerufen werden soll</param>
         /// <param name="winkel">Winkel, für den das Korrekturmaß abgerufen werden soll</param>
-        /// <returns></returns>
         float GetWinkelKorrigiert(string korrekturSatz, MaterialbedarfDTO material, int winkel);
 
         /// <summary>
@@ -87,9 +77,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices
         /// </summary>
         /// <param name="material">MaterialbedarfDTO, für das die korrigierte Zuschnittslänge abgerufen werden soll</param>
         /// <param name="winkel">Winkel, für den das Korrekturmaß abgerufen werden soll</param>
-        /// <returns></returns>
         float GetWinkelKorrigiert(MaterialbedarfDTO material, int winkel);
-
-
     }
 }
