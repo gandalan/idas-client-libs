@@ -1,5 +1,5 @@
-﻿using Gandalan.IDAS.Jobs.Contracts;
 using System;
+using Gandalan.IDAS.Jobs.Contracts;
 
 namespace Gandalan.IDAS.WebApi.Data.Contracts
 {
@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.WebApi.Data.Contracts
     public interface IBegleitpapiereExportJobData : IJobData
     {
         Guid ExportGuid { get; set; }
-        Object Data { get; set; }
+        object Data { get; set; }
         Guid ReportGuid { get; set; }
         string ExportPath { get; set; }
         string FileFormat { get; set; }
@@ -29,11 +29,10 @@ namespace Gandalan.IDAS.WebApi.Data.Contracts
         public int ProgressPercent { get; set; }
         public bool HasFinished { get; set; }
 
-        public BegleitpapiereExportJobData(Object daten, Guid reportGuid)
+        public BegleitpapiereExportJobData(object daten, Guid reportGuid)
         {
             Data = daten;
             ReportGuid = reportGuid;
         }
-
     }
 }

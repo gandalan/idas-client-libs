@@ -11,7 +11,6 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="encoding">Use Encoding.Default if null</param>
-        /// <returns></returns>
         public static gSQLInhalt ImportFromFile(string fileName, Encoding encoding = null)
         {
             if (encoding == null)
@@ -33,7 +32,6 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
         /// </summary>
         /// <param name="gsqlData"></param>
         /// <param name="encoding">Use Encoding.Default if null</param>
-        /// <returns></returns>
         public static gSQLInhalt ImportFromGsqlInhalt(gSQLInhalt gsqlData, Encoding encoding = null)
         {
             if (encoding == null)

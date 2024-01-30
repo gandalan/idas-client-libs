@@ -21,7 +21,6 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.UIServices
         /// Returns wherever this command should be shown/can be used at all or not.
         /// </summary>
         /// <param name="parameter">Some object in the command's context</param>
-        /// <returns></returns>
         public virtual bool CanHandle(object parameter)
         {
             return CanExecute(parameter);

@@ -6,7 +6,9 @@ namespace System
     public static class CountriesExtensionHelper
     {
         #region Country names
-        private static readonly string[] _euCountryCodes = { 
+
+        private static readonly string[] _euCountryCodes =
+        {
             // keep DE + AT in front for better performance with most of requests
             "Deutschland", "DE", "D",
             "Österreich", "AT", "A",
@@ -38,6 +40,7 @@ namespace System
             "Zypern", "Κύπρος", "Kıbrıs", "CY"
         };
         #endregion
+
         public static bool IsEUCountry(this string land)
         {
             return string.IsNullOrEmpty(land) ||

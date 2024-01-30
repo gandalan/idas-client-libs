@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
@@ -17,7 +17,6 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <param name="rohmaterialLaenge">Maximal zu belegende Länge. Endabschnitte müssen vom Aufrufer bereits abgezogen sein.</param>
         /// <param name="materialbedarfTeilstueckLaengen">Liste aller gewünschten Teilstücke mit MaterialBedarfGuid</param>
         /// <param name="zugabe">Sägezugabe zwischen den Teilstücken (nicht am Anfang/Ende)</param>
-        /// <returns></returns>
         IList<ZuschnittStangenInfo> Optimize(int rohmaterialLaenge, List<GuidKeyIntValue> materialbedarfTeilstueckLaengen, int zugabe = 100);
     }
 
