@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Threading.Tasks;
@@ -19,5 +19,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<string> RefreshAsync(string token) 
             => await PutAsync<string>("LoginJwt/Refresh", token);
+
+        public async Task<string> CreateServiceTokenAsync(CreateServiceTokenRequestDTO dto = null)
+            => await PostAsync<string>("LoginJwt/CreateServiceToken", dto);
     }
 }
