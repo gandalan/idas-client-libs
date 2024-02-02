@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
@@ -8,13 +8,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public MaterialWebRoutinen(IWebApiConfig settings) : base(settings)
         {
-            this.Settings.Url = this.Settings.Url.Replace("/api/", "/ModellDaten/");
+            Settings.Url = Settings.Url.Replace("/api/", "/ModellDaten/");
         }
 
-        public async Task<MaterialDTO[]> GetAllAsync() 
+        public async Task<MaterialDTO[]> GetAllAsync()
             => await GetAsync<MaterialDTO[]>("Material");
 
-        public async Task SaveMaterialAsync(MaterialDTO dto) 
+        public async Task SaveMaterialAsync(MaterialDTO dto)
             => await PutAsync("Material", dto);
     }
 }

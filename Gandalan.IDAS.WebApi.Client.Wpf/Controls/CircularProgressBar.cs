@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -9,17 +9,17 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
     {
         public CircularProgressBar()
         {
-            this.ValueChanged += CircularProgressBar_ValueChanged;
+            ValueChanged += CircularProgressBar_ValueChanged;
         }
 
         void CircularProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            CircularProgressBar bar = sender as CircularProgressBar;
-            double currentAngle = bar.Angle;
-            double targetAngle = e.NewValue / bar.Maximum * 359.999;
+            var bar = sender as CircularProgressBar;
+            var currentAngle = bar.Angle;
+            var targetAngle = e.NewValue / bar.Maximum * 359.999;
 
-            DoubleAnimation anim = new DoubleAnimation(currentAngle, targetAngle, TimeSpan.FromMilliseconds(500));
-            bar.BeginAnimation(CircularProgressBar.AngleProperty, anim, HandoffBehavior.SnapshotAndReplace);
+            var anim = new DoubleAnimation(currentAngle, targetAngle, TimeSpan.FromMilliseconds(500));
+            bar.BeginAnimation(AngleProperty, anim, HandoffBehavior.SnapshotAndReplace);
         }
 
         public double Angle

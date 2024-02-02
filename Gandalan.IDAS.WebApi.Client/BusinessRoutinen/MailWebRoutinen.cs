@@ -17,7 +17,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<JobStatusResponseDTO> Send(MailJobInfo job, List<string> attachments)
         {
-            MultipartFormDataContent content = new MultipartFormDataContent();
+            var content = new MultipartFormDataContent();
             content.Add(new StringContent(JsonConvert.SerializeObject(job)), "jobAsString");
             if (attachments != null && attachments.Count > 0)
             {
@@ -29,7 +29,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                     content.Add(fileContentStream, "files", Path.GetFileName(attachment));
                 }
             }
-            await PostDataAsync("Mail", content, version : "2.0");
+
+            await PostDataAsync("Mail", content, version: "2.0");
             return new JobStatusResponseDTO();
             //var response = JsonConvert.DeserializeObject<JobStatusResponseDTO>(await PostDataAsync("Mail", content));
             //return response;

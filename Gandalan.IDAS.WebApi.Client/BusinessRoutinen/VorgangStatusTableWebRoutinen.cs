@@ -1,7 +1,7 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -11,10 +11,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task UpdateVorgangStatusTableForFunctionAsync(VorgangStatusTableDTO dto) 
+        public async Task UpdateVorgangStatusTableForFunctionAsync(VorgangStatusTableDTO dto)
             => await PostAsync("VorgangStatus/UpdateVorgangStatusTableForFunction", dto);
 
-        public async Task<IList<VorgangStatusTableDTO>> GetNotCalculatedVorgangStatusTableForFunctionAsync() 
+        public async Task<IList<VorgangStatusTableDTO>> GetNotCalculatedVorgangStatusTableForFunctionAsync()
             => await GetAsync<IList<VorgangStatusTableDTO>>("VorgangStatus/GetNotCalculatedVorgangStatusTableForFunction");
     }
 }

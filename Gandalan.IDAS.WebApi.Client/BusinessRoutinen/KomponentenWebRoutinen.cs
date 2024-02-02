@@ -1,4 +1,4 @@
-﻿// Gandalan GmbH & Co. KG - (c) 2017
+// Gandalan GmbH & Co. KG - (c) 2017
 // Middleware//Gandalan.IDAS.WebApi.Client//BauteileWebRoutinen.cs
 // Created: 14.02.2017
 // Edit: phil - 15.02.2017
@@ -16,11 +16,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             Settings.Url = Settings.Url.Replace("/api/", "/ModellDaten/");
         }
 
-        public async Task<KomponenteDTO[]> GetAllAsync() 
+        public async Task<KomponenteDTO[]> GetAllAsync()
             => await GetAsync<KomponenteDTO[]>("Komponente");
 
-        public async Task SaveKomponenteAsync(KomponenteDTO dto) 
+        public async Task SaveKomponenteAsync(KomponenteDTO dto)
             => await PutAsync("Komponente", dto);
-
     }
 }

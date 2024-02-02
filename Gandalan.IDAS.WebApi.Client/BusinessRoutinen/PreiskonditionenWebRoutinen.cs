@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
@@ -11,9 +11,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
         public async Task<PreisermittlungsEinstellungenDTO> GetPreiskonditionenAsync()
-            => await GetAsync<PreisermittlungsEinstellungenDTO>($"Preiskonditionen/");
+            => await GetAsync<PreisermittlungsEinstellungenDTO>("Preiskonditionen/");
 
-        public async Task SavePreiskonditionenAsync(string konditionen) 
+        public async Task SavePreiskonditionenAsync(string konditionen)
             => await PutAsync<string>("Preiskonditionen/", konditionen);
     }
 }

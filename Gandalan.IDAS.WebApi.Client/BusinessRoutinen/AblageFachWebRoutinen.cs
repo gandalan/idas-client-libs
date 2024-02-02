@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
@@ -24,12 +24,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return await GetAsync<List<AblageFachDTO>>($"AblageFach?changedSince={changedSince.Value.ToString("o")}&includeDetails={includeDetails}");
             }
-            else
-            {
-                return await GetAsync<List<AblageFachDTO>>($"AblageFach?includeDetails={includeDetails}");
-            }
+
+            return await GetAsync<List<AblageFachDTO>>($"AblageFach?includeDetails={includeDetails}");
         }
-                
+
         public async Task Save(AblageFachDTO dto)
         {
             await PutAsync("AblageFach/", dto);
@@ -40,7 +38,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             await DeleteAsync("AblageFach/?id=" + guid);
         }
 
-
         public async Task<AblageFachDTO> GetAsync(Guid guid)
         {
             return await GetAsync<AblageFachDTO>("AblageFach/?id=" + guid);
@@ -48,15 +45,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<List<AblageFachDTO>> GetAllAsync(DateTime? changedSince, bool includeDetails = true)
         {
-            
+
             if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
             {
                 return await GetAsync<List<AblageFachDTO>>($"AblageFach?changedSince={changedSince.Value.ToString("o")}&includeDetails={includeDetails}");
             }
-            else
-            {
-                return await GetAsync<List<AblageFachDTO>>($"AblageFach?includeDetails={includeDetails}");
-            }
+
+            return await GetAsync<List<AblageFachDTO>>($"AblageFach?includeDetails={includeDetails}");
         }
 
         public async Task SaveAsync(AblageFachDTO dto)

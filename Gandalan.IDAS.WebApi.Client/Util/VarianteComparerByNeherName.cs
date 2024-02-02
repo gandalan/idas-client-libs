@@ -1,21 +1,21 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Util
 {
     public class VarianteComparerByNeherName : IComparer<VarianteDTO>
     {
-        private static readonly Regex VariantenNameRex = new Regex(@"(?:[a-zA-Z]{1,3}|\d{1,3}|\.[a-zA-Z]{1,3})\s*", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private static readonly Regex _variantenNameRex = new Regex(@"(?:[a-zA-Z]{1,3}|\d{1,3}|\.[a-zA-Z]{1,3})\s*", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         public int Compare(VarianteDTO x, VarianteDTO y)
         {
-            string[] partsX = VariantenNameRex.Matches(x.Name.ToLower()).Cast<Match>().Select(m => m.Value).ToArray();
-            string[] partsY = VariantenNameRex.Matches(y.Name.ToLower()).Cast<Match>().Select(m => m.Value).ToArray();
+            var partsX = _variantenNameRex.Matches(x.Name.ToLower()).Cast<Match>().Select(m => m.Value).ToArray();
+            var partsY = _variantenNameRex.Matches(y.Name.ToLower()).Cast<Match>().Select(m => m.Value).ToArray();
 
-            int wertA = GetFamilienWert(partsX[0]);
-            int wertB = GetFamilienWert(partsY[0]);
+            var wertA = GetFamilienWert(partsX[0]);
+            var wertB = GetFamilienWert(partsY[0]);
             if (wertA != wertB) return wertA - wertB;
 
             if (partsX.Length > 1) wertA += GetGruppenWert(partsX[1]);
@@ -38,12 +38,12 @@ namespace Gandalan.IDAS.WebApi.Util
 
         private static int GetProduktWert(string p)
         {
-            return int.TryParse(p, out int result) ? result : 99;
+            return int.TryParse(p, out var result) ? result : 99;
         }
 
         private static int GetGruppenWert(string p)
         {
-            return int.TryParse(p, out int result) ? result * 100 : 999;
+            return int.TryParse(p, out var result) ? result * 100 : 999;
         }
 
         private static int GetFamilienWert(string p)

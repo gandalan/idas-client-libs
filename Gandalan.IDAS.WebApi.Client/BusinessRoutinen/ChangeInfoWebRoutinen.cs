@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<ChangeInfoDTO> GetChangeInfoAsync() 
+        public async Task<ChangeInfoDTO> GetChangeInfoAsync()
             => await GetAsync<ChangeInfoDTO>("ChangeInfo");
     }
 }

@@ -1,8 +1,8 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client.DTOs.UI;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Client.DTOs.UI;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -18,10 +18,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return await GetAsync<List<TagInfoDTO>>("GetAllTagInfo?changedSince=" + changedSince.Value.ToString("o"));
             }
-            else
-            {
-                return await GetAsync<List<TagInfoDTO>>("GetAllTagInfo");
-            }
+
+            return await GetAsync<List<TagInfoDTO>>("GetAllTagInfo");
         }
 
         public async Task<IList<TagInfoDTO>> GetTagInfoSuggestionsAsync(DateTime? changedSince = null)
@@ -30,10 +28,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             {
                 return await GetAsync<List<TagInfoDTO>>("GetTagInfoSuggestions?changedSince=" + changedSince.Value.ToString("o"));
             }
-            else
-            {
-                return await GetAsync<List<TagInfoDTO>>("GetTagInfoSuggestions");
-            }
+
+            return await GetAsync<List<TagInfoDTO>>("GetTagInfoSuggestions");
         }
 
         public async Task<IList<TagInfoDTO>> GetTagInfoAsync(Guid objectGuid)
@@ -45,19 +41,19 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task AddOrUpdateTagInfoAsync(TagInfoDTO dto)
             => await PostAsync($"TagInfo", dto);
 
-        public async Task DeleteTagInfoAsync(TagInfoDTO dto) 
+        public async Task DeleteTagInfoAsync(TagInfoDTO dto)
             => await DeleteAsync($"TagInfo", dto);
 
-        public async Task<IList<TagInfoDTO>> GetTagInfoForFunctionAsync(Guid objectGuid, long mandantID) 
+        public async Task<IList<TagInfoDTO>> GetTagInfoForFunctionAsync(Guid objectGuid, long mandantID)
             => await GetAsync<List<TagInfoDTO>>($"GetTagInfoForFunction?objectGuid={objectGuid}&mandantID={mandantID}");
 
-        public async Task<IDictionary<Guid, IEnumerable<TagInfoDTO>>> GetTagInfoListForFunctionAsync(IEnumerable<Guid> guidList, long mandantID) 
+        public async Task<IDictionary<Guid, IEnumerable<TagInfoDTO>>> GetTagInfoListForFunctionAsync(IEnumerable<Guid> guidList, long mandantID)
             => await PutAsync<Dictionary<Guid, IEnumerable<TagInfoDTO>>>($"GetTagInfoListForFunction?mandantID={mandantID}", guidList);
 
-        public async Task AddTagInfoForFunctionAsync(TagInfoDTO dto, long mandantID) 
+        public async Task AddTagInfoForFunctionAsync(TagInfoDTO dto, long mandantID)
             => await PostAsync($"AddTagInfoForFunction?mandantID={mandantID}", dto);
 
-        public async Task DeleteTagInfoForFunctionAsync(TagInfoDTO dto, long mandantID) 
+        public async Task DeleteTagInfoForFunctionAsync(TagInfoDTO dto, long mandantID)
             => await DeleteAsync($"DeleteTagInfoForFunction?mandantID={mandantID}", dto);
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
@@ -12,16 +12,16 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<ReportDTO[]> GetAllAsync() 
+        public async Task<ReportDTO[]> GetAllAsync()
             => await GetAsync<ReportDTO[]>("Reports");
 
-        public async Task<ReportDTO[]> GetAllAsync(DateTime changedSince) 
+        public async Task<ReportDTO[]> GetAllAsync(DateTime changedSince)
             => await GetAsync<ReportDTO[]>($"Reports/?changedSince={changedSince:o}");
 
-        public async Task<ReportDTO> GetReportAsync(Guid id) 
+        public async Task<ReportDTO> GetReportAsync(Guid id)
             => await GetAsync<ReportDTO>($"Reports?id={id}");
 
-        public async Task SaveReportAsync(ReportDTO dto) 
+        public async Task SaveReportAsync(ReportDTO dto)
             => await PutAsync($"Reports/{dto.ReportGuid}", dto);
 
         public async Task DeleteReportAsync(Guid reportGuid)
