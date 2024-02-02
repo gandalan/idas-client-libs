@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -20,8 +20,6 @@ namespace Gandalan.IDAS.WebApi.DTO
                 ArbeitsminutenReserviert += vAuslastung.ArbeitsminutenReserviert;
                 Elementgewicht += vAuslastung.Elementgewicht;
                 ElementgewichtReserviert += vAuslastung.ElementgewichtReserviert;
-                Rahmenanzahl += vAuslastung.Rahmenanzahl;
-                RahmenanzahlReserviert += vAuslastung.RahmenanzahlReserviert;
                 AnzahlMax += vAuslastung.AnzahlMax;
                 KapazitaetBelegt += vAuslastung.KapazitaetBelegt;
                 KapazitaetMax += vAuslastung.KapazitaetMax;
@@ -40,8 +38,6 @@ namespace Gandalan.IDAS.WebApi.DTO
                 ArbeitsminutenReserviert += vAuslastung.ArbeitsminutenReserviert;
                 Elementgewicht += vAuslastung.Elementgewicht;
                 ElementgewichtReserviert += vAuslastung.ElementgewichtReserviert;
-                Rahmenanzahl += vAuslastung.Rahmenanzahl;
-                RahmenanzahlReserviert += vAuslastung.RahmenanzahlReserviert;
                 AnzahlMax += vAuslastung.AnzahlMax;
                 KapazitaetBelegt += vAuslastung.KapazitaetBelegt;
                 KapazitaetMax += vAuslastung.KapazitaetMax;
@@ -56,8 +52,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal ArbeitsminutenReserviert { get; set; }
         public decimal Elementgewicht { get; set; }
         public decimal ElementgewichtReserviert { get; set; }
-        public int Rahmenanzahl { get; set; }
-        public int RahmenanzahlReserviert { get; set; }
         public int AnzahlMax { get; set; }
         public decimal KapazitaetBelegt { get; set; }
         public decimal KapazitaetMax { get; set; }

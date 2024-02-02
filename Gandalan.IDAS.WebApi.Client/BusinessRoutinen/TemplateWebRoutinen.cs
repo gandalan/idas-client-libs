@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
@@ -11,16 +11,16 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<TemplateDTO[]> GetAllAsync() 
-			=> await GetAsync<TemplateDTO[]>("Template");
+        public async Task<TemplateDTO[]> GetAllAsync()
+            => await GetAsync<TemplateDTO[]>("Template");
 
         public async Task<TemplateDTO> GetTemplateAsync(Guid id)
-			=> await GetAsync<TemplateDTO>($"Template?id={id}");
+            => await GetAsync<TemplateDTO>($"Template?id={id}");
 
-        public async Task SaveTemplateAsync(TemplateDTO dto) 
+        public async Task SaveTemplateAsync(TemplateDTO dto)
             => await PutAsync($"Template/{dto.TemplateGuid}", dto);
 
-        public async Task DeleteTemplateAsync(Guid templateGuid) 
+        public async Task DeleteTemplateAsync(Guid templateGuid)
             => await DeleteAsync($"Template/{templateGuid}");
     }
 }

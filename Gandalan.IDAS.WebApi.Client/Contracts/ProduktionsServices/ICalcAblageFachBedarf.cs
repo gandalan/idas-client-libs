@@ -1,14 +1,13 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
     public interface ICalcAblageFachBedarf
-    {        
+    {
         /// <summary>
         /// Berechnet den Gesamtbedarf an Ablagefächern für eine Position
         /// </summary>
         /// <param name="position"></param>
-        /// <returns></returns>
         int CalcBedarf(BelegPositionAVDTO position);
 
         /// <summary>
@@ -16,7 +15,6 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// </summary>
         /// <param name="position"></param>
         /// <param name="material"></param>
-        /// <returns></returns>
         int GetPositionRelatedFachNr(BelegPositionAVDTO position, MaterialbedarfDTO material);
     }
 }

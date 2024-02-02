@@ -20,9 +20,15 @@ namespace Gandalan.IDAS.Crypto
         public static string EncryptData(string data, string password)
         {
             if (data == null)
+            {
                 throw new ArgumentNullException(nameof(data));
+            }
+
             if (password == null)
+            {
                 throw new ArgumentNullException(nameof(password));
+            }
+
             var encBytes = EncryptData(Encoding.UTF8.GetBytes(data), password, PaddingMode.ISO10126);
             return Convert.ToBase64String(encBytes);
         }
@@ -37,9 +43,15 @@ namespace Gandalan.IDAS.Crypto
         public static string DecryptData(string data, string password)
         {
             if (data == null)
+            {
                 throw new ArgumentNullException(nameof(data));
+            }
+
             if (password == null)
+            {
                 throw new ArgumentNullException(nameof(password));
+            }
+
             var encBytes = Convert.FromBase64String(data);
             var decBytes = DecryptData(encBytes, password, PaddingMode.ISO10126);
             return Encoding.UTF8.GetString(decBytes);
@@ -48,9 +60,15 @@ namespace Gandalan.IDAS.Crypto
         public static byte[] EncryptData(byte[] data, string password, PaddingMode paddingMode)
         {
             if (data == null || data.Length == 0)
+            {
                 throw new ArgumentNullException(nameof(data));
+            }
+
             if (password == null)
+            {
                 throw new ArgumentNullException(nameof(password));
+            }
+
             var pdb = new PasswordDeriveBytes(password, Encoding.UTF8.GetBytes("Salt"));
             var rm = Aes.Create();
             rm.Padding = paddingMode;
@@ -67,9 +85,15 @@ namespace Gandalan.IDAS.Crypto
         public static byte[] DecryptData(byte[] data, string password, PaddingMode paddingMode)
         {
             if (data == null || data.Length == 0)
+            {
                 throw new ArgumentNullException(nameof(data));
+            }
+
             if (password == null)
+            {
                 throw new ArgumentNullException(nameof(password));
+            }
+
             var pdb = new PasswordDeriveBytes(password, Encoding.UTF8.GetBytes("Salt"));
             var rm = Aes.Create();
             rm.Padding = paddingMode;

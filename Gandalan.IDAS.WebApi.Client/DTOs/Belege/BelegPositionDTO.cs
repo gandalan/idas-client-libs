@@ -35,7 +35,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstStorniert { get; set; }
         public bool IstFehlerhaftSFOhnePreis { get; set; }
         public bool IstGesperrt { get; set; }
-        public decimal KapazitaetsBedarf { get; set; }
         public decimal Menge { get; set; }
         public decimal Listenpreis { get; set; }
         public decimal Einzelpreis { get; set; }
@@ -75,6 +74,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstVE { get; set; }
         public decimal? VE_Menge { get; set; }
         public Guid? FrontendLogikGuid { get; set; }
+
+        public decimal? Arbeitsminuten { get; set; }
+        public decimal? Elementgewicht { get; set; }
 
         public BelegPositionDTO()
         {

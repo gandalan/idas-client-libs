@@ -1,16 +1,16 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
-    public class WerteListeDTO 
-	{
-		public WerteListeDTO()
-		{        
-			this.Items = new List<WerteListeItemDTO>();
-		}
+    public class WerteListeDTO
+    {
+        public WerteListeDTO()
+        {
+            Items = new List<WerteListeItemDTO>();
+        }
 
-		public string Name { get; set; }        
+        public string Name { get; set; }
         public long Version { get; set; }
         public DateTime ChangedDate { get; set; }
         public Guid WerteListeGuid { get; set; }
@@ -18,5 +18,3 @@ namespace Gandalan.IDAS.WebApi.DTO
         public DateTime GueltigAb { get; set; }
     }
 }
-
-

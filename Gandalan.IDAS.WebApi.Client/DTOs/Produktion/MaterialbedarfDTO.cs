@@ -1,25 +1,31 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
     public class MaterialbedarfDTO : ICloneable
     {
         public Guid MaterialBedarfGuid { get; set; }
+
         /// <summary>
         /// Eindeutiges Kennzeichen des Items (aus GUID)
         /// </summary>
         public Guid Kennzeichen { get; set; }
+
         public string InternerName { get; set; }
+
         //InternerName wird derzeit an vielen Stellen verwendet weshalb wir jetzt die Backup Property hinzufügen welche den echten InternenNamen aus dem Modell beinhaltet
         public string InternerName_Backup { get; set; }
+
         /// <summary>
         /// Neher-Katalognummer des Artikels
         /// </summary>
         public string KatalogNummer { get; set; }
+
         /// <summary>
         /// Artikelbezeichnung
         /// </summary>
         public string Bezeichnung { get; set; }
+
         /// <summary>
         /// Einheit des Artikels (lfm=Laufmeter, Stk=Stück, qm=Quadratmeter)
         /// </summary>
@@ -37,6 +43,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// sich aus mit Laufmeter!)
         /// </summary>
         public decimal Stueckzahl { get; set; }
+
         /// <summary>
         /// Laufmeter des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt
         /// sich aus mit Stückzahl!)
@@ -51,15 +58,24 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// FarbBezeichnung (Bezeichnung der Farbe)
         /// </summary>
         public string FarbBezeichnung { get; set; }
+
+        /// <summary>
+        /// FarbZusatzText, hauptsächnlich für Trendfarbkürzel (z.B. B7)
+        /// </summary>
+        public string FarbZusatzText { get; set; }
+
         /// <summary>
         /// FarbeKuerzel (Neher-Kürzel oder Sonderfarbton)
         /// </summary>
         public string FarbKuerzel { get; set; }
+
         public Guid FarbKuerzelGuid { get; set; }
+
         /// <summary>
         /// FarbeCode der Farbe
         /// </summary>
         public string FarbCode { get; set; }
+
         public string FarbeItem { get; set; }
         public Guid FarbItemGuid { get; set; }
 
@@ -70,6 +86,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Kennzeichen für Zuschnittartikel
         /// </summary>
         public bool IstZuschnitt { get; set; }
+
         public float ZuschnittLaenge { get; set; }
         public string ZuschnittWinkel { get; set; }
         public string PositionsAngabe { get; set; }
@@ -96,10 +113,12 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstBeschichtbar { get; set; }
         public KatalogArtikelArt KatalogArtikelArt { get; set; }
         public MaterialbedarfStatiDTO AktuellerStatus { get; set; }
+
         /// <summary>
         /// Kennzeichen, ob das Profil gedreht gesägt wird (z.B. bei PT2/46)
         /// </summary>
         public bool ProfilGedrehtSaegen { get; set; }
+
         public bool IstSonderfarbe { get; set; }
         public string MaterialPCode { get; set; }
         public string Bemerkung { get; set; }
@@ -108,9 +127,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid? AblageGuid { get; set; }
         public Guid? AblageFachGuid { get; set; }
         public string Lagerfach { get; set; }
+
         public object Clone()
         {
-            return this.MemberwiseClone();
+            return MemberwiseClone();
         }
     }
 }

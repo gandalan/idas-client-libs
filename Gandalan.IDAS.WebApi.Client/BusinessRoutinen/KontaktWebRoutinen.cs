@@ -1,30 +1,31 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
     public class KontaktWebRoutinen : WebRoutinenBase
     {
-        public KontaktWebRoutinen(IWebApiConfig settings) : base(settings) { }
+        public KontaktWebRoutinen(IWebApiConfig settings) : base(settings)
+        {
+        }
 
-        public async Task<KontaktListItemDTO[]> GetKontakteAsync() 
+        public async Task<KontaktListItemDTO[]> GetKontakteAsync()
             => await GetAsync<KontaktListItemDTO[]>("Kontakt");
 
         public async Task<KontaktListItemDTO[]> GetKontakteAsync(DateTime? changedSince)
         {
             if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
                 return await GetAsync<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value.ToString("o")}");
-            else
-                return await GetAsync<KontaktListItemDTO[]>("Kontakt");
+            return await GetAsync<KontaktListItemDTO[]>("Kontakt");
         }
 
-        public async Task<KontaktDTO> GetKontaktAsync(Guid kontaktGuid) 
+        public async Task<KontaktDTO> GetKontaktAsync(Guid kontaktGuid)
             => await GetAsync<KontaktDTO>($"Kontakt/{kontaktGuid}");
 
-        public async Task<KontaktDTO> SaveKontaktAsync(KontaktDTO kontakt) 
+        public async Task<KontaktDTO> SaveKontaktAsync(KontaktDTO kontakt)
             => await PutAsync<KontaktDTO>("Kontakt", kontakt);
 
         public async Task ArchiveKontakteAsync(List<Guid> kontakteIds)

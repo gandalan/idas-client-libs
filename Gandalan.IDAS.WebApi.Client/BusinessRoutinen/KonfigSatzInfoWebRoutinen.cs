@@ -1,7 +1,7 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -9,14 +9,14 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public KonfigSatzInfoWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
-        public async Task<KonfigSatzInfoDTO[]> GetAllAsync() 
+        public async Task<KonfigSatzInfoDTO[]> GetAllAsync()
             => await GetAsync<KonfigSatzInfoDTO[]>("KonfigSatzInfo");
 
-        public async Task SaveKonfigSatzInfoAsync(KonfigSatzInfoDTO konfigSatzInfo) 
+        public async Task SaveKonfigSatzInfoAsync(KonfigSatzInfoDTO konfigSatzInfo)
             => await PutAsync<KonfigSatzInfoDTO>("KonfigSatzInfo", konfigSatzInfo);
 
         [Obsolete("Funktion 'SaveKonfigSatzInfoAsync()' verwenden")]
-        public async Task SaveAsync(KonfigSatzInfoDTO dto) 
+        public async Task SaveAsync(KonfigSatzInfoDTO dto)
             => await PutAsync("KonfigSatzInfo", dto);
     }
 }

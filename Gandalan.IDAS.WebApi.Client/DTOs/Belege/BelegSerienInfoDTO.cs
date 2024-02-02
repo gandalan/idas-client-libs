@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.Client.DTOs.Belege
@@ -21,6 +21,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Belege
         public DateTime Ende { get; set; }
         public bool StaendigeSerie { get; set; }
         public decimal Kapazitaet { get; set; }
+        public decimal KapazitaetInMin { get; set; }
         public decimal KapazitaetReserviert { get; set; }
     }
 }

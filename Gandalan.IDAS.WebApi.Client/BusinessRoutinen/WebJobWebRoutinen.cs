@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Data.DTOs.WebJob;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Data.DTOs.WebJob;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -10,10 +10,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task AddHistorie(WebJobHistorieDTO historyDto) 
+        public async Task AddHistorie(WebJobHistorieDTO historyDto)
             => await PostAsync("Historie", historyDto);
 
-        public async Task DeleteOldHistorie() 
+        public async Task DeleteOldHistorie()
             => await GetAsync("Historie/DeleteOldHistorie");
     }
 }

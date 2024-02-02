@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,23 +13,27 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Eindeutige ID
         /// </summary>
         public Guid ProduktionsDatenGuid { get; set; }
+
         /// <summary>
         /// Gesamtliste des benötigten Materials (immer für Stückzahl 1)
         /// </summary>
         public List<MaterialbedarfDTO> Material { get; set; } = new List<MaterialbedarfDTO>();
+
         /// <summary>
         /// Produktionsetiketten
         /// </summary>
         public List<EtikettDTO> Etiketten { get; set; } = new List<EtikettDTO>();
+
         /// <summary>
         /// CNC-Bearbeitungen
         /// </summary>
         public List<BearbeitungDTO> Bearbeitungen { get; set; } = new List<BearbeitungDTO>();
+
         /// <summary>
         /// Daten der Original-Belegposition
         /// </summary>
         public PositionsDatenDTO PositionsDaten { get; set; }
-        
+
         public List<SonderwuenscheDTO> Sonderwuensche { get; set; } = new List<SonderwuenscheDTO>();
         public string[] Log { get; set; }
 
@@ -45,10 +49,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Gibt NUR Artikel aus dem Materialbedarf zurück, die Zuschnitte sind
         /// </summary>
-        /// <returns></returns>
         public List<MaterialbedarfDTO> GetSaegeliste()
         {
-            return Material == null ? new List<MaterialbedarfDTO>() : Material.Where(m => m.IstZuschnitt == true && m.ZuschnittLaenge > 0).ToList();
+            return Material == null ? new List<MaterialbedarfDTO>() : Material.Where(m => m.IstZuschnitt && m.ZuschnittLaenge > 0).ToList();
         }
     }
 }

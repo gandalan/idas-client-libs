@@ -1,4 +1,4 @@
-﻿namespace Gandalan.IDAS.WebApi.Data.DTOs.Produktion
+namespace Gandalan.IDAS.WebApi.Data.DTOs.Produktion
 {
     /// <summary>
     /// DTO für die Konfiguration von Sägen in IBOS3
@@ -47,7 +47,7 @@
 
         /// <summary>
         /// Ausgabeverzeichnis für die Datei mit GeradGehrungsschnitten (45-90; 90-45)
-        /// </summary>     
+        /// </summary>
         public string Ausgabeverzeichnis_GeradGehrung { get; set; }
 
         /// <summary>
@@ -59,7 +59,7 @@
         /// Kennzeichen, ob alle Schnitte in einer Datei ausgegeben werden sollen
         /// </summary>
         public bool KombinierteSaegeDatei { get; set; }
-        
+
         /// <summary>
         /// Ausgabeverzeichnis für kombinierte Sägedatei
         /// </summary>

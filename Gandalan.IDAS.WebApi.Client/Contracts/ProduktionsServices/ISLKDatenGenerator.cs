@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.ProduktionsServices
 {
@@ -10,14 +10,12 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.ProduktionsServices
         /// Erzeugt die SLK Datei zu einem BelegPostionAVDTO
         /// </summary>
         /// <param name="belegPositionAVDTO">avDTO</param>
-        /// <returns></returns>
         Task CreateSLKFile(BelegPositionAVDTO belegPositionAVDTO);
 
         /// <summary>
         /// Erzeugt die SLK Dateien zu einer Liste von BelegPositionAVDTOs
         /// </summary>
         /// <param name="belegPositionAVDTOs">Liste von AVDTOs</param>
-        /// <returns></returns>
         Task CreateSLKFiles(IList<BelegPositionAVDTO> belegPositionAVDTOs);
     }
 }

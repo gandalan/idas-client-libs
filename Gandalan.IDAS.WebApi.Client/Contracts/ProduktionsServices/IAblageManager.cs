@@ -1,7 +1,7 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {
@@ -64,7 +64,6 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <param name="materialListe">Liste von MaterialbedarfDTOs, die aus ihren Fächern entfernt werden sollen</param>
         void RemoveMaterial(List<MaterialbedarfDTO> materialListe);
 
-
         /// <summary>
         /// Kombination aus GetEmptyAblageFach und SearchAblageFach.
         /// </summary>
@@ -78,7 +77,6 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// Liefert alle registrierten Ablagen zu einem Standort
         /// </summary>
         /// <param name="standort">Standort für den die Ablagen geliefert werden.</param>
-        /// <returns></returns>
         List<AblageDTO> GetAblageListe(string standort);
 
         /// <summary>
@@ -100,8 +98,6 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// </summary>
         /// <param name="position">Position, aus der Material abgelegt werden soll</param>
         /// <param name="material"></param>
-        /// <returns></returns>
         string GetFachBezeichnung(BelegPositionAVDTO position, MaterialbedarfDTO material);
-
     }
 }

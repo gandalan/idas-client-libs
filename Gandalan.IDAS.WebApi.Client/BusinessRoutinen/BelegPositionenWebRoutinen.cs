@@ -1,8 +1,8 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -21,10 +21,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<List<Guid>> SetBelegPositionGesperrtStatusAsync(bool gesperrtStatus, List<Guid> positionen)
             => await PutAsync<List<Guid>>($"BelegPositionGesperrtStatus/SetStatus/{gesperrtStatus}", positionen);
 
-        public async Task CalculateItemsAsync() 
+        public async Task CalculateItemsAsync()
             => await PostAsync("BelegPositionen/CalculateItems", null);
 
-        public async Task<VorgangDTO> GetVorgangForFunctionAsync(Guid belegPositionGuid, long mandantId) 
+        public async Task<VorgangDTO> GetVorgangForFunctionAsync(Guid belegPositionGuid, long mandantId)
             => await GetAsync<VorgangDTO>($"BelegPositionen/GetVorgangForFunction?belegPositionGuid={belegPositionGuid}&mandantId={mandantId}");
     }
 }

@@ -1,10 +1,10 @@
-using Gandalan.IDAS.Logging.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Gandalan.IDAS.Logging.Contracts;
 
 namespace Gandalan.IDAS.Logging
 {
@@ -13,7 +13,7 @@ namespace Gandalan.IDAS.Logging
     public class Logger : ILogger
     {
         private static Logger _logger;
-        private readonly object _lock = new Object();
+        private readonly object _lock = new object();
         private TextWriterTraceListener _traceListener;
 
         public Dictionary<LogContext, LogLevel> LogLevels { get; set; }

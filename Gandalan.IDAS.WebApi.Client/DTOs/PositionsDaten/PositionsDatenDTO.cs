@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -28,6 +28,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid FarbItemGuid { get; set; }
         public string FarbCode { get; set; }
         public string FarbBezeichnung { get; set; }
+        public string FarbZusatzText { get; set; }
         public string OberflaecheBezeichnung { get; set; }
         public Guid OberflaecheGuid { get; set; }
         public bool IstSonderFarbPosition { get; set; }

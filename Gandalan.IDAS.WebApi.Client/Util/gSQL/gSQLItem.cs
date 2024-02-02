@@ -1,7 +1,7 @@
-﻿namespace Gandalan.IDAS.WebApi.Util.gSQL
+namespace Gandalan.IDAS.WebApi.Util.gSQL
 {
     public class gSQLItem
-	{
+    {
         public gSQLItem()
         {
         }
@@ -13,7 +13,7 @@
         }
 
         public string Name { get; set; }
-		public string Wert { get; set; }
+        public string Wert { get; set; }
 
         public override string ToString()
         {
