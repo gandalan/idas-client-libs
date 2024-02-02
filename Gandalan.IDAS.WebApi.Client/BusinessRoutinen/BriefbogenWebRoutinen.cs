@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
@@ -9,7 +9,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<byte[]> BriefbogenLadenAsync() 
+        public async Task<byte[]> BriefbogenLadenAsync()
             => await GetDataAsync("Briefbogen");
     }
 }

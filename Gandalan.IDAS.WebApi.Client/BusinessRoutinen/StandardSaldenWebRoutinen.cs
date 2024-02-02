@@ -1,7 +1,7 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Data.DTOs.Salden;
 using System;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Data.DTOs.Salden;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -11,13 +11,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<StandardSaldoDTO[]> GetAllAsync() 
+        public async Task<StandardSaldoDTO[]> GetAllAsync()
             => await GetAsync<StandardSaldoDTO[]>("StandardSalden");
 
         public async Task SaveSaldoAsync(StandardSaldoDTO dto)
             => await PutAsync("StandardSalden/", dto);
 
-        public async Task DeleteSaldoAsync(Guid saldoGuid) 
+        public async Task DeleteSaldoAsync(Guid saldoGuid)
             => await DeleteAsync("StandardSalden/" + saldoGuid);
     }
 }

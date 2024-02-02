@@ -2,11 +2,11 @@ using System;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
-    public class BauteilDTO 
-	{	
+    public class BauteilDTO
+    {
         public Guid BauteilGuid { get; set; }
 
-    	public virtual Guid BauteilKategorieGuid { get; set; }
+        public virtual Guid BauteilKategorieGuid { get; set; }
 
         public string Name { get; set; }
         public string Art { get; set; }
@@ -19,10 +19,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string ArtikelNummer { get; set; }
 
         public SchnittDTO Schnitt { get; set; }
-		public virtual Guid MaterialGuid { get; set; }
+        public virtual Guid MaterialGuid { get; set; }
         public virtual Guid ZugehoerigerKatalogArtikelGuid { get; set; }
 
         public long Version { get; set; }
-        public DateTime ChangedDate { get; set; }        
-	}
+        public DateTime ChangedDate { get; set; }
+    }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
@@ -20,17 +20,15 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<List<AblageDTO>> GetAllAsync(DateTime? changedSince, bool includeDetails = true)
         {
-            
+
             if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
             {
                 return await GetAsync<List<AblageDTO>>($"Ablage?changedSince={changedSince.Value.ToString("o")}&includeDetails={includeDetails}");
             }
-            else
-            {
-                return await GetAsync<List<AblageDTO>>($"Ablage?includeDetails={includeDetails}");
-            }
+
+            return await GetAsync<List<AblageDTO>>($"Ablage?includeDetails={includeDetails}");
         }
-                
+
         public async Task SaveAsync(AblageDTO dto)
         {
             await PutAsync("Ablage/", dto);
@@ -46,11 +44,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             await PutAsync($"Ablage/SerienFachverteilung/{serieGuid}", null);
         }
 
-
         public async Task FachverteilungAsync(List<Guid> avGuids)
         {
             await PutAsync($"Ablage/Fachverteilung", avGuids);
         }
-
     }
 }

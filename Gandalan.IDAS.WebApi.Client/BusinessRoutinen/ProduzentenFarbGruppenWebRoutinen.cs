@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
@@ -11,13 +11,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<ProduzentenFarbGruppeDTO[]> GetAllAsync() 
+        public async Task<ProduzentenFarbGruppeDTO[]> GetAllAsync()
             => await GetAsync<ProduzentenFarbGruppeDTO[]>("ProduzentenFarbGruppen");
 
-        public async Task SaveProduzentenFarbGruppeAsync(ProduzentenFarbGruppeDTO dto) 
+        public async Task SaveProduzentenFarbGruppeAsync(ProduzentenFarbGruppeDTO dto)
             => await PutAsync("ProduzentenFarbGruppen/" + dto.ProduzentenFarbGruppeGuid, dto);
 
-        public async Task DeleteProduzentenFarbGruppeAsync(Guid produzentenFarbGruppeGuid) 
+        public async Task DeleteProduzentenFarbGruppeAsync(Guid produzentenFarbGruppeGuid)
             => await DeleteAsync("ProduzentenFarbGruppen/" + produzentenFarbGruppeGuid);
     }
 }

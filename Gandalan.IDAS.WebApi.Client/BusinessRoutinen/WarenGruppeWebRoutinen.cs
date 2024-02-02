@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
@@ -10,10 +10,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<WarenGruppeDTO[]> GetAllAsync() 
+        public async Task<WarenGruppeDTO[]> GetAllAsync()
             => await GetAsync<WarenGruppeDTO[]>("WarenGruppe");
 
-        public async Task SaveWarenGruppeAsync(WarenGruppeDTO dto) 
+        public async Task SaveWarenGruppeAsync(WarenGruppeDTO dto)
             => await PutAsync($"WarenGruppe/{dto.WarenGruppeGuid}", dto);
     }
 }

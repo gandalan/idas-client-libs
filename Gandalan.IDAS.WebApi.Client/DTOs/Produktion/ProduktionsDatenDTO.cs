@@ -13,6 +13,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Eindeutige ID
         /// </summary>
         public Guid ProduktionsDatenGuid { get; set; }
+
         /// <summary>
         /// Gesamtliste des benötigten Materials (immer für Stückzahl 1)
         /// </summary>
