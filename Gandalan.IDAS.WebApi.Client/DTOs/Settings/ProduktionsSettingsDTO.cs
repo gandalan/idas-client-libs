@@ -48,7 +48,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool Gewebeeinzugsarm_122415 { get; set; }
         public bool RO4_143908 { get; set; }
         public bool PacklisteZusammengefasst { get; set; }
-        //public string FarbersetzungsTabelleModel { get; set; }
+        public string FarbersetzungsTabelleModel { get; set; }
         public bool Drehbandmontage { get; set; } = true;
         public int STmitLSo_LSu_Mbv_Mass { get; set; } = 50;
         public bool SP_WL_mit_Schraube_150329 { get; set; } = true;
