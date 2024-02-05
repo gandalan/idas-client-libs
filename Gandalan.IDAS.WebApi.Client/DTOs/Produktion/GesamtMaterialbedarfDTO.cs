@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,6 +29,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal UngedeckteStueckzahl => Stueckzahl - GedeckteStueckzahl;
         public decimal Laufmeter { get; set; }
         public string FarbBezeichnung { get; set; }
+        public string FarbZusatzText { get; set; }
         public string FarbKuerzel { get; set; }
         public Guid FarbKuerzelGuid { get; set; }
         public string FarbCode { get; set; }
