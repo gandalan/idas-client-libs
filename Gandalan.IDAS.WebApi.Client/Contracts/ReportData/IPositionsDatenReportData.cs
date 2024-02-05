@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.ReportData
 {
@@ -28,6 +28,7 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.ReportData
         Guid FarbItemGuid { get; set; }
         string FarbCode { get; set; }
         string FarbBezeichnung { get; set; }
+        string FarbZusatzText { get; set; }
         string OberflaecheBezeichnung { get; set; }
         Guid OberflaecheGuid { get; set; }
         bool IstSonderFarbPosition { get; set; }

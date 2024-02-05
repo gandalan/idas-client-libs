@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
+using Gandalan.IDAS.WebApi.DTO;
 using System;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.ReportData
@@ -21,6 +21,7 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.ReportData
 
         decimal VE_Menge { get; set; }
         decimal Artikel_VE_Menge { get; set; }
+        string FarbZusatzText { get; set; }
         string FarbBezeichnung { get; set; }
         string FarbKuerzel { get; set; }
         Guid FarbKuerzelGuid { get; set; }
