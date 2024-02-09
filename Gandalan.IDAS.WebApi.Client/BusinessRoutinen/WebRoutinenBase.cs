@@ -68,15 +68,19 @@ namespace Gandalan.IDAS.WebApi.Client
         private async Task RunPreRequestChecks(bool skipAuth = false)
         {
             if (_restRoutinen == null)
+            {
                 initRestRoutinen();
+            }
 
             if (!skipAuth && !await LoginAsync())
+            {
                 throw new ApiUnauthorizedException("You are not authorized.");
+            }
         }
 
         private void initRestRoutinen()
         {
-            var config = new HttpClientConfig()
+            var config = new HttpClientConfig
             {
                 BaseUrl = Settings.Url,
                 UseCompression = Settings.UseCompression,
@@ -130,7 +134,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 {
                     if (!string.IsNullOrEmpty(Settings.UserName) && !string.IsNullOrEmpty(Settings.Passwort))
                     {
-                        var ldto = new LoginDTO()
+                        var ldto = new LoginDTO
                         {
                             Email = Settings.UserName,
                             Password = Settings.Passwort,
@@ -196,7 +200,7 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             try
             {
-                return await PutAsync<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO() { Token = authTokenGuid }, null, true);
+                return await PutAsync<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO { Token = authTokenGuid }, null, true);
             }
             catch (Exception)
             {
@@ -394,7 +398,9 @@ namespace Gandalan.IDAS.WebApi.Client
                 var start = result.IndexOf("<title>") + 7;
                 var end = result.IndexOf("</title>");
                 if (end > start)
+                {
                     result = $"Interner Serverfehler (\"{result.Substring(start, end - start)}\"). Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.";
+                }
             }
             return result;
         }

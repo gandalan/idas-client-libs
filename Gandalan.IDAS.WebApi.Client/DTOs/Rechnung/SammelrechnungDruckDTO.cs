@@ -1,9 +1,9 @@
-using Gandalan.IDAS.WebApi.DTO;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Gandalan.IDAS.WebApi.DTO;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
 {
@@ -147,7 +147,11 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
                 var maxReihenfolge = salden.Max(p => p.Reihenfolge);
                 foreach (var saldo in salden)
                 {
-                    if (saldo.Name == "Warenwert") continue;
+                    if (saldo.Name == "Warenwert")
+                    {
+                        continue;
+                    }
+
                     druckSalden.Add(new SammelrechnungSaldoDruckDTO(saldo, isLastElement: saldo.Reihenfolge == maxReihenfolge));
                 }
             }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +21,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
         public string GetItem(string sektion, string itemName, string defaultWert = null)
         {
-            gSQLSektion sek = GetSektion(sektion);
+            var sek = GetSektion(sektion);
             if (sek != null)
             {
                 return sek.GetItemWert(itemName, defaultWert);
@@ -32,7 +32,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (var sektion in Sektionen)
             {
                 sb.AppendLine(sektion.Name);

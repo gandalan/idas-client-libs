@@ -1,5 +1,5 @@
-using Newtonsoft.Json;
 using System;
+using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -20,9 +20,13 @@ namespace Gandalan.IDAS.WebApi.DTO
             set
             {
                 if (value != Guid.Empty)
-                    InfoScreenModule[0] = new InfoScreenModulSettingsDTO() { ModuleGuid = value };
+                {
+                    InfoScreenModule[0] = new InfoScreenModulSettingsDTO { ModuleGuid = value };
+                }
                 else
+                {
                     InfoScreenModule[0] = null;
+                }
             }
         }
 
@@ -36,9 +40,13 @@ namespace Gandalan.IDAS.WebApi.DTO
             set
             {
                 if (value != Guid.Empty)
-                    InfoScreenModule[1] = new InfoScreenModulSettingsDTO() { ModuleGuid = value };
+                {
+                    InfoScreenModule[1] = new InfoScreenModulSettingsDTO { ModuleGuid = value };
+                }
                 else
+                {
                     InfoScreenModule[1] = null;
+                }
             }
         }
 

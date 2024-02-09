@@ -23,7 +23,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<WarenGruppeDTO[]> GetAllAsync(DateTime? changedSince = null)
         {
             if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+            {
                 return await GetAsync<WarenGruppeDTO[]>("Artikel?changedSince=" + changedSince.Value.ToString("o"), version: "2.0");
+            }
+
             return await GetAsync<WarenGruppeDTO[]>("Artikel", version: "2.0");
         }
 

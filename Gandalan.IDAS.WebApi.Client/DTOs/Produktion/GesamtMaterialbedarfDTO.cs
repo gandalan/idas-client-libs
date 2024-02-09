@@ -49,7 +49,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal? VE_Menge { get; set; }
         public object Clone()
         {
-            return new GesamtMaterialbedarfDTO()
+            return new GesamtMaterialbedarfDTO
             {
                 GesamtMaterialbedarfGuid = GesamtMaterialbedarfGuid,
                 MandantGuid = MandantGuid,

@@ -1,7 +1,7 @@
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.IO;
 using System.Linq;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Util.gSQL
 {
@@ -168,9 +168,13 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                     }
 
                     if (key.StartsWith("Sonder_"))
+                    {
                         aktuelleSektion.Items.Add(new gSQLItem(key, konfig.Wert));
+                    }
                     else
+                    {
                         aktuelleSektion.Items.Add(new gSQLItem("Position_" + key, konfig.Wert));
+                    }
                 }
 
                 foreach (var konfig in pos.Daten.Where(u => u.UnterkomponenteName == "Artikel"))
@@ -184,9 +188,13 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                     }
 
                     if (key.StartsWith("Sonder_"))
+                    {
                         aktuelleSektion.Items.Add(new gSQLItem(key, konfig.Wert));
+                    }
                     else
+                    {
                         aktuelleSektion.Items.Add(new gSQLItem("Position_" + key, konfig.Wert));
+                    }
                 }
 
                 if (pos.Sonderwuensche == null)
@@ -201,7 +209,9 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                 foreach (var sw in pos.Sonderwuensche)
                 {
                     if (sw.InternerName == "KederZeigtNachAussen")
+                    {
                         continue;
+                    }
 
                     var swExportParameter = string.Empty;
 
@@ -221,9 +231,13 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
                         if (kederZeigtNachAussen)
                         {
                             if (swExportParameter.Contains("links"))
+                            {
                                 swExportParameter = swExportParameter.Replace("links", "rechts");
+                            }
                             else if (swExportParameter.Contains("rechts"))
+                            {
                                 swExportParameter = swExportParameter.Replace("rechts", "links");
+                            }
                         }
                     }
 

@@ -1,8 +1,8 @@
-using Gandalan.IDAS.WebApi.DTO;
-using PropertyChanged;
 using System;
 using System.ComponentModel;
 using System.Windows.Input;
+using Gandalan.IDAS.WebApi.DTO;
+using PropertyChanged;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.Vorgaenge
 {
@@ -22,7 +22,10 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.Vorgaenge
         {
             var vorgang = parameter as VorgangDTO;
             if (parameter == null)
+            {
                 return false;
+            }
+
             return CanExecute(vorgang);
         }
 

@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.Client.Contracts.DataServices
 {
@@ -10,6 +10,6 @@ namespace Gandalan.Client.Contracts.DataServices
         Task<WarenGruppeDTO[]> GetAllWarenGruppenAsync();
         Task<string> SaveArtikelAsync(KatalogArtikelDTO artikel);
         Task<KatalogArtikelDTO> LoadArtikelAsync(Guid guid);
-        Task<KatalogArtikelDTO> LoadArtikelAsync(string artikelNummer);        
+        Task<KatalogArtikelDTO> LoadArtikelAsync(string artikelNummer);
     }
 }

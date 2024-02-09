@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.Contracts.ChangeTracking;
 using System.Collections.Generic;
 using System.Reflection;
+using Gandalan.IDAS.Contracts.ChangeTracking;
 
 namespace System
 {
@@ -15,7 +15,7 @@ namespace System
                 return guid;
             }
 
-            PropertyInfo guidProperty = GetGuidProperty(o.GetUnproxiedType());
+            var guidProperty = GetGuidProperty(o.GetUnproxiedType());
             return guidProperty != null ? (Guid)guidProperty.GetValue(o, null) : Guid.Empty;
         }
 
@@ -26,17 +26,14 @@ namespace System
                 return guid;
             }
 
-            PropertyInfo guidProperty = TryGetGuidProperty(o.GetUnproxiedType());
+            var guidProperty = TryGetGuidProperty(o.GetUnproxiedType());
             return guidProperty != null ? (Guid)guidProperty.GetValue(o, null) : Guid.Empty;
         }
 
         public static void SetGuid(this object o, Guid newSyncableGuid)
         {
-            PropertyInfo guidProperty = GetGuidProperty(o.GetUnproxiedType());
-            if (guidProperty != null)
-            {
-                guidProperty.SetValue(o, newSyncableGuid, null);
-            }
+            var guidProperty = GetGuidProperty(o.GetUnproxiedType());
+            guidProperty?.SetValue(o, newSyncableGuid, null);
         }
 
         public static PropertyInfo GetGuidProperty(Type t)
@@ -46,7 +43,7 @@ namespace System
                 if (!GuidProperties.ContainsKey(t))
                 {
                     string propertyName = null;
-                    SyncableAttribute attrib = t.GetCustomAttribute<SyncableAttribute>(true);
+                    var attrib = t.GetCustomAttribute<SyncableAttribute>(true);
                     if (attrib != null)
                     {
                         propertyName = attrib.GuidColumnName;
@@ -62,7 +59,7 @@ namespace System
 
                     if (!string.IsNullOrEmpty(propertyName))
                     {
-                        PropertyInfo guidProperty = t.GetProperty(propertyName);
+                        var guidProperty = t.GetProperty(propertyName);
                         if (guidProperty == null)
                         {
                             throw new InvalidOperationException($"Spalte {propertyName} nicht in Typ {t.FullName} enthalten");
@@ -91,7 +88,7 @@ namespace System
             {
                 if (!GuidProperties.ContainsKey(t))
                 {
-                    SyncableAttribute attrib = t.GetCustomAttribute<SyncableAttribute>(true);
+                    var attrib = t.GetCustomAttribute<SyncableAttribute>(true);
                     string propertyName;
                     if (attrib != null)
                     {
@@ -108,7 +105,7 @@ namespace System
 
                     if (!string.IsNullOrEmpty(propertyName))
                     {
-                        PropertyInfo guidProperty = t.GetProperty(propertyName);
+                        var guidProperty = t.GetProperty(propertyName);
                         if (guidProperty == null)
                         {
                             return null;

@@ -1,8 +1,8 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -12,31 +12,33 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr) 
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr)
             => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?jahr={jahr}");
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr) 
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr)
             => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}");
 
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(string status, int jahr, DateTime changedSince)
             => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince:o}");
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(DateTime changedSince, int jahr = 0, string status = "Alle", string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "") 
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(DateTime changedSince, int jahr = 0, string status = "Alle", string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
             => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince:o}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
 
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
             => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
 
-        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(Guid kundeGuid) 
+        public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(Guid kundeGuid)
             => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?kundeGuid={kundeGuid}");
 
         public async Task SendeVorgaengeAsync(VorgangDTO[] list)
         {
-            foreach (VorgangDTO v in list)
+            foreach (var v in list)
+            {
                 await SendeVorgangAsync(v);
+            }
         }
 
-        public async Task<VorgangDTO> SendeVorgangAsync(VorgangDTO vorgang) 
+        public async Task<VorgangDTO> SendeVorgangAsync(VorgangDTO vorgang)
             => await PutAsync<VorgangDTO>("Vorgang", vorgang);
 
         public async Task<VorgangDTO> LadeVorgangAsync(Guid vorgangGuid, bool mitKunde)
@@ -50,7 +52,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<VorgangStatusDTO> SetStatusAsync(Guid vorgangGuid, string statusCode)
         {
-            VorgangStatusDTO set = new VorgangStatusDTO()
+            var set = new VorgangStatusDTO
             {
                 VorgangGuid = vorgangGuid,
                 NeuerStatus = statusCode
@@ -60,7 +62,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task SetTextStatusAsync(List<Guid> vorgangGuids, string textStatus)
         {
-            VorgangTextStatusDTO set = new VorgangTextStatusDTO()
+            var set = new VorgangTextStatusDTO
             {
                 VorgangGuids = vorgangGuids,
                 NeuerTextStatus = textStatus
@@ -68,7 +70,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             await PostAsync("VorgangTextStatus", set);
         }
 
-        public async Task ArchiviereVorgangAsync(Guid vorgangGuid) 
+        public async Task ArchiviereVorgangAsync(Guid vorgangGuid)
             => await PostAsync("Archivierung/?vguid=" + vorgangGuid, null);
 
         public async Task ArchiviereVorgangListAsync(List<Guid> vorgangGuidList)

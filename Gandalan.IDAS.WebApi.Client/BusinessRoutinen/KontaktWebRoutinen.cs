@@ -18,7 +18,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<KontaktListItemDTO[]> GetKontakteAsync(DateTime? changedSince)
         {
             if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+            {
                 return await GetAsync<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value.ToString("o")}");
+            }
+
             return await GetAsync<KontaktListItemDTO[]>("Kontakt");
         }
 

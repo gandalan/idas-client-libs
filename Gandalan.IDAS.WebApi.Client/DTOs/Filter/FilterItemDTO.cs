@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO.DTOs.Filter
 {
@@ -13,6 +13,6 @@ namespace Gandalan.IDAS.WebApi.DTO.DTOs.Filter
         public long Version { get; set; }
         public DateTime ChangedDate { get; set; }
         public bool IsDeleted { get; set; }
-        public long Reihenfolge { get; set; } 
+        public long Reihenfolge { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,7 +27,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
         public string GetItemWert(string itemName, string defaultWert = null)
         {
-            gSQLItem item = GetItem(itemName);
+            var item = GetItem(itemName);
             return item != null ? item.Wert : defaultWert;
         }
     }

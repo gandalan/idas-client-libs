@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.Navigation
 {
@@ -9,7 +9,6 @@ namespace Gandalan.Client.Contracts.Navigation
         object Icon { get; }
         int Order { get; }
 
-        Task ExecuteAsync(object parameter); 
-
+        Task ExecuteAsync(object parameter);
     }
 }

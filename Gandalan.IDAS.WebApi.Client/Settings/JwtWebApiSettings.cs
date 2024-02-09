@@ -1,9 +1,9 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
@@ -36,7 +36,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             // set settings values from JWT token
             UserName = userId;
             Mandant = "";
-            AuthToken = new UserAuthTokenDTO()
+            AuthToken = new UserAuthTokenDTO
             {
                 Token = Guid.Parse(authTokenClaim.Value),
                 AppToken = Guid.Parse(appTokenClaim.Value),

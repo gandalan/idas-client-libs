@@ -87,7 +87,10 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
                 BelegungInProzent = (int)Math.Floor(((float)BelegungInMM / (float)Laenge) * 100);
                 VerschnittInProzent = 100 - BelegungInProzent;
             }
-            else throw new InvalidOperationException("Kein Platz mehr für dieses Teilstück!");
+            else
+            {
+                throw new InvalidOperationException("Kein Platz mehr für dieses Teilstück!");
+            }
         }
     }
 

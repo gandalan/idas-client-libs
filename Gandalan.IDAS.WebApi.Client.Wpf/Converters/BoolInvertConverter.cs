@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Windows.Data;
 
@@ -8,13 +8,13 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool booleanValue = (bool)value;
+            var booleanValue = (bool)value;
             return !booleanValue;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool booleanValue = (bool)value;
+            var booleanValue = (bool)value;
             return !booleanValue;
         }
     }

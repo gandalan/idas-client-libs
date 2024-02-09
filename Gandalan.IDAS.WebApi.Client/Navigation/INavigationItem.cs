@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.Navigation
@@ -11,6 +11,6 @@ namespace Gandalan.Client.Contracts.Navigation
         int Order { get; }
         bool IsVisible { get; set; }
 
-        Func<Task> Execute { get; } 
+        Func<Task> Execute { get; }
     }
 }

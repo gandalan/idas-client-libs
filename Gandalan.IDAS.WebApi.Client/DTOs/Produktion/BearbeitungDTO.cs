@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -16,14 +16,14 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Artikelbezeichnung
         /// </summary>
-        public string BearbeitungsName { get; set; }                
+        public string BearbeitungsName { get; set; }
         /// <summary>
-        /// Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+        /// Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt
         /// sich aus mit Laufmeter!)
         /// </summary>
         public decimal X { get; set; }
         /// <summary>
-        /// Laufmeter des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+        /// Laufmeter des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt
         /// sich aus mit Stückzahl!)
         /// </summary>
         public decimal Y { get; set; }
