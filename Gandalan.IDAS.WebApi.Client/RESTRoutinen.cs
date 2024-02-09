@@ -24,7 +24,7 @@ namespace Gandalan.IDAS.Web
 
         public RESTRoutinen(string baseUrl)
         {
-            _client = HttpClientFactory.GetInstance(new HttpClientConfig()
+            _client = HttpClientFactory.GetInstance(new HttpClientConfig
             {
                 BaseUrl = baseUrl
             });
@@ -32,7 +32,7 @@ namespace Gandalan.IDAS.Web
 
         public RESTRoutinen(string baseUrl, IWebProxy proxy)
         {
-            _client = HttpClientFactory.GetInstance(new HttpClientConfig()
+            _client = HttpClientFactory.GetInstance(new HttpClientConfig
             {
                 BaseUrl = baseUrl,
                 Proxy = proxy
@@ -340,7 +340,9 @@ namespace Gandalan.IDAS.Web
         public HttpClient GetClientByVersion(string version = null)
         {
             if (version == null || _config == null)
+            {
                 return _client;
+            }
 
             if (!_versionClients.TryGetValue(version, out var versionClient))
             {

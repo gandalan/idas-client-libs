@@ -1,8 +1,8 @@
-using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -24,7 +24,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 {
                     var code = response.StatusCode;
                     if (code == HttpStatusCode.NotFound)
+                    {
                         return null;
+                    }
                 }
 
                 throw;
@@ -43,7 +45,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 {
                     var code = response.StatusCode;
                     if (code == HttpStatusCode.NotFound)
+                    {
                         return null;
+                    }
                 }
 
                 throw;

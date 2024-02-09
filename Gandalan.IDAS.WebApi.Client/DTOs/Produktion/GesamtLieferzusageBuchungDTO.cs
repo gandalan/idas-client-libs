@@ -10,10 +10,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal Stueckzahl { get; set; }
         public decimal Laufmeter { get; set; }
         public DateTime Buchungsdatum { get; set; }
-        
+
         public object Clone()
         {
-            return new GesamtLieferzusageBuchungDTO()
+            return new GesamtLieferzusageBuchungDTO
             {
                 GesamtLieferzusageBuchungGuid = GesamtLieferzusageBuchungGuid,
                 MandantGuid = MandantGuid,

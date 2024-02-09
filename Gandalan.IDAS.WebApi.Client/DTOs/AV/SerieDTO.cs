@@ -27,7 +27,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public DateTime Ende { get; set; } = new DateTime(2099, 12, 31);
         /// <summary>
-        /// Ständige Serie, dh. Start und Ende sind ungültig/irrelevant. 
+        /// Ständige Serie, dh. Start und Ende sind ungültig/irrelevant.
         /// </summary>
         public bool StaendigeSerie { get; set; }
 
@@ -44,22 +44,22 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public decimal KapazitaetInMin { get; set; }
         /// <summary>
-        /// Belegung der Serie in neutralen Kapazitätseinheiten. Muss beim Hinzfügen/Entfernen 
+        /// Belegung der Serie in neutralen Kapazitätseinheiten. Muss beim Hinzfügen/Entfernen
         /// durch den entsprechenden Algorithmus ermittelt und gesetzt werden.
         /// </summary>
         public decimal KapazitaetReserviert { get; set; }
         /// <summary>
         /// Informationen, wann welcher Anwender welches Dokument gedruckt hat
-        /// </summary>        
+        /// </summary>
         public List<SerieDruckInfoDTO> DruckInfos { get; set; } = new List<SerieDruckInfoDTO>();
         /// <summary>
         /// Änderungsdatum des Datensatzes
         /// </summary>
-        public DateTime ChangedDate { get; set; }        
+        public DateTime ChangedDate { get; set; }
 
         public void AddDruckInfo(string dokumentArt, string benutzerName)
         {
-            DruckInfos.Add(new SerieDruckInfoDTO() { Benutzername = benutzerName, DokumentArt = dokumentArt, Zeitstempel = DateTime.UtcNow });
+            DruckInfos.Add(new SerieDruckInfoDTO { Benutzername = benutzerName, DokumentArt = dokumentArt, Zeitstempel = DateTime.UtcNow });
         }
 
         public IList<SerieDruckInfoDTO> GetDruckInfos(string dokumentArt)
@@ -87,7 +87,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string Benutzername { get; set; }
         /// <summary>
-        /// Welches Dokument wurde gedruckt (Freitext, setzt der Client) 
+        /// Welches Dokument wurde gedruckt (Freitext, setzt der Client)
         /// </summary>
         public string DokumentArt { get; set; }
         /// <summary>

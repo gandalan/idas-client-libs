@@ -1,12 +1,12 @@
-using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.Logging;
-using Gandalan.IDAS.WebApi.DTO;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Logging;
+using Gandalan.IDAS.WebApi.DTO;
+using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
@@ -33,7 +33,9 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public static IWebApiConfig ByName(string name)
         {
             if (!_isInitialized)
+            {
                 throw new InvalidOperationException("WebApiConfigurations not initialized - call Initialize() first");
+            }
 
             if (_settings.TryGetValue(name, out var byName))
             {
@@ -46,7 +48,9 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public static List<IWebApiConfig> GetAll()
         {
             if (!_isInitialized)
+            {
                 throw new InvalidOperationException("WebApiConfigurations not initialized - call Initialize() first");
+            }
 
             return new List<IWebApiConfig>(_settings.Values);
         }
@@ -54,16 +58,20 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public static void Save(IWebApiConfig settings)
         {
             if (settings == null)
+            {
                 return;
+            }
 
             var configPath = Path.Combine(_settingsPath, settings.FriendlyName);
             var configFile = Path.Combine(configPath, "AuthToken_" + _appTokenString + ".json");
             if (!Directory.Exists(configPath))
+            {
                 Directory.CreateDirectory(configPath);
+            }
 
             try
             {
-                File.WriteAllText(configFile, JsonConvert.SerializeObject(new SavedAuthToken()
+                File.WriteAllText(configFile, JsonConvert.SerializeObject(new SavedAuthToken
                 {
                     UserName = settings.UserName,
                     AuthTokenGuid = settings.AuthToken?.Token ?? Guid.Empty
@@ -131,7 +139,9 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 }
 
                 if (environment != null)
+                {
                     _settings.Add(env, environment);
+                }
             }
         }
 
@@ -140,7 +150,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             var savedAuthToken = InternalLoadSavedAuthToken(env);
             if (savedAuthToken != null)
             {
-                environment.AuthToken = new UserAuthTokenDTO()
+                environment.AuthToken = new UserAuthTokenDTO
                 {
                     Token = savedAuthToken.AuthTokenGuid,
                     AppToken = environment.AppToken

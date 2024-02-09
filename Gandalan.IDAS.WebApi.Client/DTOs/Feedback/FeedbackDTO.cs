@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
     public class FeedbackDTO
     {
-        public Guid FeedbackGuid { get; set; }    
+        public Guid FeedbackGuid { get; set; }
         public DateTime ChangedDate { get; set; }
         public long Version { get; set; }
         public string PCode { get; set; }
@@ -20,7 +20,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public ProduktionsSettingsDTO ProduktionsSettings { get; set; }
         public string Beschreibung { get; set; }
         public IList<FeedbackAttachmentDTO> Anhaenge { get; set; }
-        public IList<FeedbackKommentarDTO> Kommentare { get; set; }   
+        public IList<FeedbackKommentarDTO> Kommentare { get; set; }
         public string Status { get; set; }
         public string LoesungsVersion { get; set; }
     }

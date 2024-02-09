@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Jobs.Contracts
 {
@@ -11,13 +11,13 @@ namespace Gandalan.IDAS.Jobs.Contracts
     }
 
     /// <summary>
-    /// Definiert einen Hintergrundjob, der unabhängig von der 
+    /// Definiert einen Hintergrundjob, der unabhängig von der
     /// eigentlichen Anwendung ausgeführt wird
     /// </summary>
     public interface IBackgroundJob<TJobData> : IBackgroundJob where TJobData : IJobData
     {
         new TJobData JobData { get; }
 
-        Task RunAsync(TJobData jobData);        
+        Task RunAsync(TJobData jobData);
     }
 }

@@ -1,8 +1,8 @@
-using Gandalan.IDAS.WebApi.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -133,21 +133,43 @@ namespace Gandalan.IDAS.WebApi.DTO
             var sb = new StringBuilder();
 
             if (!string.IsNullOrEmpty(Anrede))
+            {
                 sb.AppendLine(Anrede);
+            }
+
             if (!string.IsNullOrEmpty(Firmenname))
+            {
                 sb.AppendLine(Firmenname);
+            }
             else if (!string.IsNullOrEmpty(Titel) || !string.IsNullOrEmpty(Vorname) || !string.IsNullOrEmpty(Nachname))
+            {
                 sb.AppendLine($"{Titel} {Vorname} {Nachname}".Trim());
+            }
+
             if (!string.IsNullOrEmpty(AdressZusatz1))
+            {
                 sb.AppendLine(AdressZusatz1);
+            }
+
             if (!string.IsNullOrEmpty(AdressZusatz2))
+            {
                 sb.AppendLine(AdressZusatz2);
+            }
+
             if (!string.IsNullOrEmpty(Ortsteil))
+            {
                 sb.AppendLine("OT " + Ortsteil);
+            }
+
             if (!string.IsNullOrEmpty(Strasse) || !string.IsNullOrEmpty(Hausnummer))
+            {
                 sb.AppendLine($"{Strasse} {Hausnummer}".Trim());
+            }
+
             if (!string.IsNullOrEmpty(Land) || !string.IsNullOrEmpty(Postleitzahl) || !string.IsNullOrEmpty(Ort))
+            {
                 sb.AppendLine($"{Land} {Postleitzahl} {Ort}".Trim());
+            }
 
             return sb.ToString().Trim();
 

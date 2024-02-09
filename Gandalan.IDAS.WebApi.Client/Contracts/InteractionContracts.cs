@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
@@ -6,7 +6,7 @@ namespace Gandalan.Client.Contracts
 {
     public interface IInteractivePanel : INotifyPropertyChanged
     {
-        string Caption { get; }    
+        string Caption { get; }
         bool IsLoading { get; }
         Task OnLoadAsync(object sender, EventArgs e);
         Task OnUnLoadAsync(object sender, EventArgs e);
@@ -34,14 +34,14 @@ namespace Gandalan.Client.Contracts
     {
         Task<bool> SaveAndContinue();
     }
-    
+
     public interface ISaveAndNew
     {
         Task<bool> SaveAndNew();
     }
 
     public interface IDisplayPanel : IInteractivePanel
-    {     
+    {
     }
 
     public interface ILookupDialog<T, U>

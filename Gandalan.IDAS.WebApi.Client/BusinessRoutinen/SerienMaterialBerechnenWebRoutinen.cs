@@ -17,12 +17,18 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             if (sfZusammenfassen)
             {
                 if (serieZusammenfassen)
+                {
                     await PostAsync("SerieMaterialbedarfBerechnen/SFZusammenfassen", serieGuid);
+                }
                 else
+                {
                     await PostAsync("SerieMaterialbedarfBerechnen/SFZusammenfassenVorgang", serieGuid);
+                }
             }
             else
+            {
                 await PostAsync("SerieMaterialbedarfBerechnen", serieGuid);
+            }
         }
 
         public async Task<List<MaterialbedarfDTO>> GetMaterialAsync(Guid serieGuid)

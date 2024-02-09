@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,8 +34,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
         public async Task<BenutzerDTO> GetOneBenutzerByKundeAsync(Guid kundeGuid, string email)
-        {   
-            List<BenutzerDTO> templist = await GetAsync<List<BenutzerDTO>>($"AppBenutzer/{kundeGuid}");
+        {
+            var templist = await GetAsync<List<BenutzerDTO>>($"AppBenutzer/{kundeGuid}");
             return templist.FirstOrDefault(x => x.EmailAdresse == email);
         }
 
@@ -56,7 +56,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task AktiviereMandantAsync(string adminEmail)
         {
-            await PostAsync("ProduzentAktivieren", new ProduzentAktivierenDTO()
+            await PostAsync("ProduzentAktivieren", new ProduzentAktivierenDTO
             {
                 AdminEmail = adminEmail
             });

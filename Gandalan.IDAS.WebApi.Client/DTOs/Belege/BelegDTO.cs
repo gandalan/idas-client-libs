@@ -1,10 +1,10 @@
-using Gandalan.IDAS.WebApi.Util;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using Gandalan.IDAS.WebApi.Util;
+using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -71,7 +71,9 @@ namespace Gandalan.IDAS.WebApi.DTO
             {
                 var pos = vorgang.Positionen.FirstOrDefault(pp => pp.BelegPositionGuid == p);
                 if (pos != null)
+                {
                     PositionsObjekte.Add(pos);
+                }
             });
         }
     }

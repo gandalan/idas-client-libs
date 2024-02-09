@@ -1,8 +1,8 @@
-using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client.DTOs.Nachrichten;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Client.DTOs.Nachrichten;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -13,7 +13,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public NotifyWebRoutinen(IWebApiConfig settings) : base(settings)
         {
             if (string.IsNullOrEmpty(settings.NotifyUrl))
+            {
                 return;
+            }
 
             var uri = new UriBuilder(settings.NotifyUrl);
             uri.Path = "/api/";
@@ -24,7 +26,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<IList<NachrichtenDTO>> GetAllNotificationsAsync()
         {
             if (!_validConfig)
+            {
                 return new List<NachrichtenDTO>();
+            }
+
             var mandant = Settings.AuthToken.Mandant.MandantGuid;
             var produzent = Settings.AuthToken.Mandant.ProduzentMandantGuid;
             return await GetAsync<List<NachrichtenDTO>>($"Nachrichten?mandantGuid={mandant}&produzentGuid={produzent}");
