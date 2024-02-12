@@ -1,4 +1,4 @@
-﻿namespace System
+namespace System
 {
     public static class CalendarWeek
     {
@@ -10,7 +10,7 @@
                 datum = datum.AddDays(7 - (int)datum.DayOfWeek);
             }
 
-            int kw = Globalization.CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(datum, Globalization.CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+            var kw = Globalization.CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(datum, Globalization.CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
 
             return kw;
         }

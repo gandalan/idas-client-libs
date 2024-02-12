@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.Client.Contracts.DataServices
 {
@@ -17,13 +17,13 @@ namespace Gandalan.Client.Contracts.DataServices
         /// <summary>
         /// Legt ein neues LagerbestandDTO an, oder aktualisiert es, sofern bereits vorhanden
         /// </summary>
-        /// <param name="lagerbestandDTO">LagerbestandDTO, das angelegt/aktualisiert werden soll</param>        
+        /// <param name="lagerbestandDTO">LagerbestandDTO, das angelegt/aktualisiert werden soll</param>
         Task AddOrUpdateAsync(LagerbestandDTO lagerbestandDTO);
 
         /// <summary>
         /// Legt eine Liste neuer LagerbestandDTOs an, oder aktualisiert sie, sofern bereits vorhanden
         /// </summary>
-        /// <param name="lagerbestandDTOs">Liste der LagerbestandDTOs, die angelegt/aktualisiert werden sollen</param>        
+        /// <param name="lagerbestandDTOs">Liste der LagerbestandDTOs, die angelegt/aktualisiert werden sollen</param>
         Task AddOrUpdateAsync(IList<LagerbestandDTO> lagerbestandDTOs);
 
         /// <summary>
@@ -31,6 +31,5 @@ namespace Gandalan.Client.Contracts.DataServices
         /// </summary>
         /// <param name="lagerbestandDTO">LagerbestandDTO, das entfernt werden soll</param>
         Task DeleteAsync(LagerbestandDTO lagerbestandDTO);
-
     }
 }

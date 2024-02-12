@@ -43,7 +43,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public void RemoveRolle(string rollenName)
         {
-            RemoveRolle(new RolleDTO() { Name = rollenName });
+            RemoveRolle(new RolleDTO { Name = rollenName });
         }
 
         public void RemoveRolle(RolleDTO rolle)
@@ -51,7 +51,9 @@ namespace Gandalan.IDAS.WebApi.DTO
             for (var i = Rollen.Count - 1; i >= 0; i--)
             {
                 if (Rollen[i].Name.Equals(rolle.Name, StringComparison.InvariantCultureIgnoreCase))
+                {
                     Rollen.RemoveAt(i);
+                }
             }
         }
 

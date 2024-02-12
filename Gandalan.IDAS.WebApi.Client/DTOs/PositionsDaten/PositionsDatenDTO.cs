@@ -6,7 +6,7 @@ namespace Gandalan.IDAS.WebApi.DTO
     {
         public Guid PositionsDatenGuid { get; set; }
         public string VariantenName { get; set; }
-        public string ArtikelNummer { get; set; }     
+        public string ArtikelNummer { get; set; }
         public int PositionsNummer { get; set; }
         public int AlternativPositionZuNummer { get; set; }
         public string Besonderheiten { get; set; }

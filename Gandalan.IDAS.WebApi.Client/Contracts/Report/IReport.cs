@@ -1,9 +1,9 @@
-using Gandalan.Client.Contracts.AppServices;
-using Gandalan.IDAS.WebApi.Client.Contracts.Report;
-using Gandalan.IDAS.WebApi.DTO.DTOs.Reports;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Gandalan.Client.Contracts.AppServices;
+using Gandalan.IDAS.WebApi.Client.Contracts.Report;
+using Gandalan.IDAS.WebApi.DTO.DTOs.Reports;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
 {
@@ -47,10 +47,14 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
             var dataDir = GetDataDir(action);
 
             if (!Directory.Exists(workingDir))
+            {
                 throw new InvalidOperationException($"Reportverzeichnis '{workingDir}' nicht gefunden.");
+            }
 
             if (!Directory.Exists(dataDir))
+            {
                 Directory.CreateDirectory(dataDir);
+            }
 
             if (!copyCommomHtmlData)
             {

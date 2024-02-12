@@ -1,7 +1,7 @@
-using Gandalan.IDAS.Client.Contracts.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -12,10 +12,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
         public async Task<Dictionary<Guid, decimal?>> GetKapazitaetAsync(List<Guid> positionGuids)
-            => await PostAsync<Dictionary<Guid, decimal?>>($"Kapaziaetsberechnung/GetKapaziaet", positionGuids);
-        public async Task CalculateKapazitaetForFunctionAsync(Guid positionGuid, long mandantID) 
+            => await PostAsync<Dictionary<Guid, decimal?>>("Kapaziaetsberechnung/GetKapaziaet", positionGuids);
+        public async Task CalculateKapazitaetForFunctionAsync(Guid positionGuid, long mandantID)
             => await PostAsync($"Kapaziaetsberechnung/RunKapBerechnung?id={positionGuid}&mandantId={mandantID}", null);
         public async Task CalculateItemsAsync()
-            => await PostAsync($"Kapaziaetsberechnung/CalculateItems", null);
+            => await PostAsync("Kapaziaetsberechnung/CalculateItems", null);
     }
 }

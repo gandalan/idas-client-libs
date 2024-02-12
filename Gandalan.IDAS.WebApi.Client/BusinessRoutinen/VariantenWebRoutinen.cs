@@ -20,7 +20,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<Guid[]> GetAllVariantenChanges(DateTime? changedSince = null)
         {
             if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+            {
                 return await GetAsync<Guid[]>("Variante/GetAllVariantenChanges?changedSince=" + changedSince.Value.ToString("o"));
+            }
+
             return await GetAsync<Guid[]>("Variante/GetAllGuids");
         }
 

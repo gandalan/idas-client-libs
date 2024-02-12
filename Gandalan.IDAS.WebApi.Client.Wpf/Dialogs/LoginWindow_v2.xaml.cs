@@ -1,12 +1,12 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.Logging;
-using Gandalan.IDAS.WebApi.Client.Settings;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Logging;
+using Gandalan.IDAS.WebApi.Client.Settings;
 
 namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 {
@@ -31,12 +31,13 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             if (Application.Current != null && Application.Current.Windows != null)
             {
                 foreach (var window in Application.Current.Windows)
+                {
                     if (window is Window wpfWindow && wpfWindow.IsVisible)
                     {
                         Owner = wpfWindow;
                         break;
                     }
-
+                }
             }
 
             InitializeComponent();
@@ -101,7 +102,10 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             if (await testConnection(_webApiSettings))
             {
                 if (_viewModel.SaveCredentials)
+                {
                     WebApiConfigurations.Save(_webApiSettings);
+                }
+
                 DialogResult = true;
                 Close();
 
@@ -122,7 +126,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 
         private async Task<bool> testConnection(IWebApiConfig settings)
         {
-            WebRoutinenBase wrb = new WebRoutinenBase(settings);
+            var wrb = new WebRoutinenBase(settings);
             try
             {
                 if (settings.AuthToken != null)
@@ -139,10 +143,15 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 
                 _statusText = wrb.Status;
                 if (_statusText.Contains("<title>"))
+                {
                     _statusText = internalStripHtml(_statusText);
+                }
 
                 if (result)
+                {
                     settings.AuthToken = wrb.AuthToken;
+                }
+
                 return result;
             }
             catch (Exception ex)
@@ -200,6 +209,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             {
                 _viewModel.ShowServerSelection = !_viewModel.ShowServerSelection;
             }
+
             if (Keyboard.IsKeyToggled(Key.CapsLock) || !Keyboard.IsKeyToggled(Key.NumLock))
             {
                 _viewModel.ShowPasswordInputWarning = true;
@@ -208,6 +218,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
                 {
                     _viewModel.PasswordInputWarning += "Feststelltaste ist aktiviert. ";
                 }
+
                 if (!Keyboard.IsKeyToggled(Key.NumLock))
                 {
                     _viewModel.PasswordInputWarning += "Numlock ist nicht aktiviert. ";

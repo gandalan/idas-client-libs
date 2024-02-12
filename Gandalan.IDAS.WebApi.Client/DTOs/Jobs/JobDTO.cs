@@ -21,33 +21,35 @@ namespace Gandalan.IDAS.WebApi.DTO
             Parameter = new List<JobParameterDTO>();
         }
 
-
         public bool CancelWait { get; set; }
 
         public static JobDTO AddJob(string sender, string recipient)
         {
-            var job = new JobDTO() { Sender = sender, Recipient = recipient };
-            job.Stati.Add(new JobStatusDTO() { StatusCode = "N", StatusText = "Eingefügt von " + sender, Zeitstempel = DateTime.UtcNow });
+            var job = new JobDTO { Sender = sender, Recipient = recipient };
+            job.Stati.Add(new JobStatusDTO { StatusCode = "N", StatusText = "Eingefügt von " + sender, Zeitstempel = DateTime.UtcNow });
             return job;
         }
 
         public JobDTO AddStatus(string code, string text)
         {
-            Stati.Add(new JobStatusDTO() { StatusCode = code, StatusText = text, Zeitstempel = DateTime.UtcNow });
+            Stati.Add(new JobStatusDTO { StatusCode = code, StatusText = text, Zeitstempel = DateTime.UtcNow });
             return this;
         }
 
         public JobDTO AddParameter(string richtung, string name, object value)
         {
             if (string.IsNullOrEmpty(name) || value == null)
+            {
                 return this;
-            Parameter.Add(new JobParameterDTO() { Richtung = richtung, Name = name, Wert = value.ToString(), DatenTyp = value.GetType().Name });
+            }
+
+            Parameter.Add(new JobParameterDTO { Richtung = richtung, Name = name, Wert = value.ToString(), DatenTyp = value.GetType().Name });
             return this;
         }
 
         public JobDTO AddParameter(string richtung, Dictionary<string, string> parameter)
         {
-            foreach (string k in parameter.Keys)
+            foreach (var k in parameter.Keys)
             {
                 AddParameter(richtung, k, parameter[k]);
             }

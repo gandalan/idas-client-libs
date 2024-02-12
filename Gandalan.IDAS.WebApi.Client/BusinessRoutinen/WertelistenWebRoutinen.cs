@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
@@ -11,7 +11,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<WerteListeDTO[]> GetAllAsync(bool includeAutoWerteListen) 
+        public async Task<WerteListeDTO[]> GetAllAsync(bool includeAutoWerteListen)
             => await GetAsync<WerteListeDTO[]>("WerteListe?includeAutoWerteListen=" + includeAutoWerteListen);
 
         public async Task<WerteListeDTO> GetAsync(Guid wertelisteGuid, bool includeAutoWerteListen = true)

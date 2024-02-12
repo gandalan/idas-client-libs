@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
     public class AdresseDTO : IDTOWithApplicationSpecificProperties
     {
-        public Guid AdressGuid { get; set; }        
+        public Guid AdressGuid { get; set; }
         /// <summary>
         /// Akad. Titel/Adelstitel
         /// </summary>
@@ -92,7 +92,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public string Webadresse { get; set; }
         /// <summary>
-        /// Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)        
+        /// Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)
         /// </summary>
         public string Verwendungszweck { get; set; }
         /// <summary>

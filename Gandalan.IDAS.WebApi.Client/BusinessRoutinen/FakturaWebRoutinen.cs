@@ -1,9 +1,9 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client.DTOs.Faktura;
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Client.DTOs.Faktura;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -31,10 +31,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<string> GetBelegPositionKennzeichenAsync(Guid belegPositionGuid)
             => await GetAsync<string>($"Faktura/GetBelegPositionKennzeichen?vorgangGuid={belegPositionGuid}");
 
-        public async Task<List<BelegPositionAVDTO>> GetBelegPositionAVsAsync(string kennzeichen) 
+        public async Task<List<BelegPositionAVDTO>> GetBelegPositionAVsAsync(string kennzeichen)
             => await GetAsync<List<BelegPositionAVDTO>>($"Faktura/GetBelegPositionAVs?kennzeichen={kennzeichen}");
 
-        public async Task<string> GetBelegPositionAVKennzeichenAsync(Guid belegPositionAvGuid) 
+        public async Task<string> GetBelegPositionAVKennzeichenAsync(Guid belegPositionAvGuid)
             => await GetAsync<string>($"Faktura/GetBelegPositionAVKennzeichen?vorgangGuid={belegPositionAvGuid}");
 
         public async Task<string> SetVorgangKennzeichenAsync(SetFakturaDTO dto)
@@ -43,14 +43,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<string> SetBelegKennzeichenAsync(SetFakturaDTO dto)
             => await PostAsync<string>("Faktura/SetBelegKennzeichen", dto);
 
-        public async Task<string> SetBelegPositionKennzeichenAsync(SetFakturaDTO dto) 
+        public async Task<string> SetBelegPositionKennzeichenAsync(SetFakturaDTO dto)
             => await PostAsync<string>("Faktura/SetBelegPositionKennzeichen", dto);
 
-        public async Task<string> SetBelegPositionAVKennzeichenAsync(SetFakturaDTO dto) 
+        public async Task<string> SetBelegPositionAVKennzeichenAsync(SetFakturaDTO dto)
             => await PostAsync<string>("Faktura/SetBelegPositionAVKennzeichen", dto);
 
         public async Task SetFakturaInABAuto()
             => await PostAsync<string>("Faktura/SetFakturaInABAuto", null);
-        
     }
 }

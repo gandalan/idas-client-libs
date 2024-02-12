@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Gandalan.Client.Contracts.DataServices
 {
     public interface ISettingsService
-    {        
+    {
         Task<T> Load<T>() where T : new();
         Task Load<T>(T settingsObject);
         Task Save<T>(T settingsObject);
@@ -48,7 +48,7 @@ namespace Gandalan.Client.Contracts.DataServices
     public class SettingsKeyAttribute : Attribute
     {
         private readonly string _keyName;
-                
+
         public SettingsKeyAttribute(string keyName)
         {
             _keyName = keyName;

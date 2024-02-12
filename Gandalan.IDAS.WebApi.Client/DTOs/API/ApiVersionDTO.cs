@@ -33,17 +33,23 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.API
             var description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
 
             if (string.IsNullOrEmpty(description) || !description.Contains("BuildDate="))
+            {
                 return null;
+            }
 
             var startIndex = description.IndexOf("BuildDate=");
             var endIndex = description.IndexOf(';', startIndex);
             if (startIndex < 0 || endIndex < 0)
+            {
                 return null;
+            }
 
             var substring = description.Substring(startIndex, endIndex - startIndex);
             var split = substring.Split('=')[1].Split(';')[0];
             if (!DateTime.TryParse(split, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var date))
+            {
                 return null;
+            }
 
             return date.ToString("yyyy-MM-dd HH:mm:ssK");
         }

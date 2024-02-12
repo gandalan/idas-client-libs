@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -17,7 +17,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public WarenGruppeDTO()
         {
-            Artikel = new ObservableCollection<KatalogArtikelDTO>();    
+            Artikel = new ObservableCollection<KatalogArtikelDTO>();
         }
     }
 }

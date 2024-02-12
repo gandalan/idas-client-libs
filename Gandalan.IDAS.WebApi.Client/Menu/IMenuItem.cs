@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.Menu
@@ -10,6 +10,6 @@ namespace Gandalan.Client.Contracts.Menu
         object Icon { get; }
         int Order { get; }
 
-        Func<Task> Execute { get; } 
+        Func<Task> Execute { get; }
     }
 }

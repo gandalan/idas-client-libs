@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.Client.MessageQueue
 {
@@ -13,7 +13,9 @@ namespace Gandalan.IDAS.WebApi.Client.MessageQueue
         public MQSettings(string connectionString)
         {
             if (string.IsNullOrEmpty(connectionString))
+            {
                 throw new InvalidOperationException("Message Queue settings must not be null/empty");
+            }
 
             Host = "";
             User = "";

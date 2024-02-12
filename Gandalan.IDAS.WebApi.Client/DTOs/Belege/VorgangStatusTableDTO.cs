@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -11,18 +11,22 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Eindeutige GUID des Vorgangs
         /// </summary>
         public Guid VorgangGuid { get; set; }
+
         /// <summary>
         /// Eindeutige GUID des Kontaktes im Vorgang
         /// </summary>
         public Guid? KontaktGuid { get; set; }
+
         /// <summary>
         /// Ob der Kunde geändert wurde, auch bei Neuanlöage = true
         /// </summary>
         public bool KundeGeaendert { get; set; }
+
         /// <summary>
-        /// Datum der letzten Änderung des Vorgangs        
+        /// Datum der letzten Änderung des Vorgangs
         /// </summary>
         public DateTime AenderungsDatum { get; set; }
+
         /// <summary>
         /// Die ID des Mandanten wird für die Functions benötigt
         /// </summary>

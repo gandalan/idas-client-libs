@@ -1,9 +1,9 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Data;
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Data;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -61,7 +61,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task BelegPositionenAVBerechnenAsync(List<Guid> guids)
         {
-            await PutAsync($"BelegPositionenAVBulk/AVBerechnung", guids);
+            await PutAsync("BelegPositionenAVBulk/AVBerechnung", guids);
         }
 
         public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(bool includeOriginalBeleg = true, bool includeProdDaten = true)
@@ -96,7 +96,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task DeleteBelegPositionenAVAsync(List<Guid> guids)
         {
-            await DeleteAsync($"BelegPositionenAVBulk", guids);
+            await DeleteAsync("BelegPositionenAVBulk", guids);
         }
 
         public async Task BelegPositionenSerienZuordnen(Guid belegGuid, List<PositionSerieItemDTO> positionSerieItems)

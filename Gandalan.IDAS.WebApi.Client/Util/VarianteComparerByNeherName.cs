@@ -16,18 +16,51 @@ namespace Gandalan.IDAS.WebApi.Util
 
             var wertA = GetFamilienWert(partsX[0]);
             var wertB = GetFamilienWert(partsY[0]);
-            if (wertA != wertB) return wertA - wertB;
+            if (wertA != wertB)
+            {
+                return wertA - wertB;
+            }
 
-            if (partsX.Length > 1) wertA += GetGruppenWert(partsX[1]);
-            if (partsY.Length > 1) wertB += GetGruppenWert(partsY[1]);
-            if (wertA != wertB) return wertA - wertB;
+            if (partsX.Length > 1)
+            {
+                wertA += GetGruppenWert(partsX[1]);
+            }
 
-            if (partsX.Length > 2) wertA += GetProduktWert(partsX[2]);
-            if (partsY.Length > 2) wertB += GetProduktWert(partsY[2]);
-            if (wertA != wertB) return wertA - wertB;
+            if (partsY.Length > 1)
+            {
+                wertB += GetGruppenWert(partsY[1]);
+            }
 
-            if (partsX.Length > 3) wertA += GetAbart(partsX[3]);
-            if (partsY.Length > 3) wertB += GetAbart(partsY[3]);
+            if (wertA != wertB)
+            {
+                return wertA - wertB;
+            }
+
+            if (partsX.Length > 2)
+            {
+                wertA += GetProduktWert(partsX[2]);
+            }
+
+            if (partsY.Length > 2)
+            {
+                wertB += GetProduktWert(partsY[2]);
+            }
+
+            if (wertA != wertB)
+            {
+                return wertA - wertB;
+            }
+
+            if (partsX.Length > 3)
+            {
+                wertA += GetAbart(partsX[3]);
+            }
+
+            if (partsY.Length > 3)
+            {
+                wertB += GetAbart(partsY[3]);
+            }
+
             return wertA - wertB;
         }
 

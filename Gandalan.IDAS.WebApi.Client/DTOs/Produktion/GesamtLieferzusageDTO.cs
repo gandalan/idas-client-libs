@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,7 +7,7 @@ namespace Gandalan.IDAS.WebApi.DTO
     public class GesamtLieferzusageDTO : ICloneable
     {
         public Guid GesamtLieferzusageGuid { get; set; }
-        public Guid MandantGuid { get; set; }        
+        public Guid MandantGuid { get; set; }
         public DateTime Liefertermin { get; set; }
         public string KatalogNummer { get; set; }
         public string BestellNummer { get; set; }
@@ -28,7 +28,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public List<GesamtLieferzusageBuchungDTO> Buchungen { get; set; }
         public object Clone()
         {
-            return new GesamtLieferzusageDTO()
+            return new GesamtLieferzusageDTO
             {
                 GesamtLieferzusageGuid = GesamtLieferzusageGuid,
                 MandantGuid = MandantGuid,

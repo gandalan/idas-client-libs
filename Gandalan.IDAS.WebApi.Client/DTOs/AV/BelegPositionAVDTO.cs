@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -43,13 +43,18 @@ namespace Gandalan.IDAS.WebApi.DTO
         public BelegPositionAVDTO()
         {
             if (BelegPositionAVGuid.Equals(Guid.Empty))
+            {
                 BelegPositionAVGuid = Guid.NewGuid();
+            }
         }
 
         public BelegPositionAVDTO(BelegPositionDTO position)
         {
             if (BelegPositionAVGuid.Equals(Guid.Empty))
+            {
                 BelegPositionAVGuid = Guid.NewGuid();
+            }
+
             BelegPositionGuid = position.BelegPositionGuid;
             Bereitgestellt = DateTime.UtcNow;
             Berechnet = null;

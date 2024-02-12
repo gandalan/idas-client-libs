@@ -1,7 +1,7 @@
-﻿namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices
+namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices
 {
     /// <summary>
-    /// Service for collection end user feedback, for instance via the 
+    /// Service for collection end user feedback, for instance via the
     /// "smiley" button in the top right corner of an app
     /// </summary>
     public interface IFeedbackService

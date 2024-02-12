@@ -33,7 +33,7 @@ namespace Gandalan.IDAS.WebApi.Client
 
         public object Clone()
         {
-            return new HttpClientConfig()
+            return new HttpClientConfig
             {
                 BaseUrl = BaseUrl,
                 Proxy = Proxy,
@@ -67,7 +67,7 @@ namespace Gandalan.IDAS.WebApi.Client
         /// </summary>
         private static HttpClient CreateWebClient(HttpClientConfig config)
         {
-            var handler = new HttpClientHandler()
+            var handler = new HttpClientHandler
             {
                 AutomaticDecompression = config.UseCompression ? DecompressionMethods.GZip | DecompressionMethods.Deflate : DecompressionMethods.None,
                 Credentials = config.Credentials,

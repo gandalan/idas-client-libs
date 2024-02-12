@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.DTO;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -13,7 +13,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<VorgangDTO> AddProduktionsfreigabeAsync(BelegartWechselDTO dto)
             => await PutAsync<VorgangDTO>("Produktionsfreigabe", dto);
 
-        public async Task WebJob() 
+        public async Task WebJob()
             => await PostAsync("Produktionsfreigabe/WebJob", null);
     }
 }

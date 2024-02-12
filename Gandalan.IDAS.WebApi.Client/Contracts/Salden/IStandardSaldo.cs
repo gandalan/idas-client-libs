@@ -6,9 +6,10 @@ namespace Gandalan.Client.Contracts.Salden
     public interface IStandardSaldo
     {
         string Name { get; }
+
         /// <summary>
         /// Prüft ob der StandardSaldo den Vorgang/Beleg betrifft
-        /// und gibt das entsprechende <see cref="BelegSaldoDTO"/> zurück. 
+        /// und gibt das entsprechende <see cref="BelegSaldoDTO"/> zurück.
         /// </summary>
         /// <param name="vorgang">Vorgang</param>
         /// <param name="beleg">Beleg</param>

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.Tiles
 {
@@ -17,7 +17,7 @@ namespace Gandalan.Client.Contracts.Tiles
         /// Streckt das Tile in der Höhe. Wie System.Windows.GridUnitType.Star.
         /// Alle Tiles in einer Gruppe müssen diese Flag gesetzt haben.
         /// </summary>
-        bool StretchVertically { get; set; } 
+        bool StretchVertically { get; set; }
         /// <summary>
         /// Minimale Höhe für Tile, wenn StretchVertically gesetzt ist.
         /// Der Gröste Wert innerhalb der Gruppe wird verwendet.

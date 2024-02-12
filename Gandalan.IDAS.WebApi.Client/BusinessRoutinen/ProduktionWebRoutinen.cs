@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
@@ -12,14 +12,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<string> ProduktionBerechnenAsync(Guid belegPositionsGuid) 
+        public async Task<string> ProduktionBerechnenAsync(Guid belegPositionsGuid)
             => await GetAsync<string>($"Script/PosBerechnen?pguid={belegPositionsGuid}");
 
-        public async Task<List<BearbeitungDTO>> GetProduktionAsync(Guid belegPositionsGuid) 
+        public async Task<List<BearbeitungDTO>> GetProduktionAsync(Guid belegPositionsGuid)
             => await GetAsync<List<BearbeitungDTO>>($"Produktion/?posguid={belegPositionsGuid}");
 
         public async Task<List<MaterialbedarfDTO>> GetMaterialBedarfAsync(Guid belegPositionsGuid)
             => await GetAsync<List<MaterialbedarfDTO>>($"MaterialBedarf/?posguid={belegPositionsGuid}");
-
     }
 }
