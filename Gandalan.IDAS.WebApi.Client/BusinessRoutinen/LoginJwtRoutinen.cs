@@ -11,13 +11,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<string> AuthenticateAsync(LoginDTO dto) 
+        public async Task<string> AuthenticateAsync(LoginDTO dto)
             => await PostAsync<string>("LoginJwt/Authenticate", dto);
 
-        public async Task<string> AuthenticateForFunctionAsync(string email) 
+        public async Task<string> AuthenticateForFunctionAsync(string email)
             => await PostAsync<string>("LoginJwt/AuthenticateForFunction/?email=" + Uri.EscapeDataString(email), null);
 
-        public async Task<string> RefreshAsync(string token) 
+        public async Task<string> RefreshAsync(string token)
             => await PutAsync<string>("LoginJwt/Refresh", token);
 
         public async Task<string> CreateServiceTokenAsync(CreateServiceTokenRequestDTO dto = null)

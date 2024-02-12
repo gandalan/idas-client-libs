@@ -36,13 +36,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await GetAsync<List<TagInfoDTO>>($"GetTagInfo?objectGuid={objectGuid}");
 
         public async Task<IDictionary<Guid, IEnumerable<TagInfoDTO>>> GetTagInfoAsync(IEnumerable<Guid> guidList)
-            => await PutAsync<Dictionary<Guid, IEnumerable<TagInfoDTO>>>($"GetTagInfoForGuidList", guidList);
+            => await PutAsync<Dictionary<Guid, IEnumerable<TagInfoDTO>>>("GetTagInfoForGuidList", guidList);
 
         public async Task AddOrUpdateTagInfoAsync(TagInfoDTO dto)
-            => await PostAsync($"TagInfo", dto);
+            => await PostAsync("TagInfo", dto);
 
         public async Task DeleteTagInfoAsync(TagInfoDTO dto)
-            => await DeleteAsync($"TagInfo", dto);
+            => await DeleteAsync("TagInfo", dto);
 
         public async Task<IList<TagInfoDTO>> GetTagInfoForFunctionAsync(Guid objectGuid, long mandantID)
             => await GetAsync<List<TagInfoDTO>>($"GetTagInfoForFunction?objectGuid={objectGuid}&mandantID={mandantID}");

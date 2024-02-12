@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.AppServices
 {
     /// <summary>
-    /// Check for application updates 
+    /// Check for application updates
     /// </summary>
     public interface IApplicationUpdateService
     {

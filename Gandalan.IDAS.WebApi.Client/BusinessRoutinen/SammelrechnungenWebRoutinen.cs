@@ -28,10 +28,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await GetAsync<List<BelegeInfoDTO>>("Sammelrechnungen/GetPossibleSammelrechnungRechnungen");
 
         public async Task<SammelrechnungDTO> UpdateSammelrechnungAsync(SammelrechnungDTO dto)
-            => await PostAsync<SammelrechnungDTO>($"Sammelrechnungen/UpdateSammelrechnung", dto);
+            => await PostAsync<SammelrechnungDTO>("Sammelrechnungen/UpdateSammelrechnung", dto);
 
         public async Task<SammelrechnungListItemDTO> AddRechnungToSammelrechnungenAsync(Guid belegGuid, Guid sammelrechnungGuid)
-            => await PostAsync<SammelrechnungListItemDTO>($"Sammelrechnungen/AddRechnungToSammelrechnungen",
+            => await PostAsync<SammelrechnungListItemDTO>("Sammelrechnungen/AddRechnungToSammelrechnungen",
                 new AddRechnungSammelrechnungDTO { BelegGuid = belegGuid, SammelrechnungGuid = sammelrechnungGuid });
 
         public async Task SetRechnungenAlsGedrucktAsync(List<Guid> guidListe, bool setEinzel = false)

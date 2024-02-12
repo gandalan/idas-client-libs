@@ -12,10 +12,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     public class BelegArtWebRoutinen : WebRoutinenBase
     {
         public BelegArtWebRoutinen(IWebApiConfig settings) : base(settings)
-        {   
+        {
         }
 
-        public async Task<VorgangDTO> BelegKopierenAsync(Guid bguid, string neueBelegArt, bool saldenKopieren = false) 
+        public async Task<VorgangDTO> BelegKopierenAsync(Guid bguid, string neueBelegArt, bool saldenKopieren = false)
             => await PostAsync<VorgangDTO>($"BelegArt?bguid={bguid}&saldenKopieren={saldenKopieren}&neueBelegArt={neueBelegArt}", new { });
     }
 }

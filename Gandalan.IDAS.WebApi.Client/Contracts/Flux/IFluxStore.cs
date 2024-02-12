@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Client.Contracts.Flux
@@ -17,13 +17,12 @@ namespace Gandalan.IDAS.Client.Contracts.Flux
         [Obsolete("use AddPersistentEventHandler")]
         event EventHandler<IFluxAction> DataChanged;
 
-
         Task Handle(IFluxAction action);
         void HandleSync(IFluxAction action);
         Task Initialize();
         Task Clean();
     }
-    
+
     public interface IFluxStore<T> : IFluxStore
     {
         T Data { get; }

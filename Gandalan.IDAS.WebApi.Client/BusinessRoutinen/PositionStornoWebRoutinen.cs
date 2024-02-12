@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using System;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -8,7 +8,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
     {
         public PositionStornoWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
-        public async Task PositionStornierenAsync(Guid positionGuid) 
+        public async Task PositionStornierenAsync(Guid positionGuid)
             => await PostAsync("PositionStorno?posGuid=" + positionGuid, null);
     }
 }

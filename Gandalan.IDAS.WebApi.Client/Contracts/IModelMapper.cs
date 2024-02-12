@@ -1,6 +1,6 @@
-﻿namespace Gandalan.Client.Contracts
+namespace Gandalan.Client.Contracts
 {
-    public interface IModelMapper<T, U> 
+    public interface IModelMapper<T, U>
     {
         void Convert(T source, U target);
         void Convert(U source, T target);

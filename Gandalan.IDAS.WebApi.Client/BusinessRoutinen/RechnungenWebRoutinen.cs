@@ -1,9 +1,9 @@
-using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -21,11 +21,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<List<BelegeInfoDTO>> GetAllRechnungenExportierbarAsync(DateTime? exportedSince = null)
             => await GetAsync<List<BelegeInfoDTO>>($"Rechnungen/GetNotExportedRechnungen?exportedSince={exportedSince?.ToString("o")}");
         public async Task SetBelegePrintedAsync(List<Guid> belegListe)
-            => await PostAsync($"Rechnungen/SetBelegePrinted", belegListe);
+            => await PostAsync("Rechnungen/SetBelegePrinted", belegListe);
         public async Task SetBelegeExportedAsync(List<Guid> belegListe)
-            => await PostAsync($"Rechnungen/SetBelegeExported", belegListe);
+            => await PostAsync("Rechnungen/SetBelegeExported", belegListe);
 
-        public async Task<Dictionary<Guid, Guid>> ErstelleRechnungenAsync(List<BelegartWechselDTO> belegeWechsel) 
+        public async Task<Dictionary<Guid, Guid>> ErstelleRechnungenAsync(List<BelegartWechselDTO> belegeWechsel)
             => await PostAsync<Dictionary<Guid, Guid>>("Rechnungen/ErstelleRechnungen", belegeWechsel);
     }
 }

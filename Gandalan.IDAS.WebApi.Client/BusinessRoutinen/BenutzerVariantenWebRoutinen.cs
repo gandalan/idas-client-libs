@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
@@ -11,7 +11,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<VarianteDTO[]> GetBenutzerVariantenAsync(Guid benutzer, bool mitSperrliste) 
+        public async Task<VarianteDTO[]> GetBenutzerVariantenAsync(Guid benutzer, bool mitSperrliste)
             => await GetAsync<VarianteDTO[]>($"BenutzerVarianten?id={benutzer}&mitSperrliste={mitSperrliste}");
     }
 }

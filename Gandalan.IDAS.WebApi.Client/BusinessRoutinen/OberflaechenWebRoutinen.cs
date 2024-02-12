@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
@@ -10,10 +10,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<OberflaecheDTO[]> GetAllAsync() 
+        public async Task<OberflaecheDTO[]> GetAllAsync()
             => await GetAsync<OberflaecheDTO[]>("Oberflaeche");
 
-        public async Task SaveOberflaecheAsync(OberflaecheDTO dto) 
+        public async Task SaveOberflaecheAsync(OberflaecheDTO dto)
             => await PutAsync("Oberflaeche/" + dto.OberflaecheGuid, dto);
     }
 }

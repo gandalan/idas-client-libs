@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Data.DTOs.AV;
@@ -12,10 +12,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<SerienMaterialEditDTO> AddOrUpdateAsync(MaterialbedarfDTO dto) 
+        public async Task<SerienMaterialEditDTO> AddOrUpdateAsync(MaterialbedarfDTO dto)
             => await PutAsync<SerienMaterialEditDTO>("SerieMaterialbedarfEdit", dto);
 
-        public async Task DeleteMaterialAsync(Guid materialbedarfGuid) 
+        public async Task DeleteMaterialAsync(Guid materialbedarfGuid)
             => await DeleteAsync($"SerieMaterialbedarfEdit?bedarfGuid={materialbedarfGuid}");
     }
 }

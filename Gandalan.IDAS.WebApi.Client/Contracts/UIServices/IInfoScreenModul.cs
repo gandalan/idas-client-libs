@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.Client.Contracts.UIServices
 {
@@ -18,7 +18,7 @@ namespace Gandalan.Client.Contracts.UIServices
 
         //Liefert das UIElement zurück
         object GetControl();
-        
+
         void ApplySettings(InfoScreenModulSettingsDTO settings);
 
         void ShowSettingsDialog(InfoScreenModulSettingsDTO settings, List<InfoScreenInitTypeDTO> availableTypes);

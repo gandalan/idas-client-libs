@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<VorgangDTO> VorgangReaktivierenAsync(BelegartWechselDTO dto) 
+        public async Task<VorgangDTO> VorgangReaktivierenAsync(BelegartWechselDTO dto)
             => await PutAsync<VorgangDTO>("VorgangReaktivieren", dto);
     }
 }

@@ -20,7 +20,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 NeuerStatus = statusCode,
                 NeuerStatusText = statusText
             };
-            return await PutAsync<BelegStatusDTO>($"BelegStatus", set);
+            return await PutAsync<BelegStatusDTO>("BelegStatus", set);
         }
     }
 }

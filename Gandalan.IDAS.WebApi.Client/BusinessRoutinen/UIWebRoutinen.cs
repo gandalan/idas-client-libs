@@ -1,7 +1,7 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -15,11 +15,11 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<UIDefinitionDTO> GetAsync(Guid guid)
             => await GetAsync<UIDefinitionDTO>($"UIDefinition/Get?guid={guid}&maxlevel=99");
 
-        public async Task SaveUIDefinitionAsync(UIDefinitionDTO uiDefinition) 
+        public async Task SaveUIDefinitionAsync(UIDefinitionDTO uiDefinition)
             => await PutAsync<UIDefinitionDTO>($"UIDefinition/{uiDefinition.UIDefinitionGuid}", uiDefinition);
 
         [Obsolete("Funktion 'SaveUIDefinitionAsync()' verwenden")]
-        public async Task SaveAsync(UIDefinitionDTO dto) 
+        public async Task SaveAsync(UIDefinitionDTO dto)
             => await PutAsync("UIDefinition/" + dto.UIDefinitionGuid, dto);
     }
 }

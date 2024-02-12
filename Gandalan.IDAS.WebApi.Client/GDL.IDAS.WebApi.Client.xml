@@ -15,7 +15,7 @@
             <summary>
             Liefert alle MaterialItems (optional alle zu einem PCode)
             </summary>
-            <returns>Liste von MaterialItemDTO</returns>  
+            <returns>Liste von MaterialItemDTO</returns>
         </member>
         <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialBeschaffungsJobWebRoutinen.GetMaterialBeschaffungsJob(System.Guid)">
             <summary>
@@ -55,7 +55,7 @@
             <summary>
             Liefert alle MaterialItems (optional alle zu einem PCode)
             </summary>
-            <returns>Liste von MaterialItemDTO</returns>  
+            <returns>Liste von MaterialItemDTO</returns>
         </member>
         <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialItemWebRoutinen.GetMaterialItems(System.Guid)">
             <summary>
@@ -65,7 +65,7 @@
         </member>
         <member name="M:Gandalan.IDAS.WebApi.Client.WebRoutinenBase.Login">
             <summary>
-            Meldet mit den aktuellen Credentials am Endpunkt /api/Login/Authenticate an. Wenn ein AuthToken vorhanden ist, wird 
+            Meldet mit den aktuellen Credentials am Endpunkt /api/Login/Authenticate an. Wenn ein AuthToken vorhanden ist, wird
             zunächst versucht, dieses zu verwenden und ggf. zu updaten. Wenn das fehlschlägt, erfolgt eine Anmeldung mit Username/
             Passwort aus den Settings.
             </summary>
@@ -78,17 +78,17 @@
         </member>
         <member name="P:Gandalan.IDAS.WebApi.Client.Settings.WebApiSettings.LatexReportUrl">
             <summary>
-            Latex-Reports 
+            Latex-Reports
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.Client.Settings.WebApiSettings.I2Url">
             <summary>
-            IBOS2-Varianten Produktionsberechnung 
+            IBOS2-Varianten Produktionsberechnung
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.Client.Settings.WebApiSettings.I1Url">
             <summary>
-            IBOS1-Varianten Produktionsberechnung 
+            IBOS1-Varianten Produktionsberechnung
             </summary>
         </member>
     </members>

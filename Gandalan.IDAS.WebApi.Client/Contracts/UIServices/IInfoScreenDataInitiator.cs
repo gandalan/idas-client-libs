@@ -1,12 +1,12 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.Client.Contracts.UIServices
 {
     /// <summary>
-    /// Interface für die Implementierung von Initiatoren für die InfoScreens. 
+    /// Interface für die Implementierung von Initiatoren für die InfoScreens.
     /// Der Initator liefert die Notwendigen Daten an die InfoScreen Module
     /// Standard Initiatoren: PCodeInitiator, ScanInitiator, ScanPCodeInitiator
     /// </summary>
@@ -26,5 +26,4 @@ namespace Gandalan.Client.Contracts.UIServices
 
         event EventHandler InitComplete;
     }
-
 }
