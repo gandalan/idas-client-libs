@@ -46,7 +46,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task FachverteilungAsync(List<Guid> avGuids)
         {
-            await PutAsync($"Ablage/Fachverteilung", avGuids);
+            await PutAsync("Ablage/Fachverteilung", avGuids);
         }
     }
 }

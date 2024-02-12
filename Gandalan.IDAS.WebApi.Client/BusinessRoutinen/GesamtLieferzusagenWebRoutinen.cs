@@ -16,7 +16,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await GetAsync<List<GesamtLieferzusageDTO>>($"GesamtLieferzusagen?stichTag={stichTag?.ToString("o")}");
 
         public async Task PutAsync(GesamtLieferzusageDTO dto)
-            => await PutAsync($"GesamtLieferzusagen", dto);
+            => await PutAsync("GesamtLieferzusagen", dto);
 
         public async Task SerieBuchenAsync(Guid serieGuid)
             => await PostAsync($"GesamtLieferzusagen/SerieBuchen?serieGuid={serieGuid}", null);

@@ -20,12 +20,12 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<AppActivationStatusDTO> SetMandantStatusByKundeAsync(AppActivationStatusDTO data)
         {
-            return await PutAsync<AppActivationStatusDTO>($"AppMandant", data);
+            return await PutAsync<AppActivationStatusDTO>("AppMandant", data);
         }
 
         public async Task<List<MandantDTO>> GetMandantenAsync()
         {
-            return await GetAsync<List<MandantDTO>>($"AppMandant/");
+            return await GetAsync<List<MandantDTO>>("AppMandant/");
         }
 
         public async Task<List<BenutzerDTO>> GetBenutzerByKundeAsync(Guid kundeGuid)

@@ -1,4 +1,4 @@
-﻿namespace Gandalan.Client.Contracts.AppServices
+namespace Gandalan.Client.Contracts.AppServices
 {
     public enum PermissionLevel
     {
@@ -24,7 +24,7 @@
         AdminTool,
         UserAdmin,
         AlleBelegeEinsehen,
-        AppAdmin, 
+        AppAdmin,
         SettingsSchreiben
     }
 

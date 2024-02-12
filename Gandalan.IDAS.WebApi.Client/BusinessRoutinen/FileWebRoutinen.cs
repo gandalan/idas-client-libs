@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
@@ -11,7 +11,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<byte[]> GetFileAsync(string name) 
+        public async Task<byte[]> GetFileAsync(string name)
             => await GetDataAsync("StaticFile/?name=" + name);
 
         public async Task<FileInfoDTO[]> GetFileListAsync(Guid? mandantGuid = null)
@@ -24,7 +24,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             return await GetAsync<FileInfoDTO[]>("StaticFile" + mandantURI);
         }
 
-        public async Task SaveFileAsync(string fileName, byte[] data) 
+        public async Task SaveFileAsync(string fileName, byte[] data)
             => await PutDataAsync("StaticFile/?name=" + fileName, data);
     }
 }

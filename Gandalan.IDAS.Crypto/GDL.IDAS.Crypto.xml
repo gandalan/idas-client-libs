@@ -48,7 +48,7 @@
             <summary>
             Creates a byte array from the hexadecimal string. Each two characters are combined
             to create one byte. First two hexadecimal characters become first byte in returned array.
-            Non-hexadecimal characters are ignored. 
+            Non-hexadecimal characters are ignored.
             </summary>
             <param name="hexString">string to convert to byte array</param>
             <param name="discarded">number of characters in string ignored</param>

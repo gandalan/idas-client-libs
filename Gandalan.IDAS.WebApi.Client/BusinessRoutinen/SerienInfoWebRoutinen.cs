@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
@@ -13,10 +13,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         }
 
         public async Task<List<BelegSerienInfoDTO>> GetBelegSerienInfosAsync(IList<Guid> belegGuids)
-            => await PostAsync<List<BelegSerienInfoDTO>>($"BelegSerienInfo", belegGuids);
+            => await PostAsync<List<BelegSerienInfoDTO>>("BelegSerienInfo", belegGuids);
 
-        public async Task<List<BelegSerienInfoDTO>> GetVorgangSerienInfosAsync(IList<Guid> vorgangGuids) 
-            => await PostAsync<List<BelegSerienInfoDTO>>($"BelegSerienInfo/GetByVorgangGuids", vorgangGuids);
-
+        public async Task<List<BelegSerienInfoDTO>> GetVorgangSerienInfosAsync(IList<Guid> vorgangGuids)
+            => await PostAsync<List<BelegSerienInfoDTO>>("BelegSerienInfo/GetByVorgangGuids", vorgangGuids);
     }
 }

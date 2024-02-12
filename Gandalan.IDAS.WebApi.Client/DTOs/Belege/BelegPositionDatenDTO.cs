@@ -1,9 +1,8 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
-    
-    public class BelegPositionDatenDTO 
+    public class BelegPositionDatenDTO
     {
         public string UnterkomponenteName { get; set; }
         public string KonfigName { get; set; }

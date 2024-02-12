@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
@@ -19,14 +19,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<byte[]> GetFileAsync(string filename)
             => await GetDataAsync("DataFile/?filename=" + filename);
 
-        public async Task<FileInfoDTO[]> GetFileListAsync(string directory = "/") 
+        public async Task<FileInfoDTO[]> GetFileListAsync(string directory = "/")
             => await GetAsync<FileInfoDTO[]>($"DataFile/?subdir={Uri.EscapeDataString(directory)}");
 
-        public async Task SaveFileAsync(string fileName, byte[] data) 
+        public async Task SaveFileAsync(string fileName, byte[] data)
             => await PutDataAsync("DataFile/?filename=" + fileName, data);
 
         public async Task DeleteFileAsync(string filename)
             => await DeleteAsync($"DataFile/?filename={filename}");
-
     }
 }

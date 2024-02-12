@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.Client.Contracts.DataServices
 {
@@ -17,7 +17,7 @@ namespace Gandalan.Client.Contracts.DataServices
         /// <summary>
         /// Legt ein neues AblageDTO an, oder aktualisiert es, sofern bereits vorhanden
         /// </summary>
-        /// <param name="ablageDTO">AblageDTO, das angelegt/aktualisiert werden soll</param>        
+        /// <param name="ablageDTO">AblageDTO, das angelegt/aktualisiert werden soll</param>
         Task AddOrUpdateAsync(AblageDTO ablageDTO);
 
         /// <summary>

@@ -1,7 +1,7 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {
@@ -11,28 +11,28 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<VorgangHistorienDTO> GetVorgangHistorieAsync(Guid vorgangGuid, bool includeBelege = false, bool includePositionen = false) 
+        public async Task<VorgangHistorienDTO> GetVorgangHistorieAsync(Guid vorgangGuid, bool includeBelege = false, bool includePositionen = false)
             => await GetAsync<VorgangHistorienDTO>($"HistorieVorgang?vorgangGuid={vorgangGuid}&includeBelege={includeBelege}&includePositionen={includePositionen}");
 
         public async Task<BelegHistorienDTO> GetBelegHistorieAsync(Guid belegGuid, bool includePositionen = false)
             => await GetAsync<BelegHistorienDTO>($"HistorieBeleg?belegGuid={belegGuid}&includePositionen={includePositionen}");
 
-        public async Task<BelegPositionHistorienDTO> GetBelegPositionHistorieAsync(Guid positionGuid) 
+        public async Task<BelegPositionHistorienDTO> GetBelegPositionHistorieAsync(Guid positionGuid)
             => await GetAsync<BelegPositionHistorienDTO>($"HistorieBelegPosition?positionGuid={positionGuid}");
 
         public async Task AddVorgangHistorieAsync(Guid vorgangGuid, VorgangHistorieDTO historyDto)
             => await PostAsync($"HistorieVorgang?vorgangGuid={vorgangGuid}", historyDto);
 
-        public async Task AddBelegHistorieAsync(Guid belegGuid, BelegHistorieDTO historyDto) 
+        public async Task AddBelegHistorieAsync(Guid belegGuid, BelegHistorieDTO historyDto)
             => await PostAsync($"HistorieBeleg?belegGuid={belegGuid}", historyDto);
 
-        public async Task AddBelegPositionHistorieAsync(Guid positionGuid, BelegPositionHistorieDTO historyDto) 
+        public async Task AddBelegPositionHistorieAsync(Guid positionGuid, BelegPositionHistorieDTO historyDto)
             => await PostAsync($"HistorieBelegPosition?positionGuid={positionGuid}", historyDto);
 
-        public async Task AddVorgangHistorieFromFunctionAsync(Guid vorgangGuid, VorgangHistorieDTO historyDto, long mandantID) 
+        public async Task AddVorgangHistorieFromFunctionAsync(Guid vorgangGuid, VorgangHistorieDTO historyDto, long mandantID)
             => await PostAsync($"AddVorgangHistorieFromFunction?vorgangGuid={vorgangGuid}&mandantID={mandantID}", historyDto);
 
-        public async Task AddBelegPositionHistorieFromFunctionAsync(Guid positionGuid, BelegPositionHistorieDTO historyDto, long mandantID) 
+        public async Task AddBelegPositionHistorieFromFunctionAsync(Guid positionGuid, BelegPositionHistorieDTO historyDto, long mandantID)
             => await PostAsync($"AddBelegPositionHistorieFromFunction?positionGuid={positionGuid}&mandantID={mandantID}", historyDto);
     }
 }
