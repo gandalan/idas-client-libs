@@ -113,7 +113,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
                 if (preiseAnzeigen)
                 {
-                    var saldenSorted = beleg.Salden.OrderBy(i => i.Reihenfolge);
+                    var saldenSorted = beleg.Salden.Where(s => s.Betrag != 0).OrderBy(i => i.Reihenfolge);
                     if (saldenSorted.Any())
                     {
                         var lastActivSalde = saldenSorted.Last(s => !s.IstInaktiv);
