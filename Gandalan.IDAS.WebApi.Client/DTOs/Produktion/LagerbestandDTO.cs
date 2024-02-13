@@ -22,6 +22,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Einheit { get; set; }
         public string Lagerplatz { get; set; }
         public string Charge { get; set; }
+        public bool IstAktiv {  get; set; }
         public string Seriennummer { get; set; }
         public DateTime ChangedDate { get; set; }
     }
