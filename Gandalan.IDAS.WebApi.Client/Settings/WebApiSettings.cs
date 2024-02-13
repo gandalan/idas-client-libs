@@ -28,22 +28,27 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public string UserAgent { get; set; }
         [JsonIgnore]
         public bool UseCompression { get; set; }
+
         /// <summary>
         /// CMSUrl für Dokumente
         /// </summary>
         public string DocUrl { get; set; }
+
         /// <summary>
         /// CMS für Variantenspez
         /// </summary>
         public string CMSUrl { get; set; }
+
         /// <summary>
         /// Paket-Store
         /// </summary>
         public string StoreUrl { get; set; }
+
         /// <summary>
         /// Feedback-Tool
         /// </summary>
         public string FeedbackUrl { get; set; }
+
         public string NotifyUrl { get; set; }
         public string HelpCenterUrl { get; set; }
         public string WebhookServiceUrl { get; set; }

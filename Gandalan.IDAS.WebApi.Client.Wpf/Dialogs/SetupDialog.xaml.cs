@@ -1,9 +1,9 @@
+using System.ComponentModel;
+using System.Windows;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
-using System.ComponentModel;
-using System.Windows;
 
 namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 {

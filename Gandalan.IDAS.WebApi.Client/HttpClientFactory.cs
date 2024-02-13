@@ -12,20 +12,25 @@ namespace Gandalan.IDAS.WebApi.Client
         /// werden angehängt. Beispiel: http://192.168.217.10/neurosAPI/api/
         /// </summary>
         public string BaseUrl { get; set; }
+
         /// <summary>
         /// Proxy-Informationen (optional)
         /// </summary>
         public IWebProxy Proxy { get; set; }
+
         /// <summary>
         /// Liste der zusätzlich zu übermittelnden Header. Werden bei jeder Anfrage mitgeschickt,
         /// z.B. für Authentifizierungs-Header
         /// </summary>
         public Dictionary<string, string> AdditionalHeaders { get; private set; } = new Dictionary<string, string>();
+
         public ICredentials Credentials { get; set; }
+
         /// <summary>
         /// User-Agent Header. Wird bei jeder Anfrage mitgeschickt.
         /// </summary>
         public string UserAgent { get; set; }
+
         /// <summary>
         /// AcceptEncoding Header wird auf GZIP gesetzt.
         /// </summary>
@@ -47,7 +52,9 @@ namespace Gandalan.IDAS.WebApi.Client
 
     public class HttpClientFactory
     {
-        private HttpClientFactory() { }
+        private HttpClientFactory()
+        {
+        }
 
         public static HttpClient GetInstance(HttpClientConfig config)
         {

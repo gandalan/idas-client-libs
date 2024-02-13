@@ -59,7 +59,6 @@
             Determines if given string is in proper hexadecimal string format
             </summary>
             <param name="hexString"></param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.Crypto.HexEncoding.IsHexDigit(System.Char)">
             <summary>

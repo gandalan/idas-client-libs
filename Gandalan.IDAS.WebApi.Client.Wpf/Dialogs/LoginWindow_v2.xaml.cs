@@ -64,7 +64,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             _viewModel.LoginInProgress = true;
             _viewModel.StatusText = null;
             var settings = (sender as Button)?.Tag as IWebApiConfig;
-            if (settings != null && await testConnection(settings))
+            if (settings != null && await TestConnection(settings))
             {
                 _webApiSettings.CopyToThis(settings);
                 DialogResult = true;
@@ -99,7 +99,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             _webApiSettings.Passwort = passwordBox.Password;
             _webApiSettings.AuthToken = null;
 
-            if (await testConnection(_webApiSettings))
+            if (await TestConnection(_webApiSettings))
             {
                 if (_viewModel.SaveCredentials)
                 {
@@ -124,7 +124,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             }
         }
 
-        private async Task<bool> testConnection(IWebApiConfig settings)
+        private async Task<bool> TestConnection(IWebApiConfig settings)
         {
             var wrb = new WebRoutinenBase(settings);
             try
@@ -144,7 +144,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
                 _statusText = wrb.Status;
                 if (_statusText.Contains("<title>"))
                 {
-                    _statusText = internalStripHtml(_statusText);
+                    _statusText = InternalStripHtml(_statusText);
                 }
 
                 if (result)
@@ -163,7 +163,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
             }
         }
 
-        private string internalStripHtml(string htmlString)
+        private static string InternalStripHtml(string htmlString)
         {
             var result = htmlString;
             if (result.ToLower().Contains("<title>") && result.ToLower().Contains("</title>"))

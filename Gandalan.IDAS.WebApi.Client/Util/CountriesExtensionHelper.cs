@@ -39,6 +39,7 @@ namespace System
             "Ungarn", "Magyarország", "HU",
             "Zypern", "Κύπρος", "Kıbrıs", "CY"
         };
+
         #endregion
 
         public static bool IsEUCountry(this string land)

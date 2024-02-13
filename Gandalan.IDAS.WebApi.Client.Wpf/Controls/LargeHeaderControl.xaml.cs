@@ -1,9 +1,9 @@
-using PropertyChanged;
 using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using PropertyChanged;
 
 namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
 {

@@ -1,11 +1,11 @@
-using Gandalan.IDAS.WebApi.DTO;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using Gandalan.IDAS.WebApi.DTO;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Gandalan.IDAS.Contracts.Token
 {
@@ -45,17 +45,17 @@ namespace Gandalan.IDAS.Contracts.Token
 
     public class JwtTokenService
     {
-        private readonly string _issuer = "https://gandalan.de";
+        private const string Issuer = "https://gandalan.de";
         private readonly DateTime? _issuedAt;
-        private readonly string _claimId = "id";
-        private readonly string _claimMandantGuid = "mandantGuid";
-        private readonly string _claimBenutzerGuid = "benutzerGuid";
-        private readonly string _claimAppToken = "appToken";
-        private readonly string _claimIdasAuthToken = "idasAuthToken";
-        private readonly string _claimRefreshToken = "refreshToken";
-        private readonly string _claimTokenType = "type";
-        private readonly string _claimRole = "role";
-        private readonly string _claimRights = "rights";
+        private const string ClaimId = "id";
+        private const string ClaimMandantGuid = "mandantGuid";
+        private const string ClaimBenutzerGuid = "benutzerGuid";
+        private const string ClaimAppToken = "appToken";
+        private const string ClaimIdasAuthToken = "idasAuthToken";
+        private const string ClaimRefreshToken = "refreshToken";
+        private const string ClaimTokenType = "type";
+        private const string ClaimRole = "role";
+        private const string ClaimRights = "rights";
 
         public JwtTokenService(DateTime? issuedAt = null)
         {
@@ -94,15 +94,15 @@ namespace Gandalan.IDAS.Contracts.Token
 
             // claims
             var rights = new List<Claim>();
-            rights.AddRange(roleCodes.Select(c => new Claim(_claimRole, c)));
-            rights.AddRange(rightCodes.Select(c => new Claim(_claimRights, c)));
-            rights.Add(new Claim(_claimId, authToken.Benutzer.EmailAdresse));
-            rights.Add(new Claim(_claimMandantGuid, authToken.MandantGuid.ToString()));
-            rights.Add(new Claim(_claimAppToken, authToken.AppToken.ToString()));
-            rights.Add(new Claim(_claimBenutzerGuid, authToken.Benutzer.BenutzerGuid.ToString()));
-            rights.Add(new Claim(_claimIdasAuthToken, authToken.Token.ToString()));
-            rights.Add(new Claim(_claimRefreshToken, refreshToken.Token.ToString()));
-            rights.Add(new Claim(_claimTokenType, tokenType.ToString()));
+            rights.AddRange(roleCodes.Select(c => new Claim(ClaimRole, c)));
+            rights.AddRange(rightCodes.Select(c => new Claim(ClaimRights, c)));
+            rights.Add(new Claim(ClaimId, authToken.Benutzer.EmailAdresse));
+            rights.Add(new Claim(ClaimMandantGuid, authToken.MandantGuid.ToString()));
+            rights.Add(new Claim(ClaimAppToken, authToken.AppToken.ToString()));
+            rights.Add(new Claim(ClaimBenutzerGuid, authToken.Benutzer.BenutzerGuid.ToString()));
+            rights.Add(new Claim(ClaimIdasAuthToken, authToken.Token.ToString()));
+            rights.Add(new Claim(ClaimRefreshToken, refreshToken.Token.ToString()));
+            rights.Add(new Claim(ClaimTokenType, tokenType.ToString()));
 
             expireDateTime = expireDateTime ?? DateTime.UtcNow.AddMinutes(5);
 
@@ -113,7 +113,7 @@ namespace Gandalan.IDAS.Contracts.Token
                 NotBefore = DateTime.Parse("2021-01-01 00:00:00"),
                 IssuedAt = _issuedAt ?? DateTime.UtcNow,
                 Expires = expireDateTime,
-                Issuer = _issuer,
+                Issuer = Issuer,
                 SigningCredentials = credentials,
             };
 
@@ -145,18 +145,18 @@ namespace Gandalan.IDAS.Contracts.Token
                 tokenHandler.ValidateToken(token, validations, out var validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = jwtToken.Claims.First(x => x.Type == _claimId).Value;
-                var mandantGuidClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == _claimMandantGuid);
-                var appTokenClaim = jwtToken.Claims.First(x => x.Type == _claimAppToken);
-                var authTokenClaim = jwtToken.Claims.First(x => x.Type == _claimIdasAuthToken);
-                var refreshTokenClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == _claimRefreshToken);
-                var tokenTypeClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == _claimTokenType);
+                var userId = jwtToken.Claims.First(x => x.Type == ClaimId).Value;
+                var mandantGuidClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimMandantGuid);
+                var appTokenClaim = jwtToken.Claims.First(x => x.Type == ClaimAppToken);
+                var authTokenClaim = jwtToken.Claims.First(x => x.Type == ClaimIdasAuthToken);
+                var refreshTokenClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimRefreshToken);
+                var tokenTypeClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimTokenType);
                 var roles = jwtToken.Claims
-                    .Where(x => x.Type == _claimRole)
+                    .Where(x => x.Type == ClaimRole)
                     .Select(x => x.Value)
                     .ToList();
                 var rights = jwtToken.Claims
-                    .Where(x => x.Type == _claimRights)
+                    .Where(x => x.Type == ClaimRights)
                     .Select(x => x.Value)
                     .ToList();
 
@@ -210,7 +210,7 @@ namespace Gandalan.IDAS.Contracts.Token
                 ValidateIssuer = true,
                 ValidateAudience = false,
                 ValidateLifetime = !allowExpired,
-                ValidIssuer = _issuer,
+                ValidIssuer = Issuer,
                 IssuerSigningKey = issuerSigningKey,
             };
 

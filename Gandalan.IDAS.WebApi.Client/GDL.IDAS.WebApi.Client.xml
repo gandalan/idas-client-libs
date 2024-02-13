@@ -28,28 +28,24 @@
             Zum speichern eines neuen Jobs werden spezielle Berechtigungen gebraucht.
             </summary>
             <param name="item"></param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialBeschaffungsJobWebRoutinen.SaveMaterialBeschaffungsJobBulk(System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO})">
             <summary>
             Zum speichern eines neuen Jobs werden spezielle Berechtigungen gebraucht.
             </summary>
             <param name="item"></param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialBeschaffungsJobWebRoutinen.SaveMaterialBeschaffungsJobAsync(Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO)">
             <summary>
             Zum speichern eines neuen Jobs werden spezielle Berechtigungen gebraucht.
             </summary>
             <param name="item"></param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialBeschaffungsJobWebRoutinen.SaveMaterialBeschaffungsJobBulkAsync(System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.MaterialBeschaffungsJobDTO})">
             <summary>
             Zum speichern eines neuen Jobs werden spezielle Berechtigungen gebraucht.
             </summary>
             <param name="item"></param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.MaterialItemWebRoutinen.GetAllMaterialItem(System.String)">
             <summary>

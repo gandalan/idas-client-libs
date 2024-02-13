@@ -11,6 +11,7 @@ namespace Gandalan.Client.Contracts.AppServices
         /// Progress in percent
         /// </summary>
         int Progress { get; }
+
         /// <summary>
         /// Info for user
         /// </summary>
@@ -27,6 +28,7 @@ namespace Gandalan.Client.Contracts.AppServices
         /// </summary>
         /// <returns>status bool</returns>
         Task<bool> HasUpdates();
+
         /// <summary>
         /// Performs the actual update (with progress indicator)
         /// </summary>

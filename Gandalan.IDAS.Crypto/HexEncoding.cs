@@ -68,12 +68,11 @@ namespace Gandalan.IDAS.Crypto
 
             var byteLength = newString.Length / 2;
             var returnValue = new byte[byteLength];
-            string hex;
             var counter = 0;
             for (var index = 0; index < returnValue.Length; index++)
             {
-                hex = new string(new char[] { newString[counter], newString[counter + 1] });
-                returnValue[index] = hexToByte(hex);
+                var hex = new string(new char[] { newString[counter], newString[counter + 1] });
+                returnValue[index] = HexToByte(hex);
                 counter += 2;
             }
 
@@ -119,9 +118,9 @@ namespace Gandalan.IDAS.Crypto
         {
             var returnValue = false;
             zeichen = char.ToUpper(zeichen);
-            var numA = ConvertTo<int>('A', default(int));
-            var num1 = ConvertTo<int>('0', default(int));
-            var numChar = ConvertTo<int>(zeichen, default(int));
+            var numA = ConvertTo<int>('A', default);
+            var num1 = ConvertTo<int>('0', default);
+            var numChar = ConvertTo<int>(zeichen, default);
             if (numChar >= numA && numChar < numA + 6)
             {
                 returnValue = true;
@@ -135,11 +134,11 @@ namespace Gandalan.IDAS.Crypto
         }
 
         /// <summary>
-        /// Converts 1 or 2 character string into equivalant byte value
+        /// Converts 1 or 2 character string into equivalent byte value
         /// </summary>
         /// <param name="hex">1 or 2 character string</param>
         /// <returns>byte</returns>
-        private static byte hexToByte(string hex)
+        private static byte HexToByte(string hex)
         {
             if (string.IsNullOrEmpty(hex) || hex.Length > 2)
             {

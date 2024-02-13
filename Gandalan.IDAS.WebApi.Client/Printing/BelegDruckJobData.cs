@@ -1,7 +1,7 @@
-﻿using Gandalan.IDAS.Jobs.Contracts;
-using Gandalan.IDAS.WebApi.Client.Mail;
 using System;
 using System.Collections.Generic;
+using Gandalan.IDAS.Jobs.Contracts;
+using Gandalan.IDAS.WebApi.Client.Mail;
 
 namespace Gandalan.IDAS.WebApi.Client.Printing
 {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.Client.Backup

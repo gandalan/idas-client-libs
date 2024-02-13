@@ -1,4 +1,4 @@
-﻿namespace Gandalan.Client.Contracts.RemoteControl
+namespace Gandalan.Client.Contracts.RemoteControl
 {
     public interface IRemoteControlServer
     {
