@@ -106,7 +106,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, response, contentAsString);
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -141,7 +140,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, response, contentAsString);
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -161,7 +159,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, response, contentAsString);
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -181,7 +178,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, response, contentAsString);
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -216,7 +212,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, response, contentAsString);
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -235,7 +230,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, response, contentAsString);
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -254,7 +248,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, response, contentAsString);
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -279,7 +272,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, response, contentAsString);
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }
@@ -306,7 +298,6 @@ namespace Gandalan.IDAS.Web
             catch (Exception ex)
             {
                 AddInfoToException(ex, url, response, contentAsString);
-                // Für Diagnosezwecke wird hier gefangen und weitergeworfen
                 throw;
             }
         }

@@ -31,6 +31,7 @@ namespace Gandalan.IDAS.WebApi.Client.MessageQueue
                     User = (uri.UserInfo + ":").Split(':')[0];
                     Password = (uri.UserInfo + ":").Split(':')[1];
                 }
+
                 Exchange = uri.PathAndQuery.Substring(1); // skip leading slash
                 RoutingKey = "";
             }

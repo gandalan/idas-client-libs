@@ -1,9 +1,9 @@
-using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Client.Settings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Client.Settings;
 
 namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 {

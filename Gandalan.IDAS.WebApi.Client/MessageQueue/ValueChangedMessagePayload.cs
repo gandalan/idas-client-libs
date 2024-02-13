@@ -1,4 +1,4 @@
-﻿namespace Gandalan.IDAS.WebApi.Client.MessageQueue
+namespace Gandalan.IDAS.WebApi.Client.MessageQueue
 {
     public class ValueChangedMessagePayload
     {

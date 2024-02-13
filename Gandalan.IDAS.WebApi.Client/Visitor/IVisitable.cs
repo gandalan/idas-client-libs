@@ -1,4 +1,4 @@
-﻿namespace Gandalan.IDAS.WebApi.Data.Visitor
+namespace Gandalan.IDAS.WebApi.Data.Visitor
 {
     public interface IVisitable
     {

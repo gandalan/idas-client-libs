@@ -1,4 +1,4 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.MessageQueue
 {

@@ -24,7 +24,7 @@ namespace Gandalan.IDAS.WebApi.Client
 {
     public class WebRoutinenBase
     {
-        #region  Felder
+        #region Felder
 
         public IWebApiConfig Settings;
         public bool IsJwt;
@@ -32,7 +32,7 @@ namespace Gandalan.IDAS.WebApi.Client
 
         #endregion
 
-        #region  Eigenschaften
+        #region Eigenschaften
 
         public UserAuthTokenDTO AuthToken { get; set; }
         public string Status { get; private set; }
@@ -58,6 +58,7 @@ namespace Gandalan.IDAS.WebApi.Client
                     IsJwt = true;
                     JwtToken = jc.JwtToken;
                 }
+
                 if (settings.AuthToken?.Token != Guid.Empty && settings.AuthToken?.Expires > DateTime.UtcNow)
                 {
                     AuthToken = settings.AuthToken;
@@ -402,6 +403,7 @@ namespace Gandalan.IDAS.WebApi.Client
                     result = $"Interner Serverfehler (\"{result.Substring(start, end - start)}\"). Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.";
                 }
             }
+
             return result;
         }
 
@@ -560,7 +562,9 @@ namespace Gandalan.IDAS.WebApi.Client
                             var original = JsonConvert.DeserializeObject<Exception>(responseString, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
                             return new ApiException(original.Message, code, original, payload);
                         }
-                        catch { }
+                        catch
+                        {
+                        }
                     }
 
                     try

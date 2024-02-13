@@ -2,7 +2,9 @@ namespace Gandalan.Client.Contracts.AppServices
 {
     public enum PermissionLevel
     {
-        Kein = 0, Lesen = 1, LesenUndSchreiben = 2
+        Kein = 0,
+        Lesen = 1,
+        LesenUndSchreiben = 2
     }
 
     public enum Permission

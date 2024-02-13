@@ -1,7 +1,7 @@
-using Gandalan.IDAS.WebApi.Data.DTOs.Belege;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Gandalan.IDAS.WebApi.Data.DTOs.Belege;
 
 namespace Gandalan.IDAS.Contracts.Belege
 {
@@ -19,16 +19,21 @@ namespace Gandalan.IDAS.Contracts.Belege
         public string ZahlungsBedingungen { get; set; }
 
         #region Salden
+
         public abstract IEnumerable<BelegSaldoBase> GetSalden();
         public abstract void AddOrUpdateSaldo(BelegSaldoBase saldo);
         public abstract void RemoveSaldo(BelegSaldoBase saldo);
+
         #endregion Salden
 
         #region Historie
+
         public abstract void AddHistorie(BelegHistorieBase eintrag);
+
         #endregion Historie
 
         #region Positionen
+
         public abstract IEnumerable<BelegPositionBase> GetPositionen();
         public abstract void AddOrUpdatePosition(BelegPositionBase position);
         public abstract void RemovePosition(BelegPositionBase position);
@@ -42,6 +47,7 @@ namespace Gandalan.IDAS.Contracts.Belege
         {
             return GetPositionen().FirstOrDefault(p => p.LaufendeNummer == laufendeNummer);
         }
+
         #endregion
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Gandalan.IDAS.WebApi.Client.Backup
+namespace Gandalan.IDAS.WebApi.Client.Backup
 {
     public class BackupRequest
     {

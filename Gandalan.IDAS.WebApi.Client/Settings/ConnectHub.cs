@@ -1,8 +1,8 @@
-using Gandalan.IDAS.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Logging;
+using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings
 {
@@ -10,16 +10,16 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
     {
         private const string HubUrl = "https://connect.idas-cloudservices.net/api/EndPoints";
 
-        public async Task<HubResponse> GetEndpoints(string apiVersion = null, string env = null, string clientOS = null)
+        public async Task<HubResponse> GetEndpoints(string apiVersion = null, string env = null, string clientOs = null)
         {
-            var requestURL =
+            var requestUrl =
                 HubUrl + "?" +
                 (apiVersion != null ? "apiVersion=" + apiVersion + "&" : "") +
                 (env != null ? "env=" + env + "&" : "") +
-                (clientOS != null ? "clientOS=" + clientOS : "");
+                (clientOs != null ? "clientOS=" + clientOs : "");
             try
             {
-                var response = await new HttpClient().GetStringAsync(requestURL);
+                var response = await new HttpClient().GetStringAsync(requestUrl);
                 return JsonConvert.DeserializeObject<HubResponse>(response);
             }
             catch (Exception e)

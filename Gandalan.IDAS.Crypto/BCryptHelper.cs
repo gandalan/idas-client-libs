@@ -1,4 +1,4 @@
-﻿namespace Gandalan.IDAS.Crypto
+namespace Gandalan.IDAS.Crypto
 {
     /// <summary>
     /// Klasse für die Ver-/Entschlüsselung von Strings mit BCrypt

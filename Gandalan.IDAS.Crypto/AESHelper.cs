@@ -74,11 +74,13 @@ namespace Gandalan.IDAS.Crypto
             rm.Padding = paddingMode;
             var encryptor = rm.CreateEncryptor(pdb.GetBytes(16), pdb.GetBytes(16));
             using (var msEncrypt = new MemoryStream())
-            using (var encStream = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
             {
-                encStream.Write(data, 0, data.Length);
-                encStream.FlushFinalBlock();
-                return msEncrypt.ToArray();
+                using (var encStream = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                {
+                    encStream.Write(data, 0, data.Length);
+                    encStream.FlushFinalBlock();
+                    return msEncrypt.ToArray();
+                }
             }
         }
 
@@ -99,21 +101,23 @@ namespace Gandalan.IDAS.Crypto
             rm.Padding = paddingMode;
             var decryptor = rm.CreateDecryptor(pdb.GetBytes(16), pdb.GetBytes(16));
             using (var msDecrypt = new MemoryStream(data))
-            using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
             {
-                // Decrypted bytes will always be less then encrypted bytes, so len of encrypted data will be big enouph for buffer.
-                var fromEncrypt = new byte[data.Length];
-                // Read as many bytes as possible.
-                var read = csDecrypt.Read(fromEncrypt, 0, fromEncrypt.Length);
-                if (read < fromEncrypt.Length)
+                using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                 {
-                    // Return a byte array of proper size.
-                    var clearBytes = new byte[read];
-                    Buffer.BlockCopy(fromEncrypt, 0, clearBytes, 0, read);
-                    return clearBytes;
-                }
+                    // Decrypted bytes will always be less then encrypted bytes, so len of encrypted data will be big enouph for buffer.
+                    var fromEncrypt = new byte[data.Length];
+                    // Read as many bytes as possible.
+                    var read = csDecrypt.Read(fromEncrypt, 0, fromEncrypt.Length);
+                    if (read < fromEncrypt.Length)
+                    {
+                        // Return a byte array of proper size.
+                        var clearBytes = new byte[read];
+                        Buffer.BlockCopy(fromEncrypt, 0, clearBytes, 0, read);
+                        return clearBytes;
+                    }
 
-                return fromEncrypt;
+                    return fromEncrypt;
+                }
             }
         }
     }

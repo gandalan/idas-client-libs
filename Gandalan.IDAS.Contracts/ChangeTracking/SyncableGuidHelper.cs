@@ -6,7 +6,7 @@ namespace System
 {
     public static class SyncableGuidHelper
     {
-        private static readonly Dictionary<Type, PropertyInfo> GuidProperties = new Dictionary<Type, PropertyInfo>();
+        private static readonly Dictionary<Type, PropertyInfo> _guidProperties = new Dictionary<Type, PropertyInfo>();
 
         public static Guid GetGuid(this object o)
         {
@@ -38,9 +38,9 @@ namespace System
 
         public static PropertyInfo GetGuidProperty(Type t)
         {
-            lock (GuidProperties)
+            lock (_guidProperties)
             {
-                if (!GuidProperties.ContainsKey(t))
+                if (!_guidProperties.ContainsKey(t))
                 {
                     string propertyName = null;
                     var attrib = t.GetCustomAttribute<SyncableAttribute>(true);
@@ -70,7 +70,7 @@ namespace System
                             throw new InvalidOperationException($"Spalte {propertyName} in Typ {t.FullName} ist keine Guid");
                         }
 
-                        GuidProperties.Add(t, guidProperty);
+                        _guidProperties.Add(t, guidProperty);
                     }
                     else
                     {
@@ -79,14 +79,14 @@ namespace System
                 }
             }
 
-            return GuidProperties[t];
+            return _guidProperties[t];
         }
 
         public static PropertyInfo TryGetGuidProperty(Type t)
         {
-            lock (GuidProperties)
+            lock (_guidProperties)
             {
-                if (!GuidProperties.ContainsKey(t))
+                if (!_guidProperties.ContainsKey(t))
                 {
                     var attrib = t.GetCustomAttribute<SyncableAttribute>(true);
                     string propertyName;
@@ -116,7 +116,7 @@ namespace System
                             throw new InvalidOperationException($"Spalte {propertyName} in Typ {t.FullName} ist keine Guid");
                         }
 
-                        GuidProperties.Add(t, guidProperty);
+                        _guidProperties.Add(t, guidProperty);
                     }
                     else
                     {
@@ -125,7 +125,7 @@ namespace System
                 }
             }
 
-            return GuidProperties[t];
+            return _guidProperties[t];
         }
 
         public static bool IsSyncable(this object o)

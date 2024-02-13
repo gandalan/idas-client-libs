@@ -5,7 +5,6 @@ namespace Gandalan.IDAS.WebApi.Client.Printing
 {
     public class ProduktionsLieferscheinData
     {
-
         public DateTime Liefertermin { get; set; }
         public bool ShowLiefertermin { get; set; } = true;
         public bool ShowAbsendeanschrift { get; set; }

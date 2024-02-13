@@ -1,4 +1,4 @@
-﻿namespace Gandalan.IDAS.Logging
+namespace Gandalan.IDAS.Logging
 {
     public enum LogLevel
     {

@@ -1,4 +1,4 @@
-﻿namespace Gandalan.IDAS.Contracts
+namespace Gandalan.IDAS.Contracts
 {
     public abstract class ArtikelBase
     {
@@ -9,6 +9,5 @@
 
     public abstract class NeherInsektenschutzArtikel : ArtikelBase
     {
-
     }
 }
