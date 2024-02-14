@@ -39,6 +39,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid OberFlaecheGuid { get; set; }
         public bool IstZuschnitt { get; set; }
         public float ZuschnittLaenge { get; set; }
+        public bool IstStangenoptimiert { get; set; }
         public float GedeckteZuschnittLaenge { get; set; }
         public float UngedeckteZuschnittLaenge => ZuschnittLaenge - GedeckteZuschnittLaenge;
         public string ZuschnittWinkel { get; set; }
