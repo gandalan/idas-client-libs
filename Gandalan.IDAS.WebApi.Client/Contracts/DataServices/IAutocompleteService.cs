@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.DataServices
@@ -11,7 +11,7 @@ namespace Gandalan.Client.Contracts.DataServices
         /// <summary>
         /// Ruft alle vorhandenen Einträge ab
         /// </summary>
-        Task<List<string>> GetAllAsync();
+        Task<List<string>> GetAllAsync(int? top = null);
         /// <summary>
         /// Fügt einen neuen Eintrag hinzu
         /// </summary>
@@ -26,7 +26,7 @@ namespace Gandalan.Client.Contracts.DataServices
         /// Lädt die Einstellungen / Wörter
         /// </summary>
         /// <param name="settingsKey">Schlüssel, anhand dem die Einstellungen geladen werden sollen</param>
-        Task Load(string settingsKey);
+        Task Load(string settingsKey, bool isReleoad = false);
         /// <summary>
         /// Speichert die Einstellungen / Wörter
         /// </summary>
