@@ -42,6 +42,11 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Kommission { get; set; }
 
         /// <summary>
+        /// Eingegebene Kommission2 des Händlers
+        /// </summary>
+        public string Kommission2 { get; set; }
+
+        /// <summary>
         /// Eingegebene Notitzen zum Vorgang vom Produzenten
         /// </summary>
         public string VorgangsNotitz { get; set; }
