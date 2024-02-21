@@ -4,6 +4,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 {
     public class ProduktionProduktfamilieSettingsDTO
     {
+        public string GroupName { get; set; }
         public string ProduktfamilienName { get; set; }
         public bool SprossenFrei { get; set; }
         public bool Vorbiegen { get; set; }
