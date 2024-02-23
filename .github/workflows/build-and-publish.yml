@@ -35,12 +35,12 @@ jobs:
         fetch-depth: 50
 
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1
+      uses: NuGet/setup-nuget@v2
     - name: Set release_name
       id: set_release_name
       run: echo "release_name=$(date +'%-Y.%-m.%-d').$GITHUB_RUN_NUMBER" >> $GITHUB_OUTPUT
     - name: Setup .NET Core SDK ${{ env.SDK_VERSION }}
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.SDK_VERSION }}
     - name: Run UpdateVersionInfo.ps1 with ${{ steps.set_release_name.outputs.release_name }}
