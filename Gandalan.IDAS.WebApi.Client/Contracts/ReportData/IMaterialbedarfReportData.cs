@@ -21,6 +21,10 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.ReportData
 
         decimal VE_Menge { get; set; }
         decimal Artikel_VE_Menge { get; set; }
+        /// <summary>
+        /// Format: <KürzelOderSF> <FarbzusatzTextWennVorhanden> <FarbCode> <Farbbezeichnung> <OberflächeAußerWennSieStandardHeißt>
+        /// </summary>
+        string ProduktionsFarbText { get; set; }
         string FarbZusatzText { get; set; }
         string FarbBezeichnung { get; set; }
         string FarbKuerzel { get; set; }
