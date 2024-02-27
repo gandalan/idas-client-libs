@@ -1,5 +1,5 @@
-﻿using Gandalan.IDAS.WebApi.Data.DTO;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.Data.DTO;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
 {
