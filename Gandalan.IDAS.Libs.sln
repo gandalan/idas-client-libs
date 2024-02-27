@@ -11,48 +11,52 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.WebApi.Client.Wpf", "Gandalan.IDAS.WebApi.Client.Wpf\Gandalan.IDAS.WebApi.Client.Wpf.csproj", "{33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F75A4690-2A78-4DF5-AF1F-90BC4DABFA26}"
-    ProjectSection(SolutionItems) = preProject
-        .editorconfig = .editorconfig
-        .github\workflows\build-and-publish.yml = .github\workflows\build-and-publish.yml
-        .github\workflows\check-NuGet-Libs.yml = .github\workflows\check-NuGet-Libs.yml
-        nuget_lokal.cmd = nuget_lokal.cmd
-        README.md = README.md
-        UpdateVersionInfo.ps1 = UpdateVersionInfo.ps1
-    EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.github\workflows\build-and-publish.yml = .github\workflows\build-and-publish.yml
+		.github\workflows\check-NuGet-Libs.yml = .github\workflows\check-NuGet-Libs.yml
+		.github\workflows\check-weblibs.yml = .github\workflows\check-weblibs.yml
+		.github\workflows\conflicts.yml = .github\workflows\conflicts.yml
+		nuget_lokal.cmd = nuget_lokal.cmd
+		.github\workflows\publish-weblibs.yml = .github\workflows\publish-weblibs.yml
+		README.md = README.md
+		UpdateVersionInfo.ps1 = UpdateVersionInfo.ps1
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.Contracts", "Gandalan.IDAS.Contracts\Gandalan.IDAS.Contracts.csproj", "{BC916DBF-1692-47F9-91D3-C158C6AF0E34}"
 EndProject
 Global
-    GlobalSection(SolutionConfigurationPlatforms) = preSolution
-        Debug|Any CPU = Debug|Any CPU
-        Release|Any CPU = Release|Any CPU
-    EndGlobalSection
-    GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Release|Any CPU.Build.0 = Release|Any CPU
-        {A5BCF7DE-A532-438B-B879-B2F7829AA684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {A5BCF7DE-A532-438B-B879-B2F7829AA684}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {A5BCF7DE-A532-438B-B879-B2F7829AA684}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {A5BCF7DE-A532-438B-B879-B2F7829AA684}.Release|Any CPU.Build.0 = Release|Any CPU
-        {9F026D00-7C5C-4E98-A494-63006BBAC70A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {9F026D00-7C5C-4E98-A494-63006BBAC70A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {9F026D00-7C5C-4E98-A494-63006BBAC70A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {9F026D00-7C5C-4E98-A494-63006BBAC70A}.Release|Any CPU.Build.0 = Release|Any CPU
-        {33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}.Release|Any CPU.Build.0 = Release|Any CPU
-        {BC916DBF-1692-47F9-91D3-C158C6AF0E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {BC916DBF-1692-47F9-91D3-C158C6AF0E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {BC916DBF-1692-47F9-91D3-C158C6AF0E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {BC916DBF-1692-47F9-91D3-C158C6AF0E34}.Release|Any CPU.Build.0 = Release|Any CPU
-    EndGlobalSection
-    GlobalSection(SolutionProperties) = preSolution
-        HideSolutionNode = FALSE
-    EndGlobalSection
-    GlobalSection(ExtensibilityGlobals) = postSolution
-        SolutionGuid = {74BD7AE9-5E45-4BCE-8044-A7A711227883}
-    EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A35EA672-7E79-4D68-BEEF-A34866ED6E80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5BCF7DE-A532-438B-B879-B2F7829AA684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5BCF7DE-A532-438B-B879-B2F7829AA684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5BCF7DE-A532-438B-B879-B2F7829AA684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5BCF7DE-A532-438B-B879-B2F7829AA684}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F026D00-7C5C-4E98-A494-63006BBAC70A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F026D00-7C5C-4E98-A494-63006BBAC70A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F026D00-7C5C-4E98-A494-63006BBAC70A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F026D00-7C5C-4E98-A494-63006BBAC70A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33BB88E9-A7C5-4AFA-83C2-BA56ACF66703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC916DBF-1692-47F9-91D3-C158C6AF0E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC916DBF-1692-47F9-91D3-C158C6AF0E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC916DBF-1692-47F9-91D3-C158C6AF0E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC916DBF-1692-47F9-91D3-C158C6AF0E34}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		        SolutionGuid = {74BD7AE9-5E45-4BCE-8044-A7A711227883}
+		SolutionGuid = {AFBBB95E-EEF7-4C94-B844-A53EE8A729DC}
+	EndGlobalSection
 EndGlobal
