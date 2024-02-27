@@ -5,14 +5,12 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
 {
     public abstract class IBelegItemCommand : ICommand
     {
-
         public abstract event EventHandler CanExecuteChanged;
 
         public abstract bool CanExecute(IBelegAuswahlItem parameter);
         public bool CanExecute(object parameter)
         {
-            var pos = parameter as IBelegAuswahlItem;
-            if (pos == null)
+            if (parameter is not IBelegAuswahlItem pos)
             {
                 return false;
             }
@@ -23,8 +21,7 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         public abstract void Execute(IBelegAuswahlItem parameter);
         public void Execute(object parameter)
         {
-            var pos = parameter as IBelegAuswahlItem;
-            if (pos == null)
+            if (parameter is not IBelegAuswahlItem pos)
             {
                 throw new ArgumentNullException("Parameter muss eine Belegposition sein");
             }
