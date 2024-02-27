@@ -18,6 +18,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
         public string Kundenname { get; set; }
         public string Lieferadresse { get; set; }
         public bool IstSammelrechnungsKunde { get; set; }
+        public bool InnergemeinschaftlichOhneMwSt { get; set; }
         public long? SammelrechnungsNummer { get; set; }
         public DateTime? LastPrintDate { get; set; }
         public DateTime? LastExportDate { get; set; }
