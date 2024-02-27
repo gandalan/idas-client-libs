@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.Data.DTOs.Salden;
 using System;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.Data.DTOs.Salden;
 
 namespace Gandalan.Client.Contracts.DataServices
 {

@@ -1,5 +1,5 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {

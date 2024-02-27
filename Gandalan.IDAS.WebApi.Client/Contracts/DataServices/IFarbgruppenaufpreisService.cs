@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.Data.DTOs.Farben;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.Data.DTOs.Farben;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
 {

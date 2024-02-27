@@ -1,7 +1,7 @@
-﻿using Gandalan.IBOS3.Module.Lookups.Document;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IBOS3.Module.Lookups.Document;
 
 namespace Gandalan.Client.Contracts.DataServices
 {
