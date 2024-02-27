@@ -60,7 +60,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string FarbBezeichnung { get; set; }
 
         /// <summary>
-        /// FarbZusatzText, hauptsächnlich für Trendfarbkürzel (z.B. B7)
+        /// FarbZusatzText, hauptsächlich für Trendfarbkürzel (z.B. B7)
         /// </summary>
         public string FarbZusatzText { get; set; }
 
