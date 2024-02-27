@@ -1,7 +1,7 @@
-﻿using Gandalan.IDAS.Client.Contracts.Contracts;
-using Gandalan.IDAS.WebApi.Data.DTOs.AV;
 using System;
 using System.Threading.Tasks;
+using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Data.DTOs.AV;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 {

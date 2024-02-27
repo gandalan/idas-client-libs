@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices

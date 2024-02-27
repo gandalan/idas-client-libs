@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.Data.DTOs.Update;
 using System;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.Data.DTOs.Update;
 
 namespace Gandalan.Client.Contracts.DataServices
 {

@@ -1,6 +1,6 @@
-using Gandalan.Client.Contracts;
 using System;
 using System.Collections.Generic;
+using Gandalan.Client.Contracts;
 
 namespace Gandalan.IBOS3.Module.Lookups.Document
 {

@@ -1,7 +1,7 @@
-﻿using Gandalan.IDAS.WebApi.Data.DTOs.Produktion;
+using System.Collections.Generic;
+using Gandalan.IDAS.WebApi.Data.DTOs.Produktion;
 using Gandalan.IDAS.WebApi.Data.DTOs.Reports;
 using Gandalan.IDAS.WebApi.DTO;
-using System.Collections.Generic;
 
 namespace Gandalan.Client.Contracts.ProduktionsServices
 {

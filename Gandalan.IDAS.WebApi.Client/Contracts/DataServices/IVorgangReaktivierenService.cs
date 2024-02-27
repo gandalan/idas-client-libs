@@ -1,5 +1,5 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.Client.Contracts.DataServices
 {
@@ -8,4 +8,3 @@ namespace Gandalan.Client.Contracts.DataServices
         Task<VorgangDTO> VorgangReaktivierenAsync(BelegartWechselDTO dto);
     }
 }
-

@@ -1,6 +1,6 @@
-using Gandalan.Client.Contracts.UIServices;
 using System;
 using System.ComponentModel;
+using Gandalan.Client.Contracts.UIServices;
 
 namespace Gandalan.Client.Contracts
 {
