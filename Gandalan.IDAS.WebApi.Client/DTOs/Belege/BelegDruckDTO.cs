@@ -1,4 +1,3 @@
-using Gandalan.IDAS.WebApi.Client.DTOs.Allgemein;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,6 +5,7 @@ using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Gandalan.IDAS.WebApi.Client.DTOs.Allgemein;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -94,7 +94,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 VersandAdresse = new AdresseDruckDTO(beleg.VersandAdresse);
                 VersandAdresseString = VersandAdresse.ToString();
 
-                var preiseAnzeigen = beleg.BelegArt != "Lieferschein" && beleg.BelegArt != "Bestellschein";
+                var preiseAnzeigen = beleg.BelegArt != "Lieferschein" && beleg.BelegArt != "Bestellschein" && beleg.BelegArt != "ProduktionsAuftrag";
 
                 if (beleg.PositionsObjekte.Any(p => p.IstSonderfarbPosition && p.Farbzuschlag == -1))
                 {
