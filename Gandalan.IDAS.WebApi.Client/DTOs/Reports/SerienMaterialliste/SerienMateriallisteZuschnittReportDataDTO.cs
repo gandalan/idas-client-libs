@@ -3,6 +3,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Reports.SerienMaterialliste
     public class SerienMateriallisteZuschnittReportDataDTO
     {
         public string Katalognummer { get; set; }
+        public string ProduktionsFarbText { get; set; }
         public string FarbKuerzel { get; set; }
         public string FarbCode { get; set; }
         public string FarbBezeichnung { get; set; }
