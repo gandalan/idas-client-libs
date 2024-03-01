@@ -8,6 +8,10 @@ public static class FarbExtensions
     public static string GetProduktionsFarbText(this MaterialbedarfDTO material)
     {
         var farbText = material.FarbKuerzel;
+        if (string.IsNullOrEmpty(farbText))
+        {
+            return string.Empty;
+        }
 
         // Standardfarbe
         if (!farbText.StartsWith("SF"))
