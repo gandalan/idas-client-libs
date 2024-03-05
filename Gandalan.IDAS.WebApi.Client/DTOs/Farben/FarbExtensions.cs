@@ -16,7 +16,7 @@ public static class FarbExtensions
         // Standardfarbe
         if (!farbText.StartsWith("SF"))
         {
-            farbText = GetProduktionsFarbText(farbText, farbZusatzText: null, material.FarbCode, material.FarbBezeichnung, material.OberflaecheBezeichnung, material.IstBeschichtbar);
+            // Stand 05.03.2024: Für Standardfarben wird immer das Kürzel angezeigt
         }
         // Trendfarbe ("SF" + FarbZusatzText)
         else if (farbText.StartsWith("SF") && !string.IsNullOrEmpty(material.FarbZusatzText))
