@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -12,13 +12,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid AblageFachGuid { get; set; }
 
         [JsonIgnore]
-        public bool Belegt
-        {
-            get
-            {
-                return BelegPositionAVGuid != Guid.Empty;
-            }
-        }
+        public bool Belegt => BelegPositionAVGuid != Guid.Empty;
 
         public int FachNr { get; set; }
 
@@ -36,6 +30,5 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Guid der BelegPositionAV -> Ist diese Guid schon gesetzt, aber noch kein Material zugeordnet, dann ist das Fach für die Position reserviert
         /// </summary>
         public Guid BelegPositionAVGuid { get; set; }
-
     }
 }

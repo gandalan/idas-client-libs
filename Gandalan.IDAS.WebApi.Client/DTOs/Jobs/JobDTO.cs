@@ -12,8 +12,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public virtual List<JobStatusDTO> Stati { get; set; }
         public virtual List<JobParameterDTO> Parameter { get; set; }
 
-        public DateTime Erstellt { get { return Stati != null && Stati.Any() ? Stati.First().Zeitstempel : DateTime.MinValue; } }
-        public DateTime Geaendert { get { return Stati != null && Stati.Any() ? Stati.Last().Zeitstempel : DateTime.MinValue; } }
+        public DateTime Erstellt => Stati != null && Stati.Any() ? Stati.First().Zeitstempel : DateTime.MinValue;
+        public DateTime Geaendert => Stati != null && Stati.Any() ? Stati.Last().Zeitstempel : DateTime.MinValue;
 
         public JobDTO()
         {

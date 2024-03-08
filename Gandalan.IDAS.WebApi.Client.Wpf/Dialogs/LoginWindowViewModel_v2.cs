@@ -21,15 +21,41 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs
 
         public bool EnvAlsDefault { get; set; } = false;
 
-        public string Url { get { return _url; } set { _url = value; SetOrClearMessage("Url", string.IsNullOrEmpty(_url), "Ungültige Serveradresse"); } }
+        public string Url
+        {
+            get => _url;
+            set
+            {
+                _url = value;
+                SetOrClearMessage("Url", string.IsNullOrEmpty(_url), "Ungültige Serveradresse");
+            }
+        }
 
-        private void SetOrClearMessage(string v1, bool v2, string v3)
+        private static void SetOrClearMessage(string v1, bool v2, string v3)
         {
             // TODO
         }
 
-        public string UserName { get { return _userName; } set { _userName = value; SetOrClearMessage("UserName", string.IsNullOrEmpty(_userName), "Ungültiger Benutzername"); } }
-        public string Passwort { get { return _passwort; } set { _passwort = value; SetOrClearMessage("Passwort", string.IsNullOrEmpty(_passwort), "Ungültiges Passwort"); } }
+        public string UserName
+        {
+            get => _userName;
+            set
+            {
+                _userName = value;
+                SetOrClearMessage("UserName", string.IsNullOrEmpty(_userName), "Ungültiger Benutzername");
+            }
+        }
+
+        public string Passwort
+        {
+            get => _passwort;
+            set
+            {
+                _passwort = value;
+                SetOrClearMessage("Passwort", string.IsNullOrEmpty(_passwort), "Ungültiges Passwort");
+            }
+        }
+
         public bool SaveCredentials { get; set; } = true;
 
         public IEnumerable<IWebApiConfig> AlleEnvironments { get; private set; }
