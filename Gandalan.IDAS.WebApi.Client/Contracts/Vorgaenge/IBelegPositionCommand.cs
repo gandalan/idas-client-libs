@@ -12,7 +12,7 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         public abstract bool CanExecute(IBelegPositionItem parameter);
         public bool CanExecute(object parameter)
         {
-            if (!(parameter is IBelegPositionItem pos))
+            if (parameter is not IBelegPositionItem pos)
             {
                 return false;
             }
@@ -28,7 +28,7 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         public abstract bool CanHandle(IBelegPositionItem parameter);
         public bool CanHandle(object parameter)
         {
-            if (!(parameter is IBelegPositionItem pos))
+            if (parameter is not IBelegPositionItem pos)
             {
                 return false;
             }
@@ -39,7 +39,7 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         public abstract void Execute(IBelegPositionItem parameter);
         public void Execute(object parameter)
         {
-            if (!(parameter is IBelegPositionItem pos))
+            if (parameter is not IBelegPositionItem pos)
             {
                 throw new ArgumentNullException("Parameter muss eine Belegposition sein");
             }

@@ -13,10 +13,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         [JsonIgnore]
         public Guid GuidModulCol1
         {
-            get
-            {
-                return InfoScreenModule[0]?.ModuleGuid ?? Guid.Empty;
-            }
+            get => InfoScreenModule[0]?.ModuleGuid ?? Guid.Empty;
             set
             {
                 if (value != Guid.Empty)
@@ -33,10 +30,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         [JsonIgnore]
         public Guid GuidModulCol2
         {
-            get
-            {
-                return InfoScreenModule[1]?.ModuleGuid ?? Guid.Empty;
-            }
+            get => InfoScreenModule[1]?.ModuleGuid ?? Guid.Empty;
             set
             {
                 if (value != Guid.Empty)
