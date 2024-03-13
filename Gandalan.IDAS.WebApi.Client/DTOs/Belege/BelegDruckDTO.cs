@@ -116,7 +116,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                     var saldenSorted = beleg.Salden.Where(s => s.Betrag != 0).OrderBy(i => i.Reihenfolge);
                     if (saldenSorted.Any())
                     {
-                        var lastActivSalde = saldenSorted.Last(s => !s.IstInaktiv);
+                        var lastActivSalde = saldenSorted.LastOrDefault(s => !s.IstInaktiv);
                         foreach (var dto in saldenSorted)
                         {
                             if (dto.IstInaktiv)
