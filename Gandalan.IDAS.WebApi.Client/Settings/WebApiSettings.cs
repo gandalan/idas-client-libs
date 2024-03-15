@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
 
@@ -53,26 +54,38 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public string HelpCenterUrl { get; set; }
         public string WebhookServiceUrl { get; set; }
 
+        /// <remarks>
+        /// Remember to call <see cref="WebApiConfigurations.Initialize"/> before.
+        /// </remarks>>
         public virtual async Task Initialize(Guid appToken, string env)
         {
-            if (appToken.Equals(Guid.Empty))
+            try
             {
-                throw new ArgumentException("WebApiSettings: AppToken must not be Guid.Empty");
-            }
+                if (appToken.Equals(Guid.Empty))
+                {
+                    throw new ArgumentException("WebApiSettings: AppToken must not be Guid.Empty");
+                }
 
-            if (string.IsNullOrEmpty(env))
+                if (string.IsNullOrEmpty(env))
+                {
+                    throw new ArgumentNullException("WebApiSettings: Environment must not be null or empty");
+                }
+
+                //await WebApiConfigurations.Initialize(appToken);
+                var settings = WebApiConfigurations.ByName(env);
+                if (settings != null)
+                {
+                    CopyToThis(settings);
+                }
+
+                await Task.CompletedTask;
+            }
+            catch (Exception e)
             {
-                throw new ArgumentNullException("WebApiSettings: Environment must not be null or empty");
+                // Non awaitable callers will not see exception thrown here, but we will always have logged exception
+                L.Fehler(e);
+                throw;
             }
-
-            //await WebApiConfigurations.Initialize(appToken);
-            var settings = WebApiConfigurations.ByName(env);
-            if (settings != null)
-            {
-                CopyToThis(settings);
-            }
-
-            await Task.CompletedTask;
         }
 
         public virtual void CopyToThis(IWebApiConfig settings)

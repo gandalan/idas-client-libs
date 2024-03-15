@@ -19,12 +19,13 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 (clientOs != null ? "clientOS=" + clientOs : "");
             try
             {
-                var response = await new HttpClient().GetStringAsync(requestUrl);
-                return JsonConvert.DeserializeObject<HubResponse>(response);
+                using var httpClient = new HttpClient();
+                var response = httpClient.GetStringAsync(requestUrl).GetAwaiter().GetResult();
+                return await Task.FromResult(JsonConvert.DeserializeObject<HubResponse>(response));
             }
             catch (Exception e)
             {
-                Logger.LogConsoleDebug($"{e}");
+                L.Fehler(e, $"Fehler for GetEndpoints. Env: '{env}'");
                 throw;
             }
         }
