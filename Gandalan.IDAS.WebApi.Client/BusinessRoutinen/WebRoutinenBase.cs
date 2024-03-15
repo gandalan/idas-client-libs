@@ -70,7 +70,7 @@ namespace Gandalan.IDAS.WebApi.Client
         {
             if (_restRoutinen == null)
             {
-                initRestRoutinen();
+                InitRestRoutinen();
             }
 
             if (!skipAuth && !await LoginAsync())
@@ -79,8 +79,13 @@ namespace Gandalan.IDAS.WebApi.Client
             }
         }
 
-        private void initRestRoutinen()
+        private void InitRestRoutinen()
         {
+            if (string.IsNullOrWhiteSpace(Settings.Url))
+            {
+                throw new ArgumentNullException(nameof(Settings.Url));
+            }
+
             var config = new HttpClientConfig
             {
                 BaseUrl = Settings.Url,
@@ -135,13 +140,13 @@ namespace Gandalan.IDAS.WebApi.Client
                 {
                     if (!string.IsNullOrEmpty(Settings.UserName) && !string.IsNullOrEmpty(Settings.Passwort))
                     {
-                        var ldto = new LoginDTO
+                        var lDto = new LoginDTO
                         {
                             Email = Settings.UserName,
                             Password = Settings.Passwort,
                             AppToken = Settings.AppToken
                         };
-                        result = await PostAsync<UserAuthTokenDTO>("/api/Login/Authenticate", ldto, null, true);
+                        result = await PostAsync<UserAuthTokenDTO>("/api/Login/Authenticate", lDto, null, true);
                     }
                 }
                 else
@@ -160,7 +165,7 @@ namespace Gandalan.IDAS.WebApi.Client
                 if (result != null)
                 {
                     AuthToken = result;
-                    initRestRoutinen();
+                    InitRestRoutinen();
                     Status = "OK";
                     return true;
                 }
