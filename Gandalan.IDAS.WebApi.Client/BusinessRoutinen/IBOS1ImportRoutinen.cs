@@ -18,13 +18,13 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await GetAsync<BestellungListItemDTO[]>($"Bestellungen?jahr={jahr}&includeAbegholte={includeAbegholte}");
 
         public async Task ResetBestellungenAsync(DateTime resetAb)
-            => await GetAsync($"BestellungenReset?resetAb={resetAb.ToString("o")}");
+            => await GetAsync($"BestellungenReset?resetAb={resetAb:o}");
 
         public async Task<MaterialBestellungListItemDTO[]> LadeMaterialBestellungenAsync(int jahr = -1, bool includeAbegholte = false)
             => await GetAsync<MaterialBestellungListItemDTO[]>($"MaterialBestellungen?jahr={jahr}&includeAbegholte={includeAbegholte}");
 
         public async Task ResetMaterialBestellungenAsync(DateTime resetAb)
-            => await GetAsync($"MaterialBestellungenReset?resetAb={resetAb.ToString("o")}");
+            => await GetAsync($"MaterialBestellungenReset?resetAb={resetAb:o}");
 
         public async Task<string> GetgSQLBelegAsync(Guid belegGuid)
             => Encoding.UTF8.GetString(await GetDataAsync("Bestellungen/" + belegGuid));

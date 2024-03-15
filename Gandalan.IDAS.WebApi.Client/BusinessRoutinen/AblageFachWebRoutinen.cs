@@ -22,7 +22,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
             {
-                return await GetAsync<List<AblageFachDTO>>($"AblageFach?changedSince={changedSince.Value.ToString("o")}&includeDetails={includeDetails}");
+                return await GetAsync<List<AblageFachDTO>>($"AblageFach?changedSince={changedSince.Value:o}&includeDetails={includeDetails}");
             }
 
             return await GetAsync<List<AblageFachDTO>>($"AblageFach?includeDetails={includeDetails}");
@@ -48,7 +48,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
             if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
             {
-                return await GetAsync<List<AblageFachDTO>>($"AblageFach?changedSince={changedSince.Value.ToString("o")}&includeDetails={includeDetails}");
+                return await GetAsync<List<AblageFachDTO>>($"AblageFach?changedSince={changedSince.Value:o}&includeDetails={includeDetails}");
             }
 
             return await GetAsync<List<AblageFachDTO>>($"AblageFach?includeDetails={includeDetails}");
