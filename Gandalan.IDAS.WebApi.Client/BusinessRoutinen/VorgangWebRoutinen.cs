@@ -83,6 +83,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await GetAsync<Dictionary<long, List<VorgangListItemDTO>>>($"GetAllVorgangForFunction/?changedSince={changedSince:o}");
 
         public async Task<VorgangDTO> GetVorgangForFunctionAsync(Guid vorgangGuid, long mandantId)
-            => await GetAsync<VorgangDTO>($"GetVorgangForFunction?id={vorgangGuid.ToString()}&mandantID={mandantId}");
+            => await GetAsync<VorgangDTO>($"GetVorgangForFunction?id={vorgangGuid}&mandantID={mandantId}");
     }
 }
