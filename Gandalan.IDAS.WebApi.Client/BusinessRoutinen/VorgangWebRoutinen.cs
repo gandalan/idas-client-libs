@@ -25,7 +25,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince:o}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
 
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr, string status, DateTime changedSince, string art = "", bool includeArchive = false, bool includeOthersData = false, string search = "")
-            => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince.ToString("o")}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
+            => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?status={status}&jahr={jahr}&changedSince={changedSince:o}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
 
         public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(Guid kundeGuid)
             => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?kundeGuid={kundeGuid}");

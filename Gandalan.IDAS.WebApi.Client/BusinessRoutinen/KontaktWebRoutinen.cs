@@ -19,7 +19,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
             {
-                return await GetAsync<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value.ToString("o")}");
+                return await GetAsync<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value:o}");
             }
 
             return await GetAsync<KontaktListItemDTO[]>("Kontakt");
