@@ -31,7 +31,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             }
             catch (Exception e)
             {
-                L.Fehler(e, $"Fehler for GetEndpoints. Env: '{env}'");
+                L.Fehler(e, $"Exception for GetEndpoints. Env: '{env}'");
                 throw;
             }
         }
