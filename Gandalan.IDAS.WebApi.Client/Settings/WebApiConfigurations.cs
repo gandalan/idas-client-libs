@@ -18,13 +18,19 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         private static string _appTokenString;
         private static bool _isInitialized;
 
+        [Obsolete("Call to InitializeAsync")]
         public static async Task Initialize(Guid appToken)
+        {
+            await InitializeAsync(appToken);
+        }
+
+        public static async Task InitializeAsync(Guid appToken)
         {
             _settings = new Dictionary<string, IWebApiConfig>(StringComparer.OrdinalIgnoreCase);
             _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
             _appTokenString = appToken.ToString().Trim('{', '}');
 
-            await SetupEnvironments(appToken);
+            await SetupEnvironmentsAsync(appToken);
             SetupLocalEnvironment(appToken);
 
             _isInitialized = true;
@@ -113,12 +119,12 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             }
         }
 
-        private static async Task SetupEnvironments(Guid appToken)
+        private static async Task SetupEnvironmentsAsync(Guid appToken)
         {
             var hub = new ConnectHub();
             foreach (var env in _environments)
             {
-                var response = await hub.GetEndpoints("2.1", env, "win");
+                var response = await hub.GetEndpointsAsync("2.1", env, "win");
                 IWebApiConfig environment = null;
                 if (response != null)
                 {
