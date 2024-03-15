@@ -92,7 +92,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             catch (Exception e)
             {
                 // Non awaitable callers will not see exception thrown here, but we will always have logged exception
-                L.Fehler(e);
+                L.Fehler(e, $"Exception in InitializeAsync. Env: '{env}'");
                 throw;
             }
         }
