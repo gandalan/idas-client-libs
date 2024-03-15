@@ -11,6 +11,13 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
     {
         public string JwtToken { get; set; }
 
+        [Obsolete("JWT:string parameter missing. Call InitializeAsync(Guid appToken, string env, string jwt)")]
+        public override Task Initialize(Guid appToken, string env)
+        {
+            throw new NotSupportedException("JWT:string parameter missing");
+        }
+
+        [Obsolete("JWT:string parameter missing. Call InitializeAsync(Guid appToken, string env, string jwt)")]
         public override Task InitializeAsync(Guid appToken, string env)
         {
             throw new NotSupportedException("JWT:string parameter missing");
