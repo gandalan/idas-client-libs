@@ -18,7 +18,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         private static string _appTokenString;
         private static bool _isInitialized;
 
-        [Obsolete("Call to InitializeAsync")]
+        [Obsolete("Call InitializeAsync")]
         public static async Task Initialize(Guid appToken)
         {
             await InitializeAsync(appToken);
