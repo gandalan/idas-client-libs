@@ -20,13 +20,13 @@ public static class FarbExtensions
         // Sonderfarben / Trendfarben ("SF" + FarbZusatzText)
         else if (farbText.StartsWith("SF"))
         {
-            farbText = GetProduktionsFarbText(farbText, material.FarbZusatzText, material.FarbCode, material.FarbBezeichnung, material.OberflaecheBezeichnung, material.IstBeschichtbar);
+            farbText = GetProduktionsFarbText(farbText, material.FarbZusatzText, material.FarbeItem, material.FarbCode, material.FarbBezeichnung, material.OberflaecheBezeichnung, material.IstBeschichtbar);
         }
 
         return farbText;
     }
 
-    private static string GetProduktionsFarbText(string farbKuerzel, string farbZusatzText, string farbCode, string farbBezeichnung, string oberflaecheBezeichnung, bool longText)
+    private static string GetProduktionsFarbText(string farbKuerzel, string farbZusatzText, string farbItem, string farbCode, string farbBezeichnung, string oberflaecheBezeichnung, bool longText)
     {
         var sb = new StringBuilder();
         if (!string.IsNullOrEmpty(farbKuerzel))
@@ -37,6 +37,12 @@ public static class FarbExtensions
         if (!string.IsNullOrEmpty(farbZusatzText))
         {
             sb.Append(" " + farbZusatzText);
+        }
+
+        // For some (user specific standard) colors Ibos1/2 swallow color kuerzel. So we add it here, if not already present
+        if (farbItem != null && farbItem.Length >= 2 && farbItem.Length <= 4 && !sb.ToString().Contains(farbItem) && !farbBezeichnung.Contains(farbItem))
+        {
+            sb.Append(" " + farbItem);
         }
 
         if (!longText)
