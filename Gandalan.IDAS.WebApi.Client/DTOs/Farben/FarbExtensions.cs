@@ -1,4 +1,3 @@
-using System;
 using System.Text;
 
 namespace Gandalan.IDAS.WebApi.DTO;
@@ -18,30 +17,16 @@ public static class FarbExtensions
         {
             // Stand 05.03.2024: Für Standardfarben wird immer das Kürzel angezeigt
         }
-        // Trendfarbe ("SF" + FarbZusatzText)
-        else if (farbText.StartsWith("SF") && !string.IsNullOrEmpty(material.FarbZusatzText))
+        // Sonderfarben / Trendfarben ("SF" + FarbZusatzText)
+        else if (farbText.StartsWith("SF"))
         {
             farbText = GetProduktionsFarbText(farbText, material.FarbZusatzText, material.FarbCode, material.FarbBezeichnung, material.OberflaecheBezeichnung, material.IstBeschichtbar);
-        }
-        // Sonderfarbe
-        else if (farbText.StartsWith("SF") && !string.IsNullOrEmpty(material.FarbCode))
-        {
-            // Handeingabe
-            if (material.FarbItemGuid == Guid.Empty)
-            {
-                farbText = GetProduktionsFarbText(farbText, farbZusatzText: null, farbCode: material.FarbCode, farbBezeichnung: null, oberflaecheBezeichnung: null, istBeschichtbar: true);
-            }
-            // Sonderfarbe aus Liste
-            else
-            {
-                farbText = GetProduktionsFarbText(farbText, material.FarbZusatzText, material.FarbCode, material.FarbBezeichnung, material.OberflaecheBezeichnung, material.IstBeschichtbar);
-            }
         }
 
         return farbText;
     }
 
-    private static string GetProduktionsFarbText(string farbKuerzel, string farbZusatzText, string farbCode, string farbBezeichnung, string oberflaecheBezeichnung, bool istBeschichtbar)
+    private static string GetProduktionsFarbText(string farbKuerzel, string farbZusatzText, string farbCode, string farbBezeichnung, string oberflaecheBezeichnung, bool longText)
     {
         var sb = new StringBuilder();
         if (!string.IsNullOrEmpty(farbKuerzel))
@@ -54,7 +39,7 @@ public static class FarbExtensions
             sb.Append(" " + farbZusatzText);
         }
 
-        if (!istBeschichtbar) // Wenn nicht beschichtbar, einfach Kürzel anzeigen.
+        if (!longText)
         {
             return sb.ToString();
         }
