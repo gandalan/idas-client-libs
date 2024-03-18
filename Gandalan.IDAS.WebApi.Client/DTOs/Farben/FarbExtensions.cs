@@ -34,7 +34,9 @@ public static class FarbExtensions
             sb.Append(farbKuerzel);
         }
 
-        if (!string.IsNullOrEmpty(farbZusatzText))
+        // For some colors (e.g. W3: "W3 matt") Ibos1 returns the farbKuerzel in the farbBezeichnung, so we do not add the farbZusatzText, which contains the farbKuerzel, too.
+        // if shortText, we just add it
+        if (!string.IsNullOrEmpty(farbZusatzText) && (!farbBezeichnung.Contains(farbZusatzText) || !longText))
         {
             sb.Append(" " + farbZusatzText);
         }
