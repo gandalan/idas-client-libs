@@ -60,7 +60,7 @@ public static class FarbExtensions
             sb.Append(" " + farbBezeichnung);
         }
 
-        if (!string.IsNullOrEmpty(oberflaecheBezeichnung) && oberflaecheBezeichnung != "Standard")
+        if (!string.IsNullOrEmpty(oberflaecheBezeichnung) && oberflaecheBezeichnung != "Standard" && !sb.ToString().Contains(oberflaecheBezeichnung))
         {
             sb.Append(" " + oberflaecheBezeichnung);
         }
