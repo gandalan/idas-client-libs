@@ -40,7 +40,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         {
             if (!_isInitialized)
             {
-                throw new InvalidOperationException("WebApiConfigurations not initialized - call WebApiConfigurations.Initialize() first");
+                throw new InvalidOperationException("WebApiConfigurations not initialized - call WebApiConfigurations.InitializeAsync() first");
             }
 
             if (_settings.TryGetValue(name, out var byName))
@@ -55,7 +55,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         {
             if (!_isInitialized)
             {
-                throw new InvalidOperationException("WebApiConfigurations not initialized - call WebApiConfigurations.Initialize() first");
+                throw new InvalidOperationException("WebApiConfigurations not initialized - call WebApiConfigurations.InitializeAsync() first");
             }
 
             return new List<IWebApiConfig>(_settings.Values);
