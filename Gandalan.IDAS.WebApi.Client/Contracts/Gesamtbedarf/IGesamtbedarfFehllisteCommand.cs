@@ -41,7 +41,7 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.Gesamtbedarf
         {
             if (parameter is not IGesamtbedarfListe pos)
             {
-                throw new ArgumentNullException("Parameter muss eine Liste von IGesamtMaterialbedarfItem sein");
+                throw new ArgumentException("Parameter muss eine Liste von IGesamtMaterialbedarfItem sein", nameof(parameter));
             }
 
             Execute(pos);

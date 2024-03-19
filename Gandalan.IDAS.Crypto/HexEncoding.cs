@@ -142,7 +142,7 @@ namespace Gandalan.IDAS.Crypto
         {
             if (string.IsNullOrEmpty(hex) || hex.Length > 2)
             {
-                throw new ArgumentException("hex must be 1 or 2 characters in length");
+                throw new ArgumentException("hex must be 1 or 2 characters in length", nameof(hex));
             }
 
             return byte.Parse(hex, NumberStyles.HexNumber);
