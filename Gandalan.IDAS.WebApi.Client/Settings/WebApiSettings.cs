@@ -55,7 +55,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public string WebhookServiceUrl { get; set; }
 
         /// <remarks>
-        /// Remember to call <see cref="WebApiConfigurations.Initialize"/> before.
+        /// Remember to call <see cref="WebApiConfigurations.InitializeAsync"/> before.
         /// </remarks>
         [Obsolete("Call InitializeAsync")]
         public virtual async Task Initialize(Guid appToken, string env)
@@ -64,7 +64,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         }
 
         /// <remarks>
-        /// Remember to call <see cref="WebApiConfigurations.Initialize"/> before.
+        /// Remember to call <see cref="WebApiConfigurations.InitializeAsync"/> before.
         /// </remarks>
         public virtual async Task InitializeAsync(Guid appToken, string env)
         {
