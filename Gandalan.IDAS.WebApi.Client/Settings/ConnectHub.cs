@@ -10,7 +10,13 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
     {
         private const string HubUrl = "https://connect.idas-cloudservices.net/api/EndPoints";
 
+        [Obsolete("Call GetEndpointsAsync")]
         public async Task<HubResponse> GetEndpoints(string apiVersion = null, string env = null, string clientOs = null)
+        {
+            return await GetEndpointsAsync(apiVersion, env, clientOs);
+        }
+
+        public async Task<HubResponse> GetEndpointsAsync(string apiVersion = null, string env = null, string clientOs = null)
         {
             var requestUrl =
                 HubUrl + "?" +
@@ -24,7 +30,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             }
             catch (Exception e)
             {
-                Logger.LogConsoleDebug($"{e}");
+                L.Fehler(e, $"Exception for GetEndpoints. Env: '{env}'");
                 throw;
             }
         }
