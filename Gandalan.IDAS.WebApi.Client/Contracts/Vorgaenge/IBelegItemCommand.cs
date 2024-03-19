@@ -23,7 +23,7 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         {
             if (parameter is not IBelegAuswahlItem pos)
             {
-                throw new ArgumentNullException("Parameter muss eine Belegposition sein");
+                throw new ArgumentException("Parameter muss eine Belegposition sein", nameof(parameter));
             }
 
             Execute(pos);

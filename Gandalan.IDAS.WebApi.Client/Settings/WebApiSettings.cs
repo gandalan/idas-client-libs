@@ -72,12 +72,12 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             {
                 if (appToken.Equals(Guid.Empty))
                 {
-                    throw new ArgumentException("WebApiSettings: AppToken must not be Guid.Empty");
+                    throw new ArgumentException("WebApiSettings: AppToken must not be Guid.Empty", nameof(appToken));
                 }
 
                 if (string.IsNullOrEmpty(env))
                 {
-                    throw new ArgumentNullException("WebApiSettings: Environment must not be null or empty");
+                    throw new ArgumentNullException(nameof(env), "WebApiSettings: Environment must not be null or empty");
                 }
 
                 //await WebApiConfigurations.Initialize(appToken);
