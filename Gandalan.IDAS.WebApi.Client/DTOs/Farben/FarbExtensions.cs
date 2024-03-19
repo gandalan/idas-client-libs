@@ -57,7 +57,8 @@ public static class FarbExtensions
             sb.Append(" " + farbCode);
         }
 
-        if (!string.IsNullOrEmpty(farbBezeichnung))
+        // For custom Handeingaben: FarbBezeichnung == FarbCode == FarbItem, so do not add twice
+        if (!string.IsNullOrEmpty(farbBezeichnung) && !sb.ToString().Contains(farbBezeichnung))
         {
             sb.Append(" " + farbBezeichnung);
         }
