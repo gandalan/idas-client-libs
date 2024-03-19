@@ -25,9 +25,8 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 (clientOs != null ? "clientOS=" + clientOs : "");
             try
             {
-                using var httpClient = new HttpClient();
-                var response = httpClient.GetStringAsync(requestUrl).GetAwaiter().GetResult();
-                return await Task.FromResult(JsonConvert.DeserializeObject<HubResponse>(response));
+                var response = await new HttpClient().GetStringAsync(requestUrl);
+                return JsonConvert.DeserializeObject<HubResponse>(response);
             }
             catch (Exception e)
             {
