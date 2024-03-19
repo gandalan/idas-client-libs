@@ -12,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client
         }
 
         public async Task MandantenAbgleichen(List<MandantDTO> list)
-            => await Task.Run(() => list.ForEach(async (m) => await PutAsync("Mandanten", m)));
+            => await Task.Run(() => list.ForEach(async m => await PutAsync("Mandanten", m)));
 
         public async Task<MandantDTO> MandantenAnlegenAsync(MandantDTO mandant)
             => await PutAsync<MandantDTO>("Mandanten", mandant);
