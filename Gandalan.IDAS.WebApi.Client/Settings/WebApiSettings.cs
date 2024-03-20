@@ -80,7 +80,6 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                     throw new ArgumentNullException(nameof(env), "WebApiSettings: Environment must not be null or empty");
                 }
 
-                //await WebApiConfigurations.Initialize(appToken);
                 var settings = WebApiConfigurations.ByName(env);
                 if (settings != null)
                 {
