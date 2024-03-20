@@ -1,7 +1,7 @@
-using Gandalan.IDAS.WebApi.Client.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Gandalan.IDAS.WebApi.Client.Contracts;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -10,10 +10,12 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid KatalogArtikelGuid { get; set; }
         public string KatalogNummer { get; set; }
         public string Bezeichnung { get; set; }
+
         /// <summary>
         /// Einer der Werte aus der KatalogArtikelArt-Enum
         /// </summary>
         public string Art { get; set; }
+
         public Guid WarenGruppeGuid { get; set; }
         public string ImageFileName { get; set; }
         public string Einheit { get; set; }
@@ -52,6 +54,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Preis des Artikels (pro VE?)
         /// </summary>
         public decimal Preis { get; set; }
+
         public decimal StaffelPreis { get; set; }
         public decimal StaffelMenge { get; set; }
         public decimal VEMenge { get; set; }
@@ -64,14 +67,17 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string Status { get; set; }
         public DateTime? GueltigAb { get; set; }
         public DateTime? GueltigBis { get; set; }
+
         /// <summary>
         /// Mögliche Ersatzartikel für diesen Artikel
         /// </summary>
         public List<Guid> ErsatzArtikel { get; set; }
+
         /// <summary>
         /// Für Art = FertigElementArtikel
         /// </summary>
         public Guid VarianteGuid { get; set; }
+
         public DateTime ChangedDate { get; set; }
         public long Version { get; set; }
         public bool IstTechnischerArtikel { get; set; }
