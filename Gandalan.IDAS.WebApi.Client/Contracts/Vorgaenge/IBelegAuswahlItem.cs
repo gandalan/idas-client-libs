@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
 {
@@ -14,6 +14,5 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         IList<BelegSaldoDTO> Salden { get; }
         IList<BelegPositionDTO> Positionen { get; }
         bool IstKopiert { get; }
-
     }
 }

@@ -1,6 +1,6 @@
-﻿using Gandalan.Client.Contracts.Navigation;
 using System;
 using System.Collections.Generic;
+using Gandalan.Client.Contracts.Navigation;
 
 namespace Gandalan.Client.Contracts.UIServices
 {

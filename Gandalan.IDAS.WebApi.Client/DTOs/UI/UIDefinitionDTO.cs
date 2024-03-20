@@ -1,7 +1,7 @@
-﻿using Gandalan.IDAS.WebApi.Client.DTOs.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Gandalan.IDAS.WebApi.Client.DTOs.UI;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {

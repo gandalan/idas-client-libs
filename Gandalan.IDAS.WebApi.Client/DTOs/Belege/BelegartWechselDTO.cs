@@ -1,7 +1,7 @@
-using Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
-using Gandalan.IDAS.WebApi.Data.DTOs.Belege;
 using System;
 using System.Collections.Generic;
+using Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
+using Gandalan.IDAS.WebApi.Data.DTOs.Belege;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
