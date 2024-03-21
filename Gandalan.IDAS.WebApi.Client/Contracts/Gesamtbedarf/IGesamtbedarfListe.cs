@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.DTO;
 using Gandalan.IDAS.WebApi.DTO.Gesamtbedarf;
 
@@ -10,7 +11,7 @@ public interface IGesamtbedarfListe
     ObservableCollection<IGesamtMaterialbedarfItem> Bedarfe { get; set; }
     ObservableCollection<IGesamtMaterialbedarfItem> Fehlliste { get; set; }
 
-    void Zusammenfassen(List<GesamtMaterialbedarfDTO> dtos, ZusammenfassungsOptionen optionen,
+    Task Zusammenfassen(List<GesamtMaterialbedarfDTO> dtos, ZusammenfassungsOptionen optionen,
             bool stangenoptimierung);
 }
 
