@@ -28,6 +28,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal GedeckteStueckzahl { get; set; }
         public decimal UngedeckteStueckzahl => Stueckzahl - GedeckteStueckzahl;
         public decimal Laufmeter { get; set; }
+        public decimal GedeckteLaufmeter { get; set; }
+        public decimal UngedeckteLaufmeter => Laufmeter - GedeckteLaufmeter;
         public string FarbBezeichnung { get; set; }
         public string FarbZusatzText { get; set; }
         public string FarbKuerzel { get; set; }
@@ -40,12 +42,10 @@ namespace Gandalan.IDAS.WebApi.DTO
         public bool IstZuschnitt { get; set; }
         public float ZuschnittLaenge { get; set; }
         public bool IstStangenoptimiert { get; set; }
-        public float GedeckteZuschnittLaenge { get; set; }
-        public float UngedeckteZuschnittLaenge => ZuschnittLaenge - GedeckteZuschnittLaenge;
         public string ZuschnittWinkel { get; set; }
         public bool IstSonderfarbe { get; set; }
         public KatalogArtikelArt KatalogArtikelArt { get; set; }
-        public float DeckungInPercent => Einheit == "St" ? (float)(GedeckteStueckzahl / Stueckzahl) : GedeckteZuschnittLaenge / ZuschnittLaenge;
+        public decimal DeckungInPercent => (Einheit == "St" || Einheit == "Stk.") ? (GedeckteStueckzahl / Stueckzahl) : GedeckteLaufmeter / Laufmeter;
         public bool IstVE { get; set; }
         public decimal? VE_Menge { get; set; }
         public object Clone()
@@ -85,7 +85,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 IstSonderfarbe = IstSonderfarbe,
                 KatalogArtikelArt = KatalogArtikelArt,
                 GedeckteStueckzahl = GedeckteStueckzahl,
-                GedeckteZuschnittLaenge = GedeckteZuschnittLaenge,
+                GedeckteLaufmeter = GedeckteLaufmeter,
                 IstVE = IstVE,
                 VE_Menge = VE_Menge
             };
