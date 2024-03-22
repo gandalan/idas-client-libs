@@ -45,7 +45,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string ZuschnittWinkel { get; set; }
         public bool IstSonderfarbe { get; set; }
         public KatalogArtikelArt KatalogArtikelArt { get; set; }
-        public decimal DeckungInPercent => (Einheit == "St" || Einheit == "Stk.") ? (GedeckteStueckzahl / Stueckzahl) : GedeckteLaufmeter / Laufmeter;
+        public decimal DeckungInPercent => Einheit.StartsWith("St") ? (GedeckteStueckzahl / Stueckzahl) : GedeckteLaufmeter / Laufmeter;
         public bool IstVE { get; set; }
         public decimal? VE_Menge { get; set; }
         public object Clone()
