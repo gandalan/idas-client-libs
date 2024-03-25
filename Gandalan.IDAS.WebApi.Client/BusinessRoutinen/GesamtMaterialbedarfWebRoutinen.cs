@@ -25,7 +25,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task WebJobAsync()
             => await PostAsync("GesamtMaterialbedarf/WebJob", null);
 
-        public async Task GesamtBedarfUpdateLiefertag(long mandantId, Guid changedGuid)
-            => await PostAsync($"GesamtMaterialbedarf/GesamtBedarfUpdateLiefertag?mandantId={mandantId}&posGuid={changedGuid}", null);
+        public async Task GesamtBedarfUpdateLiefertag(long mandantId, Guid posGuid)
+            => await PostAsync($"GesamtMaterialbedarf/GesamtBedarfUpdateLiefertag?mandantId={mandantId}&posGuid={posGuid}", null);
     }
 }
