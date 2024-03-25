@@ -13,8 +13,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<GesamtMaterialbedarfGetReturn> GetAsync(DateTime? stichTag = null)
-            => await GetAsync<GesamtMaterialbedarfGetReturn>($"GesamtMaterialbedarf?stichTag={stichTag?.ToString("o")}");
+        public async Task<GesamtMaterialbedarfGetReturn> GetAsync(DateTime? stichTag = null, DateTime? bedarfAb = null)
+            => await GetAsync<GesamtMaterialbedarfGetReturn>($"GesamtMaterialbedarf?stichTag={stichTag?.ToString("o")}&bedarfAb={bedarfAb?.ToString("O")}");
 
         public async Task DeleteAsync(Guid guid)
             => await DeleteAsync($"GesamtMaterialbedarf/{guid}");
