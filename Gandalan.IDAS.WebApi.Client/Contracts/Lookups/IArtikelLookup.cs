@@ -10,6 +10,7 @@ namespace Gandalan.Client.Contracts
     {
         KatalogArtikelDTO[] ArtikelListe { get; }
         VarianteDTO[] VariantenListe { get; }
+        VarianteDTO[] Sondervarianten { get; }
     }
 
     public interface IArtikelLookupResult
@@ -23,6 +24,7 @@ namespace Gandalan.Client.Contracts
         public KatalogArtikelDTO[] ArtikelListe { get; set; }
 
         public VarianteDTO[] VariantenListe { get; set; }
+        public VarianteDTO[] Sondervarianten { get; set; }
     }
 
     public class ArtikelLookupResult : IArtikelLookupResult
