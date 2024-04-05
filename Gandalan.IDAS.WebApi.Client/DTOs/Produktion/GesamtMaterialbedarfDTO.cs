@@ -73,6 +73,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 Laufmeter = Laufmeter,
                 FarbBezeichnung = FarbBezeichnung,
                 FarbKuerzel = FarbKuerzel,
+                FarbZusatzText = FarbZusatzText,
                 FarbKuerzelGuid = FarbKuerzelGuid,
                 FarbCode = FarbCode,
                 FarbeItem = FarbeItem,

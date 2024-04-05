@@ -14,6 +14,7 @@ public interface IGesamtMaterialbedarfItem
     public decimal Laufmeter { get; set; }
     public decimal? VE_Menge { get; set; }
     public string FarbBezeichnung { get; set; }
+    public string FarbZusatzText { get; set; }
     public string FarbKuerzel { get; set; }
     public Guid FarbKuerzelGuid { get; set; }
     public string FarbCode { get; set; }
