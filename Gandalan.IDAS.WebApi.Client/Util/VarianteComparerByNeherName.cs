@@ -7,7 +7,7 @@ namespace Gandalan.IDAS.WebApi.Util
 {
     public class VarianteComparerByNeherName : IComparer<VarianteDTO>
     {
-        private static readonly Regex _variantenNameRex = new Regex(@"(?:[a-zA-Z]{1,3}|\d{1,3}|\.[a-zA-Z]{1,3})\s*", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private static readonly Regex _variantenNameRex = new(@"(?:[a-zA-Z]{1,3}|\d{1,3}|\.[a-zA-Z]{1,3})\s*", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         public int Compare(VarianteDTO x, VarianteDTO y)
         {

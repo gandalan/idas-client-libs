@@ -17,8 +17,8 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public JobDTO()
         {
-            Stati = new List<JobStatusDTO>();
-            Parameter = new List<JobParameterDTO>();
+            Stati = [];
+            Parameter = [];
         }
 
         public bool CancelWait { get; set; }

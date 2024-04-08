@@ -7,7 +7,7 @@ namespace Gandalan.IDAS.WebApi.DTO
     {
         public WerteListeDTO()
         {
-            Items = new List<WerteListeItemDTO>();
+            Items = [];
         }
 
         public string Name { get; set; }

@@ -54,10 +54,10 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public BelegDTO()
         {
-            Positionen = new ObservableCollection<Guid>();
-            Salden = new ObservableCollection<BelegSaldoDTO>();
-            Historie = new ObservableCollection<BelegHistorieDTO>();
-            PositionsObjekte = new ObservableCollection<BelegPositionDTO>();
+            Positionen = [];
+            Salden = [];
+            Historie = [];
+            PositionsObjekte = [];
             BelegDatum = DateTime.UtcNow;
             AenderungsDatum = DateTime.UtcNow;
         }
@@ -66,7 +66,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public void SetupObjekte(VorgangDTO vorgang)
         {
-            PositionsObjekte = new ObservableCollection<BelegPositionDTO>();
+            PositionsObjekte = [];
             Positionen.ForEach(p =>
             {
                 var pos = vorgang.Positionen.FirstOrDefault(pp => pp.BelegPositionGuid == p);

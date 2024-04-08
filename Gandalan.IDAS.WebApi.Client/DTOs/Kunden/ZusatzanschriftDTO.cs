@@ -113,7 +113,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public ZusatzanschriftDTO()
         {
-            ApplicationSpecificProperties = new Dictionary<string, PropertyValueCollection>();
+            ApplicationSpecificProperties = [];
             ZusatzanschriftGuid = Guid.NewGuid();
         }
 

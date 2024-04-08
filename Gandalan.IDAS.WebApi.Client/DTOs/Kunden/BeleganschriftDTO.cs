@@ -142,7 +142,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public BeleganschriftDTO()
         {
-            ApplicationSpecificProperties = new Dictionary<string, PropertyValueCollection>();
+            ApplicationSpecificProperties = [];
             Art = "BelegAdresse";
             AdressGuid = Guid.NewGuid();
         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.DTO
@@ -20,10 +20,10 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public ProduktionsStatiWerteDTO AktuellerStatus { get; set; }
         public int AktuelleProzent { get; set; }
-        public string AktuellerText{ get; set; }
+        public string AktuellerText { get; set; }
         public int GesamtMinuten { get; set; }
 
-        public List<ProduktionsStatusHistorieDTO> Historie { get; set; } = new List<ProduktionsStatusHistorieDTO>();
+        public List<ProduktionsStatusHistorieDTO> Historie { get; set; } = [];
         public DateTime ChangedDate { get; set; }
     }
 }

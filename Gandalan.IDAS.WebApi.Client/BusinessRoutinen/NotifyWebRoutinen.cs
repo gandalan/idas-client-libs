@@ -29,7 +29,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (!_validConfig)
             {
-                return new List<NachrichtenDTO>();
+                return [];
             }
 
             var mandant = Settings.AuthToken.Mandant.MandantGuid;

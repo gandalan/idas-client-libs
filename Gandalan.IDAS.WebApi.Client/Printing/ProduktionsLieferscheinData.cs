@@ -25,8 +25,8 @@ namespace Gandalan.IDAS.WebApi.Client.Printing
         public string Kommission { get; set; }
         public string Kommission2 { get; set; }
         public int GesamtAnzahlElemente { get; set; }
-        public List<ProduktionsLieferscheinPositionData> Positionen { get; set; } = new List<ProduktionsLieferscheinPositionData>();
-        public List<ProduktionsLieferscheinPositionData> Artikel { get; set; } = new List<ProduktionsLieferscheinPositionData>();
-        public List<ProduktionsLieferscheinPacklisteData> Packliste { get; set; } = new List<ProduktionsLieferscheinPacklisteData>();
+        public List<ProduktionsLieferscheinPositionData> Positionen { get; set; } = [];
+        public List<ProduktionsLieferscheinPositionData> Artikel { get; set; } = [];
+        public List<ProduktionsLieferscheinPacklisteData> Packliste { get; set; } = [];
     }
 }

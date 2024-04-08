@@ -12,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 {
     public static class WebApiConfigurations
     {
-        private static readonly string[] _environments = new[] { "dev", "staging", "produktiv" };
+        private static readonly string[] _environments = ["dev", "staging", "produktiv"];
         private static string _settingsPath;
         private static Dictionary<string, IWebApiConfig> _settings;
         private static string _appTokenString;
@@ -58,7 +58,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                 throw new InvalidOperationException("WebApiConfigurations not initialized - call WebApiConfigurations.InitializeAsync() first");
             }
 
-            return new List<IWebApiConfig>(_settings.Values);
+            return [.._settings.Values];
         }
 
         public static void Save(IWebApiConfig settings)

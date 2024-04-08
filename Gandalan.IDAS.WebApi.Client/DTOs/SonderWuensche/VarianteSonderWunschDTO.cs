@@ -10,6 +10,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTO
         public string ErfassungsAnsicht { get; set; } = "innen";
         public string ProduktionsAnsicht { get; set; } = "innen";
         public string[] Imports { get; set; }
-        public List<BelegPositionSonderwunschDTO> Eigenschaften { get; set; } = new List<BelegPositionSonderwunschDTO>();
+        public List<BelegPositionSonderwunschDTO> Eigenschaften { get; set; } = [];
     }
 }

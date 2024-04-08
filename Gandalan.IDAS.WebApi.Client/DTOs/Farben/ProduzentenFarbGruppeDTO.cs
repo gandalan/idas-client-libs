@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -8,8 +7,8 @@ namespace Gandalan.IDAS.WebApi.DTO
     {
         public ProduzentenFarbGruppeDTO()
         {
-            Farben = new ObservableCollection<Guid>();
-            Oberflaechen = new ObservableCollection<Guid>();
+            Farben = [];
+            Oberflaechen = [];
         }
 
         public Guid ProduzentenFarbGruppeGuid { get; set; }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -20,8 +19,8 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public FarbGruppeDTO()
         {
-            FarbItemGuids = new ObservableCollection<Guid>();
-            OberflaecheGuids = new ObservableCollection<Guid>();
+            FarbItemGuids = [];
+            OberflaecheGuids = [];
         }
 
         public override string ToString()
