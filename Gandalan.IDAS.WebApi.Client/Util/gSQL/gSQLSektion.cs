@@ -11,7 +11,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
         public gSQLSektion()
         {
-            Items = new List<gSQLItem>();
+            Items = [];
         }
 
         public gSQLSektion(string name) : this()

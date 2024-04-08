@@ -24,7 +24,7 @@ namespace Gandalan.IDAS.Logging
 
         public Logger()
         {
-            LogLevels = new Dictionary<LogContext, LogLevel>();
+            LogLevels = [];
             SetLogDateiPfad();
         }
 

@@ -60,7 +60,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Informationen, wann welcher Anwender welches Dokument gedruckt hat
         /// </summary>
-        public List<SerieDruckInfoDTO> DruckInfos { get; set; } = new();
+        public List<SerieDruckInfoDTO> DruckInfos { get; set; } = [];
 
         /// <summary>
         /// Änderungsdatum des Datensatzes

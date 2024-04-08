@@ -27,7 +27,7 @@ namespace Gandalan.IDAS.WebApi.Client.Printing
             get { return string.Join(", ", AblagefachList.Distinct().OrderBy(x => x)); }
         }
 
-        public List<string> AblagefachList { get; set; } = new();
+        public List<string> AblagefachList { get; set; } = [];
         public string Besonderheiten { get; set; }
         public Guid BelegPositionGuid { get; set; }
         public bool IstMontiert { get; set; }

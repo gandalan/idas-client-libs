@@ -52,7 +52,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// </summary>
         public IList<int> Laengen { get; } = new List<int>();
 
-        public List<Guid> MaterialBedarfGuids { get; } = new();
+        public List<Guid> MaterialBedarfGuids { get; } = [];
 
         /// <summary>
         /// "Eröffnet" eine neue Stange mit der angegebenen Gesamtlänge und

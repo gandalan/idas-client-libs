@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Farben
         public bool NeherModellAktiv { get; set; }
         public bool EigenesModellAktiv { get; set; }
         public bool IstAdminDTO { get; set; }
-        public List<FarbgruppeSettingsDTO> FarbgruppenSettings { get; set; } = new();
+        public List<FarbgruppeSettingsDTO> FarbgruppenSettings { get; set; } = [];
 
         public long Version { get; set; }
         public DateTime ChangedDate { get; set; }

@@ -8,7 +8,7 @@ namespace System
         #region Country names
 
         private static readonly string[] _euCountryCodes =
-        {
+        [
             // keep DE + AT in front for better performance with most of requests
             "Deutschland", "DE", "D",
             "Österreich", "AT", "A",
@@ -38,7 +38,7 @@ namespace System
             "Tschechien", "Česko", "CZ",
             "Ungarn", "Magyarország", "HU",
             "Zypern", "Κύπρος", "Kıbrıs", "CY"
-        };
+        ];
 
         #endregion
 

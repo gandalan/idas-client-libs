@@ -9,7 +9,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion
         public long VorgangsNummer { get; set; }
         public Guid VorgangsGuid { get; set; }
 
-        public List<ProduktionsInfoBelegDTO> BelegInfos { get; set; } = new();
+        public List<ProduktionsInfoBelegDTO> BelegInfos { get; set; } = [];
     }
 
     public class ProduktionsInfoBelegDTO
@@ -18,9 +18,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion
         public string BelegTitel { get; set; } // z.B. 'AB vom 17.07.2021'
         public DateTime ErstellDatum { get; set; }
 
-        public List<ProduktionsInfoBelegPositionDTO> PositionenInfos { get; set; } = new()
-        {
-        };
+        public List<ProduktionsInfoBelegPositionDTO> PositionenInfos { get; set; } = [];
     }
 
     public class ProduktionsInfoBelegPositionDTO
@@ -42,9 +40,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion
         public DateTime? LieferDatum { get; set; }
         public DateTime? ProduktionsDatum { get; set; }
 
-        public List<ProduktionsInfoBelegPositionAVDTO> AvBelegPositionenInfos { get; set; } = new()
-        {
-        };
+        public List<ProduktionsInfoBelegPositionAVDTO> AvBelegPositionenInfos { get; set; } = [];
     }
 
     public class ProduktionsInfoBelegPositionAVDTO
@@ -89,6 +85,6 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion
         public string AktuellerText { get; set; }
         public int GesamtMinuten { get; set; }
 
-        public List<ProduktionsStatusHistorieDTO> Historie { get; set; } = new();
+        public List<ProduktionsStatusHistorieDTO> Historie { get; set; } = [];
     }
 }

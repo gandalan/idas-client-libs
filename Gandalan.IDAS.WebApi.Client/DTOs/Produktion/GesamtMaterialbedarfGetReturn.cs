@@ -4,9 +4,9 @@ namespace Gandalan.IDAS.WebApi.DTO
 {
     public class GesamtMaterialbedarfGetReturn
     {
-        public List<GesamtMaterialbedarfDTO> Bedarfe = new();
-        public List<GesamtMaterialbedarfDTO> Fehlliste = new();
-        public List<GesamtLieferzusageDTO> Ueberliste = new();
-        public List<GesamtLieferzusageDTO> Zusagen = new();
+        public List<GesamtMaterialbedarfDTO> Bedarfe = [];
+        public List<GesamtMaterialbedarfDTO> Fehlliste = [];
+        public List<GesamtLieferzusageDTO> Ueberliste = [];
+        public List<GesamtLieferzusageDTO> Zusagen = [];
     }
 }

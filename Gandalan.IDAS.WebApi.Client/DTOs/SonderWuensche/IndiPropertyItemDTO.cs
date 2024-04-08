@@ -9,6 +9,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTO
         public string PropertyTag { get; set; }
         public bool IsChecked { get; set; }
         public string Operation { get; set; }
-        public List<string> OperationValue { get; set; } = new();
+        public List<string> OperationValue { get; set; } = [];
     }
 }

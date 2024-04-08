@@ -6,6 +6,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTO
     {
         public string PropertyListTitle { get; set; }
         public string PropertyListTag { get; set; }
-        public List<IndiPropertyDTO> Properties { get; set; } = new();
+        public List<IndiPropertyDTO> Properties { get; set; } = [];
     }
 }

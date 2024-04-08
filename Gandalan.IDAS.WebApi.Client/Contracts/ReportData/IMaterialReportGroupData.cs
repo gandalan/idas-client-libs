@@ -16,7 +16,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
         public string ItemName { get; set; } = "";
         public byte[] Image { get; set; }
         public string Filename { get; set; }
-        public Dictionary<string, int> FarbeRGB { get; set; } = new();
-        public List<IMaterialReportItem> Material { get; set; } = new();
+        public Dictionary<string, int> FarbeRGB { get; set; } = [];
+        public List<IMaterialReportItem> Material { get; set; } = [];
     }
 }

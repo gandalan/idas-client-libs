@@ -22,6 +22,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
         public string Einbauort { get; set; }
         public string SerienKennzeichen { get; set; }
         public string VorgangsGruppenKennzeichen { get; set; }
-        public List<SerienPacklisteGruppeItemDataDTO> Items { get; set; } = new();
+        public List<SerienPacklisteGruppeItemDataDTO> Items { get; set; } = [];
     }
 }

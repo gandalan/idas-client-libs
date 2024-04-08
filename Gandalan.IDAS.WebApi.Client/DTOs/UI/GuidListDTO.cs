@@ -5,6 +5,6 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.UI
 {
     public class GuidListDTO
     {
-        public List<Guid> GuidList { get; set; } = new();
+        public List<Guid> GuidList { get; set; } = [];
     }
 }

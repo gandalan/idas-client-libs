@@ -6,6 +6,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
     {
         public string Titel { get; set; }
         public string Serienkennzeichen { get; set; }
-        public List<SerienPacklisteGruppeDataDTO> VorgangsGruppen { get; set; } = new();
+        public List<SerienPacklisteGruppeDataDTO> VorgangsGruppen { get; set; } = [];
     }
 }

@@ -22,7 +22,7 @@ namespace Gandalan.IDAS.WebApi.Client
         /// Liste der zusätzlich zu übermittelnden Header. Werden bei jeder Anfrage mitgeschickt,
         /// z.B. für Authentifizierungs-Header
         /// </summary>
-        public Dictionary<string, string> AdditionalHeaders { get; private set; } = new();
+        public Dictionary<string, string> AdditionalHeaders { get; private set; } = [];
 
         public ICredentials Credentials { get; set; }
 

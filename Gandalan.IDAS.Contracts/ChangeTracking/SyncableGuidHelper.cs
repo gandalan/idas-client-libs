@@ -6,7 +6,7 @@ namespace System
 {
     public static class SyncableGuidHelper
     {
-        private static readonly Dictionary<Type, PropertyInfo> _guidProperties = new();
+        private static readonly Dictionary<Type, PropertyInfo> _guidProperties = [];
 
         public static Guid GetGuid(this object o)
         {

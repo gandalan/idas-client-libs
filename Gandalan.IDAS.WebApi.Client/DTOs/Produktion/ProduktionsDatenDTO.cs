@@ -17,24 +17,24 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Gesamtliste des benötigten Materials (immer für Stückzahl 1)
         /// </summary>
-        public List<MaterialbedarfDTO> Material { get; set; } = new();
+        public List<MaterialbedarfDTO> Material { get; set; } = [];
 
         /// <summary>
         /// Produktionsetiketten
         /// </summary>
-        public List<EtikettDTO> Etiketten { get; set; } = new();
+        public List<EtikettDTO> Etiketten { get; set; } = [];
 
         /// <summary>
         /// CNC-Bearbeitungen
         /// </summary>
-        public List<BearbeitungDTO> Bearbeitungen { get; set; } = new();
+        public List<BearbeitungDTO> Bearbeitungen { get; set; } = [];
 
         /// <summary>
         /// Daten der Original-Belegposition
         /// </summary>
         public PositionsDatenDTO PositionsDaten { get; set; }
 
-        public List<SonderwuenscheDTO> Sonderwuensche { get; set; } = new();
+        public List<SonderwuenscheDTO> Sonderwuensche { get; set; } = [];
         public string[] Log { get; set; }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <returns>Materialliste</returns>
         public List<MaterialbedarfDTO> GetMaterialbedarf()
         {
-            return Material == null ? new List<MaterialbedarfDTO>() : Material.Where(m => m.IstZuschnitt == false || m.ZuschnittLaenge == 0).ToList();
+            return Material == null ? [] : Material.Where(m => m.IstZuschnitt == false || m.ZuschnittLaenge == 0).ToList();
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public List<MaterialbedarfDTO> GetSaegeliste()
         {
-            return Material == null ? new List<MaterialbedarfDTO>() : Material.Where(m => m.IstZuschnitt && m.ZuschnittLaenge > 0).ToList();
+            return Material == null ? [] : Material.Where(m => m.IstZuschnitt && m.ZuschnittLaenge > 0).ToList();
         }
     }
 }
