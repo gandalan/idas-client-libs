@@ -43,7 +43,11 @@ namespace Gandalan.IDAS.Logging
                     Directory.CreateDirectory(LogDateiPfad);
                 }
 
-                _traceListener = new TextWriterTraceListener(LogDateiName);
+                lock (_lock)
+                {
+                    _traceListener = new TextWriterTraceListener(LogDateiName);
+                }
+
                 LogConsoleDebug($"Logfile: {LogDateiName}");
             }
             catch (Exception ex)

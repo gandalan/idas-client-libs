@@ -79,7 +79,10 @@ namespace System
                 }
             }
 
-            return _guidProperties[t];
+            lock (_guidProperties)
+            {
+                return _guidProperties[t];
+            }
         }
 
         public static PropertyInfo TryGetGuidProperty(Type t)
@@ -125,7 +128,10 @@ namespace System
                 }
             }
 
-            return _guidProperties[t];
+            lock (_guidProperties)
+            {
+                return _guidProperties[t];
+            }
         }
 
         public static bool IsSyncable(this object o)
