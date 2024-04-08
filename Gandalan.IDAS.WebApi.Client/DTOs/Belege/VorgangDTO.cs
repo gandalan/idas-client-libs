@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using Gandalan.IDAS.WebApi.Util;
@@ -100,10 +99,10 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public VorgangDTO()
         {
-            Belege = new ObservableCollection<BelegDTO>();
-            Positionen = new ObservableCollection<BelegPositionDTO>();
-            Nachrichten = new ObservableCollection<Guid>();
-            Historie = new ObservableCollection<VorgangHistorieDTO>();
+            Belege = [];
+            Positionen = [];
+            Nachrichten = [];
+            Historie = [];
             ErstellDatum = DateTime.UtcNow;
         }
 

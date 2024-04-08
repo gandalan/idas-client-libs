@@ -8,7 +8,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
     {
         public CreateSammelrechnungDTO()
         {
-            BelegGuids = new List<Guid>();
+            BelegGuids = [];
         }
 
         public IList<Guid> BelegGuids { get; set; }

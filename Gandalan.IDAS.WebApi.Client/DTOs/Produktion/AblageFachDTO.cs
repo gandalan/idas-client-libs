@@ -19,12 +19,12 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// GUIDs der ProduktGrupptenDTOs, die im Ablagefach abgelegt werden können
         /// </summary>
-        public IList<Guid> ProduktGruppenGuids { get; set; } = new List<Guid>();
+        public IList<Guid> ProduktGruppenGuids { get; set; } = [];
 
         /// <summary>
         /// GUIDs der aktuell im Ablagefach abgelegten MaterialbedarfDTOs
         /// </summary>
-        public IList<Guid> MaterialBedarfGuids { get; set; } = new List<Guid>();
+        public IList<Guid> MaterialBedarfGuids { get; set; } = [];
 
         /// <summary>
         /// Guid der BelegPositionAV -> Ist diese Guid schon gesetzt, aber noch kein Material zugeordnet, dann ist das Fach für die Position reserviert

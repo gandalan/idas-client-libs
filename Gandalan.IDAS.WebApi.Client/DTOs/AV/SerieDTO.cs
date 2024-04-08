@@ -39,7 +39,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// AV-Positionen in dieser Serie
         /// </summary>
-        public IList<Guid> AVBelegPositionen { get; set; } = new List<Guid>();
+        public IList<Guid> AVBelegPositionen { get; set; } = [];
 
         /// <summary>
         /// Kapazität dieser Serie in neutralen Kapazitätseinheiten (alt)

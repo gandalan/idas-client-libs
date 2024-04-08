@@ -50,7 +50,7 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// <summary>
         /// Welche Längen in welcher Reihenfolge liegen auf der Stange?
         /// </summary>
-        public IList<int> Laengen { get; } = new List<int>();
+        public IList<int> Laengen { get; } = [];
 
         public List<Guid> MaterialBedarfGuids { get; } = [];
 

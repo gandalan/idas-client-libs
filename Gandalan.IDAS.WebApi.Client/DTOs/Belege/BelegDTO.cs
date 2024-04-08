@@ -54,9 +54,9 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public BelegDTO()
         {
-            Positionen = new ObservableCollection<Guid>();
-            Salden = new ObservableCollection<BelegSaldoDTO>();
-            Historie = new ObservableCollection<BelegHistorieDTO>();
+            Positionen = [];
+            Salden = [];
+            Historie = [];
             PositionsObjekte = [];
             BelegDatum = DateTime.UtcNow;
             AenderungsDatum = DateTime.UtcNow;

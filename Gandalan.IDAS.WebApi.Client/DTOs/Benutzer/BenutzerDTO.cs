@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 
@@ -30,8 +29,8 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public BenutzerDTO()
         {
-            Rollen = new ObservableCollection<RolleDTO>();
-            GesperrteVarianten = new ObservableCollection<Guid>();
+            Rollen = [];
+            GesperrteVarianten = [];
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

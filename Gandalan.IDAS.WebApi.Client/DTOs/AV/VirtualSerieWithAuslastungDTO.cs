@@ -30,6 +30,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// </summary>
         public DateTime Ende { get; set; } = new(2099, 12, 31);
 
-        public IList<SerieAuslastungDTO> Auslastungen { get; set; } = new List<SerieAuslastungDTO>();
+        public IList<SerieAuslastungDTO> Auslastungen { get; set; } = [];
     }
 }
