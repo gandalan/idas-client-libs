@@ -18,7 +18,7 @@ namespace Gandalan.IDAS.Web
     {
         private readonly HttpClientConfig _config;
         private readonly HttpClient _client;
-        private readonly Dictionary<string, HttpClient> _versionClients = new Dictionary<string, HttpClient>();
+        private readonly Dictionary<string, HttpClient> _versionClients = new();
 
         #region Constructors
 

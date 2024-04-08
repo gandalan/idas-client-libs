@@ -31,24 +31,28 @@ namespace Gandalan.Client.Contracts.ProduktionsServices
         /// In most cases, this is KatalogArtikel.ProfilLaengeMM
         /// </summary>
         public int Laenge { get; set; }
+
         /// <summary>
         /// Wie viele MM sind belegt?
         /// </summary>
         public int BelegungInMM { get; set; }
+
         /// <summary>
         /// Wie viele Prozent sind belegt?
         /// </summary>
         public int BelegungInProzent { get; set; }
+
         /// <summary>
         /// Wie viele Prozent sind Verschnitt?
         /// </summary>
         public int VerschnittInProzent { get; set; } = 100;
+
         /// <summary>
         /// Welche Längen in welcher Reihenfolge liegen auf der Stange?
         /// </summary>
         public IList<int> Laengen { get; } = new List<int>();
 
-        public List<Guid> MaterialBedarfGuids { get; } = new List<Guid>();
+        public List<Guid> MaterialBedarfGuids { get; } = new();
 
         /// <summary>
         /// "Eröffnet" eine neue Stange mit der angegebenen Gesamtlänge und

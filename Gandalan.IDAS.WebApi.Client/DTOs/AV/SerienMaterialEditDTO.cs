@@ -8,6 +8,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.AV
     {
         public Guid SerieGuid { get; set; }
 
-        public List<MaterialbedarfDTO> MaterialListe { get; set; } = new List<MaterialbedarfDTO>();
+        public List<MaterialbedarfDTO> MaterialListe { get; set; } = new();
     }
 }

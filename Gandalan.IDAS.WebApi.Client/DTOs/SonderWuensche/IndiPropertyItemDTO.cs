@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.Data.DTO
 {
@@ -9,6 +9,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTO
         public string PropertyTag { get; set; }
         public bool IsChecked { get; set; }
         public string Operation { get; set; }
-        public List<string> OperationValue { get; set; } = new List<string>();
+        public List<string> OperationValue { get; set; } = new();
     }
 }

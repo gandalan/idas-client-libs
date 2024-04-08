@@ -9,6 +9,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
         public bool SaegemaßeOhneKorrektur { get; set; } = true;
         public bool EtikettenZugehoerigkeit { get; set; }
         public string Zeitvorgabe { get; set; }
-        public List<SerienSaegelisteProfilgruppeDataDTO> Profilgruppen { get; set; } = new List<SerienSaegelisteProfilgruppeDataDTO>();
+        public List<SerienSaegelisteProfilgruppeDataDTO> Profilgruppen { get; set; } = new();
     }
 }

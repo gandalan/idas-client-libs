@@ -14,12 +14,11 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
         public string ProfilSchnittBild { get; set; }
         public string Gesamtbedarf { get; set; }
 
-        public List<SerienSaegelistenProfilgruppeSchnittDataDTO> Schnitte { get; set; } = new List<SerienSaegelistenProfilgruppeSchnittDataDTO>();
+        public List<SerienSaegelistenProfilgruppeSchnittDataDTO> Schnitte { get; set; } = new();
         public int FarbeAsInt { get; set; }
 
         public string KatalogNummer { get; set; }
 
         public string FarbKuerzel { get; set; }
-
     }
 }

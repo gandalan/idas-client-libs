@@ -5,7 +5,7 @@ using System.ComponentModel;
 namespace Gandalan.IDAS.WebApi.DTO
 {
     /// <summary>
-    /// https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/how-to-group-sort-and-filter-data-in-the-datagrid-control?view=netframeworkdesktop-4.8
+    /// <see href="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/how-to-group-sort-and-filter-data-in-the-datagrid-control?view=netframeworkdesktop-4.8">https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/how-to-group-sort-and-filter-data-in-the-datagrid-control?view=netframeworkdesktop-4.8</see>
     /// </summary>
     public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
     {
@@ -370,14 +370,13 @@ namespace Gandalan.IDAS.WebApi.DTO
         public event PropertyChangedEventHandler PropertyChanged;
         public string GroupName { get; set; }
         public string Label { get; set; }
-        public List<string> Produktgruppe { get; set; } = new List<string>();
-        public List<string> Artikelliste { get; set; } = new List<string>();
-        public List<string> Bearbeitungen { get; set; } = new List<string>();
-        public List<string> Etikettentext { get; set; } = new List<string>();
+        public List<string> Produktgruppe { get; set; } = new();
+        public List<string> Artikelliste { get; set; } = new();
+        public List<string> Bearbeitungen { get; set; } = new();
+        public List<string> Etikettentext { get; set; } = new();
         public decimal Zeitvorgabe { get; set; }
         public decimal Gewicht { get; set; }
         public bool IstBasisregel { get; set; }
         public int Order { get; set; }
     }
 }
-

@@ -13,7 +13,7 @@ namespace Gandalan.IDAS.Logging
     public class Logger : ILogger
     {
         private static Logger _logger;
-        private readonly object _lock = new object();
+        private readonly object _lock = new();
         private TextWriterTraceListener _traceListener;
 
         public Dictionary<LogContext, LogLevel> LogLevels { get; set; }

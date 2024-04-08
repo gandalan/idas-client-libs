@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
@@ -16,7 +16,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.ReportData
     {
         public string OrderedProperty { get; set; }
         public string OrderedPropertyValue { get; set; }
-        public List<IMaterialReportGroupData> Data { get; set; } = new List<IMaterialReportGroupData>();
+        public List<IMaterialReportGroupData> Data { get; set; } = new();
         public string Serienname { get; set; }
         public DateTime DruckDatum { get; set; }
     }

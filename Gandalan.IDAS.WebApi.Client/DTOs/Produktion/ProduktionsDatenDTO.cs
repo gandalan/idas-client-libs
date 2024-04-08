@@ -17,24 +17,24 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// <summary>
         /// Gesamtliste des benötigten Materials (immer für Stückzahl 1)
         /// </summary>
-        public List<MaterialbedarfDTO> Material { get; set; } = new List<MaterialbedarfDTO>();
+        public List<MaterialbedarfDTO> Material { get; set; } = new();
 
         /// <summary>
         /// Produktionsetiketten
         /// </summary>
-        public List<EtikettDTO> Etiketten { get; set; } = new List<EtikettDTO>();
+        public List<EtikettDTO> Etiketten { get; set; } = new();
 
         /// <summary>
         /// CNC-Bearbeitungen
         /// </summary>
-        public List<BearbeitungDTO> Bearbeitungen { get; set; } = new List<BearbeitungDTO>();
+        public List<BearbeitungDTO> Bearbeitungen { get; set; } = new();
 
         /// <summary>
         /// Daten der Original-Belegposition
         /// </summary>
         public PositionsDatenDTO PositionsDaten { get; set; }
 
-        public List<SonderwuenscheDTO> Sonderwuensche { get; set; } = new List<SonderwuenscheDTO>();
+        public List<SonderwuenscheDTO> Sonderwuensche { get; set; } = new();
         public string[] Log { get; set; }
 
         /// <summary>
