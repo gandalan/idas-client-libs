@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Gandalan.IDAS.WebApi.Client.DTOs.Allgemein;
 using Gandalan.IDAS.WebApi.Data.DTO;
 using Gandalan.IDAS.WebApi.Util;
@@ -80,9 +79,9 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public BelegPositionDTO()
         {
-            Daten = new ObservableCollection<BelegPositionDatenDTO>();
-            Historie = new ObservableCollection<BelegPositionHistorieDTO>();
-            Zusatztexte = new ObservableCollection<ZusatztextDTO>();
+            Daten = [];
+            Historie = [];
+            Zusatztexte = [];
         }
 
         public BelegPositionDTO Clone()

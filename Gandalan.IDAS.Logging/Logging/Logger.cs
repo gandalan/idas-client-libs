@@ -13,7 +13,7 @@ namespace Gandalan.IDAS.Logging
     public class Logger : ILogger
     {
         private static Logger _logger;
-        private readonly object _lock = new object();
+        private readonly object _lock = new();
         private TextWriterTraceListener _traceListener;
 
         public Dictionary<LogContext, LogLevel> LogLevels { get; set; }
@@ -24,7 +24,7 @@ namespace Gandalan.IDAS.Logging
 
         public Logger()
         {
-            LogLevels = new Dictionary<LogContext, LogLevel>();
+            LogLevels = [];
             SetLogDateiPfad();
         }
 
@@ -43,7 +43,11 @@ namespace Gandalan.IDAS.Logging
                     Directory.CreateDirectory(LogDateiPfad);
                 }
 
-                _traceListener = new TextWriterTraceListener(LogDateiName);
+                lock (_lock)
+                {
+                    _traceListener = new TextWriterTraceListener(LogDateiName);
+                }
+
                 LogConsoleDebug($"Logfile: {LogDateiName}");
             }
             catch (Exception ex)

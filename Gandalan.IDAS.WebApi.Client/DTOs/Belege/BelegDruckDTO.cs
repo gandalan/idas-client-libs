@@ -14,8 +14,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public BelegDruckDTO(VorgangDTO vorgang, BelegDTO beleg)
         {
             var culture = new CultureInfo("de-de");
-            Salden = new ObservableCollection<BelegSaldoDruckDTO>();
-            PositionsObjekte = new ObservableCollection<BelegPositionDruckDTO>();
+            Salden = [];
+            PositionsObjekte = [];
 
             if (beleg != null && vorgang != null)
             {

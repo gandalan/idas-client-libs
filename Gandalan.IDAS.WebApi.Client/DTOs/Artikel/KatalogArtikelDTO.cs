@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Gandalan.IDAS.WebApi.Client.Contracts;
 
 namespace Gandalan.IDAS.WebApi.DTO
@@ -88,7 +87,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public KatalogArtikelDTO()
         {
-            MoeglicheFarben = new ObservableCollection<KatalogArtikelFarbZuordnungDTO>();
+            MoeglicheFarben = [];
         }
     }
 }

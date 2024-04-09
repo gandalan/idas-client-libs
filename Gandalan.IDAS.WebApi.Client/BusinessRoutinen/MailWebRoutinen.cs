@@ -17,8 +17,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<JobStatusResponseDTO> Send(MailJobInfo job, List<string> attachments)
         {
-            var content = new MultipartFormDataContent();
-            content.Add(new StringContent(JsonConvert.SerializeObject(job)), "jobAsString");
+            var content = new MultipartFormDataContent
+            {
+                { new StringContent(JsonConvert.SerializeObject(job)), "jobAsString" }
+            };
             if (attachments != null && attachments.Count > 0)
             {
                 foreach (var attachment in attachments)

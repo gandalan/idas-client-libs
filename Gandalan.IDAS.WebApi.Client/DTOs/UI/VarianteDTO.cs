@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -39,7 +38,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public VarianteDTO()
         {
-            KonfigSatz = new ObservableCollection<KonfigSatzEintragDTO>();
+            KonfigSatz = [];
         }
     }
 }

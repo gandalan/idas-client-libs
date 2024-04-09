@@ -56,10 +56,7 @@ namespace Gandalan.IDAS.WebApi.Util
         public static void PutPropertyValuesToObject(object o, PropertyValueCollection values, HandleSpecialValueMappingDelegate specialMappingHandler,
             string[] ignoreProps)
         {
-            if (ignoreProps == null)
-            {
-                ignoreProps = new string[] { "" };
-            }
+            ignoreProps ??= [""];
 
             var targetObjectProps = o.GetType().GetProperties();
 
@@ -92,10 +89,7 @@ namespace Gandalan.IDAS.WebApi.Util
 
         public static void RegisterMappingHandler(string propertyName, Type type, HandleValueMappingDelegate mappingHandler)
         {
-            if (_mappingHandlers == null)
-            {
-                _mappingHandlers = new Dictionary<string, HandleValueMappingDelegate>();
-            }
+            _mappingHandlers ??= [];
 
             var key = type.FullName.StartsWith("System.Data.Entity.DynamicProxies.") ? type.BaseType.FullName : type.FullName;
 

@@ -71,7 +71,7 @@ namespace Gandalan.IDAS.Crypto
             var counter = 0;
             for (var index = 0; index < returnValue.Length; index++)
             {
-                var hex = new string(new char[] { newString[counter], newString[counter + 1] });
+                var hex = new string([newString[counter], newString[counter + 1]]);
                 returnValue[index] = HexToByte(hex);
                 counter += 2;
             }
