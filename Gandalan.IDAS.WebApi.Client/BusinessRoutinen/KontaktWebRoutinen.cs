@@ -28,6 +28,9 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         public async Task<KontaktDTO> GetKontaktAsync(Guid kontaktGuid)
             => await GetAsync<KontaktDTO>($"Kontakt/{kontaktGuid}");
 
+        public async Task<KontaktDTO> GetKontaktByKundenNummerAsync(string kundenNummer)
+            => await GetAsync<KontaktDTO>($"Kontakt/GetByKundenNummer?kundennummer={kundenNummer}");
+
         public async Task<KontaktDTO> SaveKontaktAsync(KontaktDTO kontakt)
             => await PutAsync<KontaktDTO>("Kontakt", kontakt);
 
