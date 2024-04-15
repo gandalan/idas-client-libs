@@ -23,6 +23,11 @@ public static class FarbExtensions
             farbText = GetProduktionsFarbText(farbText, material.FarbZusatzText, material.FarbeItem, material.FarbCode, material.FarbBezeichnung, material.OberflaecheBezeichnung, material.IstBeschichtbar);
         }
 
+        if (!string.IsNullOrEmpty(material.PulverCode))
+        {
+            farbText += " " + material.PulverCode;
+        }
+
         return farbText;
     }
 

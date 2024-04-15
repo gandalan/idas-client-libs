@@ -31,6 +31,7 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.ReportData
         string FarbZusatzText { get; set; }
         string OberflaecheBezeichnung { get; set; }
         Guid OberflaecheGuid { get; set; }
+        string PulverCode { get; set; }
         bool IstSonderFarbPosition { get; set; }
         string Gewebe { get; set; }
 

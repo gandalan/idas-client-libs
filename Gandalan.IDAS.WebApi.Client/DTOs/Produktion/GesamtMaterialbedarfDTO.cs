@@ -39,6 +39,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid FarbItemGuid { get; set; }
         public string OberFlaeche { get; set; }
         public Guid OberFlaecheGuid { get; set; }
+        public string PulverCode { get; set; }
         public bool IstZuschnitt { get; set; }
         public float ZuschnittLaenge { get; set; }
         public bool IstStangenoptimiert { get; set; }
@@ -80,6 +81,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 FarbItemGuid = FarbItemGuid,
                 OberFlaeche = OberFlaeche,
                 OberFlaecheGuid = OberFlaecheGuid,
+                PulverCode = PulverCode,
                 IstZuschnitt = IstZuschnitt,
                 ZuschnittLaenge = ZuschnittLaenge,
                 ZuschnittWinkel = ZuschnittWinkel,
