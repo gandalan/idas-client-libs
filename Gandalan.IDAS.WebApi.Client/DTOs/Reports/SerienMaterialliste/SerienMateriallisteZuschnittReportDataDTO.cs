@@ -8,6 +8,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Reports.SerienMaterialliste
         public string FarbCode { get; set; }
         public string FarbBezeichnung { get; set; }
         public string FarbZusatzText { get; set; }
+        public string PulverCode { get; set; }
         public decimal Gesamtlaenge { get; set; }
         public decimal PufferLaenge { get; set; }
         public decimal Laenge { get; set; }

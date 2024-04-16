@@ -24,6 +24,7 @@ public interface IGesamtMaterialbedarfItem
     public Guid FarbItemGuid { get; set; }
     public string OberFlaeche { get; set; }
     public Guid OberFlaecheGuid { get; set; }
+    public string PulverCode { get; set; }
     public DateTime Liefertermin { get; set; }
     public bool IstZuschnitt { get; set; }
     public bool IstSonderfarbe { get; set; }

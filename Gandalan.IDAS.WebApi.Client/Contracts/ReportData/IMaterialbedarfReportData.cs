@@ -32,9 +32,9 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.ReportData
         string FarbCode { get; set; }
         string FarbeItem { get; set; }
         Guid FarbItemGuid { get; set; }
-
         string OberflaecheBezeichnung { get; set; }
         Guid OberFlaecheGuid { get; set; }
+        string PulverCode { get; set; }
         bool IstZuschnitt { get; set; }
         float ZuschnittLaenge { get; set; }
         string ZuschnittWinkel { get; set; }
