@@ -20,6 +20,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string FarbKuerzel { get; set; }
         public Guid FarbKuerzelGuid { get; set; }
         public string FarbCode { get; set; }
+        public string PulverCode { get; set; }
         public string FarbeItem { get; set; }
         public Guid FarbItemGuid { get; set; }
         public string OberFlaeche { get; set; }
@@ -47,6 +48,7 @@ namespace Gandalan.IDAS.WebApi.DTO
                 OberFlaeche = OberFlaeche,
                 OberFlaecheGuid = OberFlaecheGuid,
                 IstSonderfarbe = IstSonderfarbe,
+                PulverCode = PulverCode,
                 UngedeckteStueckzahl = UngedeckteStueckzahl,
                 UngedeckteLaufmeter = UngedeckteLaufmeter,
                 Buchungen = Buchungen.Select(x => (GesamtLieferzusageBuchungDTO)x.Clone()).ToList()
