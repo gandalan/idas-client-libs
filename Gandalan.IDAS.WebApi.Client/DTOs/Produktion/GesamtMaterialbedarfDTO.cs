@@ -90,7 +90,8 @@ namespace Gandalan.IDAS.WebApi.DTO
                 GedeckteStueckzahl = GedeckteStueckzahl,
                 GedeckteLaufmeter = GedeckteLaufmeter,
                 IstVE = IstVE,
-                VE_Menge = VE_Menge
+                VE_Menge = VE_Menge,
+                IstStangenoptimiert = IstStangenoptimiert
             };
         }
     }
