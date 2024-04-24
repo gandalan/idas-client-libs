@@ -2,13 +2,14 @@ using System;
 using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.Gesamtbedarf;
+
 public interface IGesamtMaterialbedarfItem
 {
     public Guid GesamtMaterialbedarfGuid { get; set; }
     public string KatalogNummer { get; set; }
     public string ArtikelBezeichnung { get; set; }
     public string SerienName { get; set; }
-    public string Einheit {  get; set; }
+    public string Einheit { get; set; }
     public decimal Stueckzahl { get; set; }
     public decimal UngedeckteStueckzahl { get; }
     public float ZuschnittLaenge { get; set; }
