@@ -10,7 +10,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Wenn Guid.Empty wird Guid vom Server vergeben
         /// </summary>
         public Guid FarbKuerzelGruppeGuid { get; set; }
-        public IList<Guid>Kuerzel { get; set; }
+        public IList<Guid> Kuerzel { get; set; }
         public string Bezeichnung { get; set; }
         public DateTime? GueltigAb { get; set; }
         public DateTime? GueltigBis { get; set; }
