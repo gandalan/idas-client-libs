@@ -28,7 +28,7 @@ namespace Gandalan.Client.Contracts
     }
 
     /// <summary>
-    /// Handles dispatching of application specifc global events
+    /// Handles dispatching of application specific global events
     /// </summary>
     public interface IApplicationEventDispatcher
     {

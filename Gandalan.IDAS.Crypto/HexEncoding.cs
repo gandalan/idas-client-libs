@@ -12,11 +12,9 @@ namespace Gandalan.IDAS.Crypto
         public static int GetByteCount(string hexString)
         {
             var numHexChars = 0;
-            char zeichen;
             // remove all none A-F, 0-9, characters
-            foreach (var t in hexString)
+            foreach (var zeichen in hexString)
             {
-                zeichen = t;
                 if (IsHexDigit(zeichen))
                 {
                     numHexChars++;
@@ -44,11 +42,9 @@ namespace Gandalan.IDAS.Crypto
         {
             discarded = 0;
             var newString = string.Empty;
-            char zeichen;
             // remove all none A-F, 0-9, characters
-            foreach (var t in hexString)
+            foreach (var zeichen in hexString)
             {
-                zeichen = t;
                 if (IsHexDigit(zeichen))
                 {
                     newString += zeichen;
@@ -72,7 +68,7 @@ namespace Gandalan.IDAS.Crypto
             for (var index = 0; index < returnValue.Length; index++)
             {
                 var hex = new string([newString[counter], newString[counter + 1]]);
-                returnValue[index] = HexToByte(hex);
+                returnValue[index] = hexToByte(hex);
                 counter += 2;
             }
 
@@ -138,7 +134,7 @@ namespace Gandalan.IDAS.Crypto
         /// </summary>
         /// <param name="hex">1 or 2 character string</param>
         /// <returns>byte</returns>
-        private static byte HexToByte(string hex)
+        private static byte hexToByte(string hex)
         {
             if (string.IsNullOrEmpty(hex) || hex.Length > 2)
             {

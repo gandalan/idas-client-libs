@@ -42,7 +42,7 @@ namespace System
             {
                 if (!_guidProperties.ContainsKey(t))
                 {
-                    string propertyName = null;
+                    string propertyName;
                     var attrib = t.GetCustomAttribute<SyncableAttribute>(true);
                     if (attrib != null)
                     {
@@ -59,12 +59,7 @@ namespace System
 
                     if (!string.IsNullOrEmpty(propertyName))
                     {
-                        var guidProperty = t.GetProperty(propertyName);
-                        if (guidProperty == null)
-                        {
-                            throw new InvalidOperationException($"Spalte {propertyName} nicht in Typ {t.FullName} enthalten");
-                        }
-
+                        var guidProperty = t.GetProperty(propertyName) ?? throw new InvalidOperationException($"Spalte {propertyName} nicht in Typ {t.FullName} enthalten");
                         if (guidProperty.PropertyType != typeof(Guid))
                         {
                             throw new InvalidOperationException($"Spalte {propertyName} in Typ {t.FullName} ist keine Guid");

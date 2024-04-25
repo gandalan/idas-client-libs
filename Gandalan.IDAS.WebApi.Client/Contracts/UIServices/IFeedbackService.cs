@@ -7,7 +7,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices
     public interface IFeedbackService
     {
         /// <summary>
-        /// i.e. opens a dialog window, takes screenhots, emails them etc.
+        /// i.e. opens a dialog window, takes screenshots, emails them etc.
         /// </summary>
         void CollectUserFeedback();
     }
