@@ -17,13 +17,11 @@ namespace Gandalan.IDAS.Crypto
 
             using (var hash = SHA1.Create())
             {
-                string temp = null;
-
                 var arrayData = Encoding.ASCII.GetBytes(text);
                 var arrayResult = hash.ComputeHash(arrayData);
                 foreach (var t in arrayResult)
                 {
-                    temp = Convert.ToString(t, 16);
+                    var temp = Convert.ToString(t, 16);
                     if (temp.Length == 1)
                     {
                         temp = "0" + temp;

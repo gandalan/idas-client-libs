@@ -17,7 +17,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public int FachNr { get; set; }
 
         /// <summary>
-        /// GUIDs der ProduktGrupptenDTOs, die im Ablagefach abgelegt werden können
+        /// GUIDs der ProduktGruppenDTOs, die im Ablagefach abgelegt werden können
         /// </summary>
         public IList<Guid> ProduktGruppenGuids { get; set; } = [];
 
