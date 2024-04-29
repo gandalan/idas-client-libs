@@ -17,6 +17,7 @@ namespace Gandalan.IDAS.WebApi.Client.Printing
         public string Breite { get; set; }
         public string Hoehe { get; set; }
         public string Farbe { get; set; }
+        public string PulverCode { get; set; }
         public string Gewebe { get; set; }
         public string Text { get; set; }
         public string SonderwuenscheText { get; set; }

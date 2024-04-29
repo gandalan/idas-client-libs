@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Gandalan.IDAS.WebApi.Client.Constants;
 using Gandalan.IDAS.WebApi.Client.DTOs.Allgemein;
 
 namespace Gandalan.IDAS.WebApi.DTO
@@ -307,6 +308,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string MengenEinheit { get; set; }
         public string Text { get; set; }
         public string AngebotsText { get; set; }
+        public string PulverCode { get; set; }
         public string SonderwunschText { get; set; }
         public string SonderwunschAngebotsText { get; set; }
         public string ProduktionZusatzInfo { get; set; }
@@ -355,6 +357,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
                 Text = einbauort + position.Text;
                 AngebotsText = einbauort + position.AngebotsText;
+                PulverCode = position.Daten.FirstOrDefault(d => d.KonfigName.Equals($"Konfig.{PosDataKonfigKeys.PulverCode}"))?.Wert;
                 SonderwunschText = position.SonderwunschText;
                 SonderwunschAngebotsText = position.SonderwunschAngebotsText;
                 ProduktionZusatzInfo = position.ProduktionZusatzInfo;

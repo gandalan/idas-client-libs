@@ -17,6 +17,7 @@ namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
         decimal Gesamtpreis { get; set; }
         string Text { get; set; }
         string AnzeigeText { get; set; }
+        string PulverCode { get; set; }
         string Serie { get; set; }
         DateTime StatusDatum { get; set; }
         bool IsDeleted { get; set; }

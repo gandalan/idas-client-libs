@@ -20,7 +20,7 @@ public static class FarbExtensions
         // Sonderfarben / Trendfarben ("SF" + FarbZusatzText)
         else if (farbText.StartsWith("SF"))
         {
-            farbText = GetProduktionsFarbText(farbText, material.FarbZusatzText, material.FarbeItem, material.FarbCode, material.FarbBezeichnung, material.OberflaecheBezeichnung, material.IstBeschichtbar);
+            farbText = getProduktionsFarbText(farbText, material.FarbZusatzText, material.FarbeItem, material.FarbCode, material.FarbBezeichnung, material.OberflaecheBezeichnung, material.IstBeschichtbar);
         }
 
         if (!string.IsNullOrWhiteSpace(material.PulverCode))
@@ -31,7 +31,7 @@ public static class FarbExtensions
         return farbText;
     }
 
-    private static string GetProduktionsFarbText(string farbKuerzel, string farbZusatzText, string farbItem, string farbCode, string farbBezeichnung, string oberflaecheBezeichnung, bool longText)
+    private static string getProduktionsFarbText(string farbKuerzel, string farbZusatzText, string farbItem, string farbCode, string farbBezeichnung, string oberflaecheBezeichnung, bool longText)
     {
         var sb = new StringBuilder();
         if (!string.IsNullOrEmpty(farbKuerzel))
