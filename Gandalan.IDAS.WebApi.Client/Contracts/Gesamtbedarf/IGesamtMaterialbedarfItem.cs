@@ -29,6 +29,7 @@ public interface IGesamtMaterialbedarfItem
     public DateTime Liefertermin { get; set; }
     public bool IstZuschnitt { get; set; }
     public bool IstSonderfarbe { get; set; }
+    public bool IstVE {  get; set; }
 
     GesamtMaterialbedarfDTO ToDTO();
 }

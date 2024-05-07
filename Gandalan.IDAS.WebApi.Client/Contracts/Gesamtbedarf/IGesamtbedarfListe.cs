@@ -10,9 +10,8 @@ public interface IGesamtbedarfListe
 {
     ObservableCollection<IGesamtMaterialbedarfItem> Bedarfe { get; set; }
     ObservableCollection<IGesamtMaterialbedarfItem> Fehlliste { get; set; }
-
-    Task Zusammenfassen(List<GesamtMaterialbedarfDTO> dtos, ZusammenfassungsOptionen optionen,
-            bool stangenoptimierung);
+    ZusammenfassungsOptionen Optionen { get; set; }
+    Task LoadItems();
 }
 
 public static class GesamtMaterialbedarfItemViewModelListExtensions

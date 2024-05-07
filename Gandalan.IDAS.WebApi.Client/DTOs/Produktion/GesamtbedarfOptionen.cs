@@ -1,16 +1,17 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO.Gesamtbedarf
 {
     [Flags]
     public enum ZusammenfassungsOptionen
     {
-        Keine = 0,
+        Unbekannt = 0,
         Lieferdatum = 1,
         Serienzuordnung = 2,
         ArtikelnummerFrabeOberflaeche = 4,
         Vorgang = 8,
-        FarbeOberflaeche = 16
+        FarbeOberflaeche = 16,
+        Keine = 32
     }
 
     [Flags]

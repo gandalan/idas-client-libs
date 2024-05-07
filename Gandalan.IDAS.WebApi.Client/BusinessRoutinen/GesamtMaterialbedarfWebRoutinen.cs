@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
@@ -13,14 +12,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
         }
 
-        public async Task<GesamtMaterialbedarfGetReturn> GetAsync(DateTime? stichTag = null, DateTime? bedarfAb = null)
-            => await GetAsync<GesamtMaterialbedarfGetReturn>($"GesamtMaterialbedarf?stichTag={stichTag?.ToString("o")}&bedarfAb={bedarfAb?.ToString("O")}");
-
-        public async Task DeleteAsync(Guid guid)
-            => await DeleteAsync($"GesamtMaterialbedarf/{guid}");
-
-        public async Task ZusammenfassenAsync(List<GesamtMaterialbedarfDTO> dtos, ZusammenfassungsOptionen optionen, bool stangenoptimierung)
-            => await PostAsync($"GesamtMaterialbedarf/Zusammenfassen?optionen={optionen}&stangenoptimierung={stangenoptimierung}", dtos);
+        public async Task<GesamtMaterialbedarfGetReturn> GetAsync(ZusammenfassungsOptionen optionen,bool stangenoptimierung, DateTime? stichTag = null, DateTime? bedarfAb = null)
+            => await GetAsync<GesamtMaterialbedarfGetReturn>($"GesamtMaterialbedarf?optionen={optionen}&stangenoptimierung={stangenoptimierung}&stichTag={stichTag?.ToString("o")}&bedarfAb={bedarfAb?.ToString("O")}");
 
         public async Task WebJobAsync()
             => await PostAsync("GesamtMaterialbedarf/WebJob", null);
