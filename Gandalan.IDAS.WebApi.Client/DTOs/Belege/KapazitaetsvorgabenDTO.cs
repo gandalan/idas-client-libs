@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -347,20 +349,25 @@ namespace Gandalan.IDAS.WebApi.DTO
                     Zeitvorgabe = 2,
                     Order = Count
                 });
-                Add(new Kapazitaetsvorgabe
-                {
-                    GroupName = "Sonstiges",
-                    Label = "Mehraufwand durch Sonderfarbe",
-                    Etikettentext = ["Kunst.Farbe:"],
-                    Zeitvorgabe = 5,
-                    Order = Count
-                });
             }
 
             if (Version < 3)
             {
                 Version = 3;
                 Add(new Kapazitaetsvorgabe { GroupName = "Drehtüren DT6", Label = "2 flg. ohne Montagerahmen", Produktgruppe = ["DT6/11"], IstBasisregel = true, Order = Count });
+            }
+
+            if (Version < 4)
+            {
+                Version = 4;
+                Add(new Kapazitaetsvorgabe
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Mehraufwand durch Sonderfarbe",
+                    FarbArt = KapaFarbArt.Sonderfarbe,
+                    Zeitvorgabe = 5,
+                    Order = Count
+                });
             }
         }
     }
@@ -374,9 +381,23 @@ namespace Gandalan.IDAS.WebApi.DTO
         public List<string> Artikelliste { get; set; } = [];
         public List<string> Bearbeitungen { get; set; } = [];
         public List<string> Etikettentext { get; set; } = [];
+        [JsonConverter(typeof(StringEnumConverter))]
+        public KapaFarbArt FarbArt { get; set; } = KapaFarbArt.Alle;
         public decimal Zeitvorgabe { get; set; }
         public decimal Gewicht { get; set; }
         public bool IstBasisregel { get; set; }
         public int Order { get; set; }
+    }
+
+    /// <summary>
+    /// Definiert die Art der Farbe für die eine Kapazitätsvorgabe gilt.
+    /// Standardmäßig wird die Kapazitätsvorgabe für alle Farben verwendet.
+    /// </summary>
+    public enum KapaFarbArt
+    {
+        Alle,
+        Standardfarbe,
+        Sonderfarbe,
+        Trendfarbe,
     }
 }
