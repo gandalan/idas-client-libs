@@ -17,6 +17,7 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Belege
         ReklamationsBestellschein = 10,
         Gutschrift = 11,
         Storno = 12,
+        FremdfertigungsAuftrag = 13,
     }
 
     public struct BelegWorkflow
