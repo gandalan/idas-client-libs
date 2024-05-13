@@ -74,6 +74,9 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal? VE_Menge { get; set; }
         public Guid? FrontendLogikGuid { get; set; }
 
+        public bool IstFremdfertigung { get; set; }
+        public Guid? FremdfertigungMandantGuid { get; set; }
+
         public decimal? Arbeitsminuten { get; set; }
         public decimal? Elementgewicht { get; set; }
 
