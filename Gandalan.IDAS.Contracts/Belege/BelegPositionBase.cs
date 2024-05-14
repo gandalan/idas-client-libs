@@ -39,5 +39,6 @@ namespace Gandalan.IDAS.Contracts.Belege
 
         public virtual bool IstFremdfertigung { get; set; }
         public virtual Guid? FremdfertigungMandantGuid { get; set; }
+        public virtual bool PreisAufAnfrage {  get; set; }
     }
 }

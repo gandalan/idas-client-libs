@@ -79,6 +79,7 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public decimal? Arbeitsminuten { get; set; }
         public decimal? Elementgewicht { get; set; }
+        public bool PreisAufAnfrage { get; set; }
 
         public BelegPositionDTO()
         {
