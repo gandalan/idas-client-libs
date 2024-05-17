@@ -11,6 +11,6 @@ namespace Gandalan.Client.Contracts.DataServices
         Task<ProduktFamilieDTO> GetProduktFamilie(Guid produktFamilieGuid);
         Task<WerteListeDTO> GetWerteListe(string name, Guid varianteGuid, DateTime erstellDatum);
         Task<KatalogArtikelDTO> GetArtikel(string artikelNummer);
-        Task<WerteListeDTO> GetArtikelFarbWerteListe(KatalogArtikelDTO artikel, bool includeNeutral = false, bool onlyStandardFarben = false);
+        Task<WerteListeDTO> GetArtikelFarbWerteListe(KatalogArtikelDTO artikel, bool includeNeutral = false, bool onlyStandardFarben = false, bool includeRoh = false);
     }
 }
