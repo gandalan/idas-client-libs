@@ -1,8 +1,8 @@
-using Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
-using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.DataServices
 {

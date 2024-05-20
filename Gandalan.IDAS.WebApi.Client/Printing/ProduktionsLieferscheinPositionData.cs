@@ -17,6 +17,7 @@ namespace Gandalan.IDAS.WebApi.Client.Printing
         public string Breite { get; set; }
         public string Hoehe { get; set; }
         public string Farbe { get; set; }
+        public string PulverCode { get; set; }
         public string Gewebe { get; set; }
         public string Text { get; set; }
         public string SonderwuenscheText { get; set; }
@@ -27,7 +28,7 @@ namespace Gandalan.IDAS.WebApi.Client.Printing
             get { return string.Join(", ", AblagefachList.Distinct().OrderBy(x => x)); }
         }
 
-        public List<string> AblagefachList { get; set; } = new List<string>();
+        public List<string> AblagefachList { get; set; } = [];
         public string Besonderheiten { get; set; }
         public Guid BelegPositionGuid { get; set; }
         public bool IstMontiert { get; set; }

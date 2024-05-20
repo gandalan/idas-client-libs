@@ -12,20 +12,26 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
 {
     public static class WebApiConfigurations
     {
-        private static readonly string[] _environments = new[] { "dev", "staging", "produktiv" };
+        private static readonly string[] _environments = ["dev", "staging", "produktiv"];
         private static string _settingsPath;
         private static Dictionary<string, IWebApiConfig> _settings;
         private static string _appTokenString;
         private static bool _isInitialized;
 
+        [Obsolete("Call InitializeAsync")]
         public static async Task Initialize(Guid appToken)
+        {
+            await InitializeAsync(appToken);
+        }
+
+        public static async Task InitializeAsync(Guid appToken)
         {
             _settings = new Dictionary<string, IWebApiConfig>(StringComparer.OrdinalIgnoreCase);
             _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
             _appTokenString = appToken.ToString().Trim('{', '}');
 
-            await SetupEnvironments(appToken);
-            SetupLocalEnvironment(appToken);
+            await setupEnvironmentsAsync(appToken);
+            setupLocalEnvironment(appToken);
 
             _isInitialized = true;
         }
@@ -34,7 +40,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         {
             if (!_isInitialized)
             {
-                throw new InvalidOperationException("WebApiConfigurations not initialized - call Initialize() first");
+                throw new InvalidOperationException("WebApiConfigurations not initialized - call WebApiConfigurations.InitializeAsync() first");
             }
 
             if (_settings.TryGetValue(name, out var byName))
@@ -49,10 +55,10 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         {
             if (!_isInitialized)
             {
-                throw new InvalidOperationException("WebApiConfigurations not initialized - call Initialize() first");
+                throw new InvalidOperationException("WebApiConfigurations not initialized - call WebApiConfigurations.InitializeAsync() first");
             }
 
-            return new List<IWebApiConfig>(_settings.Values);
+            return [.. _settings.Values];
         }
 
         public static void Save(IWebApiConfig settings)
@@ -85,7 +91,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             }
         }
 
-        private static void SetupLocalEnvironment(Guid appToken)
+        private static void setupLocalEnvironment(Guid appToken)
         {
             var localEnvPath = Path.Combine(_settingsPath, "Local");
             if (Directory.Exists(localEnvPath))
@@ -102,7 +108,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                             localEnvironment.FriendlyName = friendlyName;
                             localEnvironment.AppToken = appToken;
                             _settings.Add(friendlyName, localEnvironment);
-                            InternalLoadSavedAuthToken(friendlyName, localEnvironment);
+                            internalLoadSavedAuthToken(friendlyName, localEnvironment);
                         }
                     }
                     catch (Exception ex)
@@ -113,12 +119,12 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             }
         }
 
-        private static async Task SetupEnvironments(Guid appToken)
+        private static async Task setupEnvironmentsAsync(Guid appToken)
         {
             var hub = new ConnectHub();
             foreach (var env in _environments)
             {
-                var response = await hub.GetEndpoints("2.1", env, "win");
+                var response = await hub.GetEndpointsAsync("2.1", env, "win");
                 IWebApiConfig environment = null;
                 if (response != null)
                 {
@@ -135,7 +141,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
                         FriendlyName = env,
                         AppToken = appToken
                     };
-                    InternalLoadSavedAuthToken(env, environment);
+                    internalLoadSavedAuthToken(env, environment);
                 }
 
                 if (environment != null)
@@ -145,9 +151,9 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             }
         }
 
-        private static void InternalLoadSavedAuthToken(string env, IWebApiConfig environment)
+        private static void internalLoadSavedAuthToken(string env, IWebApiConfig environment)
         {
-            var savedAuthToken = InternalLoadSavedAuthToken(env);
+            var savedAuthToken = internalLoadSavedAuthToken(env);
             if (savedAuthToken != null)
             {
                 environment.AuthToken = new UserAuthTokenDTO
@@ -159,7 +165,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             }
         }
 
-        private static SavedAuthToken InternalLoadSavedAuthToken(string env)
+        private static SavedAuthToken internalLoadSavedAuthToken(string env)
         {
             var configFile = Path.Combine(_settingsPath, env, "AuthToken_" + _appTokenString + ".json");
             if (File.Exists(configFile))

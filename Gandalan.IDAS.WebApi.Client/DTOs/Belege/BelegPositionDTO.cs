@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Gandalan.IDAS.WebApi.Client.DTOs.Allgemein;
 using Gandalan.IDAS.WebApi.Data.DTO;
 using Gandalan.IDAS.WebApi.Util;
@@ -75,14 +74,18 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal? VE_Menge { get; set; }
         public Guid? FrontendLogikGuid { get; set; }
 
+        public bool IstFremdfertigung { get; set; }
+        public Guid? FremdfertigungMandantGuid { get; set; }
+
         public decimal? Arbeitsminuten { get; set; }
         public decimal? Elementgewicht { get; set; }
+        public bool PreisAufAnfrage { get; set; }
 
         public BelegPositionDTO()
         {
-            Daten = new ObservableCollection<BelegPositionDatenDTO>();
-            Historie = new ObservableCollection<BelegPositionHistorieDTO>();
-            Zusatztexte = new ObservableCollection<ZusatztextDTO>();
+            Daten = [];
+            Historie = [];
+            Zusatztexte = [];
         }
 
         public BelegPositionDTO Clone()

@@ -17,8 +17,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
                 return;
             }
 
-            var uri = new UriBuilder(settings.NotifyUrl);
-            uri.Path = "/api/";
+            var uri = new UriBuilder(settings.NotifyUrl)
+            {
+                Path = "/api/",
+            };
             Settings.Url = uri.Uri.ToString(); // use Uri member!! to be identical to createWebClient later on - otherwise includes port etc
             _validConfig = true;
         }
@@ -27,7 +29,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
         {
             if (!_validConfig)
             {
-                return new List<NachrichtenDTO>();
+                return [];
             }
 
             var mandant = Settings.AuthToken.Mandant.MandantGuid;

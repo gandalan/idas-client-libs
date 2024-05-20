@@ -12,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
             ValueChanged += CircularProgressBar_ValueChanged;
         }
 
-        private void CircularProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private static void CircularProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             var bar = sender as CircularProgressBar;
             var currentAngle = bar.Angle;
@@ -24,8 +24,8 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
 
         public double Angle
         {
-            get { return (double)GetValue(AngleProperty); }
-            set { SetValue(AngleProperty, value); }
+            get => (double)GetValue(AngleProperty);
+            set => SetValue(AngleProperty, value);
         }
 
         /// <summary>
@@ -36,8 +36,8 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
 
         public double StrokeThickness
         {
-            get { return (double)GetValue(StrokeThicknessProperty); }
-            set { SetValue(StrokeThicknessProperty, value); }
+            get => (double)GetValue(StrokeThicknessProperty);
+            set => SetValue(StrokeThicknessProperty, value);
         }
 
         /// <summary>

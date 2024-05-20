@@ -23,7 +23,7 @@ namespace Gandalan.Client.Contracts.AppServices
         string VersionDir { get; }
 
         /// <summary>
-        /// Wether or not there are updates available. Should return
+        /// Whether or not there are updates available. Should return
         /// as quick as possible and not display progress
         /// </summary>
         /// <returns>status bool</returns>

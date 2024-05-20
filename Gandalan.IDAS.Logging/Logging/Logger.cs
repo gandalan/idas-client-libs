@@ -13,7 +13,7 @@ namespace Gandalan.IDAS.Logging
     public class Logger : ILogger
     {
         private static Logger _logger;
-        private readonly object _lock = new object();
+        private readonly object _lock = new();
         private TextWriterTraceListener _traceListener;
 
         public Dictionary<LogContext, LogLevel> LogLevels { get; set; }
@@ -24,7 +24,7 @@ namespace Gandalan.IDAS.Logging
 
         public Logger()
         {
-            LogLevels = new Dictionary<LogContext, LogLevel>();
+            LogLevels = [];
             SetLogDateiPfad();
         }
 
@@ -43,7 +43,11 @@ namespace Gandalan.IDAS.Logging
                     Directory.CreateDirectory(LogDateiPfad);
                 }
 
-                _traceListener = new TextWriterTraceListener(LogDateiName);
+                lock (_lock)
+                {
+                    _traceListener = new TextWriterTraceListener(LogDateiName);
+                }
+
                 LogConsoleDebug($"Logfile: {LogDateiName}");
             }
             catch (Exception ex)
@@ -54,7 +58,7 @@ namespace Gandalan.IDAS.Logging
 
         public static Logger GetInstance()
         {
-            return _logger ?? (_logger = new Logger());
+            return _logger ??= new Logger();
         }
 
         public void Log(string message, LogLevel level = LogLevel.Diagnose, LogContext context = LogContext.Allgemein, [CallerMemberName] string sender = null)
@@ -67,11 +71,11 @@ namespace Gandalan.IDAS.Logging
 
             // Log-Eintrag formatieren
             const string timeFormat = "HH:mm:ss";
-            var log = $"{context.ToString().PadRight(15)} {level.ToString().PadRight(8)} {DateTime.Now.ToString(timeFormat)} ";
+            var log = $"{context,-15} {level,-8} {DateTime.Now.ToString(timeFormat)} ";
             if (sender != null)
             {
 #if DEBUG
-                log += $"{sender.PadRight(16)} ";
+                log += $"{sender,-16} ";
 #else
                 log += $"{sender.PadRight(16).Substring(0, 15)} ";
 #endif

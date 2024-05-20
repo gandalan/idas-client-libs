@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
 
@@ -53,26 +54,46 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
         public string HelpCenterUrl { get; set; }
         public string WebhookServiceUrl { get; set; }
 
+        /// <remarks>
+        /// Remember to call <see cref="WebApiConfigurations.InitializeAsync"/> before.
+        /// </remarks>
+        [Obsolete("Call InitializeAsync")]
         public virtual async Task Initialize(Guid appToken, string env)
         {
-            if (appToken.Equals(Guid.Empty))
-            {
-                throw new ArgumentException("WebApiSettings: AppToken must not be Guid.Empty");
-            }
+            await InitializeAsync(appToken, env);
+        }
 
-            if (string.IsNullOrEmpty(env))
+        /// <remarks>
+        /// Remember to call <see cref="WebApiConfigurations.InitializeAsync"/> before.
+        /// </remarks>
+        public virtual async Task InitializeAsync(Guid appToken, string env)
+        {
+            try
             {
-                throw new ArgumentNullException("WebApiSettings: Environment must not be null or empty");
-            }
+                if (appToken.Equals(Guid.Empty))
+                {
+                    throw new ArgumentException("WebApiSettings: AppToken must not be Guid.Empty", nameof(appToken));
+                }
 
-            //await WebApiConfigurations.Initialize(appToken);
-            var settings = WebApiConfigurations.ByName(env);
-            if (settings != null)
+                if (string.IsNullOrEmpty(env))
+                {
+                    throw new ArgumentNullException(nameof(env), "WebApiSettings: Environment must not be null or empty");
+                }
+
+                var settings = WebApiConfigurations.ByName(env);
+                if (settings != null)
+                {
+                    CopyToThis(settings);
+                }
+
+                await Task.CompletedTask;
+            }
+            catch (Exception e)
             {
-                CopyToThis(settings);
+                // Non awaitable callers will not see exception thrown here, but we will always have logged exception
+                L.Fehler(e, $"Exception in InitializeAsync. Env: '{env}'");
+                throw;
             }
-
-            await Task.CompletedTask;
         }
 
         public virtual void CopyToThis(IWebApiConfig settings)

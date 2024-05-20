@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
 {
@@ -8,7 +8,7 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
     {
         public CreateSammelrechnungDTO()
         {
-            BelegGuids = new List<Guid>();
+            BelegGuids = [];
         }
 
         public IList<Guid> BelegGuids { get; set; }

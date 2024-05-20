@@ -33,10 +33,9 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.Vorgaenge
 
         public void Execute(object parameter)
         {
-            var vorgang = parameter as VorgangDTO;
-            if (parameter == null)
+            if (parameter is not VorgangDTO vorgang)
             {
-                throw new ArgumentNullException("Parameter muss ein VorgangDTO sein");
+                throw new ArgumentException("Parameter muss ein VorgangDTO sein", nameof(parameter));
             }
 
             Execute(vorgang);

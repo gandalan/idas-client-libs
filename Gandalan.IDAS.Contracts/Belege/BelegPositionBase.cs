@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.Contracts.Belege
 {
@@ -36,5 +36,9 @@ namespace Gandalan.IDAS.Contracts.Belege
         public DateTime? ProduktionsDatum { get; set; }
         public DateTime? LieferDatum { get; set; }
         public DateTime? ProduktionsAuftragErstellt { get; set; }
+
+        public virtual bool IstFremdfertigung { get; set; }
+        public virtual Guid? FremdfertigungMandantGuid { get; set; }
+        public virtual bool PreisAufAnfrage {  get; set; }
     }
 }

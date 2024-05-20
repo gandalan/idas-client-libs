@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
-using Newtonsoft.Json;
 using System;
+using Gandalan.IDAS.WebApi.DTO;
+using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Data.DTOs.Produktion
 {

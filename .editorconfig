@@ -346,3 +346,19 @@ dotnet_diagnostic.IDE2000.severity = warning
 
 # CS0067: The event 'Datensaetze.PropertyChanged' is never used
 dotnet_diagnostic.CS0067.severity = silent
+
+# public methods should be PascalCase
+dotnet_naming_rule.camel_case_for_public_methods.severity = suggestion
+dotnet_naming_rule.camel_case_for_public_methods.symbols  = public_methods
+dotnet_naming_rule.camel_case_for_public_methods.style    = pascal_case_style
+dotnet_naming_symbols.public_methods.applicable_kinds = method
+dotnet_naming_symbols.public_methods.applicable_accessibilities = public
+dotnet_naming_style.camel_case_style.capitalization = pascal_case
+
+# private methods should be camelCase
+dotnet_naming_rule.camel_case_for_private_methods.severity = suggestion
+dotnet_naming_rule.camel_case_for_private_methods.symbols  = private_methods
+dotnet_naming_rule.camel_case_for_private_methods.style    = camel_case_style
+dotnet_naming_symbols.private_methods.applicable_kinds = method
+dotnet_naming_symbols.private_methods.applicable_accessibilities = private
+dotnet_naming_style.camel_case_style.capitalization = camel_case

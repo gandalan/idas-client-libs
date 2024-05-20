@@ -20,7 +20,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(DateTime changedSince)
         {
-            return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("o")}");
+            return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince:o}");
         }
 
         public async Task<BelegPositionAVDTO[]> GetSerieBelegPositionenAVAsync(Guid serieGuid, bool includeOriginalBeleg = true, bool includeProdDaten = true)
@@ -71,7 +71,7 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
 
         public async Task<BelegPositionAVDTO[]> GetAllBelegPositionenAVAsync(DateTime changedSince, bool includeOriginalBeleg = true, bool includeProdDaten = true)
         {
-            return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince.ToString("o")}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
+            return await GetAsync<BelegPositionAVDTO[]>($"BelegPositionenAV/?changedSince={changedSince:o}&includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
         }
 
         public async Task<BelegPositionAVDTO> GetBelegPositionAVByIdAsync(Guid avGuid)

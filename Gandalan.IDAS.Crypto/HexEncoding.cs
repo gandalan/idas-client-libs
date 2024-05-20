@@ -12,11 +12,9 @@ namespace Gandalan.IDAS.Crypto
         public static int GetByteCount(string hexString)
         {
             var numHexChars = 0;
-            char zeichen;
             // remove all none A-F, 0-9, characters
-            foreach (var t in hexString)
+            foreach (var zeichen in hexString)
             {
-                zeichen = t;
                 if (IsHexDigit(zeichen))
                 {
                     numHexChars++;
@@ -44,11 +42,9 @@ namespace Gandalan.IDAS.Crypto
         {
             discarded = 0;
             var newString = string.Empty;
-            char zeichen;
             // remove all none A-F, 0-9, characters
-            foreach (var t in hexString)
+            foreach (var zeichen in hexString)
             {
-                zeichen = t;
                 if (IsHexDigit(zeichen))
                 {
                     newString += zeichen;
@@ -71,8 +67,8 @@ namespace Gandalan.IDAS.Crypto
             var counter = 0;
             for (var index = 0; index < returnValue.Length; index++)
             {
-                var hex = new string(new char[] { newString[counter], newString[counter + 1] });
-                returnValue[index] = HexToByte(hex);
+                var hex = new string([newString[counter], newString[counter + 1]]);
+                returnValue[index] = hexToByte(hex);
                 counter += 2;
             }
 
@@ -138,11 +134,11 @@ namespace Gandalan.IDAS.Crypto
         /// </summary>
         /// <param name="hex">1 or 2 character string</param>
         /// <returns>byte</returns>
-        private static byte HexToByte(string hex)
+        private static byte hexToByte(string hex)
         {
             if (string.IsNullOrEmpty(hex) || hex.Length > 2)
             {
-                throw new ArgumentException("hex must be 1 or 2 characters in length");
+                throw new ArgumentException("hex must be 1 or 2 characters in length", nameof(hex));
             }
 
             return byte.Parse(hex, NumberStyles.HexNumber);

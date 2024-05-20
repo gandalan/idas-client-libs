@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
-using Newtonsoft.Json;
 using System;
+using Gandalan.IDAS.WebApi.DTO;
+using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.Client.Contracts.Contracts
 {
@@ -24,22 +24,27 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts
         string UserAgent { get; set; }
         [JsonIgnore]
         bool UseCompression { get; set; }
+
         /// <summary>
         /// CMSUrl für Dokumente
         /// </summary>
         string DocUrl { get; set; }
+
         /// <summary>
         /// CMS für Variantenspez
         /// </summary>
         string CMSUrl { get; set; }
+
         /// <summary>
         /// Package Store
         /// </summary>
         string StoreUrl { get; set; }
+
         /// <summary>
         /// Feedback-Tool
         /// </summary>
         string FeedbackUrl { get; set; }
+
         string NotifyUrl { get; set; }
         string HelpCenterUrl { get; set; }
         string WebhookServiceUrl { get; set; }

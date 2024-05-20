@@ -31,6 +31,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string FarbZusatzText { get; set; }
         public string OberflaecheBezeichnung { get; set; }
         public Guid OberflaecheGuid { get; set; }
+        public string PulverCode { get; set; }
         public bool IstSonderFarbPosition { get; set; }
         public string Gewebe { get; set; }
 

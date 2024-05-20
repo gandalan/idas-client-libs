@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.Data.DTOs.Belege
 {
@@ -17,12 +17,13 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Belege
         ReklamationsBestellschein = 10,
         Gutschrift = 11,
         Storno = 12,
+        FremdfertigungsAuftrag = 13,
     }
 
     public struct BelegWorkflow
     {
-        public static BelegArt[] Steps = new[]
-        {
+        public static BelegArt[] Steps =
+        [
             BelegArt.Angebot,
             BelegArt.Bestellschein,
             BelegArt.AB,
@@ -32,7 +33,7 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Belege
             BelegArt.Lieferschein,
             BelegArt.ReklamationsBestellschein,
             BelegArt.Rechnung,
-        };
+        ];
 
         /// <summary>
         /// Prüft, ob neueBelegArt logisch hinter belegArt liegt

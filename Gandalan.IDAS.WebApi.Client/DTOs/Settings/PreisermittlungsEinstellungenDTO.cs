@@ -18,6 +18,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Dictionary<Guid, decimal> AufpreisfaktorAnpassungen { get; set; }
         public Dictionary<Guid, bool> GrenzfreigabeAnpassungen { get; set; }
         public decimal MbAufpreis { get; set; }
+        public decimal? Mb_v_Fix_Aufpreis { get; set; }
+        public decimal? Mb_Klebeband_Aufpreis { get; set; }
         public DateTime ChangedDate { get; set; }
 
         public void Accept(IVisitor visitor)

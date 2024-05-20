@@ -22,23 +22,26 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Controls
         [Description("Text für den Header"), Category("LargeHeaderControl")]
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
         }
+
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(LargeHeaderControl), new UIPropertyMetadata(""));
 
         [Description("Bild für den Button"), Category("LargeHeaderControl")]
+        //[OnChangedMethod(nameof(OnImageSourceChanged))]
         public Uri ImageSource
         {
-            get { return (Uri)GetValue(ImageProperty); }
-            set { SetValue(ImageProperty, value); }
+            get => (Uri)GetValue(ImageProperty);
+            set => SetValue(ImageProperty, value);
         }
-        public static readonly DependencyProperty ImageProperty = DependencyProperty.Register("ImageSource", typeof(Uri), typeof(LargeHeaderControl), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnImageSourceChanged)));
+
+        public static readonly DependencyProperty ImageProperty = DependencyProperty.Register("ImageSource", typeof(Uri), typeof(LargeHeaderControl), new FrameworkPropertyMetadata(OnImageSourceChanged));
 
         public event RoutedEventHandler Click;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Visibility ButtonVisible { get { return Click != null ? Visibility.Visible : Visibility.Hidden; } }
+        public Visibility ButtonVisible => Click != null ? Visibility.Visible : Visibility.Hidden;
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

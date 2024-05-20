@@ -1,44 +1,49 @@
-using Gandalan.IDAS.WebApi.Util;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using Gandalan.IDAS.WebApi.Util;
+using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
-
     public class VorgangDTO : IDTOWithApplicationSpecificProperties, INotifyPropertyChanged
     {
         /// <summary>
         /// Eindeutige GUID
         /// </summary>
         public Guid VorgangGuid { get; set; }
+
         /// <summary>
         /// Sichtbare Vorgangsnummer/zur Info für Kunden usw.
         /// </summary>
         public long VorgangsNummer { get; set; }
+
         /// <summary>
         /// Kundennummer (aus Kontakt-Objekt)
         /// </summary>
         public string KundenNummer { get; set; }
+
         /// <summary>
         /// End- oder Firmenkunde (aus Kontakt-Objekt)
         /// </summary>
         public bool IstEndkunde { get; set; }
+
         /// <summary>
         /// Standard-Kommission des Vorgangs
         /// </summary>
         public string Kommission { get; set; }
+
         /// <summary>
         /// Kommission2 des Vorgangs
         /// </summary>
         public string Kommission2 { get; set; }
+
         /// <summary>
         /// Erstelldatum des Vorgangs
         /// </summary>
         public DateTime ErstellDatum { get; set; }
+
         /// <summary>
         /// Letztes Änderungsdatum des Vorgangs
         /// </summary>
@@ -48,6 +53,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Liste und Daten der Belege zu diesem Vorgang
         /// </summary>
         public virtual IList<BelegDTO> Belege { get; set; }
+
         /// <summary>
         /// Liste und Daten der Postionen in diesem Vorgang
         /// </summary>
@@ -65,6 +71,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Kontakt für diese Vorgang (Dummy-Kontakt, falls noch nicht erfasst)
         /// </summary>
         public virtual KontaktDTO Kunde { get; set; }
+
         public Guid KundeGuid { get; set; }
 
         public string AktuellerStatus { get; set; }
@@ -73,6 +80,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         /// Gültige Werte: "NichtFreigegeben", "Freigegeben", "Abgerechnet"
         /// </summary>
         public string FakturaKennzeichen { get; set; }
+
         public string TextStatus { get; set; }
         public bool IstTestbeleg { get; set; }
         public string WaehrungsSymbol { get; set; }
@@ -91,10 +99,10 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public VorgangDTO()
         {
-            Belege = new ObservableCollection<BelegDTO>();
-            Positionen = new ObservableCollection<BelegPositionDTO>();
-            Nachrichten = new ObservableCollection<Guid>();
-            Historie = new ObservableCollection<VorgangHistorieDTO>();
+            Belege = [];
+            Positionen = [];
+            Nachrichten = [];
+            Historie = [];
             ErstellDatum = DateTime.UtcNow;
         }
 

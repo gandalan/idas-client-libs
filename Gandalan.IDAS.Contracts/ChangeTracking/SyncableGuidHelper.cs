@@ -6,7 +6,7 @@ namespace System
 {
     public static class SyncableGuidHelper
     {
-        private static readonly Dictionary<Type, PropertyInfo> _guidProperties = new Dictionary<Type, PropertyInfo>();
+        private static readonly Dictionary<Type, PropertyInfo> _guidProperties = [];
 
         public static Guid GetGuid(this object o)
         {
@@ -42,7 +42,7 @@ namespace System
             {
                 if (!_guidProperties.ContainsKey(t))
                 {
-                    string propertyName = null;
+                    string propertyName;
                     var attrib = t.GetCustomAttribute<SyncableAttribute>(true);
                     if (attrib != null)
                     {
@@ -59,12 +59,7 @@ namespace System
 
                     if (!string.IsNullOrEmpty(propertyName))
                     {
-                        var guidProperty = t.GetProperty(propertyName);
-                        if (guidProperty == null)
-                        {
-                            throw new InvalidOperationException($"Spalte {propertyName} nicht in Typ {t.FullName} enthalten");
-                        }
-
+                        var guidProperty = t.GetProperty(propertyName) ?? throw new InvalidOperationException($"Spalte {propertyName} nicht in Typ {t.FullName} enthalten");
                         if (guidProperty.PropertyType != typeof(Guid))
                         {
                             throw new InvalidOperationException($"Spalte {propertyName} in Typ {t.FullName} ist keine Guid");
@@ -79,7 +74,10 @@ namespace System
                 }
             }
 
-            return _guidProperties[t];
+            lock (_guidProperties)
+            {
+                return _guidProperties[t];
+            }
         }
 
         public static PropertyInfo TryGetGuidProperty(Type t)
@@ -125,7 +123,10 @@ namespace System
                 }
             }
 
-            return _guidProperties[t];
+            lock (_guidProperties)
+            {
+                return _guidProperties[t];
+            }
         }
 
         public static bool IsSyncable(this object o)

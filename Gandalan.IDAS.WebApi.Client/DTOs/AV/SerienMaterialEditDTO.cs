@@ -1,6 +1,6 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System;
 using System.Collections.Generic;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Data.DTOs.AV
 {
@@ -8,6 +8,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.AV
     {
         public Guid SerieGuid { get; set; }
 
-        public List<MaterialbedarfDTO> MaterialListe { get; set; } = new List<MaterialbedarfDTO>();
+        public List<MaterialbedarfDTO> MaterialListe { get; set; } = [];
     }
 }

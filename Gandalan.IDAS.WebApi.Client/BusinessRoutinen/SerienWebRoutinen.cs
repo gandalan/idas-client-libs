@@ -50,5 +50,10 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             DateTime? endDate = null)
             => await GetAsync<IList<VirtualSerieWithAuslastungDTO>>(
                     $"AuslastungVirtual/?startDate={startDate:o}&endDate={endDate:o}");
+
+        public async Task<IList<SerieAuslastungDTO>> GetAuslastungVorgangAsync(long startVorgangsnummer,
+            long endVorgangsnummer)
+            => await GetAsync<IList<SerieAuslastungDTO>>(
+                    $"AuslastungVorgang/?startVorgangsnummer={startVorgangsnummer}&endVorgangsnummer={endVorgangsnummer}");
     }
 }

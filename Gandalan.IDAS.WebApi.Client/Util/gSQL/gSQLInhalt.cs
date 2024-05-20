@@ -11,7 +11,7 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
         public gSQLInhalt()
         {
-            Sektionen = new List<gSQLSektion>();
+            Sektionen = [];
         }
 
         public gSQLSektion GetSektion(string sektion)

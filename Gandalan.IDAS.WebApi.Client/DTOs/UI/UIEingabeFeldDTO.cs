@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
@@ -41,6 +41,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         NurListenWerte = 8,
         NichtLeer = 16,
         Vierfachauswahl = 32,
-        LangText = 64
+        LangText = 64,
+        ArtikelFarbe = 128
     }
 }

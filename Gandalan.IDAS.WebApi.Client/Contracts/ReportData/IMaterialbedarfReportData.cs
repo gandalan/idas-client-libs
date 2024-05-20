@@ -1,5 +1,5 @@
-using Gandalan.IDAS.WebApi.DTO;
 using System;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.ReportData
 {
@@ -21,6 +21,10 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.ReportData
 
         decimal VE_Menge { get; set; }
         decimal Artikel_VE_Menge { get; set; }
+        /// <summary>
+        /// Format: "KürzelOderSF FarbzusatzTextWennVorhanden FarbCode Farbbezeichnung OberflächeAußerWennSieStandardHeißt"
+        /// </summary>
+        string ProduktionsFarbText { get; set; }
         string FarbZusatzText { get; set; }
         string FarbBezeichnung { get; set; }
         string FarbKuerzel { get; set; }
@@ -28,9 +32,9 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.ReportData
         string FarbCode { get; set; }
         string FarbeItem { get; set; }
         Guid FarbItemGuid { get; set; }
-
         string OberflaecheBezeichnung { get; set; }
         Guid OberFlaecheGuid { get; set; }
+        string PulverCode { get; set; }
         bool IstZuschnitt { get; set; }
         float ZuschnittLaenge { get; set; }
         string ZuschnittWinkel { get; set; }

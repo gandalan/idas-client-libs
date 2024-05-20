@@ -1,5 +1,5 @@
-﻿using Gandalan.IDAS.WebApi.DTO;
 using System.IO;
+using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.File
 {

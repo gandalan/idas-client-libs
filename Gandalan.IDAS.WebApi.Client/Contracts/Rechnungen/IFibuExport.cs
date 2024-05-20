@@ -1,8 +1,8 @@
-using Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.Rechnungen
 {
@@ -25,7 +25,7 @@ namespace Gandalan.IDAS.WebApi.Client.Contracts.Rechnungen
         long Nummer { get; set; }
         FibuRecordBelegArt OrginialBelegArt { get; set; }
         IList<PropertyInfo> GetExportProperties();
-        void FromSammelrechnung(SammelrechnungListItemDTO sammelrechnung);
-        void FromRechnung(BelegeInfoDTO rechnung);
+        Task FromSammelrechnung(SammelrechnungListItemDTO sammelrechnung);
+        Task FromRechnung(BelegeInfoDTO rechnung);
     }
 }

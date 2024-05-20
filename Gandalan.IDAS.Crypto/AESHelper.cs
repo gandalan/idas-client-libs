@@ -104,7 +104,7 @@ namespace Gandalan.IDAS.Crypto
             {
                 using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                 {
-                    // Decrypted bytes will always be less then encrypted bytes, so len of encrypted data will be big enouph for buffer.
+                    // Decrypted bytes will always be less then encrypted bytes, so len of encrypted data will be big enough for buffer.
                     var fromEncrypt = new byte[data.Length];
                     // Read as many bytes as possible.
                     var read = csDecrypt.Read(fromEncrypt, 0, fromEncrypt.Length);

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
 {
@@ -6,6 +6,6 @@ namespace Gandalan.IDAS.WebApi.Data.DTOs.Reports
     {
         public string Titel { get; set; }
         public string Serienkennzeichen { get; set; }
-        public List<SerienPacklisteGruppeDataDTO> VorgangsGruppen { get; set; } = new List<SerienPacklisteGruppeDataDTO>();
+        public List<SerienPacklisteGruppeDataDTO> VorgangsGruppen { get; set; } = [];
     }
 }

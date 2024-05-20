@@ -28,6 +28,8 @@ namespace Gandalan.IDAS.WebApi.DTO
         public decimal GedeckteStueckzahl { get; set; }
         public decimal UngedeckteStueckzahl => Stueckzahl - GedeckteStueckzahl;
         public decimal Laufmeter { get; set; }
+        public decimal GedeckteLaufmeter { get; set; }
+        public decimal UngedeckteLaufmeter => Laufmeter - GedeckteLaufmeter;
         public string FarbBezeichnung { get; set; }
         public string FarbZusatzText { get; set; }
         public string FarbKuerzel { get; set; }
@@ -37,15 +39,14 @@ namespace Gandalan.IDAS.WebApi.DTO
         public Guid FarbItemGuid { get; set; }
         public string OberFlaeche { get; set; }
         public Guid OberFlaecheGuid { get; set; }
+        public string PulverCode { get; set; }
         public bool IstZuschnitt { get; set; }
         public float ZuschnittLaenge { get; set; }
         public bool IstStangenoptimiert { get; set; }
-        public float GedeckteZuschnittLaenge { get; set; }
-        public float UngedeckteZuschnittLaenge => ZuschnittLaenge - GedeckteZuschnittLaenge;
         public string ZuschnittWinkel { get; set; }
         public bool IstSonderfarbe { get; set; }
         public KatalogArtikelArt KatalogArtikelArt { get; set; }
-        public float DeckungInPercent => Einheit == "St" ? (float)(GedeckteStueckzahl / Stueckzahl) : GedeckteZuschnittLaenge / ZuschnittLaenge;
+        public decimal DeckungInPercent => Einheit != null ? Einheit.StartsWith("S") ? (Stueckzahl != 0 ? GedeckteStueckzahl / Stueckzahl : 0) : (Laufmeter != 0 ? GedeckteLaufmeter / Laufmeter : 0) : 0;
         public bool IstVE { get; set; }
         public decimal? VE_Menge { get; set; }
         public object Clone()
@@ -73,21 +74,24 @@ namespace Gandalan.IDAS.WebApi.DTO
                 Laufmeter = Laufmeter,
                 FarbBezeichnung = FarbBezeichnung,
                 FarbKuerzel = FarbKuerzel,
+                FarbZusatzText = FarbZusatzText,
                 FarbKuerzelGuid = FarbKuerzelGuid,
                 FarbCode = FarbCode,
                 FarbeItem = FarbeItem,
                 FarbItemGuid = FarbItemGuid,
                 OberFlaeche = OberFlaeche,
                 OberFlaecheGuid = OberFlaecheGuid,
+                PulverCode = PulverCode,
                 IstZuschnitt = IstZuschnitt,
                 ZuschnittLaenge = ZuschnittLaenge,
                 ZuschnittWinkel = ZuschnittWinkel,
                 IstSonderfarbe = IstSonderfarbe,
                 KatalogArtikelArt = KatalogArtikelArt,
                 GedeckteStueckzahl = GedeckteStueckzahl,
-                GedeckteZuschnittLaenge = GedeckteZuschnittLaenge,
+                GedeckteLaufmeter = GedeckteLaufmeter,
                 IstVE = IstVE,
-                VE_Menge = VE_Menge
+                VE_Menge = VE_Menge,
+                IstStangenoptimiert = IstStangenoptimiert
             };
         }
     }

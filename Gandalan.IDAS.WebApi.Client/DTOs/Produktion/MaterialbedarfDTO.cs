@@ -60,7 +60,7 @@ namespace Gandalan.IDAS.WebApi.DTO
         public string FarbBezeichnung { get; set; }
 
         /// <summary>
-        /// FarbZusatzText, hauptsächnlich für Trendfarbkürzel (z.B. B7)
+        /// FarbZusatzText, hauptsächlich für (Trend-)Farbkürzel (z.B. B7)
         /// </summary>
         public string FarbZusatzText { get; set; }
 
@@ -81,6 +81,8 @@ namespace Gandalan.IDAS.WebApi.DTO
 
         public string OberflaecheBezeichnung { get; set; }
         public Guid OberFlaecheGuid { get; set; }
+
+        public string PulverCode { get; set; }
 
         /// <summary>
         /// Kennzeichen für Zuschnittartikel
