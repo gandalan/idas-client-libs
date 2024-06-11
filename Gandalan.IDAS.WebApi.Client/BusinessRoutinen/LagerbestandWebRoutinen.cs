@@ -35,6 +35,6 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             => await DeleteAsync($"Lagerbestand/?id={guid}");
 
         public async Task<List<LagerbuchungDTO>> GetLagerhistorieAsync(DateTime vonDatum, DateTime bisDatum)
-            => await GetAsync<List<LagerbuchungDTO>>("Lagerbuchung");
+            => await GetAsync<List<LagerbuchungDTO>>($"Lagerbuchung/?vonDatum={vonDatum}&bisDatum={bisDatum}");
     }
 }
