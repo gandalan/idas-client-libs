@@ -52,5 +52,6 @@ namespace Gandalan.IDAS.WebApi.DTO
         public int STmitLSo_LSu_Mbv_Mass { get; set; } = 50;
         public bool SP_WL_mit_Schraube_150329 { get; set; } = true;
         public bool LI_TE_Winkelprofil_mit_Schraube_150329_06 { get; set; } = true;
+        public string ProdukteMitc3Berechnen { get; set; }
     }
 }
