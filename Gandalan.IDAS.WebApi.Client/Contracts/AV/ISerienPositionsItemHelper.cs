@@ -12,5 +12,6 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.AV
         Task SaveSeriePositionItemsToSerie(BelegDTO beleg, List<PositionSerieItemDTO> items, bool autoFreigabeErlaubt, bool showDialog = true, bool timerReset = true);
         Task SaveSeriePositionItemsToSerieAuto(BelegDTO beleg, bool autoFreigabeErlaubt, bool timerReset = true);
         Task<bool> TestSerienZuordnungAuto(BelegDTO beleg);
+        bool TestZuordnungComplete(BelegDTO beleg);
     }
 }
