@@ -1,15 +1,14 @@
 ﻿using System;
 
-namespace Gandalan.IDAS.Contracts.ChangeTracking
+namespace Gandalan.IDAS.Contracts.ChangeTracking;
+
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+public class SyncableAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class SyncableAttribute : Attribute
+    public SyncableAttribute(string guidColumnName)
     {
-        public SyncableAttribute(string guidColumnName)
-        {
             GuidColumnName = guidColumnName;
         }
 
-        public string GuidColumnName { get; private set; }
-    }
+    public string GuidColumnName { get; private set; }
 }

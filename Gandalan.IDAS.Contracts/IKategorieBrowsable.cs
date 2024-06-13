@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 
-namespace Gandalan.IDAS.Data.Contracts
+namespace Gandalan.IDAS.Data.Contracts;
+
+public interface IKategorieBrowsable
 {
-    public interface IKategorieBrowsable
-    {
-        void AddSubItem();
+    void AddSubItem();
 
-        IKategorieBrowsable GetParent();
+    IKategorieBrowsable GetParent();
 
-        IList<IKategorieBrowsable> GetSubItems();
+    IList<IKategorieBrowsable> GetSubItems();
 
-        void RemoveSubItem(IKategorieBrowsable item);
-    }
+    void RemoveSubItem(IKategorieBrowsable item);
 }

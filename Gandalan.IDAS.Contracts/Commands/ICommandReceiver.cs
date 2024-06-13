@@ -1,8 +1,7 @@
-namespace Gandalan.UI.Commands.Contracts
+namespace Gandalan.UI.Commands.Contracts;
+
+public interface ICommandReceiver
 {
-    public interface ICommandReceiver
-    {
-        void Start(ICommandDispatcher dispatch);
-        void Stop();
-    }
+    void Start(ICommandDispatcher dispatch);
+    void Stop();
 }
