@@ -63,4 +63,9 @@ namespace Gandalan.Client.Contracts
     {
         Task<bool> OnBeforeSave();
     }
+
+    public interface ILockedPanel
+    {
+        bool Locked { get; set; }
+    }
 }
