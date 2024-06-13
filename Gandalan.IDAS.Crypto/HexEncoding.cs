@@ -2,177 +2,176 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Gandalan.IDAS.Crypto
+namespace Gandalan.IDAS.Crypto;
+
+/// <summary>
+/// Summary description for HexEncoding.
+/// </summary>
+public class HexEncoding
 {
-    /// <summary>
-    /// Summary description for HexEncoding.
-    /// </summary>
-    public class HexEncoding
+    public static int GetByteCount(string hexString)
     {
-        public static int GetByteCount(string hexString)
+        var numHexChars = 0;
+        // remove all none A-F, 0-9, characters
+        foreach (var zeichen in hexString)
         {
-            var numHexChars = 0;
-            // remove all none A-F, 0-9, characters
-            foreach (var zeichen in hexString)
+            if (IsHexDigit(zeichen))
             {
-                if (IsHexDigit(zeichen))
-                {
-                    numHexChars++;
-                }
+                numHexChars++;
             }
-
-            // if odd number of characters, discard last character
-            if (numHexChars % 2 != 0)
-            {
-                numHexChars--;
-            }
-
-            return numHexChars / 2; // 2 characters per byte
         }
 
-        /// <summary>
-        /// Creates a byte array from the hexadecimal string. Each two characters are combined
-        /// to create one byte. First two hexadecimal characters become first byte in returned array.
-        /// Non-hexadecimal characters are ignored.
-        /// </summary>
-        /// <param name="hexString">string to convert to byte array</param>
-        /// <param name="discarded">number of characters in string ignored</param>
-        /// <returns>byte array, in the same left-to-right order as the hexString</returns>
-        public static byte[] GetBytes(string hexString, out int discarded)
+        // if odd number of characters, discard last character
+        if (numHexChars % 2 != 0)
         {
-            discarded = 0;
-            var newString = string.Empty;
-            // remove all none A-F, 0-9, characters
-            foreach (var zeichen in hexString)
-            {
-                if (IsHexDigit(zeichen))
-                {
-                    newString += zeichen;
-                }
-                else
-                {
-                    discarded++;
-                }
-            }
+            numHexChars--;
+        }
 
-            // if odd number of characters, discard last character
-            if (newString.Length % 2 != 0)
+        return numHexChars / 2; // 2 characters per byte
+    }
+
+    /// <summary>
+    /// Creates a byte array from the hexadecimal string. Each two characters are combined
+    /// to create one byte. First two hexadecimal characters become first byte in returned array.
+    /// Non-hexadecimal characters are ignored.
+    /// </summary>
+    /// <param name="hexString">string to convert to byte array</param>
+    /// <param name="discarded">number of characters in string ignored</param>
+    /// <returns>byte array, in the same left-to-right order as the hexString</returns>
+    public static byte[] GetBytes(string hexString, out int discarded)
+    {
+        discarded = 0;
+        var newString = string.Empty;
+        // remove all none A-F, 0-9, characters
+        foreach (var zeichen in hexString)
+        {
+            if (IsHexDigit(zeichen))
+            {
+                newString += zeichen;
+            }
+            else
             {
                 discarded++;
-                newString = newString.Substring(0, newString.Length - 1);
             }
-
-            var byteLength = newString.Length / 2;
-            var returnValue = new byte[byteLength];
-            var counter = 0;
-            for (var index = 0; index < returnValue.Length; index++)
-            {
-                var hex = new string([newString[counter], newString[counter + 1]]);
-                returnValue[index] = hexToByte(hex);
-                counter += 2;
-            }
-
-            return returnValue;
         }
 
-        public static string ToString(byte[] bytes)
+        // if odd number of characters, discard last character
+        if (newString.Length % 2 != 0)
         {
-            var returnValue = string.Empty;
-            foreach (var t in bytes)
-            {
-                returnValue += t.ToString("X2");
-            }
-
-            return returnValue;
+            discarded++;
+            newString = newString.Substring(0, newString.Length - 1);
         }
 
-        /// <summary>
-        /// Determines if given string is in proper hexadecimal string format
-        /// </summary>
-        /// <param name="hexString"></param>
-        public static bool InHexFormat(string hexString)
+        var byteLength = newString.Length / 2;
+        var returnValue = new byte[byteLength];
+        var counter = 0;
+        for (var index = 0; index < returnValue.Length; index++)
         {
-            var returnValue = true;
-            foreach (var digit in hexString)
+            var hex = new string([newString[counter], newString[counter + 1]]);
+            returnValue[index] = hexToByte(hex);
+            counter += 2;
+        }
+
+        return returnValue;
+    }
+
+    public static string ToString(byte[] bytes)
+    {
+        var returnValue = string.Empty;
+        foreach (var t in bytes)
+        {
+            returnValue += t.ToString("X2");
+        }
+
+        return returnValue;
+    }
+
+    /// <summary>
+    /// Determines if given string is in proper hexadecimal string format
+    /// </summary>
+    /// <param name="hexString"></param>
+    public static bool InHexFormat(string hexString)
+    {
+        var returnValue = true;
+        foreach (var digit in hexString)
+        {
+            if (!IsHexDigit(digit))
             {
-                if (!IsHexDigit(digit))
+                returnValue = false;
+                break;
+            }
+        }
+
+        return returnValue;
+    }
+
+    /// <summary>
+    /// Returns true is c is a hexadecimal digit (A-F, a-f, 0-9)
+    /// </summary>
+    /// <param name="zeichen">Character to test</param>
+    /// <returns>true if hex digit, false if not</returns>
+    public static bool IsHexDigit(char zeichen)
+    {
+        var returnValue = false;
+        zeichen = char.ToUpper(zeichen);
+        var numA = ConvertTo<int>('A', default);
+        var num1 = ConvertTo<int>('0', default);
+        var numChar = ConvertTo<int>(zeichen, default);
+        if (numChar >= numA && numChar < numA + 6)
+        {
+            returnValue = true;
+        }
+        else if (numChar >= num1 && numChar < num1 + 10)
+        {
+            returnValue = true;
+        }
+
+        return returnValue;
+    }
+
+    /// <summary>
+    /// Converts 1 or 2 character string into equivalent byte value
+    /// </summary>
+    /// <param name="hex">1 or 2 character string</param>
+    /// <returns>byte</returns>
+    private static byte hexToByte(string hex)
+    {
+        if (string.IsNullOrEmpty(hex) || hex.Length > 2)
+        {
+            throw new ArgumentException("hex must be 1 or 2 characters in length", nameof(hex));
+        }
+
+        return byte.Parse(hex, NumberStyles.HexNumber);
+    }
+
+    public static T ConvertTo<T>(object value, T defaultValue)
+    {
+        var obj = defaultValue;
+        if (value != null)
+        {
+            if (value is T t)
+            {
+                obj = t;
+            }
+            else
+            {
+                var type = typeof(T);
+                var converter1 = TypeDescriptor.GetConverter(value);
+                if (converter1 != null && converter1.CanConvertTo(type))
                 {
-                    returnValue = false;
-                    break;
-                }
-            }
-
-            return returnValue;
-        }
-
-        /// <summary>
-        /// Returns true is c is a hexadecimal digit (A-F, a-f, 0-9)
-        /// </summary>
-        /// <param name="zeichen">Character to test</param>
-        /// <returns>true if hex digit, false if not</returns>
-        public static bool IsHexDigit(char zeichen)
-        {
-            var returnValue = false;
-            zeichen = char.ToUpper(zeichen);
-            var numA = ConvertTo<int>('A', default);
-            var num1 = ConvertTo<int>('0', default);
-            var numChar = ConvertTo<int>(zeichen, default);
-            if (numChar >= numA && numChar < numA + 6)
-            {
-                returnValue = true;
-            }
-            else if (numChar >= num1 && numChar < num1 + 10)
-            {
-                returnValue = true;
-            }
-
-            return returnValue;
-        }
-
-        /// <summary>
-        /// Converts 1 or 2 character string into equivalent byte value
-        /// </summary>
-        /// <param name="hex">1 or 2 character string</param>
-        /// <returns>byte</returns>
-        private static byte hexToByte(string hex)
-        {
-            if (string.IsNullOrEmpty(hex) || hex.Length > 2)
-            {
-                throw new ArgumentException("hex must be 1 or 2 characters in length", nameof(hex));
-            }
-
-            return byte.Parse(hex, NumberStyles.HexNumber);
-        }
-
-        public static T ConvertTo<T>(object value, T defaultValue)
-        {
-            var obj = defaultValue;
-            if (value != null)
-            {
-                if (value is T t)
-                {
-                    obj = t;
+                    obj = (T)converter1.ConvertTo(value, type);
                 }
                 else
                 {
-                    var type = typeof(T);
-                    var converter1 = TypeDescriptor.GetConverter(value);
-                    if (converter1 != null && converter1.CanConvertTo(type))
+                    var converter2 = TypeDescriptor.GetConverter(type);
+                    if (converter2 != null && converter2.CanConvertFrom(value.GetType()))
                     {
-                        obj = (T)converter1.ConvertTo(value, type);
-                    }
-                    else
-                    {
-                        var converter2 = TypeDescriptor.GetConverter(type);
-                        if (converter2 != null && converter2.CanConvertFrom(value.GetType()))
-                        {
-                            obj = (T)converter2.ConvertFrom(value);
-                        }
+                        obj = (T)converter2.ConvertFrom(value);
                     }
                 }
             }
-
-            return obj;
         }
+
+        return obj;
     }
 }
