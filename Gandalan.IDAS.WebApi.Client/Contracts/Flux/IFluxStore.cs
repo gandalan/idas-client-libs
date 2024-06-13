@@ -1,30 +1,29 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Gandalan.IDAS.Client.Contracts.Flux
+namespace Gandalan.IDAS.Client.Contracts.Flux;
+
+public interface IFluxStore
 {
-    public interface IFluxStore
-    {
-        void AddTransientEventHandler(IFluxConsumer eventHandler);
-        void AddPersistentEventHandler(IFluxConsumer eventHandler);
-        void RemoveTransientEventHandler(IFluxConsumer eventHandler);
-        void RemovePersistentEventHandler(IFluxConsumer eventHandler);
-        void ClearTransientEventHandlers();
+    void AddTransientEventHandler(IFluxConsumer eventHandler);
+    void AddPersistentEventHandler(IFluxConsumer eventHandler);
+    void RemoveTransientEventHandler(IFluxConsumer eventHandler);
+    void RemovePersistentEventHandler(IFluxConsumer eventHandler);
+    void ClearTransientEventHandlers();
 
-        /// <summary>
-        /// Obsoleted - use AddPersistentEventHandler
-        /// </summary>
-        [Obsolete("use AddPersistentEventHandler")]
-        event EventHandler<IFluxAction> DataChanged;
+    /// <summary>
+    /// Obsoleted - use AddPersistentEventHandler
+    /// </summary>
+    [Obsolete("use AddPersistentEventHandler")]
+    event EventHandler<IFluxAction> DataChanged;
 
-        Task Handle(IFluxAction action);
-        void HandleSync(IFluxAction action);
-        Task Initialize();
-        Task Clean();
-    }
+    Task Handle(IFluxAction action);
+    void HandleSync(IFluxAction action);
+    Task Initialize();
+    Task Clean();
+}
 
-    public interface IFluxStore<T> : IFluxStore
-    {
-        T Data { get; }
-    }
+public interface IFluxStore<T> : IFluxStore
+{
+    T Data { get; }
 }

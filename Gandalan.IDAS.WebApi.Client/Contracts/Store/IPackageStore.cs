@@ -1,7 +1,6 @@
-﻿namespace Gandalan.IDAS.WebApi.Client.Contracts.Store
+﻿namespace Gandalan.IDAS.WebApi.Client.Contracts.Store;
+
+public interface IPackageStore
 {
-    public interface IPackageStore
-    {
-        void Show();
-    }
+    void Show();
 }

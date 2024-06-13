@@ -1,5 +1,4 @@
-﻿namespace Gandalan.IDAS.WebApi.DTO
-{
-    public class MaterialBestellungListItemDTO : BaseListItemDTO
-    { }
-}
+﻿namespace Gandalan.IDAS.WebApi.DTO;
+
+public class MaterialBestellungListItemDTO : BaseListItemDTO
+{ }

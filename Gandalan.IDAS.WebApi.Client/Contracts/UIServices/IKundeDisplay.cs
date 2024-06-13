@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Contracts.UIServices
+namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IKundeDisplay
 {
-    public interface IKundeDisplay
-    {
-        Task DisplayKunde(Guid kundeGuid);
-    }
+    Task DisplayKunde(Guid kundeGuid);
 }

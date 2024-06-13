@@ -8,12 +8,12 @@ using System.Text;
 using Gandalan.IDAS.WebApi.Client.Constants;
 using Gandalan.IDAS.WebApi.Client.DTOs.Allgemein;
 
-namespace Gandalan.IDAS.WebApi.DTO
+namespace Gandalan.IDAS.WebApi.DTO;
+
+public class BelegDruckDTO
 {
-    public class BelegDruckDTO
+    public BelegDruckDTO(VorgangDTO vorgang, BelegDTO beleg)
     {
-        public BelegDruckDTO(VorgangDTO vorgang, BelegDTO beleg)
-        {
             var culture = new CultureInfo("de-de");
             Salden = [];
             PositionsObjekte = [];
@@ -135,46 +135,46 @@ namespace Gandalan.IDAS.WebApi.DTO
             }
         }
 
-        public Guid BelegGuid { get; set; }
-        public Guid VorgangGuid { get; set; }
-        public string Kopfzeile { get; set; }
-        public string Fusszeile { get; set; }
-        public string BelegArt { get; set; }
-        public long BelegNummer { get; set; }
-        public long VorgangsNummer { get; set; }
-        public DateTime BelegDatum { get; set; }
-        public string VorgangErstellDatum { get; set; }
-        public DateTime AenderungsDatum { get; set; }
-        public int BelegJahr { get; set; }
-        public string Schlusstext { get; set; }
-        public string BelegTitelUeberschrift { get; set; }
-        public string BelegTitelZeile1 { get; set; }
-        public string BelegTitelZeile2 { get; set; }
-        public string TextFuerAnschreiben { get; set; }
-        public string Kommission { get; set; }
-        public string Ausfuehrungsdatum { get; set; }
-        public string AnsprechpartnerKunde { get; set; }
-        public string Ansprechpartner { get; set; }
-        public string Telefonnummer { get; set; }
-        public string Bestelldatum { get; set; }
-        public string Belegdatum { get; set; }
-        public AdresseDruckDTO BelegAdresse { get; set; }
-        public string BelegAdresseString { get; set; }
-        public AdresseDruckDTO VersandAdresse { get; set; }
-        public string VersandAdresseString { get; set; }
-        public ObservableCollection<BelegPositionDruckDTO> PositionsObjekte { get; set; }
-        public IList<BelegSaldoDruckDTO> Salden { get; set; }
-        public int CountValuePositionen { get; set; }
-        public int CountValueSalden { get; set; }
-        public string Lieferzeit { get; set; }
-        public bool IsEndkunde { get; set; }
-        public bool IsRabatt { get; set; }
-        public bool IstSelbstabholer { get; set; }
-        public long? SammelbelegNummer { get; set; }
-        public string Kontrollkuerzel { get; set; }
+    public Guid BelegGuid { get; set; }
+    public Guid VorgangGuid { get; set; }
+    public string Kopfzeile { get; set; }
+    public string Fusszeile { get; set; }
+    public string BelegArt { get; set; }
+    public long BelegNummer { get; set; }
+    public long VorgangsNummer { get; set; }
+    public DateTime BelegDatum { get; set; }
+    public string VorgangErstellDatum { get; set; }
+    public DateTime AenderungsDatum { get; set; }
+    public int BelegJahr { get; set; }
+    public string Schlusstext { get; set; }
+    public string BelegTitelUeberschrift { get; set; }
+    public string BelegTitelZeile1 { get; set; }
+    public string BelegTitelZeile2 { get; set; }
+    public string TextFuerAnschreiben { get; set; }
+    public string Kommission { get; set; }
+    public string Ausfuehrungsdatum { get; set; }
+    public string AnsprechpartnerKunde { get; set; }
+    public string Ansprechpartner { get; set; }
+    public string Telefonnummer { get; set; }
+    public string Bestelldatum { get; set; }
+    public string Belegdatum { get; set; }
+    public AdresseDruckDTO BelegAdresse { get; set; }
+    public string BelegAdresseString { get; set; }
+    public AdresseDruckDTO VersandAdresse { get; set; }
+    public string VersandAdresseString { get; set; }
+    public ObservableCollection<BelegPositionDruckDTO> PositionsObjekte { get; set; }
+    public IList<BelegSaldoDruckDTO> Salden { get; set; }
+    public int CountValuePositionen { get; set; }
+    public int CountValueSalden { get; set; }
+    public string Lieferzeit { get; set; }
+    public bool IsEndkunde { get; set; }
+    public bool IsRabatt { get; set; }
+    public bool IstSelbstabholer { get; set; }
+    public long? SammelbelegNummer { get; set; }
+    public string Kontrollkuerzel { get; set; }
 
-        public void SetTextBausteine(object textBausteine)
-        {
+    public void SetTextBausteine(object textBausteine)
+    {
             if (textBausteine is ExpandoObject)
             {
                 var settingsDict = textBausteine as IDictionary<string, object>;
@@ -188,16 +188,16 @@ namespace Gandalan.IDAS.WebApi.DTO
                 }
             }
         }
-    }
+}
 
-    public class AdresseDruckDTO
+public class AdresseDruckDTO
+{
+    public AdresseDruckDTO()
     {
-        public AdresseDruckDTO()
-        {
         }
 
-        public AdresseDruckDTO(BeleganschriftDTO beleganschrift)
-        {
+    public AdresseDruckDTO(BeleganschriftDTO beleganschrift)
+    {
             if (beleganschrift != null)
             {
                 Anrede = beleganschrift.Anrede;
@@ -216,22 +216,22 @@ namespace Gandalan.IDAS.WebApi.DTO
             }
         }
 
-        public string Anrede { get; set; }
-        public string Nachname { get; set; }
-        public string Vorname { get; set; }
-        public string Firmenname { get; set; }
-        public string Zusatz { get; set; }
-        public string AdressZusatz1 { get; set; }
-        public string Strasse { get; set; }
-        public string Hausnummer { get; set; }
-        public string Postleitzahl { get; set; }
-        public string Ort { get; set; }
-        public string Ortsteil { get; set; }
-        public string Land { get; set; }
-        public bool IstInland { get; set; }
+    public string Anrede { get; set; }
+    public string Nachname { get; set; }
+    public string Vorname { get; set; }
+    public string Firmenname { get; set; }
+    public string Zusatz { get; set; }
+    public string AdressZusatz1 { get; set; }
+    public string Strasse { get; set; }
+    public string Hausnummer { get; set; }
+    public string Postleitzahl { get; set; }
+    public string Ort { get; set; }
+    public string Ortsteil { get; set; }
+    public string Land { get; set; }
+    public bool IstInland { get; set; }
 
-        public override string ToString()
-        {
+    public override string ToString()
+    {
             var adressText = new StringBuilder();
             {
                 adressText.AppendLine(Anrede);
@@ -256,23 +256,23 @@ namespace Gandalan.IDAS.WebApi.DTO
             return adressText.ToString();
         }
 
-        private string BuildAnschriftsName()
-        {
+    private string BuildAnschriftsName()
+    {
             var adesszusatz = "";
             var name1 = string.IsNullOrEmpty(Vorname) ? Nachname : Vorname;
             var name2 = string.IsNullOrEmpty(Vorname) ? adesszusatz : Nachname;
             return (!string.IsNullOrEmpty(Firmenname) ? $"{Firmenname}" : ($"{name1} {name2}")).Trim();
         }
-    }
+}
 
-    public class BelegSaldoDruckDTO
+public class BelegSaldoDruckDTO
+{
+    public BelegSaldoDruckDTO()
     {
-        public BelegSaldoDruckDTO()
-        {
         }
 
-        public BelegSaldoDruckDTO(BelegSaldoDTO saldo)
-        {
+    public BelegSaldoDruckDTO(BelegSaldoDTO saldo)
+    {
             var culture = new CultureInfo("de-de");
             if (saldo != null)
             {
@@ -284,47 +284,47 @@ namespace Gandalan.IDAS.WebApi.DTO
             }
         }
 
-        public int Reihenfolge { get; set; }
-        public string Text { get; set; }
-        public string Betrag { get; set; }
-        public string Rabatt { get; set; }
-        public bool IsLastElement { get; set; }
-    }
+    public int Reihenfolge { get; set; }
+    public string Text { get; set; }
+    public string Betrag { get; set; }
+    public string Rabatt { get; set; }
+    public bool IsLastElement { get; set; }
+}
 
-    public class BelegPositionDruckDTO
+public class BelegPositionDruckDTO
+{
+    public string PositionsKommission { get; set; }
+    public int LaufendeNummer { get; set; }
+    public string ArtikelNummer { get; set; }
+    public string Variante { get; set; }
+    public bool IstAlternativPosition { get; set; }
+    public bool IstAktiv { get; set; }
+    public decimal Menge { get; set; }
+    public string EinzelpreisOhneFarbzuschlag { get; set; }
+    public string Einzelpreis { get; set; }
+    public string Rabatt { get; set; }
+    public string Gesamtpreis { get; set; }
+    public string Farbzuschlag { get; set; }
+    public string MengenEinheit { get; set; }
+    public string Text { get; set; }
+    public string AngebotsText { get; set; }
+    public string PulverCode { get; set; }
+    public string SonderwunschText { get; set; }
+    public string SonderwunschAngebotsText { get; set; }
+    public string ProduktionZusatzInfo { get; set; }
+    public bool ProduktionZusatzInfoPrintOnReport { get; set; }
+    public bool ProduktionZusatzInfoPrintZusatzEtikett { get; set; }
+    public bool IstVE { get; set; }
+    public decimal? VE_Menge { get; set; }
+    public IList<ZusatztextDTO> Zusatztexte { get; set; }
+    public Guid BelegPositionGuid { get; set; }
+
+    public BelegPositionDruckDTO()
     {
-        public string PositionsKommission { get; set; }
-        public int LaufendeNummer { get; set; }
-        public string ArtikelNummer { get; set; }
-        public string Variante { get; set; }
-        public bool IstAlternativPosition { get; set; }
-        public bool IstAktiv { get; set; }
-        public decimal Menge { get; set; }
-        public string EinzelpreisOhneFarbzuschlag { get; set; }
-        public string Einzelpreis { get; set; }
-        public string Rabatt { get; set; }
-        public string Gesamtpreis { get; set; }
-        public string Farbzuschlag { get; set; }
-        public string MengenEinheit { get; set; }
-        public string Text { get; set; }
-        public string AngebotsText { get; set; }
-        public string PulverCode { get; set; }
-        public string SonderwunschText { get; set; }
-        public string SonderwunschAngebotsText { get; set; }
-        public string ProduktionZusatzInfo { get; set; }
-        public bool ProduktionZusatzInfoPrintOnReport { get; set; }
-        public bool ProduktionZusatzInfoPrintZusatzEtikett { get; set; }
-        public bool IstVE { get; set; }
-        public decimal? VE_Menge { get; set; }
-        public IList<ZusatztextDTO> Zusatztexte { get; set; }
-        public Guid BelegPositionGuid { get; set; }
-
-        public BelegPositionDruckDTO()
-        {
         }
 
-        public BelegPositionDruckDTO(BelegPositionDTO position, bool preiseAnzeigen = true)
-        {
+    public BelegPositionDruckDTO(BelegPositionDTO position, bool preiseAnzeigen = true)
+    {
             var culture = new CultureInfo("de-de");
             if (position != null)
             {
@@ -375,5 +375,4 @@ namespace Gandalan.IDAS.WebApi.DTO
                 }
             }
         }
-    }
 }

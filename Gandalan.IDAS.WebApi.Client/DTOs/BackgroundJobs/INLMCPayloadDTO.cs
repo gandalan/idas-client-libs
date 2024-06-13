@@ -1,6 +1,5 @@
-﻿namespace Gandalan.IDAS.WebApi.DTO
+﻿namespace Gandalan.IDAS.WebApi.DTO;
+
+public interface INLMCPayloadDTO
 {
-    public interface INLMCPayloadDTO
-    {
-    }
 }

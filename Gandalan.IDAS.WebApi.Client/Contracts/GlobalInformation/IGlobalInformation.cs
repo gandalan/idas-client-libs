@@ -1,9 +1,8 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.Client.Contracts.Contracts.GlobalInformation
+namespace Gandalan.IDAS.Client.Contracts.Contracts.GlobalInformation;
+
+public interface IGlobalInformation
 {
-    public interface IGlobalInformation
-    {
-        BenutzerDTO Benutzer { get; set; }
-    }
+    BenutzerDTO Benutzer { get; set; }
 }

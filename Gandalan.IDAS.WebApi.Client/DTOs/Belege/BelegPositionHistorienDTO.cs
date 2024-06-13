@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Gandalan.IDAS.WebApi.DTO
+namespace Gandalan.IDAS.WebApi.DTO;
+
+public class BelegPositionHistorienDTO
 {
-    public class BelegPositionHistorienDTO
-    {
-        public List<BelegPositionHistorieDTO> BelegPositionHistorien { get; set; }
-    }
+    public List<BelegPositionHistorieDTO> BelegPositionHistorien { get; set; }
 }

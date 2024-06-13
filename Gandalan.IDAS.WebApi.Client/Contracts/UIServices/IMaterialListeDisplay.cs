@@ -1,10 +1,9 @@
 using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices
+namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices;
+
+public interface IMaterialListeDisplay
 {
-    public interface IMaterialListeDisplay
-    {
-        Task Execute(BelegPositionAVDTO dto);
-    }
+    Task Execute(BelegPositionAVDTO dto);
 }

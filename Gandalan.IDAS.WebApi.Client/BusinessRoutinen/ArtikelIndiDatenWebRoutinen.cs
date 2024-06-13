@@ -10,28 +10,27 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
+namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
+
+public class ArtikelIndiDatenWebRoutinen : WebRoutinenBase
 {
-    public class ArtikelIndiDatenWebRoutinen : WebRoutinenBase
+    public ArtikelIndiDatenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        public ArtikelIndiDatenWebRoutinen(IWebApiConfig settings) : base(settings)
-        {
         }
 
-        public async Task<KatalogArtikelIndiDatenDTO[]> GetAllAsync()
-        {
+    public async Task<KatalogArtikelIndiDatenDTO[]> GetAllAsync()
+    {
             return await GetAsync<KatalogArtikelIndiDatenDTO[]>("ArtikelIndiDaten");
         }
 
-        public async Task SaveArtikelIndiDaten(KatalogArtikelIndiDatenDTO daten)
-        {
+    public async Task SaveArtikelIndiDaten(KatalogArtikelIndiDatenDTO daten)
+    {
             await PutAsync($"ArtikelIndiDaten/{daten.KatalogArtikelGuid}", daten);
         }
 
-        public async Task DeleteArtikelIndiDaten(KatalogArtikelIndiDatenDTO daten)
-        {
+    public async Task DeleteArtikelIndiDaten(KatalogArtikelIndiDatenDTO daten)
+    {
             await DeleteAsync($"ArtikelIndiDaten/{daten.KatalogArtikelGuid}");
         }
 
-    }
 }

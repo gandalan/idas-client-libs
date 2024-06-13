@@ -1,7 +1,6 @@
-﻿namespace Gandalan.Client.Contracts.UIServices
+﻿namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IUebersichtDisplay
 {
-    public interface IUebersichtDisplay
-    {
-        void DisplayUebersicht(bool showNavigateBack = false);
-    }
+    void DisplayUebersicht(bool showNavigateBack = false);
 }

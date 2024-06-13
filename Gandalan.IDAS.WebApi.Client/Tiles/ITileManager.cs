@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 
-namespace Gandalan.Client.Contracts.Tiles
+namespace Gandalan.Client.Contracts.Tiles;
+
+public interface ITileManager
 {
-    public interface ITileManager
-    {
-        void AddTile(ITileItem tileItem);
-        List<ITileItemGroup> GetTileGroups();
-    }
+    void AddTile(ITileItem tileItem);
+    List<ITileItemGroup> GetTileGroups();
 }

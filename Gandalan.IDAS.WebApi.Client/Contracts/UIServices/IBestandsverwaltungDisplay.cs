@@ -1,8 +1,7 @@
-﻿namespace Gandalan.Client.Contracts.UIServices
+﻿namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IBestandsverwaltungDisplay
 {
-    public interface IBestandsverwaltungDisplay
-    {
-        void DisplayBestandsverwaltung();
-        void DisplayBestandsverwaltung(string pfad);
-    }
+    void DisplayBestandsverwaltung();
+    void DisplayBestandsverwaltung(string pfad);
 }

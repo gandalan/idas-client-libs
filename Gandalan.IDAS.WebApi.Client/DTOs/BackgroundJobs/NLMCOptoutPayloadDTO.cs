@@ -1,7 +1,6 @@
-﻿namespace Gandalan.IDAS.WebApi.DTO
+﻿namespace Gandalan.IDAS.WebApi.DTO;
+
+public class NLMCOptoutPayloadDTO : INLMCPayloadDTO
 {
-    public class NLMCOptoutPayloadDTO : INLMCPayloadDTO
-    {
-        public string EmailAddresse { get; set; }
-    }
+    public string EmailAddresse { get; set; }
 }

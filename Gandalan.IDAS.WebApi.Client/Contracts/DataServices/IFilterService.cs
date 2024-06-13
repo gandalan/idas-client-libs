@@ -2,14 +2,13 @@
 using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.DTO.DTOs.Filter;
 
-namespace Gandalan.Client.Contracts.DataServices
+namespace Gandalan.Client.Contracts.DataServices;
+
+public interface IFilterService
 {
-    public interface IFilterService
-    {
-        Task<FilterItemDTO[]> GetAllAsync();
-        Task<FilterItemDTO> GetFilterItemAsync(Guid id);
-        Task<FilterItemDTO[]> GetFilterItemsByContextAsync(string context);
-        Task SaveAsync(FilterItemDTO dto);
-        Task DeleteAsync(Guid id);
-    }
+    Task<FilterItemDTO[]> GetAllAsync();
+    Task<FilterItemDTO> GetFilterItemAsync(Guid id);
+    Task<FilterItemDTO[]> GetFilterItemsByContextAsync(string context);
+    Task SaveAsync(FilterItemDTO dto);
+    Task DeleteAsync(Guid id);
 }

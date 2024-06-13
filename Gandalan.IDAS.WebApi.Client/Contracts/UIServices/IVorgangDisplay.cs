@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Contracts.UIServices
+namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IVorgangDisplay
 {
-    public interface IVorgangDisplay
-    {
-        Task DisplayVorgang(Guid vorgangGuid, bool clearHistory = false, Func<Task> historyOverride = null);
-    }
+    Task DisplayVorgang(Guid vorgangGuid, bool clearHistory = false, Func<Task> historyOverride = null);
 }

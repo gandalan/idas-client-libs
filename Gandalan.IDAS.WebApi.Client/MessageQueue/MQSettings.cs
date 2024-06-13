@@ -1,17 +1,17 @@
 using System;
 
-namespace Gandalan.IDAS.WebApi.Client.MessageQueue
-{
-    public class MQSettings
-    {
-        public string Host { get; private set; }
-        public string User { get; private set; }
-        public string Password { get; private set; }
-        public string Exchange { get; private set; }
-        public string RoutingKey { get; private set; }
+namespace Gandalan.IDAS.WebApi.Client.MessageQueue;
 
-        public MQSettings(string connectionString)
-        {
+public class MQSettings
+{
+    public string Host { get; private set; }
+    public string User { get; private set; }
+    public string Password { get; private set; }
+    public string Exchange { get; private set; }
+    public string RoutingKey { get; private set; }
+
+    public MQSettings(string connectionString)
+    {
             if (string.IsNullOrEmpty(connectionString))
             {
                 throw new InvalidOperationException("Message Queue settings must not be null/empty");
@@ -40,5 +40,4 @@ namespace Gandalan.IDAS.WebApi.Client.MessageQueue
                 throw new InvalidOperationException("Invalid trace settings in web.config, invalid URI!");
             }
         }
-    }
 }

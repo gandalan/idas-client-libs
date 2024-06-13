@@ -2,12 +2,12 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Gandalan.IDAS.WebApi.Util
+namespace Gandalan.IDAS.WebApi.Util;
+
+public class CustomResolverForSync : DefaultContractResolver
 {
-    public class CustomResolverForSync : DefaultContractResolver
+    protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
     {
-        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
-        {
             var prop = base.CreateProperty(member, memberSerialization);
             if (prop.PropertyType.IsClass && prop.PropertyType != typeof(string))
             {
@@ -16,5 +16,4 @@ namespace Gandalan.IDAS.WebApi.Util
 
             return prop;
         }
-    }
 }

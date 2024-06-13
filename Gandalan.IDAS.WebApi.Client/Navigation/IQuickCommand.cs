@@ -1,14 +1,13 @@
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Contracts.Navigation
-{
-    public interface IQuickCommand
-    {
-        string Group { get; }
-        string Caption { get; }
-        object Icon { get; }
-        int Order { get; }
+namespace Gandalan.Client.Contracts.Navigation;
 
-        Task ExecuteAsync(object parameter);
-    }
+public interface IQuickCommand
+{
+    string Group { get; }
+    string Caption { get; }
+    object Icon { get; }
+    int Order { get; }
+
+    Task ExecuteAsync(object parameter);
 }

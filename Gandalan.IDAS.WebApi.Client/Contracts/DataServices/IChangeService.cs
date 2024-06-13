@@ -2,10 +2,9 @@ using System;
 using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.Data.DTOs.Update;
 
-namespace Gandalan.Client.Contracts.DataServices
+namespace Gandalan.Client.Contracts.DataServices;
+
+public interface IChangeService
 {
-    public interface IChangeService
-    {
-        Task<ChangeDTO[]> GetAll(string typeName, DateTime changedSince);
-    }
+    Task<ChangeDTO[]> GetAll(string typeName, DateTime changedSince);
 }

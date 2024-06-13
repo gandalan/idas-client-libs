@@ -3,14 +3,14 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.WebApi.Util
-{
-    public class VarianteComparerByNeherName : IComparer<VarianteDTO>
-    {
-        private static readonly Regex _variantenNameRex = new(@"(?:[a-zA-Z]{1,3}|\d{1,3}|\.[a-zA-Z]{1,3})\s*", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+namespace Gandalan.IDAS.WebApi.Util;
 
-        public int Compare(VarianteDTO x, VarianteDTO y)
-        {
+public class VarianteComparerByNeherName : IComparer<VarianteDTO>
+{
+    private static readonly Regex _variantenNameRex = new(@"(?:[a-zA-Z]{1,3}|\d{1,3}|\.[a-zA-Z]{1,3})\s*", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+    public int Compare(VarianteDTO x, VarianteDTO y)
+    {
             var partsX = _variantenNameRex.Matches(x.Name.ToLower()).Cast<Match>().Select(m => m.Value).ToArray();
             var partsY = _variantenNameRex.Matches(y.Name.ToLower()).Cast<Match>().Select(m => m.Value).ToArray();
 
@@ -64,23 +64,23 @@ namespace Gandalan.IDAS.WebApi.Util
             return wertA - wertB;
         }
 
-        private static int GetAbart(string p)
-        {
+    private static int GetAbart(string p)
+    {
             return !string.IsNullOrEmpty(p) ? 50 : 0;
         }
 
-        private static int GetProduktWert(string p)
-        {
+    private static int GetProduktWert(string p)
+    {
             return int.TryParse(p, out var result) ? result : 99;
         }
 
-        private static int GetGruppenWert(string p)
-        {
+    private static int GetGruppenWert(string p)
+    {
             return int.TryParse(p, out var result) ? result * 100 : 999;
         }
 
-        private static int GetFamilienWert(string p)
-        {
+    private static int GetFamilienWert(string p)
+    {
             int result;
             switch (p.ToLower().Trim())
             {
@@ -107,5 +107,4 @@ namespace Gandalan.IDAS.WebApi.Util
 
             return result;
         }
-    }
 }
