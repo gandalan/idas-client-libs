@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Contracts.UIServices
+namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IVorgangListeDisplay
 {
-    public interface IVorgangListeDisplay
-    {
-        Task DisplayVorgaenge();
-        Task DisplayVorgaengeByKunde(Guid kundeGuid);
-    }
+    Task DisplayVorgaenge();
+    Task DisplayVorgaengeByKunde(Guid kundeGuid);
 }

@@ -2,17 +2,17 @@ using System;
 using System.Globalization;
 using System.Reflection;
 
-namespace Gandalan.IDAS.WebApi.Client.DTOs.API
-{
-    public class ApiVersionDTO
-    {
-        public string Version { get; set; }
-        public string Environment { get; set; }
-        public string BuildTime { get; set; }
-        public string ReleaseTime { get; set; }
+namespace Gandalan.IDAS.WebApi.Client.DTOs.API;
 
-        public static ApiVersionDTO FromAssembly(Assembly assembly)
-        {
+public class ApiVersionDTO
+{
+    public string Version { get; set; }
+    public string Environment { get; set; }
+    public string BuildTime { get; set; }
+    public string ReleaseTime { get; set; }
+
+    public static ApiVersionDTO FromAssembly(Assembly assembly)
+    {
             var deploymentTime = System.Environment.GetEnvironmentVariable("RELEASE_DEPLOYMENT_STARTTIME");
             var informationalVersion = System.Environment.GetEnvironmentVariable("GDL_InformationalVersion") ?? System.Environment.GetEnvironmentVariable("GDL.InformationalVersion");
 
@@ -25,11 +25,11 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.API
             };
         }
 
-        /// <summary>
-        /// Assembly description should contain the build date in following format: <code>"BuildDate=2023-01-11 16:09:51Z;"</code>
-        /// </summary>
-        private static string ExtractBuildTimeFromAssembly(Assembly assembly)
-        {
+    /// <summary>
+    /// Assembly description should contain the build date in following format: <code>"BuildDate=2023-01-11 16:09:51Z;"</code>
+    /// </summary>
+    private static string ExtractBuildTimeFromAssembly(Assembly assembly)
+    {
             var description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>()?.Description;
 
             if (string.IsNullOrEmpty(description) || !description.Contains("BuildDate="))
@@ -53,5 +53,4 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.API
 
             return date.ToString("yyyy-MM-dd HH:mm:ssK");
         }
-    }
 }

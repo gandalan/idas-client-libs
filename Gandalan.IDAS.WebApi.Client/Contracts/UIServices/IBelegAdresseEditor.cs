@@ -1,10 +1,9 @@
 using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.Client.Contracts.UIServices
+namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IBelegAdresseEditor
 {
-    public interface IBelegAdresseEditor
-    {
-        Task<BeleganschriftDTO> EditAdresse(BeleganschriftDTO dto, KontaktDTO kontaktDto);
-    }
+    Task<BeleganschriftDTO> EditAdresse(BeleganschriftDTO dto, KontaktDTO kontaktDto);
 }

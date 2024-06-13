@@ -1,7 +1,6 @@
-﻿namespace Gandalan.Client.Contracts.UIServices
+﻿namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IProgramSettingsEditor
 {
-    public interface IProgramSettingsEditor
-    {
-        void Show();
-    }
+    void Show();
 }

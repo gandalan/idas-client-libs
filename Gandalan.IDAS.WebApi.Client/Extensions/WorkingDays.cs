@@ -1,9 +1,9 @@
-namespace System
+namespace System;
+
+public static class WorkingDays
 {
-    public static class WorkingDays
+    public static DateTime AddWorkingDays(this DateTime datum, int days)
     {
-        public static DateTime AddWorkingDays(this DateTime datum, int days)
-        {
             var direction = days < 0 ? -1 : 1;
             var count = Math.Abs(days);
 
@@ -19,8 +19,8 @@ namespace System
             return datum;
         }
 
-        public static DateTime AddWorkingHours(this DateTime datum, int hours)
-        {
+    public static DateTime AddWorkingHours(this DateTime datum, int hours)
+    {
             datum = datum.AddHours(hours);
 
             while (datum.DayOfWeek == DayOfWeek.Saturday || datum.DayOfWeek == DayOfWeek.Sunday)
@@ -30,5 +30,4 @@ namespace System
 
             return datum;
         }
-    }
 }

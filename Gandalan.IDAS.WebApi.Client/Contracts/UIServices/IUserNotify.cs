@@ -1,17 +1,16 @@
 ﻿using System;
 
-namespace Gandalan.Client.Contracts.UIServices
+namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IUserNotify
 {
-    public interface IUserNotify
-    {
-        bool Active { get; set; }
-        bool StickyActive { get; set; }
-        UserNotifyMessageType MessageType { get; }
+    bool Active { get; set; }
+    bool StickyActive { get; set; }
+    UserNotifyMessageType MessageType { get; }
 
-        void ShowException(Exception ex);
-        void ShowMessage(string message, UserNotifyMessageType type, bool sticky = false);
-        void ClearMessage();
+    void ShowException(Exception ex);
+    void ShowMessage(string message, UserNotifyMessageType type, bool sticky = false);
+    void ClearMessage();
 
-        event EventHandler NotificationChanged;
-    }
+    event EventHandler NotificationChanged;
 }

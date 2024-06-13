@@ -1,12 +1,11 @@
-﻿namespace Gandalan.Client.Contracts.UIServices
-{
-    public interface IFileDisplay
-    {
-        void DisplayFile(string path, string caption);
-    }
+﻿namespace Gandalan.Client.Contracts.UIServices;
 
-    public interface IFileDisplayContainer
-    {
-        void SetControl(object control);
-    }
+public interface IFileDisplay
+{
+    void DisplayFile(string path, string caption);
+}
+
+public interface IFileDisplayContainer
+{
+    void SetControl(object control);
 }

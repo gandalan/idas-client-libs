@@ -2,17 +2,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Gandalan.IDAS.WebApi.Util.gSQL
+namespace Gandalan.IDAS.WebApi.Util.gSQL;
+
+public class gSQLImporter
 {
-    public class gSQLImporter
+    /// <summary>
+    /// Import from GSQL file
+    /// </summary>
+    /// <param name="fileName"></param>
+    /// <param name="encoding">Use Encoding.Default if null</param>
+    public static gSQLInhalt ImportFromFile(string fileName, Encoding encoding = null)
     {
-        /// <summary>
-        /// Import from GSQL file
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="encoding">Use Encoding.Default if null</param>
-        public static gSQLInhalt ImportFromFile(string fileName, Encoding encoding = null)
-        {
             if (encoding == null)
             {
                 encoding = Encoding.Default;
@@ -27,13 +27,13 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
             return Import(zeilen);
         }
 
-        /// <summary>
-        /// Import from gSQLInhalt data
-        /// </summary>
-        /// <param name="gsqlData"></param>
-        /// <param name="encoding">Use Encoding.Default if null</param>
-        public static gSQLInhalt ImportFromGsqlInhalt(gSQLInhalt gsqlData, Encoding encoding = null)
-        {
+    /// <summary>
+    /// Import from gSQLInhalt data
+    /// </summary>
+    /// <param name="gsqlData"></param>
+    /// <param name="encoding">Use Encoding.Default if null</param>
+    public static gSQLInhalt ImportFromGsqlInhalt(gSQLInhalt gsqlData, Encoding encoding = null)
+    {
             if (encoding == null)
             {
                 encoding = Encoding.Default;
@@ -45,8 +45,8 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
             return Import(zeilen);
         }
 
-        private static gSQLInhalt Import(IEnumerable<string> zeilen)
-        {
+    private static gSQLInhalt Import(IEnumerable<string> zeilen)
+    {
             var result = new gSQLInhalt();
             gSQLSektion aktuelleSektion = null;
             var doppelPunktPosition = 60;
@@ -89,8 +89,8 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
             return result;
         }
 
-        private static IEnumerable<string> ReadLines(Stream stream, Encoding encoding)
-        {
+    private static IEnumerable<string> ReadLines(Stream stream, Encoding encoding)
+    {
             var lines = new List<string>();
 
             using (var reader = new StreamReader(stream, encoding))
@@ -103,5 +103,4 @@ namespace Gandalan.IDAS.WebApi.Util.gSQL
 
             return lines;
         }
-    }
 }

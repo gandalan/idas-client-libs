@@ -1,6 +1,5 @@
-﻿namespace Gandalan.IDAS.Contracts.Benutzer
+﻿namespace Gandalan.IDAS.Contracts.Benutzer;
+
+public interface IBenutzerBase
 {
-    public interface IBenutzerBase
-    {
-    }
 }

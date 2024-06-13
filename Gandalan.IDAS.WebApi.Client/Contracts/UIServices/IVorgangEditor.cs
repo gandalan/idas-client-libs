@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Contracts.UIServices
+namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IVorgangEditor
 {
-    public interface IVorgangEditor
-    {
-        Task EditVorgang(Guid VorgangGuid);
-        Task AddVorgang();
-        Task AddVorgang(Guid KundeGuid);
-    }
+    Task EditVorgang(Guid VorgangGuid);
+    Task AddVorgang();
+    Task AddVorgang(Guid KundeGuid);
 }

@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 
-namespace Gandalan.IDAS.WebApi.DTO
+namespace Gandalan.IDAS.WebApi.DTO;
+
+public class SerieAuslastungDTO
 {
-    public class SerieAuslastungDTO
+    public SerieAuslastungDTO()
     {
-        public SerieAuslastungDTO()
-        {
         }
 
-        public SerieAuslastungDTO(VirtualSerieWithAuslastungDTO dto)
-        {
+    public SerieAuslastungDTO(VirtualSerieWithAuslastungDTO dto)
+    {
             Produktfamilie = "Summe:";
             IstSumme = true;
             foreach (var vAuslastung in dto.Auslastungen)
@@ -26,8 +26,8 @@ namespace Gandalan.IDAS.WebApi.DTO
             }
         }
 
-        public SerieAuslastungDTO(IList<SerieAuslastungDTO> value)
-        {
+    public SerieAuslastungDTO(IList<SerieAuslastungDTO> value)
+    {
             Produktfamilie = "Summe:";
             IstSumme = true;
             foreach (var vAuslastung in value)
@@ -44,16 +44,15 @@ namespace Gandalan.IDAS.WebApi.DTO
             }
         }
 
-        public bool IstSumme { get; set; }
-        public string Produktfamilie { get; set; }
-        public int Anzahl { get; set; }
-        public int Reserviert { get; set; }
-        public decimal Arbeitsminuten { get; set; }
-        public decimal ArbeitsminutenReserviert { get; set; }
-        public decimal Elementgewicht { get; set; }
-        public decimal ElementgewichtReserviert { get; set; }
-        public int AnzahlMax { get; set; }
-        public decimal KapazitaetBelegt { get; set; }
-        public decimal KapazitaetMax { get; set; }
-    }
+    public bool IstSumme { get; set; }
+    public string Produktfamilie { get; set; }
+    public int Anzahl { get; set; }
+    public int Reserviert { get; set; }
+    public decimal Arbeitsminuten { get; set; }
+    public decimal ArbeitsminutenReserviert { get; set; }
+    public decimal Elementgewicht { get; set; }
+    public decimal ElementgewichtReserviert { get; set; }
+    public int AnzahlMax { get; set; }
+    public decimal KapazitaetBelegt { get; set; }
+    public decimal KapazitaetMax { get; set; }
 }

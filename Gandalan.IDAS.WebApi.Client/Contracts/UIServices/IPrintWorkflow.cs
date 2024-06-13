@@ -1,6 +1,5 @@
-﻿namespace Gandalan.Client.Contracts.UIServices
+﻿namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IPrintWorkflow : IUIWorkflow<IPrintWorkflowData>
 {
-    public interface IPrintWorkflow : IUIWorkflow<IPrintWorkflowData>
-    {
-    }
 }

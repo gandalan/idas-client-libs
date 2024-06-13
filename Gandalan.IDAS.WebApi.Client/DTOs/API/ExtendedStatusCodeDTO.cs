@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Gandalan.IDAS.WebApi.DTO.API
+namespace Gandalan.IDAS.WebApi.DTO.API;
+
+public class ExtendedStatusCodeDTO
 {
-    public class ExtendedStatusCodeDTO
-    {
-        public Exception Exception { get; set; }
-        public string Info { get; set; }
-    }
+    public Exception Exception { get; set; }
+    public string Info { get; set; }
 }

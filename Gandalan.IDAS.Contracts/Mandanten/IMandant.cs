@@ -1,8 +1,7 @@
 using Gandalan.IDAS.Contracts.ChangeTracking;
 
-namespace Gandalan.IDAS.Contracts.Mandanten
+namespace Gandalan.IDAS.Contracts.Mandanten;
+
+public interface IMandant : IVersionable
 {
-    public interface IMandant : IVersionable
-    {
-    }
 }

@@ -8,30 +8,30 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.Client;
 using Newtonsoft.Json;
 
-namespace Gandalan.IDAS.Web
+namespace Gandalan.IDAS.Web;
+
+/// <summary>
+/// Klasse für den HTTP-Datentransfer per REST an unsere WebAPIs. Ermöglicht das Senden
+/// und Empfangen von Objekten. Die Übermittlung erfolgt mit JSON serialisierten Objekten.
+/// </summary>
+public class RESTRoutinen : IDisposable
 {
-    /// <summary>
-    /// Klasse für den HTTP-Datentransfer per REST an unsere WebAPIs. Ermöglicht das Senden
-    /// und Empfangen von Objekten. Die Übermittlung erfolgt mit JSON serialisierten Objekten.
-    /// </summary>
-    public class RESTRoutinen : IDisposable
+    private readonly HttpClientConfig _config;
+    private readonly HttpClient _client;
+    private readonly Dictionary<string, HttpClient> _versionClients = [];
+
+    #region Constructors
+
+    public RESTRoutinen(string baseUrl)
     {
-        private readonly HttpClientConfig _config;
-        private readonly HttpClient _client;
-        private readonly Dictionary<string, HttpClient> _versionClients = [];
-
-        #region Constructors
-
-        public RESTRoutinen(string baseUrl)
-        {
             _client = HttpClientFactory.GetInstance(new HttpClientConfig
             {
                 BaseUrl = baseUrl
             });
         }
 
-        public RESTRoutinen(string baseUrl, IWebProxy proxy)
-        {
+    public RESTRoutinen(string baseUrl, IWebProxy proxy)
+    {
             _client = HttpClientFactory.GetInstance(new HttpClientConfig
             {
                 BaseUrl = baseUrl,
@@ -39,40 +39,40 @@ namespace Gandalan.IDAS.Web
             });
         }
 
-        public RESTRoutinen(HttpClientConfig config)
-        {
+    public RESTRoutinen(HttpClientConfig config)
+    {
             _config = config;
             _client = HttpClientFactory.GetInstance(config);
         }
 
-        #endregion Constructors
+    #endregion Constructors
 
-        public string UserAgent
+    public string UserAgent
+    {
+        set
         {
-            set
-            {
                 _client.DefaultRequestHeaders.UserAgent.Clear();
                 _client.DefaultRequestHeaders.UserAgent.TryParseAdd(value);
             }
-        }
+    }
 
-        #region public Methods
+    #region public Methods
 
-        /// <summary>
-        /// Holt ein Objekt per HTTP GET
-        /// </summary>
-        /// <typeparam name="T">Typsierungsparameter</typeparam>
-        /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
-        /// <param name="settings"></param>
-        /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
-        /// <returns>Objektinstanz</returns>
-        public async Task<T> GetAsync<T>(string url, JsonSerializerSettings settings = null, string version = null)
-        {
+    /// <summary>
+    /// Holt ein Objekt per HTTP GET
+    /// </summary>
+    /// <typeparam name="T">Typsierungsparameter</typeparam>
+    /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
+    /// <param name="settings"></param>
+    /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
+    /// <returns>Objektinstanz</returns>
+    public async Task<T> GetAsync<T>(string url, JsonSerializerSettings settings = null, string version = null)
+    {
             return JsonConvert.DeserializeObject<T>(await GetAsync(url, version), settings);
         }
 
-        public async Task<string> GetAsync(string url, string version = null)
-        {
+    public async Task<string> GetAsync(string url, string version = null)
+    {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
@@ -91,8 +91,8 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        public async Task<byte[]> GetDataAsync(string url, string version = null)
-        {
+    public async Task<byte[]> GetDataAsync(string url, string version = null)
+    {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
@@ -110,22 +110,22 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        /// <summary>
-        /// Sendet ein Objekt per HTTP POST an die angegebene URL, i.d.R. um es zu speichern
-        /// </summary>
-        /// <typeparam name="T">Typisierungsparameter</typeparam>
-        /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
-        /// <param name="data">zu sendendes Objekt</param>
-        /// <param name="settings"></param>
-        /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
-        /// <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
-        public async Task<T> PostAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
-        {
+    /// <summary>
+    /// Sendet ein Objekt per HTTP POST an die angegebene URL, i.d.R. um es zu speichern
+    /// </summary>
+    /// <typeparam name="T">Typisierungsparameter</typeparam>
+    /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
+    /// <param name="data">zu sendendes Objekt</param>
+    /// <param name="settings"></param>
+    /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
+    /// <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
+    public async Task<T> PostAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
+    {
             return JsonConvert.DeserializeObject<T>(await PostAsync(url, data, settings, version: version), settings);
         }
 
-        public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
-        {
+    public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
+    {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
@@ -144,8 +144,8 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        public async Task<byte[]> PostDataAsync(string url, byte[] data, string version = null)
-        {
+    public async Task<byte[]> PostDataAsync(string url, byte[] data, string version = null)
+    {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
@@ -163,8 +163,8 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        public async Task<byte[]> PostDataAsync(string url, HttpContent data, string version = null)
-        {
+    public async Task<byte[]> PostDataAsync(string url, HttpContent data, string version = null)
+    {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
@@ -182,22 +182,22 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        /// <summary>
-        /// Sendet ein Objekt per HTTP PUT an die angegebene URL, i.d.R. um es anzulegen
-        /// </summary>
-        /// <typeparam name="T">Typisierungsparameter</typeparam>
-        /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
-        /// <param name="data">zu sendendes Objekt</param>
-        /// <param name="settings"></param>
-        /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
-        /// <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
-        public async Task<T> PutAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
-        {
+    /// <summary>
+    /// Sendet ein Objekt per HTTP PUT an die angegebene URL, i.d.R. um es anzulegen
+    /// </summary>
+    /// <typeparam name="T">Typisierungsparameter</typeparam>
+    /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
+    /// <param name="data">zu sendendes Objekt</param>
+    /// <param name="settings"></param>
+    /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
+    /// <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
+    public async Task<T> PutAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
+    {
             return JsonConvert.DeserializeObject<T>(await PutAsync(url, data, settings, version: version), settings);
         }
 
-        public async Task<string> PutAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
-        {
+    public async Task<string> PutAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
+    {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
@@ -216,8 +216,8 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        public async Task<byte[]> PutDataAsync(string url, byte[] data, string version = null)
-        {
+    public async Task<byte[]> PutDataAsync(string url, byte[] data, string version = null)
+    {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
@@ -234,8 +234,8 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        public async Task<byte[]> PutDataAsync(string url, HttpContent data, string version = null)
-        {
+    public async Task<byte[]> PutDataAsync(string url, HttpContent data, string version = null)
+    {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
@@ -252,14 +252,14 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        /// <summary>
-        /// Löscht ein Objekt per HTTP DELETE an die angegebene URL
-        /// </summary>
-        /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
-        /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
-        /// <returns>Antwort des Servers als String</returns>
-        public async Task DeleteAsync(string url, string version = null)
-        {
+    /// <summary>
+    /// Löscht ein Objekt per HTTP DELETE an die angegebene URL
+    /// </summary>
+    /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
+    /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
+    /// <returns>Antwort des Servers als String</returns>
+    public async Task DeleteAsync(string url, string version = null)
+    {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
@@ -276,8 +276,8 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        public async Task<string> DeleteAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
-        {
+    public async Task<string> DeleteAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
+    {
             string contentAsString = null;
             HttpResponseMessage response = null;
             try
@@ -302,17 +302,17 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        public async Task<T> DeleteAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
-        {
+    public async Task<T> DeleteAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
+    {
             return JsonConvert.DeserializeObject<T>(await DeleteAsync(url, data, settings, version: version), settings);
         }
 
-        #endregion
+    #endregion
 
-        #region private Methods
+    #region private Methods
 
-        private static void AddInfoToException(Exception ex, string url, HttpResponseMessage response = null, string responseContent = null, [CallerMemberName] string sender = null)
-        {
+    private static void AddInfoToException(Exception ex, string url, HttpResponseMessage response = null, string responseContent = null, [CallerMemberName] string sender = null)
+    {
             ex.Data.Add("URL", url);
             ex.Data.Add("CallMethod", sender);
             ex.Data.Add("StatusCode", response?.StatusCode ?? HttpStatusCode.InternalServerError);
@@ -322,14 +322,14 @@ namespace Gandalan.IDAS.Web
             }
         }
 
-        #endregion
+    #endregion
 
-        public void Dispose()
-        {
+    public void Dispose()
+    {
         }
 
-        public HttpClient GetClientByVersion(string version = null)
-        {
+    public HttpClient GetClientByVersion(string version = null)
+    {
             if (version == null || _config == null)
             {
                 return _client;
@@ -346,5 +346,4 @@ namespace Gandalan.IDAS.Web
 
             return versionClient;
         }
-    }
 }

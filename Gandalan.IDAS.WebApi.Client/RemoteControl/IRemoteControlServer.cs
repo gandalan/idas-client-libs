@@ -1,8 +1,7 @@
-namespace Gandalan.Client.Contracts.RemoteControl
+namespace Gandalan.Client.Contracts.RemoteControl;
+
+public interface IRemoteControlServer
 {
-    public interface IRemoteControlServer
-    {
-        void Start();
-        void Stop();
-    }
+    void Start();
+    void Stop();
 }

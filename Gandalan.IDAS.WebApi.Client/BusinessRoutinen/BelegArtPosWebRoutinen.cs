@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
+namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
+
+public class BelegArtPosWebRoutinen : WebRoutinenBase
 {
-    public class BelegArtPosWebRoutinen : WebRoutinenBase
+    public BelegArtPosWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        public BelegArtPosWebRoutinen(IWebApiConfig settings) : base(settings)
-        {
         }
 
-        public async Task<VorgangDTO> BelegWechselAsync(BelegartWechselDTO dto) => await PutAsync<VorgangDTO>("BelegArtPos", dto);
-    }
+    public async Task<VorgangDTO> BelegWechselAsync(BelegartWechselDTO dto) => await PutAsync<VorgangDTO>("BelegArtPos", dto);
 }
