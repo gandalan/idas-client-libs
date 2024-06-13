@@ -16,3 +16,6 @@ import { IDASFactory } from "./api/IDAS";
 import { RESTClient } from "./api/RESTClient";
 import { initIDAS } from "./api/authUtils";
 export { IDASFactory, RESTClient, initIDAS };
+
+import { api, authBuilder, fetchEnv, getRefreshToken, idasApi } from "./api/fluentApi";
+export { api, authBuilder, fetchEnv, getRefreshToken, idasApi };
