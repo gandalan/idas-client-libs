@@ -12,10 +12,13 @@ export {
     AddButton, RemoveButton, SaveButton,
 }
 
-import { IDASFactory } from "./api/IDAS";
-import { RESTClient } from "./api/RESTClient";
-import { initIDAS } from "./api/authUtils";
-export { IDASFactory, RESTClient, initIDAS };
+export { IDASFactory } from "./api/IDAS";
+export { RESTClient } from "./api/RESTClient";
+export { initIDAS } from "./api/authUtils";
+export { api, authBuilder, fetchEnv, getRefreshToken, idasApi } from "./api/fluentApi";
 
-import { api, authBuilder, fetchEnv, getRefreshToken, idasApi } from "./api/fluentApi";
-export { api, authBuilder, fetchEnv, getRefreshToken, idasApi };
+let counter = 0;
+
+export function helloWorld() {
+    alert('Hello World' + counter++);
+}
