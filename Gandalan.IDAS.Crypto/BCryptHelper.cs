@@ -1,18 +1,17 @@
-namespace Gandalan.IDAS.Crypto
+namespace Gandalan.IDAS.Crypto;
+
+/// <summary>
+/// Klasse für die Ver-/Entschlüsselung von Strings mit BCrypt
+/// </summary>
+public class BCryptHelper
 {
     /// <summary>
-    /// Klasse für die Ver-/Entschlüsselung von Strings mit BCrypt
+    /// Erzeugt einen BCrypt-Hash eines Strings (OpenBSD-Schmema, generierter Salt)
     /// </summary>
-    public class BCryptHelper
+    /// <param name="text">zu hashender String</param>
+    /// <returns>gehashtes Ergebnis</returns>
+    public static string GetBCryptHash(string text)
     {
-        /// <summary>
-        /// Erzeugt einen BCrypt-Hash eines Strings (OpenBSD-Schmema, generierter Salt)
-        /// </summary>
-        /// <param name="text">zu hashender String</param>
-        /// <returns>gehashtes Ergebnis</returns>
-        public static string GetBCryptHash(string text)
-        {
-            return BCrypt.Net.BCrypt.HashPassword(text);
-        }
+        return BCrypt.Net.BCrypt.HashPassword(text);
     }
 }

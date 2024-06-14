@@ -1,10 +1,9 @@
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.Client.Contracts.ProduktionsServices
+namespace Gandalan.Client.Contracts.ProduktionsServices;
+
+public interface IProduktionsFreigabeService
 {
-    public interface IProduktionsFreigabeService
-    {
-        void BelegFreigabe(BelegDTO belegDTO);
-        void PositionsFreigabe(BelegPositionDTO pos);
-    }
+    void BelegFreigabe(BelegDTO belegDTO);
+    void PositionsFreigabe(BelegPositionDTO pos);
 }

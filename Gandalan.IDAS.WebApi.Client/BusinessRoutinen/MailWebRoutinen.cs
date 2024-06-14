@@ -7,16 +7,16 @@ using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Mail;
 using Newtonsoft.Json;
 
-namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
+namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
+
+public class MailWebRoutinen : WebRoutinenBase
 {
-    public class MailWebRoutinen : WebRoutinenBase
+    public MailWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        public MailWebRoutinen(IWebApiConfig settings) : base(settings)
-        {
         }
 
-        public async Task<JobStatusResponseDTO> Send(MailJobInfo job, List<string> attachments)
-        {
+    public async Task<JobStatusResponseDTO> Send(MailJobInfo job, List<string> attachments)
+    {
             var content = new MultipartFormDataContent
             {
                 { new StringContent(JsonConvert.SerializeObject(job)), "jobAsString" }
@@ -38,28 +38,27 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             //return response;
         }
 
-        public async Task<IList<JobStatusEntryDTO>> GetStatus(Guid guid) =>
-            await GetAsync<IList<JobStatusEntryDTO>>($"Mail/{guid}");
-    }
+    public async Task<IList<JobStatusEntryDTO>> GetStatus(Guid guid) =>
+        await GetAsync<IList<JobStatusEntryDTO>>($"Mail/{guid}");
+}
 
-    public sealed class JobStatusEntryDTO
+public sealed class JobStatusEntryDTO
+{
+    public Guid JobGuid { get; set; }
+    public DateTime Timestamp { get; set; }
+    public string StatusText { get; set; }
+    public Guid RowKey { get; private set; }
+
+    public JobStatusEntryDTO(Guid jobGuid, string statusText)
     {
-        public Guid JobGuid { get; set; }
-        public DateTime Timestamp { get; set; }
-        public string StatusText { get; set; }
-        public Guid RowKey { get; private set; }
-
-        public JobStatusEntryDTO(Guid jobGuid, string statusText)
-        {
             JobGuid = jobGuid;
             RowKey = Guid.NewGuid();
             StatusText = statusText;
             Timestamp = DateTime.UtcNow;
         }
-    }
+}
 
-    public sealed class JobStatusResponseDTO
-    {
-        public Guid JobGuid { get; set; }
-    }
+public sealed class JobStatusResponseDTO
+{
+    public Guid JobGuid { get; set; }
 }

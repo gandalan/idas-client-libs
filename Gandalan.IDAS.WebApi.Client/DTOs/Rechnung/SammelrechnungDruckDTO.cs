@@ -5,40 +5,40 @@ using System.Linq;
 using Gandalan.IDAS.WebApi.DTO;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
+namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
+
+public class SammelrechnungDruckDTO
 {
-    public class SammelrechnungDruckDTO
+    public Guid SammelrechnungGuid { get; set; }
+    public long SammelrechnungNummer { get; set; }
+
+    // Wird nur für den Druck verwendet, damit beim automatischen Export die Rechnungsnummer mit im Dateinamen ausgegeben wird
+    public long Vorgangnummer { get; set; }
+    public long Belegnummer { get; set; }
+    public KontaktDTO Kunde { get; set; }
+    public string ErstellDatum { get; set; }
+    public string Kopfzeile { get; set; }
+    public string Fusszeile { get; set; }
+    public string Schlusstext { get; set; }
+    public string PageTitle { get; set; }
+    public string PageSubtitle1 { get; set; }
+    public string PageSubtitle2 { get; set; }
+    public string Ansprechpartner { get; set; }
+    public string Telefonnummer { get; set; }
+    public string Lieferzeit { get; set; }
+    public AdresseDruckDTO RechnungsAdresse { get; set; }
+    public string RechnungsAdresseString { get; set; }
+    public IList<SammelrechnungPositionDruckDTO> RechnungPositionen { get; set; }
+    public IList<SammelrechnungSaldoDruckDTO> Salden { get; set; }
+    public int CountValuePositionen { get; set; }
+    public int CountValueSalden { get; set; }
+    public bool IsEndkunde { get; set; }
+    public IList<BelegDruckDTO> EinzelrechnungDTOs { get; set; }
+    public string Belegart { get; set; } = "Sammelrechnung";
+    public string Ueberschrift { get; set; }
+
+    public SammelrechnungDruckDTO(SammelrechnungDTO sammelrechnung)
     {
-        public Guid SammelrechnungGuid { get; set; }
-        public long SammelrechnungNummer { get; set; }
-
-        // Wird nur für den Druck verwendet, damit beim automatischen Export die Rechnungsnummer mit im Dateinamen ausgegeben wird
-        public long Vorgangnummer { get; set; }
-        public long Belegnummer { get; set; }
-        public KontaktDTO Kunde { get; set; }
-        public string ErstellDatum { get; set; }
-        public string Kopfzeile { get; set; }
-        public string Fusszeile { get; set; }
-        public string Schlusstext { get; set; }
-        public string PageTitle { get; set; }
-        public string PageSubtitle1 { get; set; }
-        public string PageSubtitle2 { get; set; }
-        public string Ansprechpartner { get; set; }
-        public string Telefonnummer { get; set; }
-        public string Lieferzeit { get; set; }
-        public AdresseDruckDTO RechnungsAdresse { get; set; }
-        public string RechnungsAdresseString { get; set; }
-        public IList<SammelrechnungPositionDruckDTO> RechnungPositionen { get; set; }
-        public IList<SammelrechnungSaldoDruckDTO> Salden { get; set; }
-        public int CountValuePositionen { get; set; }
-        public int CountValueSalden { get; set; }
-        public bool IsEndkunde { get; set; }
-        public IList<BelegDruckDTO> EinzelrechnungDTOs { get; set; }
-        public string Belegart { get; set; } = "Sammelrechnung";
-        public string Ueberschrift { get; set; }
-
-        public SammelrechnungDruckDTO(SammelrechnungDTO sammelrechnung)
-        {
             var culture = new CultureInfo("de-de");
 
             SammelrechnungGuid = sammelrechnung.SammelrechnungGuid;
@@ -66,8 +66,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             EinzelrechnungDTOs = sammelrechnung.EinzelrechnungDTOs;
         }
 
-        private void SetTitleAndSubtitle(SammelrechnungDTO dto, CultureInfo culture)
-        {
+    private void SetTitleAndSubtitle(SammelrechnungDTO dto, CultureInfo culture)
+    {
             if (dto.PageTitle.IsNullOrEmpty())
             {
                 PageTitle = "Sammelrechnung";
@@ -80,21 +80,21 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
                 PageSubtitle2 = dto.PageSubtitle2;
             }
         }
-    }
+}
 
-    public class SammelrechnungPositionDruckDTO
+public class SammelrechnungPositionDruckDTO
+{
+    public int LaufendeNummer { get; set; }
+    public string RechnungNummer { get; set; }
+    public string RechnungDatum { get; set; }
+    public string VorgangsDatum { get; set; }
+    public string RechnungKommission { get; set; }
+    public string RechnungBetrag { get; set; }
+    public string Ueberschrift { get; set; }
+    public IList<SammelrechnungSaldoDruckDTO> RechnungSalden { get; set; }
+
+    public SammelrechnungPositionDruckDTO(SammelrechnungPositionenDTO position)
     {
-        public int LaufendeNummer { get; set; }
-        public string RechnungNummer { get; set; }
-        public string RechnungDatum { get; set; }
-        public string VorgangsDatum { get; set; }
-        public string RechnungKommission { get; set; }
-        public string RechnungBetrag { get; set; }
-        public string Ueberschrift { get; set; }
-        public IList<SammelrechnungSaldoDruckDTO> RechnungSalden { get; set; }
-
-        public SammelrechnungPositionDruckDTO(SammelrechnungPositionenDTO position)
-        {
             var culture = new CultureInfo("de-de");
 
             LaufendeNummer = position.LaufendeNummer;
@@ -106,8 +106,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             RechnungBetrag = warenwertSalde.Betrag.ToString(culture);
             RechnungSalden = SammelrechnungSaldoDruckDTO.ListFromDTOs(position.Salden);
         }
-        public static List<SammelrechnungPositionDruckDTO> ListFromDTOs(IList<SammelrechnungPositionenDTO> positionen)
-        {
+    public static List<SammelrechnungPositionDruckDTO> ListFromDTOs(IList<SammelrechnungPositionenDTO> positionen)
+    {
             var druckPositionen = new List<SammelrechnungPositionDruckDTO>();
             if (!positionen.IsNullOrEmpty())
             {
@@ -118,18 +118,18 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             }
             return druckPositionen.OrderBy(p => p.LaufendeNummer).ToList();
         }
-    }
+}
 
-    public class SammelrechnungSaldoDruckDTO
+public class SammelrechnungSaldoDruckDTO
+{
+    public int Reihenfolge { get; set; }
+    public string Text { get; set; }
+    public string Betrag { get; set; }
+    public string Rabatt { get; set; }
+    public bool IsLastElement { get; set; }
+
+    public SammelrechnungSaldoDruckDTO(SammelrechnungSaldenDTO saldo, bool isLastElement)
     {
-        public int Reihenfolge { get; set; }
-        public string Text { get; set; }
-        public string Betrag { get; set; }
-        public string Rabatt { get; set; }
-        public bool IsLastElement { get; set; }
-
-        public SammelrechnungSaldoDruckDTO(SammelrechnungSaldenDTO saldo, bool isLastElement)
-        {
             var culture = new CultureInfo("de-de");
 
             Reihenfolge = saldo.Reihenfolge;
@@ -139,8 +139,8 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             IsLastElement = isLastElement;
         }
 
-        public static List<SammelrechnungSaldoDruckDTO> ListFromDTOs(IList<SammelrechnungSaldenDTO> salden)
-        {
+    public static List<SammelrechnungSaldoDruckDTO> ListFromDTOs(IList<SammelrechnungSaldenDTO> salden)
+    {
             var druckSalden = new List<SammelrechnungSaldoDruckDTO>();
             if (!salden.IsNullOrEmpty())
             {
@@ -157,5 +157,4 @@ namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
             }
             return druckSalden.OrderBy(s => s.Reihenfolge).ToList();
         }
-    }
 }

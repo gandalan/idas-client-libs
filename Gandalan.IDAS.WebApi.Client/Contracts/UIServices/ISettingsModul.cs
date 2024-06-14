@@ -1,12 +1,11 @@
-﻿namespace Gandalan.Client.Contracts.UIServices
+﻿namespace Gandalan.Client.Contracts.UIServices;
+
+public interface ISettingsModul
 {
-    public interface ISettingsModul
-    {
-        string Name { get; }
-        string Beschreibung { get; }
-        object Control { get; }
-        bool HasErrors();
-        void SetData(object data);
-        int OrderId { get; }
-    }
+    string Name { get; }
+    string Beschreibung { get; }
+    object Control { get; }
+    bool HasErrors();
+    void SetData(object data);
+    int OrderId { get; }
 }

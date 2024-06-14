@@ -1,8 +1,7 @@
-﻿namespace Gandalan.Client.Contracts.UIServices
+﻿namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IBeschichtungDisplay
 {
-    public interface IBeschichtungDisplay
-    {
-        void DisplayBeschichtung();
-        void DisplayBeschichtung(string pfad);
-    }
+    void DisplayBeschichtung();
+    void DisplayBeschichtung(string pfad);
 }

@@ -1,8 +1,7 @@
-﻿namespace Gandalan.Client.Contracts.UIServices
+﻿namespace Gandalan.Client.Contracts.UIServices;
+
+public struct ValidationMessage
 {
-    public struct ValidationMessage
-    {
-        public string Message;
-        public UserNotifyMessageType Type;
-    }
+    public string Message;
+    public UserNotifyMessageType Type;
 }

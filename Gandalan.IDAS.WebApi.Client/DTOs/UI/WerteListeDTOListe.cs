@@ -1,11 +1,10 @@
 using System.Collections.ObjectModel;
 
-namespace Gandalan.IDAS.WebApi.DTO
+namespace Gandalan.IDAS.WebApi.DTO;
+
+public class WerteListeDTOListe : ObservableCollection<WerteListeDTO>
 {
-    public class WerteListeDTOListe : ObservableCollection<WerteListeDTO>
+    public WerteListeDTOListe()
     {
-        public WerteListeDTOListe()
-        {
         }
-    }
 }

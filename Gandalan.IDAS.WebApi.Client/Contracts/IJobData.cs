@@ -1,9 +1,8 @@
-namespace Gandalan.IDAS.Jobs.Contracts
+namespace Gandalan.IDAS.Jobs.Contracts;
+
+public interface IJobData
 {
-    public interface IJobData
-    {
-        bool ReportsProgress { get; set; }
-        int ProgressPercent { get; set; }
-        bool HasFinished { get; set; }
-    }
+    bool ReportsProgress { get; set; }
+    int ProgressPercent { get; set; }
+    bool HasFinished { get; set; }
 }

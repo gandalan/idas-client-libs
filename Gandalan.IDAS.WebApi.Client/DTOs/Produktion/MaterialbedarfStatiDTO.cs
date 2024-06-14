@@ -1,17 +1,16 @@
-﻿namespace Gandalan.IDAS.WebApi.DTO
+﻿namespace Gandalan.IDAS.WebApi.DTO;
+
+public enum MaterialbedarfStatiDTO
 {
-    public enum MaterialbedarfStatiDTO
-    {
-        Unbekannt = 0,
+    Unbekannt = 0,
 
-        Angefragt = 1,
+    Angefragt = 1,
 
-        Beschafft = 2,
+    Beschafft = 2,
 
-        NachSaege = 4,
+    NachSaege = 4,
 
-        NachSLK = 8,
+    NachSLK = 8,
 
-        Abgeschlossen = 1024
-    }
+    Abgeschlossen = 1024
 }

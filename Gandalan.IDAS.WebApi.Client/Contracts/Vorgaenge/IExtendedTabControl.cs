@@ -1,6 +1,5 @@
-﻿namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
+﻿namespace Gandalan.IDAS.Client.Contracts.Vorgaenge;
+
+public interface IExtendedTabControl
 {
-    public interface IExtendedTabControl
-    {
-    }
 }

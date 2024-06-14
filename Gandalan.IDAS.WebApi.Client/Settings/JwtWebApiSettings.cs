@@ -5,31 +5,31 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.WebApi.Client.Settings
+namespace Gandalan.IDAS.WebApi.Client.Settings;
+
+public class JwtWebApiSettings : WebApiSettings, IJwtWebApiConfig
 {
-    public class JwtWebApiSettings : WebApiSettings, IJwtWebApiConfig
+    public string JwtToken { get; set; }
+
+    [Obsolete("JWT:string parameter missing. Call InitializeAsync(Guid appToken, string env, string jwt)")]
+    public override Task Initialize(Guid appToken, string env)
     {
-        public string JwtToken { get; set; }
-
-        [Obsolete("JWT:string parameter missing. Call InitializeAsync(Guid appToken, string env, string jwt)")]
-        public override Task Initialize(Guid appToken, string env)
-        {
             throw new NotSupportedException("JWT:string parameter missing");
         }
 
-        public override Task InitializeAsync(Guid appToken, string env)
-        {
+    public override Task InitializeAsync(Guid appToken, string env)
+    {
             throw new NotSupportedException("JWT:string parameter missing");
         }
 
-        [Obsolete("Call InitializeAsync")]
-        public async Task Initialize(Guid appToken, string env, string jwt)
-        {
+    [Obsolete("Call InitializeAsync")]
+    public async Task Initialize(Guid appToken, string env, string jwt)
+    {
             await InitializeAsync(appToken, env, jwt);
         }
 
-        public async Task InitializeAsync(Guid appToken, string env, string jwt)
-        {
+    public async Task InitializeAsync(Guid appToken, string env, string jwt)
+    {
             await base.InitializeAsync(appToken, env);
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -56,13 +56,12 @@ namespace Gandalan.IDAS.WebApi.Client.Settings
             AppToken = Guid.Parse(appTokenClaim.Value);
         }
 
-        public override void CopyToThis(IWebApiConfig settings)
-        {
+    public override void CopyToThis(IWebApiConfig settings)
+    {
             base.CopyToThis(settings);
             if (settings is JwtWebApiSettings jwtSettings)
             {
                 JwtToken = jwtSettings.JwtToken;
             }
         }
-    }
 }

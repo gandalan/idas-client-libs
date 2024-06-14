@@ -1,10 +1,10 @@
-namespace System
-{
-    public static class CalendarWeek
-    {
+namespace System;
 
-        public static int GetCalendarWeek(this DateTime datum)
-        {
+public static class CalendarWeek
+{
+
+    public static int GetCalendarWeek(this DateTime datum)
+    {
             if (datum.DayOfWeek >= DayOfWeek.Monday)
             {
                 datum = datum.AddDays(7 - (int)datum.DayOfWeek);
@@ -14,5 +14,4 @@ namespace System
 
             return kw;
         }
-    }
 }

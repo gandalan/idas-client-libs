@@ -1,7 +1,6 @@
-﻿namespace Gandalan.Client.Contracts
+﻿namespace Gandalan.Client.Contracts;
+
+public interface IExecutableProgram
 {
-    public interface IExecutableProgram
-    {
-        string ProgramName { get; set; }
-    }
+    string ProgramName { get; set; }
 }

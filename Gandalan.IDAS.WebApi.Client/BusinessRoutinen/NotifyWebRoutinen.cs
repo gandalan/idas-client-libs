@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.DTOs.Nachrichten;
 
-namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
-{
-    public class NotifyWebRoutinen : WebRoutinenBase
-    {
-        private readonly bool _validConfig;
+namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
 
-        public NotifyWebRoutinen(IWebApiConfig settings) : base(settings)
-        {
+public class NotifyWebRoutinen : WebRoutinenBase
+{
+    private readonly bool _validConfig;
+
+    public NotifyWebRoutinen(IWebApiConfig settings) : base(settings)
+    {
             if (string.IsNullOrEmpty(settings.NotifyUrl))
             {
                 return;
@@ -25,8 +25,8 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             _validConfig = true;
         }
 
-        public async Task<IList<NachrichtenDTO>> GetAllNotificationsAsync()
-        {
+    public async Task<IList<NachrichtenDTO>> GetAllNotificationsAsync()
+    {
             if (!_validConfig)
             {
                 return [];
@@ -36,5 +36,4 @@ namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
             var produzent = Settings.AuthToken.Mandant.ProduzentMandantGuid;
             return await GetAsync<List<NachrichtenDTO>>($"Nachrichten?mandantGuid={mandant}&produzentGuid={produzent}");
         }
-    }
 }

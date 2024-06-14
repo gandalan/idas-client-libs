@@ -2,18 +2,17 @@
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
+namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
+
+public class FarbKuerzelGruppenWebRoutinen : WebRoutinenBase
 {
-    public class FarbKuerzelGruppenWebRoutinen : WebRoutinenBase
+    public FarbKuerzelGruppenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        public FarbKuerzelGruppenWebRoutinen(IWebApiConfig settings) : base(settings)
-        {
         }
 
-        public async Task<FarbKuerzelGruppeDTO[]> GetAllAsync()
-            => await GetAsync<FarbKuerzelGruppeDTO[]>("FarbKuerzelGruppe");
+    public async Task<FarbKuerzelGruppeDTO[]> GetAllAsync()
+        => await GetAsync<FarbKuerzelGruppeDTO[]>("FarbKuerzelGruppe");
 
-        public async Task SaveFarbKuerzelGruppeAsync(FarbKuerzelGruppeDTO dto)
-            => await PutAsync("FarbKuerzelGruppe/", dto);
-    }
+    public async Task SaveFarbKuerzelGruppeAsync(FarbKuerzelGruppeDTO dto)
+        => await PutAsync("FarbKuerzelGruppe/", dto);
 }

@@ -1,11 +1,10 @@
-namespace Gandalan.IDAS.WebApi.Data
+namespace Gandalan.IDAS.WebApi.Data;
+
+public class BearbeitungsKuerzelDTO
 {
-    public class BearbeitungsKuerzelDTO
-    {
-        public string BearbeitungsKuerzel { get; set; }
-        public string Beschreibung { get; set; }
-        public string[] VerfuegbarFuer { get; set; }
-        public string FarbCode { get; set; }
-        public string RegularExpression { get; set; }
-    }
+    public string BearbeitungsKuerzel { get; set; }
+    public string Beschreibung { get; set; }
+    public string[] VerfuegbarFuer { get; set; }
+    public string FarbCode { get; set; }
+    public string RegularExpression { get; set; }
 }

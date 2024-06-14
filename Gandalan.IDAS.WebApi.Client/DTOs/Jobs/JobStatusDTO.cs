@@ -1,18 +1,18 @@
 using System;
 
-namespace Gandalan.IDAS.WebApi.DTO
+namespace Gandalan.IDAS.WebApi.DTO;
+
+public class JobStatusDTO
 {
-    public class JobStatusDTO
+    public Guid JobStatusId { get; set; }
+    public Guid JobId { get; set; }
+    public DateTime Zeitstempel { get; set; }
+    public string StatusCode { get; set; }
+    public string StatusText { get; set; }
+    public int StatusCodeAsInt
     {
-        public Guid JobStatusId { get; set; }
-        public Guid JobId { get; set; }
-        public DateTime Zeitstempel { get; set; }
-        public string StatusCode { get; set; }
-        public string StatusText { get; set; }
-        public int StatusCodeAsInt
+        get
         {
-            get
-            {
                 switch (StatusCode)
                 {
                     case "N": return 10;
@@ -25,6 +25,5 @@ namespace Gandalan.IDAS.WebApi.DTO
                         return 100;
                 }
             }
-        }
     }
 }

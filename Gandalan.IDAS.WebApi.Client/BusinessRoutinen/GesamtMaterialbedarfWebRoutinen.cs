@@ -4,21 +4,20 @@ using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 using Gandalan.IDAS.WebApi.DTO.Gesamtbedarf;
 
-namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
+namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
+
+public class GesamtMaterialbedarfWebRoutinen : WebRoutinenBase
 {
-    public class GesamtMaterialbedarfWebRoutinen : WebRoutinenBase
+    public GesamtMaterialbedarfWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        public GesamtMaterialbedarfWebRoutinen(IWebApiConfig settings) : base(settings)
-        {
         }
 
-        public async Task<GesamtMaterialbedarfGetReturn> GetAsync(ZusammenfassungsOptionen optionen,bool stangenoptimierung, DateTime? stichTag = null, DateTime? bedarfAb = null)
-            => await GetAsync<GesamtMaterialbedarfGetReturn>($"GesamtMaterialbedarf?optionen={optionen}&stangenoptimierung={stangenoptimierung}&stichTag={stichTag?.ToString("o")}&bedarfAb={bedarfAb?.ToString("O")}");
+    public async Task<GesamtMaterialbedarfGetReturn> GetAsync(ZusammenfassungsOptionen optionen,bool stangenoptimierung, DateTime? stichTag = null, DateTime? bedarfAb = null)
+        => await GetAsync<GesamtMaterialbedarfGetReturn>($"GesamtMaterialbedarf?optionen={optionen}&stangenoptimierung={stangenoptimierung}&stichTag={stichTag?.ToString("o")}&bedarfAb={bedarfAb?.ToString("O")}");
 
-        public async Task WebJobAsync()
-            => await PostAsync("GesamtMaterialbedarf/WebJob", null);
+    public async Task WebJobAsync()
+        => await PostAsync("GesamtMaterialbedarf/WebJob", null);
 
-        public async Task GesamtBedarfUpdateLiefertag(long mandantId, Guid posGuid)
-            => await PostAsync($"GesamtMaterialbedarf/GesamtBedarfUpdateLiefertag?mandantId={mandantId}&posGuid={posGuid}", null);
-    }
+    public async Task GesamtBedarfUpdateLiefertag(long mandantId, Guid posGuid)
+        => await PostAsync($"GesamtMaterialbedarf/GesamtBedarfUpdateLiefertag?mandantId={mandantId}&posGuid={posGuid}", null);
 }
