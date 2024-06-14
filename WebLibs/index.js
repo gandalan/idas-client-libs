@@ -16,9 +16,3 @@ export { IDASFactory } from "./api/IDAS";
 export { RESTClient } from "./api/RESTClient";
 export { initIDAS } from "./api/authUtils";
 export { api, authBuilder, fetchEnv, getRefreshToken, idasApi } from "./api/fluentApi";
-
-let counter = 0;
-
-export function helloWorld() {
-    alert('Hello World' + counter++);
-}
