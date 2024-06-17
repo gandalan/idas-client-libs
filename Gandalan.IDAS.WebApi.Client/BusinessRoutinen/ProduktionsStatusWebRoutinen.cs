@@ -10,49 +10,49 @@ public class ProduktionsStatusWebRoutinen : WebRoutinenBase
 {
     public ProduktionsStatusWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<ProduktionsStatusDTO[]> GetAllAsync()
     {
-            try
-            {
-                return await GetAsync<ProduktionsStatusDTO[]>("ProduktionsStatus");
-            }
-            catch (WebException wex)
-            {
-                if (wex.Response is HttpWebResponse response)
-                {
-                    var code = response.StatusCode;
-                    if (code == HttpStatusCode.NotFound)
-                    {
-                        return null;
-                    }
-                }
-
-                throw;
-            }
+        try
+        {
+            return await GetAsync<ProduktionsStatusDTO[]>("ProduktionsStatus");
         }
+        catch (WebException wex)
+        {
+            if (wex.Response is HttpWebResponse response)
+            {
+                var code = response.StatusCode;
+                if (code == HttpStatusCode.NotFound)
+                {
+                    return null;
+                }
+            }
+
+            throw;
+        }
+    }
 
     public async Task<ProduktionsStatusDTO> GetProduktionsStatusAsync(Guid guid)
     {
-            try
-            {
-                return await GetAsync<ProduktionsStatusDTO>("ProduktionsStatus/" + guid);
-            }
-            catch (WebException wex)
-            {
-                if (wex.Response is HttpWebResponse response)
-                {
-                    var code = response.StatusCode;
-                    if (code == HttpStatusCode.NotFound)
-                    {
-                        return null;
-                    }
-                }
-
-                throw;
-            }
+        try
+        {
+            return await GetAsync<ProduktionsStatusDTO>("ProduktionsStatus/" + guid);
         }
+        catch (WebException wex)
+        {
+            if (wex.Response is HttpWebResponse response)
+            {
+                var code = response.StatusCode;
+                if (code == HttpStatusCode.NotFound)
+                {
+                    return null;
+                }
+            }
+
+            throw;
+        }
+    }
 
     public async Task SaveProduktionsStatusAsync(ProduktionsStatusDTO status)
         => await PutAsync("ProduktionsStatus", status);

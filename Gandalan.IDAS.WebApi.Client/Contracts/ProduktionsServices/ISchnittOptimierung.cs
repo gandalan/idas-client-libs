@@ -62,9 +62,9 @@ public class ZuschnittStangenInfo
     /// <param name="zugabe"></param>
     public ZuschnittStangenInfo(int laenge, int zugabe)
     {
-            Laenge = laenge;
-            _zugabe = zugabe;
-        }
+        Laenge = laenge;
+        _zugabe = zugabe;
+    }
 
     /// <summary>
     /// Prüft, ob ein Teilstück mit der angegebenen Länge noch Platz hat
@@ -73,8 +73,8 @@ public class ZuschnittStangenInfo
     /// <returns>true/false</returns>
     public bool CanAdd(int laenge)
     {
-            return BelegungInMM + _zugabe + laenge <= Laenge;
-        }
+        return BelegungInMM + _zugabe + laenge <= Laenge;
+    }
 
     /// <summary>
     /// Fügt ein Teilstück an.
@@ -83,19 +83,19 @@ public class ZuschnittStangenInfo
     /// <param name="materialBedarfGuid"></param>
     public void Add(int laenge, Guid materialBedarfGuid = default)
     {
-            if (CanAdd(laenge))
-            {
-                Laengen.Add(laenge);
-                MaterialBedarfGuids.Add(materialBedarfGuid);
-                BelegungInMM += _zugabe + laenge;
-                BelegungInProzent = (int)Math.Floor(((float)BelegungInMM / (float)Laenge) * 100);
-                VerschnittInProzent = 100 - BelegungInProzent;
-            }
-            else
-            {
-                throw new InvalidOperationException("Kein Platz mehr für dieses Teilstück!");
-            }
+        if (CanAdd(laenge))
+        {
+            Laengen.Add(laenge);
+            MaterialBedarfGuids.Add(materialBedarfGuid);
+            BelegungInMM += _zugabe + laenge;
+            BelegungInProzent = (int)Math.Floor(((float)BelegungInMM / (float)Laenge) * 100);
+            VerschnittInProzent = 100 - BelegungInProzent;
         }
+        else
+        {
+            throw new InvalidOperationException("Kein Platz mehr für dieses Teilstück!");
+        }
+    }
 }
 
 public class MaterialbedarfCutOptimization

@@ -16,15 +16,15 @@ public class InfoScreenRowDTO
         get => InfoScreenModule[0]?.ModuleGuid ?? Guid.Empty;
         set
         {
-                if (value != Guid.Empty)
-                {
-                    InfoScreenModule[0] = new InfoScreenModulSettingsDTO { ModuleGuid = value };
-                }
-                else
-                {
-                    InfoScreenModule[0] = null;
-                }
+            if (value != Guid.Empty)
+            {
+                InfoScreenModule[0] = new InfoScreenModulSettingsDTO { ModuleGuid = value };
             }
+            else
+            {
+                InfoScreenModule[0] = null;
+            }
+        }
     }
 
     [JsonIgnore]
@@ -33,15 +33,15 @@ public class InfoScreenRowDTO
         get => InfoScreenModule[1]?.ModuleGuid ?? Guid.Empty;
         set
         {
-                if (value != Guid.Empty)
-                {
-                    InfoScreenModule[1] = new InfoScreenModulSettingsDTO { ModuleGuid = value };
-                }
-                else
-                {
-                    InfoScreenModule[1] = null;
-                }
+            if (value != Guid.Empty)
+            {
+                InfoScreenModule[1] = new InfoScreenModulSettingsDTO { ModuleGuid = value };
             }
+            else
+            {
+                InfoScreenModule[1] = null;
+            }
+        }
     }
 
     public int RowNum { get; set; }

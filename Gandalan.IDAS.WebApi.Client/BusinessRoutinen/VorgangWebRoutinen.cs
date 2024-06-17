@@ -10,7 +10,7 @@ public class VorgangWebRoutinen : WebRoutinenBase
 {
     public VorgangWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr)
         => await GetAsync<VorgangListItemDTO[]>($"Vorgang/?jahr={jahr}");
@@ -32,11 +32,11 @@ public class VorgangWebRoutinen : WebRoutinenBase
 
     public async Task SendeVorgaengeAsync(VorgangDTO[] list)
     {
-            foreach (var v in list)
-            {
-                await SendeVorgangAsync(v);
-            }
+        foreach (var v in list)
+        {
+            await SendeVorgangAsync(v);
         }
+    }
 
     public async Task<VorgangDTO> SendeVorgangAsync(VorgangDTO vorgang)
         => await PutAsync<VorgangDTO>("Vorgang", vorgang);
@@ -52,23 +52,23 @@ public class VorgangWebRoutinen : WebRoutinenBase
 
     public async Task<VorgangStatusDTO> SetStatusAsync(Guid vorgangGuid, string statusCode)
     {
-            var set = new VorgangStatusDTO
-            {
-                VorgangGuid = vorgangGuid,
-                NeuerStatus = statusCode
-            };
-            return await PutAsync<VorgangStatusDTO>("VorgangStatus", set);
-        }
+        var set = new VorgangStatusDTO
+        {
+            VorgangGuid = vorgangGuid,
+            NeuerStatus = statusCode
+        };
+        return await PutAsync<VorgangStatusDTO>("VorgangStatus", set);
+    }
 
     public async Task SetTextStatusAsync(List<Guid> vorgangGuids, string textStatus)
     {
-            var set = new VorgangTextStatusDTO
-            {
-                VorgangGuids = vorgangGuids,
-                NeuerTextStatus = textStatus
-            };
-            await PostAsync("VorgangTextStatus", set);
-        }
+        var set = new VorgangTextStatusDTO
+        {
+            VorgangGuids = vorgangGuids,
+            NeuerTextStatus = textStatus
+        };
+        await PostAsync("VorgangTextStatus", set);
+    }
 
     public async Task ArchiviereVorgangAsync(Guid vorgangGuid)
         => await PostAsync("Archivierung/?vguid=" + vorgangGuid, null);
