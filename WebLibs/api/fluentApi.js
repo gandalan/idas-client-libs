@@ -202,7 +202,7 @@ export function api() {
         },
 
         async ensureBaseUrlIsSet() {
-            if (this.env && (!this.baseUrl || !this.authUrl)) {
+            if (this.env && !this.baseUrl) {
                 const envInfo = await fetchEnv(this.env);
                 this.baseUrl = envInfo.idas;
                 this.authUrl = envInfo.idas;
