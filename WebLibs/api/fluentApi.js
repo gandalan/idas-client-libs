@@ -192,9 +192,9 @@ export function api() {
                 this.token = temptoken;
                 this.refreshToken = getRefreshToken(temptoken);
                 // eslint-disable-next-line no-undef
-                globalThis.idas.token = this.token;
+                globalThis.idasTokens.token = this.token;
                 // eslint-disable-next-line no-undef
-                globalThis.idas.refreshToken = this.refreshToken;
+                globalThis.idasTokens.refreshToken = this.refreshToken;
                 localStorage.setItem("idas-refresh-token", this.refreshToken);
             } catch (e) {
                 this.redirectToLogin();
