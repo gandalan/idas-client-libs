@@ -26,10 +26,12 @@ public class BelegPositionAVDTO
     public string Kunde { get; set; }
     public string Pcode { get; set; }
     public string Fehlerlog { get; set; }
+
     /// <summary>
     /// Gültige Werte: "NichtFreigegeben", "Freigegeben", "Abgerechnet"
     /// </summary>
     public string FakturaKennzeichen { get; set; }
+
     public bool IstAusserhalbGewaehrleistung { get; set; }
     public decimal KapazitaetsBedarf { get; set; }
 
@@ -42,30 +44,30 @@ public class BelegPositionAVDTO
 
     public BelegPositionAVDTO()
     {
-            if (BelegPositionAVGuid.Equals(Guid.Empty))
-            {
-                BelegPositionAVGuid = Guid.NewGuid();
-            }
+        if (BelegPositionAVGuid.Equals(Guid.Empty))
+        {
+            BelegPositionAVGuid = Guid.NewGuid();
         }
+    }
 
     public BelegPositionAVDTO(BelegPositionDTO position)
     {
-            if (BelegPositionAVGuid.Equals(Guid.Empty))
-            {
-                BelegPositionAVGuid = Guid.NewGuid();
-            }
-
-            BelegPositionGuid = position.BelegPositionGuid;
-            Bereitgestellt = DateTime.UtcNow;
-            Berechnet = null;
-            IstBerechnet = false;
-            IstProduziert = false;
-            HatSonderwuensche = !string.IsNullOrEmpty(position.Besonderheiten);
-            SonderwunschText = position.SonderwunschText;
-            Variante = position.Variante;
-            ArtikelNummer = position.ArtikelNummer;
-            Position = position;
-            ErfassungsDatum = position.ErfassungsDatum;
-            IstAusserhalbGewaehrleistung = position.IstAusserhalbGewaehrleistung;
+        if (BelegPositionAVGuid.Equals(Guid.Empty))
+        {
+            BelegPositionAVGuid = Guid.NewGuid();
         }
+
+        BelegPositionGuid = position.BelegPositionGuid;
+        Bereitgestellt = DateTime.UtcNow;
+        Berechnet = null;
+        IstBerechnet = false;
+        IstProduziert = false;
+        HatSonderwuensche = !string.IsNullOrEmpty(position.Besonderheiten);
+        SonderwunschText = position.SonderwunschText;
+        Variante = position.Variante;
+        ArtikelNummer = position.ArtikelNummer;
+        Position = position;
+        ErfassungsDatum = position.ErfassungsDatum;
+        IstAusserhalbGewaehrleistung = position.IstAusserhalbGewaehrleistung;
+    }
 }

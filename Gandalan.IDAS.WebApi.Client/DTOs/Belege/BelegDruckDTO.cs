@@ -14,126 +14,126 @@ public class BelegDruckDTO
 {
     public BelegDruckDTO(VorgangDTO vorgang, BelegDTO beleg)
     {
-            var culture = new CultureInfo("de-de");
-            Salden = [];
-            PositionsObjekte = [];
+        var culture = new CultureInfo("de-de");
+        Salden = [];
+        PositionsObjekte = [];
 
-            if (beleg != null && vorgang != null)
+        if (beleg != null && vorgang != null)
+        {
+            beleg.SetupObjekte(vorgang);
+
+            BelegGuid = beleg.BelegGuid;
+            VorgangGuid = vorgang.VorgangGuid;
+            BelegArt = beleg.BelegArt;
+            BelegNummer = vorgang.VorgangsNummer;
+            VorgangsNummer = vorgang.VorgangsNummer;
+            BelegDatum = beleg.BelegDatum;
+            VorgangErstellDatum = vorgang.ErstellDatum.ToString("d", culture);
+            AenderungsDatum = beleg.AenderungsDatum;
+            BelegJahr = beleg.BelegJahr;
+            Schlusstext = beleg.Schlusstext;
+            SammelbelegNummer = beleg.SammelbelegNummer;
+            Kommission = string.IsNullOrEmpty(vorgang.Kommission) ? string.Empty : "Kommission: " + vorgang.Kommission;
+            Ausfuehrungsdatum = string.IsNullOrEmpty(beleg.AusfuehrungsDatum) ? string.Empty : "Ausführungsdatum: " + beleg.AusfuehrungsDatum;
+            AnsprechpartnerKunde = beleg.AnsprechpartnerKunde ?? "";
+            Ansprechpartner = ""; //??? _apiSettings?.AuthToken?.Benutzer?.Vorname + " " + _apiSettings?.AuthToken?.Benutzer?.Nachname;
+            Telefonnummer = ""; //??? _apiSettings?.AuthToken?.Benutzer?.TelefonNummer ?? "";
+
+            if (vorgang.ApplicationSpecificProperties != null && vorgang.ApplicationSpecificProperties.Count != 0 && vorgang.ApplicationSpecificProperties.TryGetValue("settings", out var settings) && settings.TryGetValue("Kontrollkuerzel", out var kontrollkuerzel))
             {
-                beleg.SetupObjekte(vorgang);
+                Kontrollkuerzel = kontrollkuerzel as string;
+            }
 
-                BelegGuid = beleg.BelegGuid;
-                VorgangGuid = vorgang.VorgangGuid;
-                BelegArt = beleg.BelegArt;
-                BelegNummer = vorgang.VorgangsNummer;
-                VorgangsNummer = vorgang.VorgangsNummer;
-                BelegDatum = beleg.BelegDatum;
-                VorgangErstellDatum = vorgang.ErstellDatum.ToString("d", culture);
-                AenderungsDatum = beleg.AenderungsDatum;
-                BelegJahr = beleg.BelegJahr;
-                Schlusstext = beleg.Schlusstext;
-                SammelbelegNummer = beleg.SammelbelegNummer;
-                Kommission = string.IsNullOrEmpty(vorgang.Kommission) ? string.Empty : "Kommission: " + vorgang.Kommission;
-                Ausfuehrungsdatum = string.IsNullOrEmpty(beleg.AusfuehrungsDatum) ? string.Empty : "Ausführungsdatum: " + beleg.AusfuehrungsDatum;
-                AnsprechpartnerKunde = beleg.AnsprechpartnerKunde ?? "";
-                Ansprechpartner = ""; //??? _apiSettings?.AuthToken?.Benutzer?.Vorname + " " + _apiSettings?.AuthToken?.Benutzer?.Nachname;
-                Telefonnummer = ""; //??? _apiSettings?.AuthToken?.Benutzer?.TelefonNummer ?? "";
+            var abBelege = vorgang.Belege.Where(b => b.BelegArt == "AB" || b.BelegArt == "Auftragsbestätigung");
+            Bestelldatum = abBelege.Any() ? abBelege.Last().BelegDatum.ToString("d", culture) : "";
+            Belegdatum = beleg.BelegDatum.ToString("d", culture);
+            Lieferzeit = ""; //???
+            IsEndkunde = vorgang.Kunde?.IstEndkunde ?? false;
+            IsRabatt = beleg.PositionsObjekte?.Any(i => !i.Equals(0m)) ?? false;
+            IstSelbstabholer = beleg.IstSelbstabholer;
 
-                if (vorgang.ApplicationSpecificProperties != null && vorgang.ApplicationSpecificProperties.Count != 0 && vorgang.ApplicationSpecificProperties.TryGetValue("settings", out var settings) && settings.TryGetValue("Kontrollkuerzel", out var kontrollkuerzel))
+            if (string.IsNullOrEmpty(beleg.BelegTitelUeberschrift))
+            {
+                switch (beleg.BelegArt)
                 {
-                    Kontrollkuerzel = kontrollkuerzel as string;
+                    case "AB":
+                        BelegTitelUeberschrift = "Auftragsbestätigung";
+                        break;
+                    default:
+                        BelegTitelUeberschrift = beleg.BelegArt;
+                        break;
                 }
 
-                var abBelege = vorgang.Belege.Where(b => b.BelegArt == "AB" || b.BelegArt == "Auftragsbestätigung");
-                Bestelldatum = abBelege.Any() ? abBelege.Last().BelegDatum.ToString("d", culture) : "";
-                Belegdatum = beleg.BelegDatum.ToString("d", culture);
-                Lieferzeit = ""; //???
-                IsEndkunde = vorgang.Kunde?.IstEndkunde ?? false;
-                IsRabatt = beleg.PositionsObjekte?.Any(i => !i.Equals(0m)) ?? false;
-                IstSelbstabholer = beleg.IstSelbstabholer;
-
-                if (string.IsNullOrEmpty(beleg.BelegTitelUeberschrift))
+                if (string.IsNullOrEmpty(beleg.BelegTitelZeile1))
                 {
                     switch (beleg.BelegArt)
                     {
-                        case "AB":
-                            BelegTitelUeberschrift = "Auftragsbestätigung";
+                        case "Rechnung":
+                            BelegTitelZeile1 =
+                                $"Nr. {beleg.BelegNummer} vom {beleg.BelegDatum.ToString(culture.DateTimeFormat.ShortDatePattern, culture)}";
+                            BelegTitelZeile2 =
+                                $"Vorgang Nr. {vorgang.VorgangsNummer}";
                             break;
                         default:
-                            BelegTitelUeberschrift = beleg.BelegArt;
+                            BelegTitelZeile1 =
+                                $"Vorgang Nr. {vorgang.VorgangsNummer} vom " +
+                                beleg.BelegDatum.ToString(culture.DateTimeFormat.ShortDatePattern, culture);
                             break;
                     }
-
-                    if (string.IsNullOrEmpty(beleg.BelegTitelZeile1))
-                    {
-                        switch (beleg.BelegArt)
-                        {
-                            case "Rechnung":
-                                BelegTitelZeile1 =
-                                    $"Nr. {beleg.BelegNummer} vom {beleg.BelegDatum.ToString(culture.DateTimeFormat.ShortDatePattern, culture)}";
-                                BelegTitelZeile2 =
-                                    $"Vorgang Nr. {vorgang.VorgangsNummer}";
-                                break;
-                            default:
-                                BelegTitelZeile1 =
-                                    $"Vorgang Nr. {vorgang.VorgangsNummer} vom " +
-                                    beleg.BelegDatum.ToString(culture.DateTimeFormat.ShortDatePattern, culture);
-                                break;
-                        }
-                    }
                 }
-                else
-                {
-                    BelegTitelUeberschrift = beleg.BelegTitelUeberschrift;
-                    BelegTitelZeile1 = beleg.BelegTitelZeile1;
-                    BelegTitelZeile2 = beleg.BelegTitelZeile2;
-                }
-
-                TextFuerAnschreiben = beleg.TextFuerAnschreiben;
-                BelegAdresse = new AdresseDruckDTO(beleg.BelegAdresse);
-                BelegAdresseString = BelegAdresse.ToString();
-                VersandAdresse = new AdresseDruckDTO(beleg.VersandAdresse);
-                VersandAdresseString = VersandAdresse.ToString();
-
-                var preiseAnzeigen = beleg.BelegArt != "Lieferschein" && beleg.BelegArt != "Bestellschein" && beleg.BelegArt != "ProduktionsAuftrag";
-
-                if (beleg.PositionsObjekte.Any(p => p.IstSonderfarbPosition && p.Farbzuschlag == -1))
-                {
-                    preiseAnzeigen = false;
-                }
-
-                foreach (var dto in beleg.PositionsObjekte)
-                {
-                    if (!dto.IstAktiv && !dto.IstAlternativPosition)
-                    {
-                        continue;
-                    }
-
-                    PositionsObjekte.Add(new BelegPositionDruckDTO(dto, preiseAnzeigen));
-                }
-
-                if (preiseAnzeigen)
-                {
-                    var saldenSorted = beleg.Salden.Where(s => s.Betrag != 0).OrderBy(i => i.Reihenfolge);
-                    if (saldenSorted.Any())
-                    {
-                        var lastActivSalde = saldenSorted.LastOrDefault(s => !s.IstInaktiv);
-                        foreach (var dto in saldenSorted)
-                        {
-                            if (dto.IstInaktiv)
-                            {
-                                continue;
-                            }
-
-                            Salden.Add(new BelegSaldoDruckDTO(dto) { IsLastElement = lastActivSalde != null && lastActivSalde == dto });
-                        }
-                    }
-                }
-
-                CountValuePositionen = PositionsObjekte.Count;
-                CountValueSalden = Salden.Count;
             }
+            else
+            {
+                BelegTitelUeberschrift = beleg.BelegTitelUeberschrift;
+                BelegTitelZeile1 = beleg.BelegTitelZeile1;
+                BelegTitelZeile2 = beleg.BelegTitelZeile2;
+            }
+
+            TextFuerAnschreiben = beleg.TextFuerAnschreiben;
+            BelegAdresse = new AdresseDruckDTO(beleg.BelegAdresse);
+            BelegAdresseString = BelegAdresse.ToString();
+            VersandAdresse = new AdresseDruckDTO(beleg.VersandAdresse);
+            VersandAdresseString = VersandAdresse.ToString();
+
+            var preiseAnzeigen = beleg.BelegArt != "Lieferschein" && beleg.BelegArt != "Bestellschein" && beleg.BelegArt != "ProduktionsAuftrag";
+
+            if (beleg.PositionsObjekte.Any(p => p.IstSonderfarbPosition && p.Farbzuschlag == -1))
+            {
+                preiseAnzeigen = false;
+            }
+
+            foreach (var dto in beleg.PositionsObjekte)
+            {
+                if (!dto.IstAktiv && !dto.IstAlternativPosition)
+                {
+                    continue;
+                }
+
+                PositionsObjekte.Add(new BelegPositionDruckDTO(dto, preiseAnzeigen));
+            }
+
+            if (preiseAnzeigen)
+            {
+                var saldenSorted = beleg.Salden.Where(s => s.Betrag != 0).OrderBy(i => i.Reihenfolge);
+                if (saldenSorted.Any())
+                {
+                    var lastActivSalde = saldenSorted.LastOrDefault(s => !s.IstInaktiv);
+                    foreach (var dto in saldenSorted)
+                    {
+                        if (dto.IstInaktiv)
+                        {
+                            continue;
+                        }
+
+                        Salden.Add(new BelegSaldoDruckDTO(dto) { IsLastElement = lastActivSalde != null && lastActivSalde == dto });
+                    }
+                }
+            }
+
+            CountValuePositionen = PositionsObjekte.Count;
+            CountValueSalden = Salden.Count;
         }
+    }
 
     public Guid BelegGuid { get; set; }
     public Guid VorgangGuid { get; set; }
@@ -175,46 +175,46 @@ public class BelegDruckDTO
 
     public void SetTextBausteine(object textBausteine)
     {
-            if (textBausteine is ExpandoObject)
-            {
-                var settingsDict = textBausteine as IDictionary<string, object>;
-                var keys = new List<string>(settingsDict.Keys);
+        if (textBausteine is ExpandoObject)
+        {
+            var settingsDict = textBausteine as IDictionary<string, object>;
+            var keys = new List<string>(settingsDict.Keys);
 
-                if (keys.Contains(BelegArt))
-                {
-                    dynamic existingValue = settingsDict[BelegArt];
-                    Kopfzeile = existingValue.Kopfzeile;
-                    Fusszeile = existingValue.Fusszeile;
-                }
+            if (keys.Contains(BelegArt))
+            {
+                dynamic existingValue = settingsDict[BelegArt];
+                Kopfzeile = existingValue.Kopfzeile;
+                Fusszeile = existingValue.Fusszeile;
             }
         }
+    }
 }
 
 public class AdresseDruckDTO
 {
     public AdresseDruckDTO()
     {
-        }
+    }
 
     public AdresseDruckDTO(BeleganschriftDTO beleganschrift)
     {
-            if (beleganschrift != null)
-            {
-                Anrede = beleganschrift.Anrede;
-                Nachname = beleganschrift.Nachname;
-                Vorname = beleganschrift.Vorname;
-                Firmenname = beleganschrift.Firmenname;
-                Zusatz = beleganschrift.Zusatz;
-                AdressZusatz1 = beleganschrift.AdressZusatz1;
-                Strasse = beleganschrift.Strasse;
-                Hausnummer = beleganschrift.Hausnummer;
-                Postleitzahl = beleganschrift.Postleitzahl;
-                Ort = beleganschrift.Ort;
-                Ortsteil = beleganschrift.Ortsteil;
-                Land = beleganschrift.Land;
-                IstInland = beleganschrift.IstInland;
-            }
+        if (beleganschrift != null)
+        {
+            Anrede = beleganschrift.Anrede;
+            Nachname = beleganschrift.Nachname;
+            Vorname = beleganschrift.Vorname;
+            Firmenname = beleganschrift.Firmenname;
+            Zusatz = beleganschrift.Zusatz;
+            AdressZusatz1 = beleganschrift.AdressZusatz1;
+            Strasse = beleganschrift.Strasse;
+            Hausnummer = beleganschrift.Hausnummer;
+            Postleitzahl = beleganschrift.Postleitzahl;
+            Ort = beleganschrift.Ort;
+            Ortsteil = beleganschrift.Ortsteil;
+            Land = beleganschrift.Land;
+            IstInland = beleganschrift.IstInland;
         }
+    }
 
     public string Anrede { get; set; }
     public string Nachname { get; set; }
@@ -232,57 +232,57 @@ public class AdresseDruckDTO
 
     public override string ToString()
     {
-            var adressText = new StringBuilder();
+        var adressText = new StringBuilder();
+        {
+            adressText.AppendLine(Anrede);
+            adressText.AppendLine(BuildAnschriftsName());
+            if (!string.IsNullOrEmpty(AdressZusatz1))
             {
-                adressText.AppendLine(Anrede);
-                adressText.AppendLine(BuildAnschriftsName());
-                if (!string.IsNullOrEmpty(AdressZusatz1))
-                {
-                    adressText.AppendLine(AdressZusatz1);
-                }
-
-                if (!string.IsNullOrEmpty(Ortsteil))
-                {
-                    adressText.AppendLine(Ortsteil);
-                }
-
-                adressText.AppendLine($"{Strasse} {Hausnummer}");
-                adressText.Append($"{Postleitzahl} {Ort}");
-                if (!IstInland)
-                {
-                    adressText.AppendLine().Append(Land?.ToUpper());
-                }
+                adressText.AppendLine(AdressZusatz1);
             }
-            return adressText.ToString();
+
+            if (!string.IsNullOrEmpty(Ortsteil))
+            {
+                adressText.AppendLine(Ortsteil);
+            }
+
+            adressText.AppendLine($"{Strasse} {Hausnummer}");
+            adressText.Append($"{Postleitzahl} {Ort}");
+            if (!IstInland)
+            {
+                adressText.AppendLine().Append(Land?.ToUpper());
+            }
         }
+        return adressText.ToString();
+    }
 
     private string BuildAnschriftsName()
     {
-            var adesszusatz = "";
-            var name1 = string.IsNullOrEmpty(Vorname) ? Nachname : Vorname;
-            var name2 = string.IsNullOrEmpty(Vorname) ? adesszusatz : Nachname;
-            return (!string.IsNullOrEmpty(Firmenname) ? $"{Firmenname}" : ($"{name1} {name2}")).Trim();
-        }
+        var adesszusatz = "";
+        var name1 = string.IsNullOrEmpty(Vorname) ? Nachname : Vorname;
+        var name2 = string.IsNullOrEmpty(Vorname) ? adesszusatz : Nachname;
+        return (!string.IsNullOrEmpty(Firmenname) ? $"{Firmenname}" : ($"{name1} {name2}")).Trim();
+    }
 }
 
 public class BelegSaldoDruckDTO
 {
     public BelegSaldoDruckDTO()
     {
-        }
+    }
 
     public BelegSaldoDruckDTO(BelegSaldoDTO saldo)
     {
-            var culture = new CultureInfo("de-de");
-            if (saldo != null)
-            {
-                Reihenfolge = saldo.Reihenfolge;
-                Text = saldo.Text;
-                var vorzeichen = saldo.Typ == "Abschlag" ? '-' : ' ';
-                Betrag = vorzeichen + saldo.Betrag.ToString(culture);
-                Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29", culture) : "";
-            }
+        var culture = new CultureInfo("de-de");
+        if (saldo != null)
+        {
+            Reihenfolge = saldo.Reihenfolge;
+            Text = saldo.Text;
+            var vorzeichen = saldo.Typ == "Abschlag" ? '-' : ' ';
+            Betrag = vorzeichen + saldo.Betrag.ToString(culture);
+            Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29", culture) : "";
         }
+    }
 
     public int Reihenfolge { get; set; }
     public string Text { get; set; }
@@ -321,58 +321,58 @@ public class BelegPositionDruckDTO
 
     public BelegPositionDruckDTO()
     {
-        }
+    }
 
     public BelegPositionDruckDTO(BelegPositionDTO position, bool preiseAnzeigen = true)
     {
-            var culture = new CultureInfo("de-de");
-            if (position != null)
+        var culture = new CultureInfo("de-de");
+        if (position != null)
+        {
+            PositionsKommission = position.PositionsKommission;
+            LaufendeNummer = position.LaufendeNummer;
+            ArtikelNummer = position.ArtikelNummer;
+            Variante = position.Variante;
+            IstAlternativPosition = position.IstAlternativPosition;
+            IstAktiv = position.IstAktiv;
+            Menge = position.Menge;
+            MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.ZuschnittLaenge")) != null ? "Stk." : position.MengenEinheit;
+
+            if (position.IstVE)
             {
-                PositionsKommission = position.PositionsKommission;
-                LaufendeNummer = position.LaufendeNummer;
-                ArtikelNummer = position.ArtikelNummer;
-                Variante = position.Variante;
-                IstAlternativPosition = position.IstAlternativPosition;
-                IstAktiv = position.IstAktiv;
-                Menge = position.Menge;
-                MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.ZuschnittLaenge")) != null ? "Stk." : position.MengenEinheit;
+                MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.Artikel_VE_Einheit"))?.Wert;
+                VE_Menge = position.VE_Menge;
+                IstVE = position.IstVE;
+            }
 
-                if (position.IstVE)
-                {
-                    MengenEinheit = position.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.Artikel_VE_Einheit"))?.Wert;
-                    VE_Menge = position.VE_Menge;
-                    IstVE = position.IstVE;
-                }
+            if (MengenEinheit == null || MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase))
+            {
+                MengenEinheit = "Stk.";
+            }
 
-                if (MengenEinheit == null || MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    MengenEinheit = "Stk.";
-                }
+            var einbauort = string.Empty;
+            if (!string.IsNullOrWhiteSpace(position.Einbauort) && !position.Text.StartsWith("Einbauort"))
+            {
+                einbauort = "Einbauort: " + position.Einbauort + " - ";
+            }
 
-                var einbauort = string.Empty;
-                if (!string.IsNullOrWhiteSpace(position.Einbauort) && !position.Text.StartsWith("Einbauort"))
-                {
-                    einbauort = "Einbauort: " + position.Einbauort + " - ";
-                }
-
-                Text = einbauort + position.Text;
-                AngebotsText = einbauort + position.AngebotsText;
-                PulverCode = position.Daten.FirstOrDefault(d => d.KonfigName.Equals($"Konfig.{PosDataKonfigKeys.PulverCode}"))?.Wert;
-                SonderwunschText = position.SonderwunschText;
-                SonderwunschAngebotsText = position.SonderwunschAngebotsText;
-                ProduktionZusatzInfo = position.ProduktionZusatzInfo;
-                ProduktionZusatzInfoPrintOnReport = position.ProduktionZusatzInfoPrintOnReport;
-                ProduktionZusatzInfoPrintZusatzEtikett = position.ProduktionZusatzInfoPrintZusatzEtikett;
-                Zusatztexte = position.Zusatztexte;
-                BelegPositionGuid = position.BelegPositionGuid;
-                if (preiseAnzeigen)
-                {
-                    Farbzuschlag = position.Farbzuschlag.ToString(culture);
-                    EinzelpreisOhneFarbzuschlag = position.Einzelpreis.ToString(culture);
-                    Rabatt = position.Rabatt.Equals(0m) ? string.Empty : position.Rabatt.ToString(culture);
-                    Gesamtpreis = position.Gesamtpreis.ToString(culture);
-                    Einzelpreis = (position.Einzelpreis + position.Farbzuschlag).ToString(culture);
-                }
+            Text = einbauort + position.Text;
+            AngebotsText = einbauort + position.AngebotsText;
+            PulverCode = position.Daten.FirstOrDefault(d => d.KonfigName.Equals($"Konfig.{PosDataKonfigKeys.PulverCode}"))?.Wert;
+            SonderwunschText = position.SonderwunschText;
+            SonderwunschAngebotsText = position.SonderwunschAngebotsText;
+            ProduktionZusatzInfo = position.ProduktionZusatzInfo;
+            ProduktionZusatzInfoPrintOnReport = position.ProduktionZusatzInfoPrintOnReport;
+            ProduktionZusatzInfoPrintZusatzEtikett = position.ProduktionZusatzInfoPrintZusatzEtikett;
+            Zusatztexte = position.Zusatztexte;
+            BelegPositionGuid = position.BelegPositionGuid;
+            if (preiseAnzeigen)
+            {
+                Farbzuschlag = position.Farbzuschlag.ToString(culture);
+                EinzelpreisOhneFarbzuschlag = position.Einzelpreis.ToString(culture);
+                Rabatt = position.Rabatt.Equals(0m) ? string.Empty : position.Rabatt.ToString(culture);
+                Gesamtpreis = position.Gesamtpreis.ToString(culture);
+                Einzelpreis = (position.Einzelpreis + position.Farbzuschlag).ToString(culture);
             }
         }
+    }
 }

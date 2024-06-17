@@ -10,27 +10,27 @@ public class TagInfoWebRoutinen : WebRoutinenBase
 {
     public TagInfoWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<IList<TagInfoDTO>> GetAllTagInfoAsync(DateTime? changedSince = null)
     {
-            if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
-            {
-                return await GetAsync<List<TagInfoDTO>>("GetAllTagInfo?changedSince=" + changedSince.Value.ToString("o"));
-            }
-
-            return await GetAsync<List<TagInfoDTO>>("GetAllTagInfo");
+        if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+        {
+            return await GetAsync<List<TagInfoDTO>>("GetAllTagInfo?changedSince=" + changedSince.Value.ToString("o"));
         }
+
+        return await GetAsync<List<TagInfoDTO>>("GetAllTagInfo");
+    }
 
     public async Task<IList<TagInfoDTO>> GetTagInfoSuggestionsAsync(DateTime? changedSince = null)
     {
-            if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
-            {
-                return await GetAsync<List<TagInfoDTO>>("GetTagInfoSuggestions?changedSince=" + changedSince.Value.ToString("o"));
-            }
-
-            return await GetAsync<List<TagInfoDTO>>("GetTagInfoSuggestions");
+        if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+        {
+            return await GetAsync<List<TagInfoDTO>>("GetTagInfoSuggestions?changedSince=" + changedSince.Value.ToString("o"));
         }
+
+        return await GetAsync<List<TagInfoDTO>>("GetTagInfoSuggestions");
+    }
 
     public async Task<IList<TagInfoDTO>> GetTagInfoAsync(Guid objectGuid)
         => await GetAsync<List<TagInfoDTO>>($"GetTagInfo?objectGuid={objectGuid}");

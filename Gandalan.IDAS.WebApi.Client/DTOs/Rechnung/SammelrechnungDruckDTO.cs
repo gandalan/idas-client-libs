@@ -39,47 +39,47 @@ public class SammelrechnungDruckDTO
 
     public SammelrechnungDruckDTO(SammelrechnungDTO sammelrechnung)
     {
-            var culture = new CultureInfo("de-de");
+        var culture = new CultureInfo("de-de");
 
-            SammelrechnungGuid = sammelrechnung.SammelrechnungGuid;
-            SammelrechnungNummer = sammelrechnung.SammelrechnungsNummer;
-            Belegnummer = Vorgangnummer = sammelrechnung.SammelrechnungsNummer;
-            Kunde = sammelrechnung.Kontakt;
-            Kunde.SchlussTextRechnung = sammelrechnung.Schlusstext;
-            Kunde.Zahlungsbedingung = sammelrechnung.ZahlungsBedingungen;
-            ErstellDatum = sammelrechnung.ErstellDatum.ToString("d", culture);
-            Kopfzeile = sammelrechnung.Kopfzeile;
-            Fusszeile = sammelrechnung.Fusszeile;
-            Schlusstext = sammelrechnung.Schlusstext;
-            SetTitleAndSubtitle(sammelrechnung, culture);
-            Ansprechpartner = sammelrechnung.Ansprechpartner;
-            Telefonnummer = sammelrechnung.Telefonnummer;
-            Lieferzeit = sammelrechnung.Liefertermin;
-            RechnungsAdresseString = sammelrechnung.RechnungsAdresse.ToString();
-            RechnungPositionen = SammelrechnungPositionDruckDTO.ListFromDTOs(sammelrechnung.Positionen);
-            Salden = SammelrechnungSaldoDruckDTO.ListFromDTOs(sammelrechnung.Salden);
+        SammelrechnungGuid = sammelrechnung.SammelrechnungGuid;
+        SammelrechnungNummer = sammelrechnung.SammelrechnungsNummer;
+        Belegnummer = Vorgangnummer = sammelrechnung.SammelrechnungsNummer;
+        Kunde = sammelrechnung.Kontakt;
+        Kunde.SchlussTextRechnung = sammelrechnung.Schlusstext;
+        Kunde.Zahlungsbedingung = sammelrechnung.ZahlungsBedingungen;
+        ErstellDatum = sammelrechnung.ErstellDatum.ToString("d", culture);
+        Kopfzeile = sammelrechnung.Kopfzeile;
+        Fusszeile = sammelrechnung.Fusszeile;
+        Schlusstext = sammelrechnung.Schlusstext;
+        SetTitleAndSubtitle(sammelrechnung, culture);
+        Ansprechpartner = sammelrechnung.Ansprechpartner;
+        Telefonnummer = sammelrechnung.Telefonnummer;
+        Lieferzeit = sammelrechnung.Liefertermin;
+        RechnungsAdresseString = sammelrechnung.RechnungsAdresse.ToString();
+        RechnungPositionen = SammelrechnungPositionDruckDTO.ListFromDTOs(sammelrechnung.Positionen);
+        Salden = SammelrechnungSaldoDruckDTO.ListFromDTOs(sammelrechnung.Salden);
 
-            CountValuePositionen = sammelrechnung.Positionen.Count;
-            CountValueSalden = sammelrechnung.Salden.Count;
-            IsEndkunde = sammelrechnung.Kontakt.IstEndkunde;
+        CountValuePositionen = sammelrechnung.Positionen.Count;
+        CountValueSalden = sammelrechnung.Salden.Count;
+        IsEndkunde = sammelrechnung.Kontakt.IstEndkunde;
 
-            EinzelrechnungDTOs = sammelrechnung.EinzelrechnungDTOs;
-        }
+        EinzelrechnungDTOs = sammelrechnung.EinzelrechnungDTOs;
+    }
 
     private void SetTitleAndSubtitle(SammelrechnungDTO dto, CultureInfo culture)
     {
-            if (dto.PageTitle.IsNullOrEmpty())
-            {
-                PageTitle = "Sammelrechnung";
-                PageSubtitle1 = $"Nr. {dto.SammelrechnungsNummer} vom {dto.ErstellDatum.ToString(culture.DateTimeFormat.ShortDatePattern, culture)}";
-            }
-            else
-            {
-                PageTitle = dto.PageTitle;
-                PageSubtitle1 = dto.PageSubtitle1;
-                PageSubtitle2 = dto.PageSubtitle2;
-            }
+        if (dto.PageTitle.IsNullOrEmpty())
+        {
+            PageTitle = "Sammelrechnung";
+            PageSubtitle1 = $"Nr. {dto.SammelrechnungsNummer} vom {dto.ErstellDatum.ToString(culture.DateTimeFormat.ShortDatePattern, culture)}";
         }
+        else
+        {
+            PageTitle = dto.PageTitle;
+            PageSubtitle1 = dto.PageSubtitle1;
+            PageSubtitle2 = dto.PageSubtitle2;
+        }
+    }
 }
 
 public class SammelrechnungPositionDruckDTO
@@ -95,29 +95,31 @@ public class SammelrechnungPositionDruckDTO
 
     public SammelrechnungPositionDruckDTO(SammelrechnungPositionenDTO position)
     {
-            var culture = new CultureInfo("de-de");
+        var culture = new CultureInfo("de-de");
 
-            LaufendeNummer = position.LaufendeNummer;
-            RechnungNummer = position.RechnungNummer.ToString();
-            RechnungDatum = position.RechnungDatum.ToString("d", culture);
-            VorgangsDatum = position.VorgangsDatum.ToString("d", culture);
-            RechnungKommission = position.RechnungKommision;
-            var warenwertSalde = position.Salden.FirstOrDefault(s => s.Name == "Warenwert");
-            RechnungBetrag = warenwertSalde.Betrag.ToString(culture);
-            RechnungSalden = SammelrechnungSaldoDruckDTO.ListFromDTOs(position.Salden);
-        }
+        LaufendeNummer = position.LaufendeNummer;
+        RechnungNummer = position.RechnungNummer.ToString();
+        RechnungDatum = position.RechnungDatum.ToString("d", culture);
+        VorgangsDatum = position.VorgangsDatum.ToString("d", culture);
+        RechnungKommission = position.RechnungKommision;
+        var warenwertSalde = position.Salden.FirstOrDefault(s => s.Name == "Warenwert");
+        RechnungBetrag = warenwertSalde.Betrag.ToString(culture);
+        RechnungSalden = SammelrechnungSaldoDruckDTO.ListFromDTOs(position.Salden);
+    }
+
     public static List<SammelrechnungPositionDruckDTO> ListFromDTOs(IList<SammelrechnungPositionenDTO> positionen)
     {
-            var druckPositionen = new List<SammelrechnungPositionDruckDTO>();
-            if (!positionen.IsNullOrEmpty())
+        var druckPositionen = new List<SammelrechnungPositionDruckDTO>();
+        if (!positionen.IsNullOrEmpty())
+        {
+            foreach (var position in positionen)
             {
-                foreach (var position in positionen)
-                {
-                    druckPositionen.Add(new SammelrechnungPositionDruckDTO(position));
-                }
+                druckPositionen.Add(new SammelrechnungPositionDruckDTO(position));
             }
-            return druckPositionen.OrderBy(p => p.LaufendeNummer).ToList();
         }
+
+        return druckPositionen.OrderBy(p => p.LaufendeNummer).ToList();
+    }
 }
 
 public class SammelrechnungSaldoDruckDTO
@@ -130,31 +132,32 @@ public class SammelrechnungSaldoDruckDTO
 
     public SammelrechnungSaldoDruckDTO(SammelrechnungSaldenDTO saldo, bool isLastElement)
     {
-            var culture = new CultureInfo("de-de");
+        var culture = new CultureInfo("de-de");
 
-            Reihenfolge = saldo.Reihenfolge;
-            Text = saldo.Text;
-            Betrag = saldo.Betrag.ToString(culture);
-            Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29", culture) : "";
-            IsLastElement = isLastElement;
-        }
+        Reihenfolge = saldo.Reihenfolge;
+        Text = saldo.Text;
+        Betrag = saldo.Betrag.ToString(culture);
+        Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29", culture) : "";
+        IsLastElement = isLastElement;
+    }
 
     public static List<SammelrechnungSaldoDruckDTO> ListFromDTOs(IList<SammelrechnungSaldenDTO> salden)
     {
-            var druckSalden = new List<SammelrechnungSaldoDruckDTO>();
-            if (!salden.IsNullOrEmpty())
+        var druckSalden = new List<SammelrechnungSaldoDruckDTO>();
+        if (!salden.IsNullOrEmpty())
+        {
+            var maxReihenfolge = salden.Max(p => p.Reihenfolge);
+            foreach (var saldo in salden)
             {
-                var maxReihenfolge = salden.Max(p => p.Reihenfolge);
-                foreach (var saldo in salden)
+                if (saldo.Name == "Warenwert")
                 {
-                    if (saldo.Name == "Warenwert")
-                    {
-                        continue;
-                    }
-
-                    druckSalden.Add(new SammelrechnungSaldoDruckDTO(saldo, isLastElement: saldo.Reihenfolge == maxReihenfolge));
+                    continue;
                 }
+
+                druckSalden.Add(new SammelrechnungSaldoDruckDTO(saldo, isLastElement: saldo.Reihenfolge == maxReihenfolge));
             }
-            return druckSalden.OrderBy(s => s.Reihenfolge).ToList();
         }
+
+        return druckSalden.OrderBy(s => s.Reihenfolge).ToList();
+    }
 }

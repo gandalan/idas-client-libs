@@ -13,25 +13,25 @@ public class ConnectHub
     [Obsolete("Call GetEndpointsAsync")]
     public async Task<HubResponse> GetEndpoints(string apiVersion = null, string env = null, string clientOs = null)
     {
-            return await GetEndpointsAsync(apiVersion, env, clientOs);
-        }
+        return await GetEndpointsAsync(apiVersion, env, clientOs);
+    }
 
     public async Task<HubResponse> GetEndpointsAsync(string apiVersion = null, string env = null, string clientOs = null)
     {
-            var requestUrl =
-                HubUrl + "?" +
-                (apiVersion != null ? "apiVersion=" + apiVersion + "&" : "") +
-                (env != null ? "env=" + env + "&" : "") +
-                (clientOs != null ? "clientOS=" + clientOs : "");
-            try
-            {
-                var response = await new HttpClient().GetStringAsync(requestUrl);
-                return JsonConvert.DeserializeObject<HubResponse>(response);
-            }
-            catch (Exception e)
-            {
-                L.Fehler(e, $"Exception for GetEndpoints. Env: '{env}'");
-                throw;
-            }
+        var requestUrl =
+            HubUrl + "?" +
+            (apiVersion != null ? "apiVersion=" + apiVersion + "&" : "") +
+            (env != null ? "env=" + env + "&" : "") +
+            (clientOs != null ? "clientOS=" + clientOs : "");
+        try
+        {
+            var response = await new HttpClient().GetStringAsync(requestUrl);
+            return JsonConvert.DeserializeObject<HubResponse>(response);
         }
+        catch (Exception e)
+        {
+            L.Fehler(e, $"Exception for GetEndpoints. Env: '{env}'");
+            throw;
+        }
+    }
 }

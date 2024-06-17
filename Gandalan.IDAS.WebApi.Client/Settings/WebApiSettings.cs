@@ -60,59 +60,59 @@ public class WebApiSettings : IWebApiConfig
     [Obsolete("Call InitializeAsync")]
     public virtual async Task Initialize(Guid appToken, string env)
     {
-            await InitializeAsync(appToken, env);
-        }
+        await InitializeAsync(appToken, env);
+    }
 
     /// <remarks>
     /// Remember to call <see cref="WebApiConfigurations.InitializeAsync"/> before.
     /// </remarks>
     public virtual async Task InitializeAsync(Guid appToken, string env)
     {
-            try
+        try
+        {
+            if (appToken.Equals(Guid.Empty))
             {
-                if (appToken.Equals(Guid.Empty))
-                {
-                    throw new ArgumentException("WebApiSettings: AppToken must not be Guid.Empty", nameof(appToken));
-                }
-
-                if (string.IsNullOrEmpty(env))
-                {
-                    throw new ArgumentNullException(nameof(env), "WebApiSettings: Environment must not be null or empty");
-                }
-
-                var settings = WebApiConfigurations.ByName(env);
-                if (settings != null)
-                {
-                    CopyToThis(settings);
-                }
-
-                await Task.CompletedTask;
+                throw new ArgumentException("WebApiSettings: AppToken must not be Guid.Empty", nameof(appToken));
             }
-            catch (Exception e)
+
+            if (string.IsNullOrEmpty(env))
             {
-                // Non awaitable callers will not see exception thrown here, but we will always have logged exception
-                L.Fehler(e, $"Exception in InitializeAsync. Env: '{env}'");
-                throw;
+                throw new ArgumentNullException(nameof(env), "WebApiSettings: Environment must not be null or empty");
             }
+
+            var settings = WebApiConfigurations.ByName(env);
+            if (settings != null)
+            {
+                CopyToThis(settings);
+            }
+
+            await Task.CompletedTask;
         }
+        catch (Exception e)
+        {
+            // Non awaitable callers will not see exception thrown here, but we will always have logged exception
+            L.Fehler(e, $"Exception in InitializeAsync. Env: '{env}'");
+            throw;
+        }
+    }
 
     public virtual void CopyToThis(IWebApiConfig settings)
     {
-            AppToken = settings.AppToken;
-            AuthToken = settings.AuthToken;
-            FriendlyName = settings.FriendlyName;
-            Mandant = settings.Mandant;
-            Passwort = settings.Passwort;
-            UserName = settings.UserName;
-            InstallationId = settings.InstallationId;
-            UserAgent = settings.UserAgent;
+        AppToken = settings.AppToken;
+        AuthToken = settings.AuthToken;
+        FriendlyName = settings.FriendlyName;
+        Mandant = settings.Mandant;
+        Passwort = settings.Passwort;
+        UserName = settings.UserName;
+        InstallationId = settings.InstallationId;
+        UserAgent = settings.UserAgent;
 
-            Url = settings.Url;
-            CMSUrl = settings.CMSUrl;
-            DocUrl = settings.DocUrl;
-            FeedbackUrl = settings.FeedbackUrl;
-            StoreUrl = settings.StoreUrl;
-            NotifyUrl = settings.NotifyUrl;
-            HelpCenterUrl = settings.HelpCenterUrl;
-        }
+        Url = settings.Url;
+        CMSUrl = settings.CMSUrl;
+        DocUrl = settings.DocUrl;
+        FeedbackUrl = settings.FeedbackUrl;
+        StoreUrl = settings.StoreUrl;
+        NotifyUrl = settings.NotifyUrl;
+        HelpCenterUrl = settings.HelpCenterUrl;
+    }
 }

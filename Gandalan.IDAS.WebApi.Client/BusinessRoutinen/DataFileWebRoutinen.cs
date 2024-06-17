@@ -14,7 +14,7 @@ public class DataFileWebRoutinen : WebRoutinenBase
 {
     public DataFileWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<byte[]> GetFileAsync(string filename)
         => await GetDataAsync("DataFile/?filename=" + filename);
