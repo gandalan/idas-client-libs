@@ -9,25 +9,25 @@ public class AnpassungenWebRoutinen : WebRoutinenBase
 {
     public AnpassungenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<AnpassungDTO[]> GetAllAsync()
     {
-            return await GetAsync<AnpassungDTO[]>("Anpassungen");
-        }
+        return await GetAsync<AnpassungDTO[]>("Anpassungen");
+    }
 
     public async Task SaveAnpassungAsync(AnpassungDTO dto)
     {
-            await PutAsync("Anpassungen/" + dto.AnpassungGuid, dto);
-        }
+        await PutAsync("Anpassungen/" + dto.AnpassungGuid, dto);
+    }
 
     public async Task DeleteAnpassungAsync(Guid anpassungGuid)
     {
-            await DeleteAsync("Anpassungen/" + anpassungGuid);
-        }
+        await DeleteAsync("Anpassungen/" + anpassungGuid);
+    }
 
     public async Task WebJob()
     {
-            await PostAsync<string>("Anpassungen/WebJob", "");
-        }
+        await PostAsync<string>("Anpassungen/WebJob", "");
+    }
 }

@@ -9,7 +9,7 @@ public class BenutzerVariantenWebRoutinen : WebRoutinenBase
 {
     public BenutzerVariantenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<VarianteDTO[]> GetBenutzerVariantenAsync(Guid benutzer, bool mitSperrliste)
         => await GetAsync<VarianteDTO[]>($"BenutzerVarianten?id={benutzer}&mitSperrliste={mitSperrliste}");

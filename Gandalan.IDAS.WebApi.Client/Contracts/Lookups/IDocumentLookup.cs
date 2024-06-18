@@ -39,8 +39,8 @@ public class DocumentLookupResult : IDocumentLookupResult
 {
     public DocumentLookupResult(IDocument doc)
     {
-            Document = doc;
-        }
+        Document = doc;
+    }
 
     public static DocumentLookupResult Empty { get; }
 

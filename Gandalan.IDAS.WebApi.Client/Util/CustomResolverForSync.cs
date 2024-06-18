@@ -8,12 +8,12 @@ public class CustomResolverForSync : DefaultContractResolver
 {
     protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
     {
-            var prop = base.CreateProperty(member, memberSerialization);
-            if (prop.PropertyType.IsClass && prop.PropertyType != typeof(string))
-            {
-                prop.ShouldSerialize = obj => false;
-            }
-
-            return prop;
+        var prop = base.CreateProperty(member, memberSerialization);
+        if (prop.PropertyType.IsClass && prop.PropertyType != typeof(string))
+        {
+            prop.ShouldSerialize = obj => false;
         }
+
+        return prop;
+    }
 }

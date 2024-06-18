@@ -56,18 +56,18 @@ public class ProduktionsInfoBelegPositionAVDTO
         get => _aktuellerStatus;
         set
         {
-                _aktuellerStatus = value;
-                IstFuerAVBereitgestellt = (_aktuellerStatus & ProduktionsStatiWerteDTO.FuerAVBereitgestellt) > 0;
-                IstAVBerechnet = (_aktuellerStatus & ProduktionsStatiWerteDTO.AVBerechnet) > 0;
-                IstAVAbgeschlossen = (_aktuellerStatus & ProduktionsStatiWerteDTO.AVAbgeschlossen) > 0;
-                IstSerieZugeordnet = (_aktuellerStatus & ProduktionsStatiWerteDTO.SerieZugeordnet) > 0;
-                IstInProduktion = (_aktuellerStatus & ProduktionsStatiWerteDTO.InProduktion) > 0;
-                IstProduktionAbgeschlossen = (_aktuellerStatus & ProduktionsStatiWerteDTO.ProduktionAbgeschlossen) > 0;
-                IstVersandVorbereitung = (_aktuellerStatus & ProduktionsStatiWerteDTO.VersandVorbereitung) > 0;
-                IstVersandAbgeschlossen = (_aktuellerStatus & ProduktionsStatiWerteDTO.VersandAbgeschlossen) > 0;
-                IstProduktionUnterbrochen = (_aktuellerStatus & ProduktionsStatiWerteDTO.ProduktionUnterbrochen) > 0;
-                IstFehler = (_aktuellerStatus & ProduktionsStatiWerteDTO.Fehler) > 0;
-            }
+            _aktuellerStatus = value;
+            IstFuerAVBereitgestellt = (_aktuellerStatus & ProduktionsStatiWerteDTO.FuerAVBereitgestellt) > 0;
+            IstAVBerechnet = (_aktuellerStatus & ProduktionsStatiWerteDTO.AVBerechnet) > 0;
+            IstAVAbgeschlossen = (_aktuellerStatus & ProduktionsStatiWerteDTO.AVAbgeschlossen) > 0;
+            IstSerieZugeordnet = (_aktuellerStatus & ProduktionsStatiWerteDTO.SerieZugeordnet) > 0;
+            IstInProduktion = (_aktuellerStatus & ProduktionsStatiWerteDTO.InProduktion) > 0;
+            IstProduktionAbgeschlossen = (_aktuellerStatus & ProduktionsStatiWerteDTO.ProduktionAbgeschlossen) > 0;
+            IstVersandVorbereitung = (_aktuellerStatus & ProduktionsStatiWerteDTO.VersandVorbereitung) > 0;
+            IstVersandAbgeschlossen = (_aktuellerStatus & ProduktionsStatiWerteDTO.VersandAbgeschlossen) > 0;
+            IstProduktionUnterbrochen = (_aktuellerStatus & ProduktionsStatiWerteDTO.ProduktionUnterbrochen) > 0;
+            IstFehler = (_aktuellerStatus & ProduktionsStatiWerteDTO.Fehler) > 0;
+        }
     }
 
     public bool IstFuerAVBereitgestellt { get; private set; }

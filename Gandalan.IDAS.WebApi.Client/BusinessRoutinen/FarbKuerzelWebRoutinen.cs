@@ -8,7 +8,7 @@ public class FarbKuerzelWebRoutinen : WebRoutinenBase
 {
     public FarbKuerzelWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<FarbKuerzelDTO[]> GetAllAsync()
         => await GetAsync<FarbKuerzelDTO[]>("FarbKuerzel");

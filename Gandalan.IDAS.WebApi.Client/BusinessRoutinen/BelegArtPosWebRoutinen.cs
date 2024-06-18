@@ -12,7 +12,7 @@ public class BelegArtPosWebRoutinen : WebRoutinenBase
 {
     public BelegArtPosWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<VorgangDTO> BelegWechselAsync(BelegartWechselDTO dto) => await PutAsync<VorgangDTO>("BelegArtPos", dto);
 }

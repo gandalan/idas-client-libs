@@ -16,6 +16,6 @@ public class WarenGruppeDTO
 
     public WarenGruppeDTO()
     {
-            Artikel = [];
-        }
+        Artikel = [];
+    }
 }

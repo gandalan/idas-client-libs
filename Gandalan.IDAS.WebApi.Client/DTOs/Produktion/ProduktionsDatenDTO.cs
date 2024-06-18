@@ -43,14 +43,14 @@ public class ProduktionsDatenDTO
     /// <returns>Materialliste</returns>
     public List<MaterialbedarfDTO> GetMaterialbedarf()
     {
-            return Material == null ? [] : Material.Where(m => m.IstZuschnitt == false || m.ZuschnittLaenge == 0).ToList();
-        }
+        return Material == null ? [] : Material.Where(m => m.IstZuschnitt == false || m.ZuschnittLaenge == 0).ToList();
+    }
 
     /// <summary>
     /// Gibt NUR Artikel aus dem Materialbedarf zurück, die Zuschnitte sind
     /// </summary>
     public List<MaterialbedarfDTO> GetSaegeliste()
     {
-            return Material == null ? [] : Material.Where(m => m.IstZuschnitt && m.ZuschnittLaenge > 0).ToList();
-        }
+        return Material == null ? [] : Material.Where(m => m.IstZuschnitt && m.ZuschnittLaenge > 0).ToList();
+    }
 }

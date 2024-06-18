@@ -10,7 +10,7 @@ public class LieferzusageWebRoutinen : WebRoutinenBase
 {
     public LieferzusageWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<List<LieferzusageDTO>> GetAllZusagenAsync(Guid serie, string lieferant = "")
         => await GetAsync<List<LieferzusageDTO>>($"Lieferzusage/?serieGuid={serie}&lieferant={lieferant}");

@@ -8,10 +8,10 @@ public class SammelrechnungDTO
 {
     public SammelrechnungDTO()
     {
-            Positionen = [];
-            Salden = [];
-            EinzelrechnungDTOs = [];
-        }
+        Positionen = [];
+        Salden = [];
+        EinzelrechnungDTOs = [];
+    }
 
     public Guid SammelrechnungGuid { get; set; }
     public long SammelrechnungsNummer { get; set; }
@@ -40,8 +40,8 @@ public class SammelrechnungPositionenDTO
 {
     public SammelrechnungPositionenDTO()
     {
-            Salden = [];
-        }
+        Salden = [];
+    }
 
     public Guid SammelrechnungPositionGuid { get; set; }
     public int LaufendeNummer { get; set; }

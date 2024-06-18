@@ -11,9 +11,9 @@ public class TypedWebRoutinenBase<T> : WebRoutinenBase where T : new()
 
     public TypedWebRoutinenBase(string endPoint, Func<T, Guid> getGuid, IWebApiConfig settings) : base(settings)
     {
-            _endPoint = endPoint;
-            _getGuid = getGuid;
-        }
+        _endPoint = endPoint;
+        _getGuid = getGuid;
+    }
 
     public async Task<T[]> GetAllAsync()
         => await GetAsync<T[]>(_endPoint);

@@ -10,20 +10,20 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
 {
     public LagerbestandWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<LagerbestandDTO> GetAsync(Guid guid)
         => await GetAsync<LagerbestandDTO>("Lagerbestand/?id=" + guid);
 
     public async Task<List<LagerbestandDTO>> GetAllAsync(DateTime? changedSince)
     {
-            if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
-            {
-                return await GetAsync<List<LagerbestandDTO>>("Lagerbestand?changedSince=" + changedSince.Value.ToString("o"));
-            }
-
-            return await GetAsync<List<LagerbestandDTO>>("Lagerbestand");
+        if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+        {
+            return await GetAsync<List<LagerbestandDTO>>("Lagerbestand?changedSince=" + changedSince.Value.ToString("o"));
         }
+
+        return await GetAsync<List<LagerbestandDTO>>("Lagerbestand");
+    }
 
     public async Task<LagerbestandDTO> LagerbuchungAsync(LagerbuchungDTO buchung)
         => await PutAsync<LagerbestandDTO>("Lagerbuchung", buchung);

@@ -17,48 +17,48 @@ public class JobDTO
 
     public JobDTO()
     {
-            Stati = [];
-            Parameter = [];
-        }
+        Stati = [];
+        Parameter = [];
+    }
 
     public bool CancelWait { get; set; }
 
     public static JobDTO AddJob(string sender, string recipient)
     {
-            var job = new JobDTO { Sender = sender, Recipient = recipient };
-            job.Stati.Add(new JobStatusDTO { StatusCode = "N", StatusText = "Eingefügt von " + sender, Zeitstempel = DateTime.UtcNow });
-            return job;
-        }
+        var job = new JobDTO { Sender = sender, Recipient = recipient };
+        job.Stati.Add(new JobStatusDTO { StatusCode = "N", StatusText = "Eingefügt von " + sender, Zeitstempel = DateTime.UtcNow });
+        return job;
+    }
 
     public JobDTO AddStatus(string code, string text)
     {
-            Stati.Add(new JobStatusDTO { StatusCode = code, StatusText = text, Zeitstempel = DateTime.UtcNow });
-            return this;
-        }
+        Stati.Add(new JobStatusDTO { StatusCode = code, StatusText = text, Zeitstempel = DateTime.UtcNow });
+        return this;
+    }
 
     public JobDTO AddParameter(string richtung, string name, object value)
     {
-            if (string.IsNullOrEmpty(name) || value == null)
-            {
-                return this;
-            }
-
-            Parameter.Add(new JobParameterDTO { Richtung = richtung, Name = name, Wert = value.ToString(), DatenTyp = value.GetType().Name });
+        if (string.IsNullOrEmpty(name) || value == null)
+        {
             return this;
         }
+
+        Parameter.Add(new JobParameterDTO { Richtung = richtung, Name = name, Wert = value.ToString(), DatenTyp = value.GetType().Name });
+        return this;
+    }
 
     public JobDTO AddParameter(string richtung, Dictionary<string, string> parameter)
     {
-            foreach (var k in parameter.Keys)
-            {
-                AddParameter(richtung, k, parameter[k]);
-            }
-
-            return this;
+        foreach (var k in parameter.Keys)
+        {
+            AddParameter(richtung, k, parameter[k]);
         }
+
+        return this;
+    }
 
     public List<JobStatusDTO> GetOrderedStati()
     {
-            return Stati.ToList().OrderBy(ts => ts.StatusCodeAsInt).ToList();
-        }
+        return Stati.ToList().OrderBy(ts => ts.StatusCodeAsInt).ToList();
+    }
 }

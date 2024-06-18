@@ -20,26 +20,26 @@ public abstract class IVorgangCommand : ICommand, INotifyPropertyChanged
 
     public bool CanExecute(object parameter)
     {
-            var vorgang = parameter as VorgangDTO;
-            if (parameter == null)
-            {
-                return false;
-            }
-
-            return CanExecute(vorgang);
+        var vorgang = parameter as VorgangDTO;
+        if (parameter == null)
+        {
+            return false;
         }
+
+        return CanExecute(vorgang);
+    }
 
     public abstract bool CanExecute(VorgangDTO vorgang);
 
     public void Execute(object parameter)
     {
-            if (parameter is not VorgangDTO vorgang)
-            {
-                throw new ArgumentException("Parameter muss ein VorgangDTO sein", nameof(parameter));
-            }
-
-            Execute(vorgang);
+        if (parameter is not VorgangDTO vorgang)
+        {
+            throw new ArgumentException("Parameter muss ein VorgangDTO sein", nameof(parameter));
         }
+
+        Execute(vorgang);
+    }
 
     public abstract void Execute(VorgangDTO vorgang);
 }

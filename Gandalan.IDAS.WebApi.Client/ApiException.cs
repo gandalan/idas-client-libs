@@ -15,45 +15,45 @@ public class ApiException : Exception
 
     public ApiException()
     {
-        }
+    }
 
     public ApiException(string message) : base(message)
     {
-        }
+    }
 
     public ApiException(string message, HttpStatusCode statusCode) : base(message)
     {
-            StatusCode = statusCode;
-        }
+        StatusCode = statusCode;
+    }
 
     public ApiException(string message, Exception innerException) : base(message, innerException)
     {
-        }
+    }
 
     public ApiException(string message, HttpStatusCode statusCode, Exception innerException) : base(message, innerException)
     {
-            StatusCode = statusCode;
-        }
+        StatusCode = statusCode;
+    }
 
     public ApiException(string message, object payload) : base(message)
     {
-            Payload = JsonConvert.SerializeObject(payload);
-        }
+        Payload = JsonConvert.SerializeObject(payload);
+    }
 
     public ApiException(string message, HttpStatusCode statusCode, object payload) : base(message)
     {
-            StatusCode = statusCode;
-            Payload = JsonConvert.SerializeObject(payload);
-        }
+        StatusCode = statusCode;
+        Payload = JsonConvert.SerializeObject(payload);
+    }
 
     public ApiException(string message, Exception innerException, object payload) : base(message, innerException)
     {
-            Payload = JsonConvert.SerializeObject(payload);
-        }
+        Payload = JsonConvert.SerializeObject(payload);
+    }
 
     public ApiException(string message, HttpStatusCode statusCode, Exception innerException, object payload) : base(message, innerException)
     {
-            StatusCode = statusCode;
-            Payload = JsonConvert.SerializeObject(payload);
-        }
+        StatusCode = statusCode;
+        Payload = JsonConvert.SerializeObject(payload);
+    }
 }

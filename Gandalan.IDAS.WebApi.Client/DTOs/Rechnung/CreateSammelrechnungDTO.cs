@@ -8,8 +8,8 @@ public class CreateSammelrechnungDTO
 {
     public CreateSammelrechnungDTO()
     {
-            BelegGuids = [];
-        }
+        BelegGuids = [];
+    }
 
     public IList<Guid> BelegGuids { get; set; }
     public Guid KontaktGuid { get; set; }

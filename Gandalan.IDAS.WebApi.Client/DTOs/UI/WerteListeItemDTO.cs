@@ -17,6 +17,6 @@ public class WerteListeItemDTO
 
     public override string ToString()
     {
-            return Kuerzel;
-        }
+        return Kuerzel;
+    }
 }

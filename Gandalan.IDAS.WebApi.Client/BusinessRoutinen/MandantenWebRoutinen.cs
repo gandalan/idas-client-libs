@@ -9,7 +9,7 @@ public class MandantenWebRoutinen : WebRoutinenBase
 {
     public MandantenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task MandantenAbgleichen(List<MandantDTO> list)
         => await Task.Run(() => list.ForEach(async m => await PutAsync("Mandanten", m)));

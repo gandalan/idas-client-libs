@@ -10,7 +10,7 @@ public class BenutzerWebRoutinen : WebRoutinenBase
 {
     public BenutzerWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<BenutzerDTO[]> GetBenutzerListeAsync(Guid mandant, bool mitRollenUndRechten = true)
         => await GetAsync<BenutzerDTO[]>($"BenutzerListe?id={mandant}&mitRollenUndRechten={mitRollenUndRechten}");
@@ -29,6 +29,6 @@ public class BenutzerWebRoutinen : WebRoutinenBase
 
     public async Task SICSyncWebJob()
     {
-            await PostAsync("Benutzer/SICSyncWebJob", null);
-        }
+        await PostAsync("Benutzer/SICSyncWebJob", null);
+    }
 }

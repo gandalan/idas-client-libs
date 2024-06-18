@@ -13,17 +13,17 @@ public class JobStatusDTO
     {
         get
         {
-                switch (StatusCode)
-                {
-                    case "N": return 10;
-                    case "A": return 20;
-                    case "R": return 30;
-                    case "F": return 40;
-                    case "X": return 50;
-                    case "E": return 60;
-                    default:
-                        return 100;
-                }
+            switch (StatusCode)
+            {
+                case "N": return 10;
+                case "A": return 20;
+                case "R": return 30;
+                case "F": return 40;
+                case "X": return 50;
+                case "E": return 60;
+                default:
+                    return 100;
             }
+        }
     }
 }

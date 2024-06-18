@@ -8,7 +8,7 @@ public class FarbGruppenWebRoutinen : WebRoutinenBase
 {
     public FarbGruppenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<FarbGruppeDTO[]> GetAllAsync()
         => await GetAsync<FarbGruppeDTO[]>("FarbGruppen");

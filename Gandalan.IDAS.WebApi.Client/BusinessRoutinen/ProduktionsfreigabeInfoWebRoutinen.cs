@@ -9,7 +9,7 @@ public class ProduktionsfreigabeInfoWebRoutinen : WebRoutinenBase
 {
     public ProduktionsfreigabeInfoWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<Dictionary<Guid, DateTime>> GetProduktionsfreigabeInfoAsync(IList<Guid> belegGuids)
         => await PutAsync<Dictionary<Guid, DateTime>>("ProduktionsfreigabeInfo", belegGuids);

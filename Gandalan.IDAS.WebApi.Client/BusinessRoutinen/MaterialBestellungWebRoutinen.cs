@@ -9,7 +9,7 @@ public class MaterialBestellungWebRoutinen : WebRoutinenBase
 {
     public MaterialBestellungWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<VorgangDTO> ErzeugeVorgangBeiBeschichterAsync(VorgangDTO vorgang, Guid mGuid, string produzentenKundenNummer)
         => await PutAsync<VorgangDTO>($"MaterialBestellung?mGuid={mGuid}&produzentenKundenNummer={produzentenKundenNummer}", vorgang);

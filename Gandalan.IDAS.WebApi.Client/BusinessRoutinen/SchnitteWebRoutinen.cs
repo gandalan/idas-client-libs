@@ -8,8 +8,8 @@ public class SchnitteWebRoutinen : WebRoutinenBase
 {
     public SchnitteWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-            Settings.Url = Settings.Url.Replace("/api/", "/ModellDaten/");
-        }
+        Settings.Url = Settings.Url.Replace("/api/", "/ModellDaten/");
+    }
 
     public async Task<SchnittDTO[]> GetAllAsync()
         => await GetAsync<SchnittDTO[]>("Schnitt");

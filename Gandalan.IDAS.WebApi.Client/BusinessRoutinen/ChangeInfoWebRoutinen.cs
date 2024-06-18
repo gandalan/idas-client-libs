@@ -8,7 +8,7 @@ public class ChangeInfoWebRoutinen : WebRoutinenBase
 {
     public ChangeInfoWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<ChangeInfoDTO> GetChangeInfoAsync()
         => await GetAsync<ChangeInfoDTO>("ChangeInfo");

@@ -9,7 +9,7 @@ public class VariantenWebRoutinen : WebRoutinenBase
 {
     public VariantenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<VarianteDTO[]> GetAllAsync()
         => await GetAsync<VarianteDTO[]>("Variante?includeUIDefs=true&maxLevel=99");
@@ -19,13 +19,13 @@ public class VariantenWebRoutinen : WebRoutinenBase
 
     public async Task<Guid[]> GetAllVariantenChanges(DateTime? changedSince = null)
     {
-            if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
-            {
-                return await GetAsync<Guid[]>("Variante/GetAllVariantenChanges?changedSince=" + changedSince.Value.ToString("o"));
-            }
-
-            return await GetAsync<Guid[]>("Variante/GetAllGuids");
+        if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+        {
+            return await GetAsync<Guid[]>("Variante/GetAllVariantenChanges?changedSince=" + changedSince.Value.ToString("o"));
         }
+
+        return await GetAsync<Guid[]>("Variante/GetAllGuids");
+    }
 
     public async Task<VarianteDTO> GetAsync(Guid varianteGuid, bool includeUIDefs = true, bool includeKonfigs = true)
         => await GetAsync<VarianteDTO>($"Variante/{varianteGuid}?includeUIDefs={includeUIDefs}&maxLevel=99&includeKonfigs={includeKonfigs}");

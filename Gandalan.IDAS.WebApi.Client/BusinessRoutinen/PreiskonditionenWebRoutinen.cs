@@ -8,7 +8,7 @@ public class PreiskonditionenWebRoutinen : WebRoutinenBase
 {
     public PreiskonditionenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<PreisermittlungsEinstellungenDTO> GetPreiskonditionenAsync()
         => await GetAsync<PreisermittlungsEinstellungenDTO>("Preiskonditionen/");

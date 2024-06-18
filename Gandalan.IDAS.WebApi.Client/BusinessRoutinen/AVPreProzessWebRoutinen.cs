@@ -8,10 +8,10 @@ public class AVPreProzessWebRoutinen : WebRoutinenBase
 {
     public AVPreProzessWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<BerechnungParameterDTO> BerechnenAsync(BerechnungParameterDTO dto)
     {
-            return await PutAsync<BerechnungParameterDTO>("AVPreProcess", dto);
-        }
+        return await PutAsync<BerechnungParameterDTO>("AVPreProcess", dto);
+    }
 }
