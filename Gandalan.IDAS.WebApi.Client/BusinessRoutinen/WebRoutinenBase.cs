@@ -221,7 +221,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             return await _restRoutinen.PostAsync<T>(uri, data, settings, version: version);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri, data);
         }
@@ -234,7 +234,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             await _restRoutinen.PostAsync(uri, data, settings, version: version);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri, data);
         }
@@ -247,7 +247,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             return await _restRoutinen.PostDataAsync(uri, data, version: version);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri, data);
         }
@@ -260,7 +260,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             return await _restRoutinen.PostDataAsync(uri, data, version: version);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri, data);
         }
@@ -273,7 +273,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             return await _restRoutinen.GetDataAsync(uri, version: version);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri);
         }
@@ -286,7 +286,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             return await _restRoutinen.GetAsync(uri, version: version);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri);
         }
@@ -299,7 +299,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             return await _restRoutinen.GetAsync<T>(uri, settings, version: version);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri);
         }
@@ -312,7 +312,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             await _restRoutinen.PutAsync(uri, data, settings, version: version);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri, data);
         }
@@ -325,7 +325,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             return await _restRoutinen.PutAsync<T>(uri, data, settings, version: version);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri, data);
         }
@@ -338,7 +338,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             return await _restRoutinen.PutDataAsync(uri, data);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri, data);
         }
@@ -351,7 +351,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             return await _restRoutinen.PutDataAsync(uri, data);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri, data);
         }
@@ -364,7 +364,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             await _restRoutinen.DeleteAsync(uri);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri);
         }
@@ -377,7 +377,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             await _restRoutinen.DeleteAsync(uri, data, version: version);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri);
         }
@@ -390,7 +390,7 @@ public class WebRoutinenBase
             await RunPreRequestChecks(skipAuth);
             return await _restRoutinen.DeleteAsync<T>(uri, data, version: version);
         }
-        catch (HttpRequestException ex)
+        catch (Exception ex)
         {
             throw HandleWebException(ex, uri);
         }
@@ -499,13 +499,13 @@ public class WebRoutinenBase
         return false;
     }
 
-    private ApiException HandleWebException(HttpRequestException ex, string url, [CallerMemberName] string sender = null)
+    private ApiException HandleWebException(Exception ex, string url, [CallerMemberName] string sender = null)
     {
         var exception = TranslateException(ex);
         return InternalHandleWebException(exception, url, sender);
     }
 
-    private ApiException HandleWebException(HttpRequestException ex, string url, object data, [CallerMemberName] string sender = null)
+    private ApiException HandleWebException(Exception ex, string url, object data, [CallerMemberName] string sender = null)
     {
         var exception = TranslateException(ex, data);
         return InternalHandleWebException(exception, url, sender);
@@ -550,7 +550,7 @@ public class WebRoutinenBase
         return exception;
     }
 
-    protected static ApiException TranslateException(HttpRequestException ex, object payload)
+    protected static ApiException TranslateException(Exception ex, object payload)
     {
         if (ex.Data.Contains("Response"))
         {
@@ -590,7 +590,7 @@ public class WebRoutinenBase
         return new ApiException(ex.Message, ex, payload);
     }
 
-    protected static ApiException TranslateException(HttpRequestException ex)
+    protected static ApiException TranslateException(Exception ex)
     {
         if (ex.Data.Contains("Response"))
         {
