@@ -313,7 +313,7 @@ public class RESTRoutinen : IDisposable
         ex.Data.Add("URL", url);
         ex.Data.Add("CallMethod", sender);
         ex.Data.Add("StatusCode", response?.StatusCode ?? HttpStatusCode.InternalServerError);
-        if (responseContent != null)
+        if (!string.IsNullOrWhiteSpace(responseContent))
         {
             ex.Data.Add("Response", responseContent);
         }
