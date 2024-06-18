@@ -10,20 +10,20 @@ public class KontaktWebRoutinen : WebRoutinenBase
 {
     public KontaktWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<KontaktListItemDTO[]> GetKontakteAsync()
         => await GetAsync<KontaktListItemDTO[]>("Kontakt");
 
     public async Task<KontaktListItemDTO[]> GetKontakteAsync(DateTime? changedSince)
     {
-            if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
-            {
-                return await GetAsync<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value:o}");
-            }
-
-            return await GetAsync<KontaktListItemDTO[]>("Kontakt");
+        if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+        {
+            return await GetAsync<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value:o}");
         }
+
+        return await GetAsync<KontaktListItemDTO[]>("Kontakt");
+    }
 
     public async Task<KontaktDTO> GetKontaktAsync(Guid kontaktGuid)
         => await GetAsync<KontaktDTO>($"Kontakt/{kontaktGuid}");

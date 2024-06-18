@@ -87,6 +87,6 @@ public class KatalogArtikelDTO : IWithGueltigkeitsZeitraum
 
     public KatalogArtikelDTO()
     {
-            MoeglicheFarben = [];
-        }
+        MoeglicheFarben = [];
+    }
 }

@@ -274,61 +274,61 @@ public class KontaktDTO : IDTOWithApplicationSpecificProperties, INotifyProperty
 
     public KontaktDTO()
     {
-            Zusatzanschriften = [];
-            Personen = [];
-        }
+        Zusatzanschriften = [];
+        Personen = [];
+    }
 
     public event PropertyChangedEventHandler PropertyChanged;
 
     public override string ToString()
     {
-            return AnzeigeName;
-        }
+        return AnzeigeName;
+    }
 
     public BeleganschriftDTO GetRechnungsadresse()
     {
-            var rechnungsAdresse = new BeleganschriftDTO
-            {
-                AdressGuid = Guid.NewGuid(),
-            };
-            var rechnungsanschrift = Zusatzanschriften?.FirstOrDefault(z => z.Verwendungszweck == "Rechnung" && !string.IsNullOrWhiteSpace(z.ToString()));
-            if (rechnungsanschrift != null)
-            {
-                rechnungsAdresse.Nachname = rechnungsanschrift.Nachname;
-                rechnungsAdresse.Vorname = rechnungsanschrift.Vorname;
-                rechnungsAdresse.Firmenname = rechnungsanschrift.Firmenname;
-                rechnungsAdresse.Hausnummer = rechnungsanschrift.Hausnummer;
-                rechnungsAdresse.Strasse = rechnungsanschrift.Strasse;
-                rechnungsAdresse.Titel = rechnungsanschrift.Titel;
-                rechnungsAdresse.Anrede = rechnungsanschrift.Anrede;
-                rechnungsAdresse.AdressZusatz1 = rechnungsanschrift.AdressZusatz1;
-                rechnungsAdresse.AdressZusatz2 = rechnungsanschrift.AdressZusatz2;
-                rechnungsAdresse.Ortsteil = rechnungsanschrift.Ortsteil;
-                rechnungsAdresse.Postfach = rechnungsanschrift.Postfach;
-                rechnungsAdresse.Postleitzahl = rechnungsanschrift.Postleitzahl;
-                rechnungsAdresse.Ort = rechnungsanschrift.Ort;
-                rechnungsAdresse.Land = rechnungsanschrift.Land;
-                rechnungsAdresse.IstInland = rechnungsanschrift.IstInland;
-            }
-            else
-            {
-                rechnungsAdresse.Nachname = Nachname;
-                rechnungsAdresse.Vorname = Vorname;
-                rechnungsAdresse.Firmenname = Firmenname;
-                rechnungsAdresse.Hausnummer = Hausnummer;
-                rechnungsAdresse.Strasse = Strasse;
-                rechnungsAdresse.Titel = Titel;
-                rechnungsAdresse.Anrede = Anrede;
-                rechnungsAdresse.AdressZusatz1 = AdressZusatz1;
-                rechnungsAdresse.AdressZusatz2 = AdressZusatz2;
-                rechnungsAdresse.Ortsteil = Ortsteil;
-                rechnungsAdresse.Postfach = Postfach;
-                rechnungsAdresse.Postleitzahl = Postleitzahl;
-                rechnungsAdresse.Ort = Ort;
-                rechnungsAdresse.Land = Land;
-                rechnungsAdresse.IstInland = IstInland;
-            }
-
-            return rechnungsAdresse;
+        var rechnungsAdresse = new BeleganschriftDTO
+        {
+            AdressGuid = Guid.NewGuid(),
+        };
+        var rechnungsanschrift = Zusatzanschriften?.FirstOrDefault(z => z.Verwendungszweck == "Rechnung" && !string.IsNullOrWhiteSpace(z.ToString()));
+        if (rechnungsanschrift != null)
+        {
+            rechnungsAdresse.Nachname = rechnungsanschrift.Nachname;
+            rechnungsAdresse.Vorname = rechnungsanschrift.Vorname;
+            rechnungsAdresse.Firmenname = rechnungsanschrift.Firmenname;
+            rechnungsAdresse.Hausnummer = rechnungsanschrift.Hausnummer;
+            rechnungsAdresse.Strasse = rechnungsanschrift.Strasse;
+            rechnungsAdresse.Titel = rechnungsanschrift.Titel;
+            rechnungsAdresse.Anrede = rechnungsanschrift.Anrede;
+            rechnungsAdresse.AdressZusatz1 = rechnungsanschrift.AdressZusatz1;
+            rechnungsAdresse.AdressZusatz2 = rechnungsanschrift.AdressZusatz2;
+            rechnungsAdresse.Ortsteil = rechnungsanschrift.Ortsteil;
+            rechnungsAdresse.Postfach = rechnungsanschrift.Postfach;
+            rechnungsAdresse.Postleitzahl = rechnungsanschrift.Postleitzahl;
+            rechnungsAdresse.Ort = rechnungsanschrift.Ort;
+            rechnungsAdresse.Land = rechnungsanschrift.Land;
+            rechnungsAdresse.IstInland = rechnungsanschrift.IstInland;
         }
+        else
+        {
+            rechnungsAdresse.Nachname = Nachname;
+            rechnungsAdresse.Vorname = Vorname;
+            rechnungsAdresse.Firmenname = Firmenname;
+            rechnungsAdresse.Hausnummer = Hausnummer;
+            rechnungsAdresse.Strasse = Strasse;
+            rechnungsAdresse.Titel = Titel;
+            rechnungsAdresse.Anrede = Anrede;
+            rechnungsAdresse.AdressZusatz1 = AdressZusatz1;
+            rechnungsAdresse.AdressZusatz2 = AdressZusatz2;
+            rechnungsAdresse.Ortsteil = Ortsteil;
+            rechnungsAdresse.Postfach = Postfach;
+            rechnungsAdresse.Postleitzahl = Postleitzahl;
+            rechnungsAdresse.Ort = Ort;
+            rechnungsAdresse.Land = Land;
+            rechnungsAdresse.IstInland = IstInland;
+        }
+
+        return rechnungsAdresse;
+    }
 }

@@ -9,7 +9,7 @@ public class UIScriptWebRoutinen : WebRoutinenBase
 {
     public UIScriptWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<UIScriptDTO[]> GetAllAsync()
         => await GetAsync<UIScriptDTO[]>("UIScript/");

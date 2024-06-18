@@ -10,7 +10,7 @@ public class SammelrechnungenWebRoutinen : WebRoutinenBase
 {
     public SammelrechnungenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<SammelrechnungListItemDTO> ErstelleSammelrechnungenAsync(CreateSammelrechnungDTO dto)
         => await PostAsync<SammelrechnungListItemDTO>("Sammelrechnungen/ErstelleSammelrechnungen", dto);

@@ -7,9 +7,9 @@ public class WarenGruppeDTOListe : ObservableCollection<WarenGruppeDTO>
 {
     public WarenGruppeDTOListe()
     {
-        }
+    }
 
     public WarenGruppeDTOListe(IEnumerable<WarenGruppeDTO> items) : base(items)
     {
-        }
+    }
 }

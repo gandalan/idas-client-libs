@@ -13,7 +13,7 @@ public class BelegLoeschenWebRoutinen : WebRoutinenBase
 {
     public BelegLoeschenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<VorgangDTO> BelegLoeschenAsync(Guid bguid)
         => await DeleteAsync<VorgangDTO>("Vorgang/DeleteBeleg/" + bguid, null);

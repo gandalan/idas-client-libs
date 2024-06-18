@@ -8,7 +8,7 @@ public class VorgangReaktivierenWebRoutinen : WebRoutinenBase
 {
     public VorgangReaktivierenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<VorgangDTO> VorgangReaktivierenAsync(BelegartWechselDTO dto)
         => await PutAsync<VorgangDTO>("VorgangReaktivieren", dto);

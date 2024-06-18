@@ -8,8 +8,8 @@ public class KonturenWebRoutinen : WebRoutinenBase
 {
     public KonturenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-            Settings.Url = Settings.Url.Replace("/api/", "/ModellDaten/");
-        }
+        Settings.Url = Settings.Url.Replace("/api/", "/ModellDaten/");
+    }
 
     public async Task<KonturDTO[]> GetAllAsync()
         => await GetAsync<KonturDTO[]>("Kontur");

@@ -22,55 +22,55 @@ public abstract class IReport
 
     public IReport(IApplicationConfig appConfig)
     {
-            AppConfig = appConfig;
-        }
+        AppConfig = appConfig;
+    }
 
     public virtual string GetWorkingDir(ReportAction action)
     {
-            var baseDir = action == ReportAction.Design
-                ? AppConfig.StandardReportsDevDir
-                : AppConfig.StandardReportsDir;
-            return Path.Combine(baseDir, ReportFolderName);
+        var baseDir = action == ReportAction.Design
+            ? AppConfig.StandardReportsDevDir
+            : AppConfig.StandardReportsDir;
+        return Path.Combine(baseDir, ReportFolderName);
 
-        }
+    }
 
     public virtual string GetDataDir(ReportAction action)
     {
-            return action == ReportAction.Design
-             ? Path.Combine(GetWorkingDir(action), "public", "data")
-             : Path.Combine(GetWorkingDir(action), "data");
-        }
+        return action == ReportAction.Design
+         ? Path.Combine(GetWorkingDir(action), "public", "data")
+         : Path.Combine(GetWorkingDir(action), "data");
+    }
 
     public virtual async Task InitializeFolders(ReportAction action, bool copyCommomHtmlData = true)
     {
-            var workingDir = GetWorkingDir(action);
-            var dataDir = GetDataDir(action);
+        var workingDir = GetWorkingDir(action);
+        var dataDir = GetDataDir(action);
 
-            if (!Directory.Exists(workingDir))
-            {
-                throw new InvalidOperationException($"Reportverzeichnis '{workingDir}' nicht gefunden.");
-            }
-
-            if (!Directory.Exists(dataDir))
-            {
-                Directory.CreateDirectory(dataDir);
-            }
-
-            if (!copyCommomHtmlData)
-            {
-                return;
-            }
-
-            var sourceDir = Path.Combine(AppConfig.DataDir, "HTMLReportCommon");
-            if (Directory.Exists(sourceDir))
-            {
-                foreach (var document in new DirectoryInfo(sourceDir).GetFiles())
-                {
-                    File.Copy(document.FullName, $"{workingDir}/{document.Name}", true);
-                }
-            }
-            await Task.CompletedTask;
+        if (!Directory.Exists(workingDir))
+        {
+            throw new InvalidOperationException($"Reportverzeichnis '{workingDir}' nicht gefunden.");
         }
+
+        if (!Directory.Exists(dataDir))
+        {
+            Directory.CreateDirectory(dataDir);
+        }
+
+        if (!copyCommomHtmlData)
+        {
+            return;
+        }
+
+        var sourceDir = Path.Combine(AppConfig.DataDir, "HTMLReportCommon");
+        if (Directory.Exists(sourceDir))
+        {
+            foreach (var document in new DirectoryInfo(sourceDir).GetFiles())
+            {
+                File.Copy(document.FullName, $"{workingDir}/{document.Name}", true);
+            }
+        }
+        await Task.CompletedTask;
+    }
 
     public abstract Task Execute(ReportExecuteSettings reportSettings);
 }
@@ -79,7 +79,7 @@ public abstract class IReport<T> : IReport where T : class
 {
     public IReport(IApplicationConfig appConfig) : base(appConfig)
     {
-        }
+    }
 
     public T Data { get; set; }
     public abstract Task Initialize(T data);
@@ -118,13 +118,13 @@ public class ReportExecuteSettings
 
     public static ReportExecuteSettings FromReportAuswahlResult(IReportAuswahlResult result)
     {
-            return new ReportExecuteSettings
-            {
-                ReportAction = result.Action,
-                PrinterName = result.PrinterName,
-                FileName = result.FileName,
-                Copies = result.Copies,
-                Watermark = result.Watermark
-            };
-        }
+        return new ReportExecuteSettings
+        {
+            ReportAction = result.Action,
+            PrinterName = result.PrinterName,
+            FileName = result.FileName,
+            Copies = result.Copies,
+            Watermark = result.Watermark
+        };
+    }
 }

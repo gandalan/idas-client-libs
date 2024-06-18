@@ -10,8 +10,8 @@ public class IBOS1ImportRoutinen : WebRoutinenBase
 {
     public IBOS1ImportRoutinen(IWebApiConfig settings) : base(settings)
     {
-            Settings.Url = Settings.Url.Replace("/api/", "/ibos-api/");
-        }
+        Settings.Url = Settings.Url.Replace("/api/", "/ibos-api/");
+    }
 
     // eigentlich kann man die Funktionen LadeBestellungen() und LadeMaterialBestellungen() sowie ResetBestellungen() und ResetMaterialBestellungen() auch noch zusammenfassen aber da war ich jetzt echt zu faul für...
     public async Task<BestellungListItemDTO[]> LadeBestellungenAsync(int jahr = -1, bool includeAbegholte = false)

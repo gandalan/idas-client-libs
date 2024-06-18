@@ -6,5 +6,5 @@ public class WerteListeDTOListe : ObservableCollection<WerteListeDTO>
 {
     public WerteListeDTOListe()
     {
-        }
+    }
 }

@@ -9,7 +9,7 @@ public class TemplateWebRoutinen : WebRoutinenBase
 {
     public TemplateWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<TemplateDTO[]> GetAllAsync()
         => await GetAsync<TemplateDTO[]>("Template");

@@ -10,7 +10,7 @@ public class SerienInfoWebRoutinen : WebRoutinenBase
 {
     public SerienInfoWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<List<BelegSerienInfoDTO>> GetBelegSerienInfosAsync(IList<Guid> belegGuids)
         => await PostAsync<List<BelegSerienInfoDTO>>("BelegSerienInfo", belegGuids);

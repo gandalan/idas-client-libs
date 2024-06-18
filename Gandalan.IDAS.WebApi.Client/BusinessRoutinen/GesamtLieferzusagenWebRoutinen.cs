@@ -10,7 +10,7 @@ public class GesamtLieferzusagenWebRoutinen : WebRoutinenBase
 {
     public GesamtLieferzusagenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<List<GesamtLieferzusageDTO>> GetAsync(DateTime? stichTag = null)
         => await GetAsync<List<GesamtLieferzusageDTO>>($"GesamtLieferzusagen?stichTag={stichTag?.ToString("o")}");

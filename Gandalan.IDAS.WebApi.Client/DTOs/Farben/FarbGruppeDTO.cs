@@ -19,12 +19,12 @@ public class FarbGruppeDTO
 
     public FarbGruppeDTO()
     {
-            FarbItemGuids = [];
-            OberflaecheGuids = [];
-        }
+        FarbItemGuids = [];
+        OberflaecheGuids = [];
+    }
 
     public override string ToString()
     {
-            return $"{AnzeigeName} ({Bezeichnung})";
-        }
+        return $"{AnzeigeName} ({Bezeichnung})";
+    }
 }

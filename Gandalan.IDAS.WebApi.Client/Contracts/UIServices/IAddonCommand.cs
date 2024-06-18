@@ -14,8 +14,8 @@ public abstract class IAddonCommand : ICommand, INotifyPropertyChanged
 
     public virtual bool CanExecute(object parameter)
     {
-            return parameter != null;
-        }
+        return parameter != null;
+    }
 
     /// <summary>
     /// Returns wherever this command should be shown/can be used at all or not.
@@ -23,28 +23,28 @@ public abstract class IAddonCommand : ICommand, INotifyPropertyChanged
     /// <param name="parameter">Some object in the command's context</param>
     public virtual bool CanHandle(object parameter)
     {
-            return CanExecute(parameter);
-        }
+        return CanExecute(parameter);
+    }
 
     public virtual void Execute(object parameter)
     {
-        }
+    }
 }
 
 public abstract class IAddonCommand<T> : IAddonCommand
 {
     public virtual bool CanExecute(T parameter)
     {
-            return base.CanExecute(parameter);
-        }
+        return base.CanExecute(parameter);
+    }
 
     public virtual bool CanHandle(T parameter)
     {
-            return base.CanHandle(parameter);
-        }
+        return base.CanHandle(parameter);
+    }
 
     public virtual void Execute(T parameter)
     {
-            base.Execute(parameter);
-        }
+        base.Execute(parameter);
+    }
 }

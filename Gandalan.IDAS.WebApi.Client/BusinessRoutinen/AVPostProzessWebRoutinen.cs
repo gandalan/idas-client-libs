@@ -8,10 +8,10 @@ public class AVPostProzessWebRoutinen : WebRoutinenBase
 {
     public AVPostProzessWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<ProduktionsDatenDTO> BerechnenAsync(BelegPositionAVDTO dto)
     {
-            return await PutAsync<ProduktionsDatenDTO>("AVPostProcess", dto);
-        }
+        return await PutAsync<ProduktionsDatenDTO>("AVPostProcess", dto);
+    }
 }

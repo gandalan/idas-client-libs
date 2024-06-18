@@ -113,19 +113,19 @@ public class ZusatzanschriftDTO : IDTOWithApplicationSpecificProperties, INotify
 
     public ZusatzanschriftDTO()
     {
-            ApplicationSpecificProperties = [];
-            ZusatzanschriftGuid = Guid.NewGuid();
-        }
+        ApplicationSpecificProperties = [];
+        ZusatzanschriftGuid = Guid.NewGuid();
+    }
 
     public event PropertyChangedEventHandler PropertyChanged;
 
     public string GetText()
     {
-            return $"{Firmenname} {Vorname} {Nachname}".Trim();
-        }
+        return $"{Firmenname} {Vorname} {Nachname}".Trim();
+    }
 
     public override string ToString()
     {
-            return $"{GetText()}\r\n{Strasse} {Hausnummer}\r\n{Postleitzahl} {Ort}\r\n{Land}".Trim();
-        }
+        return $"{GetText()}\r\n{Strasse} {Hausnummer}\r\n{Postleitzahl} {Ort}\r\n{Land}".Trim();
+    }
 }

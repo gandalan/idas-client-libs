@@ -8,7 +8,7 @@ public class WarenGruppeWebRoutinen : WebRoutinenBase
 {
     public WarenGruppeWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<WarenGruppeDTO[]> GetAllAsync()
         => await GetAsync<WarenGruppeDTO[]>("WarenGruppe");

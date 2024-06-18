@@ -16,21 +16,21 @@ public class ArtikelIndiDatenWebRoutinen : WebRoutinenBase
 {
     public ArtikelIndiDatenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<KatalogArtikelIndiDatenDTO[]> GetAllAsync()
     {
-            return await GetAsync<KatalogArtikelIndiDatenDTO[]>("ArtikelIndiDaten");
-        }
+        return await GetAsync<KatalogArtikelIndiDatenDTO[]>("ArtikelIndiDaten");
+    }
 
     public async Task SaveArtikelIndiDaten(KatalogArtikelIndiDatenDTO daten)
     {
-            await PutAsync($"ArtikelIndiDaten/{daten.KatalogArtikelGuid}", daten);
-        }
+        await PutAsync($"ArtikelIndiDaten/{daten.KatalogArtikelGuid}", daten);
+    }
 
     public async Task DeleteArtikelIndiDaten(KatalogArtikelIndiDatenDTO daten)
     {
-            await DeleteAsync($"ArtikelIndiDaten/{daten.KatalogArtikelGuid}");
-        }
+        await DeleteAsync($"ArtikelIndiDaten/{daten.KatalogArtikelGuid}");
+    }
 
 }

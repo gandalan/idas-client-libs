@@ -9,7 +9,7 @@ public class LieferscheineWebRoutinen : WebRoutinenBase
 {
     public LieferscheineWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<BaseListItemDTO[]> LadeListeAsync(int jahr)
         => await GetAsync<BaseListItemDTO[]>("Lieferscheine/?jahr=" + jahr);
@@ -31,11 +31,11 @@ public class LieferscheineWebRoutinen : WebRoutinenBase
 
     public async Task<VorgangStatusDTO> SetStatusAsync(Guid vorgangGuid, string statusCode)
     {
-            var set = new VorgangStatusDTO
-            {
-                VorgangGuid = vorgangGuid,
-                NeuerStatus = statusCode
-            };
-            return await PutAsync<VorgangStatusDTO>("VorgangStatus", set);
-        }
+        var set = new VorgangStatusDTO
+        {
+            VorgangGuid = vorgangGuid,
+            NeuerStatus = statusCode
+        };
+        return await PutAsync<VorgangStatusDTO>("VorgangStatus", set);
+    }
 }

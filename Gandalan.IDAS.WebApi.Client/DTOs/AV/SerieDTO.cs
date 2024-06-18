@@ -69,26 +69,26 @@ public class SerieDTO
 
     public void AddDruckInfo(string dokumentArt, string benutzerName)
     {
-            DruckInfos.Add(new SerieDruckInfoDTO
-            {
-                Benutzername = benutzerName,
-                DokumentArt = dokumentArt,
-                Zeitstempel = DateTime.UtcNow,
-            });
-        }
+        DruckInfos.Add(new SerieDruckInfoDTO
+        {
+            Benutzername = benutzerName,
+            DokumentArt = dokumentArt,
+            Zeitstempel = DateTime.UtcNow,
+        });
+    }
 
     public IList<SerieDruckInfoDTO> GetDruckInfos(string dokumentArt)
     {
-            return DruckInfos
-                .Where(i => i.DokumentArt.Equals(dokumentArt, StringComparison.InvariantCultureIgnoreCase))
-                .OrderBy(i => i.Zeitstempel)
-                .ToList();
-        }
+        return DruckInfos
+            .Where(i => i.DokumentArt.Equals(dokumentArt, StringComparison.InvariantCultureIgnoreCase))
+            .OrderBy(i => i.Zeitstempel)
+            .ToList();
+    }
 
     public SerieDruckInfoDTO GetLastDruckInfo(string dokumentArt)
     {
-            return GetDruckInfos(dokumentArt).LastOrDefault();
-        }
+        return GetDruckInfos(dokumentArt).LastOrDefault();
+    }
 }
 
 public class SerieDruckInfoDTO

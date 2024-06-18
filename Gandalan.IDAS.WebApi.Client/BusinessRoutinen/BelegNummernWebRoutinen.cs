@@ -8,7 +8,7 @@ public class BelegNummernWebRoutinen : WebRoutinenBase
 {
     public BelegNummernWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<BelegNummerSettingDTO[]> GetBelegNummernAsync(bool currentYear = false)
         => await GetAsync<BelegNummerSettingDTO[]>($"BelegNummern?currentYear={currentYear}");

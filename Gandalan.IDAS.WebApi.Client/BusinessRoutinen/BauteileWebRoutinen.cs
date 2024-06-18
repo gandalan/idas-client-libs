@@ -13,16 +13,16 @@ public class BauteileWebRoutinen : WebRoutinenBase
 {
     public BauteileWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-            Settings.Url = Settings.Url.Replace("/api/", "/ModellDaten/");
-        }
+        Settings.Url = Settings.Url.Replace("/api/", "/ModellDaten/");
+    }
 
     public async Task<BauteilDTO[]> GetAllAsync()
     {
-            return await GetAsync<BauteilDTO[]>("Bauteil");
-        }
+        return await GetAsync<BauteilDTO[]>("Bauteil");
+    }
 
     public async Task SaveBauteilAsync(BauteilDTO dto)
     {
-            await PutAsync("Bauteil", dto);
-        }
+        await PutAsync("Bauteil", dto);
+    }
 }

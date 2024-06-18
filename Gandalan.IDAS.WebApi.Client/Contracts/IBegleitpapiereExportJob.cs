@@ -31,7 +31,7 @@ public class BegleitpapiereExportJobData : IBegleitpapiereExportJobData
 
     public BegleitpapiereExportJobData(object daten, Guid reportGuid)
     {
-            Data = daten;
-            ReportGuid = reportGuid;
-        }
+        Data = daten;
+        ReportGuid = reportGuid;
+    }
 }

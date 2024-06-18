@@ -8,7 +8,7 @@ public class ProduktionsfreigabeWebRoutinen : WebRoutinenBase
 {
     public ProduktionsfreigabeWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<VorgangDTO> AddProduktionsfreigabeAsync(BelegartWechselDTO dto)
         => await PutAsync<VorgangDTO>("Produktionsfreigabe", dto);

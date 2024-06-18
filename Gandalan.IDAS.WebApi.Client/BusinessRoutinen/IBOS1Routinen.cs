@@ -8,7 +8,7 @@ public class IBOS1Routinen : WebRoutinenBase
 {
     public IBOS1Routinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<string> ProduktionBerechnenAsync(Guid belegPositionsGuid)
         => await GetAsync<string>("IBOS1/Print?bguid=" + belegPositionsGuid);

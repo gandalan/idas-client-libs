@@ -132,6 +132,6 @@ public class MaterialbedarfDTO : ICloneable
 
     public object Clone()
     {
-            return MemberwiseClone();
-        }
+        return MemberwiseClone();
+    }
 }

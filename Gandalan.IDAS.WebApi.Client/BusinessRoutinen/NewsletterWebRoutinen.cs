@@ -8,7 +8,7 @@ public class NewsletterWebRoutinen : WebRoutinenBase
 {
     public NewsletterWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task RequestNewsletterAsync(Guid guid)
         => await PostAsync($"Newsletter/?id={guid}&eintragen=true", null);
