@@ -2,6 +2,8 @@ import { jwtDecode } from "jwt-decode";
 
 const envs = {};
 
+const JWT_SAFE_RENEWAL = 30; // seconds before token expiry to renew
+
 export async function fetchEnv(env = "") {
     if (!(env in envs)) {
         const hubUrl = `https://connect.idas-cloudservices.net/api/Endpoints?env=${env}`;
@@ -25,7 +27,7 @@ export function isTokenValid(token)
         const decoded = jwtDecode(token);
         if (!decoded) 
             throw new Error("Invalid token");
-        return (decoded.exp - 10 > Date.now() / 1000);
+        return (decoded.exp - JWT_SAFE_RENEWAL > Date.now() / 1000);
     }
     catch {
         return false;
@@ -42,12 +44,15 @@ export function authBuilder() {
         useAppToken(appToken = "") {
             this.appToken = appToken; return this;
         },
+
         useBaseUrl(authUrl = "") {
             this.authUrl = authUrl; return this;
         },
+
         useToken(jwtToken = "") {
             this.token = jwtToken; return this;
         },
+
         useRefreshToken(storedRefreshToken = "") {
             this.refreshToken = storedRefreshToken; return this;
         },
@@ -123,28 +128,25 @@ export function restClient()
             const res = await fetch(finalUrl, { method: "GET", headers });
             if (res.ok)
                 return await res.json();
-            else 
-                throw new Error(`GET ${finalUrl} failed: ${res.status} ${res.statusText}`);
+            throw new Error(`GET ${finalUrl} failed: ${res.status} ${res.statusText}`);
         },
 
         async put(url = "", payload = {}) {
             const finalUrl = `${this.baseUrl}/${url}`;
-            const headers = this.token ? { "Authorization": `Bearer ${this.token}`, "Content-Type" : "application/json" } : {};
+            const headers = this.token ? { "Authorization": `Bearer ${this.token}`, "Content-Type": "application/json" } : {};
             const res = await fetch(finalUrl, { method: "PUT", body: JSON.stringify(payload), headers });
             if (res.ok)
                 return await res.json();
-            else 
-                throw new Error(`PUT ${finalUrl} failed: ${res.status} ${res.statusText}`);
+            throw new Error(`PUT ${finalUrl} failed: ${res.status} ${res.statusText}`);
         },
 
         async post(url = "", payload = {}) {
             const finalUrl = `${this.baseUrl}/${url}`;
-            const headers = this.token ? { "Authorization": `Bearer ${this.token}`, "Content-Type" : "application/json" } : {};
+            const headers = this.token ? { "Authorization": `Bearer ${this.token}`, "Content-Type": "application/json" } : {};
             const res = await fetch(finalUrl, { method: "POST", body: JSON.stringify(payload), headers });
             if (res.ok)
                 return await res.json();
-            else 
-                throw new Error(`POST ${finalUrl} failed: ${res.status} ${res.statusText}`);
+            throw new Error(`POST ${finalUrl} failed: ${res.status} ${res.statusText}`);
         },
 
         async delete(url = "") {
@@ -153,8 +155,7 @@ export function restClient()
             const res = await fetch(finalUrl, { method: "DELETE", headers });
             if (res.ok)
                 return await res.json();
-            else 
-                throw new Error(`DELETE ${finalUrl} failed: ${res.status} ${res.statusText}`);
+            throw new Error(`DELETE ${finalUrl} failed: ${res.status} ${res.statusText}`);
         }
     }
 }
@@ -172,21 +173,27 @@ export function api() {
         useEnvironment(env = "") {
             this.env = env; return this;
         },
+
         useAppToken(newApptoken = "") {
             this.appToken = newApptoken; return this;
         },
+
         useBaseUrl(url = "") {
             this.baseUrl = url; return this;
         },
+
         useAuthUrl(url = "") {
             this.authUrl = url; return this;
         },
+
         useToken(jwtToken = "") {
             this.token = jwtToken; return this;
         },
+
         useRefreshToken(storedRefreshToken = "") {
             this.refreshToken = storedRefreshToken; return this;
         },
+
         useGlobalAuth() {
             // eslint-disable-next-line no-undef
             this.token = globalThis.idasTokens.token; this.refreshToken = globalThis.idasTokens.refreshToken; return this;
