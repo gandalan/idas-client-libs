@@ -8,7 +8,7 @@ public class FarbgruppenaufpreisWebRoutinen : WebRoutinenBase
 {
     public FarbgruppenaufpreisWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<FarbgruppenaufpreiseDTO[]> GetAsync()
         => await GetAsync<FarbgruppenaufpreiseDTO[]>("Farbgruppenaufpreis");

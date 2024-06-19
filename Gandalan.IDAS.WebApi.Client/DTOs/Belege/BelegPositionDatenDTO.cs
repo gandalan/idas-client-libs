@@ -12,11 +12,11 @@ public class BelegPositionDatenDTO
 
     public BelegPositionDatenDTO()
     {
-            BelegPositionDatenGuid = Guid.NewGuid();
-        }
+        BelegPositionDatenGuid = Guid.NewGuid();
+    }
 
     public override string ToString()
     {
-            return UnterkomponenteName + "/" + KonfigName + "=" + Wert;
-        }
+        return UnterkomponenteName + "/" + KonfigName + "=" + Wert;
+    }
 }

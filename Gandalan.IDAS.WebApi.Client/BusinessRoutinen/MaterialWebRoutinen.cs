@@ -8,8 +8,8 @@ public class MaterialWebRoutinen : WebRoutinenBase
 {
     public MaterialWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-            Settings.Url = Settings.Url.Replace("/api/", "/ModellDaten/");
-        }
+        Settings.Url = Settings.Url.Replace("/api/", "/ModellDaten/");
+    }
 
     public async Task<MaterialDTO[]> GetAllAsync()
         => await GetAsync<MaterialDTO[]>("Material");

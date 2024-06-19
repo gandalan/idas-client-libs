@@ -8,7 +8,7 @@ public class FilterWebRoutinen : WebRoutinenBase
 {
     public FilterWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<FilterItemDTO[]> GetAllAsync()
         => await GetAsync<FilterItemDTO[]>("Filter");

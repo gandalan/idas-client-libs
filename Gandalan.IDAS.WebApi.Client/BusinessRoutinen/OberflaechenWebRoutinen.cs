@@ -8,7 +8,7 @@ public class OberflaechenWebRoutinen : WebRoutinenBase
 {
     public OberflaechenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<OberflaecheDTO[]> GetAllAsync()
         => await GetAsync<OberflaecheDTO[]>("Oberflaeche");

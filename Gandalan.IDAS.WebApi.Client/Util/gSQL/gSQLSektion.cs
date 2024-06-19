@@ -11,23 +11,23 @@ public class gSQLSektion
 
     public gSQLSektion()
     {
-            Items = [];
-        }
+        Items = [];
+    }
 
     public gSQLSektion(string name) : this()
     {
-            Name = name;
-        }
+        Name = name;
+    }
 
     internal gSQLItem GetItem(string itemName)
     {
-            return Items.FirstOrDefault(i => i.Name != null && i.Name.Equals(itemName, StringComparison.InvariantCultureIgnoreCase));
+        return Items.FirstOrDefault(i => i.Name != null && i.Name.Equals(itemName, StringComparison.InvariantCultureIgnoreCase));
 
-        }
+    }
 
     public string GetItemWert(string itemName, string defaultWert = null)
     {
-            var item = GetItem(itemName);
-            return item != null ? item.Wert : defaultWert;
-        }
+        var item = GetItem(itemName);
+        return item != null ? item.Wert : defaultWert;
+    }
 }

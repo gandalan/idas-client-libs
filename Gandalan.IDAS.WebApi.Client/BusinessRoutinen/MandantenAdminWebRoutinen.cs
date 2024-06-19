@@ -10,21 +10,21 @@ public class MandantenAdminWebRoutinen : WebRoutinenBase
 {
     public MandantenAdminWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<List<MandantDTO>> LadeMandantenMitFilterAsync(string filter, bool onlyHaendler, bool onlyProduzenten)
     {
-            if (!string.IsNullOrEmpty(filter))
-            {
-                filter = Uri.EscapeDataString(filter);
-            }
-            else
-            {
-                filter = string.Empty;
-            }
-
-            return await GetAsync<List<MandantDTO>>("MandantenAdmin?filter=" + filter + "&onlyHaendler=" + onlyHaendler + "&onlyProduzenten=" + onlyProduzenten);
+        if (!string.IsNullOrEmpty(filter))
+        {
+            filter = Uri.EscapeDataString(filter);
         }
+        else
+        {
+            filter = string.Empty;
+        }
+
+        return await GetAsync<List<MandantDTO>>("MandantenAdmin?filter=" + filter + "&onlyHaendler=" + onlyHaendler + "&onlyProduzenten=" + onlyProduzenten);
+    }
 
     public async Task<MandantDTO> LadeMandantAsync(Guid guid)
         => await GetAsync<MandantDTO>("MandantenAdmin?guid=" + guid);

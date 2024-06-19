@@ -12,28 +12,28 @@ public class NotifyWebRoutinen : WebRoutinenBase
 
     public NotifyWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-            if (string.IsNullOrEmpty(settings.NotifyUrl))
-            {
-                return;
-            }
-
-            var uri = new UriBuilder(settings.NotifyUrl)
-            {
-                Path = "/api/",
-            };
-            Settings.Url = uri.Uri.ToString(); // use Uri member!! to be identical to createWebClient later on - otherwise includes port etc
-            _validConfig = true;
+        if (string.IsNullOrEmpty(settings.NotifyUrl))
+        {
+            return;
         }
+
+        var uri = new UriBuilder(settings.NotifyUrl)
+        {
+            Path = "/api/",
+        };
+        Settings.Url = uri.Uri.ToString(); // use Uri member!! to be identical to createWebClient later on - otherwise includes port etc
+        _validConfig = true;
+    }
 
     public async Task<IList<NachrichtenDTO>> GetAllNotificationsAsync()
     {
-            if (!_validConfig)
-            {
-                return [];
-            }
-
-            var mandant = Settings.AuthToken.Mandant.MandantGuid;
-            var produzent = Settings.AuthToken.Mandant.ProduzentMandantGuid;
-            return await GetAsync<List<NachrichtenDTO>>($"Nachrichten?mandantGuid={mandant}&produzentGuid={produzent}");
+        if (!_validConfig)
+        {
+            return [];
         }
+
+        var mandant = Settings.AuthToken.Mandant.MandantGuid;
+        var produzent = Settings.AuthToken.Mandant.ProduzentMandantGuid;
+        return await GetAsync<List<NachrichtenDTO>>($"Nachrichten?mandantGuid={mandant}&produzentGuid={produzent}");
+    }
 }

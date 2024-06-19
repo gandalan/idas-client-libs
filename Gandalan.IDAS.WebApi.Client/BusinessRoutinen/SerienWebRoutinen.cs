@@ -10,7 +10,7 @@ public class SerienWebRoutinen : WebRoutinenBase
 {
     public SerienWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task ReleaseElementeAsync(Guid fromSerie)
         => await GetAsync($"Serie/ReleaseElemente?fromSerie={fromSerie}");

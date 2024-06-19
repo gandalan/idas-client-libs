@@ -83,13 +83,13 @@ public class BelegPositionDTO : IDTOWithApplicationSpecificProperties
 
     public BelegPositionDTO()
     {
-            Daten = [];
-            Historie = [];
-            Zusatztexte = [];
-        }
+        Daten = [];
+        Historie = [];
+        Zusatztexte = [];
+    }
 
     public BelegPositionDTO Clone()
     {
-            return ObjectCloner.Clone(this);
-        }
+        return ObjectCloner.Clone(this);
+    }
 }

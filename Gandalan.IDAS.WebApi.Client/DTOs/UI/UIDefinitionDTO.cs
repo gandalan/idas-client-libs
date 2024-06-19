@@ -20,7 +20,7 @@ public class UIDefinitionDTO
 
     public UIDefinitionDTO()
     {
-            EingabeFelder = [];
-            KonfiguratorFelder = [];
-        }
+        EingabeFelder = [];
+        KonfiguratorFelder = [];
+    }
 }

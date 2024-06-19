@@ -10,9 +10,9 @@ public class GesamtMaterialbedarfWebRoutinen : WebRoutinenBase
 {
     public GesamtMaterialbedarfWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
-    public async Task<GesamtMaterialbedarfGetReturn> GetAsync(ZusammenfassungsOptionen optionen,bool stangenoptimierung, DateTime? stichTag = null, DateTime? bedarfAb = null)
+    public async Task<GesamtMaterialbedarfGetReturn> GetAsync(ZusammenfassungsOptionen optionen, bool stangenoptimierung, DateTime? stichTag = null, DateTime? bedarfAb = null)
         => await GetAsync<GesamtMaterialbedarfGetReturn>($"GesamtMaterialbedarf?optionen={optionen}&stangenoptimierung={stangenoptimierung}&stichTag={stichTag?.ToString("o")}&bedarfAb={bedarfAb?.ToString("O")}");
 
     public async Task WebJobAsync()

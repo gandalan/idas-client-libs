@@ -84,23 +84,23 @@ public class KontaktListItemDTO
 
     public void copyproperties(KontaktListItemDTO newkontakt)
     {
-            newkontakt.KontaktGuid = KontaktGuid;
-            newkontakt.KontaktMandantGuid = KontaktMandantGuid;
-            newkontakt.KontaktMandantIstAktiv = KontaktMandantIstAktiv;
-            newkontakt.Nachname = Nachname;
-            newkontakt.Vorname = Vorname;
-            newkontakt.Firmenname = Firmenname;
-            newkontakt.KundenNummer = KundenNummer;
-            newkontakt.IstEndkunde = IstEndkunde;
-            newkontakt.IstKunde = IstKunde;
-            newkontakt.URL = URL;
-            newkontakt.Email = Email;
-            newkontakt.IstGesperrt = IstGesperrt;
-            newkontakt.IstArchiviert = IstArchiviert;
-            newkontakt.Strasse = Strasse;
-            newkontakt.Land = Land;
-            newkontakt.Plz = Plz;
-            newkontakt.Ort = Ort;
-            newkontakt.Telefon = Telefon;
-        }
+        newkontakt.KontaktGuid = KontaktGuid;
+        newkontakt.KontaktMandantGuid = KontaktMandantGuid;
+        newkontakt.KontaktMandantIstAktiv = KontaktMandantIstAktiv;
+        newkontakt.Nachname = Nachname;
+        newkontakt.Vorname = Vorname;
+        newkontakt.Firmenname = Firmenname;
+        newkontakt.KundenNummer = KundenNummer;
+        newkontakt.IstEndkunde = IstEndkunde;
+        newkontakt.IstKunde = IstKunde;
+        newkontakt.URL = URL;
+        newkontakt.Email = Email;
+        newkontakt.IstGesperrt = IstGesperrt;
+        newkontakt.IstArchiviert = IstArchiviert;
+        newkontakt.Strasse = Strasse;
+        newkontakt.Land = Land;
+        newkontakt.Plz = Plz;
+        newkontakt.Ort = Ort;
+        newkontakt.Telefon = Telefon;
+    }
 }

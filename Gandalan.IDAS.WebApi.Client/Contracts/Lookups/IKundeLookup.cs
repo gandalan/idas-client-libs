@@ -32,11 +32,11 @@ public class KundeLookupResult : IKundeLookupResult
 
     public KundeLookupResult()
     {
-        }
+    }
 
     public KundeLookupResult(KontaktListItemDTO kunde)
     {
-            Kunde = kunde;
-            IsValid = true;
-        }
+        Kunde = kunde;
+        IsValid = true;
+    }
 }

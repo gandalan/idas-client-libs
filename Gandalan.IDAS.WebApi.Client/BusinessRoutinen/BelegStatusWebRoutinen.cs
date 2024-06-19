@@ -14,12 +14,12 @@ public class BelegStatusWebRoutinen : WebRoutinenBase
 
     public async Task<BelegStatusDTO> SetStatusAsync(Guid belegGuid, string statusCode, string statusText = "")
     {
-            var set = new BelegStatusDTO
-            {
-                BelegGuid = belegGuid,
-                NeuerStatus = statusCode,
-                NeuerStatusText = statusText
-            };
-            return await PutAsync<BelegStatusDTO>("BelegStatus", set);
-        }
+        var set = new BelegStatusDTO
+        {
+            BelegGuid = belegGuid,
+            NeuerStatus = statusCode,
+            NeuerStatusText = statusText
+        };
+        return await PutAsync<BelegStatusDTO>("BelegStatus", set);
+    }
 }

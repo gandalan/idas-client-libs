@@ -12,6 +12,6 @@ public class RolleDTO
 
     public RolleDTO()
     {
-            Berechtigungen = [];
-        }
+        Berechtigungen = [];
+    }
 }

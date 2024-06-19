@@ -7,8 +7,8 @@ public class SyncableAttribute : Attribute
 {
     public SyncableAttribute(string guidColumnName)
     {
-            GuidColumnName = guidColumnName;
-        }
+        GuidColumnName = guidColumnName;
+    }
 
     public string GuidColumnName { get; private set; }
 }

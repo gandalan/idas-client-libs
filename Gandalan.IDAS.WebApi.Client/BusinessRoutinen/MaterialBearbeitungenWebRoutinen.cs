@@ -8,7 +8,7 @@ public class MaterialBearbeitungenWebRoutinen : WebRoutinenBase
 {
     public MaterialBearbeitungenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<MaterialBearbeitungsMethodeDTO[]> GetAllAsync()
         => await GetAsync<MaterialBearbeitungsMethodeDTO[]>("MaterialBearbeitungsMethoden");

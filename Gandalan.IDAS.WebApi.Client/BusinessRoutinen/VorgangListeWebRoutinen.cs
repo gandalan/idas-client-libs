@@ -9,7 +9,7 @@ public class VorgangListeWebRoutinen : WebRoutinenBase
 {
     public VorgangListeWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<VorgangListItemDTO[]> LadeVorgangsListeAsync(int jahr, bool includeASP = false)
         => await GetAsync<VorgangListItemDTO[]>($"VorgangListe/?jahr={jahr}&includeASP={includeASP}");

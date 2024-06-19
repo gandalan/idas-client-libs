@@ -7,8 +7,8 @@ public class WerteListeDTO
 {
     public WerteListeDTO()
     {
-            Items = [];
-        }
+        Items = [];
+    }
 
     public string Name { get; set; }
     public long Version { get; set; }

@@ -7,9 +7,9 @@ public class VarianteDTOListe : ObservableCollection<VarianteDTO>
 {
     public VarianteDTOListe()
     {
-        }
+    }
 
     public VarianteDTOListe(IEnumerable<VarianteDTO> items) : base(items)
     {
-        }
+    }
 }

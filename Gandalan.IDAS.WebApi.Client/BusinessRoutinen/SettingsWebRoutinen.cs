@@ -9,7 +9,7 @@ public class SettingsWebRoutinen : WebRoutinenBase
 {
     public SettingsWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<Dictionary<string, ExpandoObject>> GetAllAsync()
         => await GetAsync<Dictionary<string, ExpandoObject>>("Settings");

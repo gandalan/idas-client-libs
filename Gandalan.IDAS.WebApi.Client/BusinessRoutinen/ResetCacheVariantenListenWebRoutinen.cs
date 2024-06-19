@@ -7,7 +7,7 @@ public class ResetCacheVariantenListenWebRoutinen : WebRoutinenBase
 {
     public ResetCacheVariantenListenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task ResetAsync()
         => await PutAsync("ResetCacheVariantenListen", null);
