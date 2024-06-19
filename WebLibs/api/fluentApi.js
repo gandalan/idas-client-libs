@@ -5,6 +5,7 @@ const envs = {};
 export async function fetchEnv(env = "") {
     if (!(env in envs)) {
         const hubUrl = `https://connect.idas-cloudservices.net/api/Endpoints?env=${env}`;
+        console.log("fetching env", hubUrl);
         const r = await fetch(hubUrl);
         const data = await r.json();
         envs[env] = data;
@@ -15,6 +16,20 @@ export async function fetchEnv(env = "") {
 export function getRefreshToken(token) {
     const decoded = jwtDecode(token);
     return decoded.refreshToken;
+}
+
+export function isTokenValid(token) 
+{
+    try
+    {
+        const decoded = jwtDecode(token);
+        if (!decoded) 
+            throw new Error("Invalid token");
+        return (decoded.exp - 10 > Date.now() / 1000);
+    }
+    catch {
+        return false;
+    }
 }
 
 export function authBuilder() {
@@ -37,28 +52,15 @@ export function authBuilder() {
             this.refreshToken = storedRefreshToken; return this;
         },
 
-        async authenticate(username = "", password = "") {
+        async authenticate(username = "", password = "") 
+        {
             console.log("authenticating:", this.token ? `token set, exp: ${jwtDecode(this.token).exp - (Date.now() / 1000)}` : "no token,", this.refreshToken);
 
-            if (this.token) {
-                try {
-                    const decoded = jwtDecode(this.token);
-                    if (!decoded) {
-                        throw new Error("Invalid token");
-                    }
+            if (this.token && isTokenValid(this.token)) 
+                return this.token;
 
-                    if (decoded.exp - 60 > Date.now() / 1000) {
-                        return this.token;
-                    }
-
-                    if (decoded.refreshToken && !this.refreshToken) {
-                        this.refreshToken = decoded.refreshToken;
-                    }
-                } catch (e) {
-                    console.error("Error decoding token", e);
-                    return null;
-                }
-            }
+            if (this.token && !this.refreshToken)
+                this.refreshToken = getRefreshToken(this.token);
 
             if (this.refreshToken) {
                 try {
@@ -72,7 +74,6 @@ export function authBuilder() {
                     // - should still be valid for a while
                 }
                 return this.token;
-
             }
 
             if (username && password) {
@@ -90,7 +91,7 @@ export function authBuilder() {
         },
 
         async tryRefreshToken(refreshToken = "") {
-            const payload = { "Token": refreshToken };
+            const payload = { "Token": refreshToken };            
             const res = await fetch(`${this.authUrl}/LoginJwt/Refresh`,
                 {
                     method: "PUT",
@@ -99,6 +100,62 @@ export function authBuilder() {
                 });
             return res.ok ? await res.json() : null;
         },
+    }
+}
+
+export function restClient()
+{
+    return {
+        baseUrl: "",
+        token: "",
+
+        useBaseUrl(url = "") {
+            this.baseUrl = url; return this;
+        },
+
+        useToken(jwtToken = "") {
+            this.token = jwtToken; return this;
+        },
+
+        async get(url = "", auth = true) {
+            const finalUrl = `${this.baseUrl}/${url}`;
+            const headers = this.token ? { "Authorization": `Bearer ${this.token}` } : {};
+            const res = await fetch(finalUrl, { method: "GET", headers });
+            if (res.ok)
+                return await res.json();
+            else 
+                throw new Error(`GET ${finalUrl} failed: ${res.status} ${res.statusText}`);
+        },
+
+        async put(url = "", payload = {}) {
+            const finalUrl = `${this.baseUrl}/${url}`;
+            const headers = this.token ? { "Authorization": `Bearer ${this.token}`, "Content-Type" : "application/json" } : {};
+            const res = await fetch(finalUrl, { method: "PUT", body: JSON.stringify(payload), headers });
+            if (res.ok)
+                return await res.json();
+            else 
+                throw new Error(`PUT ${finalUrl} failed: ${res.status} ${res.statusText}`);
+        },
+
+        async post(url = "", payload = {}) {
+            const finalUrl = `${this.baseUrl}/${url}`;
+            const headers = this.token ? { "Authorization": `Bearer ${this.token}`, "Content-Type" : "application/json" } : {};
+            const res = await fetch(finalUrl, { method: "POST", body: JSON.stringify(payload), headers });
+            if (res.ok)
+                return await res.json();
+            else 
+                throw new Error(`POST ${finalUrl} failed: ${res.status} ${res.statusText}`);
+        },
+
+        async delete(url = "") {
+            const finalUrl = `${this.baseUrl}/${url}`;
+            const headers = this.token ? { "Authorization": `Bearer ${this.token}` } : {};
+            const res = await fetch(finalUrl, { method: "DELETE", headers });
+            if (res.ok)
+                return await res.json();
+            else 
+                throw new Error(`DELETE ${finalUrl} failed: ${res.status} ${res.statusText}`);
+        }
     }
 }
 
@@ -132,57 +189,45 @@ export function api() {
         },
         useGlobalAuth() {
             // eslint-disable-next-line no-undef
-            this.token = globalThis.idas.token; this.refreshToken = globalThis.idas.refreshToken; return this;
+            this.token = globalThis.idasTokens.token; this.refreshToken = globalThis.idasTokens.refreshToken; return this;
         },
 
-        async get(url = "") {
-            console.log("get", url);
-            await this.ensureAuthenticated();
-            const headers = this.token ? { "Authorization": `Bearer ${this.token}` } : {};
-            const res = await fetch(`${this.baseUrl}/${url}`, { method: "GET", headers });
-            return await res.json();
+        async get(url = "", auth = true) {
+            if (auth) 
+                await this.ensureAuthenticated();
+            return restClient().useBaseUrl(this.baseUrl).useToken(this.token).get(url);
         },
 
-        async put(url = "", payload = {}) {
-            console.log("put", url, payload);
-            await this.ensureAuthenticated();
-
-            const headers = this.token ? { "Authorization": `Bearer ${this.token}`, "Content-Type": "application/json" } : {};
-            const res = await fetch(`${this.baseUrl}/${url}`,
-                { method: "PUT", body: JSON.stringify(payload), headers });
-            return await res.json();
+        async put(url = "", payload = {}, auth = true) {
+            if (auth) 
+                await this.ensureAuthenticated();
+            return restClient().useBaseUrl(this.baseUrl).useToken(this.token).put(url, payload);
         },
 
-        async post(url = "", payload = {}) {
-            console.log("post", url, payload);
-            await this.ensureAuthenticated();
-
-            const headers = this.token ? { "Authorization": `Bearer ${this.token}`, "Content-Type": "application/json" } : {};
-            const res = await fetch(`${this.baseUrl}/${url}`,
-                { method: "POST", body: JSON.stringify(payload), headers });
-            return await res.json();
+        async post(url = "", payload = {}, auth = true) {
+            if (auth) 
+                await this.ensureAuthenticated();
+            return restClient().useBaseUrl(this.baseUrl).useToken(this.token).post(url, payload);
         },
 
-        async delete(url = "") {
-            console.log("delete", url);
-            await this.ensureAuthenticated();
-
-            const headers = this.token ? { "Authorization": `Bearer ${this.token}` } : {};
-            const res = await fetch(`${this.baseUrl}/${url}`, { method: "DELETE", headers });
-            return await res.json();
+        async delete(url = "", auth = true) {
+            if (auth) 
+                await this.ensureAuthenticated();
+            return restClient().useBaseUrl(this.baseUrl).useToken(this.token).delete(url);
         },
 
         async ensureAuthenticated() {
-            await this.ensureBaseUrlIsSet();
-            if (!this.token && !this.refreshToken) {
+            if (this.token && isTokenValid(this.token))
                 return;
-            }
+
+            await this.ensureBaseUrlIsSet();
+
             try {
                 const temptoken = await authBuilder()
-                    .useToken(this.token)
-                    .useRefreshToken(this.refreshToken)
                     .useAppToken(this.appToken)
                     .useBaseUrl(this.authUrl)
+                    .useToken(this.token)
+                    .useRefreshToken(this.refreshToken)
                     .authenticate() || "";
 
                 if (!temptoken) {
@@ -202,14 +247,19 @@ export function api() {
         },
 
         async ensureBaseUrlIsSet() {
-            if (this.env && !this.baseUrl) {
+            if (this.env && (!this.baseUrl || !this.authUrl)) {
                 const envInfo = await fetchEnv(this.env);
-                this.baseUrl = envInfo.idas;
-                this.authUrl = envInfo.idas;
+                this.baseUrl = this.baseUrl || envInfo.idas;
+                this.authUrl = this.authUrl || envInfo.idas;
+                console.log("envInfo", envInfo);
             }
 
             if (!this.baseUrl) {
                 throw new Error("apiBaseurl not set");
+            }
+
+            if (!this.authUrl) {
+                throw new Error("authUrl not set");
             }
         },
 

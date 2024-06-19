@@ -37,7 +37,7 @@ module.exports = {
         "keyword-spacing": "warn",
         "space-infix-ops": "warn",
         "arrow-spacing": "warn",
-        "no-trailing-spaces": "warn",
+        "no-trailing-spaces": "ignore",
         "space-before-blocks": "warn",
         "no-unused-vars": ["warn", {
             "args": "none",
