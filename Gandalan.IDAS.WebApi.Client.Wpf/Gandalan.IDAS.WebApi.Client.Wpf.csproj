@@ -30,11 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
+    <ProjectReference Include="..\Gandalan.IDAS.WebApi.Client\Gandalan.IDAS.WebApi.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Gandalan.IDAS.WebApi.Client\Gandalan.IDAS.WebApi.Client.csproj" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
