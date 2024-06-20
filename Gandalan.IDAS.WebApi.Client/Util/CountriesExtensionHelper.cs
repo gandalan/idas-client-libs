@@ -44,13 +44,13 @@ public static class CountriesExtensionHelper
 
     public static bool IsEUCountry(this string land)
     {
-            return string.IsNullOrEmpty(land) ||
-                   _euCountryCodes.Any(t => land.Equals(t, StringComparison.OrdinalIgnoreCase));
-        }
+        return string.IsNullOrEmpty(land) ||
+               _euCountryCodes.Any(t => land.Equals(t, StringComparison.OrdinalIgnoreCase));
+    }
 
     public static bool IsInland(this string land, IEnumerable<string> inlandsLaender)
     {
-            return string.IsNullOrEmpty(land) ||
-                   inlandsLaender.Any(x => land.Equals(x, StringComparison.OrdinalIgnoreCase));
-        }
+        return string.IsNullOrEmpty(land) ||
+               inlandsLaender.Any(x => land.Equals(x, StringComparison.OrdinalIgnoreCase));
+    }
 }

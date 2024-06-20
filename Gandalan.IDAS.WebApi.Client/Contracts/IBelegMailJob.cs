@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.Jobs.Contracts;
 
 public interface IBelegMailJob : IBackgroundJob<IBelegMailJobData>
 {
-
 }
 
 public interface IBelegMailJobData : IJobData

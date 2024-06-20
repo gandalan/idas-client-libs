@@ -28,32 +28,30 @@ public sealed class NullValidator<T> : IValidator<T>
 
     public void InvokeCancelledSave()
     {
-            CancelledSave?.Invoke(this, null);
-        }
+        CancelledSave?.Invoke(this, null);
+    }
 
     public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
     public event EventHandler CancelledSave;
 
     public ValidationMessage GetErrors(string propertyName)
     {
-            return default;
-        }
+        return default;
+    }
 
     public void Monitor(T data)
     {
-        }
+    }
 
     public void SetData(T data)
     {
-
-        }
+    }
 
     public void Validate()
     {
-
-        }
+    }
 
     public void Validate(T model)
     {
-        }
+    }
 }

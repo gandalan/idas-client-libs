@@ -7,5 +7,5 @@ public class AnpassungVorlagenWebRoutinen : TypedWebRoutinenBase<AnpassungVorlag
 {
     public AnpassungVorlagenWebRoutinen(IWebApiConfig settings) : base("AnpassungVorlagen", dto => dto.AnpassungVorlageGuid, settings)
     {
-        }
+    }
 }

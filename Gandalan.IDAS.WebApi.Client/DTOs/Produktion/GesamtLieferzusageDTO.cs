@@ -31,31 +31,31 @@ public class GesamtLieferzusageDTO : ICloneable
     public List<GesamtLieferzusageBuchungDTO> Buchungen { get; set; }
     public object Clone()
     {
-            return new GesamtLieferzusageDTO
-            {
-                GesamtLieferzusageGuid = GesamtLieferzusageGuid,
-                MandantGuid = MandantGuid,
-                Liefertermin = Liefertermin,
-                KatalogNummer = KatalogNummer,
-                BestellNummer = BestellNummer,
-                Einheit = Einheit,
-                Stueckzahl = Stueckzahl,
-                Laufmeter = Laufmeter,
-                FarbBezeichnung = FarbBezeichnung,
-                FarbKuerzel = FarbKuerzel,
-                FarbKuerzelGuid = FarbKuerzelGuid,
-                FarbCode = FarbCode,
-                FarbeItem = FarbeItem,
-                FarbItemGuid = FarbItemGuid,
-                OberFlaeche = OberFlaeche,
-                OberFlaecheGuid = OberFlaecheGuid,
-                IstSonderfarbe = IstSonderfarbe,
-                PulverCode = PulverCode,
-                UngedeckteStueckzahl = UngedeckteStueckzahl,
-                UngedeckteLaufmeter = UngedeckteLaufmeter,
-                IstVE = IstVE,
-                VE_Menge = VE_Menge,
-                Buchungen = Buchungen.Select(x => (GesamtLieferzusageBuchungDTO)x.Clone()).ToList()
-            };
-        }
+        return new GesamtLieferzusageDTO
+        {
+            GesamtLieferzusageGuid = GesamtLieferzusageGuid,
+            MandantGuid = MandantGuid,
+            Liefertermin = Liefertermin,
+            KatalogNummer = KatalogNummer,
+            BestellNummer = BestellNummer,
+            Einheit = Einheit,
+            Stueckzahl = Stueckzahl,
+            Laufmeter = Laufmeter,
+            FarbBezeichnung = FarbBezeichnung,
+            FarbKuerzel = FarbKuerzel,
+            FarbKuerzelGuid = FarbKuerzelGuid,
+            FarbCode = FarbCode,
+            FarbeItem = FarbeItem,
+            FarbItemGuid = FarbItemGuid,
+            OberFlaeche = OberFlaeche,
+            OberFlaecheGuid = OberFlaecheGuid,
+            IstSonderfarbe = IstSonderfarbe,
+            PulverCode = PulverCode,
+            UngedeckteStueckzahl = UngedeckteStueckzahl,
+            UngedeckteLaufmeter = UngedeckteLaufmeter,
+            IstVE = IstVE,
+            VE_Menge = VE_Menge,
+            Buchungen = Buchungen.Select(x => (GesamtLieferzusageBuchungDTO)x.Clone()).ToList()
+        };
+    }
 }

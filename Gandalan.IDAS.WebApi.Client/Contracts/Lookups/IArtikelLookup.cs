@@ -31,12 +31,12 @@ public class ArtikelLookupResult : IArtikelLookupResult
 {
     public ArtikelLookupResult(VarianteDTO varianteDTO)
     {
-            Variante = varianteDTO;
-        }
+        Variante = varianteDTO;
+    }
     public ArtikelLookupResult(KatalogArtikelDTO artikelDTO)
     {
-            Artikel = artikelDTO;
-        }
+        Artikel = artikelDTO;
+    }
     public KatalogArtikelDTO Artikel { get; set; }
     public VarianteDTO Variante { get; set; }
     public bool IsValid => Variante != null || Artikel != null;

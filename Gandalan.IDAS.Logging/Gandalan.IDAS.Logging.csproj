@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\Projects\idas-client-libs\Gandalan.IDAS.Logging\GDL.IDAS.Logging.xml</DocumentationFile>
+    <DocumentationFile>..\Gandalan.IDAS.Logging\GDL.IDAS.Logging.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
 

@@ -13,30 +13,30 @@ public class MailWebRoutinen : WebRoutinenBase
 {
     public MailWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<JobStatusResponseDTO> Send(MailJobInfo job, List<string> attachments)
     {
-            var content = new MultipartFormDataContent
+        var content = new MultipartFormDataContent
             {
                 { new StringContent(JsonConvert.SerializeObject(job)), "jobAsString" }
             };
-            if (attachments != null && attachments.Count > 0)
+        if (attachments != null && attachments.Count > 0)
+        {
+            foreach (var attachment in attachments)
             {
-                foreach (var attachment in attachments)
-                {
-                    // read each file and add it to the multipart form data
-                    var fileStream = File.OpenRead(attachment);
-                    var fileContentStream = new StreamContent(fileStream);
-                    content.Add(fileContentStream, "files", Path.GetFileName(attachment));
-                }
+                // read each file and add it to the multipart form data
+                var fileStream = File.OpenRead(attachment);
+                var fileContentStream = new StreamContent(fileStream);
+                content.Add(fileContentStream, "files", Path.GetFileName(attachment));
             }
-
-            await PostDataAsync("Mail", content, version: "2.0");
-            return new JobStatusResponseDTO();
-            //var response = JsonConvert.DeserializeObject<JobStatusResponseDTO>(await PostDataAsync("Mail", content));
-            //return response;
         }
+
+        await PostDataAsync("Mail", content, version: "2.0");
+        return new JobStatusResponseDTO();
+        //var response = JsonConvert.DeserializeObject<JobStatusResponseDTO>(await PostDataAsync("Mail", content));
+        //return response;
+    }
 
     public async Task<IList<JobStatusEntryDTO>> GetStatus(Guid guid) =>
         await GetAsync<IList<JobStatusEntryDTO>>($"Mail/{guid}");
@@ -51,11 +51,11 @@ public sealed class JobStatusEntryDTO
 
     public JobStatusEntryDTO(Guid jobGuid, string statusText)
     {
-            JobGuid = jobGuid;
-            RowKey = Guid.NewGuid();
-            StatusText = statusText;
-            Timestamp = DateTime.UtcNow;
-        }
+        JobGuid = jobGuid;
+        RowKey = Guid.NewGuid();
+        StatusText = statusText;
+        Timestamp = DateTime.UtcNow;
+    }
 }
 
 public sealed class JobStatusResponseDTO

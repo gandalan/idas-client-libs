@@ -38,6 +38,6 @@ public class VarianteDTO
 
     public VarianteDTO()
     {
-            KonfigSatz = [];
-        }
+        KonfigSatz = [];
+    }
 }

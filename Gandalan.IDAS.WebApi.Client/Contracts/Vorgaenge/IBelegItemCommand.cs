@@ -10,24 +10,24 @@ public abstract class IBelegItemCommand : ICommand
     public abstract bool CanExecute(IBelegAuswahlItem parameter);
     public bool CanExecute(object parameter)
     {
-            if (parameter is not IBelegAuswahlItem pos)
-            {
-                return false;
-            }
-
-            return CanExecute(pos);
+        if (parameter is not IBelegAuswahlItem pos)
+        {
+            return false;
         }
+
+        return CanExecute(pos);
+    }
 
     public abstract void Execute(IBelegAuswahlItem parameter);
     public void Execute(object parameter)
     {
-            if (parameter is not IBelegAuswahlItem pos)
-            {
-                throw new ArgumentException("Parameter muss eine Belegposition sein", nameof(parameter));
-            }
-
-            Execute(pos);
+        if (parameter is not IBelegAuswahlItem pos)
+        {
+            throw new ArgumentException("Parameter muss eine Belegposition sein", nameof(parameter));
         }
+
+        Execute(pos);
+    }
 
     /// <summary>
     /// Wird als Content in den Buttons angezeigt.

@@ -9,7 +9,7 @@ public class StandardSaldenWebRoutinen : WebRoutinenBase
 {
     public StandardSaldenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<StandardSaldoDTO[]> GetAllAsync()
         => await GetAsync<StandardSaldoDTO[]>("StandardSalden");

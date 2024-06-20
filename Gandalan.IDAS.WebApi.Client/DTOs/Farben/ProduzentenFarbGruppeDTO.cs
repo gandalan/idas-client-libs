@@ -7,9 +7,9 @@ public class ProduzentenFarbGruppeDTO
 {
     public ProduzentenFarbGruppeDTO()
     {
-            Farben = [];
-            Oberflaechen = [];
-        }
+        Farben = [];
+        Oberflaechen = [];
+    }
 
     public Guid ProduzentenFarbGruppeGuid { get; set; }
     public string Name { get; set; }

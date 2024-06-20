@@ -14,6 +14,6 @@ public class ProduktGruppeDTO
 
     public ProduktGruppeDTO()
     {
-            ProduktSerien = [];
-        }
+        ProduktSerien = [];
+    }
 }

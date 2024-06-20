@@ -10,7 +10,7 @@ public class ProduktionWebRoutinen : WebRoutinenBase
 {
     public ProduktionWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<string> ProduktionBerechnenAsync(Guid belegPositionsGuid)
         => await GetAsync<string>($"Script/PosBerechnen?pguid={belegPositionsGuid}");

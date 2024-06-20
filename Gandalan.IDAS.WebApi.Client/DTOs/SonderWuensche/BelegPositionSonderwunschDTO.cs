@@ -26,12 +26,12 @@ public class BelegPositionSonderwunschDTO
 
     public BelegPositionSonderwunschDTO()
     {
-        }
+    }
 
     public BelegPositionSonderwunschDTO(string bezeichnung, string exportname, string wert)
     {
-            Bezeichnung = bezeichnung;
-            ExportName = exportname;
-            Wert = wert;
-        }
+        Bezeichnung = bezeichnung;
+        ExportName = exportname;
+        Wert = wert;
+    }
 }

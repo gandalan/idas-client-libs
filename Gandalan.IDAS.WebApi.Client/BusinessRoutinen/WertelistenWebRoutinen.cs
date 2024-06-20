@@ -9,7 +9,7 @@ public class WertelistenWebRoutinen : WebRoutinenBase
 {
     public WertelistenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<WerteListeDTO[]> GetAllAsync(bool includeAutoWerteListen)
         => await GetAsync<WerteListeDTO[]>("WerteListe?includeAutoWerteListen=" + includeAutoWerteListen);

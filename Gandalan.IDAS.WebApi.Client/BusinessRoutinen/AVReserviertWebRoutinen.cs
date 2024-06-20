@@ -9,15 +9,15 @@ public class AVReserviertWebRoutinen : WebRoutinenBase
 {
     public AVReserviertWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<AVReserviertItemDTO[]> GetAllAVReserviertItemsAsync()
     {
-            return await GetAsync<AVReserviertItemDTO[]>("AVReserviert");
-        }
+        return await GetAsync<AVReserviertItemDTO[]>("AVReserviert");
+    }
 
     public async Task<AVReserviertItemDTO[]> GetAllAVReserviertItemsBySerieAsync(Guid serieGuid)
     {
-            return await GetAsync<AVReserviertItemDTO[]>($"AVReserviert/?serieGuid={serieGuid}");
-        }
+        return await GetAsync<AVReserviertItemDTO[]>($"AVReserviert/?serieGuid={serieGuid}");
+    }
 }

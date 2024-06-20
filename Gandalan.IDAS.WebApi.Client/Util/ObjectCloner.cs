@@ -6,7 +6,7 @@ public class ObjectCloner
 {
     public static T Clone<T>(T obj)
     {
-            var jsonString = JsonConvert.SerializeObject(obj);
-            return JsonConvert.DeserializeObject<T>(jsonString);
-        }
+        var jsonString = JsonConvert.SerializeObject(obj);
+        return JsonConvert.DeserializeObject<T>(jsonString);
+    }
 }

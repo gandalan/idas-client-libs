@@ -38,8 +38,8 @@ public class DataPrintJobData : IDataPrintJobData
 
     public DataPrintJobData(object daten, Guid reportGuid, int copies = 1)
     {
-            Data = daten;
-            ReportGuid = reportGuid;
-            Copies = copies;
-        }
+        Data = daten;
+        ReportGuid = reportGuid;
+        Copies = copies;
+    }
 }

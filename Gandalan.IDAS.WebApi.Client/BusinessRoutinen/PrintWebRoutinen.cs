@@ -8,7 +8,7 @@ public class PrintWebRoutinen : WebRoutinenBase
 {
     public PrintWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<byte[]> PDFErzeugenAsync(Guid belegGuid)
         => await PostDataAsync("Print/?bguid=" + belegGuid, []);

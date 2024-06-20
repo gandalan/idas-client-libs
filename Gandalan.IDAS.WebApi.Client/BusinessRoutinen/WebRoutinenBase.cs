@@ -552,10 +552,10 @@ public class WebRoutinenBase
 
     protected static ApiException TranslateException(Exception ex, object payload)
     {
-        if (ex.Data.Contains("Response"))
+        if (ex.Data.Contains("StatusCode"))
         {
+            var responseString = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
             var code = (HttpStatusCode)ex.Data["StatusCode"];
-            var responseString = (string)ex.Data["Response"];
 
             if (!string.IsNullOrWhiteSpace(responseString))
             {
@@ -592,10 +592,10 @@ public class WebRoutinenBase
 
     protected static ApiException TranslateException(Exception ex)
     {
-        if (ex.Data.Contains("Response"))
+        if (ex.Data.Contains("StatusCode"))
         {
+            var response = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
             var code = (HttpStatusCode)ex.Data["StatusCode"];
-            var response = (string)ex.Data["Response"];
 
             if (!string.IsNullOrWhiteSpace(response))
             {

@@ -13,14 +13,14 @@ public class GesamtLieferzusageBuchungDTO : ICloneable
 
     public object Clone()
     {
-            return new GesamtLieferzusageBuchungDTO
-            {
-                GesamtLieferzusageBuchungGuid = GesamtLieferzusageBuchungGuid,
-                MandantGuid = MandantGuid,
-                GesamtMaterialbedarfGuid = GesamtMaterialbedarfGuid,
-                Stueckzahl = Stueckzahl,
-                Laufmeter = Laufmeter,
-                Buchungsdatum = Buchungsdatum
-            };
-        }
+        return new GesamtLieferzusageBuchungDTO
+        {
+            GesamtLieferzusageBuchungGuid = GesamtLieferzusageBuchungGuid,
+            MandantGuid = MandantGuid,
+            GesamtMaterialbedarfGuid = GesamtMaterialbedarfGuid,
+            Stueckzahl = Stueckzahl,
+            Laufmeter = Laufmeter,
+            Buchungsdatum = Buchungsdatum
+        };
+    }
 }

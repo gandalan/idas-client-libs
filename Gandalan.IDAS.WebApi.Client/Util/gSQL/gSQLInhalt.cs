@@ -11,39 +11,39 @@ public class gSQLInhalt
 
     public gSQLInhalt()
     {
-            Sektionen = [];
-        }
+        Sektionen = [];
+    }
 
     public gSQLSektion GetSektion(string sektion)
     {
-            return Sektionen.FirstOrDefault(s => s.Name != null && s.Name.Equals(sektion, StringComparison.InvariantCultureIgnoreCase));
-        }
+        return Sektionen.FirstOrDefault(s => s.Name != null && s.Name.Equals(sektion, StringComparison.InvariantCultureIgnoreCase));
+    }
 
     public string GetItem(string sektion, string itemName, string defaultWert = null)
     {
-            var sek = GetSektion(sektion);
-            if (sek != null)
-            {
-                return sek.GetItemWert(itemName, defaultWert);
-            }
-
-            return defaultWert;
+        var sek = GetSektion(sektion);
+        if (sek != null)
+        {
+            return sek.GetItemWert(itemName, defaultWert);
         }
+
+        return defaultWert;
+    }
 
     public override string ToString()
     {
-            var sb = new StringBuilder();
-            foreach (var sektion in Sektionen)
+        var sb = new StringBuilder();
+        foreach (var sektion in Sektionen)
+        {
+            sb.AppendLine(sektion.Name);
+            foreach (var item in sektion.Items)
             {
-                sb.AppendLine(sektion.Name);
-                foreach (var item in sektion.Items)
-                {
-                    sb.AppendLine(item.ToString());
-                }
-
-                sb.AppendLine();
+                sb.AppendLine(item.ToString());
             }
 
-            return sb.ToString();
+            sb.AppendLine();
         }
+
+        return sb.ToString();
+    }
 }

@@ -7,8 +7,8 @@ public class ProduktionsStatusDTO
 {
     public ProduktionsStatusDTO()
     {
-            Erstellt = DateTime.UtcNow;
-        }
+        Erstellt = DateTime.UtcNow;
+    }
 
     public Guid ProduktionsStatusGuid { get; set; }
     public Guid BelegPositionAVGuid { get; set; }

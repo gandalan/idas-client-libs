@@ -7,10 +7,10 @@ public class AuthTokenWebRoutinen : WebRoutinenBase
 {
     public AuthTokenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task RemoveExpiredTokens()
     {
-            await PostAsync("AuthToken/RemoveExpiredTokens", null);
-        }
+        await PostAsync("AuthToken/RemoveExpiredTokens", null);
+    }
 }

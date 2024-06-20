@@ -31,7 +31,7 @@ public class DataExportJobData : IDataExportJobData
 
     public DataExportJobData(object daten, Guid reportGuid)
     {
-            Data = daten;
-            ReportGuid = reportGuid;
-        }
+        Data = daten;
+        ReportGuid = reportGuid;
+    }
 }

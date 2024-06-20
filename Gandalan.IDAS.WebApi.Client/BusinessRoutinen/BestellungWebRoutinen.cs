@@ -8,7 +8,7 @@ public class BestellungWebRoutinen : WebRoutinenBase
 {
     public BestellungWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task Bestellen(Guid bguid)
         => await PutAsync($"Bestellung/?bguid={bguid}", null);

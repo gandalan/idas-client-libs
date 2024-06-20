@@ -8,7 +8,7 @@ public class RollenWebRoutinen : WebRoutinenBase
 {
     public RollenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<RolleDTO[]> GetAllAsync()
         => await GetAsync<RolleDTO[]>("Rollen");

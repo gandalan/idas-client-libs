@@ -10,7 +10,7 @@ public class ApiErrorArgs : EventArgs
 
     public ApiErrorArgs(string message, HttpStatusCode statusCode)
     {
-            Message = message;
-            StatusCode = statusCode;
-        }
+        Message = message;
+        StatusCode = statusCode;
+    }
 }

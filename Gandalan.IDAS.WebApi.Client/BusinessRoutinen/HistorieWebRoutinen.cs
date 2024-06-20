@@ -9,7 +9,7 @@ public class HistorieWebRoutinen : WebRoutinenBase
 {
     public HistorieWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<VorgangHistorienDTO> GetVorgangHistorieAsync(Guid vorgangGuid, bool includeBelege = false, bool includePositionen = false)
         => await GetAsync<VorgangHistorienDTO>($"HistorieVorgang?vorgangGuid={vorgangGuid}&includeBelege={includeBelege}&includePositionen={includePositionen}");

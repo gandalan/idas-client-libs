@@ -7,7 +7,7 @@ public class BriefbogenWebRoutinen : WebRoutinenBase
 {
     public BriefbogenWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<byte[]> BriefbogenLadenAsync()
         => await GetDataAsync("Briefbogen");

@@ -9,7 +9,7 @@ public class ChangeWebRoutinen : WebRoutinenBase
 {
     public ChangeWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<ChangeDTO[]> GetChangesAsync(string typeName, DateTime changedSince)
         => await GetAsync<ChangeDTO[]>($"Change/?typeName={typeName}&changedSince={changedSince:o}");

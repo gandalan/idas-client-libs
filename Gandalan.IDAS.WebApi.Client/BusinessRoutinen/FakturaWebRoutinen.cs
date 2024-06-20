@@ -11,7 +11,7 @@ public class FakturaWebRoutinen : WebRoutinenBase
 {
     public FakturaWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<List<VorgangDTO>> GetVorgaengeAsync(string kennzeichen)
         => await GetAsync<List<VorgangDTO>>($"Faktura/GetVorgaenge?kennzeichen={kennzeichen}");

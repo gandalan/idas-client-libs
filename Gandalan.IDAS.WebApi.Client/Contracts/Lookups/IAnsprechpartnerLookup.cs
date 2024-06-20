@@ -21,7 +21,7 @@ public class AnsprechPartnerLookupParams : IAnsprechPartnerLookupParams
 
     public AnsprechPartnerLookupParams(List<PersonDTO> list, bool multiSelect)
     {
-            Personen = list;
-            MultiSelect = multiSelect;
-        }
+        Personen = list;
+        MultiSelect = multiSelect;
+    }
 }

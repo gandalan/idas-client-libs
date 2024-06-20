@@ -8,7 +8,7 @@ public class ProduktionsfreigabeListeWebRoutinen : WebRoutinenBase
 {
     public ProduktionsfreigabeListeWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<ProduktionsfreigabeItemDTO[]> GetAllAsync()
         => await GetAsync<ProduktionsfreigabeItemDTO[]>("ProduktionsfreigabeListe");

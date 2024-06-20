@@ -9,7 +9,7 @@ public class KapazitaetsberechnungWebRoutinen : WebRoutinenBase
 {
     public KapazitaetsberechnungWebRoutinen(IWebApiConfig settings) : base(settings)
     {
-        }
+    }
 
     public async Task<Dictionary<Guid, decimal?>> GetKapazitaetAsync(List<Guid> positionGuids)
         => await PostAsync<Dictionary<Guid, decimal?>>("Kapaziaetsberechnung/GetKapaziaet", positionGuids);
