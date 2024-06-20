@@ -69,7 +69,7 @@
         </member>
         <member name="M:Gandalan.IDAS.Crypto.HexEncoding.hexToByte(System.String)">
             <summary>
-            Converts 1 or 2 character string into equivalant byte value
+            Converts 1 or 2 character string into equivalent byte value
             </summary>
             <param name="hex">1 or 2 character string</param>
             <returns>byte</returns>

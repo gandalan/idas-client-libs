@@ -4,54 +4,23 @@
         <name>GDL.IDAS.WebApi.Client</name>
     </assembly>
     <members>
-        <member name="P:Gandalan.IDAS.Web.GDLWebClient.Timeout">
-            <summary>
-            Timeout in ms, Default: 60.000ms
-            </summary>
-        </member>
         <member name="T:Gandalan.IDAS.Web.RESTRoutinen">
             <summary>
             Klasse für den HTTP-Datentransfer per REST an unsere WebAPIs. Ermöglicht das Senden
             und Empfangen von Objekten. Die Übermittlung erfolgt mit JSON serialisierten Objekten.
             </summary>
         </member>
-        <member name="P:Gandalan.IDAS.Web.RESTRoutinen.BaseUrl">
-            <summary>
-            Stammadresse der Web-API. Die Resource-Parameter der einzelnen Übertragungsmethoden
-            werden angehängt. Beispiel: http://192.168.217.10/neurosAPI/api/
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.Web.RESTRoutinen.Proxy">
-            <summary>
-            Proxy-Informationen (optional)
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.Web.RESTRoutinen.AdditionalHeaders">
-            <summary>
-            Liste der zusätzlich zu übermittelnden Header. Werden bei jeder Anfrage mitgeschickt,
-            z.B. für Authentifizierungs-Header
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.Web.RESTRoutinen.UserAgent">
-            <summary>
-            User-Agent Header. Wird bei jeder Anfrage mitgeschickt.
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.Web.RESTRoutinen.UseCompression">
-            <summary>
-            AcceptEncoding Header wird auf GZIP gesetzt.
-            </summary>
-        </member>
-        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.Get``1(System.String,Newtonsoft.Json.JsonSerializerSettings)">
+        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.GetAsync``1(System.String,Newtonsoft.Json.JsonSerializerSettings,System.String)">
             <summary>
             Holt ein Objekt per HTTP GET
             </summary>
             <typeparam name="T">Typsierungsparameter</typeparam>
             <param name="url">Relative URL, bezogen auf die BaseUrl</param>
             <param name="settings"></param>
+            <param name="version">API Version, if omitted, defaults to version 1.0</param>
             <returns>Objektinstanz</returns>
         </member>
-        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.Post``1(System.String,System.Object,Newtonsoft.Json.JsonSerializerSettings)">
+        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.PostAsync``1(System.String,System.Object,Newtonsoft.Json.JsonSerializerSettings,System.String)">
             <summary>
             Sendet ein Objekt per HTTP POST an die angegebene URL, i.d.R. um es zu speichern
             </summary>
@@ -59,9 +28,10 @@
             <param name="url">Relative URL, bezogen auf die BaseUrl</param>
             <param name="data">zu sendendes Objekt</param>
             <param name="settings"></param>
+            <param name="version">API Version, if omitted, defaults to version 1.0</param>
             <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
         </member>
-        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.Put``1(System.String,System.Object,Newtonsoft.Json.JsonSerializerSettings)">
+        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.PutAsync``1(System.String,System.Object,Newtonsoft.Json.JsonSerializerSettings,System.String)">
             <summary>
             Sendet ein Objekt per HTTP PUT an die angegebene URL, i.d.R. um es anzulegen
             </summary>
@@ -69,37 +39,16 @@
             <param name="url">Relative URL, bezogen auf die BaseUrl</param>
             <param name="data">zu sendendes Objekt</param>
             <param name="settings"></param>
+            <param name="version">API Version, if omitted, defaults to version 1.0</param>
             <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
         </member>
-        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.Delete(System.String)">
+        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.DeleteAsync(System.String,System.String)">
             <summary>
             Löscht ein Objekt per HTTP DELETE an die angegebene URL
             </summary>
             <param name="url">Relative URL, bezogen auf die BaseUrl</param>
+            <param name="version">API Version, if omitted, defaults to version 1.0</param>
             <returns>Antwort des Servers als String</returns>
-        </member>
-        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.Delete``1(System.String,System.Object,Newtonsoft.Json.JsonSerializerSettings)">
-            <summary>
-            Löscht ein Objekt per HTTP DELETE an die angegebene URL
-            </summary>
-            <param name="url">Relative URL, bezogen auf die BaseUrl</param>
-            <param name="data"></param>
-            <param name="settings"></param>
-            <returns>Antwort des Servers als String</returns>
-        </member>
-        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.Delete``1(System.String,Newtonsoft.Json.JsonSerializerSettings)">
-            <summary>
-            Löscht ein Objekt per HTTP DELETE an die angegebene URL
-            </summary>
-            <param name="url">Relative URL, bezogen auf die BaseUrl</param>
-            <param name="settings"></param>
-            <returns>Antwort des Servers als String</returns>
-        </member>
-        <member name="M:Gandalan.IDAS.Web.RESTRoutinen.createWebClient">
-            <summary>
-            Erstellt und konfiguriert eine neue WebClient-Instanz
-            </summary>
-            <returns></returns>
         </member>
         <member name="T:Gandalan.IDAS.WebApi.Client.BusinessRoutinen.DataFileWebRoutinen">
             <summary>
@@ -108,7 +57,7 @@
             Die Dateien werden in einem Mandantenspezifischen Speicher abgelegt.
             </summary>
         </member>
-        <member name="M:Gandalan.IDAS.WebApi.Client.WebRoutinenBase.Login">
+        <member name="M:Gandalan.IDAS.WebApi.Client.WebRoutinenBase.LoginAsync">
             <summary>
             Meldet mit den aktuellen Credentials am Endpunkt /api/Login/Authenticate an. Wenn ein AuthToken vorhanden ist, wird
             zunächst versucht, dieses zu verwenden und ggf. zu updaten. Wenn das fehlschlägt, erfolgt eine Anmeldung mit Username/
@@ -116,33 +65,86 @@
             </summary>
             <returns>Status des Logins</returns>
         </member>
+        <member name="M:Gandalan.IDAS.WebApi.Client.Contracts.Gesamtbedarf.IGesamtbedarfFehllisteCommand.CanHandle(Gandalan.IDAS.WebApi.Client.Contracts.Gesamtbedarf.IGesamtbedarfListe)">
+            <summary>
+            Returns wherever this command should be shown or not.
+            Sometimes a position should not show some commands if they are not allowed
+            </summary>
+            <param name="parameter"></param>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Client.Contracts.Gesamtbedarf.IGesamtbedarfFehllisteCommand.Caption">
+            <summary>
+            Wird als Content in den Buttons angezeigt.
+            </summary>
+        </member>
         <member name="M:Gandalan.IDAS.WebApi.Client.Contracts.ProduktionsServices.ISLKDatenGenerator.CreateSLKFile(Gandalan.IDAS.WebApi.DTO.BelegPositionAVDTO)">
             <summary>
             Erzeugt die SLK Datei zu einem BelegPostionAVDTO
             </summary>
             <param name="belegPositionAVDTO">avDTO</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.WebApi.Client.Contracts.ProduktionsServices.ISLKDatenGenerator.CreateSLKFiles(System.Collections.Generic.IList{Gandalan.IDAS.WebApi.DTO.BelegPositionAVDTO})">
             <summary>
             Erzeugt die SLK Dateien zu einer Liste von BelegPositionAVDTOs
             </summary>
             <param name="belegPositionAVDTOs">Liste von AVDTOs</param>
-            <returns></returns>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Client.Contracts.ReportData.IMaterialbedarfReportData.ProduktionsFarbText">
+            <summary>
+            Format: "KürzelOderSF FarbzusatzTextWennVorhanden FarbCode Farbbezeichnung OberflächeAußerWennSieStandardHeißt"
+            </summary>
         </member>
         <member name="M:Gandalan.IDAS.WebApi.Client.Contracts.UIServices.IAddonCommand.CanHandle(System.Object)">
             <summary>
             Returns wherever this command should be shown/can be used at all or not.
             </summary>
             <param name="parameter">Some object in the command's context</param>
-            <returns></returns>
         </member>
-        <member name="M:Gandalan.IDAS.WebApi.Client.DTOs.API.ApiVersionDTO.FromThis">
-            <returns>The ApiVersionDTO of the object/method that invoked this method.</returns>
+        <member name="M:Gandalan.IDAS.WebApi.Client.DTOs.API.ApiVersionDTO.ExtractBuildTimeFromAssembly(System.Reflection.Assembly)">
+            <summary>
+            Assembly description should contain the build date in following format: <code>"BuildDate=2023-01-11 16:09:51Z;"</code>
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.Client.DTOs.Belege.BelegSerienInfoDTO">
+            <summary>
+            Zusammenfassung der Serien, denen die Positionen des Belegs zugewiesen sind.
+            </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.Client.DTOs.Faktura.SetFakturaDTO.Kennzeichen">
             <summary>
             erlaubte Werte: Freigegeben, Abgerechnet
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Client.HttpClientConfig.BaseUrl">
+            <summary>
+            Stammadresse der Web-API. Die Resource-Parameter der einzelnen Übertragungsmethoden
+            werden angehängt. Beispiel: http://192.168.217.10/neurosAPI/api/
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Client.HttpClientConfig.Proxy">
+            <summary>
+            Proxy-Informationen (optional)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Client.HttpClientConfig.AdditionalHeaders">
+            <summary>
+            Liste der zusätzlich zu übermittelnden Header. Werden bei jeder Anfrage mitgeschickt,
+            z.B. für Authentifizierungs-Header
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Client.HttpClientConfig.UserAgent">
+            <summary>
+            User-Agent Header. Wird bei jeder Anfrage mitgeschickt.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Client.HttpClientConfig.UseCompression">
+            <summary>
+            AcceptEncoding Header wird auf GZIP gesetzt.
+            </summary>
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.Client.HttpClientFactory.CreateWebClient(Gandalan.IDAS.WebApi.Client.HttpClientConfig)">
+            <summary>
+            Erstellt und konfiguriert eine neue WebClient-Instanz
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.Client.Settings.WebApiSettings.DocUrl">
@@ -163,6 +165,47 @@
         <member name="P:Gandalan.IDAS.WebApi.Client.Settings.WebApiSettings.FeedbackUrl">
             <summary>
             Feedback-Tool
+            </summary>
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.Client.Settings.WebApiSettings.Initialize(System.Guid,System.String)">
+            <remarks>
+            Remember to call <see cref="M:Gandalan.IDAS.WebApi.Client.Settings.WebApiConfigurations.InitializeAsync(System.Guid)"/> before.
+            </remarks>
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.Client.Settings.WebApiSettings.InitializeAsync(System.Guid,System.String)">
+            <remarks>
+            Remember to call <see cref="M:Gandalan.IDAS.WebApi.Client.Settings.WebApiConfigurations.InitializeAsync(System.Guid)"/> before.
+            </remarks>
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.Data.DTOs.Belege.BelegWorkflow.IsBehind(Gandalan.IDAS.WebApi.Data.DTOs.Belege.BelegArt,Gandalan.IDAS.WebApi.Data.DTOs.Belege.BelegArt)">
+            <summary>
+            Prüft, ob neueBelegArt logisch hinter belegArt liegt
+            </summary>
+            <param name="neueBelegArt"></param>
+            <param name="belegArt"></param>
+            <returns>true/false</returns>
+        </member>
+        <member name="M:Gandalan.IDAS.WebApi.Data.DTOs.Belege.BelegWorkflow.IsBefore(Gandalan.IDAS.WebApi.Data.DTOs.Belege.BelegArt,Gandalan.IDAS.WebApi.Data.DTOs.Belege.BelegArt)">
+            <summary>
+            Prüft, ob neueBelegArt logisch vor belegArt liegt
+            </summary>
+            <param name="neueBelegArt"></param>
+            <param name="belegArt"></param>
+            <returns>true/false</returns>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Produktion.BerechnungParameterDTO.SaveResultData">
+            <summary>
+            Default: true
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Produktion.BerechnungParameterDTO.VorgangsNummer">
+            <summary>
+            Default: -999
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Produktion.BerechnungParameterDTO.BelegNummer">
+            <summary>
+            Default: -999
             </summary>
         </member>
         <member name="T:Gandalan.IDAS.WebApi.Data.DTOs.Produktion.SaegeKonfigurationDTO">
@@ -213,7 +256,7 @@
         <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Produktion.SaegeKonfigurationDTO.Ausgabeverzeichnis_GeradGehrung">
             <summary>
             Ausgabeverzeichnis für die Datei mit GeradGehrungsschnitten (45-90; 90-45)
-            </summary>     
+            </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Produktion.SaegeKonfigurationDTO.Ausgabeverzeichnis_DoppelGehrung">
             <summary>
@@ -235,6 +278,11 @@
             FarbKuerzel für Sonderfarbschnitte
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Reports.SerienPacklisteGruppeDataDTO.VorgangsVarianten">
+            <summary>
+            Variants of vorgang. Only for zusammengefasste Packliste.
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Salden.StandardSaldoDTO.Wert">
             <summary>
             Der Wert, den der Anwender eingegeben hat, z.B. 5%
@@ -253,7 +301,7 @@
         <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Salden.StandardSaldoDTO.Name">
             <summary>
             Zulässige Werte: "Saldo", "StandardSaldo", "Warenwert", "Mehrwertsteuer",
-            "Gesamtbetrag", "Endbetrag", "Farbe"  
+            "Gesamtbetrag", "Endbetrag", "Farbe"
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.Data.DTOs.Salden.StandardSaldoDTO.Text">
@@ -261,9 +309,19 @@
             Text für die Anzeige
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.PositionSerieItemDTO.VeschiedeneSerien">
+            <summary>
+            currently only used in client
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.Data.PositionSerieItemDTO.SerienGuids">
+            <summary>
+            only set when <see cref="P:Gandalan.IDAS.WebApi.Data.PositionSerieItemDTO.VeschiedeneSerien"/> is set.
+            </summary>
+        </member>
         <member name="T:Gandalan.IDAS.WebApi.Data.Visitor.IVisitor">
             <summary>
-            Einfaches Visitor-Pattern. Wir implementieren aber hier noch eine Variante der Visit-Methode, die 
+            Einfaches Visitor-Pattern. Wir implementieren aber hier noch eine Variante der Visit-Methode, die
             ein dynamic akzeptiert, weil wir in ExpandoObject und anderen dynamic-Klassen nicht IVisitable implementieren
             können (sind sealed)
             </summary>
@@ -291,11 +349,6 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.KatalogArtikelDTO.ErsatzArtikel">
             <summary>
             Mögliche Ersatzartikel für diesen Artikel
-            </summary>
-        </member>
-        <member name="P:Gandalan.IDAS.WebApi.DTO.KatalogArtikelDTO.FrontendLogik">
-            <summary>
-            Internes Feld - mappt den Machine/UI-Bezeichner auf die Frontend-Anzeige
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.KatalogArtikelDTO.VarianteGuid">
@@ -335,7 +388,7 @@
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.SerieDTO.StaendigeSerie">
             <summary>
-            Ständige Serie, dh. Start und Ende sind ungültig/irrelevant. 
+            Ständige Serie, dh. Start und Ende sind ungültig/irrelevant.
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.SerieDTO.AVBelegPositionen">
@@ -345,19 +398,24 @@
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.SerieDTO.Kapazitaet">
             <summary>
-            Kapazität dieser Serie in neutralen Kapazitätseinheiten
+            Kapazität dieser Serie in neutralen Kapazitätseinheiten (alt)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.SerieDTO.KapazitaetInMin">
+            <summary>
+            Kapazität der Serie in Minuten
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.SerieDTO.KapazitaetReserviert">
             <summary>
-            Belegung der Serie in neutralen Kapazitätseinheiten. Muss beim Hinzfügen/Entfernen 
+            Belegung der Serie in neutralen Kapazitätseinheiten. Muss beim Hinzfügen/Entfernen
             durch den entsprechenden Algorithmus ermittelt und gesetzt werden.
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.SerieDTO.DruckInfos">
             <summary>
             Informationen, wann welcher Anwender welches Dokument gedruckt hat
-            </summary>        
+            </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.SerieDTO.ChangedDate">
             <summary>
@@ -376,12 +434,37 @@
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.SerieDruckInfoDTO.DokumentArt">
             <summary>
-            Welches Dokument wurde gedruckt (Freitext, setzt der Client) 
+            Welches Dokument wurde gedruckt (Freitext, setzt der Client)
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.SerieDruckInfoDTO.Zeitstempel">
             <summary>
             Zeitstempel (UTC)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VirtualSerieWithAuslastungDTO.SerieGuid">
+            <summary>
+            Eindeutige ID der Serie
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VirtualSerieWithAuslastungDTO.Name">
+            <summary>
+            Name der Serie (Langform)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VirtualSerieWithAuslastungDTO.Kuerzel">
+            <summary>
+            Serienkürzel für Ausdrucke, Kurzanzeige usw.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VirtualSerieWithAuslastungDTO.Start">
+            <summary>
+            Beginn der Produktion (erster Produktionstag)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VirtualSerieWithAuslastungDTO.Ende">
+            <summary>
+            Ende der Produktion (letzter Produktionstag)
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.BaseListItemDTO.VorgangGuid">
@@ -469,7 +552,7 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.BelegSaldoDTO.Name">
             <summary>
             Zulässige Werte: "Saldo", "StandardSaldo", "Warenwert", "Mehrwertsteuer",
-            "Gesamtbetrag", "Endbetrag", "Farbe"  
+            "Gesamtbetrag", "Endbetrag", "Farbe"
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.BelegSaldoDTO.SaldenStatus">
@@ -480,6 +563,16 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.BelegSaldoDTO.Tag">
             <summary>
             In diesem Tag können belibige interne Informationen als String gespeichert werden.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegSaldoDTO.Rabatt">
+            <summary>
+            Rabatt, der in der Salde verrechnet wurde
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.BelegSaldoDTO.TemplateText">
+            <summary>
+            TemplateText mit z.B. Platzhalter aus der Standardsalde der benötigt wird um beim ändern einer Salde den Text neu zu generieren.
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.BelegStatusDTO.VorgangGuid">
@@ -499,7 +592,18 @@
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.BelegStatusDTO.AenderungsDatum">
             <summary>
-            Datum der letzten Änderung des Vorgangs        
+            Datum der letzten Änderung des Vorgangs
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.KapazitaetsvorgabenDTO">
+            <summary>
+            <see href="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/how-to-group-sort-and-filter-data-in-the-datagrid-control?view=netframeworkdesktop-4.8">https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/how-to-group-sort-and-filter-data-in-the-datagrid-control?view=netframeworkdesktop-4.8</see>
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.WebApi.DTO.KapaFarbArt">
+            <summary>
+            Definiert die Art der Farbe für die eine Kapazitätsvorgabe gilt.
+            Standardmäßig wird die Kapazitätsvorgabe für alle Farben verwendet.
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangDTO.VorgangGuid">
@@ -602,6 +706,11 @@
             Eingegebene Kommission des Händlers
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.Kommission2">
+            <summary>
+            Eingegebene Kommission2 des Händlers
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.VorgangsNotitz">
             <summary>
             Eingegebene Notitzen zum Vorgang vom Produzenten
@@ -610,7 +719,7 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.AktuelleBelegNummer">
             <summary>
             Aktuelle Belegnummer
-            </summary>        
+            </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangListItemDTO.AktuelleBelegGuid">
             <summary>
@@ -654,7 +763,7 @@
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangStatusDTO.AenderungsDatum">
             <summary>
-            Datum der letzten Änderung des Vorgangs        
+            Datum der letzten Änderung des Vorgangs
             </summary>
         </member>
         <member name="T:Gandalan.IDAS.WebApi.DTO.VorgangStatusTableDTO">
@@ -679,7 +788,7 @@
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangStatusTableDTO.AenderungsDatum">
             <summary>
-            Datum der letzten Änderung des Vorgangs        
+            Datum der letzten Änderung des Vorgangs
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.VorgangStatusTableDTO.MandantId">
@@ -729,24 +838,24 @@
         </member>
         <member name="T:Gandalan.IDAS.WebApi.DTO.UserAuthTokenDTO">
             <summary>
-            Informationen über eine erfolgreiche Anmeldung am System. 
+            Informationen über eine erfolgreiche Anmeldung am System.
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.UserAuthTokenDTO.AppToken">
             <summary>
-            Token der Anwendung, die den Zugriff initiiert. Regelt Login- und 
+            Token der Anwendung, die den Zugriff initiiert. Regelt Login- und
             Zugriffsberechtigungen des Anwenders innerhalb der API.
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.UserAuthTokenDTO.Expires">
             <summary>
-            Ablaufdatum, ab dem das Token ungültig wird. Die Anwendung muss 
+            Ablaufdatum, ab dem das Token ungültig wird. Die Anwendung muss
             sich dann erneut einloggen
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.UserAuthTokenDTO.Token">
             <summary>
-            Das erzeugte Token, das für weitere Requests an die API mitgesendet 
+            Das erzeugte Token, das für weitere Requests an die API mitgesendet
             werden muss
             </summary>
         </member>
@@ -883,7 +992,7 @@
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.Verwendungszweck">
             <summary>
-            Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)        
+            Ursprunglicher interner Verwendungszweck für diesen Adressdatensatz (nur für Adresse aus IBOS, z.B. "Rechnung", "AB"...)
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.AdresseDTO.ApplicationSpecificProperties">
@@ -1023,8 +1132,8 @@
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.BeleganschriftDTO.AnzeigeName">
             <summary>
-            Erzeugt einen Text aus den Namensfeldern für die Anzeige in 
-            Überschriften, Anschriftenfeldern usw. 
+            Erzeugt einen Text aus den Namensfeldern für die Anzeige in
+            Überschriften, Anschriftenfeldern usw.
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.KontaktGuid">
@@ -1082,6 +1191,11 @@
             Gesperrt/Wird nicht beliefert
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.IstArchiviert">
+            <summary>
+            Archiviert, wird nicht mehr angezeigt, restliche Abhängigkeiten bleiben unberührt
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.IstSelbstabholer">
             <summary>
             Holt Ware normalerweise ab
@@ -1092,6 +1206,11 @@
             Kunde muss in Vorkasse gehen.
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.InnergemeinschaftOhneMwSt">
+            <summary>
+            Wenn der Kontakt ein Innergemeinschaftlicher Kontakt ist, kann durch dieses Flag ide MwSt. Berechnung abgeschaltet werden.
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Personen">
             <summary>
             Zugeordnete Personen
@@ -1100,6 +1219,16 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Zusatzanschriften">
             <summary>
             Zugeordnete Standard-Adressen
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Nummernkreis">
+            <summary>
+            Kunden-Nummernkreis, z.B. 600, 0000, 000
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Liefertage">
+            <summary>
+            Liefertage, Montag bis Freitag
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.Anrede">
@@ -1227,10 +1356,20 @@
             Kunde hat Winterrabatt ja/nein
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.IstInaktiv">
+            <summary>
+            Inaktiv Kennzeichen
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktDTO.AnzeigeName">
             <summary>
-            Erzeugt einen Text aus den Namensfeldern für die Anzeige in 
-            Überschriften, Anschriftenfeldern usw. 
+            Erzeugt einen Text aus den Namensfeldern für die Anzeige in
+            Überschriften, Anschriftenfeldern usw.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.KontaktMandantIstAktiv">
+            <summary>
+            Der KontaktMandant hat die App-Verwendung aktiv
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.Nachname">
@@ -1293,6 +1432,11 @@
             Kunde gesperrt?
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.KontaktListItemDTO.IstArchiviert">
+            <summary>
+            Archivierte Kontakte werden nicht angezeigt
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.PersonDTO.PersonGuid">
             <summary>
             Eindeutige GUID
@@ -1316,6 +1460,11 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.PersonDTO.Geburtstag">
             <summary>
             Geburtstag
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.PersonDTO.IstInaktiv">
+            <summary>
+            Inaktiv Kennzeichen
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Titel">
@@ -1388,6 +1537,11 @@
             Land als Textkürzel
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.IstInland">
+            <summary>
+            Bezogen auf den Versender die Angabe, ob die hier ausgefertigte Adresse eine Inlandsadresse ist
+            </summary>
+        </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.Mailadresse">
             <summary>
             E-Mail-Adresse
@@ -1410,6 +1564,16 @@
             Intern
             </summary>
         </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.ZusatzanschriftDTO.IstInaktiv">
+            <summary>
+            Inaktiv Kennzeichen
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.CreateServiceTokenRequestDTO.AppTokenGuid">
+            <summary>
+            Overwrite user's AppTokenGuid for service token request
+            </summary>
+        </member>
         <member name="T:Gandalan.IDAS.WebApi.DTO.AblageDTO">
             <summary>
             DTO für die IBOS3 Ablageverwaltung
@@ -1422,7 +1586,7 @@
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.AblageFachDTO.ProduktGruppenGuids">
             <summary>
-            GUIDs der ProduktGrupptenDTOs, die im Ablagefach abgelegt werden können
+            GUIDs der ProduktGruppenDTOs, die im Ablagefach abgelegt werden können
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.AblageFachDTO.MaterialBedarfGuids">
@@ -1452,13 +1616,13 @@
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.BearbeitungDTO.X">
             <summary>
-            Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+            Anzahl des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt
             sich aus mit Laufmeter!)
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.BearbeitungDTO.Y">
             <summary>
-            Laufmeter des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt 
+            Laufmeter des Artikels (gleiche Artikel werden per Standard nicht zusammengefasst; schließt
             sich aus mit Stückzahl!)
             </summary>
         </member>
@@ -1512,6 +1676,11 @@
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.FarbBezeichnung">
             <summary>
             FarbBezeichnung (Bezeichnung der Farbe)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.FarbZusatzText">
+            <summary>
+            FarbZusatzText, hauptsächlich für (Trend-)Farbkürzel (z.B. B7)
             </summary>
         </member>
         <member name="P:Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO.FarbKuerzel">
@@ -1574,7 +1743,6 @@
             <summary>
             Gibt NUR Artikel aus dem Materialbedarf zurück, die Zuschnitte sind
             </summary>
-            <returns></returns>
         </member>
         <member name="F:Gandalan.IDAS.WebApi.DTO.ProduktionsStatiWerteDTO.Unbekannt">
             <summary>
@@ -1740,7 +1908,6 @@
             </summary>
             <param name="fileName"></param>
             <param name="encoding">Use Encoding.Default if null</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.WebApi.Util.gSQL.gSQLImporter.ImportFromGsqlInhalt(Gandalan.IDAS.WebApi.Util.gSQL.gSQLInhalt,System.Text.Encoding)">
             <summary>
@@ -1748,7 +1915,6 @@
             </summary>
             <param name="gsqlData"></param>
             <param name="encoding">Use Encoding.Default if null</param>
-            <returns></returns>
         </member>
         <member name="P:Gandalan.IDAS.Client.Contracts.Contracts.IWebApiConfig.DocUrl">
             <summary>
@@ -1781,14 +1947,12 @@
             </summary>
             <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
             <param name="material">MaterialbedarfDTO, für das das Korrekturmaß abgerufen werden soll</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService.GetKorrekturmass(Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO)">
             <summary>
             Ruft das (summierte) Korrekturmaß für ein MaterialbedarfDTO, abhängig von Winkel links/rechts, ab. Nutzt den Korrektursatz, der an der Säge "Serie" hinterlegt ist-
             </summary>
             <param name="material">MaterialbedarfDTO, für das das Korrekturmaß abgerufen werden soll</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService.GetKorrekturmass(System.String,System.String,System.Int32)">
             <summary>
@@ -1797,7 +1961,6 @@
             <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
             <param name="katalogNummer">Katalognummer des Profils</param>
             <param name="winkel">Winkel, für den das Korrekturmaß abgerufen werden soll</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService.GetKorrekturmass(System.String,System.Int32)">
             <summary>
@@ -1805,7 +1968,6 @@
             </summary>
             <param name="katalogNummer">Katalognummer des Profils</param>
             <param name="winkel">Winkel, für den das Korrekturmaß abgerufen werden soll</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService.GetZuschnittKorrigiert(System.String,Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO)">
             <summary>
@@ -1813,14 +1975,12 @@
             </summary>
             <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
             <param name="material">MaterialbedarfDTO, für das die korrigierte Zuschnittslänge abgerufen werden soll</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService.GetZuschnittKorrigiert(Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO)">
             <summary>
             Liefert das korrigierte Zuschnittsmaß für ein MaterialbedarfDTO (ZuschnittLaenge + Korrekturmaß). Nutzt den Korrektursatz, der an der Säge "Serie" hinterlegt ist.
             </summary>
             <param name="material">MaterialbedarfDTO, für das die korrigierte Zuschnittslänge abgerufen werden soll</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService.GetWinkelKorrekturmass(System.String,System.String,System.Int32)">
             <summary>
@@ -1829,7 +1989,6 @@
             <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
             <param name="katalogNummer">Katalognummer des Profils</param>
             <param name="winkel">Winkel, für den das Korrekturmaß abgerufen werden soll</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService.GetWinkelKorrekturmass(System.String,System.Int32)">
             <summary>
@@ -1837,7 +1996,6 @@
             </summary>
             <param name="katalogNummer">Katalognummer des Profils</param>
             <param name="winkel">Winkel, für den das Korrekturmaß abgerufen werden soll</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService.GetWinkelKorrigiert(System.String,Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO,System.Int32)">
             <summary>
@@ -1846,7 +2004,6 @@
             <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
             <param name="material">MaterialbedarfDTO, für das die korrigierte Zuschnittslänge abgerufen werden soll</param>
             <param name="winkel">Winkel, für den das Korrekturmaß abgerufen werden soll</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.ProduktionsServices.ISaegemassKorrekturService.GetWinkelKorrigiert(Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO,System.Int32)">
             <summary>
@@ -1854,17 +2011,41 @@
             </summary>
             <param name="material">MaterialbedarfDTO, für das die korrigierte Zuschnittslänge abgerufen werden soll</param>
             <param name="winkel">Winkel, für den das Korrekturmaß abgerufen werden soll</param>
-            <returns></returns>
+        </member>
+        <member name="P:Gandalan.IDAS.Client.Contracts.Contracts.Report.ReportExecuteSettings.PageWidth">
+            <summary>
+            Page width in mm
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Client.Contracts.Contracts.Report.ReportExecuteSettings.PageHeight">
+            <summary>
+            Page height in mm
+            </summary>
         </member>
         <member name="T:Gandalan.IDAS.Client.Contracts.Contracts.UIServices.IFeedbackService">
             <summary>
-            Service for collection end user feedback, for instance via the 
+            Service for collection end user feedback, for instance via the
             "smiley" button in the top right corner of an app
             </summary>
         </member>
         <member name="M:Gandalan.IDAS.Client.Contracts.Contracts.UIServices.IFeedbackService.CollectUserFeedback">
             <summary>
-            i.e. opens a dialog window, takes screenhots, emails them etc.
+            i.e. opens a dialog window, takes screenshots, emails them etc.
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.Client.Contracts.Flux.CallMode.Guaranteed">
+            <summary>
+            retry until success or max retries reached, then throw exception if still not successful
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.Client.Contracts.Flux.CallMode.BestEffort">
+            <summary>
+            retry until success or max retries reached
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.Client.Contracts.Flux.CallMode.FireAndForget">
+            <summary>
+            try once, ignore failures
             </summary>
         </member>
         <member name="E:Gandalan.IDAS.Client.Contracts.Flux.IFluxStore.DataChanged">
@@ -1879,11 +2060,10 @@
         </member>
         <member name="M:Gandalan.IDAS.Client.Contracts.Vorgaenge.IBelegPositionCommand.CanHandle(Gandalan.IDAS.Client.Contracts.Vorgaenge.IBelegPositionItem)">
             <summary>
-            Returns wherever this command should be shown or not. 
+            Returns wherever this command should be shown or not.
             Sometimes a position should not show some commands if they are not allowed
             </summary>
             <param name="parameter"></param>
-            <returns></returns>
         </member>
         <member name="P:Gandalan.IDAS.Client.Contracts.Vorgaenge.IBelegPositionCommand.Caption">
             <summary>
@@ -1892,13 +2072,13 @@
         </member>
         <member name="T:Gandalan.IDAS.Jobs.Contracts.IBackgroundJob`1">
             <summary>
-            Definiert einen Hintergrundjob, der unabhängig von der 
+            Definiert einen Hintergrundjob, der unabhängig von der
             eigentlichen Anwendung ausgeführt wird
             </summary>
         </member>
         <member name="T:Gandalan.Client.Contracts.AppServices.IApplicationUpdateService">
             <summary>
-            Check for application updates 
+            Check for application updates
             </summary>
         </member>
         <member name="P:Gandalan.Client.Contracts.AppServices.IApplicationUpdateService.Progress">
@@ -1918,7 +2098,7 @@
         </member>
         <member name="M:Gandalan.Client.Contracts.AppServices.IApplicationUpdateService.HasUpdates">
             <summary>
-            Wether or not there are updates available. Should return
+            Whether or not there are updates available. Should return
             as quick as possible and not display progress
             </summary>
             <returns>status bool</returns>
@@ -1943,7 +2123,7 @@
             <summary>
             Legt ein neues AblageDTO an, oder aktualisiert es, sofern bereits vorhanden
             </summary>
-            <param name="ablageDTO">AblageDTO, das angelegt/aktualisiert werden soll</param>        
+            <param name="ablageDTO">AblageDTO, das angelegt/aktualisiert werden soll</param>
         </member>
         <member name="M:Gandalan.Client.Contracts.DataServices.IAblageService.DeleteAsync(Gandalan.IDAS.WebApi.DTO.AblageDTO)">
             <summary>
@@ -1956,10 +2136,11 @@
             Liefert gespeicherte Ergebnisse für AutoCompleteFelder
             </summary>
         </member>
-        <member name="M:Gandalan.Client.Contracts.DataServices.IAutocompleteService.GetAllAsync">
+        <member name="M:Gandalan.Client.Contracts.DataServices.IAutocompleteService.GetAllAsync(System.Nullable{System.Int32})">
             <summary>
             Ruft alle vorhandenen Einträge ab
             </summary>
+            <param name="top">Gibt die Anazhl der sortierten Einträge an.</param>
         </member>
         <member name="M:Gandalan.Client.Contracts.DataServices.IAutocompleteService.AddAsync(System.String)">
             <summary>
@@ -1973,11 +2154,12 @@
             </summary>
             <param name="word">Das zu löschende Wort</param>
         </member>
-        <member name="M:Gandalan.Client.Contracts.DataServices.IAutocompleteService.Load(System.String)">
+        <member name="M:Gandalan.Client.Contracts.DataServices.IAutocompleteService.Load(System.String,System.Boolean)">
             <summary>
             Lädt die Einstellungen / Wörter
             </summary>
-            <param name="word">Schlüssel, anhand dem die Einstellungen geladen werden sollen</param>
+            <param name="settingsKey">Schlüssel, anhand dem die Einstellungen geladen werden sollen</param>
+            <param name="isReleoad">Wenn die Settings neu vom Server geladen werden müssen</param>
         </member>
         <member name="M:Gandalan.Client.Contracts.DataServices.IAutocompleteService.Save">
             <summary>
@@ -1998,13 +2180,18 @@
             <summary>
             Legt ein neues InfoScreenConfigDTO an, oder aktualisiert es, sofern bereits vorhanden
             </summary>
-            <param name="infoScreenConfigDTO">InfoScreenConfigDTO, das angelegt/aktualisiert werden soll</param>        
+            <param name="infoScreenConfigDTO">InfoScreenConfigDTO, das angelegt/aktualisiert werden soll</param>
         </member>
         <member name="M:Gandalan.Client.Contracts.DataServices.IInfoScreenService.DeleteAsync(Gandalan.IDAS.WebApi.DTO.InfoScreenConfigDTO)">
             <summary>
             Entfernt das übergebene InfoScreenConfigDTO
             </summary>
             <param name="infoScreenConfigDTO">InfoScreenConfigDTO, das entfernt werden soll</param>
+        </member>
+        <member name="T:Gandalan.Client.Contracts.DataServices.IInternalMailService">
+            <summary>
+            Implementiert einen Service zum Versenden von internen E-Mails (nicht kundenbezogen, also z.B. Fehlerberichte), optional mit Anhang
+            </summary>
         </member>
         <member name="T:Gandalan.Client.Contracts.DataServices.ILagerbestandService">
             <summary>
@@ -2020,13 +2207,13 @@
             <summary>
             Legt ein neues LagerbestandDTO an, oder aktualisiert es, sofern bereits vorhanden
             </summary>
-            <param name="lagerbestandDTO">LagerbestandDTO, das angelegt/aktualisiert werden soll</param>        
+            <param name="lagerbestandDTO">LagerbestandDTO, das angelegt/aktualisiert werden soll</param>
         </member>
         <member name="M:Gandalan.Client.Contracts.DataServices.ILagerbestandService.AddOrUpdateAsync(System.Collections.Generic.IList{Gandalan.IDAS.WebApi.DTO.LagerbestandDTO})">
             <summary>
             Legt eine Liste neuer LagerbestandDTOs an, oder aktualisiert sie, sofern bereits vorhanden
             </summary>
-            <param name="lagerbestandDTOs">Liste der LagerbestandDTOs, die angelegt/aktualisiert werden sollen</param>        
+            <param name="lagerbestandDTOs">Liste der LagerbestandDTOs, die angelegt/aktualisiert werden sollen</param>
         </member>
         <member name="M:Gandalan.Client.Contracts.DataServices.ILagerbestandService.DeleteAsync(Gandalan.IDAS.WebApi.DTO.LagerbestandDTO)">
             <summary>
@@ -2058,7 +2245,7 @@
         </member>
         <member name="T:Gandalan.Client.Contracts.IApplicationEventDispatcher">
             <summary>
-            Handles dispatching of application specifc global events
+            Handles dispatching of application specific global events
             </summary>
         </member>
         <member name="M:Gandalan.Client.Contracts.IApplicationEventDispatcher.DispatchAsync(Gandalan.Client.Contracts.IApplicationEvent)">
@@ -2108,7 +2295,7 @@
             <param name="position">Position, aus der Material abgelegt werden soll</param>
             <returns>Liste von AbalgeFachDTO</returns>
         </member>
-        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.PutMaterial(System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.BelegPositionAVDTO},System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO},System.String)">
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.PutMaterialAsync(System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.BelegPositionAVDTO},System.Collections.Generic.List{Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO},System.String)">
             <summary>
             Legt eine Materialliste in mehreren Ablagefächern ab
             </summary>
@@ -2116,7 +2303,7 @@
             <param name="materialListe">Liste von MaterialbedarfDTOs, die abgelegt werden sollen</param>
             <param name="standort">Standort der Ablagen, die berücksichtigt werden</param>
         </member>
-        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.PutMaterial(Gandalan.IDAS.WebApi.DTO.SerieDTO,System.String)">
+        <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.PutMaterialAsync(Gandalan.IDAS.WebApi.DTO.SerieDTO,System.String)">
             <summary>
             Legt Material für eine Serie in mehreren Ablagefächern ab
             </summary>
@@ -2143,7 +2330,6 @@
             Liefert alle registrierten Ablagen zu einem Standort
             </summary>
             <param name="standort">Standort für den die Ablagen geliefert werden.</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.Client.Contracts.ProduktionsServices.IAblageManager.ChangeAblageStandort(System.Guid,System.String)">
             <summary>
@@ -2165,11 +2351,10 @@
             </summary>
             <param name="position">Position, aus der Material abgelegt werden soll</param>
             <param name="material"></param>
-            <returns></returns>
         </member>
         <member name="P:Gandalan.Client.Contracts.ProduktionsServices.IAVBerechnungService.TempFolder">
             <summary>
-            Zuletzt verwendeter Daten-Temp-Ordner (für Diagnosezwecke) 
+            Zuletzt verwendeter Daten-Temp-Ordner (für Diagnosezwecke)
             </summary>
         </member>
         <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ICalcAblageFachBedarf.CalcBedarf(Gandalan.IDAS.WebApi.DTO.BelegPositionAVDTO)">
@@ -2177,7 +2362,6 @@
             Berechnet den Gesamtbedarf an Ablagefächern für eine Position
             </summary>
             <param name="position"></param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ICalcAblageFachBedarf.GetPositionRelatedFachNr(Gandalan.IDAS.WebApi.DTO.BelegPositionAVDTO,Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO)">
             <summary>
@@ -2185,7 +2369,6 @@
             </summary>
             <param name="position"></param>
             <param name="material"></param>
-            <returns></returns>
         </member>
         <member name="T:Gandalan.Client.Contracts.ProduktionsServices.IEtikettenDruckAufbereitung">
             <summary>
@@ -2273,6 +2456,7 @@
             Druckt die angegebenen Daten auf dem Gerät aus.
             Es wird das übergebene Template genutzt.
             </summary>
+            <param name="data"></param>
             <param name="template">Druck Template (muss zum ausgewählten Drucker passen)</param>
         </member>
         <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ILabelPrinter.GetSettingsControl">
@@ -2287,10 +2471,16 @@
             Information zur Säge (Hersteller, Modellnummer usw.)
             </summary>
         </member>
+        <member name="P:Gandalan.Client.Contracts.ProduktionsServices.ISaegeDatenGenerator.DateiEndung">
+            <summary>
+            Dateiendung für die Sägedateien
+            </summary>
+        </member>
         <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ISaegeDatenGenerator.GenerateContent(Gandalan.IDAS.WebApi.Data.DTOs.Produktion.SaegeKonfigurationDTO,System.Collections.Generic.IList{Gandalan.IDAS.WebApi.DTO.BelegPositionAVDTO},System.Collections.Generic.IList{Gandalan.IDAS.WebApi.DTO.MaterialbedarfDTO})">
             <summary>
             Erzeugt die Sägedaten.
             </summary>
+            <param name="saegeKonfiguration"></param>
             <param name="avData">AV Daten zum Sägematerial</param>
             <param name="material"></param>
             <returns>Modellabhängige Daten zur Übermittlung an die Maschine</returns>
@@ -2321,7 +2511,6 @@
             </summary>
             <param name="groupedProperty">Property, nachdem groupiert werden soll (Level 1)</param>
             <param name="items">Items die aufbereitet werden sollen</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.Client.Contracts.ProduktionsServices.ISaegeListeAufbereitenService.SortAndGroup(System.String,System.Collections.Generic.IEnumerable{Gandalan.IDAS.Client.Contracts.Contracts.ReportData.IMaterialReportItem},System.String)">
             <summary>
@@ -2330,7 +2519,6 @@
             <param name="groupedProperty">Property, nachdem groupiert werden soll (Level 1)</param>
             <param name="items">Items die aufbereitet werden sollen</param>
             <param name="secondLevelGroup">Property, nachdem groupiert werden soll (Level 2)</param>
-            <returns></returns>
         </member>
         <member name="T:Gandalan.Client.Contracts.ProduktionsServices.ISchnittOptimierung">
             <summary>
@@ -2346,7 +2534,6 @@
             <param name="rohmaterialLaenge">Maximal zu belegende Länge. Endabschnitte müssen vom Aufrufer bereits abgezogen sein.</param>
             <param name="materialbedarfTeilstueckLaengen">Liste aller gewünschten Teilstücke mit MaterialBedarfGuid</param>
             <param name="zugabe">Sägezugabe zwischen den Teilstücken (nicht am Anfang/Ende)</param>
-            <returns></returns>
         </member>
         <member name="T:Gandalan.Client.Contracts.ProduktionsServices.ZuschnittStangenInfo">
             <summary>
@@ -2400,9 +2587,21 @@
             <param name="laenge">Länge des Teilstücks</param>
             <param name="materialBedarfGuid"></param>
         </member>
+        <member name="M:Gandalan.Client.Contracts.Salden.IStandardSaldo.Apply(Gandalan.IDAS.WebApi.DTO.VorgangDTO,Gandalan.IDAS.WebApi.DTO.BelegDTO,Gandalan.IDAS.WebApi.Data.DTOs.Salden.StandardSaldoDTO)">
+            <summary>
+            Prüft ob der StandardSaldo den Vorgang/Beleg betrifft
+            und gibt das entsprechende <see cref="T:Gandalan.IDAS.WebApi.DTO.BelegSaldoDTO"/> zurück.
+            </summary>
+            <param name="vorgang">Vorgang</param>
+            <param name="beleg">Beleg</param>
+            <param name="dto">Werte des Standard Saldo.
+            StandardSaldoDTO.Name muss hier IStandardSaldo.Name entsprechen.</param>
+            <returns><see cref="T:Gandalan.IDAS.WebApi.DTO.BelegSaldoDTO"/>, das dem zu erstellenden Standardsaldo entspricht.
+            null, wenn der StandardSaldo nicht den Vorgang/Beleg betrifft.</returns>
+        </member>
         <member name="T:Gandalan.Client.Contracts.UIServices.IInfoScreenDataInitiator">
             <summary>
-            Interface für die Implementierung von Initiatoren für die InfoScreens. 
+            Interface für die Implementierung von Initiatoren für die InfoScreens.
             Der Initator liefert die Notwendigen Daten an die InfoScreen Module
             Standard Initiatoren: PCodeInitiator, ScanInitiator, ScanPCodeInitiator
             </summary>
@@ -2414,12 +2613,11 @@
         </member>
         <member name="M:Gandalan.Client.Contracts.UIServices.IProgressNotify.ShowProgress(System.String,System.Func{System.Threading.Tasks.Task})">
             <summary>
-            Show a progress indicator for an indeterminate Task (i.e. no 
+            Show a progress indicator for an indeterminate Task (i.e. no
             percentage for progress)
             </summary>
             <param name="title">Title to show</param>
             <param name="toExecute">Function to run</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.Client.Contracts.UIServices.IProgressNotify.ShowProgress(System.String,System.Func{Gandalan.Client.Contracts.UIServices.IProgressNotify,System.Threading.Tasks.Task})">
             <summary>
@@ -2427,28 +2625,37 @@
             </summary>
             <param name="title">Title to show</param>
             <param name="toExecute">Function to run, IProgressNotify is passed as param for updating</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.Client.Contracts.UIServices.IProgressNotify.UpdateProgress(System.Int32)">
             <summary>
             Function to display the progress value for determinate progress tasks
             </summary>
             <param name="percent">value</param>
-            <returns></returns>
         </member>
         <member name="M:Gandalan.Client.Contracts.UIServices.IProgressNotify.UpdateProgress(System.Int32,System.String)">
             <summary>
             Function to display the progress value for determinate progress tasks
             </summary>
             <param name="percent">value</param>
-            <returns></returns>
+            <param name="text"></param>
         </member>
         <member name="M:Gandalan.Client.Contracts.UIServices.IProgressNotify.UpdateProgress(System.String)">
             <summary>
             Function to display the progress value for determinate progress tasks
             </summary>
-            <param name="percent">value</param>
-            <returns></returns>
+            <param name="text">value</param>
+        </member>
+        <member name="P:Gandalan.Client.Contracts.Tiles.ITileItem.StretchVertically">
+            <summary>
+            Streckt das Tile in der Höhe. Wie System.Windows.GridUnitType.Star.
+            Alle Tiles in einer Gruppe müssen diese Flag gesetzt haben.
+            </summary>
+        </member>
+        <member name="P:Gandalan.Client.Contracts.Tiles.ITileItem.MinHeight">
+            <summary>
+            Minimale Höhe für Tile, wenn StretchVertically gesetzt ist.
+            Der Gröste Wert innerhalb der Gruppe wird verwendet.
+            </summary>
         </member>
     </members>
 </doc>

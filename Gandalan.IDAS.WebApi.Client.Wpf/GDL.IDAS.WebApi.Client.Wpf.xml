@@ -4,6 +4,16 @@
         <name>GDL.IDAS.WebApi.Client.Wpf</name>
     </assembly>
     <members>
+        <member name="F:Gandalan.IDAS.WebApi.Client.Wpf.Controls.CircularProgressBar.AngleProperty">
+            <summary>
+            Using a DependencyProperty as the backing store for Angle. This enables animation, styling, binding, etc...
+            </summary>
+        </member>
+        <member name="F:Gandalan.IDAS.WebApi.Client.Wpf.Controls.CircularProgressBar.StrokeThicknessProperty">
+            <summary>
+            Using a DependencyProperty as the backing store for StrokeThickness. This enables animation, styling, binding, etc...
+            </summary>
+        </member>
         <member name="T:Gandalan.IDAS.WebApi.Client.Wpf.Controls.LargeHeaderControl">
             <summary>
             Interaction logic for SmallHeaderControl.xaml
