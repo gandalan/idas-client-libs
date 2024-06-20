@@ -7,13 +7,13 @@ public interface IHistorieHelper
 {
     Task ProgressInfoAsync(Func<Task> asyncFunc);
     Task ProgressInfoAsync(string label, Func<Task> asyncFunc);
-    void ProgressInfoAsyncFnF(Func<Task> asyncFunc);
-    void ProgressInfoAsyncFnF(string label, Func<Task> asyncFunc);
-    void ProgressInfo(Action action);
-    void ProgressInfo(string label, Action action);
-    void Info(string text);
-    void Warning(string text);
-    void Error(string text);
-    void Fatal(string text);
-    void Exception(Exception e);
+    Task ProgressInfoAsyncFnF(Func<Task> asyncFunc);
+    Task ProgressInfoAsyncFnF(string label, Func<Task> asyncFunc);
+    Task ProgressInfo(Action action);
+    Task ProgressInfo(string label, Action action);
+    Task Info(string text);
+    Task Warning(string text);
+    Task Error(string text);
+    Task Fatal(string text);
+    Task Exception(Exception e);
 }
