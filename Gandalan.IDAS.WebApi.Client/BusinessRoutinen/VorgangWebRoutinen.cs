@@ -76,6 +76,9 @@ public class VorgangWebRoutinen : WebRoutinenBase
     public async Task ArchiviereVorgangListAsync(List<Guid> vorgangGuidList)
         => await PostAsync("Archivierung/", vorgangGuidList);
 
+    public async Task ArchivierungAufhebenAsync(Guid vorgangGuid)
+        => await PostAsync("ArchivierungAufheben/?vguid=" + vorgangGuid, null);
+
     public async Task AendereBelegArtAsync(Guid belegGuid, string neueBelegArt)
         => await PostAsync("BelegArt/?bguid=" + belegGuid + "&neueBelegArt=" + neueBelegArt, null);
 
