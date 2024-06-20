@@ -14,17 +14,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\projects\Repos\idas-client-libs\Gandalan.IDAS.WebApi.Client\GDL.IDAS.WebApi.Client.xml</DocumentationFile>
-    <NoWarn>1591;CS0067</NoWarn>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-    <NoWarn>1701;1702;CS0067</NoWarn>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
+    <DocumentationFile>..\Gandalan.IDAS.WebApi.Client\GDL.IDAS.WebApi.Client.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

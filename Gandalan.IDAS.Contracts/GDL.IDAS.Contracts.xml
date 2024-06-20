@@ -4,5 +4,46 @@
         <name>GDL.IDAS.Contracts</name>
     </assembly>
     <members>
+        <member name="M:Gandalan.IDAS.Contracts.Belege.BelegWorkflow.IsBehind(Gandalan.IDAS.Contracts.Belege.BelegArt,Gandalan.IDAS.Contracts.Belege.BelegArt)">
+            <summary>
+            Prüft, ob neueBelegArt logisch hinter belegArt liegt
+            </summary>
+            <param name="neueBelegArt"></param>
+            <param name="belegArt"></param>
+            <returns>true/false</returns>
+        </member>
+        <member name="M:Gandalan.IDAS.Contracts.Belege.BelegWorkflow.IsBefore(Gandalan.IDAS.Contracts.Belege.BelegArt,Gandalan.IDAS.Contracts.Belege.BelegArt)">
+            <summary>
+            Prüft, ob neueBelegArt logisch vor belegArt liegt
+            </summary>
+            <param name="neueBelegArt"></param>
+            <param name="belegArt"></param>
+            <returns>true/false</returns>
+        </member>
+        <member name="M:Gandalan.IDAS.Contracts.Token.JwtTokenService.GenerateToken(Gandalan.IDAS.WebApi.DTO.UserAuthTokenDTO,Gandalan.IDAS.WebApi.DTO.RefreshTokenDTO,System.String,System.Nullable{System.DateTime})">
+            <summary>
+            Generate JWT token
+            </summary>
+            <param name="userId">User ID/email</param>
+            <param name="mandantId">MandantId</param>
+            <param name="privateKey">Private key</param>
+            <param name="expireDateTime">Expiry date (optional, default: 7 days)</param>
+            <returns>Token string</returns>
+        </member>
+        <member name="M:Gandalan.IDAS.Contracts.Token.JwtTokenService.ParseToken(System.String,System.String,System.Boolean)">
+            <summary>
+            Parse token data
+            </summary>
+            <param name="token">Token string</param>
+            <param name="publicKey">Public key</param>
+            <returns>Token data or null if token is invalid or expired</returns>
+        </member>
+        <member name="M:Gandalan.IDAS.Contracts.Token.JwtTokenService.ValidationParams(System.String,System.Boolean)">
+            <summary>
+            Get token validation parameters
+            </summary>
+            <param name="publicKey">Public key</param>
+            <returns>Token validation parameters</returns>
+        </member>
     </members>
 </doc>

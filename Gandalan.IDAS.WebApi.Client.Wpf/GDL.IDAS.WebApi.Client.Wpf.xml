@@ -4,7 +4,7 @@
         <name>GDL.IDAS.WebApi.Client.Wpf</name>
     </assembly>
     <members>
-        <member name="T:Gandalan.IBOS3.Controls.LargeHeaderControl">
+        <member name="T:Gandalan.IDAS.WebApi.Client.Wpf.Controls.LargeHeaderControl">
             <summary>
             Interaction logic for SmallHeaderControl.xaml
             </summary>
@@ -12,12 +12,12 @@
             LargeHeaderControl
             </summary>
         </member>
-        <member name="M:Gandalan.IBOS3.Controls.LargeHeaderControl.InitializeComponent">
+        <member name="M:Gandalan.IDAS.WebApi.Client.Wpf.Controls.LargeHeaderControl.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
         </member>
-        <member name="T:Gandalan.Controls.WPF.Dialogs.LoginWindow_v2">
+        <member name="T:Gandalan.IDAS.WebApi.Client.Wpf.Dialogs.LoginWindow_v2">
             <summary>
             Interaktionslogik für LoginWindow_v2.xaml
             </summary>
@@ -25,12 +25,12 @@
             LoginWindow_v2
             </summary>
         </member>
-        <member name="M:Gandalan.Controls.WPF.Dialogs.LoginWindow_v2.InitializeComponent">
+        <member name="M:Gandalan.IDAS.WebApi.Client.Wpf.Dialogs.LoginWindow_v2.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
         </member>
-        <member name="T:Gandalan.Client.Common.Dialogs.PasswordResetDialog">
+        <member name="T:Gandalan.IDAS.WebApi.Client.Wpf.Dialogs.PasswordResetDialog">
             <summary>
             Interaction logic for PasswordResetDialog.xaml
             </summary>
@@ -38,12 +38,12 @@
             PasswordResetDialog
             </summary>
         </member>
-        <member name="M:Gandalan.Client.Common.Dialogs.PasswordResetDialog.InitializeComponent">
+        <member name="M:Gandalan.IDAS.WebApi.Client.Wpf.Dialogs.PasswordResetDialog.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
         </member>
-        <member name="T:Gandalan.Client.Common.Dialogs.SetupDialog">
+        <member name="T:Gandalan.IDAS.WebApi.Client.Wpf.Dialogs.SetupDialog">
             <summary>
             Interaction logic for SetupDialog.xaml
             </summary>
@@ -51,7 +51,7 @@
             SetupDialog
             </summary>
         </member>
-        <member name="M:Gandalan.Client.Common.Dialogs.SetupDialog.InitializeComponent">
+        <member name="M:Gandalan.IDAS.WebApi.Client.Wpf.Dialogs.SetupDialog.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
