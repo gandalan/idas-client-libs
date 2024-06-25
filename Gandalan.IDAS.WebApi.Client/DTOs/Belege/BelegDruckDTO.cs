@@ -114,7 +114,8 @@ public class BelegDruckDTO
 
             if (preiseAnzeigen)
             {
-                var saldenSorted = beleg.Salden.Where(s => s.Betrag != 0).OrderBy(i => i.Reihenfolge);
+                var saldenSorted = beleg.Salden.Where(s => s.Betrag != 0 || s.SaldenStatus == "AufAnfrage").OrderBy(i => i.Reihenfolge);
+                var aufAnfrage = false;
                 if (saldenSorted.Any())
                 {
                     var lastActivSalde = saldenSorted.LastOrDefault(s => !s.IstInaktiv);
@@ -125,7 +126,10 @@ public class BelegDruckDTO
                             continue;
                         }
 
-                        Salden.Add(new BelegSaldoDruckDTO(dto) { IsLastElement = lastActivSalde != null && lastActivSalde == dto });
+                        if (dto.SaldenStatus == "AufAnfrage")
+                            aufAnfrage = true;
+
+                        Salden.Add(new BelegSaldoDruckDTO(dto, aufAnfrage) { IsLastElement = lastActivSalde != null && lastActivSalde == dto });
                     }
                 }
             }
@@ -271,16 +275,24 @@ public class BelegSaldoDruckDTO
     {
     }
 
-    public BelegSaldoDruckDTO(BelegSaldoDTO saldo)
+    public BelegSaldoDruckDTO(BelegSaldoDTO saldo, bool isAufAnfrage = false)
     {
         var culture = new CultureInfo("de-de");
         if (saldo != null)
         {
             Reihenfolge = saldo.Reihenfolge;
             Text = saldo.Text;
-            var vorzeichen = saldo.Typ == "Abschlag" ? '-' : ' ';
-            Betrag = vorzeichen + saldo.Betrag.ToString(culture);
-            Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29", culture) : "";
+            if (isAufAnfrage)
+            {
+                Betrag = "auf Anfrage";
+                Rabatt = string.Empty;
+            }
+            else
+            {
+                var vorzeichen = saldo.Typ == "Abschlag" ? '-' : ' ';
+                Betrag = vorzeichen + saldo.Betrag.ToString(culture);
+                Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29", culture) : "";
+            }
         }
     }
 
@@ -367,11 +379,22 @@ public class BelegPositionDruckDTO
             BelegPositionGuid = position.BelegPositionGuid;
             if (preiseAnzeigen)
             {
-                Farbzuschlag = position.Farbzuschlag.ToString(culture);
-                EinzelpreisOhneFarbzuschlag = position.Einzelpreis.ToString(culture);
-                Rabatt = position.Rabatt.Equals(0m) ? string.Empty : position.Rabatt.ToString(culture);
-                Gesamtpreis = position.Gesamtpreis.ToString(culture);
-                Einzelpreis = (position.Einzelpreis + position.Farbzuschlag).ToString(culture);
+                if (position.PreisAufAnfrage || position.IstFehlerhaft)
+                {
+                    Rabatt = string.Empty;
+                    Farbzuschlag = string.Empty;
+                    EinzelpreisOhneFarbzuschlag = string.Empty;
+                    Gesamtpreis = string.Empty;
+                    Einzelpreis = "auf Anfrage";
+                }
+                else
+                {
+                    Farbzuschlag = position.Farbzuschlag.ToString(culture);
+                    EinzelpreisOhneFarbzuschlag = position.Einzelpreis.ToString(culture);
+                    Rabatt = position.Rabatt.Equals(0m) ? string.Empty : position.Rabatt.ToString(culture);
+                    Gesamtpreis = position.Gesamtpreis.ToString(culture);
+                    Einzelpreis = (position.Einzelpreis + position.Farbzuschlag).ToString(culture);
+                }
             }
         }
     }
