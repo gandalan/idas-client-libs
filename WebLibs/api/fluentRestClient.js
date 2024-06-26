@@ -1,4 +1,3 @@
-// @ts-check
 /**
  * @typedef {Object} FluentRESTClient
  * @property {string} baseUrl - The base URL for API requests.

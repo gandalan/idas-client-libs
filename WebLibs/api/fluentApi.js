@@ -1,4 +1,3 @@
-// @ts-check
 import { jwtDecode } from "jwt-decode";
 import { restClient } from "./fluentRestClient";
 import { authBuilder } from "./fluentAuthBuilder";
