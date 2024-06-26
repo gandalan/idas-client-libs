@@ -10,6 +10,7 @@
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
         "skipLibCheck": true,
+        "lib": [ "ES6" ],
         /**
          * To have warnings / errors of the Svelte compiler at the
          * correct position, enable source maps by default.

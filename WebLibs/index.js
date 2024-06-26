@@ -15,4 +15,7 @@ export {
 export { IDASFactory } from "./api/IDAS";
 export { RESTClient } from "./api/RESTClient";
 export { initIDAS } from "./api/authUtils";
-export { api, authBuilder, fetchEnv, getRefreshToken, idasApi } from "./api/fluentApi";
+
+export { createApi as api, idasApi, fetchEnv, getRefreshToken } from "./api/fluentApi";
+export { authBuilder } from "./api/fluentAuthBuilder";
+export { restClient } from "./api/fluentRestClient";

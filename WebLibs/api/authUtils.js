@@ -2,9 +2,36 @@
 import { jwtDecode } from "jwt-decode";
 import validator from "validator";
 
+/**
+ * @typedef {Object} Settings
+ * @property {string} appToken - The application token.
+ * @property {string} mandantGuid - The mandant GUID.
+ * @property {string} apiBaseurl - The base URL for the API.
+ * @property {string} authUrl - The authentication URL.
+ */
+
+/**
+ * the current JWT token (encoded)
+ *
+ * @type {string}
+ */
 export let currentToken = undefined;
+
+/**
+ * the current refresh token (UUID v4)
+ *
+ * @type {string}
+ */
 export let currentRefreshToken = undefined;
 
+/**
+ * initializes the API client with the given appToken
+ *
+ * @export
+ * @async
+ * @param {string} appToken, UUID v4 format
+ * @returns {Settings} settings object
+ */
 export async function initIDAS(appToken)
 {
     if (!validator.isUUID(appToken))
@@ -59,6 +86,13 @@ export async function initIDAS(appToken)
     return settings;
 }
 
+/**
+ * sets up authentication 
+ *
+ * @export
+ * @async
+ * @param {Settings} settings
+ */
 export async function setup(settings)
 {
     console.log("Setup IDAS");
@@ -97,6 +131,12 @@ export async function setup(settings)
     console.log("Setup finished", settings);
 }
 
+/**
+ * starts a timer to refresh the JWT token before it expires
+ *
+ * @private
+ * @type {*}
+ */
 let timerRef = undefined;
 function startRefreshTimer(settings)
 {
@@ -119,6 +159,13 @@ function startRefreshTimer(settings)
     }, 5000);
 }
 
+/**
+ * checks if the current JWT token is invalid
+ *
+ * @export
+ * @param {Settings} settings
+ * @returns {boolean}
+ */
 export function isInvalid(settings)
 {
     if (!currentToken)
@@ -136,6 +183,13 @@ export function isInvalid(settings)
     return true;
 }
 
+/**
+ * tries to renew the JWT token
+ *
+ * @export
+ * @async
+ * @param {Settings} settings
+ */
 export async function tryRenew(settings)
 {
     console.log("Try to refresh");
@@ -173,6 +227,12 @@ export async function tryRenew(settings)
     }
 }
 
+/**
+ * redirects to the login page
+ *
+ * @export
+ * @param {Settings} settings
+ */
 export function redirectToLogin(settings, authPath)
 {
     const authEndpoint = (new URL(window.location.href).origin) + authPath;
