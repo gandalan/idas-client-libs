@@ -11,10 +11,11 @@ import { isTokenValid, getRefreshToken } from "./fluentApi";
  * @property {function(string) : FluentAuth} useBaseUrl - Sets the base URL for authentication and returns the FluentApi object.
  * @property {function(string|null) : FluentAuth} useToken - Sets the JWT token and returns the FluentApi object.
  * @property {function(string|null) : FluentAuth} useRefreshToken - Sets the refresh token and returns the FluentApi object.
- * @property {Function} authenticate - Authenticates the user with username and password, or refreshes the token.
+ * @property {function() : string} authenticate - Authenticates the user with username and password, or refreshes the token.
  * @property {Function} tryRefreshToken - Attempts to refresh the authentication token using the refresh token.
  * @property {Function} redirectToLogin - Redirects to the login page.
  * @property {Function} init - Initializes the authentication object.
+ * @property {function(string,string) : string} login - Logs in with the provided credentials.
  */
 
 /**
@@ -70,13 +71,11 @@ export function authBuilder() {
         },
 
         /**
-         * Authenticates the user with username and password, or refreshes the token.
-         *
-         * @param {string} username
-         * @param {string} password
-         * @returns
+         * Authenticates the user with the JWT token or refreshes the token with 
+         * the refreshToken set before
+         * @return {string} the JWT token
          */
-        async authenticate(username = "", password = "") {
+        async authenticate() {
             console.log("authenticating:", this.token ? `token set, exp: ${jwtDecode(this.token).exp - (Date.now() / 1000)}` : "no token,", this.refreshToken, this.appToken);
 
             if (this.token && isTokenValid(this.token))
@@ -99,6 +98,17 @@ export function authBuilder() {
                 return this.token;
             }
 
+            throw new Error("not authenticated");
+        },
+
+        /**
+         * Login with credentials and return the JWT token
+         * @param {string} username 
+         * @param {string} password 
+         * @return {string} the JWT token
+         */
+        async login(username = "", password = "") 
+        {
             if (username && password) {
                 const payload = { "Email": username, "Password": password, "AppToken": this.appToken };
                 const res = await fetch(`${this.authUrl}/LoginJwt`,
@@ -106,16 +116,15 @@ export function authBuilder() {
                 const temptoken = await res.json();
                 if (temptoken) {
                     this.token = temptoken;
+                    this.refreshToken = getRefreshToken(temptoken);
                     return this.token;
                 }
             }
-
             throw new Error("not authenticated");
         },
 
         /**
-         * try to refresh the token using the refresh token
-         *
+         * try to refresh the JWT token by using the refreshToken
          * @async
          * @private
          * @param {string} [refreshToken=""]
@@ -132,6 +141,12 @@ export function authBuilder() {
             return res.ok ? await res.json() : null;
         },
 
+        /**
+         * Initializes the authentication object. Before calling, set the token and refresh token if available.
+         * If the token is not set, the refresh token will be used to try to refresh the token.
+         * If the token is not valid, the user will be redirected to the login page.
+         * If tokens are valid, they will be stored in the global variable idasTokens.
+         */
         async init()
         {
             if (!this.token && this.refreshToken)
@@ -141,8 +156,7 @@ export function authBuilder() {
     
             if (this.token && isTokenValid(this.token))
             {
-                const decoded = jwtDecode(this.token);
-                this.refreshToken = ("refreshToken" in decoded) ? decoded["refreshToken"] : null;
+                this.refreshToken = getRefreshToken(this.token);
                 localStorage.setItem("idas-refresh-token", this.refreshToken);
             }
 
@@ -153,27 +167,24 @@ export function authBuilder() {
 
             // eslint-disable-next-line no-undef
             globalThis.idasTokens = { token: this.token, refreshToken: this.refreshToken, appToken: this.appToken };
-            //await idasApi(appToken).get("/Version"); // Warm up authentication
         },
         
         /**
          * Redirect to the login page
-         *
-         * @param {string} [authPath=""]
          * @private
          */
-        redirectToLogin(authPath = "") {
+        redirectToLogin() {
             if (!window) {
                 return;
             }
 
-            const authEndpoint = (new URL(window.location.href).origin) + authPath;
-            let authUrlCallback = `${authEndpoint}?r=%target%&j=%jwt%&m=%mandant%`;
-            authUrlCallback = authUrlCallback.replace("%target%", encodeURIComponent(window.location.href));
+            const redirectAfterAuth = new URL(window.location.href).origin;
+            let redirectUrl = `${redirectAfterAuth}?r=%target%&j=%jwt%&m=%mandant%`;
+            redirectUrl = redirectUrl.replace("%target%", encodeURIComponent(window.location.href));
 
             const url = new URL(this.authUrl);
             url.pathname = "/Session";
-            url.search = `?a=${this.appToken}&r=${encodeURIComponent(authUrlCallback)}`;
+            url.search = `?a=${this.appToken}&r=${encodeURIComponent(redirectUrl)}`;
             let loginUrl = url.toString();
 
             window.location.href = loginUrl;
