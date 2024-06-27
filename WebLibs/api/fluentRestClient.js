@@ -52,7 +52,7 @@ export function restClient() {
             const headers = this.token ? { "Authorization": `Bearer ${this.token}` } : {};
             const res = await fetch(finalUrl, { method: "GET", headers });
             if (res.ok)
-                return await res.json();
+                return await this._parseReponse(res);
             throw new Error(`GET ${finalUrl} failed: ${res.status} ${res.statusText}`);
         },
 
@@ -69,7 +69,7 @@ export function restClient() {
             const headers = this.token ? { "Authorization": `Bearer ${this.token}`, "Content-Type": "application/json" } : {};
             const res = await fetch(finalUrl, { method: "PUT", body: JSON.stringify(payload), headers });
             if (res.ok)
-                return await res.json();
+                return await this._parseReponse(res);
             throw new Error(`PUT ${finalUrl} failed: ${res.status} ${res.statusText}`);
         },
 
@@ -86,7 +86,7 @@ export function restClient() {
             const headers = this.token ? { "Authorization": `Bearer ${this.token}`, "Content-Type": "application/json" } : {};
             const res = await fetch(finalUrl, { method: "POST", body: JSON.stringify(payload), headers });
             if (res.ok)
-                return await res.json();
+                return await this._parseReponse(res);
             throw new Error(`POST ${finalUrl} failed: ${res.status} ${res.statusText}`);
         },
 
@@ -102,8 +102,17 @@ export function restClient() {
             const headers = this.token ? { "Authorization": `Bearer ${this.token}` } : {};
             const res = await fetch(finalUrl, { method: "DELETE", headers });
             if (res.ok)
-                return await res.json();
+                return await this._parseReponse(res);
             throw new Error(`DELETE ${finalUrl} failed: ${res.status} ${res.statusText}`);
+        },
+
+        async _parseReponse(res)
+        {
+            // check if repsonse is JSON, then return parsed JSON, otherwise return text
+            const contentType = res.headers.get("content-type");
+            if (contentType && contentType.includes("application/json"))
+                return await res.json();
+            return await res.text();
         }
     };
 }
