@@ -151,6 +151,7 @@ export function authBuilder() {
                 this.redirectToLogin();
             }
 
+            // eslint-disable-next-line no-undef
             globalThis.idasTokens = { token: this.token, refreshToken: this.refreshToken, appToken: this.appToken };
             //await idasApi(appToken).get("/Version"); // Warm up authentication
         },
