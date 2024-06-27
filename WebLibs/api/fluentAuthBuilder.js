@@ -139,7 +139,7 @@ export function authBuilder() {
                 this.token = await this.tryRefreshToken(this.refreshToken);
             }
     
-            if (this.token)
+            if (this.token && isTokenValid(this.token))
             {
                 const decoded = jwtDecode(this.token);
                 this.refreshToken = ("refreshToken" in decoded) ? decoded["refreshToken"] : null;
