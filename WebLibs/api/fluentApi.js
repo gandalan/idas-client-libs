@@ -197,6 +197,8 @@ export function createApi() {
             this.token = globalThis.idasTokens.token; 
             // eslint-disable-next-line no-undef
             this.refreshToken = globalThis.idasTokens.refreshToken; 
+            // eslint-disable-next-line no-undef
+            this.appToken = globalThis.idasTokens.appToken;
             return this;
         },
         

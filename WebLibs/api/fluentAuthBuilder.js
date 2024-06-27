@@ -7,12 +7,14 @@ import { isTokenValid, getRefreshToken } from "./fluentApi";
  * @property {string} appToken - The application token.
  * @property {string} token - The JWT token.
  * @property {string} refreshToken - The refresh token.
- * @property {function(string) : FluentApi} useAppToken - Sets the application token and returns the FluentApi object.
- * @property {function(string) : FluentApi} useBaseUrl - Sets the base URL for authentication and returns the FluentApi object.
- * @property {function(string) : FluentApi} useToken - Sets the JWT token and returns the FluentApi object.
- * @property {function(string) : FluentApi} useRefreshToken - Sets the refresh token and returns the FluentApi object.
+ * @property {function(string) : FluentAuth} useAppToken - Sets the application token and returns the FluentApi object.
+ * @property {function(string) : FluentAuth} useBaseUrl - Sets the base URL for authentication and returns the FluentApi object.
+ * @property {function(string|null) : FluentAuth} useToken - Sets the JWT token and returns the FluentApi object.
+ * @property {function(string|null) : FluentAuth} useRefreshToken - Sets the refresh token and returns the FluentApi object.
  * @property {Function} authenticate - Authenticates the user with username and password, or refreshes the token.
  * @property {Function} tryRefreshToken - Attempts to refresh the authentication token using the refresh token.
+ * @property {Function} redirectToLogin - Redirects to the login page.
+ * @property {Function} init - Initializes the authentication object.
  */
 
 /**
@@ -75,7 +77,7 @@ export function authBuilder() {
          * @returns
          */
         async authenticate(username = "", password = "") {
-            console.log("authenticating:", this.token ? `token set, exp: ${jwtDecode(this.token).exp - (Date.now() / 1000)}` : "no token,", this.refreshToken);
+            console.log("authenticating:", this.token ? `token set, exp: ${jwtDecode(this.token).exp - (Date.now() / 1000)}` : "no token,", this.refreshToken, this.appToken);
 
             if (this.token && isTokenValid(this.token))
                 return this.token;
@@ -129,5 +131,51 @@ export function authBuilder() {
                 });
             return res.ok ? await res.json() : null;
         },
+
+        async init()
+        {
+            if (!this.token && this.refreshToken)
+            {
+                this.token = await this.tryRefreshToken(this.refreshToken);
+            }
+    
+            if (this.token)
+            {
+                const decoded = jwtDecode(this.token);
+                this.refreshToken = ("refreshToken" in decoded) ? decoded["refreshToken"] : null;
+                localStorage.setItem("idas-refresh-token", this.refreshToken);
+            }
+
+            if (!isTokenValid(this.token))
+            {
+                this.redirectToLogin();
+            }
+
+            globalThis.idasTokens = { token: this.token, refreshToken: this.refreshToken, appToken: this.appToken };
+            //await idasApi(appToken).get("/Version"); // Warm up authentication
+        },
+        
+        /**
+         * Redirect to the login page
+         *
+         * @param {string} [authPath=""]
+         * @private
+         */
+        redirectToLogin(authPath = "") {
+            if (!window) {
+                return;
+            }
+
+            const authEndpoint = (new URL(window.location.href).origin) + authPath;
+            let authUrlCallback = `${authEndpoint}?r=%target%&j=%jwt%&m=%mandant%`;
+            authUrlCallback = authUrlCallback.replace("%target%", encodeURIComponent(window.location.href));
+
+            const url = new URL(this.authUrl);
+            url.pathname = "/Session";
+            url.search = `?a=${this.appToken}&r=${encodeURIComponent(authUrlCallback)}`;
+            let loginUrl = url.toString();
+
+            window.location.href = loginUrl;
+        }
     };
 }
