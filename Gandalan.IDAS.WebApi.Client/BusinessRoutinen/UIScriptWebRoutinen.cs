@@ -15,11 +15,11 @@ public class UIScriptWebRoutinen : WebRoutinenBase
         => await GetAsync<UIScriptDTO[]>("UIScript/");
 
     public async Task<UIScriptDTO> GetUIScript(string name)
-        => await GetAsync<UIScriptDTO>("UIScript?name=" + name);
+        => await GetAsync<UIScriptDTO>($"UIScript?name={name}");
 
     public async Task SaveAsync(UIScriptDTO dto)
         => await PutAsync("UIScript/", dto);
 
     public async Task DeleteAsync(Guid guid)
-        => await DeleteAsync("UIScript?guid=" + guid);
+        => await DeleteAsync($"UIScript?guid={guid}");
 }

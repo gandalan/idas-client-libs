@@ -42,13 +42,13 @@ public class VorgangWebRoutinen : WebRoutinenBase
         => await PutAsync<VorgangDTO>("Vorgang", vorgang);
 
     public async Task<VorgangDTO> LadeVorgangAsync(Guid vorgangGuid, bool mitKunde)
-        => await GetAsync<VorgangDTO>("Vorgang/" + vorgangGuid + "?includeKunde=" + mitKunde);
+        => await GetAsync<VorgangDTO>($"Vorgang/{vorgangGuid}?includeKunde={mitKunde}");
 
     public async Task<VorgangDTO> LadeVorgangAsync(long vorgangsNummer, int jahr, bool mitKunde = false)
         => await GetAsync<VorgangDTO>($"Vorgang/{vorgangsNummer}/{jahr}?includeKunde={mitKunde}");
 
     public async Task<VorgangStatusDTO> GetStatusAsync(Guid vorgangGuid)
-        => await GetAsync<VorgangStatusDTO>("VorgangStatus/" + vorgangGuid);
+        => await GetAsync<VorgangStatusDTO>($"VorgangStatus/{vorgangGuid}");
 
     public async Task<VorgangStatusDTO> SetStatusAsync(Guid vorgangGuid, string statusCode)
     {
@@ -71,16 +71,16 @@ public class VorgangWebRoutinen : WebRoutinenBase
     }
 
     public async Task ArchiviereVorgangAsync(Guid vorgangGuid)
-        => await PostAsync("Archivierung/?vguid=" + vorgangGuid, null);
+        => await PostAsync($"Archivierung/?vguid={vorgangGuid}", null);
 
     public async Task ArchiviereVorgangListAsync(List<Guid> vorgangGuidList)
         => await PostAsync("Archivierung/", vorgangGuidList);
 
     public async Task ArchivierungAufhebenAsync(Guid vorgangGuid)
-        => await PostAsync("ArchivierungAufheben/?vguid=" + vorgangGuid, null);
+        => await PostAsync($"ArchivierungAufheben/?vguid={vorgangGuid}", null);
 
     public async Task AendereBelegArtAsync(Guid belegGuid, string neueBelegArt)
-        => await PostAsync("BelegArt/?bguid=" + belegGuid + "&neueBelegArt=" + neueBelegArt, null);
+        => await PostAsync($"BelegArt/?bguid={belegGuid}&neueBelegArt={neueBelegArt}", null);
 
     public async Task<Dictionary<long, List<VorgangListItemDTO>>> GetAllVorgangForFunctionAsync(DateTime changedSince)
         => await GetAsync<Dictionary<long, List<VorgangListItemDTO>>>($"GetAllVorgangForFunction/?changedSince={changedSince:o}");

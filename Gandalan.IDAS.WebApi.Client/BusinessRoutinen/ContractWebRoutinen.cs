@@ -17,5 +17,5 @@ public class ContractWebRoutinen : WebRoutinenBase
         => await PutAsync<ContractDTO>("Contracts", dto);
 
     public async Task DeleteContractAsync(ContractDTO dto)
-        => await DeleteAsync("Contracts/" + dto.ContractGuid);
+        => await DeleteAsync($"Contracts/{dto.ContractGuid}");
 }

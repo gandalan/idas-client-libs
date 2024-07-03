@@ -26,7 +26,7 @@ public class JobDTO
     public static JobDTO AddJob(string sender, string recipient)
     {
         var job = new JobDTO { Sender = sender, Recipient = recipient };
-        job.Stati.Add(new JobStatusDTO { StatusCode = "N", StatusText = "Eingefügt von " + sender, Zeitstempel = DateTime.UtcNow });
+        job.Stati.Add(new JobStatusDTO { StatusCode = "N", StatusText = $"Eingefügt von {sender}", Zeitstempel = DateTime.UtcNow });
         return job;
     }
 

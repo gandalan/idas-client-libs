@@ -15,7 +15,7 @@ public class LoginJwtRoutinen : WebRoutinenBase
         => await PostAsync<string>("LoginJwt/Authenticate", dto);
 
     public async Task<string> AuthenticateForFunctionAsync(string email)
-        => await PostAsync<string>("LoginJwt/AuthenticateForFunction/?email=" + Uri.EscapeDataString(email), null);
+        => await PostAsync<string>($"LoginJwt/AuthenticateForFunction/?email={Uri.EscapeDataString(email)}", null);
 
     public async Task<string> RefreshAsync(string token)
         => await PutAsync<string>("LoginJwt/Refresh", token);

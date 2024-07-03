@@ -14,5 +14,5 @@ public class FarbGruppenWebRoutinen : WebRoutinenBase
         => await GetAsync<FarbGruppeDTO[]>("FarbGruppen");
 
     public async Task SaveFarbItemGruppeAsync(FarbGruppeDTO dto)
-        => await PutAsync("FarbGruppen/" + dto.FarbItemGroupGuid, dto);
+        => await PutAsync($"FarbGruppen/{dto.FarbItemGroupGuid}", dto);
 }

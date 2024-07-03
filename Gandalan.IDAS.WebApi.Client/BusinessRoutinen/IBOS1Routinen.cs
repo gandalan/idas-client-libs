@@ -11,11 +11,11 @@ public class IBOS1Routinen : WebRoutinenBase
     }
 
     public async Task<string> ProduktionBerechnenAsync(Guid belegPositionsGuid)
-        => await GetAsync<string>("IBOS1/Print?bguid=" + belegPositionsGuid);
+        => await GetAsync<string>($"IBOS1/Print?bguid={belegPositionsGuid}");
 
     public async Task<string> PositionTestenAsync(Guid belegPositionsGuid)
-        => await GetAsync<string>("Test?bguid=" + belegPositionsGuid);
+        => await GetAsync<string>($"Test?bguid={belegPositionsGuid}");
 
     public async Task<string> GetProduktionAsync(Guid guid)
-        => await GetAsync<string>("Produktion/?posguid=" + guid);
+        => await GetAsync<string>($"Produktion/?posguid={guid}");
 }

@@ -22,5 +22,5 @@ public class LieferzusageWebRoutinen : WebRoutinenBase
         => await PostAsync<string>("Lieferzusage", lieferzusage);
 
     public async Task ResetZusageAsync(Guid lieferzusageGuid)
-        => await DeleteAsync("Lieferzusage?zusageGuid=" + lieferzusageGuid);
+        => await DeleteAsync($"Lieferzusage?zusageGuid={lieferzusageGuid}");
 }

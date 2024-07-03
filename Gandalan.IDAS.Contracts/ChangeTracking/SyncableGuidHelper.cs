@@ -50,7 +50,7 @@ public static class SyncableGuidHelper
                 }
                 else if (t.Name.Contains("DTO"))
                 {
-                    propertyName = t.Name.Replace("DTO", "") + "Guid";
+                    propertyName = $"{t.Name.Replace("DTO", "")}Guid";
                 }
                 else
                 {
@@ -94,11 +94,11 @@ public static class SyncableGuidHelper
                 }
                 else if (t.Name.Contains("DTO"))
                 {
-                    propertyName = t.Name.Replace("DTO", "") + "Guid";
+                    propertyName = $"{t.Name.Replace("DTO", "")}Guid";
                 }
                 else
                 {
-                    propertyName = t.Name + "Guid";
+                    propertyName = $"{t.Name}Guid";
                 }
 
                 if (!string.IsNullOrEmpty(propertyName))

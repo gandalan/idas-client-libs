@@ -33,8 +33,8 @@ public class BelegDruckDTO
             BelegJahr = beleg.BelegJahr;
             Schlusstext = beleg.Schlusstext;
             SammelbelegNummer = beleg.SammelbelegNummer;
-            Kommission = string.IsNullOrEmpty(vorgang.Kommission) ? string.Empty : "Kommission: " + vorgang.Kommission;
-            Ausfuehrungsdatum = string.IsNullOrEmpty(beleg.AusfuehrungsDatum) ? string.Empty : "Ausführungsdatum: " + beleg.AusfuehrungsDatum;
+            Kommission = string.IsNullOrEmpty(vorgang.Kommission) ? string.Empty : $"Kommission: {vorgang.Kommission}";
+            Ausfuehrungsdatum = string.IsNullOrEmpty(beleg.AusfuehrungsDatum) ? string.Empty : $"Ausführungsdatum: {beleg.AusfuehrungsDatum}";
             AnsprechpartnerKunde = beleg.AnsprechpartnerKunde ?? "";
             Ansprechpartner = ""; //??? _apiSettings?.AuthToken?.Benutzer?.Vorname + " " + _apiSettings?.AuthToken?.Benutzer?.Nachname;
             Telefonnummer = ""; //??? _apiSettings?.AuthToken?.Benutzer?.TelefonNummer ?? "";
@@ -76,8 +76,7 @@ public class BelegDruckDTO
                             break;
                         default:
                             BelegTitelZeile1 =
-                                $"Vorgang Nr. {vorgang.VorgangsNummer} vom " +
-                                beleg.BelegDatum.ToString(culture.DateTimeFormat.ShortDatePattern, culture);
+                                $"Vorgang Nr. {vorgang.VorgangsNummer} vom {beleg.BelegDatum.ToString(culture.DateTimeFormat.ShortDatePattern, culture)}";
                             break;
                     }
                 }
@@ -364,7 +363,7 @@ public class BelegPositionDruckDTO
             var einbauort = string.Empty;
             if (!string.IsNullOrWhiteSpace(position.Einbauort) && !position.Text.StartsWith("Einbauort"))
             {
-                einbauort = "Einbauort: " + position.Einbauort + " - ";
+                einbauort = $"Einbauort: {position.Einbauort} - ";
             }
 
             Text = einbauort + position.Text;

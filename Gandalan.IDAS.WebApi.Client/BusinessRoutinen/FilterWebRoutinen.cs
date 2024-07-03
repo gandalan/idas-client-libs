@@ -14,10 +14,10 @@ public class FilterWebRoutinen : WebRoutinenBase
         => await GetAsync<FilterItemDTO[]>("Filter");
 
     public async Task<FilterItemDTO> GetFilterItemAsync(Guid id)
-        => await GetAsync<FilterItemDTO>("Filter?id=" + id);
+        => await GetAsync<FilterItemDTO>($"Filter?id={id}");
 
     public async Task<FilterItemDTO[]> GetFilterItemsByContextAsync(string context)
-        => await GetAsync<FilterItemDTO[]>("Filter?context=" + context);
+        => await GetAsync<FilterItemDTO[]>($"Filter?context={context}");
 
     public async Task SaveAsync(FilterItemDTO dto)
         => await PutAsync("Filter", dto);

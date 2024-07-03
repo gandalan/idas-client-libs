@@ -18,12 +18,12 @@ public class AnpassungenWebRoutinen : WebRoutinenBase
 
     public async Task SaveAnpassungAsync(AnpassungDTO dto)
     {
-        await PutAsync("Anpassungen/" + dto.AnpassungGuid, dto);
+        await PutAsync($"Anpassungen/{dto.AnpassungGuid}", dto);
     }
 
     public async Task DeleteAnpassungAsync(Guid anpassungGuid)
     {
-        await DeleteAsync("Anpassungen/" + anpassungGuid);
+        await DeleteAsync($"Anpassungen/{anpassungGuid}");
     }
 
     public async Task WebJob()

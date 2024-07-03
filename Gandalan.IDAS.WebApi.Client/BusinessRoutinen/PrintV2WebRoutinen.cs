@@ -11,5 +11,5 @@ public class PrintV2WebRoutinen : WebRoutinenBase
     }
 
     public async Task<byte[]> PdfAsync(Guid bguid, string email)
-        => await GetDataAsync("PrintV2/Pdf?bguid=" + bguid + "&email=" + Uri.EscapeDataString(email));
+        => await GetDataAsync($"PrintV2/Pdf?bguid={bguid}&email={Uri.EscapeDataString(email)}");
 }

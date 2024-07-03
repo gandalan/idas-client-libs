@@ -46,12 +46,14 @@ public class WebRoutinenBase
     /// </summary>
     /// <returns><c>true</c> if the exception was handled - <c>false</c> if the exception is not handled</returns>
     public delegate bool ExceptionHandler(Exception ex);
+
     /// <summary>
     /// Used to register custom handlers to catch Exceptions thrown by <see cref="WebRoutinenBase"/>
     /// </summary>
     public static event ExceptionHandler CustomExceptionHandler;
 
     public delegate void ErrorOccuredEventHandler(object sender, ApiErrorArgs e);
+
     public static event ErrorOccuredEventHandler ErrorOccured;
 
     public WebRoutinenBase(IWebApiConfig settings)
@@ -75,11 +77,11 @@ public class WebRoutinenBase
         }
     }
 
-    private async Task RunPreRequestChecks(bool skipAuth = false)
+    private async Task runPreRequestChecks(bool skipAuth = false)
     {
         if (_restRoutinen == null)
         {
-            InitRestRoutinen();
+            initRestRoutinen();
         }
 
         if (!skipAuth && !await LoginAsync())
@@ -88,7 +90,7 @@ public class WebRoutinenBase
         }
     }
 
-    private void InitRestRoutinen()
+    private void initRestRoutinen()
     {
         if (string.IsNullOrWhiteSpace(Settings.Url))
         {
@@ -104,7 +106,7 @@ public class WebRoutinenBase
 
         if (IsJwt && !string.IsNullOrEmpty(JwtToken))
         {
-            config.AdditionalHeaders.Add("Authorization", "Bearer " + JwtToken);
+            config.AdditionalHeaders.Add("Authorization", $"Bearer {JwtToken}");
         }
         else if (AuthToken != null)
         {
@@ -139,7 +141,7 @@ public class WebRoutinenBase
     {
         if (IsJwt)
         {
-            return await CheckJwtTokenAsync();
+            return await checkJwtTokenAsync();
         }
 
         try
@@ -174,7 +176,7 @@ public class WebRoutinenBase
             if (result != null)
             {
                 AuthToken = result;
-                InitRestRoutinen();
+                initRestRoutinen();
                 Status = "OK";
                 return true;
             }
@@ -189,13 +191,13 @@ public class WebRoutinenBase
             Status = apiEx.Message;
             if (Status.ToLower().Contains("<title>"))
             {
-                Status = InternalStripHtml(Status);
+                Status = internalStripHtml(Status);
             }
 
             var innerException = apiEx.InnerException;
             while (innerException != null)
             {
-                Status += " - " + innerException.Message;
+                Status += $" - {innerException.Message}";
                 innerException = innerException.InnerException;
             }
 
@@ -227,18 +229,19 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             return await _restRoutinen.PostAsync<T>(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri, data);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri, data);
+            tryHandleException(apiException);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            tryHandleException(e);
         }
+
         return default;
     }
 
@@ -246,17 +249,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             await _restRoutinen.PostAsync(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri, data);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri, data);
+            tryHandleException(apiException);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            tryHandleException(e);
         }
     }
 
@@ -264,18 +267,19 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             return await _restRoutinen.PostDataAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri, data);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri, data);
+            tryHandleException(apiException);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            tryHandleException(e);
         }
+
         return null;
     }
 
@@ -283,18 +287,19 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             return await _restRoutinen.PostDataAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri, data);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri, data);
+            tryHandleException(apiException);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            tryHandleException(e);
         }
+
         return null;
     }
 
@@ -302,18 +307,19 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             return await _restRoutinen.GetDataAsync(uri, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri);
+            tryHandleException(apiException);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            tryHandleException(e);
         }
+
         return null;
     }
 
@@ -321,18 +327,19 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             return await _restRoutinen.GetAsync(uri, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri);
+            tryHandleException(apiException);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            tryHandleException(e);
         }
+
         return null;
     }
 
@@ -340,18 +347,19 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             return await _restRoutinen.GetAsync<T>(uri, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri);
+            tryHandleException(apiException);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            tryHandleException(e);
         }
+
         return default;
     }
 
@@ -359,17 +367,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             await _restRoutinen.PutAsync(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri, data);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri, data);
+            tryHandleException(apiException);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            tryHandleException(e);
         }
     }
 
@@ -377,18 +385,19 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             return await _restRoutinen.PutAsync<T>(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri, data);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri, data);
+            tryHandleException(apiException);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            tryHandleException(e);
         }
+
         return default;
     }
 
@@ -396,13 +405,13 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             return await _restRoutinen.PutDataAsync(uri, data);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri, data);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri, data);
+            tryHandleException(apiException);
             return null;
         }
     }
@@ -411,18 +420,19 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             return await _restRoutinen.PutDataAsync(uri, data);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri, data);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri, data);
+            tryHandleException(apiException);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            tryHandleException(e);
         }
+
         return null;
     }
 
@@ -430,17 +440,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             await _restRoutinen.DeleteAsync(uri);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri);
+            tryHandleException(apiException);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            tryHandleException(e);
         }
     }
 
@@ -448,17 +458,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             await _restRoutinen.DeleteAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri, data);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri, data);
+            tryHandleException(apiException);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            tryHandleException(e);
         }
     }
 
@@ -466,22 +476,23 @@ public class WebRoutinenBase
     {
         try
         {
-            await RunPreRequestChecks(skipAuth);
+            await runPreRequestChecks(skipAuth);
             return await _restRoutinen.DeleteAsync<T>(uri, data, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var apiException = HandleWebException(ex, uri);
-            TryHandleException(apiException);
+            var apiException = handleWebException(ex, uri);
+            tryHandleException(apiException);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            tryHandleException(e);
         }
+
         return default;
     }
 
-    private static string InternalStripHtml(string htmlString)
+    private static string internalStripHtml(string htmlString)
     {
         var result = htmlString;
         if (result.ToLower().Contains("<title>") && result.ToLower().Contains("</title>"))
@@ -497,9 +508,9 @@ public class WebRoutinenBase
         return result;
     }
 
-    private async Task<bool> CheckJwtTokenAsync()
+    private async Task<bool> checkJwtTokenAsync()
     {
-        if (InternalCheckJwtToken(out var refreshToken, out var checkResult))
+        if (internalCheckJwtToken(out var refreshToken, out var checkResult))
         {
             return checkResult;
         }
@@ -517,13 +528,13 @@ public class WebRoutinenBase
             Status = apiEx.Message;
             if (Status.ToLower().Contains("<title>"))
             {
-                Status = InternalStripHtml(Status);
+                Status = internalStripHtml(Status);
             }
 
             var innerException = apiEx.InnerException;
             while (innerException != null)
             {
-                Status += " - " + innerException.Message;
+                Status += $" - {innerException.Message}";
                 innerException = innerException.InnerException;
             }
 
@@ -539,7 +550,7 @@ public class WebRoutinenBase
         }
     }
 
-    private bool InternalCheckJwtToken(out string refreshToken, out bool checkResult)
+    private bool internalCheckJwtToken(out string refreshToken, out bool checkResult)
     {
         refreshToken = null;
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -589,7 +600,7 @@ public class WebRoutinenBase
     /// </summary>
     /// <param name="exception">Exception to check</param>
     /// <exception cref="Exception">Throws <paramref name="exception"/>, if no <see cref="CustomExceptionHandler"/> handles the exception</exception>
-    private static void TryHandleException(Exception exception)
+    private static void tryHandleException(Exception exception)
     {
         if (CustomExceptionHandler != null && CustomExceptionHandler.GetInvocationList().Cast<ExceptionHandler>().Any(handler => handler(exception)))
         {
@@ -599,19 +610,19 @@ public class WebRoutinenBase
         throw exception;
     }
 
-    private ApiException HandleWebException(HttpRequestException ex, string url, [CallerMemberName] string sender = null)
+    private ApiException handleWebException(HttpRequestException ex, string url, [CallerMemberName] string sender = null)
     {
         var exception = TranslateException(ex);
-        return InternalHandleWebException(exception, url, sender);
+        return internalHandleWebException(exception, url, sender);
     }
 
-    private ApiException HandleWebException(HttpRequestException ex, string url, object data, [CallerMemberName] string sender = null)
+    private ApiException handleWebException(HttpRequestException ex, string url, object data, [CallerMemberName] string sender = null)
     {
         var exception = TranslateException(ex, data);
-        return InternalHandleWebException(exception, url, sender);
+        return internalHandleWebException(exception, url, sender);
     }
 
-    private ApiException InternalHandleWebException(ApiException exception, string url, [CallerMemberName] string sender = null)
+    private ApiException internalHandleWebException(ApiException exception, string url, [CallerMemberName] string sender = null)
     {
         if (!IgnoreOnErrorOccured)
         {

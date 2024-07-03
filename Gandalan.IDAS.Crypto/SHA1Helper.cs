@@ -24,7 +24,7 @@ public class SHA1Helper
                 var temp = Convert.ToString(t, 16);
                 if (temp.Length == 1)
                 {
-                    temp = "0" + temp;
+                    temp = $"0{temp}";
                 }
 
                 result += temp;
