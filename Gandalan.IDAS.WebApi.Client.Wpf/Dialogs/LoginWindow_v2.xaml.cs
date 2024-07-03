@@ -74,7 +74,7 @@ public partial class LoginWindow_v2 : Window
         }
 
         _viewModel.LoginInProgress = false;
-        _viewModel.StatusText = "Fehler: " + _statusText;
+        _viewModel.StatusText = $"Fehler: {_statusText}";
 
         if (_statusText == "Invalid password" || _statusText == "Error")
         {
@@ -113,7 +113,7 @@ public partial class LoginWindow_v2 : Window
         }
 
         _viewModel.LoginInProgress = false;
-        _viewModel.StatusText = "Fehler: " + _statusText;
+        _viewModel.StatusText = $"Fehler: {_statusText}";
 
         if (_statusText != null &&
             _statusText != "Invalid password" &&

@@ -37,7 +37,7 @@ public class ProduktionsStatusWebRoutinen : WebRoutinenBase
     {
         try
         {
-            return await GetAsync<ProduktionsStatusDTO>("ProduktionsStatus/" + guid);
+            return await GetAsync<ProduktionsStatusDTO>($"ProduktionsStatus/{guid}");
         }
         catch (WebException wex)
         {

@@ -14,5 +14,5 @@ public class OberflaechenWebRoutinen : WebRoutinenBase
         => await GetAsync<OberflaecheDTO[]>("Oberflaeche");
 
     public async Task SaveOberflaecheAsync(OberflaecheDTO dto)
-        => await PutAsync("Oberflaeche/" + dto.OberflaecheGuid, dto);
+        => await PutAsync($"Oberflaeche/{dto.OberflaecheGuid}", dto);
 }

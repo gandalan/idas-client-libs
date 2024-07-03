@@ -20,5 +20,5 @@ public class UIWebRoutinen : WebRoutinenBase
 
     [Obsolete("Funktion 'SaveUIDefinitionAsync()' verwenden")]
     public async Task SaveAsync(UIDefinitionDTO dto)
-        => await PutAsync("UIDefinition/" + dto.UIDefinitionGuid, dto);
+        => await PutAsync($"UIDefinition/{dto.UIDefinitionGuid}", dto);
 }

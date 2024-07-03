@@ -12,11 +12,11 @@ public class WertelistenWebRoutinen : WebRoutinenBase
     }
 
     public async Task<WerteListeDTO[]> GetAllAsync(bool includeAutoWerteListen)
-        => await GetAsync<WerteListeDTO[]>("WerteListe?includeAutoWerteListen=" + includeAutoWerteListen);
+        => await GetAsync<WerteListeDTO[]>($"WerteListe?includeAutoWerteListen={includeAutoWerteListen}");
 
     public async Task<WerteListeDTO> GetAsync(Guid wertelisteGuid, bool includeAutoWerteListen = true)
-        => await GetAsync<WerteListeDTO>($"WerteListe/{wertelisteGuid}?includeAutoWerteListen=" + includeAutoWerteListen);
+        => await GetAsync<WerteListeDTO>($"WerteListe/{wertelisteGuid}?includeAutoWerteListen={includeAutoWerteListen}");
 
     public async Task SaveAsync(WerteListeDTO dto)
-        => await PutAsync("WerteListe/" + dto.WerteListeGuid, dto);
+        => await PutAsync($"WerteListe/{dto.WerteListeGuid}", dto);
 }

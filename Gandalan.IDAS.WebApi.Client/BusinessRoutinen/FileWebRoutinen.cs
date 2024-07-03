@@ -12,18 +12,18 @@ public class FileWebRoutinen : WebRoutinenBase
     }
 
     public async Task<byte[]> GetFileAsync(string name)
-        => await GetDataAsync("StaticFile/?name=" + name);
+        => await GetDataAsync($"StaticFile/?name={name}");
 
     public async Task<FileInfoDTO[]> GetFileListAsync(Guid? mandantGuid = null)
     {
         var mandantURI = "";
         if (mandantGuid.HasValue)
         {
-            mandantURI = "?mandantGuid=" + mandantGuid;
+            mandantURI = $"?mandantGuid={mandantGuid}";
         }
-        return await GetAsync<FileInfoDTO[]>("StaticFile" + mandantURI);
+        return await GetAsync<FileInfoDTO[]>($"StaticFile{mandantURI}");
     }
 
     public async Task SaveFileAsync(string fileName, byte[] data)
-        => await PutDataAsync("StaticFile/?name=" + fileName, data);
+        => await PutDataAsync($"StaticFile/?name={fileName}", data);
 }

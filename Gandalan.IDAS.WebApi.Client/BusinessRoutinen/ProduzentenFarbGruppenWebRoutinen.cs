@@ -15,8 +15,8 @@ public class ProduzentenFarbGruppenWebRoutinen : WebRoutinenBase
         => await GetAsync<ProduzentenFarbGruppeDTO[]>("ProduzentenFarbGruppen");
 
     public async Task SaveProduzentenFarbGruppeAsync(ProduzentenFarbGruppeDTO dto)
-        => await PutAsync("ProduzentenFarbGruppen/" + dto.ProduzentenFarbGruppeGuid, dto);
+        => await PutAsync($"ProduzentenFarbGruppen/{dto.ProduzentenFarbGruppeGuid}", dto);
 
     public async Task DeleteProduzentenFarbGruppeAsync(Guid produzentenFarbGruppeGuid)
-        => await DeleteAsync("ProduzentenFarbGruppen/" + produzentenFarbGruppeGuid);
+        => await DeleteAsync($"ProduzentenFarbGruppen/{produzentenFarbGruppeGuid}");
 }

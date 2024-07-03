@@ -16,7 +16,7 @@ public class ProduktionsInfoWebRoutinen : WebRoutinenBase
     {
         try
         {
-            return await GetAsync<ProduktionsInfoDTO>("ProduktionsInfo?vorgangGuid=" + vorgangGuid);
+            return await GetAsync<ProduktionsInfoDTO>($"ProduktionsInfo?vorgangGuid={vorgangGuid}");
         }
         catch (WebException wex)
         {

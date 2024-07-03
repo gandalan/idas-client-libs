@@ -17,6 +17,6 @@ public class BelegPositionDatenDTO
 
     public override string ToString()
     {
-        return UnterkomponenteName + "/" + KonfigName + "=" + Wert;
+        return $"{UnterkomponenteName}/{KonfigName}={Wert}";
     }
 }

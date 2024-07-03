@@ -19,11 +19,11 @@ public class TypedWebRoutinenBase<T> : WebRoutinenBase where T : new()
         => await GetAsync<T[]>(_endPoint);
 
     public async Task<T> GetAsync(Guid guid)
-        => await GetAsync<T>(_endPoint + "/" + guid);
+        => await GetAsync<T>($"{_endPoint}/{guid}");
 
     public async Task SaveAsync(T dto)
-        => await PutAsync(_endPoint + "/" + _getGuid(dto), dto);
+        => await PutAsync($"{_endPoint}/{_getGuid(dto)}", dto);
 
     public async Task DeleteAsync(Guid guid)
-        => await DeleteAsync(_endPoint + "/" + guid);
+        => await DeleteAsync($"{_endPoint}/{guid}");
 }

@@ -14,5 +14,5 @@ public class FarbenWebRoutinen : WebRoutinenBase
         => await GetAsync<FarbeDTO[]>("Farben");
 
     public async Task SaveFarbItemAsync(FarbeDTO dto)
-        => await PutAsync("Farben/" + dto.FarbItemGuid, dto);
+        => await PutAsync($"Farben/{dto.FarbItemGuid}", dto);
 }

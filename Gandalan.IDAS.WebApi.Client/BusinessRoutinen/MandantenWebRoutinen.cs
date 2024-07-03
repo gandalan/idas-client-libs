@@ -18,5 +18,5 @@ public class MandantenWebRoutinen : WebRoutinenBase
         => await PutAsync<MandantDTO>("Mandanten", mandant);
 
     public async Task<List<MandantDTO>> LadeMandantenMitFilterAsync(string filter)
-        => await GetAsync<List<MandantDTO>>("Mandanten?filter=" + System.Uri.EscapeDataString(filter));
+        => await GetAsync<List<MandantDTO>>($"Mandanten?filter={System.Uri.EscapeDataString(filter)}");
 }

@@ -17,5 +17,5 @@ public class ProduktFamilienWebRoutinen : WebRoutinenBase
 
     [Obsolete("Funktion 'SaveProduktFamilieAsync()' verwenden")]
     public async Task SaveAsync(ProduktFamilieDTO dto)
-        => await PutAsync("ProduktFamilie/" + dto.ProduktFamilieGuid, dto);
+        => await PutAsync($"ProduktFamilie/{dto.ProduktFamilieGuid}", dto);
 }

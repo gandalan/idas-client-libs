@@ -173,7 +173,7 @@ public class gSQLExporter
                 }
                 else
                 {
-                    aktuelleSektion.Items.Add(new gSQLItem("Position_" + key, konfig.Wert));
+                    aktuelleSektion.Items.Add(new gSQLItem($"Position_{key}", konfig.Wert));
                 }
             }
 
@@ -193,7 +193,7 @@ public class gSQLExporter
                 }
                 else
                 {
-                    aktuelleSektion.Items.Add(new gSQLItem("Position_" + key, konfig.Wert));
+                    aktuelleSektion.Items.Add(new gSQLItem($"Position_{key}", konfig.Wert));
                 }
             }
 
@@ -241,21 +241,21 @@ public class gSQLExporter
                     }
                 }
 
-                aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swExportParameter, sw.Wert));
+                aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}", sw.Wert));
 
                 if (sw.Laenge > 0 || sw.Laenge == -1)
                 {
-                    aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swExportParameter + "_Laenge", sw.Laenge.ToString()));
+                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Laenge", sw.Laenge.ToString()));
                 }
 
                 if (sw.Hoehe > 0)
                 {
-                    aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swExportParameter + "_Hoehe", sw.Hoehe.ToString()));
+                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Hoehe", sw.Hoehe.ToString()));
                 }
 
                 if (!string.IsNullOrEmpty(sw.Farbe))
                 {
-                    aktuelleSektion.Items.Add(new gSQLItem("Sonder_" + swExportParameter + "_Farbe", sw.Farbe));
+                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Farbe", sw.Farbe));
                 }
             }
 

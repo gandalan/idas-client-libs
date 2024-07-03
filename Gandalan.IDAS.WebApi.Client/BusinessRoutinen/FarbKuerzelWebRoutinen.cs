@@ -14,5 +14,5 @@ public class FarbKuerzelWebRoutinen : WebRoutinenBase
         => await GetAsync<FarbKuerzelDTO[]>("FarbKuerzel");
 
     public async Task SaveFarbKuerzelAsync(FarbKuerzelDTO dto)
-        => await PutAsync("FarbKuerzel/" + dto.FarbKuerzelGuid, dto);
+        => await PutAsync($"FarbKuerzel/{dto.FarbKuerzelGuid}", dto);
 }

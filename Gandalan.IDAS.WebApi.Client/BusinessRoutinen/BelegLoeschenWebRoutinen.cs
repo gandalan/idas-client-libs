@@ -16,5 +16,5 @@ public class BelegLoeschenWebRoutinen : WebRoutinenBase
     }
 
     public async Task<VorgangDTO> BelegLoeschenAsync(Guid bguid)
-        => await DeleteAsync<VorgangDTO>("Vorgang/DeleteBeleg/" + bguid, null);
+        => await DeleteAsync<VorgangDTO>($"Vorgang/DeleteBeleg/{bguid}", null);
 }

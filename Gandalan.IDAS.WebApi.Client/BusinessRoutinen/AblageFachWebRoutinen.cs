@@ -14,7 +14,7 @@ public class AblageFachWebRoutinen : WebRoutinenBase
 
     public async Task<AblageFachDTO> Get(Guid guid)
     {
-        return await GetAsync<AblageFachDTO>("AblageFach/?id=" + guid);
+        return await GetAsync<AblageFachDTO>($"AblageFach/?id={guid}");
     }
 
     public async Task<List<AblageFachDTO>> GetAll(DateTime? changedSince, bool includeDetails = true)
@@ -34,12 +34,12 @@ public class AblageFachWebRoutinen : WebRoutinenBase
 
     public async Task Delete(Guid guid)
     {
-        await DeleteAsync("AblageFach/?id=" + guid);
+        await DeleteAsync($"AblageFach/?id={guid}");
     }
 
     public async Task<AblageFachDTO> GetAsync(Guid guid)
     {
-        return await GetAsync<AblageFachDTO>("AblageFach/?id=" + guid);
+        return await GetAsync<AblageFachDTO>($"AblageFach/?id={guid}");
     }
 
     public async Task<List<AblageFachDTO>> GetAllAsync(DateTime? changedSince, bool includeDetails = true)
@@ -59,6 +59,6 @@ public class AblageFachWebRoutinen : WebRoutinenBase
 
     public async Task DeleteAsync(Guid guid)
     {
-        await DeleteAsync("AblageFach/?id=" + guid);
+        await DeleteAsync($"AblageFach/?id={guid}");
     }
 }

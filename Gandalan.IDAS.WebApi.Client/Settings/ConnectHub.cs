@@ -19,10 +19,7 @@ public class ConnectHub
     public async Task<HubResponse> GetEndpointsAsync(string apiVersion = null, string env = null, string clientOs = null)
     {
         var requestUrl =
-            HubUrl + "?" +
-            (apiVersion != null ? "apiVersion=" + apiVersion + "&" : "") +
-            (env != null ? "env=" + env + "&" : "") +
-            (clientOs != null ? "clientOS=" + clientOs : "");
+            $"{HubUrl}?{(apiVersion != null ? $"apiVersion={apiVersion}&" : "")}{(env != null ? $"env={env}&" : "")}{(clientOs != null ? $"clientOS={clientOs}" : "")}";
         try
         {
             var response = await new HttpClient().GetStringAsync(requestUrl);

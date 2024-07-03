@@ -11,8 +11,8 @@ public class PrintWebRoutinen : WebRoutinenBase
     }
 
     public async Task<byte[]> PDFErzeugenAsync(Guid belegGuid)
-        => await PostDataAsync("Print/?bguid=" + belegGuid, []);
+        => await PostDataAsync($"Print/?bguid={belegGuid}", []);
 
     public async Task<byte[]> XPSErzeugenAsync(Guid belegGuid)
-        => await PostDataAsync("Print/?bguid=" + belegGuid + "&fileFormat=XPS", []);
+        => await PostDataAsync($"Print/?bguid={belegGuid}&fileFormat=XPS", []);
 }

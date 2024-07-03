@@ -20,7 +20,7 @@ public class gSQLImporter
 
         if (!File.Exists(fileName))
         {
-            throw new FileNotFoundException(fileName + " nicht gefunden");
+            throw new FileNotFoundException($"{fileName} nicht gefunden");
         }
 
         var zeilen = File.ReadAllLines(fileName, encoding);
