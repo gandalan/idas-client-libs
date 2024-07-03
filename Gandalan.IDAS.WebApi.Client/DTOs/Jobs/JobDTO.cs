@@ -12,8 +12,8 @@ public class JobDTO
     public virtual List<JobStatusDTO> Stati { get; set; }
     public virtual List<JobParameterDTO> Parameter { get; set; }
 
-    public DateTime Erstellt => Stati != null && Stati.Any() ? Stati.First().Zeitstempel : DateTime.MinValue;
-    public DateTime Geaendert => Stati != null && Stati.Any() ? Stati.Last().Zeitstempel : DateTime.MinValue;
+    public DateTime Erstellt => Stati != null && Stati.Count != 0 ? Stati.First().Zeitstempel : DateTime.MinValue;
+    public DateTime Geaendert => Stati != null && Stati.Count != 0 ? Stati.Last().Zeitstempel : DateTime.MinValue;
 
     public JobDTO()
     {
