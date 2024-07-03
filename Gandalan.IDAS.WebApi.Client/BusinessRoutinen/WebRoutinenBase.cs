@@ -41,9 +41,18 @@ public class WebRoutinenBase
 
     #endregion
 
-    public static event ErrorOccuredEventHandler ErrorOccured;
+    /// <summary>
+    /// Custom handler for exceptions.
+    /// </summary>
+    /// <returns><c>true</c> if the exception was handled - <c>false</c> if the exception is not handled</returns>
+    public delegate bool ExceptionHandler(Exception ex);
+    /// <summary>
+    /// Used to register custom handlers to catch Exceptions thrown by <see cref="WebRoutinenBase"/>
+    /// </summary>
+    public static event ExceptionHandler CustomExceptionHandler;
 
     public delegate void ErrorOccuredEventHandler(object sender, ApiErrorArgs e);
+    public static event ErrorOccuredEventHandler ErrorOccured;
 
     public WebRoutinenBase(IWebApiConfig settings)
     {
@@ -223,8 +232,14 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri, data);
+            var apiException = HandleWebException(ex, uri, data);
+            TryHandleException(apiException);
         }
+        catch (Exception e)
+        {
+            TryHandleException(e);
+        }
+        return default;
     }
 
     public async Task PostAsync(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
@@ -236,7 +251,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri, data);
+            var apiException = HandleWebException(ex, uri, data);
+            TryHandleException(apiException);
+        }
+        catch (Exception e)
+        {
+            TryHandleException(e);
         }
     }
 
@@ -249,8 +269,14 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri, data);
+            var apiException = HandleWebException(ex, uri, data);
+            TryHandleException(apiException);
         }
+        catch (Exception e)
+        {
+            TryHandleException(e);
+        }
+        return null;
     }
 
     public async Task<byte[]> PostDataAsync(string uri, HttpContent data, bool skipAuth = false, string version = null)
@@ -262,8 +288,14 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri, data);
+            var apiException = HandleWebException(ex, uri, data);
+            TryHandleException(apiException);
         }
+        catch (Exception e)
+        {
+            TryHandleException(e);
+        }
+        return null;
     }
 
     public async Task<byte[]> GetDataAsync(string uri, bool skipAuth = false, string version = null)
@@ -275,8 +307,14 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri);
+            var apiException = HandleWebException(ex, uri);
+            TryHandleException(apiException);
         }
+        catch (Exception e)
+        {
+            TryHandleException(e);
+        }
+        return null;
     }
 
     public async Task<string> GetAsync(string uri, bool skipAuth = false, string version = null)
@@ -288,8 +326,14 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri);
+            var apiException = HandleWebException(ex, uri);
+            TryHandleException(apiException);
         }
+        catch (Exception e)
+        {
+            TryHandleException(e);
+        }
+        return null;
     }
 
     public async Task<T> GetAsync<T>(string uri, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
@@ -301,8 +345,14 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri);
+            var apiException = HandleWebException(ex, uri);
+            TryHandleException(apiException);
         }
+        catch (Exception e)
+        {
+            TryHandleException(e);
+        }
+        return default;
     }
 
     public async Task PutAsync(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
@@ -314,7 +364,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri, data);
+            var apiException = HandleWebException(ex, uri, data);
+            TryHandleException(apiException);
+        }
+        catch (Exception e)
+        {
+            TryHandleException(e);
         }
     }
 
@@ -327,8 +382,14 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri, data);
+            var apiException = HandleWebException(ex, uri, data);
+            TryHandleException(apiException);
         }
+        catch (Exception e)
+        {
+            TryHandleException(e);
+        }
+        return default;
     }
 
     public async Task<byte[]> PutDataAsync(string uri, byte[] data, bool skipAuth = false, string version = null)
@@ -340,7 +401,9 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri, data);
+            var apiException = HandleWebException(ex, uri, data);
+            TryHandleException(apiException);
+            return null;
         }
     }
 
@@ -353,8 +416,14 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri, data);
+            var apiException = HandleWebException(ex, uri, data);
+            TryHandleException(apiException);
         }
+        catch (Exception e)
+        {
+            TryHandleException(e);
+        }
+        return null;
     }
 
     public async Task DeleteAsync(string uri, bool skipAuth = false, string version = null)
@@ -366,7 +435,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri);
+            var apiException = HandleWebException(ex, uri);
+            TryHandleException(apiException);
+        }
+        catch (Exception e)
+        {
+            TryHandleException(e);
         }
     }
 
@@ -379,7 +453,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri);
+            var apiException = HandleWebException(ex, uri, data);
+            TryHandleException(apiException);
+        }
+        catch (Exception e)
+        {
+            TryHandleException(e);
         }
     }
 
@@ -392,8 +471,14 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            throw HandleWebException(ex, uri);
+            var apiException = HandleWebException(ex, uri);
+            TryHandleException(apiException);
         }
+        catch (Exception e)
+        {
+            TryHandleException(e);
+        }
+        return default;
     }
 
     private static string InternalStripHtml(string htmlString)
@@ -497,6 +582,21 @@ public class WebRoutinenBase
         // token is good - return "false" for further processing
         checkResult = true;
         return false;
+    }
+
+    /// <summary>
+    /// Checks if a <see cref="CustomExceptionHandler"/> can handle the exception. If not, will throw the Exception.
+    /// </summary>
+    /// <param name="exception">Exception to check</param>
+    /// <exception cref="Exception">Throws <paramref name="exception"/>, if no <see cref="CustomExceptionHandler"/> handles the exception</exception>
+    private static void TryHandleException(Exception exception)
+    {
+        if (CustomExceptionHandler != null && CustomExceptionHandler.GetInvocationList().Cast<ExceptionHandler>().Any(handler => handler(exception)))
+        {
+            return;
+        }
+
+        throw exception;
     }
 
     private ApiException HandleWebException(HttpRequestException ex, string url, [CallerMemberName] string sender = null)
