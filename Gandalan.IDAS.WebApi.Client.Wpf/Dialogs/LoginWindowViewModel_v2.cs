@@ -27,14 +27,14 @@ public class LoginWindowViewModel_v2 : INotifyPropertyChanged
         set
         {
             _url = value;
-            SetOrClearMessage("Url", string.IsNullOrEmpty(_url), "Ungültige Serveradresse");
+            //SetOrClearMessage("Url", string.IsNullOrEmpty(_url), "Ungültige Serveradresse");
         }
     }
 
-    private static void SetOrClearMessage(string v1, bool v2, string v3)
+    /*private static void SetOrClearMessage(string v1, bool v2, string v3)
     {
         // TODO
-    }
+    }*/
 
     public string UserName
     {
@@ -42,7 +42,7 @@ public class LoginWindowViewModel_v2 : INotifyPropertyChanged
         set
         {
             _userName = value;
-            SetOrClearMessage("UserName", string.IsNullOrEmpty(_userName), "Ungültiger Benutzername");
+            //SetOrClearMessage("UserName", string.IsNullOrEmpty(_userName), "Ungültiger Benutzername");
         }
     }
 
@@ -52,7 +52,7 @@ public class LoginWindowViewModel_v2 : INotifyPropertyChanged
         set
         {
             _passwort = value;
-            SetOrClearMessage("Passwort", string.IsNullOrEmpty(_passwort), "Ungültiges Passwort");
+            //SetOrClearMessage("Passwort", string.IsNullOrEmpty(_passwort), "Ungültiges Passwort");
         }
     }
 
@@ -80,7 +80,7 @@ public class LoginWindowViewModel_v2 : INotifyPropertyChanged
         ServerEnvironment = AlleEnvironments.FirstOrDefault(e => e.FriendlyName.Equals(webApiSettings.FriendlyName, StringComparison.InvariantCultureIgnoreCase));
 
 #if DEBUG
-            ShowServerSelection = true;
+        ShowServerSelection = true;
 #endif
     }
 
