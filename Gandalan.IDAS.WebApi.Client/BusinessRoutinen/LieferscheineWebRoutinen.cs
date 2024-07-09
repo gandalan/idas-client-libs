@@ -12,7 +12,7 @@ public class LieferscheineWebRoutinen : WebRoutinenBase
     }
 
     public async Task<BaseListItemDTO[]> LadeListeAsync(int jahr)
-        => await GetAsync<BaseListItemDTO[]>("Lieferscheine/?jahr=" + jahr);
+        => await GetAsync<BaseListItemDTO[]>($"Lieferscheine/?jahr={jahr}");
 
     public async Task<BaseListItemDTO[]> LadeListeAsync(string status, int jahr)
         => await GetAsync<BaseListItemDTO[]>($"Lieferscheine/?status={status}&jahr={jahr}");
@@ -24,10 +24,10 @@ public class LieferscheineWebRoutinen : WebRoutinenBase
         => await GetAsync<BaseListItemDTO[]>($"Lieferscheine/?status={status}&jahr={jahr}&changedSince={changedSince:o}&art={art}&includeArchive={includeArchive}&includeOthersData={includeOthersData}&search={search}");
 
     public async Task<VorgangDTO> GetAsyncVorgangByLieferscheinGuidAsync(Guid lieferscheinGuid)
-        => await GetAsync<VorgangDTO>("Lieferscheine/" + lieferscheinGuid);
+        => await GetAsync<VorgangDTO>($"Lieferscheine/{lieferscheinGuid}");
 
     public async Task<VorgangStatusDTO> GetAsyncStatusAsync(Guid vorgangGuid)
-        => await GetAsync<VorgangStatusDTO>("VorgangStatus/" + vorgangGuid);
+        => await GetAsync<VorgangStatusDTO>($"VorgangStatus/{vorgangGuid}");
 
     public async Task<VorgangStatusDTO> SetStatusAsync(Guid vorgangGuid, string statusCode)
     {

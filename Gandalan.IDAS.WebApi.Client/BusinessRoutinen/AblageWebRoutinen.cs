@@ -14,7 +14,7 @@ public class AblageWebRoutinen : WebRoutinenBase
 
     public async Task<AblageDTO> GetAsync(Guid guid)
     {
-        return await GetAsync<AblageDTO>("Ablage/?id=" + guid);
+        return await GetAsync<AblageDTO>($"Ablage/?id={guid}");
     }
 
     public async Task<List<AblageDTO>> GetAllAsync(DateTime? changedSince, bool includeDetails = true)
@@ -34,7 +34,7 @@ public class AblageWebRoutinen : WebRoutinenBase
 
     public async Task DeleteAsync(Guid guid)
     {
-        await DeleteAsync("Ablage/?id=" + guid);
+        await DeleteAsync($"Ablage/?id={guid}");
     }
 
     public async Task SerienFachverteilungAsync(Guid serieGuid)

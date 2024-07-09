@@ -8,7 +8,7 @@ public class GesamtMaterialbedarfDTO : ICloneable
 {
     public Guid GesamtMaterialbedarfGuid { get; set; }
     public Guid MandantGuid { get; set; }
-    public bool IsGruppe => Children != null && Children.Any();
+    public bool IsGruppe => Children != null && Children.Count != 0;
     public List<GesamtMaterialbedarfDTO> Children { get; set; }
     public Guid ProduktionsMaterialbedarfGuid { get; set; }
     public MaterialbedarfDTO ProduktionsMaterialbedarf { get; set; }

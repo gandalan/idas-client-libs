@@ -16,7 +16,7 @@ public class TagInfoWebRoutinen : WebRoutinenBase
     {
         if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
         {
-            return await GetAsync<List<TagInfoDTO>>("GetAllTagInfo?changedSince=" + changedSince.Value.ToString("o"));
+            return await GetAsync<List<TagInfoDTO>>($"GetAllTagInfo?changedSince={changedSince.Value:o}");
         }
 
         return await GetAsync<List<TagInfoDTO>>("GetAllTagInfo");
@@ -26,7 +26,7 @@ public class TagInfoWebRoutinen : WebRoutinenBase
     {
         if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
         {
-            return await GetAsync<List<TagInfoDTO>>("GetTagInfoSuggestions?changedSince=" + changedSince.Value.ToString("o"));
+            return await GetAsync<List<TagInfoDTO>>($"GetTagInfoSuggestions?changedSince={changedSince.Value:o}");
         }
 
         return await GetAsync<List<TagInfoDTO>>("GetTagInfoSuggestions");

@@ -32,14 +32,14 @@ public class SerienMaterialBerechnenWebRoutinen : WebRoutinenBase
     }
 
     public async Task<List<MaterialbedarfDTO>> GetMaterialAsync(Guid serieGuid)
-        => await GetAsync<List<MaterialbedarfDTO>>("SerieMaterialbedarfBerechnen?serieGuid=" + serieGuid);
+        => await GetAsync<List<MaterialbedarfDTO>>($"SerieMaterialbedarfBerechnen?serieGuid={serieGuid}");
 
     public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfv2Async(Guid serieGuid)
-        => await GetAsync<List<MaterialbedarfDTO>>("SerieOffenerMaterialbedarf?serieGuid=" + serieGuid, version: "2");
+        => await GetAsync<List<MaterialbedarfDTO>>($"SerieOffenerMaterialbedarf?serieGuid={serieGuid}", version: "2");
 
     public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfAsync(Guid serieGuid)
-        => await GetAsync<List<MaterialbedarfDTO>>("SerieOffenerMaterialbedarf?serieGuid=" + serieGuid);
+        => await GetAsync<List<MaterialbedarfDTO>>($"SerieOffenerMaterialbedarf?serieGuid={serieGuid}");
 
     public async Task ResetMaterialAsync(Guid serieGuid)
-        => await DeleteAsync("SerieMaterialbedarfBerechnen?serieGuid=" + serieGuid);
+        => await DeleteAsync($"SerieMaterialbedarfBerechnen?serieGuid={serieGuid}");
 }

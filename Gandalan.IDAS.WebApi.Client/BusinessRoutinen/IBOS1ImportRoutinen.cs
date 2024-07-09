@@ -27,5 +27,5 @@ public class IBOS1ImportRoutinen : WebRoutinenBase
         => await GetAsync($"MaterialBestellungenReset?resetAb={resetAb:o}");
 
     public async Task<string> GetgSQLBelegAsync(Guid belegGuid)
-        => Encoding.UTF8.GetString(await GetDataAsync("Bestellungen/" + belegGuid));
+        => Encoding.UTF8.GetString(await GetDataAsync($"Bestellungen/{belegGuid}"));
 }

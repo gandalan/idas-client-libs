@@ -21,7 +21,7 @@ public class VariantenWebRoutinen : WebRoutinenBase
     {
         if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
         {
-            return await GetAsync<Guid[]>("Variante/GetAllVariantenChanges?changedSince=" + changedSince.Value.ToString("o"));
+            return await GetAsync<Guid[]>($"Variante/GetAllVariantenChanges?changedSince={changedSince.Value:o}");
         }
 
         return await GetAsync<Guid[]>("Variante/GetAllGuids");
@@ -38,5 +38,5 @@ public class VariantenWebRoutinen : WebRoutinenBase
 
     [Obsolete("Funktion 'SaveVarianteAsync()' verwenden")]
     public async Task SaveAsync(VarianteDTO dto)
-        => await PutAsync("Variante/" + dto.VarianteGuid, dto);
+        => await PutAsync($"Variante/{dto.VarianteGuid}", dto);
 }

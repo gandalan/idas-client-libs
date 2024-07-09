@@ -69,7 +69,7 @@ public static class WebApiConfigurations
         }
 
         var configPath = Path.Combine(_settingsPath, settings.FriendlyName);
-        var configFile = Path.Combine(configPath, "AuthToken_" + _appTokenString + ".json");
+        var configFile = Path.Combine(configPath, $"AuthToken_{_appTokenString}.json");
         if (!Directory.Exists(configPath))
         {
             Directory.CreateDirectory(configPath);
@@ -167,7 +167,7 @@ public static class WebApiConfigurations
 
     private static SavedAuthToken internalLoadSavedAuthToken(string env)
     {
-        var configFile = Path.Combine(_settingsPath, env, "AuthToken_" + _appTokenString + ".json");
+        var configFile = Path.Combine(_settingsPath, env, $"AuthToken_{_appTokenString}.json");
         if (File.Exists(configFile))
         {
             try

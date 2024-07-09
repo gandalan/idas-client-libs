@@ -75,7 +75,7 @@ public class Logger : ILogger
         if (sender != null)
         {
 #if DEBUG
-                log += $"{sender,-16} ";
+            log += $"{sender,-16} ";
 #else
             log += $"{sender.PadRight(16).Substring(0, 15)} ";
 #endif

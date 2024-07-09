@@ -16,5 +16,5 @@ public class ProduktGruppenWebRoutinen : WebRoutinenBase
 
     [Obsolete("Funktion 'SaveProduktGruppeAsync()' verwenden")]
     public async Task SaveAsync(ProduktGruppeDTO dto)
-        => await PutAsync("ProduktGruppe/" + dto.ProduktGruppeGuid, dto);
+        => await PutAsync($"ProduktGruppe/{dto.ProduktGruppeGuid}", dto);
 }

@@ -29,7 +29,7 @@ public class PropertyValueCollection : Dictionary<string, object>
                 var value = pi.GetValue(o, null);
                 if (value != null)
                 {
-                    var key = result.TypeName + "::" + pi.Name;
+                    var key = $"{result.TypeName}::{pi.Name}";
                     if (_mappingHandlers != null && _mappingHandlers.TryGetValue(key, out var handleDelegate))
                     {
                         value = handleDelegate(value);
@@ -93,6 +93,6 @@ public class PropertyValueCollection : Dictionary<string, object>
 
         var key = type.FullName.StartsWith("System.Data.Entity.DynamicProxies.") ? type.BaseType.FullName : type.FullName;
 
-        _mappingHandlers[key + "::" + propertyName] = mappingHandler;
+        _mappingHandlers[$"{key}::{propertyName}"] = mappingHandler;
     }
 }

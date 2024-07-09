@@ -18,5 +18,5 @@ public class StandardSaldenWebRoutinen : WebRoutinenBase
         => await PutAsync("StandardSalden/", dto);
 
     public async Task DeleteSaldoAsync(Guid saldoGuid)
-        => await DeleteAsync("StandardSalden/" + saldoGuid);
+        => await DeleteAsync($"StandardSalden/{saldoGuid}");
 }

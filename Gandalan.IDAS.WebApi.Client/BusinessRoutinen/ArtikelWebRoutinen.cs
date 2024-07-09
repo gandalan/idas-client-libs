@@ -24,7 +24,7 @@ public class ArtikelWebRoutinen : WebRoutinenBase
     {
         if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
         {
-            return await GetAsync<WarenGruppeDTO[]>("Artikel?changedSince=" + changedSince.Value.ToString("o"), version: "2.0");
+            return await GetAsync<WarenGruppeDTO[]>($"Artikel?changedSince={changedSince.Value:o}", version: "2.0");
         }
 
         return await GetAsync<WarenGruppeDTO[]>("Artikel", version: "2.0");

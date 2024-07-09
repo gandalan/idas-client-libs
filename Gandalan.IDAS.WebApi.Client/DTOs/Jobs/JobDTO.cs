@@ -12,8 +12,8 @@ public class JobDTO
     public virtual List<JobStatusDTO> Stati { get; set; }
     public virtual List<JobParameterDTO> Parameter { get; set; }
 
-    public DateTime Erstellt => Stati != null && Stati.Any() ? Stati.First().Zeitstempel : DateTime.MinValue;
-    public DateTime Geaendert => Stati != null && Stati.Any() ? Stati.Last().Zeitstempel : DateTime.MinValue;
+    public DateTime Erstellt => Stati != null && Stati.Count != 0 ? Stati.First().Zeitstempel : DateTime.MinValue;
+    public DateTime Geaendert => Stati != null && Stati.Count != 0 ? Stati.Last().Zeitstempel : DateTime.MinValue;
 
     public JobDTO()
     {
@@ -26,7 +26,7 @@ public class JobDTO
     public static JobDTO AddJob(string sender, string recipient)
     {
         var job = new JobDTO { Sender = sender, Recipient = recipient };
-        job.Stati.Add(new JobStatusDTO { StatusCode = "N", StatusText = "Eingefügt von " + sender, Zeitstempel = DateTime.UtcNow });
+        job.Stati.Add(new JobStatusDTO { StatusCode = "N", StatusText = $"Eingefügt von {sender}", Zeitstempel = DateTime.UtcNow });
         return job;
     }
 

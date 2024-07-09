@@ -184,7 +184,7 @@ public class BeleganschriftDTO : IDTOWithApplicationSpecificProperties, INotifyP
 
         if (!string.IsNullOrEmpty(Ortsteil))
         {
-            sb.AppendLine("OT " + Ortsteil);
+            sb.AppendLine($"OT {Ortsteil}");
         }
 
         if (!string.IsNullOrEmpty(Strasse) || !string.IsNullOrEmpty(Hausnummer))
