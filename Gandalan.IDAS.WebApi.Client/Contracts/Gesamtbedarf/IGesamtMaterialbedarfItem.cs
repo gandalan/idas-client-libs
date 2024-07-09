@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.Gesamtbedarf;
@@ -30,6 +31,7 @@ public interface IGesamtMaterialbedarfItem
     public bool IstZuschnitt { get; set; }
     public bool IstSonderfarbe { get; set; }
     public bool IstVE { get; set; }
+    public List<IGesamtMaterialbedarfItem> Children { get; set; }
 
     GesamtMaterialbedarfDTO ToDTO();
 }
