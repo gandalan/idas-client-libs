@@ -38,6 +38,9 @@ public class TagInfoWebRoutinen : WebRoutinenBase
     public async Task<IDictionary<Guid, IEnumerable<TagInfoDTO>>> GetTagInfoAsync(IEnumerable<Guid> guidList)
         => await PutAsync<Dictionary<Guid, IEnumerable<TagInfoDTO>>>("GetTagInfoForGuidList", guidList);
 
+    public async Task<IDictionary<Guid, IEnumerable<TagInfoDTO>>> GetTagInfoFremdfertigungAsync(IEnumerable<Guid> guidList)
+        => await PutAsync<Dictionary<Guid, IEnumerable<TagInfoDTO>>>("GetTagInfoForFremdfertigungGuidList", guidList);
+
     public async Task AddOrUpdateTagInfoAsync(TagInfoDTO dto)
         => await PostAsync("TagInfo", dto);
 
