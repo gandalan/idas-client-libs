@@ -15,7 +15,7 @@ public partial class SetupDialog : Window, INotifyPropertyChanged
     public string Email { get; set; }
     public IWebApiConfig Settings { get; set; }
 
-    public bool InProgress { get; set; } = false;
+    public bool InProgress { get; set; }
 
     public SetupDialog()
     {

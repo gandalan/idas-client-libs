@@ -14,7 +14,7 @@ public class BackupWebRoutinen : WebRoutinenBase
 
     public async Task<List<Guid>> GetVorgangGuidsAsync(string email, int year = 0, bool onlyBills = false)
     {
-        return await GetAsync<List<Guid>>($"Backup/GetVorgangGuids?email={Uri.EscapeDataString(email)}&jahr={year}&nurRechnungen={onlyBills}", null);
+        return await GetAsync<List<Guid>>($"Backup/GetVorgangGuids?email={Uri.EscapeDataString(email)}&jahr={year}&nurRechnungen={onlyBills}");
     }
 
     public async Task<VorgangExtendedDTO> GetVorgangAsync(string email, Guid guid, bool onlyBills = false)

@@ -89,7 +89,6 @@ public class HexEncoding
     /// <summary>
     /// Determines if given string is in proper hexadecimal string format
     /// </summary>
-    /// <param name="hexString"></param>
     public static bool InHexFormat(string hexString)
     {
         var returnValue = true;

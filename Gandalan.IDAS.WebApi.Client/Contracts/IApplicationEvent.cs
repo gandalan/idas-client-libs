@@ -16,7 +16,6 @@ public interface IApplicationEventHandler<TEvent> : IApplicationEventHandler whe
     /// <summary>
     /// Handles a certain event that is dispatched to this instance
     /// </summary>
-    /// <param name="theEvent"></param>
     Task HandleEvent(TEvent theEvent);
 }
 

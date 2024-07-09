@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Windows;
 using Gandalan.IDAS.Client.Contracts.Contracts;
@@ -11,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs;
 public partial class PasswordResetDialog : Window, INotifyPropertyChanged
 {
     public string Email { get; set; }
-    public bool InProgress { get; set; } = false;
+    public bool InProgress { get; set; }
     public IWebApiConfig Settings { get; set; }
 
     public PasswordResetDialog()
@@ -43,7 +44,7 @@ public partial class PasswordResetDialog : Window, INotifyPropertyChanged
             await service.PasswortResetAsync(Email);
             MessageBox.Show("Passwort erfolgreich zurückgesetzt.", "Info vom System", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             L.Fehler(ex);
             MessageBox.Show(ex.Message, "Info vom System", MessageBoxButton.OK, MessageBoxImage.Error);

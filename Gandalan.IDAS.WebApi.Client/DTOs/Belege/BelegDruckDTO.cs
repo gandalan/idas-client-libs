@@ -126,7 +126,9 @@ public class BelegDruckDTO
                         }
 
                         if (dto.SaldenStatus == "AufAnfrage")
+                        {
                             aufAnfrage = true;
+                        }
 
                         Salden.Add(new BelegSaldoDruckDTO(dto, aufAnfrage) { IsLastElement = lastActivSalde != null && lastActivSalde == dto });
                     }

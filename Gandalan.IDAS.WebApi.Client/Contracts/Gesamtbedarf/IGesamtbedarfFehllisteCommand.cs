@@ -24,7 +24,6 @@ public abstract class IGesamtbedarfFehllisteCommand : ICommand, INotifyPropertyC
     /// Returns wherever this command should be shown or not.
     /// Sometimes a position should not show some commands if they are not allowed
     /// </summary>
-    /// <param name="parameter"></param>
     public abstract bool CanHandle(IGesamtbedarfListe parameter);
     public bool CanHandle(object parameter)
     {

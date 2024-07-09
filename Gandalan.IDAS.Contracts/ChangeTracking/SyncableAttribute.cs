@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.Contracts.ChangeTracking;
 
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+[AttributeUsage(AttributeTargets.Class)]
 public class SyncableAttribute : Attribute
 {
     public SyncableAttribute(string guidColumnName)
