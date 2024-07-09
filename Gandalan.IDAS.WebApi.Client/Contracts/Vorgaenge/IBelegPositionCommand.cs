@@ -24,7 +24,6 @@ public abstract class IBelegPositionCommand : ICommand, INotifyPropertyChanged
     /// Returns wherever this command should be shown or not.
     /// Sometimes a position should not show some commands if they are not allowed
     /// </summary>
-    /// <param name="parameter"></param>
     public abstract bool CanHandle(IBelegPositionItem parameter);
     public bool CanHandle(object parameter)
     {

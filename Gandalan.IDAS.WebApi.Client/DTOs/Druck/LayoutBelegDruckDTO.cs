@@ -55,7 +55,4 @@ public class LayoutBelegDruckDTO : ILayoutBelegDruck
     [JsonIgnore]
     public bool IsDiagnoseDruck { get; set; }
     #endregion
-
-    public LayoutBelegDruckDTO()
-    { }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO.DTOs.Filter;
+
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
 
 public class FilterWebRoutinen : WebRoutinenBase

@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace System;
 
 public static class CalendarWeek
@@ -9,7 +11,7 @@ public static class CalendarWeek
             datum = datum.AddDays(7 - (int)datum.DayOfWeek);
         }
 
-        var kw = Globalization.CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(datum, Globalization.CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        var kw = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(datum, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
 
         return kw;
     }

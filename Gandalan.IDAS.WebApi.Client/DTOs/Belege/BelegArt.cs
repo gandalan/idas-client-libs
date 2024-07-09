@@ -38,9 +38,6 @@ public struct BelegWorkflow
     /// <summary>
     /// Prüft, ob neueBelegArt logisch hinter belegArt liegt
     /// </summary>
-    /// <param name="neueBelegArt"></param>
-    /// <param name="belegArt"></param>
-    /// <returns>true/false</returns>
     public static bool IsBehind(BelegArt neueBelegArt, BelegArt belegArt)
     {
         return Array.IndexOf(Steps, neueBelegArt) > Array.IndexOf(Steps, belegArt);
@@ -49,9 +46,6 @@ public struct BelegWorkflow
     /// <summary>
     /// Prüft, ob neueBelegArt logisch vor belegArt liegt
     /// </summary>
-    /// <param name="neueBelegArt"></param>
-    /// <param name="belegArt"></param>
-    /// <returns>true/false</returns>
     public static bool IsBefore(BelegArt neueBelegArt, BelegArt belegArt)
     {
         return Array.IndexOf(Steps, neueBelegArt) < Array.IndexOf(Steps, belegArt);

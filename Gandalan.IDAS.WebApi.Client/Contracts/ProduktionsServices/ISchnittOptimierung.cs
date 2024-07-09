@@ -58,8 +58,6 @@ public class ZuschnittStangenInfo
     /// "Eröffnet" eine neue Stange mit der angegebenen Gesamtlänge und
     /// dem Zugabe-Parameter für Teilstückzwischenräume
     /// </summary>
-    /// <param name="laenge"></param>
-    /// <param name="zugabe"></param>
     public ZuschnittStangenInfo(int laenge, int zugabe)
     {
         Laenge = laenge;
@@ -69,8 +67,6 @@ public class ZuschnittStangenInfo
     /// <summary>
     /// Prüft, ob ein Teilstück mit der angegebenen Länge noch Platz hat
     /// </summary>
-    /// <param name="laenge"></param>
-    /// <returns>true/false</returns>
     public bool CanAdd(int laenge)
     {
         return BelegungInMM + _zugabe + laenge <= Laenge;
@@ -88,7 +84,7 @@ public class ZuschnittStangenInfo
             Laengen.Add(laenge);
             MaterialBedarfGuids.Add(materialBedarfGuid);
             BelegungInMM += _zugabe + laenge;
-            BelegungInProzent = (int)Math.Floor(((float)BelegungInMM / (float)Laenge) * 100);
+            BelegungInProzent = (int)Math.Floor((BelegungInMM / (float)Laenge) * 100);
             VerschnittInProzent = 100 - BelegungInProzent;
         }
         else

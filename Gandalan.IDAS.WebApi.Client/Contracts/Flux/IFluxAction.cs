@@ -14,7 +14,7 @@ public enum CallMode
     /// try once, ignore failures
     /// </summary>
     FireAndForget
-};
+}
 
 public interface IFluxAction
 {
