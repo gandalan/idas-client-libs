@@ -179,14 +179,13 @@ export function authBuilder() {
             }
 
             const redirectAfterAuth = new URL(window.location.href).origin;
-            let redirectUrl = `${redirectAfterAuth}?r=%target%&j=%jwt%&m=%mandant%`;
-            redirectUrl = redirectUrl.replace("%target%", encodeURIComponent(window.location.href));
-
+            //let redirectUrl = `${redirectAfterAuth}?r=%target%&j=%jwt%&m=%mandant%`;
+            //redirectUrl = redirectUrl.replace("%target%", encodeURIComponent(window.location.href));
+            let redirectUrl = `${redirectAfterAuth}?t=%token%`;
             const url = new URL(this.authUrl);
             url.pathname = "/Session";
             url.search = `?a=${this.appToken}&r=${encodeURIComponent(redirectUrl)}`;
             let loginUrl = url.toString();
-
             window.location.href = loginUrl;
         }
     };

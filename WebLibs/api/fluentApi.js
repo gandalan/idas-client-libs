@@ -292,7 +292,8 @@ export function createApi() {
                 globalThis.idasTokens.refreshToken = this.refreshToken;
                 localStorage.setItem("idas-refresh-token", this.refreshToken);
             } catch (e) {
-                this.redirectToLogin();
+                //this.redirectToLogin();
+                console.error("not authenticated", e);
             }
         },
         
@@ -318,30 +319,7 @@ export function createApi() {
             if (!this.authUrl) {
                 throw new Error("authUrl not set");
             }
-        },
-
-        /**
-         * Redirect to the login page
-         *
-         * @param {string} [authPath=""]
-         * @private
-         */
-        redirectToLogin(authPath = "") {
-            if (!window) {
-                return;
-            }
-
-            const authEndpoint = (new URL(window.location.href).origin) + authPath;
-            let authUrlCallback = `${authEndpoint}?r=%target%&j=%jwt%&m=%mandant%`;
-            authUrlCallback = authUrlCallback.replace("%target%", encodeURIComponent(window.location.href));
-
-            const url = new URL(this.authUrl);
-            url.pathname = "/Session";
-            url.search = `?a=${this.appToken}&r=${encodeURIComponent(authUrlCallback)}`;
-            let loginUrl = url.toString();
-
-            window.location.href = loginUrl;
-        },
+        }
     };
 }
 
