@@ -350,6 +350,9 @@ dotnet_diagnostic.IDE2000.severity = warning
 # CS0067: The event 'Datensaetze.PropertyChanged' is never used
 dotnet_diagnostic.CS0067.severity = silent
 
+# https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/using
+csharp_prefer_simple_using_statement = false
+
 # public methods should be PascalCase
 dotnet_naming_rule.camel_case_for_public_methods.severity = suggestion
 dotnet_naming_rule.camel_case_for_public_methods.symbols  = public_methods
