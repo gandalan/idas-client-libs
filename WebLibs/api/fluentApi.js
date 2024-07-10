@@ -290,6 +290,8 @@ export function createApi() {
                 globalThis.idasTokens.token = this.token;
                 // eslint-disable-next-line no-undef
                 globalThis.idasTokens.refreshToken = this.refreshToken;
+                // eslint-disable-next-line no-undef
+                globalThis.idasTokens.userInfo = jwtDecode(this.token);
                 localStorage.setItem("idas-refresh-token", this.refreshToken);
             } catch (e) {
                 //this.redirectToLogin();

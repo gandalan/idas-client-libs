@@ -166,7 +166,7 @@ export function authBuilder() {
             }
 
             // eslint-disable-next-line no-undef
-            globalThis.idasTokens = { token: this.token, refreshToken: this.refreshToken, appToken: this.appToken };
+            globalThis.idasTokens = { token: this.token, refreshToken: this.refreshToken, appToken: this.appToken, userInfo: jwtDecode(this.token) };
         },
         
         /**
