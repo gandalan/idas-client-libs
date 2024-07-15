@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.Client.Contracts.CSV;
 using Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
 
 namespace Gandalan.IDAS.WebApi.Client.Contracts.Rechnungen;
@@ -19,12 +20,11 @@ public enum FibuRecordBelegArt
     Gutschrift = 2,
 }
 
-public interface IFibuRecord
+public interface IFibuRecord : ICSVRecord
 {
     Guid OrginialBelegGuid { get; set; }
     long Nummer { get; set; }
     FibuRecordBelegArt OrginialBelegArt { get; set; }
-    IList<PropertyInfo> GetExportProperties();
     Task FromSammelrechnung(SammelrechnungListItemDTO sammelrechnung);
     Task FromRechnung(BelegeInfoDTO rechnung);
 }
