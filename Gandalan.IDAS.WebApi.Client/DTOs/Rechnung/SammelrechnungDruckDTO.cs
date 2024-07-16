@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Gandalan.IDAS.WebApi.DTO;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
 
@@ -51,7 +50,7 @@ public class SammelrechnungDruckDTO
         Kopfzeile = sammelrechnung.Kopfzeile;
         Fusszeile = sammelrechnung.Fusszeile;
         Schlusstext = sammelrechnung.Schlusstext;
-        SetTitleAndSubtitle(sammelrechnung, culture);
+        setTitleAndSubtitle(sammelrechnung, culture);
         Ansprechpartner = sammelrechnung.Ansprechpartner;
         Telefonnummer = sammelrechnung.Telefonnummer;
         Lieferzeit = sammelrechnung.Liefertermin;
@@ -66,9 +65,9 @@ public class SammelrechnungDruckDTO
         EinzelrechnungDTOs = sammelrechnung.EinzelrechnungDTOs;
     }
 
-    private void SetTitleAndSubtitle(SammelrechnungDTO dto, CultureInfo culture)
+    private void setTitleAndSubtitle(SammelrechnungDTO dto, CultureInfo culture)
     {
-        if (dto.PageTitle.IsNullOrEmpty())
+        if (string.IsNullOrEmpty(dto.PageTitle))
         {
             PageTitle = "Sammelrechnung";
             PageSubtitle1 = $"Nr. {dto.SammelrechnungsNummer} vom {dto.ErstellDatum.ToString(culture.DateTimeFormat.ShortDatePattern, culture)}";
@@ -110,7 +109,7 @@ public class SammelrechnungPositionDruckDTO
     public static List<SammelrechnungPositionDruckDTO> ListFromDTOs(IList<SammelrechnungPositionenDTO> positionen)
     {
         var druckPositionen = new List<SammelrechnungPositionDruckDTO>();
-        if (!positionen.IsNullOrEmpty())
+        if (positionen != null && positionen.Any())
         {
             foreach (var position in positionen)
             {
@@ -144,7 +143,7 @@ public class SammelrechnungSaldoDruckDTO
     public static List<SammelrechnungSaldoDruckDTO> ListFromDTOs(IList<SammelrechnungSaldenDTO> salden)
     {
         var druckSalden = new List<SammelrechnungSaldoDruckDTO>();
-        if (!salden.IsNullOrEmpty())
+        if (salden != null && salden.Any())
         {
             var maxReihenfolge = salden.Max(p => p.Reihenfolge);
             foreach (var saldo in salden)
