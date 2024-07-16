@@ -58,7 +58,7 @@ public class HttpClientFactory
 
     public static HttpClient GetInstance(HttpClientConfig config)
     {
-        return CreateWebClient(config); // this is not best practice!!
+        return createWebClient(config); // this is not best practice!!
         /*
         if (!_clients.ContainsKey(config.BaseUrl))
         {
@@ -72,7 +72,7 @@ public class HttpClientFactory
     /// <summary>
     /// Erstellt und konfiguriert eine neue WebClient-Instanz
     /// </summary>
-    private static HttpClient CreateWebClient(HttpClientConfig config)
+    private static HttpClient createWebClient(HttpClientConfig config)
     {
         var handler = new HttpClientHandler
         {

@@ -7,7 +7,7 @@ using Newtonsoft.Json.Converters;
 namespace Gandalan.IDAS.WebApi.DTO;
 
 /// <summary>
-/// <see href="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/how-to-group-sort-and-filter-data-in-the-datagrid-control?view=netframeworkdesktop-4.8">https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/how-to-group-sort-and-filter-data-in-the-datagrid-control?view=netframeworkdesktop-4.8</see>
+/// <see href="https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/how-to-group-sort-and-filter-data-in-the-datagrid-control?view=netframeworkdesktop-4.8"/>
 /// </summary>
 public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
 {
