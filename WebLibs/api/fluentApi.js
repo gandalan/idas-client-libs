@@ -104,8 +104,8 @@ export function isTokenValid(token)
  * @property {function(string) : FluentApi} useRefreshToken - Sets the refresh token and returns the FluentApi object.
  * @property {function() : FluentApi} useGlobalAuth - Uses global authentication tokens and returns the FluentApi object.
  * @property {function(string) : object|Array<any>} get - Async function to perform GET requests.
- * @property {function(string, object) : object|Array<any>} put - Async function to perform PUT requests with a payload.
- * @property {function(string, object) : object|Array<any>} post - Async function to perform POST requests with a payload.
+ * @property {function(string, object|null) : object|Array<any>} put - Async function to perform PUT requests with a payload.
+ * @property {function(string, object|null) : object|Array<any>} post - Async function to perform POST requests with a payload.
  * @property {function(string) : object|Array<any>} delete - Async function to perform DELETE requests.
  * @property {Function} ensureAuthenticated - Ensures the user is authenticated before making a request.
  * @property {Function} ensureBaseUrlIsSet - Ensures the base URL is set before making a request.

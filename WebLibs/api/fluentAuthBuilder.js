@@ -132,7 +132,7 @@ export function authBuilder() {
          */
         async tryRefreshToken(refreshToken = "") {
             const payload = { "Token": refreshToken };
-            const res = await fetch(`${this.authUrl}/LoginJwt/Refresh`,
+            const res = await fetch(`${this.authUrl}LoginJwt/Refresh`,
                 {
                     method: "PUT",
                     body: JSON.stringify(payload),
@@ -165,8 +165,13 @@ export function authBuilder() {
                 this.redirectToLogin();
             }
 
+            let userInfo = {};
+            if (this.token)
+            {
+                userInfo = jwtDecode(this.token);
+            }
             // eslint-disable-next-line no-undef
-            globalThis.idasTokens = { token: this.token, refreshToken: this.refreshToken, appToken: this.appToken, userInfo: jwtDecode(this.token) };
+            globalThis.idasTokens = { token: this.token, refreshToken: this.refreshToken, appToken: this.appToken, userInfo };
         },
         
         /**
