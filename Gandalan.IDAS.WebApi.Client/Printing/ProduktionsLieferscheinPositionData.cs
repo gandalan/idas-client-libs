@@ -32,4 +32,5 @@ public class ProduktionsLieferscheinPositionData
     public string Besonderheiten { get; set; }
     public Guid BelegPositionGuid { get; set; }
     public bool IstMontiert { get; set; }
+    public bool IstFremdFertigung { get; set; }
 }
