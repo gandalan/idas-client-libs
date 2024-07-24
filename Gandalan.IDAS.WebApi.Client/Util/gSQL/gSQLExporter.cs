@@ -203,8 +203,8 @@ public class gSQLExporter
             }
 
             //KederZeigtNachAussen bedeutet dass Fl und Fr in der Produktion getauscht werden (in IBOS1) deshalb muss das hier getauscht werden
-            var kederZeigtNachAussen = pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert != null ?
-                Convert.ToBoolean(pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert) : false;
+            var kederZeigtNachAussen = pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert != null
+                                       && Convert.ToBoolean(pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert);
 
             foreach (var sw in pos.Sonderwuensche)
             {
