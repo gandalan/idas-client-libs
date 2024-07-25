@@ -38,10 +38,7 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
 
     public async Task<List<LagerbuchungDTO>> GetLagerhistorieAsync(DateTime vonDatum, DateTime bisDatum)
     {
-        var result = await GetAsync<List<LagerbuchungDTO>>($"Lagerbuchung/?vonDatum={DateTime.Parse("18.07.2024 00:00:00"):o}&bisDatum={DateTime.Parse("26.07.2024 00:00:00"):o}");
-        if (result.Count > 0)
-            result[0].Hinweis = $"Lagerbuchung/?vonDatum={vonDatum}&bisDatum={bisDatum}";
-
+        var result = await GetAsync<List<LagerbuchungDTO>>($"Lagerbuchung/?vonDatum={DateTime.Parse(vonDatum.ToString()):o}&bisDatum={DateTime.Parse("26.07.2024 00:00:00"):o}");
         //result = await GetAsync<List<LagerbuchungDTO>>($"Lagerbuchung/?vonDatum={vonDatum}&bisDatum={bisDatum}");
 
         return result;
