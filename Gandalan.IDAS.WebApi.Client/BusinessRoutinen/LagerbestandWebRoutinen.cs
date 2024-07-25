@@ -41,6 +41,9 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
         var result = await GetAsync<List<LagerbuchungDTO>>($"Lagerbuchung/?vonDatum={DateTime.Parse("18.07.2024 00:00:00"):o}&bisDatum={DateTime.Parse("26.07.2024 00:00:00"):o}");
         if (result.Count > 0)
             result[0].Hinweis = $"vonDatum: {vonDatum} | bisDatum: {bisDatum}";
+
+        result = await GetAsync<List<LagerbuchungDTO>>($"Lagerbuchung/?vonDatum={vonDatum:o}&bisDatum={bisDatum:o}");
+
         return result;
     }
 }
