@@ -25,7 +25,8 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
         return await GetAsync<List<LagerbestandDTO>>("Lagerbestand");
     }
 
-    public async Task<List<LagerbestandDTO>> GetUnterschreitungEisernerBestandAsync() => await GetAsync<List<LagerbestandDTO>>("Lagerbestand/UnterschreitungEisernerBestand");
+    public async Task<List<LagerbestandDTO>> GetUnterschreitungEisernerBestandAsync()
+        => await GetAsync<List<LagerbestandDTO>>("Lagerbestand/UnterschreitungEisernerBestand");
 
     public async Task<LagerbestandDTO> LagerbuchungAsync(LagerbuchungDTO buchung)
         => await PutAsync<LagerbestandDTO>("Lagerbuchung", buchung);
@@ -37,8 +38,5 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
         => await DeleteAsync($"Lagerbestand/?id={guid}");
 
     public async Task<List<LagerbuchungDTO>> GetLagerhistorieAsync(DateTime vonDatum, DateTime bisDatum)
-    {
-        var result = await GetAsync<List<LagerbuchungDTO>>($"Lagerbuchung/?vonDatum={DateTime.Parse(vonDatum.ToString()):o}&bisDatum={DateTime.Parse(bisDatum.ToString()):o}");
-        return result;
-    }
+        => await GetAsync<List<LagerbuchungDTO>>($"Lagerbuchung/?vonDatum={DateTime.Parse(vonDatum.ToString()):o}&bisDatum={DateTime.Parse(bisDatum.ToString()):o}");
 }
