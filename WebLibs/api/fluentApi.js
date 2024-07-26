@@ -96,7 +96,7 @@ export function isTokenValid(token)
  * @property {string} storageEntry - The storage entry.
  * @property {string} token - The JWT token for authorization.
  * @property {string} refreshToken - The refresh token.
- * @property {function(string) : FluentApi} useEnvironment - Sets the environment and returns the FluentApi object.
+ * @property {function(EnvironmentConfig) : FluentApi} useEnvironment - Sets the environment and returns the FluentApi object.
  * @property {function(string) : FluentApi} useAppToken - Sets the application token and returns the FluentApi object.
  * @property {function(string) : FluentApi} useBaseUrl - Sets the base URL for API requests and returns the FluentApi object.
  * @property {function(string) : FluentApi} useAuthUrl - Sets the authentication URL and returns the FluentApi object.
@@ -130,11 +130,14 @@ export function createApi() {
         /**
          * set the environment to use
          * 
-         * @param {string} env 
+         * @param {EnvironmentConfig} env 
          * @return {FluentApi}
          */
-        useEnvironment(env = "") {
-            this.env = env; return this;
+        useEnvironment(env = {}) { 
+            this.env = env; 
+            this.baseUrl = env.idas;
+            this.authUrl = env.idas;
+            return this; 
         },
 
         /**
@@ -154,7 +157,9 @@ export function createApi() {
          * @return {FluentApi}
          */
         useBaseUrl(url = "") {
-            this.baseUrl = url; return this;
+            this.baseUrl = url; 
+            console.log("url!!!");
+            return this;
         },
 
         /**
@@ -270,12 +275,10 @@ export function createApi() {
             if (this.token && isTokenValid(this.token))
                 return;
 
-            await this.ensureBaseUrlIsSet();
-
             try {
                 const temptoken = await authBuilder()
                     .useAppToken(this.appToken)
-                    .useBaseUrl(this.authUrl)
+                    .useBaseUrl(this.authUrl || this.env.idas)
                     .useToken(this.token)
                     .useRefreshToken(this.refreshToken)
                     .authenticate() || "";
@@ -297,30 +300,6 @@ export function createApi() {
                 //this.redirectToLogin();
                 console.error("not authenticated", e);
             }
-        },
-        
-        /**
-         * Ensure the base URL is set before making a request. If not set, 
-         * retrieve the environment data and set the base URL.
-         *
-         * @async
-         * @private
-         */
-        async ensureBaseUrlIsSet() {
-            if (this.env && (!this.baseUrl || !this.authUrl)) {
-                const envInfo = await fetchEnv(this.env);
-                this.baseUrl = this.baseUrl || envInfo.idas;
-                this.authUrl = this.authUrl || envInfo.idas;
-                console.log("envInfo", envInfo);
-            }
-
-            if (!this.baseUrl) {
-                throw new Error("apiBaseurl not set");
-            }
-
-            if (!this.authUrl) {
-                throw new Error("authUrl not set");
-            }
         }
     };
 }
@@ -335,8 +314,7 @@ export function createApi() {
 export function idasApi(appToken = "") {
     return createApi()
         .useGlobalAuth()
-        .useAppToken(appToken)
-        .useEnvironment("dev");
+        .useAppToken(appToken);
 }
 
 /**
@@ -348,6 +326,5 @@ export function idasApi(appToken = "") {
 export function localApi() {
     return createApi()
         .useGlobalAuth()
-        .useBaseUrl("/api")
-        .useEnvironment("dev");
+        .useBaseUrl("api");
 }

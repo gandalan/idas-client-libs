@@ -48,7 +48,7 @@ export function restClient() {
          * @returns {Promise<any>}
          */
         async get(url = "", auth = true) {
-            const finalUrl = `${this.baseUrl}/${url}`;
+            const finalUrl = `${this.baseUrl}${url}`;
             const headers = this.token ? { "Authorization": `Bearer ${this.token}` } : {};
             const res = await fetch(finalUrl, { method: "GET", headers });
             if (res.ok)
@@ -65,7 +65,7 @@ export function restClient() {
          * @returns {Promise<any>}
          */
         async put(url = "", payload = {}) {
-            const finalUrl = `${this.baseUrl}/${url}`;
+            const finalUrl = `${this.baseUrl}${url}`;
             const headers = this.token ? { "Authorization": `Bearer ${this.token}`, "Content-Type": "application/json" } : {};
             const res = await fetch(finalUrl, { method: "PUT", body: JSON.stringify(payload), headers });
             if (res.ok)
@@ -82,7 +82,7 @@ export function restClient() {
          * @returns {Promise<any>}
          */
         async post(url = "", payload = {}) {
-            const finalUrl = `${this.baseUrl}/${url}`;
+            const finalUrl = `${this.baseUrl}${url}`;
             const headers = this.token ? { "Authorization": `Bearer ${this.token}`, "Content-Type": "application/json" } : {};
             const res = await fetch(finalUrl, { method: "POST", body: JSON.stringify(payload), headers });
             if (res.ok)
@@ -98,7 +98,7 @@ export function restClient() {
          * @returns {Promise<any>}
          */
         async delete(url = "") {
-            const finalUrl = `${this.baseUrl}/${url}`;
+            const finalUrl = `${this.baseUrl}${url}`;
             const headers = this.token ? { "Authorization": `Bearer ${this.token}` } : {};
             const res = await fetch(finalUrl, { method: "DELETE", headers });
             if (res.ok)
