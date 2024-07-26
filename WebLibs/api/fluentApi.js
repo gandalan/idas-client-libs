@@ -157,8 +157,7 @@ export function createApi() {
          * @return {FluentApi}
          */
         useBaseUrl(url = "") {
-            this.baseUrl = url; 
-            console.log("url!!!");
+            this.baseUrl = url;
             return this;
         },
 
