@@ -14,5 +14,6 @@ public class BelegArtPosWebRoutinen : WebRoutinenBase
     {
     }
 
-    public async Task<VorgangDTO> BelegWechselAsync(BelegartWechselDTO dto) => await PutAsync<VorgangDTO>("BelegArtPos", dto);
+    public async Task<VorgangDTO> BelegWechselAsync(BelegartWechselDTO dto)
+        => await PutAsync<VorgangDTO>("BelegArtPos", dto);
 }
