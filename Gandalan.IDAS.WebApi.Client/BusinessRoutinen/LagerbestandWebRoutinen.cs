@@ -25,7 +25,8 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
         return await GetAsync<List<LagerbestandDTO>>("Lagerbestand");
     }
 
-    public async Task<List<LagerbestandDTO>> GetUnterschreitungEisernerBestandAsync() => await GetAsync<List<LagerbestandDTO>>("Lagerbestand/UnterschreitungEisernerBestand");
+    public async Task<List<LagerbestandDTO>> GetUnterschreitungEisernerBestandAsync()
+        => await GetAsync<List<LagerbestandDTO>>("Lagerbestand/UnterschreitungEisernerBestand");
 
     public async Task<LagerbestandDTO> LagerbuchungAsync(LagerbuchungDTO buchung)
         => await PutAsync<LagerbestandDTO>("Lagerbuchung", buchung);
