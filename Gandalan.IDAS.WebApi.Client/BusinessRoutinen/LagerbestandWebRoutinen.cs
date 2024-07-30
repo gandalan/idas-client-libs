@@ -36,9 +36,7 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
     public async Task DeleteAsync(Guid guid)
         => await DeleteAsync($"Lagerbestand/?id={guid}");
 
+    // vonDatum and bisDatum need to be converted to string and back otherwise the backend will receive null values
     public async Task<List<LagerbuchungDTO>> GetLagerhistorieAsync(DateTime vonDatum, DateTime bisDatum)
-    {
-        var result = await GetAsync<List<LagerbuchungDTO>>($"Lagerbuchung/?vonDatum={DateTime.Parse(vonDatum.ToString()):o}&bisDatum={DateTime.Parse(bisDatum.ToString()):o}");
-        return result;
-    }
+        => await GetAsync<List<LagerbuchungDTO>>($"Lagerbuchung/?vonDatum={DateTime.Parse(vonDatum.ToString()):o}&bisDatum={DateTime.Parse(bisDatum.ToString()):o}");
 }
