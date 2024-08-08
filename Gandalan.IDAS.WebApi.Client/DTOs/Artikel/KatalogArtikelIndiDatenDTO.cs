@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.DTO;
@@ -17,6 +17,7 @@ public class KatalogArtikelIndiDatenDTO
     public bool Freigabe_IBOS { get; set; }
     public bool Freigabe_BestellFix { get; set; }
     public bool Freigabe_ARTOS { get; set; }
+    public int InventurBewertung { get; set; }
 
     public DateTime ChangedDate { get; set; }
 }
