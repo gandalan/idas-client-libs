@@ -12,4 +12,5 @@ public interface IBelegPositionService
     Task<WerteListeDTO> GetWerteListe(string name, Guid varianteGuid, DateTime erstellDatum);
     Task<KatalogArtikelDTO> GetArtikel(string artikelNummer);
     Task<WerteListeDTO> GetArtikelFarbWerteListe(KatalogArtikelDTO artikel, bool includeNeutral = false, bool onlyStandardFarben = false, bool includeRoh = false);
+    Task<VarianteDTO> GetArtikelFakeVariante(Guid frontendLogikGuid, KatalogArtikelDTO artikel);
 }

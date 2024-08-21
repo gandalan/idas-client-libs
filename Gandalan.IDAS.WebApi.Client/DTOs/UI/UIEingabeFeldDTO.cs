@@ -1,8 +1,9 @@
 using System;
+using Gandalan.IDAS.WebApi.Client.Contracts;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class UIEingabeFeldDTO
+public class UIEingabeFeldDTO : IWithGueltigkeitsZeitraum
 {
     public int Reihenfolge { get; set; }
     public string Caption { get; set; }
