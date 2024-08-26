@@ -1,8 +1,7 @@
-﻿namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices
+﻿namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices;
+
+public interface IHelpPage
 {
-    public interface IHelpPage
-    {
-        string Name { get; set; }
-        string ContentURL { get; set; }
-    }
+    string Name { get; set; }
+    string ContentURL { get; set; }
 }

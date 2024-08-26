@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
-{
-    public class BelegArtWebRoutinen : WebRoutinenBase
-    {
-        public BelegArtWebRoutinen(IWebApiConfig settings) : base(settings)
-        {
-        }
+namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
 
-        public async Task<VorgangDTO> BelegKopierenAsync(Guid bguid, string neueBelegArt, bool saldenKopieren = false)
-            => await PostAsync<VorgangDTO>($"BelegArt?bguid={bguid}&saldenKopieren={saldenKopieren}&neueBelegArt={neueBelegArt}", new { });
+public class BelegArtWebRoutinen : WebRoutinenBase
+{
+    public BelegArtWebRoutinen(IWebApiConfig settings) : base(settings)
+    {
     }
+
+    public async Task<VorgangDTO> BelegKopierenAsync(Guid bguid, string neueBelegArt, bool saldenKopieren = false)
+        => await PostAsync<VorgangDTO>($"BelegArt?bguid={bguid}&saldenKopieren={saldenKopieren}&neueBelegArt={neueBelegArt}", new { });
 }

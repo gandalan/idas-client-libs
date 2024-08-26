@@ -4,35 +4,31 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Logging;
 using Newtonsoft.Json;
 
-namespace Gandalan.IDAS.WebApi.Client.Settings
+namespace Gandalan.IDAS.WebApi.Client.Settings;
+
+public class ConnectHub
 {
-    public class ConnectHub
+    private const string HubUrl = "https://connect.idas-cloudservices.net/api/EndPoints";
+
+    [Obsolete("Call GetEndpointsAsync")]
+    public async Task<HubResponse> GetEndpoints(string apiVersion = null, string env = null, string clientOs = null)
     {
-        private const string HubUrl = "https://connect.idas-cloudservices.net/api/EndPoints";
+        return await GetEndpointsAsync(apiVersion, env, clientOs);
+    }
 
-        [Obsolete("Call GetEndpointsAsync")]
-        public async Task<HubResponse> GetEndpoints(string apiVersion = null, string env = null, string clientOs = null)
+    public async Task<HubResponse> GetEndpointsAsync(string apiVersion = null, string env = null, string clientOs = null)
+    {
+        var requestUrl =
+            $"{HubUrl}?{(apiVersion != null ? $"apiVersion={apiVersion}&" : "")}{(env != null ? $"env={env}&" : "")}{(clientOs != null ? $"clientOS={clientOs}" : "")}";
+        try
         {
-            return await GetEndpointsAsync(apiVersion, env, clientOs);
+            var response = await new HttpClient().GetStringAsync(requestUrl);
+            return JsonConvert.DeserializeObject<HubResponse>(response);
         }
-
-        public async Task<HubResponse> GetEndpointsAsync(string apiVersion = null, string env = null, string clientOs = null)
+        catch (Exception e)
         {
-            var requestUrl =
-                HubUrl + "?" +
-                (apiVersion != null ? "apiVersion=" + apiVersion + "&" : "") +
-                (env != null ? "env=" + env + "&" : "") +
-                (clientOs != null ? "clientOS=" + clientOs : "");
-            try
-            {
-                var response = await new HttpClient().GetStringAsync(requestUrl);
-                return JsonConvert.DeserializeObject<HubResponse>(response);
-            }
-            catch (Exception e)
-            {
-                L.Fehler(e, $"Exception for GetEndpoints. Env: '{env}'");
-                throw;
-            }
+            L.Fehler(e, $"Exception for GetEndpoints. Env: '{env}'");
+            throw;
         }
     }
 }

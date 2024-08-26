@@ -51,15 +51,15 @@ jobs:
     - name: Build
       run: dotnet build --configuration ${{ env.BUILD_CONFIG }} --no-restore -p:Version=${{ steps.set_release_name.outputs.release_name }}
     - name: Create package ${{ env.PACKAGE_1 }}
-      run: nuget pack ${{ env.PACKAGE_1_FULL }}/${{ env.PACKAGE_1 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
+      run: nuget pack ${{ env.PACKAGE_1_FULL }}/${{ env.PACKAGE_1 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }} -Symbols -SymbolPackageFormat snupkg
     - name: Create package ${{ env.PACKAGE_2 }}
-      run: nuget pack ${{ env.PACKAGE_2_FULL }}/${{ env.PACKAGE_2 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
+      run: nuget pack ${{ env.PACKAGE_2_FULL }}/${{ env.PACKAGE_2 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }} -Symbols -SymbolPackageFormat snupkg
     - name: Create package ${{ env.PACKAGE_3 }}
-      run: nuget pack ${{ env.PACKAGE_3_FULL }}/${{ env.PACKAGE_3 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
+      run: nuget pack ${{ env.PACKAGE_3_FULL }}/${{ env.PACKAGE_3 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }} -Symbols -SymbolPackageFormat snupkg
     - name: Create package ${{ env.PACKAGE_4 }}
-      run: nuget pack ${{ env.PACKAGE_4_FULL }}/${{ env.PACKAGE_4 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
+      run: nuget pack ${{ env.PACKAGE_4_FULL }}/${{ env.PACKAGE_4 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }} -Symbols -SymbolPackageFormat snupkg
     - name: Create package ${{ env.PACKAGE_5 }}
-      run: nuget pack ${{ env.PACKAGE_5_FULL }}/${{ env.PACKAGE_5 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }}
+      run: nuget pack ${{ env.PACKAGE_5_FULL }}/${{ env.PACKAGE_5 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }} -Symbols -SymbolPackageFormat snupkg
     - name: Push packages
       run: dotnet nuget push "${{ env.OUTPUT_DIR }}/*.nupkg" -k ${NUGET_TOKEN} #--skip-duplicate
       env:
@@ -72,4 +72,4 @@ jobs:
     - name: Create release with changelog and assets
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: gh release create "IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}" --generate-notes --prerelease ${{ env.OUTPUT_DIR }}/*.nupkg
+      run: gh release create "IDAS.Client.Libs-Release_${{ steps.set_release_name.outputs.release_name }}" --generate-notes --prerelease ${{ env.OUTPUT_DIR }}/*.nupkg ${{ env.OUTPUT_DIR }}/*.snupkg

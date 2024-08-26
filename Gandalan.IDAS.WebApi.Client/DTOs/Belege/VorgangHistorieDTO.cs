@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace Gandalan.IDAS.WebApi.DTO
+namespace Gandalan.IDAS.WebApi.DTO;
+
+public class VorgangHistorieDTO
 {
-    public class VorgangHistorieDTO
-    {
-        public Guid VorgangHistorieGuid { get; set; }
-        public virtual string Text { get; set; }
-        public virtual DateTime Zeitstempel { get; set; }
-        public virtual string Benutzer { get; set; }
-    }
+    public Guid VorgangHistorieGuid { get; set; }
+    public virtual string Text { get; set; }
+    public virtual DateTime Zeitstempel { get; set; }
+    public virtual string Benutzer { get; set; }
 }

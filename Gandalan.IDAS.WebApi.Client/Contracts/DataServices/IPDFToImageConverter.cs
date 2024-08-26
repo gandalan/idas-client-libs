@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices
+namespace Gandalan.IDAS.Client.Contracts.Contracts.DataServices;
+
+public interface IPDFToImageConverter
 {
-    public interface IPDFToImageConverter
-    {
-        Task<List<string>> ConvertPDFListToImages(List<string> pdfList, string outputFolder);
-    }
+    Task<List<string>> ConvertPDFListToImages(List<string> pdfList, string outputFolder);
 }

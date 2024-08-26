@@ -1,8 +1,7 @@
-﻿namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung
+﻿namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
+
+public enum RechnungsNummer
 {
-    public enum RechnungsNummer
-    {
-        Standard = 0,
-        VorgangsNummer = 1
-    }
+    Standard = 0,
+    VorgangsNummer = 1
 }

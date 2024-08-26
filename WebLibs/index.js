@@ -12,7 +12,10 @@ export {
     AddButton, RemoveButton, SaveButton,
 }
 
-import { IDASFactory } from "./api/IDAS";
-import { RESTClient } from "./api/RESTClient";
-import { initIDAS } from "./api/authUtils";
-export { IDASFactory, RESTClient, initIDAS };
+export { IDASFactory } from "./api/IDAS";
+export { RESTClient } from "./api/RESTClient";
+export { initIDAS } from "./api/authUtils";
+
+export { createApi as api, idasApi, fetchEnv, getRefreshToken } from "./api/fluentApi";
+export { authBuilder } from "./api/fluentAuthBuilder";
+export { restClient } from "./api/fluentRestClient";

@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Gandalan.IDAS.Contracts.ChangeTracking
+namespace Gandalan.IDAS.Contracts.ChangeTracking;
+
+public interface IVersionable
 {
-    public interface IVersionable
-    {
-        long Version { get; set; }
-        DateTime ChangedDate { get; set; }
-    }
+    long Version { get; set; }
+    DateTime ChangedDate { get; set; }
 }

@@ -1,7 +1,6 @@
-﻿namespace Gandalan.Client.Contracts.ProduktionsServices
+﻿namespace Gandalan.Client.Contracts.ProduktionsServices;
+
+public interface IPcodeGenerator
 {
-    public interface IPcodeGenerator
-    {
-        string GetPcode();
-    }
+    string GetPcode();
 }

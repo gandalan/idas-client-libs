@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Gandalan.Client.Contracts.UIServices
+namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IStartseiteDisplay
 {
-    public interface IStartseiteDisplay
-    {
-        Task Show();
-    }
+    Task Show();
 }

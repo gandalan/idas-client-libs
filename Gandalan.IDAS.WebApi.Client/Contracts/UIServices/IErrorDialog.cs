@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace Gandalan.Client.Contracts.UIServices
+namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IErrorDialog
 {
-    public interface IErrorDialog
-    {
-        bool ShowError(string title = null, string message = null, Exception exception = null);
-    }
+    bool ShowError(string title = null, string message = null, Exception exception = null);
 }

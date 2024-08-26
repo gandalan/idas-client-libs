@@ -3,48 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Gandalan.IDAS.WebApi.Util.gSQL
+namespace Gandalan.IDAS.WebApi.Util.gSQL;
+
+public class gSQLInhalt
 {
-    public class gSQLInhalt
+    public List<gSQLSektion> Sektionen { get; set; }
+
+    public gSQLInhalt()
     {
-        public List<gSQLSektion> Sektionen { get; set; }
+        Sektionen = [];
+    }
 
-        public gSQLInhalt()
+    public gSQLSektion GetSektion(string sektion)
+    {
+        return Sektionen.FirstOrDefault(s => s.Name != null && s.Name.Equals(sektion, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    public string GetItem(string sektion, string itemName, string defaultWert = null)
+    {
+        var sek = GetSektion(sektion);
+        if (sek != null)
         {
-            Sektionen = [];
+            return sek.GetItemWert(itemName, defaultWert);
         }
 
-        public gSQLSektion GetSektion(string sektion)
-        {
-            return Sektionen.FirstOrDefault(s => s.Name != null && s.Name.Equals(sektion, StringComparison.InvariantCultureIgnoreCase));
-        }
+        return defaultWert;
+    }
 
-        public string GetItem(string sektion, string itemName, string defaultWert = null)
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        foreach (var sektion in Sektionen)
         {
-            var sek = GetSektion(sektion);
-            if (sek != null)
+            sb.AppendLine(sektion.Name);
+            foreach (var item in sektion.Items)
             {
-                return sek.GetItemWert(itemName, defaultWert);
+                sb.AppendLine(item.ToString());
             }
 
-            return defaultWert;
+            sb.AppendLine();
         }
 
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            foreach (var sektion in Sektionen)
-            {
-                sb.AppendLine(sektion.Name);
-                foreach (var item in sektion.Items)
-                {
-                    sb.AppendLine(item.ToString());
-                }
-
-                sb.AppendLine();
-            }
-
-            return sb.ToString();
-        }
+        return sb.ToString();
     }
 }

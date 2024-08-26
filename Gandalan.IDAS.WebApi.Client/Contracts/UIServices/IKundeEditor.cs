@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
-namespace Gandalan.Client.Contracts.UIServices
+namespace Gandalan.Client.Contracts.UIServices;
+
+public interface IKundeEditor : ILockedPanel
 {
-    public interface IKundeEditor
-    {
-        Task EditKunde(Guid kundeGuid);
-    }
+    Task EditKunde(Guid kundeGuid);
 }

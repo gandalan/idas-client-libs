@@ -3,19 +3,18 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
+namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
+
+public class ProduktGruppenWebRoutinen : WebRoutinenBase
 {
-    public class ProduktGruppenWebRoutinen : WebRoutinenBase
-    {
-        public ProduktGruppenWebRoutinen(IWebApiConfig settings) : base(settings) { }
+    public ProduktGruppenWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
-        public async Task<ProduktGruppeDTO[]> GetAllAsync(bool includeFamilien = true)
-            => await GetAsync<ProduktGruppeDTO[]>($"ProduktGruppe?includeFamilien={includeFamilien}&includeVarianten={includeFamilien}&includeUIDefs={includeFamilien}&maxLevel=99");
-        public async Task SaveProduktGruppeAsync(ProduktGruppeDTO produktGruppe)
-            => await PutAsync<ProduktGruppeDTO>($"ProduktGruppe/{produktGruppe.ProduktGruppeGuid}", produktGruppe);
+    public async Task<ProduktGruppeDTO[]> GetAllAsync(bool includeFamilien = true)
+        => await GetAsync<ProduktGruppeDTO[]>($"ProduktGruppe?includeFamilien={includeFamilien}&includeVarianten={includeFamilien}&includeUIDefs={includeFamilien}&maxLevel=99");
+    public async Task SaveProduktGruppeAsync(ProduktGruppeDTO produktGruppe)
+        => await PutAsync<ProduktGruppeDTO>($"ProduktGruppe/{produktGruppe.ProduktGruppeGuid}", produktGruppe);
 
-        [Obsolete("Funktion 'SaveProduktGruppeAsync()' verwenden")]
-        public async Task SaveAsync(ProduktGruppeDTO dto)
-            => await PutAsync("ProduktGruppe/" + dto.ProduktGruppeGuid, dto);
-    }
+    [Obsolete("Funktion 'SaveProduktGruppeAsync()' verwenden")]
+    public async Task SaveAsync(ProduktGruppeDTO dto)
+        => await PutAsync($"ProduktGruppe/{dto.ProduktGruppeGuid}", dto);
 }

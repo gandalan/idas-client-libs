@@ -1,9 +1,8 @@
 ﻿using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.Client.Contracts.Contracts.AV
+namespace Gandalan.IDAS.Client.Contracts.Contracts.AV;
+
+public interface IIsSonderfarbArtikel
 {
-    public interface IIsSonderfarbArtikel
-    {
-        bool CheckSonderfarbe(MaterialbedarfDTO materialBedarfDTO);
-    }
+    bool CheckSonderfarbe(MaterialbedarfDTO materialBedarfDTO);
 }

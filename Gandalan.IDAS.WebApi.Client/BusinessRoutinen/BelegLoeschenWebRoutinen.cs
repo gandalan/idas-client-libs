@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen
-{
-    public class BelegLoeschenWebRoutinen : WebRoutinenBase
-    {
-        public BelegLoeschenWebRoutinen(IWebApiConfig settings) : base(settings)
-        {
-        }
+namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
 
-        public async Task<VorgangDTO> BelegLoeschenAsync(Guid bguid)
-            => await DeleteAsync<VorgangDTO>("Vorgang/DeleteBeleg/" + bguid, null);
+public class BelegLoeschenWebRoutinen : WebRoutinenBase
+{
+    public BelegLoeschenWebRoutinen(IWebApiConfig settings) : base(settings)
+    {
     }
+
+    public async Task<VorgangDTO> BelegLoeschenAsync(Guid bguid)
+        => await DeleteAsync<VorgangDTO>($"Vorgang/DeleteBeleg/{bguid}", null);
 }

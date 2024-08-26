@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 
-namespace Gandalan.IDAS.WebApi.Data.DTO
+namespace Gandalan.IDAS.WebApi.Data.DTO;
+
+public class IndiPropertyListDTO
 {
-    public class IndiPropertyListDTO
-    {
-        public string PropertyListTitle { get; set; }
-        public string PropertyListTag { get; set; }
-        public List<IndiPropertyDTO> Properties { get; set; } = [];
-    }
+    public string PropertyListTitle { get; set; }
+    public string PropertyListTag { get; set; }
+    public List<IndiPropertyDTO> Properties { get; set; } = [];
 }

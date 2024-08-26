@@ -8,21 +8,20 @@
 
 using System;
 
-namespace Gandalan.IDAS.WebApi.Client
+namespace Gandalan.IDAS.WebApi.Client;
+
+[Serializable]
+public class ApiUnauthorizedException : Exception
 {
-    [Serializable]
-    public class ApiUnauthorizedException : Exception
+    public ApiUnauthorizedException()
     {
-        public ApiUnauthorizedException()
-        {
-        }
+    }
 
-        public ApiUnauthorizedException(string message) : base(message)
-        {
-        }
+    public ApiUnauthorizedException(string message) : base(message)
+    {
+    }
 
-        public ApiUnauthorizedException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
+    public ApiUnauthorizedException(string message, Exception innerException) : base(message, innerException)
+    {
     }
 }

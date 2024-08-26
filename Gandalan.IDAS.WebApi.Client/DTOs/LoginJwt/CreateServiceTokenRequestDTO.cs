@@ -1,10 +1,9 @@
-namespace Gandalan.IDAS.WebApi.DTO
+namespace Gandalan.IDAS.WebApi.DTO;
+
+public class CreateServiceTokenRequestDTO
 {
-    public class CreateServiceTokenRequestDTO
-    {
-        /// <summary>
-        /// Overwrite user's AppTokenGuid for service token request
-        /// </summary>
-        public string AppTokenGuid { get; set; }
-    }
+    /// <summary>
+    /// Overwrite user's AppTokenGuid for service token request
+    /// </summary>
+    public string AppTokenGuid { get; set; }
 }

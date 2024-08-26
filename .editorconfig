@@ -1,13 +1,13 @@
 ### From: https://github.com/dotnet/aspnetcore/blob/main/.editorconfig
-### Last sync: b3d1545
-### Disabled: CA1018, CA1305, CA1510, CA2007, CA2208, IDE0011, IDE0073, IDE0161
+### Last sync: ca1f641
+### Disabled: CA1018, CA1305, CA1510, CA2007, IDE0011, IDE0073, IDE0161
 ; EditorConfig to support per-solution formatting.
 ; Use the EditorConfig VS add-in to make this work.
 ; http://editorconfig.org/
 ;
 ; Here are some resources for what's supported for .NET/C#
 ; https://kent-boogaart.com/blog/editorconfig-reference-for-c-developers
-; https://learn.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
+; https://learn.microsoft.com/visualstudio/ide/editorconfig-code-style-settings-reference
 ;
 ; Be **careful** editing this because some of the rules don't support adding a severity level
 ; For instance if you change to `dotnet_sort_system_directives_first = true:warning` (adding `:warning`)
@@ -151,7 +151,7 @@ dotnet_diagnostic.CA1823.severity = warning
 dotnet_diagnostic.CA1825.severity = warning
 
 # CA1826: Do not use Enumerable methods on indexable collections. Instead use the collection directly
-dotnet_diagnostic.CA1826.severity = warning
+dotnet_diagnostic.CA1826.severity = suggestion
 
 # CA1827: Do not use Count() or LongCount() when Any() can be used
 dotnet_diagnostic.CA1827.severity = warning
@@ -258,6 +258,9 @@ dotnet_diagnostic.CA2014.severity = warning
 # CA2016: Forward the 'CancellationToken' parameter to methods that take one
 dotnet_diagnostic.CA2016.severity = warning
 
+# CA2022: Avoid inexact read with `Stream.Read`
+dotnet_diagnostic.CA2022.severity = warning
+
 # CA2200: Rethrow to preserve stack details
 dotnet_diagnostic.CA2200.severity = warning
 
@@ -265,7 +268,7 @@ dotnet_diagnostic.CA2200.severity = warning
 dotnet_diagnostic.CA2201.severity = warning
 
 # CA2208: Instantiate argument exceptions correctly
-#dotnet_diagnostic.CA2208.severity = warning
+dotnet_diagnostic.CA2208.severity = warning
 
 # CA2245: Do not assign a property to itself
 dotnet_diagnostic.CA2245.severity = warning
@@ -346,6 +349,9 @@ dotnet_diagnostic.IDE2000.severity = warning
 
 # CS0067: The event 'Datensaetze.PropertyChanged' is never used
 dotnet_diagnostic.CS0067.severity = silent
+
+# https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/using
+csharp_prefer_simple_using_statement = false
 
 # public methods should be PascalCase
 dotnet_naming_rule.camel_case_for_public_methods.severity = suggestion

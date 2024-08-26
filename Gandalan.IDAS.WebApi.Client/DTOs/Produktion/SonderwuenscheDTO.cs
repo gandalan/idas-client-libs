@@ -1,8 +1,7 @@
-namespace Gandalan.IDAS.WebApi.DTO
+namespace Gandalan.IDAS.WebApi.DTO;
+
+public class SonderwuenscheDTO
 {
-    public class SonderwuenscheDTO
-    {
-        public string Bezeichnung { get; set; }
-        public string Wert { get; set; }
-    }
+    public string Bezeichnung { get; set; }
+    public string Wert { get; set; }
 }

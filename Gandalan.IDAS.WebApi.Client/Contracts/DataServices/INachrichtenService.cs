@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.Client.DTOs.Nachrichten;
 
-namespace Gandalan.IDAS.WebApi.Client.Contracts.DataServices
+namespace Gandalan.IDAS.WebApi.Client.Contracts.DataServices;
+
+public interface INachrichtenService
 {
-    public interface INachrichtenService
-    {
-        Task<IList<NachrichtenDTO>> GetAllNotifications();
-    }
+    Task<IList<NachrichtenDTO>> GetAllNotifications();
 }

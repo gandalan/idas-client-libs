@@ -4,13 +4,12 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.Data.DTOs.Reports;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.Client.Contracts.Contracts.Report
+namespace Gandalan.IDAS.Client.Contracts.Contracts.Report;
+
+public interface ISerienSaegelisteAufbereitenService
 {
-    public interface ISerienSaegelisteAufbereitenService
-    {
-        Task<List<SerienSaegelisteDataDTO>> Aufbereiten(SerieDTO serie, IList<BelegPositionAVDTO> elemente);
-        Task<List<SerienSaegelisteDataDTO>> Aufbereiten(VorgangDTO vorgang, IList<BelegPositionAVDTO> elemente);
-        Task<List<SerienSaegelisteDataDTO>> getBySerie(SerieDTO serie, IList<BelegPositionAVDTO> elemente, IList<string> winkel, string titel);
-        Task<List<SerienSaegelisteDataDTO>> getBySerie(SerieDTO serie, IList<BelegPositionAVDTO> elemente, IOrderedEnumerable<KeyValuePair<string, MaterialbedarfDTO>> orderedZuschnitte, IList<string> winkel, string titel);
-    }
+    Task<List<SerienSaegelisteDataDTO>> Aufbereiten(SerieDTO serie, IList<BelegPositionAVDTO> elemente);
+    Task<List<SerienSaegelisteDataDTO>> Aufbereiten(VorgangDTO vorgang, IList<BelegPositionAVDTO> elemente);
+    Task<List<SerienSaegelisteDataDTO>> getBySerie(SerieDTO serie, IList<BelegPositionAVDTO> elemente, IList<string> winkel, string titel);
+    Task<List<SerienSaegelisteDataDTO>> getBySerie(SerieDTO serie, IList<BelegPositionAVDTO> elemente, IOrderedEnumerable<KeyValuePair<string, MaterialbedarfDTO>> orderedZuschnitte, IList<string> winkel, string titel);
 }

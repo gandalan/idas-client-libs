@@ -5,64 +5,63 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.WebApi.Client.Settings
+namespace Gandalan.IDAS.WebApi.Client.Settings;
+
+public class JwtWebApiSettings : WebApiSettings, IJwtWebApiConfig
 {
-    public class JwtWebApiSettings : WebApiSettings, IJwtWebApiConfig
+    public string JwtToken { get; set; }
+
+    [Obsolete("JWT:string parameter missing. Call InitializeAsync(Guid appToken, string env, string jwt)")]
+    public override Task Initialize(Guid appToken, string env)
     {
-        public string JwtToken { get; set; }
+        throw new NotSupportedException("JWT:string parameter missing");
+    }
 
-        [Obsolete("JWT:string parameter missing. Call InitializeAsync(Guid appToken, string env, string jwt)")]
-        public override Task Initialize(Guid appToken, string env)
+    public override Task InitializeAsync(Guid appToken, string env)
+    {
+        throw new NotSupportedException("JWT:string parameter missing");
+    }
+
+    [Obsolete("Call InitializeAsync")]
+    public async Task Initialize(Guid appToken, string env, string jwt)
+    {
+        await InitializeAsync(appToken, env, jwt);
+    }
+
+    public async Task InitializeAsync(Guid appToken, string env, string jwt)
+    {
+        await base.InitializeAsync(appToken, env);
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+        if (!tokenHandler.CanReadToken(jwt))
         {
-            throw new NotSupportedException("JWT:string parameter missing");
+            // JWT token has not a valid form
+            return;
         }
 
-        public override Task InitializeAsync(Guid appToken, string env)
+        JwtToken = jwt;
+        var jwtToken = tokenHandler.ReadJwtToken(jwt);
+        var userId = jwtToken.Claims.First(x => x.Type == "id").Value;
+        var appTokenClaim = jwtToken.Claims.First(x => x.Type == "appToken");
+        var authTokenClaim = jwtToken.Claims.First(x => x.Type == "idasAuthToken");
+
+        // set settings values from JWT token
+        UserName = userId;
+        Mandant = "";
+        AuthToken = new UserAuthTokenDTO
         {
-            throw new NotSupportedException("JWT:string parameter missing");
-        }
+            Token = Guid.Parse(authTokenClaim.Value),
+            AppToken = Guid.Parse(appTokenClaim.Value),
+        };
+        AppToken = Guid.Parse(appTokenClaim.Value);
+    }
 
-        [Obsolete("Call InitializeAsync")]
-        public async Task Initialize(Guid appToken, string env, string jwt)
+    public override void CopyToThis(IWebApiConfig settings)
+    {
+        base.CopyToThis(settings);
+        if (settings is JwtWebApiSettings jwtSettings)
         {
-            await InitializeAsync(appToken, env, jwt);
-        }
-
-        public async Task InitializeAsync(Guid appToken, string env, string jwt)
-        {
-            await base.InitializeAsync(appToken, env);
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            if (!tokenHandler.CanReadToken(jwt))
-            {
-                // JWT token has not a valid form
-                return;
-            }
-
-            JwtToken = jwt;
-            var jwtToken = tokenHandler.ReadJwtToken(jwt);
-            var userId = jwtToken.Claims.First(x => x.Type == "id").Value;
-            var appTokenClaim = jwtToken.Claims.First(x => x.Type == "appToken");
-            var authTokenClaim = jwtToken.Claims.First(x => x.Type == "idasAuthToken");
-
-            // set settings values from JWT token
-            UserName = userId;
-            Mandant = "";
-            AuthToken = new UserAuthTokenDTO
-            {
-                Token = Guid.Parse(authTokenClaim.Value),
-                AppToken = Guid.Parse(appTokenClaim.Value),
-            };
-            AppToken = Guid.Parse(appTokenClaim.Value);
-        }
-
-        public override void CopyToThis(IWebApiConfig settings)
-        {
-            base.CopyToThis(settings);
-            if (settings is JwtWebApiSettings jwtSettings)
-            {
-                JwtToken = jwtSettings.JwtToken;
-            }
+            JwtToken = jwtSettings.JwtToken;
         }
     }
 }

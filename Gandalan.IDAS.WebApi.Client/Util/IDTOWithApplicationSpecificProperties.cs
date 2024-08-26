@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 
-namespace Gandalan.IDAS.WebApi.Util
+namespace Gandalan.IDAS.WebApi.Util;
+
+public interface IDTOWithApplicationSpecificProperties
 {
-    public interface IDTOWithApplicationSpecificProperties
-    {
-        Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
-    }
+    Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+}
+
+public interface IEntityWithApplicationSpecificProperties
+{   
 }

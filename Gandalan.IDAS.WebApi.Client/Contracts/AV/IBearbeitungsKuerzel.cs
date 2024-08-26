@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using Gandalan.IDAS.WebApi.Data;
 
-namespace Gandalan.IDAS.Client.Contracts.Contracts.AV
+namespace Gandalan.IDAS.Client.Contracts.Contracts.AV;
+
+public interface IBearbeitungsKuerzel
 {
-    public interface IBearbeitungsKuerzel
-    {
-        Task<IList<BearbeitungsKuerzelDTO>> GetListe();
-    }
+    Task<IList<BearbeitungsKuerzelDTO>> GetListe();
 }

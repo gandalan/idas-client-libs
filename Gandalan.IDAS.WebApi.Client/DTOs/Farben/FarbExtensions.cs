@@ -25,7 +25,7 @@ public static class FarbExtensions
 
         if (!string.IsNullOrWhiteSpace(material.PulverCode))
         {
-            farbText += " " + material.PulverCode;
+            farbText += $" {material.PulverCode}";
         }
 
         return farbText;
@@ -43,13 +43,13 @@ public static class FarbExtensions
         // if shortText, we just add it
         if (!string.IsNullOrEmpty(farbZusatzText) && (!farbBezeichnung.Contains(farbZusatzText) || !longText))
         {
-            sb.Append(" " + farbZusatzText);
+            sb.Append($" {farbZusatzText}");
         }
 
         // For some (user specific standard) colors Ibos1/2 swallow color kuerzel. So we add it here, if not already present
         if (farbItem != null && farbItem.Length >= 2 && farbItem.Length <= 4 && !sb.ToString().Contains(farbItem) && !farbBezeichnung.Contains(farbItem))
         {
-            sb.Append(" " + farbItem);
+            sb.Append($" {farbItem}");
         }
 
         if (!longText)
@@ -59,18 +59,18 @@ public static class FarbExtensions
 
         if (!string.IsNullOrEmpty(farbCode))
         {
-            sb.Append(" " + farbCode);
+            sb.Append($" {farbCode}");
         }
 
         // For custom Handeingaben: FarbBezeichnung == FarbCode == FarbItem, so do not add twice
         if (!string.IsNullOrEmpty(farbBezeichnung) && !sb.ToString().Contains(farbBezeichnung))
         {
-            sb.Append(" " + farbBezeichnung);
+            sb.Append($" {farbBezeichnung}");
         }
 
         if (!string.IsNullOrEmpty(oberflaecheBezeichnung) && oberflaecheBezeichnung != "Standard" && !sb.ToString().Contains(oberflaecheBezeichnung))
         {
-            sb.Append(" " + oberflaecheBezeichnung);
+            sb.Append($" {oberflaecheBezeichnung}");
         }
 
         return sb.ToString();

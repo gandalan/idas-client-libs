@@ -1,16 +1,15 @@
 ﻿using System.Threading.Tasks;
 
-namespace Gandalan.IDAS.Client.Contracts.Vorgaenge
+namespace Gandalan.IDAS.Client.Contracts.Vorgaenge;
+
+public interface IBelegTabControl
 {
-    public interface IBelegTabControl
-    {
-        string TabCaption { get; }
-        int Order { get; }
+    string TabCaption { get; }
+    int Order { get; }
 
-        bool ShowOnlyInDevMode { get; }
+    bool ShowOnlyInDevMode { get; }
 
-        Task OnSave();
+    Task OnSave();
 
-        Task OnNavigation(TabNavigationKind kind);
-    }
+    Task OnNavigation(TabNavigationKind kind);
 }

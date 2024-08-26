@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net7.0;net6.0;net481;net48</TargetFrameworks>
+    <TargetFrameworks>net8.0;net48</TargetFrameworks>
     <AssemblyName>GDL.IDAS.Contracts</AssemblyName>
 
     <AssemblyVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</AssemblyVersion>
@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\projects\Repos\idas-client-libs\Gandalan.IDAS.Contracts\GDL.IDAS.Contracts.xml</DocumentationFile>
+    <DocumentationFile>..\Gandalan.IDAS.Contracts\GDL.IDAS.Contracts.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
