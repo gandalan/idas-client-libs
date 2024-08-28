@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Contracts.Repositories;
 
@@ -20,6 +21,7 @@ public interface IRepository<T> where T : class
     bool Save();
     void Update(T entity, bool saveImmediately);
     T Get(long id);
+    Task<T> GetAsync(long id);
     T GetOrCreate(long id);
     IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "");
     IQueryable<T> GetAllForRead();
