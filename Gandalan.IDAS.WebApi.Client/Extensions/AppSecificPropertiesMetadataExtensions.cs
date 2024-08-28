@@ -6,7 +6,7 @@ namespace Gandalan.IDAS.WebApi.Util;
 /// </summary>
 public static class AppSecificPropertiesMetadataExtensions
 {
-    public const string MetadataKey = "$METADATA";
+    private const string MetadataKey = "$METADATA";
     private const string IsPublicKey = "IsPublic";
 
     public static bool HasPublicAppSepcificProperties(this IDTOWithApplicationSpecificProperties dto) =>
