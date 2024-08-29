@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.Util;
+
 /// <summary>
 /// Helper methods to get and set metadata to IDTOWithApplicationSpecificProperties.
 /// </summary>
@@ -25,6 +26,9 @@ public static class AppSecificPropertiesMetadataExtensions
         dto.ApplicationSpecificProperties[MetadataKey] = metadata;
     }
 
+    /// <summary>
+    /// Sets 'IsPublicKey' value to <c>true</c>.
+    /// </summary>
     public static void SetIsPublicInMetadata(this Dictionary<string, PropertyValueCollection> dictionary)
     {
         var metadata = dictionary.TryGetValue(MetadataKey, out var m) ? m : [];
