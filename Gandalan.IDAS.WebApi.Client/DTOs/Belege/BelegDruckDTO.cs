@@ -45,7 +45,7 @@ public class BelegDruckDTO
             }
 
             var abBelege = vorgang.Belege.Where(b => b.BelegArt == "AB" || b.BelegArt == "Auftragsbestätigung");
-            Bestelldatum = abBelege.Any() ? abBelege.Last().BelegDatum.ToString("d", culture) : "";
+            Bestelldatum = abBelege.AnyOptimized() ? abBelege.Last().BelegDatum.ToString("d", culture) : "";
             Belegdatum = beleg.BelegDatum.ToString("d", culture);
             Lieferzeit = ""; //???
             IsEndkunde = vorgang.Kunde?.IstEndkunde ?? false;
@@ -115,7 +115,7 @@ public class BelegDruckDTO
             {
                 var saldenSorted = beleg.Salden.Where(s => s.Betrag != 0 || s.SaldenStatus == "AufAnfrage").OrderBy(i => i.Reihenfolge);
                 var aufAnfrage = false;
-                if (saldenSorted.Any())
+                if (saldenSorted.AnyOptimized())
                 {
                     var lastActivSalde = saldenSorted.LastOrDefault(s => !s.IstInaktiv);
                     foreach (var dto in saldenSorted)

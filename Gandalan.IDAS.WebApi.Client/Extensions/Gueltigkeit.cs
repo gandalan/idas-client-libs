@@ -1,6 +1,7 @@
 using Gandalan.IDAS.WebApi.Client.Contracts;
 
 namespace System;
+
 public static class Gueltigkeit
 {
     public static bool IstGueltig(this IWithGueltigkeitsZeitraum gueltig, DateTime? referenceDate = null)
