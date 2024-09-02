@@ -1,15 +1,11 @@
-#if NETFRAMEWORK //|| true // Uncomment || to see code formatting in Visual Studio
-
 using System.Collections;
 using System.Collections.Generic;
 
 namespace System.Linq;
 
-/// <summary>
-/// Faster Linq code from .NET 9
-/// </summary>
 public static class LinqExtensions
 {
+#if NETFRAMEWORK
     /// <summary>Faster Linq code from .NET 9. Determines whether a sequence contains any elements.</summary>
     /// <param name="source">The <see cref="T:System.Collections.Generic.IEnumerable`1" /> to check for emptiness.</param>
     /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
@@ -37,6 +33,13 @@ public static class LinqExtensions
         using IEnumerator<TSource> e = source.GetEnumerator();
         return e.MoveNext();
     }
-}
-
 #endif
+
+#if NET
+    /// <inheritdoc cref="Enumerable.Any{TSource}(System.Collections.Generic.IEnumerable{TSource})"/>
+    public static bool AnyOptimized<TSource>(this IEnumerable<TSource> source)
+    {
+        return source.Any();
+    }
+#endif
+}
