@@ -40,7 +40,6 @@ public static class AppSpecificPropertiesExtensions
     /// <summary>
     /// Delete a single key/value pair from the settings subobject of the ApplicationSpecificProperties
     /// </summary>
-    /// <typeparam name="T">implementation of IDTOWithApplicationSpecificProperties to extend</typeparam>
     /// <param name="dto">instance to extend</param>
     /// <param name="key">key identifier to delete, if it exists</param>
     public static void DeleteSetting(this IDTOWithApplicationSpecificProperties dto, string key)
