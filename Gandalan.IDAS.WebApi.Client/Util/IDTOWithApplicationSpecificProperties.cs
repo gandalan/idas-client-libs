@@ -12,59 +12,43 @@ public interface IEntityWithApplicationSpecificProperties
 {
 }
 
+/// <summary>
+/// Handle the ApplicationSpecificProperties of a DTO.
+/// Includes methods to manage subobjects and key/value pairs, both from the generic "settings" subobject
+/// as well as any other subojects of an application.
+/// </summary>
 public static class AppSpecificPropertiesExtensions
 {
+    /// <summary>
+    /// Get a single key/value pair from the settings subobject of the ApplicationSpecificProperties
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="dto"></param>
+    /// <param name="key"></param>
+    /// <param name="defaultValue"></param>
+    /// <returns></returns>
     public static T GetSetting<T>(this IDTOWithApplicationSpecificProperties dto, string key, T defaultValue = default)
     {
-        return GetSetting(dto, "settings", key, defaultValue);
+        return GetProperty(dto, "settings", key, defaultValue);
     }
 
-    public static T GetSetting<T>(this IDTOWithApplicationSpecificProperties dto, string subObjectName, string key, T defaultValue = default)
-    {
-        var properties = dto?.ApplicationSpecificProperties;
-        if (properties == null || properties.Count == 0 || !properties.TryGetValue(subObjectName, out var subObj) || !subObj.ContainsKey(key))
-        {
-            return defaultValue;
-        }
-
-        // to avoid InvalidCastException in Convert.ChangeType we need to change to the underlying type of nullable types
-        var underlyingT = Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T);
-        // if the property value is null => defaultValue
-        // else change type to underlying type
-        var value = properties[subObjectName][key] == null
-            ? defaultValue
-            : Convert.ChangeType(properties[subObjectName][key], underlyingT);
-        // back to the original type
-        return (T)value;
-    }
-
-    public static PropertyValueCollection GetSubObject(this IDTOWithApplicationSpecificProperties dto, string subObjectName)
-    {
-        var properties = dto.ApplicationSpecificProperties;
-        if (properties == null || properties.Count == 0 || !properties.TryGetValue(subObjectName, out var subObject))
-        {
-            return null;
-        }
-
-        return subObject;
-    }
-
-    public static void SetSubObject(this IDTOWithApplicationSpecificProperties dto, string subObjectName, PropertyValueCollection subObject)
-    {
-        var properties = dto.ApplicationSpecificProperties;
-        if (properties == null) //noch kein Objekt für die properties
-        {
-            properties = dto.ApplicationSpecificProperties = [];
-        }
-
-        properties[subObjectName] = subObject;
-    }
-
+    /// <summary>
+    /// Set a single key/value pair in the settings subobject of the ApplicationSpecificProperties
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="dto"></param>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
     public static void SetSetting<T>(this IDTOWithApplicationSpecificProperties dto, string key, T value)
     {
-        SetSetting(dto, "settings", key, value);
+        SetProperty(dto, "settings", key, value);
     }
 
+    /// <summary>
+    /// Delete a single key/value pair from the settings subobject of the ApplicationSpecificProperties
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <param name="key"></param>
     public static void DeleteSetting(this IDTOWithApplicationSpecificProperties dto, string key)
     {
         const string prefix = "settings";
@@ -87,7 +71,15 @@ public static class AppSpecificPropertiesExtensions
         properties[prefix].Remove(key);
     }
 
-    public static void SetSetting<T>(this IDTOWithApplicationSpecificProperties dto, string subObjectName, string key, T value)
+    /// <summary>
+    /// Set a single key/value pair in a named subobject of the ApplicationSpecificProperties
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="dto"></param>
+    /// <param name="subObjectName"></param>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    public static void SetProperty<T>(this IDTOWithApplicationSpecificProperties dto, string subObjectName, string key, T value)
     {
         var properties = dto.ApplicationSpecificProperties;
 
@@ -113,6 +105,68 @@ public static class AppSpecificPropertiesExtensions
         {
             subObj[key] = value;
         }
+    }
+
+    /// <summary>
+    /// Get a single key/value pair from a named subobject of the ApplicationSpecificProperties
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="dto"></param>
+    /// <param name="subObjectName"></param>
+    /// <param name="key"></param>
+    /// <param name="defaultValue"></param>
+    /// <returns></returns>
+    public static T GetProperty<T>(this IDTOWithApplicationSpecificProperties dto, string subObjectName, string key, T defaultValue = default)
+    {
+        var properties = dto?.ApplicationSpecificProperties;
+        if (properties == null || properties.Count == 0 || !properties.TryGetValue(subObjectName, out var subObj) || !subObj.ContainsKey(key))
+        {
+            return defaultValue;
+        }
+
+        // to avoid InvalidCastException in Convert.ChangeType we need to change to the underlying type of nullable types
+        var underlyingT = Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T);
+        // if the property value is null => defaultValue
+        // else change type to underlying type
+        var value = properties[subObjectName][key] == null
+            ? defaultValue
+            : Convert.ChangeType(properties[subObjectName][key], underlyingT);
+        // back to the original type
+        return (T)value;
+    }
+
+    /// <summary>
+    /// Get a subobject, containing a dictionary of key/value pairs, from the ApplicationSpecificProperties
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <param name="subObjectName"></param>
+    /// <returns></returns>
+    public static PropertyValueCollection GetSubObject(this IDTOWithApplicationSpecificProperties dto, string subObjectName)
+    {
+        var properties = dto.ApplicationSpecificProperties;
+        if (properties == null || properties.Count == 0 || !properties.TryGetValue(subObjectName, out var subObject))
+        {
+            return null;
+        }
+
+        return subObject;
+    }
+
+    /// <summary>
+    /// Set a subobject, containing a dictionary of key/value pairs, in the ApplicationSpecificProperties
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <param name="subObjectName"></param>
+    /// <param name="subObject"></param>
+    public static void SetSubObject(this IDTOWithApplicationSpecificProperties dto, string subObjectName, PropertyValueCollection subObject)
+    {
+        var properties = dto.ApplicationSpecificProperties;
+        if (properties == null) //noch kein Objekt für die properties
+        {
+            properties = dto.ApplicationSpecificProperties = [];
+        }
+
+        properties[subObjectName] = subObject;
     }
 }
 
