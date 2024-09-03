@@ -71,7 +71,7 @@ public static class AppSpecificPropertiesExtensions
     /// <typeparam name="T">type of the value to store</typeparam>
     /// <param name="dto">instance to extend</param>
     /// <param name="key">key identifier to write to</param>
-    /// <param name="value">value to write</param>
+    /// <param name="defaultValue">default value, if value doesn't exist</param>
     /// <returns>requested value or default value, if it doesn't exist</returns>
     public static T GetPublicProperty<T>(this IDTOWithApplicationSpecificProperties dto, string key, T defaultValue = default)
     {
