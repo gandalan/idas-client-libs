@@ -65,6 +65,60 @@ public static class AppSpecificPropertiesExtensions
     }
 
     /// <summary>
+    /// Gets a value from the "public" subobject of the ApplicationSpecificProperties. Public subobjects are 
+    /// be visible across all applications.
+    /// </summary>
+    /// <typeparam name="T">type of the value to store</typeparam>
+    /// <param name="dto">instance to extend</param>
+    /// <param name="key">key identifier to write to</param>
+    /// <param name="value">value to write</param>
+    /// <returns>requested value or default value, if it doesn't exist</returns>
+    public static T GetPublicProperty<T>(this IDTOWithApplicationSpecificProperties dto, string key, T defaultValue = default)
+    {
+        return GetProperty(dto, "public", key, defaultValue);
+    }
+
+    /// <summary>
+    /// Sets a value in the "public" subobject of the ApplicationSpecificProperties. Public subobjects are
+    /// visible across all applications.
+    /// </summary>
+    /// <typeparam name="T">type of the value to store</typeparam>
+    /// <param name="dto">instance to extend</param>
+    /// <param name="key">key identifier to write to</param>
+    /// <param name="value">value to write</param>
+    public static void SetPublicProperty<T>(this IDTOWithApplicationSpecificProperties dto, string key, T value)
+    {
+        SetProperty(dto, "public", key, value);
+    }
+
+    /// <summary>
+    /// Deletes a public property 
+    /// </summary>
+    /// <param name="dto">instance to extend</param>
+    /// <param name="key">key identifier to write to</param>
+    public static void DeletePublicProperty(this IDTOWithApplicationSpecificProperties dto, string key)
+    {
+        const string prefix = "public";
+        var properties = dto.ApplicationSpecificProperties;
+        if (properties == null) //noch kein Objekt für die properties, nichts zu löschen
+        {
+            return;
+        }
+
+        if (properties.Count == 0 || !properties.TryGetValue(prefix, out var property)) //wenn keine properties vorhanden oder noch keine settings da, nichts zu löschen
+        {
+            return;
+        }
+
+        if (!property.ContainsKey(key))
+        {
+            return; // key nicht vorhanden, nichts zu löschen
+        }
+
+        properties[prefix].Remove(key);
+    }
+
+    /// <summary>
     /// Set a single key/value pair in a named subobject of the ApplicationSpecificProperties
     /// </summary>
     /// <typeparam name="T">type of the value to set</typeparam>
