@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFrameworks>net48</TargetFrameworks>
+    <AssemblyName>GDL.IDAS.WebApi.Client.Wpf</AssemblyName>
     <UseWPF>true</UseWPF>
 
-    <AssemblyName>GDL.IDAS.WebApi.Client.Wpf</AssemblyName>
     <AssemblyVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</AssemblyVersion>
     <AssemblyVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</AssemblyVersion>
     <FileVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</FileVersion>
@@ -14,9 +14,14 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <WarningsAsErrors>$(WarningsAsErrors);NU1605</WarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DocumentationFile>..\Gandalan.IDAS.WebApi.Client.Wpf\GDL.IDAS.WebApi.Client.Wpf.xml</DocumentationFile>
-    <NoWarn>1591</NoWarn>
+    <WarningsAsErrors>$(WarningsAsErrors);NU1605</WarningsAsErrors>
+    <NoWarn>CS1572;CS1573;CS1591;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
