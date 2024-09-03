@@ -29,7 +29,8 @@ public static class AppSpecificPropertiesExtensions
     /// Set a single key/value pair in the settings subobject of the ApplicationSpecificProperties
     /// </summary>
     /// <typeparam name="T">type of the value to set</typeparam>
-    /// <param name="wfwfwf">instance to extend</param>
+    /// <param name="dto">instance to extend</param>
+    /// <param name="key">key identifier to write to</param>
     /// <param name="value">value to write</param>
     public static void SetSetting<T>(this IDTOWithApplicationSpecificProperties dto, string key, T value)
     {
