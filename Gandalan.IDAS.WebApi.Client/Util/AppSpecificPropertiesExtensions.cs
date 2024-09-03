@@ -65,7 +65,7 @@ public static class AppSpecificPropertiesExtensions
     }
 
     /// <summary>
-    /// Gets a value from the "public" subobject of the ApplicationSpecificProperties. Public subobjects are 
+    /// Gets a value from the "public" subobject of the ApplicationSpecificProperties. Public subobjects are
     /// be visible across all applications.
     /// </summary>
     /// <typeparam name="T">type of the value to store</typeparam>
@@ -92,7 +92,7 @@ public static class AppSpecificPropertiesExtensions
     }
 
     /// <summary>
-    /// Deletes a public property 
+    /// Deletes a public property
     /// </summary>
     /// <param name="dto">instance to extend</param>
     /// <param name="key">key identifier to write to</param>

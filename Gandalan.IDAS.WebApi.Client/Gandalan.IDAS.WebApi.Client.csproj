@@ -13,18 +13,14 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>..\Gandalan.IDAS.WebApi.Client\GDL.IDAS.WebApi.Client.xml</DocumentationFile>
-    <NoWarn>1591;CS0067</NoWarn>
-  </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-    <NoWarn>1701;1702;CS0067</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DocumentationFile>..\Gandalan.IDAS.WebApi.Client\GDL.IDAS.WebApi.Client.xml</DocumentationFile>
     <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
+    <NoWarn>CS0067;CS1572;CS1573;CS1591;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
