@@ -11,4 +11,6 @@ public interface INavigationManager
     event EventHandler NavigationItemsChanged;
 
     void SetGroupOrder(string groupName, int order);
+
+    void SetGroupIcon(string groupName, object icon);
 }
