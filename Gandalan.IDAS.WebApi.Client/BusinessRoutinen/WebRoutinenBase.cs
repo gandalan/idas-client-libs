@@ -44,7 +44,7 @@ public class WebRoutinenBase
     /// <summary>
     /// Custom handler for exceptions.
     /// </summary>
-    /// <returns><c>true</c> if the exception was handled - <c>false</c> if the exception is not handled</returns>
+    /// <returns><see langword="true"/> if the exception was handled - <see langword="false"/> if the exception is not handled</returns>
     public delegate bool ExceptionHandler(Exception ex);
 
     /// <summary>
