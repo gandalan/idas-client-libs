@@ -11,7 +11,7 @@ public interface IProgressNotify
     /// </summary>
     /// <param name="title">Title to show</param>
     /// <param name="toExecute">Function to run</param>
-    /// <param name="extraWaitTimeMs">Additional time the dialog stays open after <c>toExecute</c> has finished executing. Time in milliseconds</param>
+    /// <param name="extraWaitTimeMs">Additional time the dialog stays open after <paramref name="toExecute"/> has finished executing. Time in milliseconds</param>
     Task ShowProgress(string title, Func<Task> toExecute, int extraWaitTimeMs = 0);
 
     /// <summary>
@@ -19,7 +19,7 @@ public interface IProgressNotify
     /// </summary>
     /// <param name="title">Title to show</param>
     /// <param name="toExecute">Function to run, IProgressNotify is passed as param for updating</param>
-    /// <param name="extraWaitTimeMs">Additional time the dialog stays open after <c>toExecute</c> has finished executing. Time in milliseconds</param>
+    /// <param name="extraWaitTimeMs">Additional time the dialog stays open after <paramref name="toExecute"/> has finished executing. Time in milliseconds</param>
     Task ShowProgress(string title, Func<IProgressNotify, Task> toExecute, int extraWaitTimeMs = 0);
 
     /// <summary>
