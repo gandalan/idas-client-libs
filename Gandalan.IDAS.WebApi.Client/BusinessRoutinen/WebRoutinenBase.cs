@@ -656,6 +656,7 @@ public class WebRoutinenBase
         {
             exception.Data.Add("URL", url);
             exception.Data.Add("CallMethod", sender);
+            exception.Data.Add("StatusCode", exception.StatusCode);
         }
 
         return exception;
