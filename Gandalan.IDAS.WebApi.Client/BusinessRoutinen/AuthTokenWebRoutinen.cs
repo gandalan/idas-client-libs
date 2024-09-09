@@ -16,8 +16,8 @@ public class AuthTokenWebRoutinen : WebRoutinenBase
         await PostAsync("AuthToken/RemoveExpiredTokens", null);
     }
 
-    public async Task<UserAuthTokenDTO[]> GetFremdAppAuthTokenAsync(Guid fremdApp)
+    public async Task<UserAuthTokenDTO> GetFremdAppAuthTokenAsync(Guid fremdApp)
     {
-        return await GetAsync<UserAuthTokenDTO[]>($"AuthToken/GetFremdAppAuthToken?fremdApp={fremdApp}");
+        return await GetAsync<UserAuthTokenDTO>($"AuthToken/GetFremdAppAuthToken?fremdApp={fremdApp}");
     }
 }
