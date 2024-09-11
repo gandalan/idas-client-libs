@@ -8,7 +8,9 @@ namespace Gandalan.IDAS.WebApi.DTO;
 public class LagerbuchungDTO
 {
     public Guid KatalogArtikelGuid { get; set; }
+    [Obsolete("FarbKuerzelGuid verwenden")]
     public Guid FarbGuid { get; set; }
+    public Guid FarbKuerzelGuid { get; set; }
     public float Betrag { get; set; }
     public bool IstReservierung { get; set; }
     public string Einheit { get; set; }
