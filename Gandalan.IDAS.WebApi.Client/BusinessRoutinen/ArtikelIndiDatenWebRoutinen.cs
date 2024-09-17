@@ -1,4 +1,4 @@
-﻿// *****************************************************************************
+// *****************************************************************************
 // Gandalan GmbH & Co. KG - (c) 2017
 // *****************************************************************************
 // Middleware//Gandalan.IDAS.WebApi.Client//ArtikelWebRoutinen.cs
@@ -6,6 +6,7 @@
 // Edit: phil - 15.02.2017
 // *****************************************************************************
 
+using System;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
@@ -18,8 +19,12 @@ public class ArtikelIndiDatenWebRoutinen : WebRoutinenBase
     {
     }
 
-    public async Task<KatalogArtikelIndiDatenDTO[]> GetAllAsync()
+    public async Task<KatalogArtikelIndiDatenDTO[]> GetAllAsync(DateTime? changedSince = null)
     {
+        if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+        {
+            return await GetAsync<KatalogArtikelIndiDatenDTO[]>($"ArtikelIndiDaten?changedSince={changedSince.Value:o}");
+        }
         return await GetAsync<KatalogArtikelIndiDatenDTO[]>("ArtikelIndiDaten");
     }
 
