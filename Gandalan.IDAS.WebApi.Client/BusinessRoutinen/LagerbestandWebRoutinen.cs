@@ -39,7 +39,7 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
 
     // vonDatum and bisDatum need to be converted to string and back otherwise the backend will receive null values
     public async Task<List<LagerbuchungDTO>> GetLagerhistorieAsync(DateTime vonDatum, DateTime bisDatum, bool mitLagerbuchungen = true, bool mitReservierungen = true, Guid? katalogArtikelGuid = null)
-        => await GetAsync<List<LagerbuchungDTO>>($"Lagerbuchung/?vonDatum={DateTime.Parse(vonDatum.ToString()):o}&bisDatum={DateTime.Parse(bisDatum.ToString()):o}&mitLagerbuchungen={mitLagerbuchungen}&mitReservierungen={mitReservierungen}&katalogArtikelGuid={katalogArtikelGuid}");
+        => await GetAsync<List<LagerbuchungDTO>>($"Lagerbuchung/?vonDatum={vonDatum:o}&bisDatum={bisDatum:o}&mitLagerbuchungen={mitLagerbuchungen}&mitReservierungen={mitReservierungen}&katalogArtikelGuid={katalogArtikelGuid}");
 
     #region Functions
     public async Task<List<long>> GetProduzentenMandantIDsAsync()
