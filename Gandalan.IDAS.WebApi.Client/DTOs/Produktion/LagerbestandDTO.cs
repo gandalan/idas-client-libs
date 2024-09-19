@@ -26,4 +26,5 @@ public class LagerbestandDTO
     public bool IstAktiv { get; set; }
     public string Seriennummer { get; set; }
     public DateTime ChangedDate { get; set; }
+    public string WindowsUser { get; set; }
 }
