@@ -115,7 +115,7 @@ public class RESTRoutinen : IDisposable
     /// <param name="data">zu sendendes Objekt</param>
     /// <param name="settings"></param>
     /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
-    /// <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
+    /// <returns>deserialisierte Antwort (i.d.R. sollte das gespeicherte Objekt in seiner Endfassung sein)</returns>
     public async Task<T> PostAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
     {
         return JsonConvert.DeserializeObject<T>(await PostAsync(url, data, settings, version: version), settings);
@@ -187,7 +187,7 @@ public class RESTRoutinen : IDisposable
     /// <param name="data">zu sendendes Objekt</param>
     /// <param name="settings"></param>
     /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
-    /// <returns>deserialisierte Antwort (i.d.R. sollte das das gespeicherte Objekt in seiner Endfassung sein)</returns>
+    /// <returns>deserialisierte Antwort (i.d.R. sollte das gespeicherte Objekt in seiner Endfassung sein)</returns>
     public async Task<T> PutAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
     {
         return JsonConvert.DeserializeObject<T>(await PutAsync(url, data, settings, version: version), settings);
