@@ -11,13 +11,13 @@ public interface ISaegemassKorrekturService
     /// Ruft das (summierte) Korrekturmaß für ein MaterialbedarfDTO, abhängig von Winkel links/rechts, ab.
     /// </summary>
     /// <param name="korrekturSatz">Korrektursatz der genutzt werden soll</param>
-    /// <param name="material">MaterialbedarfDTO, für das das Korrekturmaß abgerufen werden soll</param>
+    /// <param name="material">MaterialbedarfDTO, für das Korrekturmaß abgerufen werden soll</param>
     float GetKorrekturmass(string korrekturSatz, MaterialbedarfDTO material);
 
     /// <summary>
     /// Ruft das (summierte) Korrekturmaß für ein MaterialbedarfDTO, abhängig von Winkel links/rechts, ab. Nutzt den Korrektursatz, der an der Säge "Serie" hinterlegt ist-
     /// </summary>
-    /// <param name="material">MaterialbedarfDTO, für das das Korrekturmaß abgerufen werden soll</param>
+    /// <param name="material">MaterialbedarfDTO, für das Korrekturmaß abgerufen werden soll</param>
     float GetKorrekturmass(MaterialbedarfDTO material);
 
     /// <summary>
