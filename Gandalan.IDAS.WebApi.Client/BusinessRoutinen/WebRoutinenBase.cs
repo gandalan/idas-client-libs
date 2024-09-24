@@ -689,11 +689,11 @@ public class WebRoutinenBase
                 {
                     var infoObject = JsonConvert.DeserializeObject<dynamic>(responseString);
                     string status = infoObject.status;
-                    return new ApiException(status, code, payload) { ExceptionString = infoObject.exception.ToString() };
+                    return new ApiException(status, code, ex, payload) { ExceptionString = infoObject.exception.ToString() };
                 }
                 catch
                 {
-                    return new ApiException(responseString, code, payload);
+                    return new ApiException(responseString, code, ex, payload);
                 }
             }
 
