@@ -667,17 +667,17 @@ public class WebRoutinenBase
     {
         if (ex.Data.Contains("StatusCode"))
         {
-            var responseString = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
+            var response = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
             var code = (HttpStatusCode)ex.Data["StatusCode"];
 
-            if (!string.IsNullOrWhiteSpace(responseString))
+            if (!string.IsNullOrWhiteSpace(response))
             {
                 // Newtonsoft TypeNameInfo - try to restore original exception from Backend
-                if (responseString.Contains("$type"))
+                if (response.Contains("$type"))
                 {
                     try
                     {
-                        var original = JsonConvert.DeserializeObject<Exception>(responseString, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+                        var original = JsonConvert.DeserializeObject<Exception>(response, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
                         return new ApiException(original.Message, code, original, payload);
                     }
                     catch
@@ -687,13 +687,13 @@ public class WebRoutinenBase
 
                 try
                 {
-                    var infoObject = JsonConvert.DeserializeObject<dynamic>(responseString);
+                    var infoObject = JsonConvert.DeserializeObject<dynamic>(response);
                     string status = infoObject.status;
                     return new ApiException(status, code, ex, payload) { ExceptionString = infoObject.exception.ToString() };
                 }
                 catch
                 {
-                    return new ApiException(responseString, code, ex, payload);
+                    return new ApiException(response, code, ex, payload);
                 }
             }
 
