@@ -723,11 +723,11 @@ public class WebRoutinenBase
                     {
                         var infoObject = JsonConvert.DeserializeObject<dynamic>(response);
                         string status = infoObject.status;
-                        return new ApiException(status, code) { ExceptionString = infoObject.exception.ToString() };
+                        return new ApiException(status, code, ex) { ExceptionString = infoObject.exception.ToString() };
                     }
                     catch
                     {
-                        return new ApiException(response, code);
+                        return new ApiException(response, code, ex);
                     }
                 }
             }
