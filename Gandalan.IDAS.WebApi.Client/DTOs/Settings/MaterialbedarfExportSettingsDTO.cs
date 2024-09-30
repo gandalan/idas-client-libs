@@ -1,48 +1,46 @@
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
 public class MaterialbedarfExportSettingsDTO
 {
-    public MaterialbedarfExportType StandardfarbeExportType { get; set; } = MaterialbedarfExportType.CSV;
-    public MaterialbedarfExportType TrendfarbeExportType { get; set; } = MaterialbedarfExportType.CSV;
-    public MaterialbedarfExportType SonderfarbeExportType { get; set; } = MaterialbedarfExportType.CSV;
+    public MaterialbedarfExportType StandardfarbArtikelExportType { get; set; } = MaterialbedarfExportType.Schnittstelle;
+    public MaterialbedarfExportType TrendfarbArtikelExportType { get; set; } = MaterialbedarfExportType.Schnittstelle;
+    public MaterialbedarfExportType SonderfarbArtikelExportType { get; set; } = MaterialbedarfExportType.Schnittstelle;
+    public MaterialbedarfExportType UeberschriebeneArtikelExportType { get; set; } = MaterialbedarfExportType.Schnittstelle;
+    public MaterialbedarfExportType EigeneArtikelExportType { get; set; } = MaterialbedarfExportType.Schnittstelle;
 
-    public CsvExportCombination CsvExportCombination1 { get; set; } = CsvExportCombination.Standardfarbe;
-    public CsvExportCombination CsvExportCombination2 { get; set; } = CsvExportCombination.TrendUndSonderfarbe;
-    public CsvExportCombination CsvExportCombination3 { get; set; } = CsvExportCombination.None;
+    public List<CsvExportCombinationDTO> CsvExportCombinations { get; set; } = [];
 
     public bool WriteLieferzusageOnCsvExport { get; set; } = true;
 }
 
-public class CsvExportCombination
+/// <summary>
+/// Defines the combination of ArtikelArten which will be exported together in a CSV file.
+/// </summary>
+public class CsvExportCombinationDTO
 {
-    public int Index { get; private set; }
-    public string Name { get; set; }
     /// <summary>
-    /// The type of colors which will be combined in this export.
+    /// The type of Artikel which will be combined in this export.
     /// </summary>
-    public List<CsvExportFarbArt> FarbArten { get; set; }
+    public List<CsvExportArtikelArt> ArtikelArtenKombinationen { get; set; } = [];
 
-    public static CsvExportCombination None => new() { Index = 0, Name = "", FarbArten = [] };
-    public static CsvExportCombination Standardfarbe => new() { Index = 1, Name = "Standardfarbe", FarbArten = [CsvExportFarbArt.Standardfarbe] };
-    public static CsvExportCombination Trendfarbe => new() { Index = 2, Name = "Trendfarbe", FarbArten = [CsvExportFarbArt.Trendfarbe] };
-    public static CsvExportCombination Sonderfarbe => new() { Index = 3, Name = "Sonderfarbe", FarbArten = [CsvExportFarbArt.Sonderfarbe] };
-    public static CsvExportCombination StandardUndTrendfarbe => new() { Index = 4, Name = "Standard- und Trendfarbe", FarbArten = [CsvExportFarbArt.Standardfarbe, CsvExportFarbArt.Trendfarbe] };
-    public static CsvExportCombination StandardUndSonderfarbe => new() { Index = 5, Name = "Standard- und Sonderfarbe", FarbArten = [CsvExportFarbArt.Standardfarbe, CsvExportFarbArt.Sonderfarbe] };
-    public static CsvExportCombination TrendUndSonderfarbe => new() { Index = 6, Name = "Trend- und Sonderfarbe", FarbArten = [CsvExportFarbArt.Trendfarbe, CsvExportFarbArt.Sonderfarbe] };
-    public static CsvExportCombination Alle => new() { Index = 7, Name = "Alle", FarbArten = [CsvExportFarbArt.Standardfarbe, CsvExportFarbArt.Trendfarbe, CsvExportFarbArt.Sonderfarbe] };
-
-    public static List<CsvExportCombination> All() => [
-            None,
-            Standardfarbe,
-            Trendfarbe,
-            Sonderfarbe,
-            StandardUndTrendfarbe,
-            StandardUndSonderfarbe,
-            TrendUndSonderfarbe,
-            Alle,
-        ];
+    public override string ToString()
+    {
+        if (ArtikelArtenKombinationen.Count == 1)
+        {
+            return ArtikelArtenKombinationen[0].GetDescription() + " Artikel";
+        }
+        else
+        {
+            var descriptions = ArtikelArtenKombinationen.Select(a => a.GetDescription());
+            return string.Join("-, ", descriptions.Take(descriptions.Count() - 1)) + " & " + descriptions.Last() + " Artikel";
+        }
+    }
 }
 
 /// <summary>
@@ -57,9 +55,22 @@ public enum MaterialbedarfExportType
 /// <summary>
 /// Used to determine CSV export combinations.
 /// </summary>
-public enum CsvExportFarbArt
+public enum CsvExportArtikelArt
 {
-    Standardfarbe,
-    Trendfarbe,
-    Sonderfarbe,
+    Standardfarb,
+    Trendfarb,
+    Sonderfarb,
+    [Description("Überschriebene")]
+    Ueberschriebene,
+    Eigene,
+}
+
+public static class CsvExportArtikelArtExtension
+{
+    public static string GetDescription(this Enum value)
+    {
+        var field = value.GetType().GetField(value.ToString());
+        var attribute = field.GetCustomAttribute<DescriptionAttribute>();
+        return attribute == null ? value.ToString() : attribute.Description;
+    }
 }
