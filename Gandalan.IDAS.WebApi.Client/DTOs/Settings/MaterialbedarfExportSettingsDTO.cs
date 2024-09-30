@@ -38,7 +38,7 @@ public class CsvExportCombinationDTO
         else
         {
             var descriptions = ArtikelArtenKombinationen.Select(a => a.GetDescription());
-            return string.Join("-, ", descriptions.Take(descriptions.Count() - 1)) + " & " + descriptions.Last() + " Artikel";
+            return string.Join(", ", descriptions.Take(descriptions.Count() - 1)) + " und " + descriptions.Last() + " Artikel";
         }
     }
 }
