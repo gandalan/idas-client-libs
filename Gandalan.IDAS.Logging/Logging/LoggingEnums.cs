@@ -6,7 +6,7 @@ public enum LogLevel
     Fehler = 1,
     Warnung = 2,
     Info = 3,
-    Diagnose = 4
+    Diagnose = 4,
 }
 
 public enum LogContext
@@ -27,5 +27,5 @@ public enum LogContext
     BackendService = 13,
     WebApi = 14,
     StammdatenPflege = 15,
-    Drucken = 16
+    Drucken = 16,
 }

@@ -91,7 +91,7 @@ public enum ReportAction
     Print = 1,
     Preview = 3,
     Export = 4,
-    Design = 99
+    Design = 99,
 }
 
 public enum ReportCapability
@@ -104,14 +104,17 @@ public class ReportExecuteSettings
     public string ReportName { get; set; }
     public ReportAction ReportAction { get; set; }
     public string PrinterName { get; set; }
+
     /// <summary>
     /// Page width in mm
     /// </summary>
     public double PageWidth { get; set; } = 210;
+
     /// <summary>
     /// Page height in mm
     /// </summary>
     public double PageHeight { get; set; } = 297;
+
     public string FileName { get; set; }
     public int Copies { get; set; } = 1;
     public string Watermark { get; set; }

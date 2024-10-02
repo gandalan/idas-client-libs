@@ -25,6 +25,7 @@ public class ArtikelIndiDatenWebRoutinen : WebRoutinenBase
         {
             return await GetAsync<KatalogArtikelIndiDatenDTO[]>($"ArtikelIndiDaten?changedSince={changedSince.Value:o}");
         }
+
         return await GetAsync<KatalogArtikelIndiDatenDTO[]>("ArtikelIndiDaten");
     }
 
@@ -37,5 +38,4 @@ public class ArtikelIndiDatenWebRoutinen : WebRoutinenBase
     {
         await DeleteAsync($"ArtikelIndiDaten/{daten.KatalogArtikelGuid}");
     }
-
 }
