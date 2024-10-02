@@ -1,4 +1,4 @@
-﻿namespace Gandalan.IDAS.Client.Contracts.Flux;
+namespace Gandalan.IDAS.Client.Contracts.Flux;
 
 public enum CallMode
 {
@@ -6,14 +6,16 @@ public enum CallMode
     /// retry until success or max retries reached, then throw exception if still not successful
     /// </summary>
     Guaranteed,
+
     /// <summary>
     /// retry until success or max retries reached
     /// </summary>
     BestEffort,
+
     /// <summary>
     /// try once, ignore failures
     /// </summary>
-    FireAndForget
+    FireAndForget,
 }
 
 public interface IFluxAction

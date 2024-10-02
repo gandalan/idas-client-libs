@@ -11,7 +11,7 @@ public enum ZusammenfassungsOptionen
     ArtikelnummerFrabeOberflaeche = 4,
     Vorgang = 8,
     FarbeOberflaeche = 16,
-    Keine = 32
+    Keine = 32,
 }
 
 [Flags]

@@ -1,6 +1,8 @@
-﻿namespace Gandalan.IDAS.Client.Contracts.Contracts.AV;
+namespace Gandalan.IDAS.Client.Contracts.Contracts.AV;
 
 public enum SerieSuchenModus
 {
-    AllePositionen, EinzelnePositionen, Manuell
+    AllePositionen,
+    EinzelnePositionen,
+    Manuell,
 }
