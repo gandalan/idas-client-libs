@@ -1,6 +1,6 @@
 ﻿namespace Gandalan.IDAS.Client.Contracts.Contracts;
 
-internal interface IJwtWebApiConfig : IWebApiConfig
+public interface IJwtWebApiConfig : IWebApiConfig
 {
     string JwtToken { get; set; }
 }

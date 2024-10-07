@@ -1,4 +1,4 @@
-﻿namespace Gandalan.Client.Contracts.UIServices;
+namespace Gandalan.Client.Contracts.UIServices;
 
 public enum UserNotifyMessageType
 {
@@ -8,5 +8,5 @@ public enum UserNotifyMessageType
     Error,
     UIError,
     Success,
-    Exception
+    Exception,
 }

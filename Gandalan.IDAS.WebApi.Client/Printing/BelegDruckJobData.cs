@@ -33,5 +33,5 @@ public enum JobArt
     Unbekannt = 0,
     Print = 1,
     Backup = 2,
-    Mail = 3
+    Mail = 3,
 }

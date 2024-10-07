@@ -9,5 +9,5 @@ public enum FarbArt
     LivFarbe = 4,
     SonderEloxalFarbe = 5,
     RALSonderFarbe = 6,
-    Roh = 7
+    Roh = 7,
 }

@@ -43,5 +43,5 @@ public enum UIEingabeFeldRegelNames
     NichtLeer = 16,
     Vierfachauswahl = 32,
     LangText = 64,
-    ArtikelFarbe = 128
+    ArtikelFarbe = 128,
 }

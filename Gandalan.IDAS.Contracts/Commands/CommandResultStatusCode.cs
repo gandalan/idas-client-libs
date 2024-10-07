@@ -1,4 +1,4 @@
-﻿namespace Gandalan.UI.Commands.Contracts;
+namespace Gandalan.UI.Commands.Contracts;
 
 public enum CommandResultStatusCode
 {
@@ -16,5 +16,5 @@ public enum CommandResultStatusCode
     BelegPositionNichtGefunden = 990,
     VarianteNichtGefunden = 991,
     VarianteLadeFehler = 992,
-    VarianteNichtErfassbar = 993
+    VarianteNichtErfassbar = 993,
 }
