@@ -13,5 +13,5 @@ public enum AnpassungArtDTO
     MbAufpreise = 256,
     Grenzenfreigabe = 512,
     FarbGruppen = 1024,
-    MbAufpreiseKlebe = 2048
+    MbAufpreiseKlebe = 2048,
 }

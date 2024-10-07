@@ -13,10 +13,7 @@ public class gSQLImporter
     /// <param name="encoding">Use Encoding.Default if null</param>
     public static gSQLInhalt ImportFromFile(string fileName, Encoding encoding = null)
     {
-        if (encoding == null)
-        {
-            encoding = Encoding.Default;
-        }
+        encoding ??= Encoding.Default;
 
         if (!File.Exists(fileName))
         {
@@ -24,7 +21,7 @@ public class gSQLImporter
         }
 
         var zeilen = File.ReadAllLines(fileName, encoding);
-        return Import(zeilen);
+        return import(zeilen);
     }
 
     /// <summary>
@@ -34,18 +31,15 @@ public class gSQLImporter
     /// <param name="encoding">Use Encoding.Default if null</param>
     public static gSQLInhalt ImportFromGsqlInhalt(gSQLInhalt gsqlData, Encoding encoding = null)
     {
-        if (encoding == null)
-        {
-            encoding = Encoding.Default;
-        }
+        encoding ??= Encoding.Default;
 
         var stream = new MemoryStream(encoding.GetBytes(gsqlData.ToString()));
 
-        var zeilen = ReadLines(stream, encoding);
-        return Import(zeilen);
+        var zeilen = readLines(stream, encoding);
+        return import(zeilen);
     }
 
-    private static gSQLInhalt Import(IEnumerable<string> zeilen)
+    private static gSQLInhalt import(IEnumerable<string> zeilen)
     {
         var result = new gSQLInhalt();
         gSQLSektion aktuelleSektion = null;
@@ -89,7 +83,7 @@ public class gSQLImporter
         return result;
     }
 
-    private static IEnumerable<string> ReadLines(Stream stream, Encoding encoding)
+    private static IEnumerable<string> readLines(Stream stream, Encoding encoding)
     {
         var lines = new List<string>();
 

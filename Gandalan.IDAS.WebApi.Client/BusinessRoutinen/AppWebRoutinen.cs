@@ -59,6 +59,6 @@ public class AppWebRoutinen : WebRoutinenBase
         await PostAsync("ProduzentAktivieren", new ProduzentAktivierenDTO
         {
             AdminEmail = adminEmail
-        });
+        }, null, true);
     }
 }

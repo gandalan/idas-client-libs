@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 
 namespace Gandalan.IDAS.WebApi.Client.DTOs.Belege;
 
@@ -30,5 +30,5 @@ public enum BelegStatus
     Storniert = 140,
     Importiert = 150,
     [Description("Beleg kopiert")]
-    BelegKopiert = 160
+    BelegKopiert = 160,
 }

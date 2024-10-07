@@ -105,10 +105,10 @@ public class HexEncoding
     }
 
     /// <summary>
-    /// Returns true is c is a hexadecimal digit (A-F, a-f, 0-9)
+    /// Returns <see langword="true"/> is c is a hexadecimal digit (A-F, a-f, 0-9)
     /// </summary>
     /// <param name="zeichen">Character to test</param>
-    /// <returns>true if hex digit, false if not</returns>
+    /// <returns><see langword="true"/> if hex digit, <see langword="false"/> if not</returns>
     public static bool IsHexDigit(char zeichen)
     {
         var returnValue = false;

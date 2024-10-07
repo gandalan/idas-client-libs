@@ -4,7 +4,7 @@ public enum PermissionLevel
 {
     Kein = 0,
     Lesen = 1,
-    LesenUndSchreiben = 2
+    LesenUndSchreiben = 2,
 }
 
 public enum Permission
@@ -27,10 +27,10 @@ public enum Permission
     UserAdmin,
     AlleBelegeEinsehen,
     AppAdmin,
-    SettingsSchreiben
+    SettingsSchreiben,
 }
 
 public interface IPermissions
 {
-    bool HasPermission(Permission permission, PermissionLevel minlevel);
+    bool HasPermission(Permission permission, PermissionLevel minLevel);
 }

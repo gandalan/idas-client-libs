@@ -15,5 +15,6 @@ public interface IHistorieHelper
     Task Warning(string text);
     Task Error(string text);
     Task Fatal(string text);
+    Task Fatal(Exception e, string text);
     Task Exception(Exception e);
 }

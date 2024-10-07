@@ -1,4 +1,4 @@
-﻿namespace Gandalan.IDAS.WebApi.DTO;
+namespace Gandalan.IDAS.WebApi.DTO;
 
 /// <summary>
 /// Informativ: Artikel-Arten
@@ -10,5 +10,5 @@ public enum KatalogArtikelArt
     ProfilArtikel = 2,
     FertigElementArtikel = 4,
     GewebeArtikel = 8,
-    DienstleistungsArtikel = 16
+    DienstleistungsArtikel = 16,
 }

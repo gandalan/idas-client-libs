@@ -4,5 +4,5 @@ public enum Lieferungstyp
 {
     Inland = 0,
     EU_Ausland = 1,
-    Welt = 2
+    Welt = 2,
 }

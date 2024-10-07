@@ -76,7 +76,7 @@ public class LoginWindowViewModel_v2 : INotifyPropertyChanged
     {
         AlleEnvironments = WebApiConfigurations.GetAll();
         LoggedInEnvironments = AlleEnvironments.Where(e => e.AuthToken != null && e.AuthToken.Token != Guid.Empty);
-        ShowLoggedInEnvironments = LoggedInEnvironments.Any();
+        ShowLoggedInEnvironments = LoggedInEnvironments.AnyOptimized();
         ServerEnvironment = AlleEnvironments.FirstOrDefault(e => e.FriendlyName.Equals(webApiSettings.FriendlyName, StringComparison.InvariantCultureIgnoreCase));
 
 #if DEBUG
