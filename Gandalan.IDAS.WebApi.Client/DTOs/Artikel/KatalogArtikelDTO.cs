@@ -85,6 +85,10 @@ public class KatalogArtikelDTO : IWithGueltigkeitsZeitraum
 
     public bool IsIndiArtikel { get; set; }
 
+    public bool IstEigenartikel { get; set; }
+    public bool ErsetztNeherArtikel { get; set; }
+    public Guid? OriginalArtikelGuid { get; set; }
+
     public KatalogArtikelDTO()
     {
         MoeglicheFarben = [];

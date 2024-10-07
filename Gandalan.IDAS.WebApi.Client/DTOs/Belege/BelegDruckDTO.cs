@@ -45,7 +45,9 @@ public class BelegDruckDTO
             }
 
             var abBelege = vorgang.Belege.Where(b => b.BelegArt == "AB" || b.BelegArt == "Auftragsbestätigung");
-            Bestelldatum = abBelege.Any() ? abBelege.Last().BelegDatum.ToString("d", culture) : "";
+#pragma warning disable CS0618 // Suppress the warning for obsolete code
+            Bestelldatum = abBelege.AnyOptimized() ? abBelege.Last().BelegDatum.ToString("d", culture) : "";
+#pragma warning restore CS0618
             Belegdatum = beleg.BelegDatum.ToString("d", culture);
             Lieferzeit = ""; //???
             IsEndkunde = vorgang.Kunde?.IstEndkunde ?? false;
@@ -115,7 +117,9 @@ public class BelegDruckDTO
             {
                 var saldenSorted = beleg.Salden.Where(s => s.Betrag != 0 || s.SaldenStatus == "AufAnfrage").OrderBy(i => i.Reihenfolge);
                 var aufAnfrage = false;
-                if (saldenSorted.Any())
+#pragma warning disable CS0618 // Suppress the warning for obsolete code
+                if (saldenSorted.AnyOptimized())
+#pragma warning restore CS0618
                 {
                     var lastActivSalde = saldenSorted.LastOrDefault(s => !s.IstInaktiv);
                     foreach (var dto in saldenSorted)

@@ -10,6 +10,7 @@ public class LagerbestandDTO
     public Guid LagerbestandGuid { get; set; }
     public Guid KatalogArtikelGuid { get; set; }
     public string KatalogNummer { get; set; }
+    [Obsolete("FarbKuerzelGuid verwenden")]
     public Guid FarbGuid { get; set; }
     public Guid FarbKuerzelGuid { get; set; }
     public string FarbKuerzel { get; set; }
@@ -25,4 +26,5 @@ public class LagerbestandDTO
     public bool IstAktiv { get; set; }
     public string Seriennummer { get; set; }
     public DateTime ChangedDate { get; set; }
+    public string WindowsUser { get; set; }
 }

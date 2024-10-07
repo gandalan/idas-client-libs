@@ -44,7 +44,7 @@ public class WebRoutinenBase
     /// <summary>
     /// Custom handler for exceptions.
     /// </summary>
-    /// <returns><c>true</c> if the exception was handled - <c>false</c> if the exception is not handled</returns>
+    /// <returns><see langword="true"/> if the exception was handled - <see langword="false"/> if the exception is not handled</returns>
     public delegate bool ExceptionHandler(Exception ex);
 
     /// <summary>
@@ -656,6 +656,8 @@ public class WebRoutinenBase
         {
             exception.Data.Add("URL", url);
             exception.Data.Add("CallMethod", sender);
+            exception.Data.Add("StatusCode", exception.StatusCode);
+            exception.Data.Add("Payload", exception.Payload);
         }
 
         return exception;
@@ -665,17 +667,17 @@ public class WebRoutinenBase
     {
         if (ex.Data.Contains("StatusCode"))
         {
-            var responseString = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
+            var response = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
             var code = (HttpStatusCode)ex.Data["StatusCode"];
 
-            if (!string.IsNullOrWhiteSpace(responseString))
+            if (!string.IsNullOrWhiteSpace(response))
             {
                 // Newtonsoft TypeNameInfo - try to restore original exception from Backend
-                if (responseString.Contains("$type"))
+                if (response.Contains("$type"))
                 {
                     try
                     {
-                        var original = JsonConvert.DeserializeObject<Exception>(responseString, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+                        var original = JsonConvert.DeserializeObject<Exception>(response, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
                         return new ApiException(original.Message, code, original, payload);
                     }
                     catch
@@ -685,13 +687,13 @@ public class WebRoutinenBase
 
                 try
                 {
-                    var infoObject = JsonConvert.DeserializeObject<dynamic>(responseString);
+                    var infoObject = JsonConvert.DeserializeObject<dynamic>(response);
                     string status = infoObject.status;
-                    return new ApiException(status, code, payload) { ExceptionString = infoObject.exception.ToString() };
+                    return new ApiException(status, code, ex, payload) { ExceptionString = infoObject.exception.ToString() };
                 }
                 catch
                 {
-                    return new ApiException(responseString, code, payload);
+                    return new ApiException(response, code, ex, payload);
                 }
             }
 
@@ -721,11 +723,11 @@ public class WebRoutinenBase
                     {
                         var infoObject = JsonConvert.DeserializeObject<dynamic>(response);
                         string status = infoObject.status;
-                        return new ApiException(status, code) { ExceptionString = infoObject.exception.ToString() };
+                        return new ApiException(status, code, ex) { ExceptionString = infoObject.exception.ToString() };
                     }
                     catch
                     {
-                        return new ApiException(response, code);
+                        return new ApiException(response, code, ex);
                     }
                 }
             }

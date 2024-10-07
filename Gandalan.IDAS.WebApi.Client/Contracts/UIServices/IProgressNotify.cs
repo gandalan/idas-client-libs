@@ -11,14 +11,16 @@ public interface IProgressNotify
     /// </summary>
     /// <param name="title">Title to show</param>
     /// <param name="toExecute">Function to run</param>
-    Task ShowProgress(string title, Func<Task> toExecute);
+    /// <param name="extraWaitTimeMs">Additional time the dialog stays open after <paramref name="toExecute"/> has finished executing. Time in milliseconds</param>
+    Task ShowProgress(string title, Func<Task> toExecute, int extraWaitTimeMs = 0);
 
     /// <summary>
     /// Show a progress indicator for a Task that updates progress
     /// </summary>
     /// <param name="title">Title to show</param>
     /// <param name="toExecute">Function to run, IProgressNotify is passed as param for updating</param>
-    Task ShowProgress(string title, Func<IProgressNotify, Task> toExecute);
+    /// <param name="extraWaitTimeMs">Additional time the dialog stays open after <paramref name="toExecute"/> has finished executing. Time in milliseconds</param>
+    Task ShowProgress(string title, Func<IProgressNotify, Task> toExecute, int extraWaitTimeMs = 0);
 
     /// <summary>
     /// Function to display the progress value for determinate progress tasks

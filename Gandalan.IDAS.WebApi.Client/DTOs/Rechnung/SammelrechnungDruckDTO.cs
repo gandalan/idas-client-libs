@@ -109,7 +109,9 @@ public class SammelrechnungPositionDruckDTO
     public static List<SammelrechnungPositionDruckDTO> ListFromDTOs(IList<SammelrechnungPositionenDTO> positionen)
     {
         var druckPositionen = new List<SammelrechnungPositionDruckDTO>();
-        if (positionen != null && positionen.Any())
+#pragma warning disable CS0618 // Suppress the warning for obsolete code
+        if (positionen != null && positionen.AnyOptimized())
+#pragma warning restore CS0618
         {
             foreach (var position in positionen)
             {
@@ -143,7 +145,9 @@ public class SammelrechnungSaldoDruckDTO
     public static List<SammelrechnungSaldoDruckDTO> ListFromDTOs(IList<SammelrechnungSaldenDTO> salden)
     {
         var druckSalden = new List<SammelrechnungSaldoDruckDTO>();
-        if (salden != null && salden.Any())
+#pragma warning disable CS0618 // Suppress the warning for obsolete code
+        if (salden != null && salden.AnyOptimized())
+#pragma warning restore CS0618
         {
             var maxReihenfolge = salden.Max(p => p.Reihenfolge);
             foreach (var saldo in salden)

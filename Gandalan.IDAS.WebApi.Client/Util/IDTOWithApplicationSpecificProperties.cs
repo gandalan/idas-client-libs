@@ -8,5 +8,6 @@ public interface IDTOWithApplicationSpecificProperties
 }
 
 public interface IEntityWithApplicationSpecificProperties
-{   
+{
 }
+

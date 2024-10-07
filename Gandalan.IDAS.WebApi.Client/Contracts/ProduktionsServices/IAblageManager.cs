@@ -90,7 +90,7 @@ public interface IAblageManager
     /// Verschiebt das Material von einem Ablagefach in ein anderes.
     /// </summary>
     /// <param name="sourceFach">Ablagefach in dem sich das Material befindet</param>
-    /// <param name="targetFach">Ablagefach in das das Material verschoben werden soll</param>
+    /// <param name="targetFach">Ablagefach in das Material verschoben werden soll</param>
     void MoveMaterial(AblageFachDTO sourceFach, AblageFachDTO targetFach);
 
     /// <summary>
