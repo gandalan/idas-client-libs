@@ -9,4 +9,5 @@ public interface INavigationGroup
     ObservableCollection<INavigationItem> Items { get; set; }
     int Order { get; set; }
     bool IsVisible { get; set; }
+    bool SingleClick { get; set; }
 }
