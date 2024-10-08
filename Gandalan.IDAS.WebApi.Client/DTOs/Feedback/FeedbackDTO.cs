@@ -23,6 +23,7 @@ public class FeedbackDTO
     public IList<FeedbackKommentarDTO> Kommentare { get; set; }
     public string Status { get; set; }
     public string LoesungsVersion { get; set; }
+    public string HotlineTicketNummer { get; set; }
 }
 
 public class FeedbackKommentarDTO
