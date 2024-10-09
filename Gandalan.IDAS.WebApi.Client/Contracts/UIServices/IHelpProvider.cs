@@ -10,5 +10,5 @@ public interface IHelpProvider
     Task ShowContextHelp(string slug);
     [Obsolete("Use ShowHelpCenter(string application) instead.")]
     Task ShowHelpCenter();
-    Task ShowHelpCenter(string application);
+    Task ShowHelpCenter(string application, bool clearHistory = true);
 }
