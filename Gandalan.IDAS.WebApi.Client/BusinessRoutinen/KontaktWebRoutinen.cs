@@ -12,17 +12,17 @@ public class KontaktWebRoutinen : WebRoutinenBase
     {
     }
 
-    public async Task<KontaktListItemDTO[]> GetKontakteAsync()
-        => await GetAsync<KontaktListItemDTO[]>("Kontakt");
+    public async Task<KontaktListItemDTO[]> GetKontakteAsync(bool ohneEndkunden = false)
+        => await GetAsync<KontaktListItemDTO[]>($"Kontakt?ohneEndkunden={ohneEndkunden}");
 
-    public async Task<KontaktListItemDTO[]> GetKontakteAsync(DateTime? changedSince)
+    public async Task<KontaktListItemDTO[]> GetKontakteAsync(DateTime? changedSince, bool ohneEndkunden = false)
     {
         if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
         {
-            return await GetAsync<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value:o}");
+            return await GetAsync<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value:o}&ohneEndkunden={ohneEndkunden}");
         }
 
-        return await GetAsync<KontaktListItemDTO[]>("Kontakt");
+        return await GetAsync<KontaktListItemDTO[]>($"Kontakt?ohneEndkunden={ohneEndkunden}");
     }
 
     public async Task<KontaktDTO> GetKontaktAsync(Guid kontaktGuid)

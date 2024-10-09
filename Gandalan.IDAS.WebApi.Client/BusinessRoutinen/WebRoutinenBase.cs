@@ -77,7 +77,7 @@ public class WebRoutinenBase
         }
     }
 
-    private async Task runPreRequestChecks(bool skipAuth = false)
+    private async Task runPreRequestChecks(string url, bool skipAuth = false, [CallerMemberName] string sender = null)
     {
         if (_restRoutinen == null)
         {
@@ -86,7 +86,10 @@ public class WebRoutinenBase
 
         if (!skipAuth && !await LoginAsync())
         {
-            throw new ApiUnauthorizedException("You are not authorized.");
+            var ex = new ApiUnauthorizedException("You are not authorized.");
+            ex.Data.Add("URL", url);
+            ex.Data.Add("CallMethod", sender);
+            throw ex;
         }
     }
 
@@ -229,7 +232,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             return await _restRoutinen.PostAsync<T>(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
@@ -249,7 +252,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             await _restRoutinen.PostAsync(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
@@ -267,7 +270,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             return await _restRoutinen.PostDataAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
@@ -287,7 +290,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             return await _restRoutinen.PostDataAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
@@ -307,7 +310,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             return await _restRoutinen.GetDataAsync(uri, version: version);
         }
         catch (HttpRequestException ex)
@@ -327,7 +330,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             return await _restRoutinen.GetAsync(uri, version: version);
         }
         catch (HttpRequestException ex)
@@ -347,7 +350,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             return await _restRoutinen.GetAsync<T>(uri, settings, version: version);
         }
         catch (HttpRequestException ex)
@@ -367,7 +370,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             await _restRoutinen.PutAsync(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
@@ -385,7 +388,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             return await _restRoutinen.PutAsync<T>(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
@@ -405,7 +408,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             return await _restRoutinen.PutDataAsync(uri, data);
         }
         catch (HttpRequestException ex)
@@ -420,7 +423,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             return await _restRoutinen.PutDataAsync(uri, data);
         }
         catch (HttpRequestException ex)
@@ -440,7 +443,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             await _restRoutinen.DeleteAsync(uri);
         }
         catch (HttpRequestException ex)
@@ -458,7 +461,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             await _restRoutinen.DeleteAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
@@ -476,7 +479,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             return await _restRoutinen.DeleteAsync<T>(uri, data, version: version);
         }
         catch (HttpRequestException ex)
