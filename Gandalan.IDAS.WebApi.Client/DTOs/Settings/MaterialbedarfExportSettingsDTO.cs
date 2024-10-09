@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using Gandalan.Client.Contracts.DataServices;
 
 namespace Gandalan.IDAS.WebApi.DTO;
+
+[UserSettingsObject]
+public class MaterialbedarfExportUserSettings
+{
+    public string CsvExportPath { get; set; } = "";
+}
 
 public class MaterialbedarfExportSettingsDTO
 {

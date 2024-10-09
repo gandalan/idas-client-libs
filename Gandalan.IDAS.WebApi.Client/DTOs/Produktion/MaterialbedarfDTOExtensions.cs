@@ -1,10 +1,12 @@
 using System.Collections.Generic;
-using Gandalan.IDAS.WebApi.Client.DTOs.Artikel;
 
 namespace Gandalan.IDAS.WebApi.DTO
 {
     public static class MaterialbedarfDTOExtensions
     {
+        public static bool HasStandardfarbe(this MaterialbedarfDTO dto) =>
+           string.IsNullOrEmpty(dto.FarbKuerzel) || dto.FarbKuerzel != "SF";
+
         public static bool HasSonderfarbe(this MaterialbedarfDTO dto) =>
             dto.FarbKuerzel == "SF" && string.IsNullOrEmpty(dto.FarbZusatzText);
 

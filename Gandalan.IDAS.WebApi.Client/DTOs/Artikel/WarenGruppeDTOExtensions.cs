@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Gandalan.IDAS.WebApi.DTO;
 
-namespace Gandalan.IDAS.WebApi.Client.DTOs.Artikel;
+namespace Gandalan.IDAS.WebApi.DTO;
 
 public static class WarenGruppeDTOExtensions
 {
