@@ -38,6 +38,10 @@ public class CsvExportCombinationDTO
 
     public override string ToString()
     {
+        if (ArtikelArtenKombinationen.Count == Enum.GetValues(typeof(CsvExportArtikelArt)).Length)
+        {
+            return "Alle Artikel";
+        }
         if (ArtikelArtenKombinationen.Count == 1)
         {
             return ArtikelArtenKombinationen[0].GetDescription() + " Artikel";
