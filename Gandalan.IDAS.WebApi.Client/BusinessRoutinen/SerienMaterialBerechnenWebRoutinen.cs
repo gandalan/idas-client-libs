@@ -34,8 +34,8 @@ public class SerienMaterialBerechnenWebRoutinen : WebRoutinenBase
     public async Task<List<MaterialbedarfDTO>> GetMaterialAsync(Guid serieGuid)
         => await GetAsync<List<MaterialbedarfDTO>>($"SerieMaterialbedarfBerechnen?serieGuid={serieGuid}");
 
-    public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfv2Async(Guid serieGuid)
-        => await GetAsync<List<MaterialbedarfDTO>>($"SerieOffenerMaterialbedarf?serieGuid={serieGuid}", version: "2");
+    public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfv2Async(Guid serieGuid, bool filterCsvExportedMaterial = true)
+        => await GetAsync<List<MaterialbedarfDTO>>($"SerieOffenerMaterialbedarf?serieGuid={serieGuid}&filterCsvExportedMaterial={filterCsvExportedMaterial}", version: "2");
 
     public async Task<List<MaterialbedarfDTO>> GetOffenerMaterialBedarfAsync(Guid serieGuid)
         => await GetAsync<List<MaterialbedarfDTO>>($"SerieOffenerMaterialbedarf?serieGuid={serieGuid}");
