@@ -5,9 +5,8 @@ on:
   pull_request:
     paths-ignore:
       - 'WebLibs/**'
-      - '.github/workflows/build-and-publish.yml'
-      - '.github/workflows/check-weblibs.yml'
-      - '.github/workflows/publish-weblibs.yml'
+      - '.github/workflows/**'
+      - '!.github/workflows/check-NuGet-Libs.yml'
 
 env:
   SDK_VERSION: 8.0.x
