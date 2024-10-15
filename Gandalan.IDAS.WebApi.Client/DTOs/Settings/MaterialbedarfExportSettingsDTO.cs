@@ -15,11 +15,17 @@ public class MaterialbedarfExportUserSettings
 
 public class MaterialbedarfExportSettingsDTO
 {
-    public MaterialbedarfExportType StandardfarbArtikelExportType { get; set; } = MaterialbedarfExportType.Schnittstelle;
-    public MaterialbedarfExportType TrendfarbArtikelExportType { get; set; } = MaterialbedarfExportType.Schnittstelle;
-    public MaterialbedarfExportType SonderfarbArtikelExportType { get; set; } = MaterialbedarfExportType.Schnittstelle;
-    public MaterialbedarfExportType UeberschriebeneArtikelExportType { get; set; } = MaterialbedarfExportType.Schnittstelle;
-    public MaterialbedarfExportType EigeneArtikelExportType { get; set; } = MaterialbedarfExportType.Schnittstelle;
+    public MaterialbedarfExportType NeherArtikelStandardFarbe { get; set; } = MaterialbedarfExportType.Schnittstelle;
+    public MaterialbedarfExportType NeherArtikelTrendFarbe { get; set; } = MaterialbedarfExportType.Schnittstelle;
+    public MaterialbedarfExportType NeherArtikelSonderFarbe { get; set; } = MaterialbedarfExportType.Schnittstelle;
+
+    public MaterialbedarfExportType UeberschriebenerArtikelStandardFarbe { get; set; } = MaterialbedarfExportType.Schnittstelle;
+    public MaterialbedarfExportType UeberschriebenerArtikelTrendFarbe { get; set; } = MaterialbedarfExportType.Schnittstelle;
+    public MaterialbedarfExportType UeberschriebenerArtikelSonderFarbe { get; set; } = MaterialbedarfExportType.Schnittstelle;
+
+    public MaterialbedarfExportType EigenArtikelStandardFarbe { get; set; } = MaterialbedarfExportType.CSV;
+    public MaterialbedarfExportType EigenArtikelTrendFarbe { get; set; } = MaterialbedarfExportType.CSV;
+    public MaterialbedarfExportType EigenArtikelSonderFarbe { get; set; } = MaterialbedarfExportType.CSV;
 
     public List<CsvExportCombinationDTO> CsvExportCombinations { get; set; } = [];
 
@@ -27,30 +33,18 @@ public class MaterialbedarfExportSettingsDTO
 }
 
 /// <summary>
-/// Defines the combination of ArtikelArten which will be exported together in a CSV file.
+/// Defines the combination of ArtikelArten + FarbArten which will be exported together in a CSV file.
 /// </summary>
 public class CsvExportCombinationDTO
 {
-    /// <summary>
-    /// The type of Artikel which will be combined in this export.
-    /// </summary>
-    public List<CsvExportArtikelArt> ArtikelArtenKombinationen { get; set; } = [];
+    public List<ExportArtikelArt> ExportArtikelArten { get; set; } = [];
+    public List<ExportFarbArt> ExportFarbArten { get; set; } = [];
 
     public override string ToString()
     {
-        if (ArtikelArtenKombinationen.Count == Enum.GetValues(typeof(CsvExportArtikelArt)).Length)
-        {
-            return "Alle Artikel";
-        }
-        if (ArtikelArtenKombinationen.Count == 1)
-        {
-            return ArtikelArtenKombinationen[0].GetDescription() + " Artikel";
-        }
-        else
-        {
-            var descriptions = ArtikelArtenKombinationen.Select(a => a.GetDescription());
-            return string.Join(", ", descriptions.Take(descriptions.Count() - 1)) + " und " + descriptions.Last() + " Artikel";
-        }
+        var artikelArten = ExportArtikelArten.Select(a => a.GetDescription());
+        var farbArten = ExportFarbArten.Select(a => a.GetDescription());
+        return string.Join(" + ", artikelArten) + " Artikel mit " + string.Join(" + ", farbArten);
     }
 }
 
@@ -66,14 +60,22 @@ public enum MaterialbedarfExportType
 /// <summary>
 /// Used to determine CSV export combinations.
 /// </summary>
-public enum CsvExportArtikelArt
+public enum ExportArtikelArt
 {
-    Standardfarb,
-    Trendfarb,
-    Sonderfarb,
+    Neher,
     [Description("Überschriebene")]
     Ueberschriebene,
     Eigene,
+}
+
+/// <summary>
+/// Used to determine CSV export combinations.
+/// </summary>
+public enum ExportFarbArt
+{
+    Standardfarbe,
+    Trendfarbe,
+    Sonderfarbe,
 }
 
 public static class CsvExportArtikelArtExtension
