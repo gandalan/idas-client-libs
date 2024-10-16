@@ -27,7 +27,7 @@ env:
 jobs:
   build-and-publish-nuget:
     if: github.repository_owner == 'gandalan'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # ubuntu-latest has issue with nuget pack command (nuget: 2: mono: not found)
 
     steps:
     - uses: actions/checkout@v4
