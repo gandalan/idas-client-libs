@@ -5,9 +5,8 @@ on:
   pull_request:
     paths-ignore:
       - 'WebLibs/**'
-      - '.github/workflows/build-and-publish.yml'
-      - '.github/workflows/check-weblibs.yml'
-      - '.github/workflows/publish-weblibs.yml'
+      - '.github/workflows/**'
+      - '!.github/workflows/check-NuGet-Libs.yml'
 
 env:
   SDK_VERSION: 8.0.x
@@ -26,7 +25,7 @@ env:
 
 jobs:
   check-nuget-libs:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # ubuntu-latest has issue with nuget pack command (nuget: 2: mono: not found)
 
     steps:
     - uses: actions/checkout@v4
