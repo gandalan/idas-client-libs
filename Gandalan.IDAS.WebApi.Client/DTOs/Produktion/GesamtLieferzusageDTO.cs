@@ -17,6 +17,7 @@ public class GesamtLieferzusageDTO : ICloneable
     public decimal Laufmeter { get; set; }
     public decimal UngedeckteLaufmeter { get; set; }
     public string FarbBezeichnung { get; set; }
+    public string FarbZusatzText { get; set; }
     public string FarbKuerzel { get; set; }
     public Guid FarbKuerzelGuid { get; set; }
     public string FarbCode { get; set; }
@@ -42,6 +43,7 @@ public class GesamtLieferzusageDTO : ICloneable
             Stueckzahl = Stueckzahl,
             Laufmeter = Laufmeter,
             FarbBezeichnung = FarbBezeichnung,
+            FarbZusatzText = FarbZusatzText,
             FarbKuerzel = FarbKuerzel,
             FarbKuerzelGuid = FarbKuerzelGuid,
             FarbCode = FarbCode,
