@@ -23,9 +23,9 @@ public class MaterialbedarfExportSettingsDTO
     public MaterialbedarfExportType UeberschriebenerArtikelTrendFarbe { get; set; } = MaterialbedarfExportType.Schnittstelle;
     public MaterialbedarfExportType UeberschriebenerArtikelSonderFarbe { get; set; } = MaterialbedarfExportType.Schnittstelle;
 
-    public MaterialbedarfExportType EigenArtikelStandardFarbe { get; set; } = MaterialbedarfExportType.CSV;
-    public MaterialbedarfExportType EigenArtikelTrendFarbe { get; set; } = MaterialbedarfExportType.CSV;
-    public MaterialbedarfExportType EigenArtikelSonderFarbe { get; set; } = MaterialbedarfExportType.CSV;
+    public MaterialbedarfExportType EigenArtikelStandardFarbe { get; set; } = MaterialbedarfExportType.Schnittstelle;
+    public MaterialbedarfExportType EigenArtikelTrendFarbe { get; set; } = MaterialbedarfExportType.Schnittstelle;
+    public MaterialbedarfExportType EigenArtikelSonderFarbe { get; set; } = MaterialbedarfExportType.Schnittstelle;
 
     public List<CsvExportCombinationDTO> CsvExportCombinations { get; set; } = [];
 
