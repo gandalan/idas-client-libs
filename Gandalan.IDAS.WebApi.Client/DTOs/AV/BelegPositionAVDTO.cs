@@ -14,6 +14,11 @@ public class BelegPositionAVDTO
     public DateTime Bereitgestellt { get; set; }
     public DateTime? Berechnet { get; set; }
     public bool IstBerechnet { get; set; }
+    /// <summary>
+    /// Counter for how often the calculation of this AVBelegPosition has failed.
+    /// Gets reset to 0 when calculation was successful or re-calculation was triggered (updated position or manually).
+    /// </summary>
+    public int FailedCalculationsCount { get; set; }
     public bool IstProduziert { get; set; }
     public bool IstGeloescht { get; set; }
     public bool IstStorniert { get; set; }
