@@ -11,6 +11,7 @@ public class BelegPositionStatusDTO
     public bool AVDatenBerechnen { get; set; }
 
     public bool AVDatenAktualisieren { get; set; }
+    public bool ResetFailCounter { get; set; }
 
     public DateTime ChangedDate { get; set; }
 }
