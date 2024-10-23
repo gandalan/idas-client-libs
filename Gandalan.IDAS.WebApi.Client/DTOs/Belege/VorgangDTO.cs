@@ -96,6 +96,7 @@ public class VorgangDTO : IDTOWithApplicationSpecificProperties, INotifyProperty
     public long? OriginalVorgangsNummer { get; set; }
     public Guid OriginalAppGuid { get; set; }
     public bool InnergemeinschaftlichOhneMwSt { get; set; }
+    public Guid ZielVorgangGuid { get; set; }
 
     public VorgangDTO()
     {
