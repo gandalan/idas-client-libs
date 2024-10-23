@@ -23,6 +23,7 @@ public class FeedbackDTO
     public IList<FeedbackKommentarDTO> Kommentare { get; set; }
     public string Status { get; set; }
     public string LoesungsVersion { get; set; }
+    public string HotlineTicketNummer { get; set; }
 }
 
 public class FeedbackKommentarDTO
@@ -39,5 +40,15 @@ public class FeedbackAttachmentDTO
     public DateTime Zeitstempel { get; set; }
     public string Filename { get; set; }
     public string URL { get; set; }
+}
 
+public class FeedbackNotifyItemDTO
+{
+    public Guid FeedbackNotifyItemGuid { get; set; }
+    public string Type { get; set; }
+    public string Benutzer { get; set; }
+    public Guid FeedbackGuid { get; set; }
+    public Guid FeedbackKommentarGuid { get; set; }
+    public bool Gelesen { get; set; }
+    public DateTime ChangedDate { get; set; }
 }
