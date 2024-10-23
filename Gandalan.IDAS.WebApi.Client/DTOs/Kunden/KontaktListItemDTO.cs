@@ -38,6 +38,11 @@ public class KontaktListItemDTO
     public string Strasse { get; set; }
 
     /// <summary>
+    /// Postalische Hausnummer, ggf. mit Suffix/Prafix z.B. "16a" oder "77 (Hinterhaus)"
+    /// </summary>
+    public string Hausnummer { get; set; }
+
+    /// <summary>
     /// Land
     /// </summary>
     public string Land { get; set; }
@@ -98,6 +103,7 @@ public class KontaktListItemDTO
         newkontakt.IstGesperrt = IstGesperrt;
         newkontakt.IstArchiviert = IstArchiviert;
         newkontakt.Strasse = Strasse;
+        newkontakt.Hausnummer = Hausnummer;
         newkontakt.Land = Land;
         newkontakt.Plz = Plz;
         newkontakt.Ort = Ort;
