@@ -47,6 +47,15 @@ public class TagInfoWebRoutinen : WebRoutinenBase
     public async Task DeleteTagInfoAsync(TagInfoDTO dto)
         => await DeleteAsync("TagInfo", dto);
 
+    public async Task<IList<TagVorlageDTO>> GetTagVorlagenAsync()
+        => await GetAsync<List<TagVorlageDTO>>($"TagVorlagen/GetTagVorlagen");
+
+    public async Task AddOrUpdateTagVorlageAsync(TagVorlageDTO dto)
+        => await PostAsync("TagVorlagen/AddOrUpdateTagVorlagen", dto);
+
+    public async Task DeleteTagVorlageAsync(Guid tagVorlageGuid)
+        => await DeleteAsync("TagVorlagen/DeleteTagVorlage", tagVorlageGuid);
+
     public async Task<IList<TagInfoDTO>> GetTagInfoForFunctionAsync(Guid objectGuid, long mandantID)
         => await GetAsync<List<TagInfoDTO>>($"GetTagInfoForFunction?objectGuid={objectGuid}&mandantID={mandantID}");
 
