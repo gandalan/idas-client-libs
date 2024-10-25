@@ -10,4 +10,7 @@ public class PositionStornoWebRoutinen : WebRoutinenBase
 
     public async Task PositionStornierenAsync(Guid positionGuid)
         => await PostAsync($"PositionStorno?posGuid={positionGuid}", null);
+
+    public async Task BelegStornierenAsync(Guid belegGuid)
+        => await PostAsync($"BelegStorno?belegGuid={belegGuid}", null);
 }
