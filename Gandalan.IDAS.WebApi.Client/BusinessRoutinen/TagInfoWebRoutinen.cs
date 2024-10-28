@@ -54,7 +54,7 @@ public class TagInfoWebRoutinen : WebRoutinenBase
         => await PostAsync("TagVorlagen/AddOrUpdateTagVorlagen", dto);
 
     public async Task DeleteTagVorlageAsync(Guid tagVorlageGuid)
-        => await DeleteAsync("TagVorlagen/DeleteTagVorlage", tagVorlageGuid);
+        => await DeleteAsync($"TagVorlagen/DeleteTagVorlage?tagVorlageGuid={tagVorlageGuid}");
 
     public async Task<IList<TagInfoDTO>> GetTagInfoForFunctionAsync(Guid objectGuid, long mandantID)
         => await GetAsync<List<TagInfoDTO>>($"GetTagInfoForFunction?objectGuid={objectGuid}&mandantID={mandantID}");
