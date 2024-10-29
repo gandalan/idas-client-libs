@@ -44,7 +44,7 @@ public class CsvExportCombinationDTO
     {
         var artikelArten = ExportArtikelArten.Select(a => a.GetDescription());
         var farbArten = ExportFarbArten.Select(a => a.GetDescription());
-        return string.Join(" + ", artikelArten) + " Artikel mit " + string.Join(" + ", farbArten);
+        return $"{string.Join(" + ", artikelArten)} Artikel mit {string.Join(" + ", farbArten)}";
     }
 }
 
