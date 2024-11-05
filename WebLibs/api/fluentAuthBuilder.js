@@ -1,5 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import { isTokenValid, getRefreshToken } from "./fluentApi";
+import validator from "validator";
 
 /**
  * @typedef {Object} FluentAuth
@@ -38,6 +39,11 @@ export function authBuilder() {
          * @returns {FluentAuth}
          */
         useAppToken(appToken = "") {
+            if (!validator.isUUID(appToken)) {
+                console.error("AppToken is not valid GUID");
+                return null;
+            }
+
             this.appToken = appToken; return this;
         },
 
@@ -71,7 +77,7 @@ export function authBuilder() {
         },
 
         /**
-         * Authenticates the user with the JWT token or refreshes the token with 
+         * Authenticates the user with the JWT token or refreshes the token with
          * the refreshToken set before
          * @return {string} the JWT token
          */
@@ -103,11 +109,11 @@ export function authBuilder() {
 
         /**
          * Login with credentials and return the JWT token
-         * @param {string} username 
-         * @param {string} password 
+         * @param {string} username
+         * @param {string} password
          * @return {string} the JWT token
          */
-        async login(username = "", password = "") 
+        async login(username = "", password = "")
         {
             if (username && password) {
                 const payload = { "Email": username, "Password": password, "AppToken": this.appToken };
@@ -153,7 +159,7 @@ export function authBuilder() {
             {
                 this.token = await this.tryRefreshToken(this.refreshToken);
             }
-    
+
             if (this.token && isTokenValid(this.token))
             {
                 this.refreshToken = getRefreshToken(this.token);
@@ -173,7 +179,7 @@ export function authBuilder() {
             // eslint-disable-next-line no-undef
             globalThis.idasTokens = { token: this.token, refreshToken: this.refreshToken, appToken: this.appToken, userInfo };
         },
-        
+
         /**
          * Redirect to the login page
          * @private
