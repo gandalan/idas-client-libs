@@ -25,7 +25,7 @@ public class TranslateWebRoutinen : WebRoutinenBase
         _validConfig = true;
     }
 
-    public async Task<String> Translate(string language, string text)
+    public async Task<string> Translate(string language, string text)
     {
         if (!_validConfig)
         {
