@@ -138,6 +138,7 @@ public static class WebApiConfigurations
                     HelpCenterUrl = response.HelpCenter,
                     StoreUrl = response.Store,
                     WebhookServiceUrl = response.WebhookService,
+                    TranslateUrl = response.Translate,
                     FriendlyName = env,
                     AppToken = appToken
                 };

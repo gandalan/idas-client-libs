@@ -49,5 +49,7 @@ public interface IWebApiConfig
     string HelpCenterUrl { get; set; }
     string WebhookServiceUrl { get; set; }
 
+    string TranslateUrl { get; set; }
+
     void CopyToThis(IWebApiConfig settings);
 }
