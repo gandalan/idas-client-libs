@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -52,21 +53,35 @@ public class HttpClientConfig : ICloneable
 
 public class HttpClientFactory
 {
+    private static readonly ConcurrentDictionary<string, HttpClient> _clients = new();
+
     private HttpClientFactory()
     {
     }
 
     public static HttpClient GetInstance(HttpClientConfig config)
     {
-        return createWebClient(config); // this is not best practice!!
-        /*
-        if (!_clients.ContainsKey(config.BaseUrl))
+        // Check if an instance already exists to avoid unnecessary creation
+        if (_clients.TryGetValue(config.BaseUrl, out var client))
         {
-            var client = createWebClient(config);
-            _clients[client.BaseAddress.ToString()] = client;
+            return client;
         }
-        return _clients[config.BaseUrl];
-        */
+
+        // Try to add a new client; only one thread will succeed in adding
+        var newClient = createWebClient(config);
+        if (_clients.TryAdd(config.BaseUrl, newClient))
+        {
+            return newClient;
+        }
+        else
+        {
+            // Dispose the newly created client if another thread added a client first
+            newClient.Dispose();
+        }
+
+        // Retrieve the existing client from the dictionary
+        _clients.TryGetValue(config.BaseUrl, out client);
+        return client;
     }
 
     /// <summary>
