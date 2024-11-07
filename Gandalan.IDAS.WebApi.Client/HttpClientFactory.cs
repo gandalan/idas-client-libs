@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -48,25 +49,89 @@ public class HttpClientConfig : ICloneable
             AdditionalHeaders = new Dictionary<string, string>(AdditionalHeaders)
         };
     }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is not HttpClientConfig other) return false;
+
+        // Compare base properties
+        if (BaseUrl != other.BaseUrl ||
+            UseCompression != other.UseCompression ||
+            UserAgent != other.UserAgent ||
+            !Equals(Credentials, other.Credentials) ||
+            !Equals(Proxy, other.Proxy))
+        {
+            return false;
+        }
+
+        // Compare headers
+        if (AdditionalHeaders.Count != other.AdditionalHeaders.Count)
+        {
+            return false;
+        }
+
+        foreach (var pair in AdditionalHeaders)
+        {
+            if (!other.AdditionalHeaders.TryGetValue(pair.Key, out var value) || value != pair.Value)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public override int GetHashCode()
+    {
+        // Hash each property and combine them to generate a unique hash
+        var hash = BaseUrl.GetHashCode() ^ UseCompression.GetHashCode() ^ (UserAgent?.GetHashCode() ?? 0);
+        if (Credentials != null)
+        {
+            hash ^= Credentials.GetHashCode();
+        }
+        if (Proxy != null)
+        {
+            hash ^= Proxy.GetHashCode();
+        }
+        foreach (var header in AdditionalHeaders)
+        {
+            hash ^= header.Key.GetHashCode() ^ header.Value.GetHashCode();
+        }
+        return hash;
+    }
 }
 
 public class HttpClientFactory
 {
+    private static readonly ConcurrentDictionary<HttpClientConfig, HttpClient> _clients = new();
+
     private HttpClientFactory()
     {
     }
 
     public static HttpClient GetInstance(HttpClientConfig config)
     {
-        return createWebClient(config); // this is not best practice!!
-        /*
-        if (!_clients.ContainsKey(config.BaseUrl))
+        // Check if an instance already exists to avoid unnecessary creation
+        if (_clients.TryGetValue(config, out var client))
         {
-            var client = createWebClient(config);
-            _clients[client.BaseAddress.ToString()] = client;
+            return client;
         }
-        return _clients[config.BaseUrl];
-        */
+
+        // Try to add a new client; only one thread will succeed in adding
+        var newClient = createWebClient(config);
+        if (_clients.TryAdd(config, newClient))
+        {
+            return newClient;
+        }
+        else
+        {
+            // Dispose the newly created client if another thread added a client first
+            newClient.Dispose();
+        }
+
+        // Retrieve the existing client from the dictionary
+        _clients.TryGetValue(config, out client);
+        return client;
     }
 
     /// <summary>
