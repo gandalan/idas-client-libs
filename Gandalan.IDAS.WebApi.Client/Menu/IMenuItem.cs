@@ -9,6 +9,6 @@ public interface IMenuItem
     string Caption { get; }
     object Icon { get; }
     int Order { get; }
-
     Func<Task> Execute { get; }
+    bool CanHandle();
 }
