@@ -6,7 +6,7 @@
  * @property {function(string) : FluentRESTClient} useToken - Function to set the JWT token and return the FluentApi object.
  * @property {function(string) : object|Array<any>} get - Async function to perform GET requests.
  * @property {function(string, object) : object|Array<any>} put - Async function to perform PUT requests with a payload.
- * @property {function(string, object) : object|Array<any>} post - Async function to perform POST requests with a payload.
+ * @property {function(string, object|FormData) : object|Array<any>} post - Async function to perform POST requests with a payload.
  * @property {function(string) : object|Array<any>} delete - Async function to perform DELETE requests.
  */
 
@@ -21,7 +21,7 @@ export function restClient() {
 
         /**
          * set the base URL for all requests
-         * 
+         *
          * @param {string} url to use as base URL
          * @returns {FluentRESTClient}
          */
@@ -78,13 +78,23 @@ export function restClient() {
          *
          * @async
          * @param {string} [url=""]
-         * @param {Object} [payload={}]
+         * @param {Object|FormData} [payload={}]
          * @returns {Promise<any>}
          */
         async post(url = "", payload = {}) {
             const finalUrl = `${this.baseUrl}${url}`;
-            const headers = this.token ? { "Authorization": `Bearer ${this.token}`, "Content-Type": "application/json" } : {};
-            const res = await fetch(finalUrl, { method: "POST", body: JSON.stringify(payload), headers });
+            const headers = this.token ? { "Authorization": `Bearer ${this.token}` } : {};
+
+            // Determine the body and headers based on the payload type
+            let body;
+            if (payload instanceof FormData) {
+                body = payload;
+            } else {
+                body = JSON.stringify(payload);
+                headers["Content-Type"] = "application/json";
+            }
+
+            const res = await fetch(finalUrl, { method: "POST", body, headers });
             if (res.ok)
                 return await this._parseReponse(res);
             throw new Error(`POST ${finalUrl} failed: ${res.status} ${res.statusText}`);
@@ -106,8 +116,7 @@ export function restClient() {
             throw new Error(`DELETE ${finalUrl} failed: ${res.status} ${res.statusText}`);
         },
 
-        async _parseReponse(res)
-        {
+        async _parseReponse(res) {
             // check if repsonse is JSON, then return parsed JSON, otherwise return text
             const contentType = res.headers.get("content-type");
             if (contentType && contentType.includes("application/json"))
