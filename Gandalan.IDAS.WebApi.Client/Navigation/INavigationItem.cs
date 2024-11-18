@@ -6,6 +6,7 @@ namespace Gandalan.Client.Contracts.Navigation;
 public interface INavigationItem
 {
     string Group { get; }
+    string SubGroup { get; }
     string Caption { get; }
     object Icon { get; }
     int Order { get; }
