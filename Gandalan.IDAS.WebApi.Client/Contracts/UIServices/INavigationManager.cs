@@ -14,5 +14,5 @@ public interface INavigationManager
     void SetGroupOrder(string groupName, int order);
 
     void SetGroupIcon(string groupName, object icon);
-    void SetSingleClick(string groupName, bool singleClick);
+    void SetSubGroupOrder(string groupName, string subGroupName, int order);
 }
