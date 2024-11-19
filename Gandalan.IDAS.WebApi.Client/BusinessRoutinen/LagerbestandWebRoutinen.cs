@@ -45,7 +45,7 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
     public async Task<LagerReservierungDTO> GetReservierungAsync(Guid guid)
         => await GetAsync<LagerReservierungDTO>($"LagerReservierungen/?id={guid}");
 
-    public async Task<List<LagerReservierungDTO>> GetAllReservierungenAsync(string artikelnummer, string farbkuerzel, string farbcode, string bezug, DateTime? changedSince)
+    public async Task<List<LagerReservierungDTO>> GetAllReservierungenAsync(string artikelnummer = "", string farbkuerzel = "", string farbcode = "", string bezug = "", DateTime? changedSince = null)
     {
         if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
         {
