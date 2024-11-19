@@ -1,12 +1,13 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Gandalan.Client.Contracts.Navigation;
 
 namespace Gandalan.Client.Contracts.UIServices;
 
 public interface INavigationManager
 {
-    void AddNavigationItem(INavigationItem data);
+    Task AddNavigationItem(INavigationItem data);
     ObservableCollection<INavigationGroup> GetNavigationGroups();
     event EventHandler NavigationItemsChanged;
 
