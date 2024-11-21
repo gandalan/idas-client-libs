@@ -7,7 +7,6 @@ namespace Gandalan.Client.Contracts.UIServices;
 public interface INavigationManager
 {
     Task AddNavigationItem(INavigationItem data);
-    ObservableCollection<INavigationGroup> GetNavigationGroups();
     Task SetGroupOrder(string groupName, int order);
     Task SetGroupIcon(string groupName, object icon);
     Task SetSubGroupOrder(string groupName, string subGroupName, int order);
