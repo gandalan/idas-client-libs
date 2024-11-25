@@ -17,10 +17,10 @@ public interface IFeedbackService
     /// </summary>
     /// <param name="pcode">optional, preselected pcode</param>
     /// <returns></returns>
-    Task NavigatorToNewFeedback(string pcode = null);
+    Task NavigateToNewFeedback(string pcode = null);
 
     /// <summary>
     /// navigate to a WebView to view the feedback entry list.
     /// </summary>
-    Task NavigatorToFeedbackList();
+    Task NavigateToFeedbackList();
 }
