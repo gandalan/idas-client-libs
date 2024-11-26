@@ -1,13 +1,26 @@
-namespace Gandalan.IDAS.Client.Contracts.Contracts.UIServices;
+using System.Threading.Tasks;
+
+namespace Gandalan.IDAS.WebApi.Client.Contracts.UIServices;
 
 /// <summary>
-/// Service for collection end user feedback, for instance via the
-/// "smiley" button in the top right corner of an app
+/// UI-Service for collecting end user feedback.
 /// </summary>
 public interface IFeedbackService
 {
     /// <summary>
-    /// i.e. opens a dialog window, takes screenshots, emails them etc.
+    /// opens the feedback dialog window to create a new feedback entry.
     /// </summary>
-    void CollectUserFeedback();
+    Task OpenNewFeedbackWindow();
+
+    /// <summary>
+    /// navigate to a WebView to create a new feedback entry.
+    /// </summary>
+    /// <param name="pcode">optional, preselected pcode</param>
+    /// <returns></returns>
+    Task NavigateToNewFeedback(string pcode = null);
+
+    /// <summary>
+    /// navigate to a WebView to view the feedback entry list.
+    /// </summary>
+    Task NavigateToFeedbackList();
 }
