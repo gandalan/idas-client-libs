@@ -1,6 +1,6 @@
 {
   "name": "@gandalan/weblibs",
-  "version": "1.1.83",
+  "version": "1.2.0",
   "description": "WebLibs for Gandalan JS/TS/Svelte projects",
   "keywords": [
     "gandalan"
@@ -27,9 +27,9 @@
     "validator": "^13.12.0"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.25.8",
+    "@babel/eslint-parser": "^7.25.9",
     "eslint": "^8.57.1",
-    "eslint-plugin-svelte": "^2.44.1",
+    "eslint-plugin-svelte": "^2.46.0",
     "svelte": "^4.2.19",
     "svelte-check": "^3.8.6"
   },
