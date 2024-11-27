@@ -13,6 +13,7 @@ if ($PackageVersion) {
     # Could be run in DevOps
     # The build process will automatically set the value of the BUILD_BUILDNUMBER environment variable to the correct build number
     $BuildNumber = $Env:Build_BuildNumber
+    Write-Host "BuildNumber was set from environment variable"
 }
 
 Write-Host "BuildNumber: $BuildNumber"
