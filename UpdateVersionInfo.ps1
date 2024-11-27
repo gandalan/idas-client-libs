@@ -1,8 +1,10 @@
+#Requires -Version 7.4
+# Run this script with pwsh command. Running via .\UpdateVersionInfo.ps1 2024.11.27.356 can't add PackageVersion param somehow
 [CmdletBinding()]
 
 param (
-    # https://regex101.com/r/qEydI3/1
-    [ValidatePattern("[0-9]{4}\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]+")]
+    # https://regex101.com/r/L80HcG/1
+    [ValidatePattern("^[0-9]{4}\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]+$")]
     [String]
     $PackageVersion
 )
