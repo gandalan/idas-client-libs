@@ -8,5 +8,4 @@ public interface INavigationSubGroup
     int Order { get; set; }
     ObservableCollection<INavigationItem> Items { get; set; }
     bool IsVisible { get; set; }
-    bool IsFirst { get; set; }
 }
