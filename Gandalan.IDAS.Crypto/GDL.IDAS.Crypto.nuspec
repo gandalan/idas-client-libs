@@ -13,6 +13,8 @@
         <readme>README.md</readme>
         <dependencies>
           <dependency id="BCrypt.Net-Next" version="4.0.3" />
+          <group targetFramework=".NETFramework4.8" />
+          <group targetFramework="net8.0" />
         </dependencies>
     </metadata>
     <files>
