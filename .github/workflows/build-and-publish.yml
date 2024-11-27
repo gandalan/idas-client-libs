@@ -10,7 +10,7 @@ on:
       - '!.github/workflows/build-and-publish.yml'
 
 env:
-  SDK_VERSION: 8.0.x
+  SDK_VERSION: 9.0.x
   PACKAGE_1: GDL.IDAS.Crypto
   PACKAGE_1_FULL: Gandalan.IDAS.Crypto
   PACKAGE_2: GDL.IDAS.Logging
