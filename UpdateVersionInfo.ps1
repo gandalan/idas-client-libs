@@ -2,7 +2,7 @@
 
 param (
     # https://regex101.com/r/3qs3QO/1
-    [ValidatePattern("[0-9]{4}\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}")]
+    [ValidatePattern("[0-9]{4}")]
     [String]
     $PackageVersion
 )
@@ -12,8 +12,8 @@ if ($PackageVersion) {
 } else {
     # Could be run in DevOps
     # The build process will automatically set the value of the BUILD_BUILDNUMBER environment variable to the correct build number
-    $BuildNumber = $Env:Build_BuildNumber
-    Write-Host "BuildNumber was set from environment variable"
+    Write-Host "PackageVersion param is empty. Try to set BuildNumber from environment variable"
+	$BuildNumber = $Env:Build_BuildNumber
 }
 
 Write-Host "BuildNumber: $BuildNumber"
