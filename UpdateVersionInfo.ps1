@@ -46,20 +46,27 @@ $NewVersion = [regex]::matches($BuildNumber, $VersionRegex)
 $file = ".\Gandalan.IDAS.WebApi.Client\GDL.IDAS.WebApi.Client.nuspec"
 # Search in the "GDL.IDAS.WebApi.Client.nuspec" file items that matches the version regex and replace them with the
 # correct version number
+Write-Host "Updating $file..."
 (Get-Content $file) -replace $VersionReplaceRegex, $NewVersion | Out-File $file
 
 #GDL.IDAS.Logging.nuspec
 $file = ".\Gandalan.IDAS.Logging\GDL.IDAS.Logging.nuspec"
+Write-Host "Updating $file..."
 (Get-Content $file) -replace $VersionReplaceRegex, $NewVersion | Out-File $file
 
 #GDL.IDAS.Crypto.nuspec
 $file = ".\Gandalan.IDAS.Crypto\GDL.IDAS.Crypto.nuspec"
+Write-Host "Updating $file..."
 (Get-Content $file) -replace $VersionReplaceRegex, $NewVersion | Out-File $file
 
 #GDL.IDAS.WebApi.Client.Wpf.nuspec
 $file = ".\Gandalan.IDAS.WebApi.Client.Wpf\GDL.IDAS.WebApi.Client.Wpf.nuspec"
+Write-Host "Updating $file..."
 (Get-Content $file) -replace $VersionReplaceRegex, $NewVersion | Out-File $file
 
 #GDL.IDAS.Contracts.nuspec
 $file = ".\Gandalan.IDAS.Contracts\GDL.IDAS.Contracts.nuspec"
+Write-Host "Updating $file..."
 (Get-Content $file) -replace $VersionReplaceRegex, $NewVersion | Out-File $file
+
+Write-Host "Done"
