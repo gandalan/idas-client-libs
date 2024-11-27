@@ -2,7 +2,7 @@
 
 param (
     # https://regex101.com/r/3qs3QO/1
-    [ValidatePattern("[0-9]{4}")]
+    [ValidatePattern("[0-9]{4}\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]+")]
     [String]
     $PackageVersion
 )
