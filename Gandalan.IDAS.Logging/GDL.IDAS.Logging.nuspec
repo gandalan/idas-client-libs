@@ -12,6 +12,8 @@
         <license type="expression">MIT</license>
         <readme>README.md</readme>
         <dependencies>
+          <group targetFramework=".NETFramework4.8" />
+          <group targetFramework="net8.0" />
         </dependencies>
     </metadata>
     <files>
