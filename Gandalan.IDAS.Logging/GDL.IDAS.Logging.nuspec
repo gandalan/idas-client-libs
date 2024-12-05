@@ -9,6 +9,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Gandalan.IDAS.Logging</description>
         <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2024</copyright>
+        <projectUrl>https://github.com/gandalan/idas-client-libs/</projectUrl>
         <license type="expression">MIT</license>
         <readme>README.md</readme>
         <dependencies>
