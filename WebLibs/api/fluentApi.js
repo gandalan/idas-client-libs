@@ -1,5 +1,5 @@
-import { EnvironmentConfig } from "./envUtils";
 import { FluentAuthManager } from "./fluentAuthManager";
+import { EnvironmentConfig } from "./fluentEnvUtils";
 import { FluentRestClient, restClient } from "./fluentRestClient";
 
 /**
@@ -130,14 +130,14 @@ export function createApi() {
  * Default setup for IDAS
  *
  * @export
- * @param {EnvironmentConfig} [env={}]
+ * @param {EnvironmentConfig} [envConfig={}]
  * @param {FluentAuthManager} [authManager={}]
  * @return {FluentApi}
  */
-export function idasApi(env, authManager) {
+export function idasApi(envConfig, authManager) {
   return createApi()
     .useAuthManager(authManager)
-    .useBaseUrl(env.idas);
+    .useBaseUrl(envConfig.idas);
 }
 
 /**

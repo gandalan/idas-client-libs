@@ -18,23 +18,23 @@
  * @private
  * @type {Object.<string, EnvironmentConfig>}
  */
-const envs = {};
+const envConfigs = {};
 
 /**
  * Fetches the environment data from the hub.
  *
  * @export
  * @async
- * @param {string} [env=""] - The environment name (e.g., "dev", "staging", "produktiv").
+ * @param {string} [envConfig=""] - The environment name (e.g., "dev", "staging", "produktiv").
  * @returns {Promise<EnvironmentConfig>}
  */
-export async function fetchEnv(env = "") {
-  if (!(env in envs)) {
-    const hubUrl = `https://connect.idas-cloudservices.net/api/Endpoints?env=${env}`;
+export async function fetchEnvConfig(envConfig = "") {
+  if (!(envConfig in envConfigs)) {
+    const hubUrl = `https://connect.idas-cloudservices.net/api/Endpoints?env=${envConfig}`;
     console.log("fetching env", hubUrl);
     const r = await fetch(hubUrl);
     const data = await r.json();
-    envs[env] = data;
+    envConfigs[envConfig] = data;
   }
-  return envs[env];
+  return envConfigs[envConfig];
 }

@@ -1,12 +1,12 @@
 import { jwtDecode } from "jwt-decode";
 import validator from "validator";
-import { EnvironmentConfig } from "./envUtils";
+import { EnvironmentConfig } from "./fluentEnvUtils";
 
 /**
  * @typedef {Object} FluentAuthManager
  * @property {string} appToken - The application token.
  * @property {string} authUrl - The authentication URL.
- * @property {EnvironmentConfig} env - The environment setting.
+ * @property {EnvironmentConfig} envConfig - The environment setting.
  * @property {string} token - The JWT token for authorization.
  * @property {string} refreshToken - The refresh token.
  * @property {object} userInfo - The user information.
@@ -33,7 +33,7 @@ export function createAuthManager() {
   return {
     appToken: "",
     authUrl: "",
-    env: {},
+    envConfig: {},
     token: "",
     refreshToken: "",
     userInfo: {},
@@ -67,12 +67,12 @@ export function createAuthManager() {
     /**
       * set the environment to use
       *
-      * @param {EnvironmentConfig} env
+      * @param {EnvironmentConfig} envConfig
       * @return {FluentAuthManager}
       */
-    useEnvironment(env = {}) {
-      this.env = env;
-      this.authUrl = env.idas;
+    useEnvConfig(envConfig = {}) {
+      this.envConfig = envConfig;
+      this.authUrl = envConfig.idas;
       return this;
     },
 
@@ -289,15 +289,15 @@ export function isTokenValid(token) {
  * create a new FluentAuthManager with the provided tokens
  * @export
  * @param {string} appToken
- * @param {EnvironmentConfig} env
+ * @param {EnvironmentConfig} envConfig
  * @param {string} token - JWT token, if available
  * @param {string} refreshToken - refresh token, if available
  * @returns {FluentAuthManager}
  */
-export function createIdasAuthManager(appToken, env, token = null, refreshToken = null) {
+export function createIdasAuthManager(appToken, envConfig, token = null, refreshToken = null) {
   return createAuthManager()
     .useAppToken(appToken)
-    .useEnvironment(env)
+    .useEnvConfig(envConfig)
     .useToken(token)
     .useRefreshToken(refreshToken);
 }
