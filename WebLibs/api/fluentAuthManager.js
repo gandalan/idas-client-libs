@@ -9,6 +9,7 @@ import { EnvironmentConfig } from "./envUtils";
  * @property {EnvironmentConfig} env - The environment setting.
  * @property {string} token - The JWT token for authorization.
  * @property {string} refreshToken - The refresh token.
+ * @property {object} userInfo - The user information.
  * @property {function(string) : FluentAuth} useAppToken - Sets the application token and returns the FluentApi object.
  * @property {function(string) : FluentAuth} useBaseUrl - Sets the base URL for authentication and returns the FluentApi object.
  * @property {function(string|null) : FluentAuth} useToken - Sets the JWT token and returns the FluentApi object.
@@ -35,6 +36,7 @@ export function createAuthManager() {
     env: {},
     token: "",
     refreshToken: "",
+    userInfo: {},
 
     /**
      * app token to use for authentication
