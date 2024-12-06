@@ -10,17 +10,17 @@ import { EnvironmentConfig } from "./envUtils";
  * @property {string} token - The JWT token for authorization.
  * @property {string} refreshToken - The refresh token.
  * @property {object} userInfo - The user information.
- * @property {function(string) : FluentAuth} useAppToken - Sets the application token and returns the FluentApi object.
- * @property {function(string) : FluentAuth} useBaseUrl - Sets the base URL for authentication and returns the FluentApi object.
- * @property {function(string|null) : FluentAuth} useToken - Sets the JWT token and returns the FluentApi object.
- * @property {function(string|null) : FluentAuth} useRefreshToken - Sets the refresh token and returns the FluentApi object.
- * @property {Function} ensureAuthenticated - Ensures the user is authenticated before making a request.
+ * @property {function(string) : FluentAuthManager} useAppToken - Sets the application token and returns the FluentApi object.
+ * @property {function(string) : FluentAuthManager} useBaseUrl - Sets the base URL for authentication and returns the FluentApi object.
+ * @property {function(string|null) : FluentAuthManager} useToken - Sets the JWT token and returns the FluentApi object.
+ * @property {function(string|null) : FluentAuthManager} useRefreshToken - Sets the refresh token and returns the FluentApi object.
+ * @property {function} ensureAuthenticated - Ensures the user is authenticated before making a request.
  * @property {function() : string} authenticate - Authenticates the user with username and password, or refreshes the token.
- * @property {Function} init - Initializes the authentication object.
+ * @property {function():FluentAuthManager} init - Initializes the authentication object.
  * @property {function(string,string) : string} login - Logs in with the provided credentials.
- * @property {Function} tryRefreshToken - Attempts to refresh the authentication token using the refresh token.
- * @property {Function} updateUserSession - Updates the user session with the new token.
- * @property {Function} redirectToLogin - Redirects to the login page.
+ * @property {function} tryRefreshToken - Attempts to refresh the authentication token using the refresh token.
+ * @property {function} updateUserSession - Updates the user session with the new token.
+ * @property {function} redirectToLogin - Redirects to the login page.
  */
 
 /**
@@ -151,6 +151,9 @@ export function createAuthManager() {
       * If the token is not set, the refresh token will be used to try to refresh the token.
       * If the token is not valid, the user will be redirected to the login page.
       * If tokens are valid, they will be stored in this instance of the FluentAuthManager.
+      *
+      * @async
+      * @return {FluentAuthManager}
       */
     async init() {
       if (!this.token && this.refreshToken) {
@@ -159,12 +162,14 @@ export function createAuthManager() {
 
       if (this.token && isTokenValid(this.token)) {
         updateUserSession(this.token);
-        return;
+        return this;
       }
 
       if (!isTokenValid(this.token)) {
         this.redirectToLogin();
+        return null;
       }
+      return this;
     },
 
     /**
@@ -227,8 +232,6 @@ export function createAuthManager() {
       }
 
       const redirectAfterAuth = new URL(window.location.href).origin;
-      //let redirectUrl = `${redirectAfterAuth}?r=%target%&j=%jwt%&m=%mandant%`;
-      //redirectUrl = redirectUrl.replace("%target%", encodeURIComponent(window.location.href));
       let redirectUrl = `${redirectAfterAuth}?t=%token%`;
       const url = new URL(this.authUrl);
       url.pathname = "/Session";
