@@ -6,7 +6,7 @@ Example:
 import { idasApi, localApi } from '@gandalan/weblibs/api/fluentApi';
 import { createIdasAuthManager } from '@gandalan/weblibs/api/fluentAuthManager';
 import { getCachedRefreshToken, popRefreshTokenFromUrl } from '@gandalan/weblibs/api/fluentAuthUtils';
-import { fetchEnvConfig } from '@gandalan/weblibs/api/fetchEnvConfig';
+import { fetchEnvConfig } from '@gandalan/weblibs/api/fluentEnvUtils';
 
 async function initializeAuthAndApi() {
   const appToken = 'your-app-token';

@@ -23,99 +23,99 @@ export function createApi() {
         baseUrl: "",
 
         /**
-     * Sets the base URL for API requests.
-     *
-     * @param {string} [url=""]
-     * @return {FluentApi}
-     */
+         * Sets the base URL for API requests.
+         *
+         * @param {string} [url=""]
+         * @return {FluentApi}
+         */
         useBaseUrl(url = "") {
             this.baseUrl = url;
             return this;
         },
 
         /**
-     * Sets the authentication manager.
-     *
-     * @param {FluentAuthManager} authManager
-     * @return {FluentApi}
-     */
+         * Sets the authentication manager.
+         *
+         * @param {FluentAuthManager} authManager
+         * @return {FluentApi}
+         */
         useAuthManager(authManager) {
             this.authManager = authManager;
             return this;
         },
 
         /**
-      * Sends a GET request, ensuring authentication if needed.
-      *
-      * @async
-      * @param {string} [url=""]
-      * @param {boolean} [auth=true]
-      * @returns {Promise<Object>}
-      */
+          * Sends a GET request, ensuring authentication if needed.
+          *
+          * @async
+          * @param {string} [url=""]
+          * @param {boolean} [auth=true]
+          * @returns {Promise<Object>}
+          */
         async get(url = "", auth = true) {
             await this.preCheck(auth);
             return await this.createRestClient().get(url);
         },
 
         /**
-      * Sends a PUT request with a payload, ensuring authentication if needed.
-      *
-      * @async
-      * @param {string} [url=""]
-      * @param {Object} [payload={}]
-      * @param {boolean} [auth=true]
-      * @returns {Promise<Object>}
-      */
+          * Sends a PUT request with a payload, ensuring authentication if needed.
+          *
+          * @async
+          * @param {string} [url=""]
+          * @param {Object} [payload={}]
+          * @param {boolean} [auth=true]
+          * @returns {Promise<Object>}
+          */
         async put(url = "", payload = {}, auth = true) {
             await this.preCheck(auth);
             return await this.createRestClient().put(url, payload);
         },
 
         /**
-      * Sends a POST request with a payload, ensuring authentication if needed.
-      *
-      * @async
-      * @param {string} [url=""]
-      * @param {Object} [payload={}]
-      * @param {boolean} [auth=true]
-      * @returns {Promise<Object>}
-      */
+          * Sends a POST request with a payload, ensuring authentication if needed.
+          *
+          * @async
+          * @param {string} [url=""]
+          * @param {Object} [payload={}]
+          * @param {boolean} [auth=true]
+          * @returns {Promise<Object>}
+          */
         async post(url = "", payload = {}, auth = true) {
             await this.preCheck(auth);
             return await this.createRestClient().post(url, payload);
         },
 
         /**
-     * Sends a DELETE request, ensuring authentication if needed.
-     *
-     * @async
-     * @param {string} [url=""]
-     * @param {boolean} [auth=true]
-     * @returns {Promise<Object>}
-     */
+         * Sends a DELETE request, ensuring authentication if needed.
+         *
+         * @async
+         * @param {string} [url=""]
+         * @param {boolean} [auth=true]
+         * @returns {Promise<Object>}
+         */
         async delete(url = "", auth = true) {
             await this.preCheck(auth);
             return await this.createRestClient().delete(url);
         },
 
         /**
-     * Creates the REST client instance with the current configuration.
-     *
-     * @private
-     * @returns {FluentRestClient}
-     */
+         * Creates the REST client instance with the current configuration.
+         *
+         * @private
+         * @returns {FluentRestClient}
+         */
         createRestClient() {
             return restClient().useBaseUrl(this.baseUrl).useToken(this.authManager?.token);
         },
 
         /**
-     * Ensures the user is authenticated before making a request.
-     *
-     * @private
-     * @async
-     * @param {boolean} [auth=true]
-     * @returns {void}
-     */
+         * Ensures the user is authenticated before making a request.
+         *
+         * @private
+         * @async
+         * @param {boolean} [auth=true]
+         * @returns {void}
+         */
         async preCheck(auth = true) {
             if (auth) {
                 await this.authManager.ensureAuthenticated();

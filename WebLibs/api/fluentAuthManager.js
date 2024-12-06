@@ -38,11 +38,11 @@ export function createAuthManager() {
         userInfo: {},
 
         /**
-     * app token to use for authentication
-     *
-     * @param {string} [appToken=""]
-     * @returns {FluentAuthManager}
-     */
+         * app token to use for authentication
+         *
+         * @param {string} [appToken=""]
+         * @returns {FluentAuthManager}
+         */
         useAppToken(appToken = "") {
             if (!validator.isUUID(appToken)) {
                 console.error("AppToken is not valid GUID");
@@ -53,22 +53,22 @@ export function createAuthManager() {
         },
 
         /**
-      * set the authentication URL
-      *
-      * @param {string} [url=""]
-      * @return {FluentAuthManager}
-      */
+         * set the authentication URL
+         *
+         * @param {string} [url=""]
+         * @return {FluentAuthManager}
+         */
         useBaseUrl(url = "") {
             this.authUrl = url;
             return this;
         },
 
         /**
-      * set the environment to use
-      *
-      * @param {EnvironmentConfig} envConfig
-      * @return {FluentAuthManager}
-      */
+         * set the environment to use
+         *
+         * @param {EnvironmentConfig} envConfig
+         * @return {FluentAuthManager}
+         */
         useEnvConfig(envConfig = {}) {
             this.envConfig = envConfig;
             this.authUrl = envConfig.idas;
@@ -76,33 +76,33 @@ export function createAuthManager() {
         },
 
         /**
-     * set the JWT token for authorization
-     *
-     * @param {string} [jwtToken=""]
-     * @return {FluentAuthManager}
-     */
+         * set the JWT token for authorization
+         *
+         * @param {string} [jwtToken=""]
+         * @return {FluentAuthManager}
+         */
         useToken(jwtToken = "") {
             this.token = jwtToken;
             return this;
         },
 
         /**
-     * set the refresh token
-     *
-     * @param {string} [storedRefreshToken=""]
-     * @return {FluentAuthManager}
-     */
+         * set the refresh token
+         *
+         * @param {string} [storedRefreshToken=""]
+         * @return {FluentAuthManager}
+         */
         useRefreshToken(storedRefreshToken = "") {
             this.refreshToken = storedRefreshToken;
             return this;
         },
 
         /**
-      * Ensure the user is authenticated before making a request
-      *
-      * @async
-      * @private
-      */
+         * Ensure the user is authenticated before making a request
+         *
+         * @async
+         * @private
+         */
         async ensureAuthenticated() {
             if (this.token && isTokenValid(this.token))
                 return;
@@ -116,12 +116,12 @@ export function createAuthManager() {
         },
 
         /**
-      * Authenticates the user with the JWT token or refreshes the token with
-      * the refreshToken set before.
-      *
-      * @throws {Error} if JWT token and refreshToken are not set or both are invalid
-      * @return {string} the JWT token
-      */
+         * Authenticates the user with the JWT token or refreshes the token with
+         * the refreshToken set before.
+         *
+         * @throws {Error} if JWT token and refreshToken are not set or both are invalid
+         * @return {string} the JWT token
+         */
         async authenticate() { // benutzt bei existierendem JWT oder RefreshToken, wenn keins vorhanden ERROR
             console.log("authenticating:", this.token ? `token set, exp: ${jwtDecode(this.token).exp - (Date.now() / 1000)}` : "no token,", this.refreshToken, this.appToken);
 
@@ -146,14 +146,14 @@ export function createAuthManager() {
         },
 
         /**
-      * Initializes the authentication object. Before calling, set the token and refresh token if available.
-      * If the token is not set, the refresh token will be used to try to refresh the token.
-      * If the token is not valid, the user will be redirected to the login page.
-      * If tokens are valid, they will be stored in this instance of the FluentAuthManager.
-      *
-      * @async
-      * @return {FluentAuthManager}
-      */
+         * Initializes the authentication object. Before calling, set the token and refresh token if available.
+         * If the token is not set, the refresh token will be used to try to refresh the token.
+         * If the token is not valid, the user will be redirected to the login page.
+         * If tokens are valid, they will be stored in this instance of the FluentAuthManager.
+         *
+         * @async
+         * @return {FluentAuthManager}
+         */
         async init() {
             if (!this.token && this.refreshToken) {
                 this.token = await this.tryRefreshToken(this.refreshToken);
@@ -172,11 +172,11 @@ export function createAuthManager() {
         },
 
         /**
-     * Login with credentials and return the JWT token
-     * @param {string} username
-     * @param {string} password
-     * @return {string} the JWT token
-     */
+         * Login with credentials and return the JWT token
+         * @param {string} username
+         * @param {string} password
+         * @return {string} the JWT token
+         */
         async login(username = "", password = "") {
             if (username && password) {
                 const payload = { "Email": username, "Password": password, "AppToken": this.appToken };
@@ -189,12 +189,12 @@ export function createAuthManager() {
         },
 
         /**
-      * try to refresh the JWT token by using the refreshToken
-      * @async
-      * @private
-      * @param {string} [refreshToken=""]
-      * @returns {unknown}
-      */
+         * try to refresh the JWT token by using the refreshToken
+         * @async
+         * @private
+         * @param {string} [refreshToken=""]
+         * @returns {unknown}
+         */
         async tryRefreshToken(refreshToken = "") {
             const payload = { "Token": refreshToken };
             const res = await fetch(`${this.authUrl}LoginJwt/Refresh`,
@@ -207,11 +207,11 @@ export function createAuthManager() {
         },
 
         /**
-     * update the user session with the new token
-     * @private
-     * @param {string} token
-     * @returns {void}
-     */
+         * update the user session with the new token
+         * @private
+         * @param {string} token
+         * @returns {void}
+         */
         updateUserSession(token) {
             if (token) {
                 this.token = token;
@@ -222,9 +222,9 @@ export function createAuthManager() {
         },
 
         /**
-      * Redirect to the login page
-      * @private
-      */
+         * Redirect to the login page
+         * @private
+         */
         redirectToLogin() {
             if (!window) {
                 return;
