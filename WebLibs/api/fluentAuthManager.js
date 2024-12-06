@@ -1,11 +1,12 @@
 import { jwtDecode } from "jwt-decode";
 import validator from "validator";
+import { EnvironmentConfig } from "./envUtils";
 
 /**
  * @typedef {Object} FluentAuthManager
  * @property {string} appToken - The application token.
  * @property {string} authUrl - The authentication URL.
- * @property {import("./envUtils").EnvironmentConfig} env - The environment setting.
+ * @property {EnvironmentConfig} env - The environment setting.
  * @property {string} token - The JWT token for authorization.
  * @property {string} refreshToken - The refresh token.
  * @property {function(string) : FluentAuth} useAppToken - Sets the application token and returns the FluentApi object.
@@ -64,7 +65,7 @@ export function createAuthManager() {
     /**
       * set the environment to use
       *
-      * @param {import("./envUtils").EnvironmentConfig} env
+      * @param {EnvironmentConfig} env
       * @return {FluentAuthManager}
       */
     useEnvironment(env = {}) {
@@ -283,7 +284,7 @@ export function isTokenValid(token) {
  * create a new FluentAuthManager with the provided tokens
  * @export
  * @param {string} appToken
- * @param {import("./envUtils").EnvironmentConfig} env
+ * @param {EnvironmentConfig} env
  * @param {string} token - JWT token, if available
  * @param {string} refreshToken - refresh token, if available
  * @returns {FluentAuthManager}

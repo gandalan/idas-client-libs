@@ -1,11 +1,13 @@
-import { restClient } from "./fluentRestClient";
+import { EnvironmentConfig } from "./envUtils";
+import { FluentAuthManager } from "./fluentAuthManager";
+import { FluentRestClient, restClient } from "./fluentRestClient";
 
 /**
  * @typedef {Object} FluentApi
  * @property {string} baseUrl - The base URL for API requests.
- * @property {import("./fluentAuthManager").FluentAuthManager} authManager - The authentication manager.
+ * @property {FluentAuthManager} authManager - The authentication manager.
  * @property {function(string) : FluentApi} useBaseUrl - Sets the base URL for API requests and returns the FluentApi object.
- * @property {function(string) : FluentApi} useAuthManager - Sets the auth manager and returns the FluentApi object.
+ * @property {function(FluentAuthManager) : FluentApi} useAuthManager - Sets the auth manager and returns the FluentApi object.
  * @property {function(string) : object|Array<any>} get - Async function to perform GET requests.
  * @property {function(string, object|null) : object|Array<any>} put - Async function to perform PUT requests with a payload.
  * @property {function(string, object|null) : object|Array<any>} post - Async function to perform POST requests with a payload.
@@ -36,7 +38,7 @@ export function createApi() {
     /**
      * Sets the authentication manager.
      *
-     * @param {import("./fluentAuthManager").FluentAuthManager} authManager
+     * @param {FluentAuthManager} authManager
      * @return {FluentApi}
      */
     useAuthManager(authManager) {
@@ -102,7 +104,7 @@ export function createApi() {
      * Creates the REST client instance with the current configuration.
      *
      * @private
-     * @returns {import("./fluentRestClient").FluentRestClient}
+     * @returns {FluentRestClient}
      */
     createRestClient() {
       return restClient().useBaseUrl(this.baseUrl).useToken(this.authManager?.token);
@@ -128,8 +130,8 @@ export function createApi() {
  * Default setup for IDAS
  *
  * @export
- * @param {import("./envUtils").EnvironmentConfig} [env={}]
- * @param {import("./fluentAuthManager").FluentAuthManager} [authManager={}]
+ * @param {EnvironmentConfig} [env={}]
+ * @param {FluentAuthManager} [authManager={}]
  * @return {FluentApi}
  */
 export function idasApi(env, authManager) {
@@ -147,7 +149,7 @@ export function idasApi(env, authManager) {
  *   api.get("users"); // Sends a GET request to http://example.com/api/users.
  *
  * @export
- * @param {import("./fluentAuthManager").FluentAuthManager} authManager - The authentication manager instance.
+ * @param {FluentAuthManager} authManager - The authentication manager instance.
  * @return {FluentApi} Configured API instance for local use.
  */
 export function localApi(authManager) {
