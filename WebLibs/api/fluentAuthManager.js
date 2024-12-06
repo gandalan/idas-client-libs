@@ -15,7 +15,7 @@ import validator from "validator";
  * @property {function(string|null) : FluentAuthManager} useRefreshToken - Sets the refresh token and returns the FluentApi object.
  * @property {function} ensureAuthenticated - Ensures the user is authenticated before making a request.
  * @property {function() : string} authenticate - Authenticates the user with username and password, or refreshes the token.
- * @property {function():Promise<FluentAuthManager>} init - Initializes the authentication object.
+ * @property {function():Promise<FluentAuthManager|null>} init - Returns promise for authManager. Returns null if not authenticated.
  * @property {function(string,string) : string} login - Logs in with the provided credentials.
  * @property {function} tryRefreshToken - Attempts to refresh the authentication token using the refresh token.
  * @property {function} updateUserSession - Updates the user session with the new token.
