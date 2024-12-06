@@ -29,12 +29,12 @@ const envConfigs = {};
  * @returns {Promise<EnvironmentConfig>}
  */
 export async function fetchEnvConfig(envConfig = "") {
-  if (!(envConfig in envConfigs)) {
-    const hubUrl = `https://connect.idas-cloudservices.net/api/Endpoints?env=${envConfig}`;
-    console.log("fetching env", hubUrl);
-    const r = await fetch(hubUrl);
-    const data = await r.json();
-    envConfigs[envConfig] = data;
-  }
-  return envConfigs[envConfig];
+    if (!(envConfig in envConfigs)) {
+        const hubUrl = `https://connect.idas-cloudservices.net/api/Endpoints?env=${envConfig}`;
+        console.log("fetching env", hubUrl);
+        const r = await fetch(hubUrl);
+        const data = await r.json();
+        envConfigs[envConfig] = data;
+    }
+    return envConfigs[envConfig];
 }

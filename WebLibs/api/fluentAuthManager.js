@@ -1,6 +1,5 @@
 import { jwtDecode } from "jwt-decode";
 import validator from "validator";
-import { EnvironmentConfig } from "./fluentEnvUtils";
 
 /**
  * @typedef {Object} FluentAuthManager
@@ -30,123 +29,123 @@ import { EnvironmentConfig } from "./fluentEnvUtils";
  * @returns {FluentAuthManager}
  */
 export function createAuthManager() {
-  return {
-    appToken: "",
-    authUrl: "",
-    envConfig: {},
-    token: "",
-    refreshToken: "",
-    userInfo: {},
+    return {
+        appToken: "",
+        authUrl: "",
+        envConfig: {},
+        token: "",
+        refreshToken: "",
+        userInfo: {},
 
-    /**
+        /**
      * app token to use for authentication
      *
      * @param {string} [appToken=""]
      * @returns {FluentAuthManager}
      */
-    useAppToken(appToken = "") {
-      if (!validator.isUUID(appToken)) {
-        console.error("AppToken is not valid GUID");
-        return null;
-      }
-      this.appToken = appToken;
-      return this;
-    },
+        useAppToken(appToken = "") {
+            if (!validator.isUUID(appToken)) {
+                console.error("AppToken is not valid GUID");
+                return null;
+            }
+            this.appToken = appToken;
+            return this;
+        },
 
-    /**
+        /**
       * set the authentication URL
       *
       * @param {string} [url=""]
       * @return {FluentAuthManager}
       */
-    useBaseUrl(url = "") {
-      this.authUrl = url;
-      return this;
-    },
+        useBaseUrl(url = "") {
+            this.authUrl = url;
+            return this;
+        },
 
-    /**
+        /**
       * set the environment to use
       *
       * @param {EnvironmentConfig} envConfig
       * @return {FluentAuthManager}
       */
-    useEnvConfig(envConfig = {}) {
-      this.envConfig = envConfig;
-      this.authUrl = envConfig.idas;
-      return this;
-    },
+        useEnvConfig(envConfig = {}) {
+            this.envConfig = envConfig;
+            this.authUrl = envConfig.idas;
+            return this;
+        },
 
-    /**
+        /**
      * set the JWT token for authorization
      *
      * @param {string} [jwtToken=""]
      * @return {FluentAuthManager}
      */
-    useToken(jwtToken = "") {
-      this.token = jwtToken;
-      return this;
-    },
+        useToken(jwtToken = "") {
+            this.token = jwtToken;
+            return this;
+        },
 
-    /**
+        /**
      * set the refresh token
      *
      * @param {string} [storedRefreshToken=""]
      * @return {FluentAuthManager}
      */
-    useRefreshToken(storedRefreshToken = "") {
-      this.refreshToken = storedRefreshToken;
-      return this;
-    },
+        useRefreshToken(storedRefreshToken = "") {
+            this.refreshToken = storedRefreshToken;
+            return this;
+        },
 
-    /**
+        /**
       * Ensure the user is authenticated before making a request
       *
       * @async
       * @private
       */
-    async ensureAuthenticated() {
-      if (this.token && isTokenValid(this.token))
-        return;
+        async ensureAuthenticated() {
+            if (this.token && isTokenValid(this.token))
+                return;
 
-      try {
-        await this.authenticate();
-      } catch (e) {
-        // no redirect to login, because we're in a request
-        console.error("not authenticated", e);
-      }
-    },
+            try {
+                await this.authenticate();
+            } catch (e) {
+                // no redirect to login, because we're in a request
+                console.error("not authenticated", e);
+            }
+        },
 
-    /**
+        /**
       * Authenticates the user with the JWT token or refreshes the token with
       * the refreshToken set before.
       *
       * @throws {Error} if JWT token and refreshToken are not set or both are invalid
       * @return {string} the JWT token
       */
-    async authenticate() { // benutzt bei existierendem JWT oder RefreshToken, wenn keins vorhanden ERROR
-      console.log("authenticating:", this.token ? `token set, exp: ${jwtDecode(this.token).exp - (Date.now() / 1000)}` : "no token,", this.refreshToken, this.appToken);
+        async authenticate() { // benutzt bei existierendem JWT oder RefreshToken, wenn keins vorhanden ERROR
+            console.log("authenticating:", this.token ? `token set, exp: ${jwtDecode(this.token).exp - (Date.now() / 1000)}` : "no token,", this.refreshToken, this.appToken);
 
-      if (this.token && isTokenValid(this.token))
-        return;
+            if (this.token && isTokenValid(this.token))
+                return;
 
-      if (this.token && !this.refreshToken)
-        this.refreshToken = getRefreshToken(this.token);
+            if (this.token && !this.refreshToken)
+                this.refreshToken = getRefreshToken(this.token);
 
-      if (!this.refreshToken) {
-        throw new Error("not authenticated");
-      }
+            if (!this.refreshToken) {
+                throw new Error("not authenticated");
+            }
 
-      try {
-        const temptoken = await this.tryRefreshToken(this.refreshToken);
-        this.updateUserSession(temptoken);
-      } catch {
-        // if refresh failed
-        // - current token should still be valid for a while
-        // - or user has invalid (refresh) token and needs to login/refresh manually
-      }
-    },
+            try {
+                const temptoken = await this.tryRefreshToken(this.refreshToken);
+                this.updateUserSession(temptoken);
+            } catch {
+                // if refresh failed
+                // - current token should still be valid for a while
+                // - or user has invalid (refresh) token and needs to login/refresh manually
+            }
+        },
 
-    /**
+        /**
       * Initializes the authentication object. Before calling, set the token and refresh token if available.
       * If the token is not set, the refresh token will be used to try to refresh the token.
       * If the token is not valid, the user will be redirected to the login page.
@@ -155,91 +154,91 @@ export function createAuthManager() {
       * @async
       * @return {FluentAuthManager}
       */
-    async init() {
-      if (!this.token && this.refreshToken) {
-        this.token = await this.tryRefreshToken(this.refreshToken);
-      }
+        async init() {
+            if (!this.token && this.refreshToken) {
+                this.token = await this.tryRefreshToken(this.refreshToken);
+            }
 
-      if (this.token && isTokenValid(this.token)) {
-        updateUserSession(this.token);
-        return this;
-      }
+            if (this.token && isTokenValid(this.token)) {
+                this.updateUserSession(this.token);
+                return this;
+            }
 
-      if (!isTokenValid(this.token)) {
-        this.redirectToLogin();
-        return null;
-      }
-      return this;
-    },
+            if (!isTokenValid(this.token)) {
+                this.redirectToLogin();
+                return null;
+            }
+            return this;
+        },
 
-    /**
+        /**
      * Login with credentials and return the JWT token
      * @param {string} username
      * @param {string} password
      * @return {string} the JWT token
      */
-    async login(username = "", password = "") {
-      if (username && password) {
-        const payload = { "Email": username, "Password": password, "AppToken": this.appToken };
-        const res = await fetch(`${this.authUrl}/LoginJwt`,
-          { method: "POST", body: JSON.stringify(payload), headers: { "Content-Type": "application/json" } });
-        updateUserSession((await res.json()));
-        return;
-      }
-      throw new Error("not authenticated");
-    },
+        async login(username = "", password = "") {
+            if (username && password) {
+                const payload = { "Email": username, "Password": password, "AppToken": this.appToken };
+                const res = await fetch(`${this.authUrl}/LoginJwt`,
+                    { method: "POST", body: JSON.stringify(payload), headers: { "Content-Type": "application/json" } });
+                this.updateUserSession((await res.json()));
+                return;
+            }
+            throw new Error("not authenticated");
+        },
 
-    /**
+        /**
       * try to refresh the JWT token by using the refreshToken
       * @async
       * @private
       * @param {string} [refreshToken=""]
       * @returns {unknown}
       */
-    async tryRefreshToken(refreshToken = "") {
-      const payload = { "Token": refreshToken };
-      const res = await fetch(`${this.authUrl}LoginJwt/Refresh`,
-        {
-          method: "PUT",
-          body: JSON.stringify(payload),
-          headers: { "Content-Type": "application/json" },
-        });
-      return res.ok ? await res.json() : null;
-    },
+        async tryRefreshToken(refreshToken = "") {
+            const payload = { "Token": refreshToken };
+            const res = await fetch(`${this.authUrl}LoginJwt/Refresh`,
+                {
+                    method: "PUT",
+                    body: JSON.stringify(payload),
+                    headers: { "Content-Type": "application/json" },
+                });
+            return res.ok ? await res.json() : null;
+        },
 
-    /**
+        /**
      * update the user session with the new token
      * @private
      * @param {string} token
      * @returns {void}
      */
-    updateUserSession(token) {
-      if (token) {
-        this.token = token;
-        this.refreshToken = getRefreshToken(token);
-        this.userInfo = jwtDecode(this.token);
-        localStorage.setItem("idas-refresh-token", this.refreshToken);
-      }
-    },
+        updateUserSession(token) {
+            if (token) {
+                this.token = token;
+                this.refreshToken = getRefreshToken(token);
+                this.userInfo = jwtDecode(this.token);
+                localStorage.setItem("idas-refresh-token", this.refreshToken);
+            }
+        },
 
-    /**
+        /**
       * Redirect to the login page
       * @private
       */
-    redirectToLogin() {
-      if (!window) {
-        return;
-      }
+        redirectToLogin() {
+            if (!window) {
+                return;
+            }
 
-      const redirectAfterAuth = new URL(window.location.href).origin;
-      let redirectUrl = `${redirectAfterAuth}?t=%token%`;
-      const url = new URL(this.authUrl);
-      url.pathname = "/Session";
-      url.search = `?a=${this.appToken}&r=${encodeURIComponent(redirectUrl)}`;
-      let loginUrl = url.toString();
-      window.location.href = loginUrl;
-    }
-  };
+            const redirectAfterAuth = new URL(window.location.href).origin;
+            let redirectUrl = `${redirectAfterAuth}?t=%token%`;
+            const url = new URL(this.authUrl);
+            url.pathname = "/Session";
+            url.search = `?a=${this.appToken}&r=${encodeURIComponent(redirectUrl)}`;
+            let loginUrl = url.toString();
+            window.location.href = loginUrl;
+        }
+    };
 }
 
 /**
@@ -261,8 +260,8 @@ const JWT_SAFE_RENEWAL = 30; // seconds before token expiry to renew
  * @returns {string}
  */
 export function getRefreshToken(token) {
-  const decoded = /** @type {JwtTokenExt} */(jwtDecode(token));
-  return decoded.refreshToken;
+    const decoded = /** @type {JwtTokenExt} */(jwtDecode(token));
+    return decoded.refreshToken;
 }
 
 /**
@@ -274,15 +273,15 @@ export function getRefreshToken(token) {
  * @returns {boolean}
  */
 export function isTokenValid(token) {
-  try {
-    const decoded = jwtDecode(token);
-    if (!decoded || !decoded.exp)
-      throw new Error("Invalid token");
-    return (decoded.exp - JWT_SAFE_RENEWAL > Date.now() / 1000);
-  }
-  catch {
-    return false;
-  }
+    try {
+        const decoded = jwtDecode(token);
+        if (!decoded || !decoded.exp)
+            throw new Error("Invalid token");
+        return (decoded.exp - JWT_SAFE_RENEWAL > Date.now() / 1000);
+    }
+    catch {
+        return false;
+    }
 }
 
 /**
@@ -295,9 +294,9 @@ export function isTokenValid(token) {
  * @returns {FluentAuthManager}
  */
 export function createIdasAuthManager(appToken, envConfig, token = null, refreshToken = null) {
-  return createAuthManager()
-    .useAppToken(appToken)
-    .useEnvConfig(envConfig)
-    .useToken(token)
-    .useRefreshToken(refreshToken);
+    return createAuthManager()
+        .useAppToken(appToken)
+        .useEnvConfig(envConfig)
+        .useToken(token)
+        .useRefreshToken(refreshToken);
 }

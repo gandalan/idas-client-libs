@@ -1,6 +1,4 @@
-import { FluentAuthManager } from "./fluentAuthManager";
-import { EnvironmentConfig } from "./fluentEnvUtils";
-import { FluentRestClient, restClient } from "./fluentRestClient";
+import { restClient } from "./fluentRestClient";
 
 /**
  * @typedef {Object} FluentApi
@@ -20,33 +18,33 @@ import { FluentRestClient, restClient } from "./fluentRestClient";
  * @return {FluentApi} A configured API client instance.
  */
 export function createApi() {
-  return {
-    authManager: {},
-    baseUrl: "",
+    return {
+        authManager: {},
+        baseUrl: "",
 
-    /**
+        /**
      * Sets the base URL for API requests.
      *
      * @param {string} [url=""]
      * @return {FluentApi}
      */
-    useBaseUrl(url = "") {
-      this.baseUrl = url;
-      return this;
-    },
+        useBaseUrl(url = "") {
+            this.baseUrl = url;
+            return this;
+        },
 
-    /**
+        /**
      * Sets the authentication manager.
      *
      * @param {FluentAuthManager} authManager
      * @return {FluentApi}
      */
-    useAuthManager(authManager) {
-      this.authManager = authManager;
-      return this;
-    },
+        useAuthManager(authManager) {
+            this.authManager = authManager;
+            return this;
+        },
 
-    /**
+        /**
       * Sends a GET request, ensuring authentication if needed.
       *
       * @async
@@ -54,12 +52,12 @@ export function createApi() {
       * @param {boolean} [auth=true]
       * @returns {Promise<Object>}
       */
-    async get(url = "", auth = true) {
-      await this.preCheck(auth);
-      return await this.createRestClient().get(url);
-    },
+        async get(url = "", auth = true) {
+            await this.preCheck(auth);
+            return await this.createRestClient().get(url);
+        },
 
-    /**
+        /**
       * Sends a PUT request with a payload, ensuring authentication if needed.
       *
       * @async
@@ -68,12 +66,12 @@ export function createApi() {
       * @param {boolean} [auth=true]
       * @returns {Promise<Object>}
       */
-    async put(url = "", payload = {}, auth = true) {
-      await this.preCheck(auth);
-      return await this.createRestClient().put(url, payload);
-    },
+        async put(url = "", payload = {}, auth = true) {
+            await this.preCheck(auth);
+            return await this.createRestClient().put(url, payload);
+        },
 
-    /**
+        /**
       * Sends a POST request with a payload, ensuring authentication if needed.
       *
       * @async
@@ -82,12 +80,12 @@ export function createApi() {
       * @param {boolean} [auth=true]
       * @returns {Promise<Object>}
       */
-    async post(url = "", payload = {}, auth = true) {
-      await this.preCheck(auth);
-      return await this.createRestClient().post(url, payload);
-    },
+        async post(url = "", payload = {}, auth = true) {
+            await this.preCheck(auth);
+            return await this.createRestClient().post(url, payload);
+        },
 
-    /**
+        /**
      * Sends a DELETE request, ensuring authentication if needed.
      *
      * @async
@@ -95,22 +93,22 @@ export function createApi() {
      * @param {boolean} [auth=true]
      * @returns {Promise<Object>}
      */
-    async delete(url = "", auth = true) {
-      await this.preCheck(auth);
-      return await this.createRestClient().delete(url);
-    },
+        async delete(url = "", auth = true) {
+            await this.preCheck(auth);
+            return await this.createRestClient().delete(url);
+        },
 
-    /**
+        /**
      * Creates the REST client instance with the current configuration.
      *
      * @private
      * @returns {FluentRestClient}
      */
-    createRestClient() {
-      return restClient().useBaseUrl(this.baseUrl).useToken(this.authManager?.token);
-    },
+        createRestClient() {
+            return restClient().useBaseUrl(this.baseUrl).useToken(this.authManager?.token);
+        },
 
-    /**
+        /**
      * Ensures the user is authenticated before making a request.
      *
      * @private
@@ -118,12 +116,12 @@ export function createApi() {
      * @param {boolean} [auth=true]
      * @returns {void}
      */
-    async preCheck(auth = true) {
-      if (auth) {
-        await this.authManager.ensureAuthenticated();
-      }
-    }
-  };
+        async preCheck(auth = true) {
+            if (auth) {
+                await this.authManager.ensureAuthenticated();
+            }
+        }
+    };
 }
 
 /**
@@ -135,9 +133,9 @@ export function createApi() {
  * @return {FluentApi}
  */
 export function idasApi(envConfig, authManager) {
-  return createApi()
-    .useAuthManager(authManager)
-    .useBaseUrl(envConfig.idas);
+    return createApi()
+        .useAuthManager(authManager)
+        .useBaseUrl(envConfig.idas);
 }
 
 /**
@@ -153,7 +151,7 @@ export function idasApi(envConfig, authManager) {
  * @return {FluentApi} Configured API instance for local use.
  */
 export function localApi(authManager) {
-  return createApi()
-    .useAuthManager(authManager)
-    .useBaseUrl("/api/");
+    return createApi()
+        .useAuthManager(authManager)
+        .useBaseUrl("/api/");
 }
