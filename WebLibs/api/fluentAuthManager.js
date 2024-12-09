@@ -5,7 +5,6 @@ import validator from "validator";
  * @typedef {Object} FluentAuthManager
  * @property {string} appToken - The application token.
  * @property {string} authUrl - The authentication URL.
- * @property {EnvironmentConfig} envConfig - The environment setting.
  * @property {string} token - The JWT token for authorization.
  * @property {string} refreshToken - The refresh token.
  * @property {object} userInfo - The user information.
@@ -32,7 +31,6 @@ export function createAuthManager() {
     return {
         appToken: "",
         authUrl: "",
-        envConfig: {},
         token: "",
         refreshToken: "",
         userInfo: {},
@@ -60,18 +58,6 @@ export function createAuthManager() {
          */
         useBaseUrl(url = "") {
             this.authUrl = url;
-            return this;
-        },
-
-        /**
-         * set the environment to use
-         *
-         * @param {EnvironmentConfig} envConfig
-         * @return {FluentAuthManager}
-         */
-        useEnvConfig(envConfig = {}) {
-            this.envConfig = envConfig;
-            this.authUrl = envConfig.idas;
             return this;
         },
 
@@ -296,7 +282,7 @@ export function isTokenValid(token) {
 export function createIdasAuthManager(appToken, envConfig, token = null, refreshToken = null) {
     return createAuthManager()
         .useAppToken(appToken)
-        .useEnvConfig(envConfig)
+        .useBaseUrl(envConfig.idas)
         .useToken(token)
         .useRefreshToken(refreshToken);
 }
