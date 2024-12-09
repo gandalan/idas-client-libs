@@ -117,7 +117,7 @@ export function createApi() {
          * @returns {void}
          */
         async preCheck(auth = true) {
-            if (auth) {
+            if (auth && this.authManager) {
                 await this.authManager.ensureAuthenticated();
             }
         }
@@ -154,4 +154,23 @@ export function localApi(authManager) {
     return createApi()
         .useAuthManager(authManager)
         .useBaseUrl("/api/");
+}
+
+/**
+ * Sets up a client for API requests.
+ *
+ * - Requests will be sent to the url provided.
+ * - Example usage:
+ *   const api = fluentApi("https://jsonplaceholder.typicode.com/todos/", null);
+ *   api.get("1"); // Sends a GET request to https://jsonplaceholder.typicode.com/todos/1.
+ *
+ * @export
+ * @param {string} url - The base URL for API requests.
+ * @param {FluentAuthManager} authManager - The authentication manager instance.
+ * @return {FluentApi} Configured API instance for local use.
+ */
+export function fluentApi(url, authManager) {
+    return createApi()
+        .useAuthManager(authManager)
+        .useBaseUrl(url);
 }
