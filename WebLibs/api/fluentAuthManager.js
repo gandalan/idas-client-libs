@@ -10,7 +10,7 @@ import validator from "validator";
  * @property {object} userInfo - The user information.
  * @property {function(string) : FluentAuthManager} useAppToken - Sets the application token and returns the FluentApi object.
  * @property {function(string) : FluentAuthManager} useBaseUrl - Sets the base URL for authentication and returns the FluentApi object.
- * @property {function(string|null) : FluentAuthManager} useToken - Sets the JWT token and returns the FluentApi object.
+ * @property {function(string|null) : FluentAuthManager} useToken - Sets the JWT token and returns the FluentApi object. Only intended for usage with Service Tokens.
  * @property {function(string|null) : FluentAuthManager} useRefreshToken - Sets the refresh token and returns the FluentApi object.
  * @property {function} ensureAuthenticated - Ensures the user is authenticated before making a request.
  * @property {function() : string} authenticate - Authenticates the user with username and password, or refreshes the token.
@@ -274,15 +274,14 @@ export function isTokenValid(token) {
  * create a new FluentAuthManager with the provided tokens
  * @export
  * @param {string} appToken
- * @param {EnvironmentConfig} envConfig
+ * @param {EnvironmentConfig} authBaseUrl
  * @param {string} token - JWT token, if available
  * @param {string} refreshToken - refresh token, if available
  * @returns {FluentAuthManager}
  */
-export function createIdasAuthManager(appToken, envConfig, token = null, refreshToken = null) {
+export function createIdasAuthManager(appToken, authBaseUrl, refreshToken = null) {
     return createAuthManager()
         .useAppToken(appToken)
-        .useBaseUrl(envConfig.idas)
-        .useToken(token)
+        .useBaseUrl(authBaseUrl)
         .useRefreshToken(refreshToken);
 }

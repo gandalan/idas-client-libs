@@ -11,11 +11,10 @@ import { fetchEnvConfig } from '@gandalan/weblibs/api/fluentEnvUtils';
 async function initializeAuthAndApi() {
     const appToken = 'your-app-token';
     const envConfig = await fetchEnvConfig('dev'); // Replace 'dev' with your desired environment
-    const token = null; // JWT-Token, if available;
     const refreshToken = popRefreshTokenFromUrl() || getCachedRefreshToken(); // refresh token, if available
 
     // Create + init IDAS authentication manager
-    const authManager = await createIdasAuthManager(appToken, envConfig, token, refreshToken).init();
+    const authManager = await createIdasAuthManager(appToken, envConfig.idas, refreshToken).init();
     if (!authManager) {
         return; // init() has redirected to login.
     }
