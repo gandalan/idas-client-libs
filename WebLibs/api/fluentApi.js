@@ -125,38 +125,6 @@ export function createApi() {
 }
 
 /**
- * Default setup for IDAS
- *
- * @export
- * @param {EnvironmentConfig} [envConfig={}]
- * @param {FluentAuthManager} [authManager={}]
- * @return {FluentApi}
- */
-export function idasApi(envConfig, authManager) {
-    return createApi()
-        .useAuthManager(authManager)
-        .useBaseUrl(envConfig.idas);
-}
-
-/**
- * Sets up a default API configuration for local requests.
- *
- * - Requests will be sent to the "/api/" endpoint of the current domain (e.g., http://example.com/api/).
- * - Example usage:
- *   const api = localApi(authManager);
- *   api.get("users"); // Sends a GET request to http://example.com/api/users.
- *
- * @export
- * @param {FluentAuthManager} authManager - The authentication manager instance.
- * @return {FluentApi} Configured API instance for local use.
- */
-export function localApi(authManager) {
-    return createApi()
-        .useAuthManager(authManager)
-        .useBaseUrl("/api/");
-}
-
-/**
  * Sets up a client for API requests.
  *
  * - Requests will be sent to the url provided.

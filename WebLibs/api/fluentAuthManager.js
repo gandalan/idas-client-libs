@@ -275,11 +275,10 @@ export function isTokenValid(token) {
  * @export
  * @param {string} appToken
  * @param {EnvironmentConfig} authBaseUrl
- * @param {string} token - JWT token, if available
  * @param {string} refreshToken - refresh token, if available
  * @returns {FluentAuthManager}
  */
-export function createIdasAuthManager(appToken, authBaseUrl, refreshToken = null) {
+export function fluentIdasAuthManager(appToken, authBaseUrl, refreshToken = null) {
     return createAuthManager()
         .useAppToken(appToken)
         .useBaseUrl(authBaseUrl)

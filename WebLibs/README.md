@@ -4,7 +4,7 @@
 Example:
 ```js
 import { fluentApi } from '@gandalan/weblibs/api/fluentApi';
-import { createIdasAuthManager } from '@gandalan/weblibs/api/fluentAuthManager';
+import { fluentIdasAuthManager } from '@gandalan/weblibs/api/fluentAuthManager';
 import { getCachedRefreshToken, popRefreshTokenFromUrl } from '@gandalan/weblibs/api/fluentAuthUtils';
 import { fetchEnvConfig } from '@gandalan/weblibs/api/fluentEnvUtils';
 
@@ -14,7 +14,7 @@ async function initializeAuthAndApi() {
     const refreshToken = popRefreshTokenFromUrl() || getCachedRefreshToken(); // refresh token, if available
 
     // Create + init IDAS authentication manager
-    const authManager = await createIdasAuthManager(appToken, envConfig.idas, refreshToken).init();
+    const authManager = await fluentIdasAuthManager(appToken, envConfig.idas, refreshToken).init();
     if (!authManager) {
         return; // init() has redirected to login.
     }
@@ -34,6 +34,6 @@ const responseIdas = await globalThis.idas.get('mandanten');
 console.log(responseIdas[0].Name);
 
 // Example local API usage
-const responseApi = await globalThis.api.get('/some-endpoint');
+const responseApi = await globalThis.api.get('some-endpoint');
 console.log(responseApi);
 ```
