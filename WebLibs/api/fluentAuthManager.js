@@ -1,5 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import validator from "validator";
+import { popRefreshTokenFromUrl } from "./fluentAuthUtils";
 
 /**
  * @typedef {Object} FluentAuthManager
@@ -137,10 +138,16 @@ export function createAuthManager() {
          * If the token is not valid, the user will be redirected to the login page.
          * If tokens are valid, they will be stored in this instance of the FluentAuthManager.
          *
+         * Side effect if refreshToken is not set: tries to get the refreshToken from the URL or localStorage.
+         *
          * @async
-         * @return {Promise<FluentAuthManager>}
+         * @return {Promise<FluentAuthManager> | null} the FluentAuthManager or null if not authenticated
          */
         async init() {
+            if (!this.refreshToken) {
+                this.refreshToken = popRefreshTokenFromUrl() || localStorage.getItem("idas-refresh-token");
+            }
+
             if (!this.token && this.refreshToken) {
                 this.token = await this.tryRefreshToken(this.refreshToken);
             }
@@ -275,12 +282,10 @@ export function isTokenValid(token) {
  * @export
  * @param {string} appToken
  * @param {EnvironmentConfig} authBaseUrl
- * @param {string} refreshToken - refresh token, if available
  * @returns {FluentAuthManager}
  */
-export function fluentIdasAuthManager(appToken, authBaseUrl, refreshToken = null) {
+export function fluentIdasAuthManager(appToken, authBaseUrl) {
     return createAuthManager()
         .useAppToken(appToken)
         .useBaseUrl(authBaseUrl)
-        .useRefreshToken(refreshToken);
 }

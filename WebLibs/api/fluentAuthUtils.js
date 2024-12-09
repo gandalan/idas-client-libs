@@ -13,12 +13,3 @@ export function popRefreshTokenFromUrl() {
     }
     return null;
 }
-
-/**
- * Gets idas refresh token from local storage.
- *
- * @returns {string|null} The refresh token or null if it does not exist.
- */
-export function getCachedRefreshToken() {
-    return localStorage.getItem("idas-refresh-token");
-}

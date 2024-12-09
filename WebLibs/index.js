@@ -5,7 +5,6 @@ export { IDASFactory, initIDAS, RESTClient };
 
 export { createApi, fluentApi } from "./api/fluentApi";
 export { createAuthManager, fluentIdasAuthManager } from "./api/fluentAuthManager";
-export { getCachedRefreshToken, popRefreshTokenFromUrl } from "./api/fluentAuthUtils";
 export { fetchEnvConfig } from "./api/fluentEnvUtils";
 export { restClient } from "./api/fluentRestClient";
 
