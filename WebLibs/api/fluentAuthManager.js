@@ -281,7 +281,7 @@ export function isTokenValid(token) {
  * create a new FluentAuthManager with the provided tokens
  * @export
  * @param {string} appToken
- * @param {EnvironmentConfig} authBaseUrl
+ * @param {string} authBaseUrl
  * @returns {FluentAuthManager}
  */
 export function fluentIdasAuthManager(appToken, authBaseUrl) {
