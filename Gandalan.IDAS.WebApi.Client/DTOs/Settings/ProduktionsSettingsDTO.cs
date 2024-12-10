@@ -53,4 +53,11 @@ public class ProduktionsSettingsDTO
     public bool SP_WL_mit_Schraube_150329 { get; set; } = true;
     public bool LI_TE_Winkelprofil_mit_Schraube_150329_06 { get; set; } = true;
     public string ProdukteMitc3Berechnen { get; set; }
+    public bool DF4_DT4_133604 { get; set; } = true;
+
+    //ZusatzRahmen
+    public bool ZR_Schraubeckwinkel { get; set; } = true;
+    public bool ZR_Verstanzen { get; set; }
+    public int? ZR_Verstanzen_Mass { get; set; }
+    public bool ZR_Eckwinkel { get; set; }
 }
