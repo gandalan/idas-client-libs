@@ -121,6 +121,8 @@ export function restClient() {
             const contentType = res.headers.get("content-type");
             if (contentType && contentType.includes("application/json"))
                 return await res.json();
+            if (contentType && contentType.includes("image"))
+                return await res.blob();
             return await res.text();
         }
     };
