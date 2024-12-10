@@ -159,7 +159,7 @@ export function createAuthManager() {
 
             if (!isTokenValid(this.token)) {
                 this.redirectToLogin();
-                return null;
+                throw "Redirect to login...";
             }
             return this;
         },
