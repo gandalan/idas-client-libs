@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Gandalan.IDAS.WebApi.Data.DTO;
 
@@ -23,6 +23,7 @@ public class BelegPositionSonderwunschDTO
     public bool NichtSaegenMoeglich { get; set; }
     public bool ProfilNichtSaegen { get; set; }
     public Guid BelegPositionSonderwunschGuid { get; set; } = Guid.NewGuid();
+    public bool IstKorrekturAktiv { get; set; }
 
     public BelegPositionSonderwunschDTO()
     {
