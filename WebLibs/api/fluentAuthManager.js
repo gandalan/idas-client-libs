@@ -200,6 +200,24 @@ export function createAuthManager() {
         },
 
         /**
+         * check if the user has the specific right
+         * @param {string} code
+         * @returns {boolean}
+         */
+        hasRight(code) {
+            return (this.userInfo?.rights || []).includes(code);
+        },
+
+        /**
+         * check if the user has the specific role
+         * @param {string} code
+         * @returns {boolean}
+         */
+        hasRole(code) {
+            return (this.userInfo?.roles || []).includes(code);
+        },
+
+        /**
          * update the user session with the new token
          * @private
          * @param {string} token
