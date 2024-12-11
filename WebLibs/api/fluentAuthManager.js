@@ -214,7 +214,7 @@ export function createAuthManager() {
          * @returns {boolean}
          */
         hasRole(code) {
-            return (this.userInfo?.roles || []).includes(code);
+            return (this.userInfo?.role || []).includes(code);
         },
 
         /**
