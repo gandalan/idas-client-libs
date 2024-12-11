@@ -51,7 +51,7 @@ public class BelegDruckDTO
             Belegdatum = beleg.BelegDatum.ToString("d", culture);
             Lieferzeit = ""; //???
             IsEndkunde = vorgang.Kunde?.IstEndkunde ?? false;
-            IsRabatt = beleg.PositionsObjekte?.Any(i => !i.Equals(0m)) ?? false;
+            IsRabatt = beleg.PositionsObjekte?.Any(i => !i.Rabatt.Equals(0m)) ?? false;
             IstSelbstabholer = beleg.IstSelbstabholer;
 
             if (string.IsNullOrEmpty(beleg.BelegTitelUeberschrift))
