@@ -16,10 +16,10 @@ public class LoginWindowViewModel_v2 : INotifyPropertyChanged
     public event PropertyChangedEventHandler PropertyChanged;
 
     public string Title => "Neher Cloud - Anmeldung";
-    public bool LoginInProgress { get; set; } = false;
+    public bool LoginInProgress { get; set; }
     public bool ShowServerSelection { get; set; }
 
-    public bool EnvAlsDefault { get; set; } = false;
+    public bool EnvAlsDefault { get; set; }
 
     public string Url
     {
@@ -67,7 +67,7 @@ public class LoginWindowViewModel_v2 : INotifyPropertyChanged
     public string StatusText { get; set; }
 
     public string PlainPassword { get; set; }
-    public bool ShowPlainPassword { get; set; } = false;
+    public bool ShowPlainPassword { get; set; }
     public bool HidePlainPassword => !ShowPlainPassword;
     public string PasswordInputWarning { get; set; }
     public bool ShowPasswordInputWarning { get; set; }
