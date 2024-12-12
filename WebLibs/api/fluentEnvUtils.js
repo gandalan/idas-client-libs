@@ -36,5 +36,6 @@ export async function fetchEnvConfig(envConfig = "") {
         const data = await r.json();
         envConfigs[envConfig] = data;
     }
+
     return envConfigs[envConfig];
 }
