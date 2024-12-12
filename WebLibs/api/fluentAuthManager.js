@@ -20,6 +20,8 @@ import { popRefreshTokenFromUrl } from "./fluentAuthUtils";
  * @property {function} tryRefreshToken - Attempts to refresh the authentication token using the refresh token.
  * @property {function} updateUserSession - Updates the user session with the new token.
  * @property {function} redirectToLogin - Redirects to the login page.
+ * @property {function(string) : boolean} hasRight - Checks if the user has the specific right.
+ * @property {function(string) : boolean} hasRole - Checks if the user has the specific role.
  */
 
 /**
