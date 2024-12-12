@@ -93,8 +93,9 @@ export function createAuthManager() {
          * @private
          */
         async ensureAuthenticated() {
-            if (this.token && isTokenValid(this.token))
+            if (this.token && isTokenValid(this.token)) {
                 return;
+            }
 
             try {
                 await this.authenticate();
@@ -114,11 +115,13 @@ export function createAuthManager() {
         async authenticate() { // benutzt bei existierendem JWT oder RefreshToken, wenn keins vorhanden ERROR
             console.log("authenticating:", this.token ? `token set, exp: ${jwtDecode(this.token).exp - (Date.now() / 1000)}` : "no token,", this.refreshToken, this.appToken);
 
-            if (this.token && isTokenValid(this.token))
+            if (this.token && isTokenValid(this.token)) {
                 return;
+            }
 
-            if (this.token && !this.refreshToken)
+            if (this.token && !this.refreshToken) {
                 this.refreshToken = getRefreshToken(this.token);
+            }
 
             if (!this.refreshToken) {
                 throw new Error("not authenticated");
@@ -163,6 +166,7 @@ export function createAuthManager() {
                 this.redirectToLogin();
                 throw "Redirect to login...";
             }
+
             return this;
         },
 
@@ -180,6 +184,7 @@ export function createAuthManager() {
                 this.updateUserSession((await res.json()));
                 return;
             }
+
             throw new Error("not authenticated");
         },
 
@@ -281,15 +286,17 @@ export function getRefreshToken(token) {
  * check if the token is still valid
  * - checks the expiry date and the JWT_SAFE_RENEWAL buffer
  *
- *  @export
+ * @export
  * @param {string} token
  * @returns {boolean}
  */
 export function isTokenValid(token) {
     try {
         const decoded = jwtDecode(token);
-        if (!decoded || !decoded.exp)
+        if (!decoded || !decoded.exp) {
             throw new Error("Invalid token");
+        }
+
         return (decoded.exp - JWT_SAFE_RENEWAL > Date.now() / 1000);
     }
     catch {
