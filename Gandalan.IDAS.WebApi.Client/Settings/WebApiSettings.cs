@@ -53,6 +53,7 @@ public class WebApiSettings : IWebApiConfig
     public string NotifyUrl { get; set; }
     public string HelpCenterUrl { get; set; }
     public string WebhookServiceUrl { get; set; }
+    public string TranslateUrl { get; set; }
 
     /// <remarks>
     /// Remember to call <see cref="WebApiConfigurations.InitializeAsync"/> before.
@@ -114,5 +115,6 @@ public class WebApiSettings : IWebApiConfig
         StoreUrl = settings.StoreUrl;
         NotifyUrl = settings.NotifyUrl;
         HelpCenterUrl = settings.HelpCenterUrl;
+        TranslateUrl = settings.TranslateUrl;
     }
 }

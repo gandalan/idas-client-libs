@@ -1,157 +1,29 @@
-import { jwtDecode } from "jwt-decode";
 import { restClient } from "./fluentRestClient";
-import { authBuilder } from "./fluentAuthBuilder";
-
-/**
- * @typedef {Object} EnvironmentConfig
- * @property {string} name - The environment name.
- * @property {string} version - The version number.
- * @property {string} cms - The CMS URL.
- * @property {string} idas - The IDAS API URL.
- * @property {string} store - The store API URL.
- * @property {string} docs - The documentation URL.
- * @property {string} notify - The notification service URL.
- * @property {string} feedback - The feedback service URL.
- * @property {string} helpcenter - The help center URL.
- * @property {string} reports - The reports service URL.
- * @property {string} webhookService - The webhook service URL.
- */
-
-/**
- * buffer for environment data
- * @private
- * @type {Object.<string, EnvironmentConfig>}
- */
-const envs = {};
-
-/**
- * configure the time before token expiry to renew
- * @type {number}
- */
-const JWT_SAFE_RENEWAL = 30; // seconds before token expiry to renew
-
-/**
- * fetches the environment data from the hub
- * @export
- * @async
- * @param {string} [env="", env="dev", env="staging", env="produktiv"]
- * @returns {Promise<EnvironmentConfig>}
- */
-export async function fetchEnv(env = "") {
-    if (!(env in envs)) {
-        const hubUrl = `https://connect.idas-cloudservices.net/api/Endpoints?env=${env}`;
-        console.log("fetching env", hubUrl);
-        const r = await fetch(hubUrl);
-        const data = await r.json();
-        envs[env] = data;
-    }
-    return envs[env];
-}
-
-/** 
- * @typedef {Object} JwtTokenExt
- * @property {string} id
- * @property {string} refreshToken
-*/
-
-/**
- * decode the JWT token and return the refresh token
- * @export
- * @param {string} token
- * @returns {string}
- */
-export function getRefreshToken(token) {
-    const decoded = /** @type {JwtTokenExt} */(jwtDecode(token));
-    return decoded.refreshToken;
-}
-
-/**
- * check if the token is still valid
- * - checks the expiry date and the JWT_SAFE_RENEWAL buffer
- * 
- *  @export
- * @param {string} token
- * @returns {boolean}
- */
-export function isTokenValid(token) 
-{
-    try
-    {
-        const decoded = jwtDecode(token);
-        if (!decoded || !decoded.exp) 
-            throw new Error("Invalid token");
-        return (decoded.exp - JWT_SAFE_RENEWAL > Date.now() / 1000);
-    }
-    catch {
-        return false;
-    }
-}
 
 /**
  * @typedef {Object} FluentApi
  * @property {string} baseUrl - The base URL for API requests.
- * @property {string} authUrl - The authentication URL.
- * @property {string} env - The environment setting.
- * @property {string} appToken - The application token.
- * @property {string} storageEntry - The storage entry.
- * @property {string} token - The JWT token for authorization.
- * @property {string} refreshToken - The refresh token.
- * @property {function(EnvironmentConfig) : FluentApi} useEnvironment - Sets the environment and returns the FluentApi object.
- * @property {function(string) : FluentApi} useAppToken - Sets the application token and returns the FluentApi object.
+ * @property {import("./fluentAuthManager").FluentAuthManager} authManager - The authentication manager.
  * @property {function(string) : FluentApi} useBaseUrl - Sets the base URL for API requests and returns the FluentApi object.
- * @property {function(string) : FluentApi} useAuthUrl - Sets the authentication URL and returns the FluentApi object.
- * @property {function(string) : FluentApi} useToken - Sets the JWT token for authorization and returns the FluentApi object.
- * @property {function(string) : FluentApi} useRefreshToken - Sets the refresh token and returns the FluentApi object.
- * @property {function() : FluentApi} useGlobalAuth - Uses global authentication tokens and returns the FluentApi object.
- * @property {function(string) : object|Array<any>} get - Async function to perform GET requests.
- * @property {function(string, object|null) : object|Array<any>} put - Async function to perform PUT requests with a payload.
- * @property {function(string, object|null) : object|Array<any>} post - Async function to perform POST requests with a payload.
- * @property {function(string) : object|Array<any>} delete - Async function to perform DELETE requests.
- * @property {Function} ensureAuthenticated - Ensures the user is authenticated before making a request.
- * @property {Function} ensureBaseUrlIsSet - Ensures the base URL is set before making a request.
- * @property {Function} redirectToLogin - Redirects to the login page.
+ * @property {function(fluentAuthManager) : FluentApi} useAuthManager - Sets the auth manager and returns the FluentApi object.
+ * @property {function(string) : Promise<object|Array<any>>} get - Async function to perform GET requests.
+ * @property {function(string, object|null) : Promise<object|Array<any>>} put - Async function to perform PUT requests with a payload.
+ * @property {function(string, object|null) : Promise<object|Array<any>>} post - Async function to perform POST requests with a payload.
+ * @property {function(string) : Promise<object|Array<any>>} delete - Async function to perform DELETE requests.
  */
 
 /**
- * Builds a client to communicate with the IDAS api in a fluent syntax
- * 
- * @return {FluentApi}
+ * Builds a client to communicate with the IDAS or local API using fluent syntax.
+ *
+ * @return {FluentApi} A configured API client instance.
  */
 export function createApi() {
     return {
+        authManager: {},
         baseUrl: "",
-        authUrl: "",
-        env: "",
-        appToken: "",
-        storageEntry: "",
-        token: "",
-        refreshToken: "",
 
         /**
-         * set the environment to use
-         * 
-         * @param {EnvironmentConfig} env 
-         * @return {FluentApi}
-         */
-        useEnvironment(env = {}) { 
-            this.env = env; 
-            this.baseUrl = env.idas;
-            this.authUrl = env.idas;
-            return this; 
-        },
-
-        /**
-         * set the app token to use
-         *
-         * @param {string} [newApptoken=""]
-         * @return {FluentApi}
-         */
-        useAppToken(newApptoken = "") {
-            this.appToken = newApptoken; return this;
-        },
-
-        /**
-         * set the base URL for API requests
+         * Sets the base URL for API requests.
          *
          * @param {string} [url=""]
          * @return {FluentApi}
@@ -162,96 +34,59 @@ export function createApi() {
         },
 
         /**
-         * set the authentication URL
+         * Sets the authentication manager.
          *
-         * @param {string} [url=""]
+         * @param {FluentAuthManager} authManager
          * @return {FluentApi}
          */
-        useAuthUrl(url = "") {
-            this.authUrl = url; return this;
-        },
-
-        /**
-         * set the JWT token for authorization
-         *
-         * @param {string} [jwtToken=""]
-         * @return {FluentApi}
-         */
-        useToken(jwtToken = "") {
-            this.token = jwtToken; return this;
-        },
-
-        /**
-         * set the refresh token
-         *
-         * @param {string} [storedRefreshToken=""]
-         * @return {FluentApi}
-         */
-        useRefreshToken(storedRefreshToken = "") {
-            this.refreshToken = storedRefreshToken; return this;
-        },
-        
-        /**
-         * tell the client to use the global authentication tokens
-         *
-         * @return {FluentApi}
-         */
-        useGlobalAuth() {
-            // eslint-disable-next-line no-undef 
-            this.token = globalThis.idasTokens.token; 
-            // eslint-disable-next-line no-undef
-            this.refreshToken = globalThis.idasTokens.refreshToken; 
-            // eslint-disable-next-line no-undef
-            this.appToken = globalThis.idasTokens.appToken;
+        useAuthManager(authManager) {
+            this.authManager = authManager;
             return this;
         },
-        
+
         /**
-         * GET request, ensure authenticated if needed
-         *
-         * @async
-         * @param {string} [url=""]
-         * @param {boolean} [auth=true]
-         * @returns {Promise<Object>}
-         */
+          * Sends a GET request, ensuring authentication if needed.
+          *
+          * @async
+          * @param {string} [url=""]
+          * @param {boolean} [auth=true]
+          * @returns {Promise<Object>}
+          */
         async get(url = "", auth = true) {
-            if (auth) 
-                await this.ensureAuthenticated();
-            return restClient().useBaseUrl(this.baseUrl).useToken(this.token).get(url);
+            await this.preCheck(auth);
+            return await this.createRestClient().get(url);
         },
 
         /**
-         * PUT request, ensure authenticated if needed
-         *
-         * @async
-         * @param {string} [url=""]
-         * @param {Object} [payload={}]
-         * @param {boolean} [auth=true]
-         * @returns {Promise<Object>}
-         */
+          * Sends a PUT request with a payload, ensuring authentication if needed.
+          *
+          * @async
+          * @param {string} [url=""]
+          * @param {Object} [payload={}]
+          * @param {boolean} [auth=true]
+          * @returns {Promise<Object>}
+          */
         async put(url = "", payload = {}, auth = true) {
-            if (auth) 
-                await this.ensureAuthenticated();
-            return restClient().useBaseUrl(this.baseUrl).useToken(this.token).put(url, payload);
+            await this.preCheck(auth);
+            return await this.createRestClient().put(url, payload);
         },
 
         /**
-         * POST request, ensure authenticated if needed
-         *
-         * @async
-         * @param {string} [url=""]
-         * @param {Object} [payload={}]
-         * @param {boolean} [auth=true]
-         * @returns {Promise<Object>}
-         */
+          * Sends a POST request with a payload, ensuring authentication if needed.
+          *
+          * @async
+          * @param {string} [url=""]
+          * @param {Object} [payload={}]
+          * @param {boolean} [auth=true]
+          * @returns {Promise<Object>}
+          */
         async post(url = "", payload = {}, auth = true) {
-            if (auth) 
-                await this.ensureAuthenticated();
-            return restClient().useBaseUrl(this.baseUrl).useToken(this.token).post(url, payload);
+            await this.preCheck(auth);
+            return await this.createRestClient().post(url, payload);
         },
-        
+
         /**
-         * DELETE request, ensure authenticated if needed
+         * Sends a DELETE request, ensuring authentication if needed.
          *
          * @async
          * @param {string} [url=""]
@@ -259,71 +94,51 @@ export function createApi() {
          * @returns {Promise<Object>}
          */
         async delete(url = "", auth = true) {
-            if (auth) 
-                await this.ensureAuthenticated();
-            return restClient().useBaseUrl(this.baseUrl).useToken(this.token).delete(url);
+            await this.preCheck(auth);
+            return await this.createRestClient().delete(url);
         },
 
         /**
-         * Ensure the user is authenticated before making a request
+         * Creates the REST client instance with the current configuration.
          *
-         * @async
          * @private
+         * @returns {import("./fluentRestClient").FluentRESTClient}
          */
-        async ensureAuthenticated() {
-            if (this.token && isTokenValid(this.token))
-                return;
+        createRestClient() {
+            return restClient().useBaseUrl(this.baseUrl).useToken(this.authManager?.token);
+        },
 
-            try {
-                const temptoken = await authBuilder()
-                    .useAppToken(this.appToken)
-                    .useBaseUrl(this.authUrl || this.env.idas)
-                    .useToken(this.token)
-                    .useRefreshToken(this.refreshToken)
-                    .authenticate() || "";
-
-                if (!temptoken) {
-                    throw new Error("not authenticated");
-                }
-
-                this.token = temptoken;
-                this.refreshToken = getRefreshToken(temptoken);
-                // eslint-disable-next-line no-undef
-                globalThis.idasTokens.token = this.token;
-                // eslint-disable-next-line no-undef
-                globalThis.idasTokens.refreshToken = this.refreshToken;
-                // eslint-disable-next-line no-undef
-                globalThis.idasTokens.userInfo = jwtDecode(this.token);
-                localStorage.setItem("idas-refresh-token", this.refreshToken);
-            } catch (e) {
-                //this.redirectToLogin();
-                console.error("not authenticated", e);
+        /**
+         * Ensures the user is authenticated before making a request.
+         *
+         * @private
+         * @async
+         * @param {boolean} [auth=true]
+         * @returns {void}
+         */
+        async preCheck(auth = true) {
+            if (auth && this.authManager) {
+                await this.authManager.ensureAuthenticated();
             }
         }
     };
 }
 
 /**
- * Default setup for IDAS
+ * Sets up a client for API requests.
+ *
+ * - Requests will be sent to the url provided.
+ * - Example usage:
+ *   const api = fluentApi("https://jsonplaceholder.typicode.com/todos/", null);
+ *   api.get("1"); // Sends a GET request to https://jsonplaceholder.typicode.com/todos/1.
  *
  * @export
- * @param {string} [appToken=""]
- * @return {FluentApi}
+ * @param {string} url - The base URL for API requests.
+ * @param {FluentAuthManager} authManager - The authentication manager instance.
+ * @return {FluentApi} Configured API instance for local use.
  */
-export function idasApi(appToken = "") {
+export function fluentApi(url, authManager) {
     return createApi()
-        .useGlobalAuth()
-        .useAppToken(appToken);
-}
-
-/**
- * Default setup for local API
- *
- * @export
- * @return {FluentApi}
- */
-export function localApi() {
-    return createApi()
-        .useGlobalAuth()
-        .useBaseUrl("api");
+        .useAuthManager(authManager)
+        .useBaseUrl(url);
 }

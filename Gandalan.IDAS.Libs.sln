@@ -13,17 +13,24 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F75A4690-2A78-4DF5-AF1F-90BC4DABFA26}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		.github\workflows\build-and-publish.yml = .github\workflows\build-and-publish.yml
-		.github\workflows\check-NuGet-Libs.yml = .github\workflows\check-NuGet-Libs.yml
-		.github\workflows\check-weblibs.yml = .github\workflows\check-weblibs.yml
-		.github\workflows\conflicts.yml = .github\workflows\conflicts.yml
+		.gitignore = .gitignore
+		AssemblyProjectInfo.cs = AssemblyProjectInfo.cs
+		Directory.Build.props = Directory.Build.props
 		nuget_lokal.cmd = nuget_lokal.cmd
-		.github\workflows\publish-weblibs.yml = .github\workflows\publish-weblibs.yml
 		README.md = README.md
 		UpdateVersionInfo.ps1 = UpdateVersionInfo.ps1
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gandalan.IDAS.Contracts", "Gandalan.IDAS.Contracts\Gandalan.IDAS.Contracts.csproj", "{BC916DBF-1692-47F9-91D3-C158C6AF0E34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{5683B436-0370-4240-AE01-BA370150E899}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build-and-publish.yml = .github\workflows\build-and-publish.yml
+		.github\workflows\check-NuGet-Libs.yml = .github\workflows\check-NuGet-Libs.yml
+		.github\workflows\check-weblibs.yml = .github\workflows\check-weblibs.yml
+		.github\workflows\conflicts.yml = .github\workflows\conflicts.yml
+		.github\workflows\publish-weblibs.yml = .github\workflows\publish-weblibs.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,8 +62,11 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5683B436-0370-4240-AE01-BA370150E899} = {F75A4690-2A78-4DF5-AF1F-90BC4DABFA26}
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {74BD7AE9-5E45-4BCE-8044-A7A711227883}
 		SolutionGuid = {AFBBB95E-EEF7-4C94-B844-A53EE8A729DC}
+		        SolutionGuid = {74BD7AE9-5E45-4BCE-8044-A7A711227883}
 	EndGlobalSection
 EndGlobal

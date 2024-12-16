@@ -10,4 +10,6 @@ public class HubResponse
     public string Feedback { get; set; }
     public string Notify { get; set; }
     public string WebhookService { get; set; }
+    public string Translate { get; set; }
+
 }

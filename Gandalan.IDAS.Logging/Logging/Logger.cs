@@ -108,12 +108,13 @@ public class Logger : ILogger
     }
 
     /// <summary>
-    /// Write to Console and Debug output. Does not write anything to file.
+    /// Write to Console, Debug and Trace output. Does not write anything to file.
     /// </summary>
     /// <param name="message">Message to print</param>
     public static void LogConsoleDebug(string message)
     {
         Debug.WriteLine(message);
         Console.WriteLine(message);
+        Trace.WriteLine(message);
     }
 }

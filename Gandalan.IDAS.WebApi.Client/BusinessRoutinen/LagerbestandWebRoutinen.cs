@@ -40,6 +40,29 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
     public async Task<List<LagerbuchungDTO>> GetLagerhistorieAsync(DateTime vonDatum, DateTime bisDatum, bool mitLagerbuchungen = true, bool mitReservierungen = true, Guid? katalogArtikelGuid = null)
         => await GetAsync<List<LagerbuchungDTO>>($"Lagerbuchung/?vonDatum={vonDatum.ToUniversalTime():o}&bisDatum={bisDatum.ToUniversalTime():o}&mitLagerbuchungen={mitLagerbuchungen}&mitReservierungen={mitReservierungen}&katalogArtikelGuid={katalogArtikelGuid}");
 
+    #region Reservierungen
+
+    public async Task<LagerReservierungDTO> GetReservierungAsync(Guid guid)
+        => await GetAsync<LagerReservierungDTO>($"LagerReservierungen/?id={guid}");
+
+    public async Task<List<LagerReservierungDTO>> GetAllReservierungenAsync(string artikelnummer = "", string farbkuerzel = "", string farbcode = "", string bezug = "", DateTime? changedSince = null)
+    {
+        if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
+        {
+            return await GetAsync<List<LagerReservierungDTO>>($"LagerReservierungen?artikelnummer={artikelnummer}&farbkuerzel={farbkuerzel}&farbcode={farbcode}&bezug={bezug}&changedSince={changedSince.Value:o}");
+        }
+
+        return await GetAsync<List<LagerReservierungDTO>>($"LagerReservierungen?artikelnummer={artikelnummer}&farbkuerzel={farbkuerzel}&farbcode={farbcode}&bezug={bezug}");
+    }
+
+    public async Task SaveReservierungenAsync(LagerReservierungDTO[] dtos)
+        => await PutAsync("LagerReservierungen/", dtos);
+
+    public async Task DeleteReservierungAsync(Guid[] guids)
+        => await DeleteAsync($"LagerReservierungen", guids);
+
+    #endregion
+
     #region Functions
     public async Task<List<long>> GetProduzentenMandantIDsAsync()
         => await GetAsync<List<long>>($"Lagerbestand/GetProduzentIdListe");
