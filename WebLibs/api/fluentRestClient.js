@@ -132,7 +132,9 @@ export function restClient() {
                     return await res.json();
                 }
 
-                if (contentType.includes("image") || contentType.includes("application/pdf")) {
+                const blobTypes = ["pdf", "zip", "octet-stream"];
+                if (contentType.includes("image") ||
+                    blobTypes.some(type => contentType.includes(`application/${type}`))) {
                     return await res.blob();
                 }
             }
