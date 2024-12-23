@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.DataServices;
@@ -10,6 +11,15 @@ public interface ISettingsService
     Task Load<T>(T settingsObject);
     Task Save<T>(T settingsObject);
     bool IstReady();
+    Task<Dictionary<string, string>> GetAllSettings(SettingsType type);
+    bool HasSetting(string name);
+}
+
+public enum SettingsType
+{
+    User,
+    App,
+    Server
 }
 
 public class UserSettingsObjectAttribute : Attribute
