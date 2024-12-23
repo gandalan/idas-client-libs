@@ -54,8 +54,8 @@ public class JwtTokenService
     private const string ClaimIdasAuthToken = "idasAuthToken";
     private const string ClaimRefreshToken = "refreshToken";
     private const string ClaimTokenType = "type";
-    private const string ClaimRole = "role";
-    private const string ClaimRights = "rights";
+    public static string ClaimRole = "role";
+    public static string ClaimRights = "rights";
 
     public JwtTokenService(DateTime? issuedAt = null)
     {
