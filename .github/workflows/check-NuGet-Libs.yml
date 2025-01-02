@@ -22,6 +22,8 @@ env:
   PACKAGE_5_FULL: Gandalan.IDAS.Contracts
   BUILD_CONFIG: Release
   OUTPUT_DIR: ./GDLPackages
+  RELEASE_NAME: _will_be_set_in_steps_
+  COMMON_PACK_PARAMS: _will_be_set_in_steps_
 
 jobs:
   check-nuget-libs:
@@ -34,27 +36,28 @@ jobs:
 
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v2
-    - name: Set release_name
-      id: set_release_name
-      run: echo "release_name=$(date +'%-Y.%-m.%-d').$GITHUB_RUN_NUMBER" >> $GITHUB_OUTPUT
+    - name: Set env.RELEASE_NAME
+      run: echo "RELEASE_NAME=$(date +'%-Y.%-m.%-d').$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
     - name: Setup .NET Core SDK ${{ env.SDK_VERSION }}
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.SDK_VERSION }}
-    - name: Run UpdateVersionInfo.ps1 with ${{ steps.set_release_name.outputs.release_name }}
+    - name: Run UpdateVersionInfo.ps1 with ${{ env.RELEASE_NAME }}
       shell: pwsh
-      run: .\UpdateVersionInfo.ps1 ${{ steps.set_release_name.outputs.release_name }}
+      run: .\UpdateVersionInfo.ps1 ${{ env.RELEASE_NAME }}
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration ${{ env.BUILD_CONFIG }} --no-restore -p:Version=${{ steps.set_release_name.outputs.release_name }}
+      run: dotnet build --configuration ${{ env.BUILD_CONFIG }} --no-restore -p:Version=${{ env.RELEASE_NAME }}
+    - name: Set env.COMMON_PACK_PARAMS
+      run: echo "COMMON_PACK_PARAMS=-NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }} -Symbols -SymbolPackageFormat snupkg" >> $GITHUB_ENV
     - name: Create package ${{ env.PACKAGE_1 }}
-      run: nuget pack ${{ env.PACKAGE_1_FULL }}/${{ env.PACKAGE_1 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }} -Symbols -SymbolPackageFormat snupkg
+      run: nuget pack ${{ env.PACKAGE_1_FULL }}/${{ env.PACKAGE_1 }}.nuspec ${{ env.COMMON_PACK_PARAMS }}
     - name: Create package ${{ env.PACKAGE_2 }}
-      run: nuget pack ${{ env.PACKAGE_2_FULL }}/${{ env.PACKAGE_2 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }} -Symbols -SymbolPackageFormat snupkg
+      run: nuget pack ${{ env.PACKAGE_2_FULL }}/${{ env.PACKAGE_2 }}.nuspec ${{ env.COMMON_PACK_PARAMS }}
     - name: Create package ${{ env.PACKAGE_3 }}
-      run: nuget pack ${{ env.PACKAGE_3_FULL }}/${{ env.PACKAGE_3 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }} -Symbols -SymbolPackageFormat snupkg
+      run: nuget pack ${{ env.PACKAGE_3_FULL }}/${{ env.PACKAGE_3 }}.nuspec ${{ env.COMMON_PACK_PARAMS }}
     - name: Create package ${{ env.PACKAGE_4 }}
-      run: nuget pack ${{ env.PACKAGE_4_FULL }}/${{ env.PACKAGE_4 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }} -Symbols -SymbolPackageFormat snupkg
+      run: nuget pack ${{ env.PACKAGE_4_FULL }}/${{ env.PACKAGE_4 }}.nuspec ${{ env.COMMON_PACK_PARAMS }}
     - name: Create package ${{ env.PACKAGE_5 }}
-      run: nuget pack ${{ env.PACKAGE_5_FULL }}/${{ env.PACKAGE_5 }}.nuspec -NonInteractive -Verbosity Detailed -OutputDirectory ${{ env.OUTPUT_DIR }} -Symbols -SymbolPackageFormat snupkg
+      run: nuget pack ${{ env.PACKAGE_5_FULL }}/${{ env.PACKAGE_5 }}.nuspec ${{ env.COMMON_PACK_PARAMS }}
