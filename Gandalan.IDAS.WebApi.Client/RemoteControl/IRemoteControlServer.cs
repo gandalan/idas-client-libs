@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace Gandalan.Client.Contracts.RemoteControl;
 
 public interface IRemoteControlServer
 {
-    void Start();
-    void Stop();
+    Task Start();
+    Task Stop();
 }
