@@ -9,6 +9,15 @@ namespace Gandalan.IDAS.Crypto;
 /// </summary>
 public class HexEncoding
 {
+    /// <summary>
+    /// Calculates the number of bytes represented by a hexadecimal string, ignoring non-hexadecimal characters.
+    /// If the number of valid hexadecimal characters is odd, the last character is discarded.
+    /// </summary>
+    /// <param name="hexString">The hexadecimal string to analyze.</param>
+    /// <returns>
+    /// The number of bytes represented by the valid hexadecimal characters in the string.
+    /// Each byte is represented by two hexadecimal characters.
+    /// </returns>
     public static int GetByteCount(string hexString)
     {
         var numHexChars = 0;
@@ -75,6 +84,14 @@ public class HexEncoding
         return returnValue;
     }
 
+    /// <summary>
+    /// Converts a byte array to a hexadecimal string representation, where each byte is represented as two uppercase hexadecimal characters.
+    /// </summary>
+    /// <param name="bytes">The byte array to convert.</param>
+    /// <returns>
+    /// A string containing the hexadecimal representation of the byte array.
+    /// Each byte is represented by two characters in uppercase.
+    /// </returns>
     public static string ToString(byte[] bytes)
     {
         var returnValue = string.Empty;
@@ -143,6 +160,16 @@ public class HexEncoding
         return byte.Parse(hex, NumberStyles.HexNumber);
     }
 
+    /// <summary>
+    /// Converts an object to a specified type, returning a default value if the conversion is not possible.
+    /// </summary>
+    /// <typeparam name="T">The target type to which the object should be converted.</typeparam>
+    /// <param name="value">The object to convert.</param>
+    /// <param name="defaultValue">The default value to return if the conversion is not possible.</param>
+    /// <returns>
+    /// The converted value of type <typeparamref name="T"/> if the conversion succeeds;
+    /// otherwise, <paramref name="defaultValue"/>.
+    /// </returns>
     public static T ConvertTo<T>(object value, T defaultValue)
     {
         var obj = defaultValue;
