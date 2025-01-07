@@ -8,15 +8,16 @@
         <owners>Gandalan GmbH &amp; Co. KG</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Gandalan.IDAS.Contracts</description>
-        <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2024</copyright>
+        <copyright>Copyright © Gandalan GmbH &amp; Co. KG 2012-2025</copyright>
         <projectUrl>https://github.com/gandalan/idas-client-libs/</projectUrl>
         <license type="expression">MIT</license>
         <readme>README.md</readme>
         <dependencies>
-          <group targetFramework=".NETFramework4.8" />
-          <group targetFramework="net8.0" />
+          <group targetFramework=".NETFramework4.8">
+            <dependency id="GDL.IDAS.WebApi.Client" version="BUILDVERSION" />
+          </group>
 
-          <group>
+          <group targetFramework="net8.0">
             <dependency id="GDL.IDAS.WebApi.Client" version="BUILDVERSION" />
           </group>
         </dependencies>
