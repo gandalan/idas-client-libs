@@ -60,4 +60,6 @@ public class ProduktionsSettingsDTO
     public bool ZR_Verstanzen { get; set; }
     public int? ZR_Verstanzen_Mass { get; set; }
     public bool ZR_Eckwinkel { get; set; }
+
+    public bool Magnetposition_DT3_DT6 { get; set; }
 }

@@ -70,6 +70,7 @@ export class RESTClient
                 fileName = response.headers["content-disposition"].split(";")[1];
                 fileName = fileName.replace("filename=", "").trim();
             }
+
             this.lastError = "";
             return { data: response.data, filename: fileName, contentType: "application/pdf" };
         }
@@ -92,6 +93,7 @@ export class RESTClient
         {
             this.handleError(error);
         }
+
         return response;
     }
 

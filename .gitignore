@@ -396,3 +396,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/Gandalan.IDAS.Crypto/GDL.IDAS.Crypto.xml
+/Gandalan.IDAS.Logging/GDL.IDAS.Logging.xml
+/Gandalan.IDAS.WebApi.Client.Wpf/GDL.IDAS.WebApi.Client.Wpf.xml
+/Gandalan.IDAS.WebApi.Client/GDL.IDAS.WebApi.Client.xml

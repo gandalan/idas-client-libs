@@ -13,7 +13,11 @@
         <license type="expression">MIT</license>
         <readme>README.md</readme>
         <dependencies>
-          <dependency id="GDL.IDAS.WebApi.Client" version="BUILDVERSION" />
+          <group targetFramework=".NETFramework4.8" />
+
+          <group>
+            <dependency id="GDL.IDAS.WebApi.Client" version="BUILDVERSION" />
+          </group>
         </dependencies>
     </metadata>
     <files>

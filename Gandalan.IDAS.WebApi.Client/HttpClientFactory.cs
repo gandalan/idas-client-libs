@@ -123,11 +123,9 @@ public class HttpClientFactory
         {
             return newClient;
         }
-        else
-        {
-            // Dispose the newly created client if another thread added a client first
-            newClient.Dispose();
-        }
+
+        // Dispose the newly created client if another thread added a client first
+        newClient.Dispose();
 
         // Retrieve the existing client from the dictionary
         _clients.TryGetValue(config, out client);

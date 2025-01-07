@@ -20,6 +20,8 @@ import { popRefreshTokenFromUrl } from "./fluentAuthUtils";
  * @property {function} tryRefreshToken - Attempts to refresh the authentication token using the refresh token.
  * @property {function} updateUserSession - Updates the user session with the new token.
  * @property {function} redirectToLogin - Redirects to the login page.
+ * @property {function(string) : boolean} hasRight - Checks if the user has the specific right.
+ * @property {function(string) : boolean} hasRole - Checks if the user has the specific role.
  */
 
 /**
@@ -91,8 +93,9 @@ export function createAuthManager() {
          * @private
          */
         async ensureAuthenticated() {
-            if (this.token && isTokenValid(this.token))
+            if (this.token && isTokenValid(this.token)) {
                 return;
+            }
 
             try {
                 await this.authenticate();
@@ -112,11 +115,13 @@ export function createAuthManager() {
         async authenticate() { // benutzt bei existierendem JWT oder RefreshToken, wenn keins vorhanden ERROR
             console.log("authenticating:", this.token ? `token set, exp: ${jwtDecode(this.token).exp - (Date.now() / 1000)}` : "no token,", this.refreshToken, this.appToken);
 
-            if (this.token && isTokenValid(this.token))
+            if (this.token && isTokenValid(this.token)) {
                 return;
+            }
 
-            if (this.token && !this.refreshToken)
+            if (this.token && !this.refreshToken) {
                 this.refreshToken = getRefreshToken(this.token);
+            }
 
             if (!this.refreshToken) {
                 throw new Error("not authenticated");
@@ -161,6 +166,7 @@ export function createAuthManager() {
                 this.redirectToLogin();
                 throw "Redirect to login...";
             }
+
             return this;
         },
 
@@ -178,6 +184,7 @@ export function createAuthManager() {
                 this.updateUserSession((await res.json()));
                 return;
             }
+
             throw new Error("not authenticated");
         },
 
@@ -197,6 +204,24 @@ export function createAuthManager() {
                     headers: { "Content-Type": "application/json" },
                 });
             return res.ok ? await res.json() : null;
+        },
+
+        /**
+         * check if the user has the specific right
+         * @param {string} code
+         * @returns {boolean}
+         */
+        hasRight(code) {
+            return (this.userInfo?.rights || []).includes(code);
+        },
+
+        /**
+         * check if the user has the specific role
+         * @param {string} code
+         * @returns {boolean}
+         */
+        hasRole(code) {
+            return (this.userInfo?.role || []).includes(code);
         },
 
         /**
@@ -261,15 +286,17 @@ export function getRefreshToken(token) {
  * check if the token is still valid
  * - checks the expiry date and the JWT_SAFE_RENEWAL buffer
  *
- *  @export
+ * @export
  * @param {string} token
  * @returns {boolean}
  */
 export function isTokenValid(token) {
     try {
         const decoded = jwtDecode(token);
-        if (!decoded || !decoded.exp)
+        if (!decoded || !decoded.exp) {
             throw new Error("Invalid token");
+        }
+
         return (decoded.exp - JWT_SAFE_RENEWAL > Date.now() / 1000);
     }
     catch {

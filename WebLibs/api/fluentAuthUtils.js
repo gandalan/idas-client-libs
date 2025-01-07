@@ -11,5 +11,6 @@ export function popRefreshTokenFromUrl() {
         window.history.replaceState({}, document.title, url);
         return refreshToken;
     }
+
     return null;
 }

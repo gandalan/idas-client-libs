@@ -3,13 +3,13 @@ import { restClient } from "./fluentRestClient";
 /**
  * @typedef {Object} FluentApi
  * @property {string} baseUrl - The base URL for API requests.
- * @property {FluentAuthManager} authManager - The authentication manager.
+ * @property {import("./fluentAuthManager").FluentAuthManager} authManager - The authentication manager.
  * @property {function(string) : FluentApi} useBaseUrl - Sets the base URL for API requests and returns the FluentApi object.
- * @property {function(FluentAuthManager) : FluentApi} useAuthManager - Sets the auth manager and returns the FluentApi object.
- * @property {function(string) : object|Array<any>} get - Async function to perform GET requests.
- * @property {function(string, object|null) : object|Array<any>} put - Async function to perform PUT requests with a payload.
- * @property {function(string, object|null) : object|Array<any>} post - Async function to perform POST requests with a payload.
- * @property {function(string) : object|Array<any>} delete - Async function to perform DELETE requests.
+ * @property {function(fluentAuthManager) : FluentApi} useAuthManager - Sets the auth manager and returns the FluentApi object.
+ * @property {function(string) : Promise<object|Array<any>>} get - Async function to perform GET requests.
+ * @property {function(string, object|null) : Promise<object|Array<any>>} put - Async function to perform PUT requests with a payload.
+ * @property {function(string, object|null) : Promise<object|Array<any>>} post - Async function to perform POST requests with a payload.
+ * @property {function(string) : Promise<object|Array<any>>} delete - Async function to perform DELETE requests.
  */
 
 /**
@@ -102,7 +102,7 @@ export function createApi() {
          * Creates the REST client instance with the current configuration.
          *
          * @private
-         * @returns {FluentRestClient}
+         * @returns {import("./fluentRestClient").FluentRESTClient}
          */
         createRestClient() {
             return restClient().useBaseUrl(this.baseUrl).useToken(this.authManager?.token);
