@@ -29,7 +29,7 @@
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-    <NoWarn>CS0067;CS1572;CS1573;</NoWarn>
+    <NoWarn>CS0067;CS1572;CS1573;CS1591;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
