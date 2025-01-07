@@ -12,19 +12,19 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Configurations>Debug;Release;Debug - Core only</Configurations>
+    <DocumentationFile>..\Gandalan.IDAS.Crypto\GDL.IDAS.Crypto.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
+    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416;</WarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug - Core only'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
+    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416;</WarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DocumentationFile>..\Gandalan.IDAS.Crypto\GDL.IDAS.Crypto.xml</DocumentationFile>
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
+    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416;</WarningsAsErrors>
     <NoWarn>CS1572;CS1573;CS1591;</NoWarn>
   </PropertyGroup>
 

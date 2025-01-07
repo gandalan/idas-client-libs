@@ -11,15 +11,19 @@
     <Version>2099.0.0-alpha</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>..\Gandalan.IDAS.Contracts\GDL.IDAS.Contracts.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);CS1591;</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
+    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416;</WarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DocumentationFile>..\Gandalan.IDAS.Contracts\GDL.IDAS.Contracts.xml</DocumentationFile>
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
+    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416;</WarningsAsErrors>
     <NoWarn>CS1572;CS1573;CS1591;</NoWarn>
   </PropertyGroup>
 

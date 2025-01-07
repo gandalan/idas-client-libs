@@ -34,10 +34,10 @@ public class AESHelper
     }
 
     /// <summary>
-    /// Decrypt the data string to the original string.  The data must be the base64 string
-    /// returned from the EncryptData method.
+    /// Decrypt the data string to the original string. The data must be the base64 string
+    /// returned from the <see cref="EncryptData(string,string)"/> method.
     /// </summary>
-    /// <param name="data">Encrypted data generated from EncryptData method.</param>
+    /// <param name="data">Encrypted data generated from <see cref="EncryptData(string,string)"/> method.</param>
     /// <param name="password">Password used to decrypt the string.</param>
     /// <returns>Decrypted string.</returns>
     public static string DecryptData(string data, string password)
@@ -57,6 +57,17 @@ public class AESHelper
         return Encoding.UTF8.GetString(decBytes);
     }
 
+    /// <summary>
+    /// Encrypts a byte array using AES encryption with the specified password and padding mode.
+    /// The same password and padding mode must be used to decrypt the data.
+    /// </summary>
+    /// <param name="data">The byte array to encrypt.</param>
+    /// <param name="password">The password used for encryption.</param>
+    /// <param name="paddingMode">The padding mode to use during encryption.</param>
+    /// <returns>A byte array containing the encrypted data.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// Thrown when <paramref name="data"/> is null or empty, or when <paramref name="password"/> is null.
+    /// </exception>
     public static byte[] EncryptData(byte[] data, string password, PaddingMode paddingMode)
     {
         if (data == null || data.Length == 0)
@@ -84,6 +95,18 @@ public class AESHelper
         }
     }
 
+    /// <summary>
+    /// Decrypts an encrypted byte array back to its original byte array using AES decryption.
+    /// The encrypted data must be created using a compatible encryption method, such as
+    /// <see cref="EncryptData(byte[], string, PaddingMode)"/>.
+    /// </summary>
+    /// <param name="data">The encrypted byte array to decrypt.</param>
+    /// <param name="password">The password used for decryption, matching the encryption password.</param>
+    /// <param name="paddingMode">The padding mode used during encryption.</param>
+    /// <returns>A byte array containing the decrypted data.</returns>
+    /// <exception cref="ArgumentNullException">
+    /// Thrown when <paramref name="data"/> is null or empty, or when <paramref name="password"/> is null.
+    /// </exception>
     public static byte[] DecryptData(byte[] data, string password, PaddingMode paddingMode)
     {
         if (data == null || data.Length == 0)

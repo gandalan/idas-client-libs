@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Gandalan.IDAS.Crypto;
 
+/// <summary>
+/// Provides helper methods for generating SHA1 hashes.
+/// </summary>
 public class SHA1Helper
 {
     /// <summary>
