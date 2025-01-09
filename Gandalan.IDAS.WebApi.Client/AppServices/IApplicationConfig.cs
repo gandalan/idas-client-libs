@@ -24,4 +24,7 @@ public interface IApplicationConfig
     bool IsFirstRun { get; set; }
     bool IsAdditionalInstance { get; set; }
     string ChangeLogFileName { get; set; }
+    bool IsSafeMode { get; set; }
+    bool UsingAppPath { get; set; }
+
 }
