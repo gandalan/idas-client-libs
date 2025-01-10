@@ -43,12 +43,12 @@ public static class WebApiConfigurations
             throw new InvalidOperationException("WebApiConfigurations not initialized - call WebApiConfigurations.InitializeAsync() first");
         }
 
-        if (_settings.TryGetValue(name, out var byName))
+        if (!_settings.TryGetValue(name, out var byName))
         {
-            return byName;
+            throw new InvalidOperationException($"Invalid environment name: {name}");
         }
 
-        return null;
+        return byName;
     }
 
     public static List<IWebApiConfig> GetAll()
