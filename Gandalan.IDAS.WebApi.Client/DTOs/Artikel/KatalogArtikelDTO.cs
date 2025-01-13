@@ -62,6 +62,7 @@ public class KatalogArtikelDTO : IWithGueltigkeitsZeitraum
     public int MengeGrossVE { get; set; }
     public int MengeGrossVE2 { get; set; }
     public int MeldeSchwelleGrossVEs { get; set; }
+    public decimal MaxBestellMenge { get; set; }
 
     public string Status { get; set; }
     public DateTime? GueltigAb { get; set; }

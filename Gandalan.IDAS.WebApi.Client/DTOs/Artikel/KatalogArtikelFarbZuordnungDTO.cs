@@ -36,5 +36,5 @@ public class KatalogArtikelFarbZuordnungDTO
     public long Version { get; set; }
 
     public DateTime ChangedDate { get; set; }
-
+    public decimal MaxBestellMenge { get; set; }
 }
