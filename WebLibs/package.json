@@ -13,6 +13,7 @@
   "author": "Philipp Reif",
   "main": "index",
   "typings": "index",
+  "type": "module",
   "scripts": {
     "svelte-check": "svelte-check",
     "svelte-check:watch": "svelte-check --watch",

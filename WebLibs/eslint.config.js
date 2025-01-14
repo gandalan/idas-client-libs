@@ -2,7 +2,7 @@ import js from "@eslint/js";
 import svelteParser from "svelte-eslint-parser";
 import eslintPluginSvelte from "eslint-plugin-svelte";
 
-module.exports = [
+export default [
     // add more generic rule sets here, such as:
     js.configs.recommended,
 	eslintPluginSvelte.configs.recommended,
