@@ -2,13 +2,12 @@ import globals from "globals";
 import babelParser from "@babel/eslint-parser";
 import js from "@eslint/js";
 import svelteParser from "svelte-eslint-parser";
-//import eslintPluginSvelte from "eslint-plugin-svelte";
+import eslintPluginSvelte from "eslint-plugin-svelte";
 
 export default [
     // add more generic rule sets here, such as:
     js.configs.recommended,
-    // TODO: A config object is using the "extends" key, which is not supported in flat config system.
-    //eslintPluginSvelte.configs.recommended,
+    ...eslintPluginSvelte.configs["flat/recommended"],
     {
         ignores: [
             "**/.DS_Store",
@@ -41,6 +40,8 @@ export default [
                 requireConfigFile: false,
             },
         },
+    },
+    {
         rules: {
             "yoda": "warn",
             eqeqeq: ["warn", "smart"],
@@ -70,6 +71,6 @@ export default [
             "prefer-template": "warn",
             "template-curly-spacing": ["warn", "never"],
             "comma-dangle": ["off"],
-        }
+        },
     },
 ];
