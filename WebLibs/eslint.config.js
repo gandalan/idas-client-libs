@@ -1,11 +1,12 @@
 import js from "@eslint/js";
 import svelteParser from "svelte-eslint-parser";
-import eslintPluginSvelte from "eslint-plugin-svelte";
+//import eslintPluginSvelte from "eslint-plugin-svelte";
 
 export default [
     // add more generic rule sets here, such as:
     js.configs.recommended,
-	eslintPluginSvelte.configs.recommended,
+    // TODO: A config object is using the "extends" key, which is not supported in flat config system.
+	//eslintPluginSvelte.configs.recommended,
 	{
 		files: ["**/*.svelte", "*.svelte"],
 		languageOptions: {
@@ -32,9 +33,7 @@ export default [
 			"arrow-spacing": "warn",
 			"no-trailing-spaces": "off",
 			"space-before-blocks": "warn",
-			"no-unused-vars": ["warn", {
-				"args": "none",
-			}],
+			"no-unused-vars": ["warn", { "args": "none" }],
 			"no-console": "off",
 			"no-extra-boolean-cast": "off",
 			"no-multiple-empty-lines": ["warn", { "max": 1, "maxBOF": 0 }],
