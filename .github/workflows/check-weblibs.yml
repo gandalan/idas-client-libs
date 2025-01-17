@@ -22,7 +22,5 @@ jobs:
         node-version: 22
     - run: npm ci
       working-directory: ${{ env.WEBLIBS_DIR }}
-    - run: npm run svelte-check
-      working-directory: ${{ env.WEBLIBS_DIR }}
     - run: npm run lint:prod
       working-directory: ${{ env.WEBLIBS_DIR }}

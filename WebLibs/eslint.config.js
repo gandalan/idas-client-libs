@@ -1,13 +1,10 @@
 import globals from "globals";
 import babelParser from "@babel/eslint-parser";
 import js from "@eslint/js";
-import svelteParser from "svelte-eslint-parser";
-import eslintPluginSvelte from "eslint-plugin-svelte";
 
 export default [
     // add more generic rule sets here, such as:
     js.configs.recommended,
-    ...eslintPluginSvelte.configs["flat/recommended"],
     {
         ignores: [
             "**/.DS_Store",
@@ -22,12 +19,6 @@ export default [
             "**/package-lock.json",
             "**/yarn.lock",
         ],
-    },
-    {
-        files: ["**/*.svelte", "*.svelte"],
-        languageOptions: {
-            parser: svelteParser,
-        },
     },
     {
         languageOptions: {

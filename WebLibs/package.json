@@ -1,7 +1,7 @@
 {
   "name": "@gandalan/weblibs",
-  "version": "1.3.12",
-  "description": "WebLibs for Gandalan JS/TS/Svelte projects",
+  "version": "1.4.0",
+  "description": "WebLibs for Gandalan JS/TS projects",
   "keywords": [
     "gandalan"
   ],
@@ -15,8 +15,6 @@
   "typings": "index",
   "type": "module",
   "scripts": {
-    "svelte-check": "svelte-check",
-    "svelte-check:watch": "svelte-check --watch",
     "lint": "eslint .",
     "lint:prod": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -32,10 +30,7 @@
     "@babel/eslint-parser": "^7.26.5",
     "@eslint/js": "^9.18.0",
     "eslint": "^9.18.0",
-    "eslint-plugin-svelte": "^2.46.1",
-    "globals": "^15.14.0",
-    "svelte": "^4.2.19",
-    "svelte-check": "^3.8.6"
+    "globals": "^15.14.0"
   },
   "publishConfig": {
     "access": "public"
