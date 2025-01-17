@@ -20,6 +20,7 @@ public class MandantDTO : INotifyPropertyChanged
     public bool IstProduzent { get; set; }
     public bool ErbtAuswahlOhneSprosse { get; set; }
     public bool StammdatenbearbeitungGesperrt { get; set; }
+    public string NeherKundennummer { get; set; }
 
     public event PropertyChangedEventHandler PropertyChanged;
 }
