@@ -97,7 +97,7 @@ public class SammelrechnungPositionDruckDTO
         var culture = new CultureInfo("de-de");
 
         LaufendeNummer = position.LaufendeNummer;
-        RechnungNummer = position.RechnungNummer.ToString();
+        RechnungNummer = position.RechnungNummer.ToString(CultureInfo.InvariantCulture);
         RechnungDatum = position.RechnungDatum.ToString("d", culture);
         VorgangsDatum = position.VorgangsDatum.ToString("d", culture);
         RechnungKommission = position.RechnungKommision;

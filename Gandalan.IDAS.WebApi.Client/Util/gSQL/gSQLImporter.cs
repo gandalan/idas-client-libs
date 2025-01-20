@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -65,7 +66,7 @@ public class gSQLImporter
                     var format = zeileBereinigt.Substring(zeileBereinigt.IndexOf(':') + 1);
                     if (format.StartsWith("gSQL"))
                     {
-                        doppelPunktPosition = int.Parse(format.Replace("gSQL", ""));
+                        doppelPunktPosition = int.Parse(format.Replace("gSQL", ""), CultureInfo.InvariantCulture);
                     }
                 }
 

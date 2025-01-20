@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -61,7 +62,7 @@ public class Logger : ILogger
     /// <param name="pfad">The custom path for the log file. If null, a default path is used.</param>
     public void SetLogDateiPfad(string pfad = null)
     {
-        var datum = DateTime.UtcNow.Date.ToString("yyyy-MM-dd");
+        var datum = DateTime.UtcNow.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         var app = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.Location ?? "WebApi");
         var user = Environment.UserName;
 
@@ -114,7 +115,7 @@ public class Logger : ILogger
 
         // Log-Eintrag formatieren
         const string timeFormat = "HH:mm:ss";
-        var log = $"{context,-15} {level,-8} {DateTime.Now.ToString(timeFormat)} ";
+        var log = $"{context,-15} {level,-8} {DateTime.Now.ToString(timeFormat, CultureInfo.InvariantCulture)} ";
         if (sender != null)
         {
 #if DEBUG
