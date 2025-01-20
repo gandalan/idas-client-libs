@@ -102,7 +102,7 @@ public static class WebApiConfigurations
                 var friendlyName = Path.GetFileNameWithoutExtension(file);
                 try
                 {
-                    IWebApiConfig localEnvironment = JsonConvert.DeserializeObject<WebApiSettings>(File.ReadAllText(file));
+                    var localEnvironment = JsonConvert.DeserializeObject<WebApiSettings>(File.ReadAllText(file));
                     if (localEnvironment != null)
                     {
                         localEnvironment.FriendlyName = friendlyName;
