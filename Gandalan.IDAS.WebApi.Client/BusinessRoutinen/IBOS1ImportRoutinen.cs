@@ -24,7 +24,7 @@ public class IBOS1ImportRoutinen : WebRoutinenBase
         => await GetAsync<MaterialBestellungListItemDTO[]>($"MaterialBestellungen?jahr={jahr}&includeAbegholte={includeAbegholte}&includeArchive={includeArchive}&includeAllTypes={includeAllTypes}&includeArtosGeloeschtFlag={includeArtosGeloeschtFlag}");
 
     public async Task<MaterialBestellungListItemDTO[]> LadeMaterialBestellungenVonBisAsync(DateTime vonDatum, DateTime bisDatum, bool includeAbegholte = false, bool includeArchive = false, bool includeAllTypes = false, bool includeArtosGeloeschtFlag = false)
-            => await GetAsync<MaterialBestellungListItemDTO[]>($"MaterialBestellungen?jahr=0&includeAbegholte={includeAbegholte}&includeArchive={includeArchive}&includeAllTypes={includeAllTypes}&vonDatum={vonDatum}&bisDatum={bisDatum}");
+            => await GetAsync<MaterialBestellungListItemDTO[]>($"MaterialBestellungen?jahr=0&includeAbegholte={includeAbegholte}&includeArchive={includeArchive}&includeAllTypes={includeAllTypes}&vonDatum={vonDatum:o}&bisDatum={bisDatum:o}");
 
     public async Task ResetMaterialBestellungenAsync(DateTime resetAb)
         => await GetAsync($"MaterialBestellungenReset?resetAb={resetAb:o}");
