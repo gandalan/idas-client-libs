@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using Gandalan.Client.Contracts.DataServices;
 
 namespace Gandalan.IDAS.WebApi.DTO;
@@ -76,14 +75,4 @@ public enum ExportFarbArt
     Standardfarbe,
     Trendfarbe,
     Sonderfarbe,
-}
-
-public static class CsvExportArtikelArtExtension
-{
-    public static string GetDescription(this Enum value)
-    {
-        var field = value.GetType().GetField(value.ToString());
-        var attribute = field.GetCustomAttribute<DescriptionAttribute>();
-        return attribute == null ? value.ToString() : attribute.Description;
-    }
 }

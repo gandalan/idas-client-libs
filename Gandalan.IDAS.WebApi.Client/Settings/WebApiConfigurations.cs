@@ -43,12 +43,12 @@ public static class WebApiConfigurations
             throw new InvalidOperationException("WebApiConfigurations not initialized - call WebApiConfigurations.InitializeAsync() first");
         }
 
-        if (_settings.TryGetValue(name, out var byName))
+        if (!_settings.TryGetValue(name, out var byName))
         {
-            return byName;
+            throw new InvalidOperationException($"Invalid environment name: {name}");
         }
 
-        return null;
+        return byName;
     }
 
     public static List<IWebApiConfig> GetAll()
@@ -102,7 +102,7 @@ public static class WebApiConfigurations
                 var friendlyName = Path.GetFileNameWithoutExtension(file);
                 try
                 {
-                    IWebApiConfig localEnvironment = JsonConvert.DeserializeObject<WebApiSettings>(File.ReadAllText(file));
+                    var localEnvironment = JsonConvert.DeserializeObject<WebApiSettings>(File.ReadAllText(file));
                     if (localEnvironment != null)
                     {
                         localEnvironment.FriendlyName = friendlyName;
