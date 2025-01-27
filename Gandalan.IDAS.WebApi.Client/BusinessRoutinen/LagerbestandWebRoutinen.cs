@@ -15,6 +15,9 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
     public async Task<LagerbestandDTO> GetAsync(Guid guid)
         => await GetAsync<LagerbestandDTO>($"Lagerbestand/?id={guid}");
 
+    public async Task<List<LagerbestandDTO>> GetFromGuidListAsync(List<Guid> guids)
+        => await PostAsync<List<LagerbestandDTO>>($"Lagerbestand/GetFromGuidList", guids);
+
     public async Task<List<LagerbestandDTO>> GetAllAsync(DateTime? changedSince)
     {
         if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
