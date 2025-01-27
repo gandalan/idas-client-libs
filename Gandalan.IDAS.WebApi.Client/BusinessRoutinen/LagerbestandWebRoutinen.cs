@@ -37,6 +37,9 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
     public async Task SaveAsync(LagerbestandDTO dto)
         => await PutAsync("Lagerbestand/", dto);
 
+    public async Task<List<Guid>> SaveListeAsync(List<LagerbestandDTO> dtos)
+        => await PutAsync<List<Guid>>("Lagerbestand/PutLagerbestandListe", dtos);
+
     public async Task DeleteAsync(Guid guid)
         => await DeleteAsync($"Lagerbestand/?id={guid}");
 
