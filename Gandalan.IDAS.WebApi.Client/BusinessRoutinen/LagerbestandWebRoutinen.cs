@@ -34,6 +34,9 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
     public async Task<LagerbestandDTO> LagerbuchungAsync(LagerbuchungDTO buchung)
         => await PutAsync<LagerbestandDTO>("Lagerbuchung", buchung);
 
+    public async Task<List<LagerbestandDTO>> LagerbuchungListeAsync(List<LagerbuchungDTO> buchungen)
+        => await PutAsync<List<LagerbestandDTO>>("Lagerbuchung/PutBuchungListe", buchungen);
+
     public async Task SaveAsync(LagerbestandDTO dto)
         => await PutAsync("Lagerbestand/", dto);
 
