@@ -11,12 +11,6 @@ public interface IFluxStore
     void RemovePersistentEventHandler(IFluxConsumer eventHandler);
     void ClearTransientEventHandlers();
 
-    /// <summary>
-    /// Obsoleted - use AddPersistentEventHandler
-    /// </summary>
-    [Obsolete("use AddPersistentEventHandler")]
-    event EventHandler<IFluxAction> DataChanged;
-
     Task Handle(IFluxAction action);
     void HandleSync(IFluxAction action);
     Task Initialize();
