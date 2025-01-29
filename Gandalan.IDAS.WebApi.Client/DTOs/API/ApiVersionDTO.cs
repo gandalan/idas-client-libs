@@ -51,6 +51,6 @@ public class ApiVersionDTO
             return null;
         }
 
-        return date.ToString("yyyy-MM-dd HH:mm:ssK");
+        return date.ToString("yyyy-MM-dd HH:mm:ssK", CultureInfo.InvariantCulture);
     }
 }
