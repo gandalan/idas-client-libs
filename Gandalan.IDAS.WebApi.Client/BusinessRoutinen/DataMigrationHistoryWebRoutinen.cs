@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 
@@ -11,5 +12,5 @@ public class DataMigrationHistoryWebRoutinen : WebRoutinenBase
         => await GetAsync<long>("DataMigrationHistory");
 
     public async Task SetHistoryVersionAsync(long newVersion)
-        => await PutAsync("DataMigrationHistory", newVersion.ToString());
+        => await PutAsync("DataMigrationHistory", newVersion.ToString(CultureInfo.InvariantCulture));
 }

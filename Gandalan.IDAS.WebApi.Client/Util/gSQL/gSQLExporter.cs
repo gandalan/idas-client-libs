@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Gandalan.IDAS.WebApi.DTO;
@@ -35,9 +36,9 @@ public class gSQLExporter
         result.Sektionen.Add(aktuelleSektion);
 
         aktuelleSektion = new gSQLSektion("IndexDaten");
-        aktuelleSektion.Items.Add(new gSQLItem("BelegNummer", beleg.BelegNummer.ToString()));
-        aktuelleSektion.Items.Add(new gSQLItem("VorgangsNummer", vorgang.VorgangsNummer.ToString()));
-        aktuelleSektion.Items.Add(new gSQLItem("BelegJahr", beleg.BelegDatum.Year.ToString()));
+        aktuelleSektion.Items.Add(new gSQLItem("BelegNummer", beleg.BelegNummer.ToString(CultureInfo.InvariantCulture)));
+        aktuelleSektion.Items.Add(new gSQLItem("VorgangsNummer", vorgang.VorgangsNummer.ToString(CultureInfo.InvariantCulture)));
+        aktuelleSektion.Items.Add(new gSQLItem("BelegJahr", beleg.BelegDatum.Year.ToString(CultureInfo.InvariantCulture)));
         aktuelleSektion.Items.Add(new gSQLItem("Beleg_ID_Nummer", beleg.BelegGuid.ToString()));
         result.Sektionen.Add(aktuelleSektion);
 
@@ -50,7 +51,7 @@ public class gSQLExporter
         aktuelleSektion.Items.Add(new gSQLItem("HaendlerMandantGuid", vorgang.Kunde?.KontaktMandantGuid.ToString()));
         aktuelleSektion.Items.Add(new gSQLItem("VorgangGuid", vorgang.VorgangGuid.ToString()));
         aktuelleSektion.Items.Add(new gSQLItem("OriginalVorgangGuid", vorgang.OriginalVorgangGuid.ToString()));
-        aktuelleSektion.Items.Add(new gSQLItem("OriginalVorgangsNummer", vorgang.OriginalVorgangsNummer?.ToString() ?? string.Empty));
+        aktuelleSektion.Items.Add(new gSQLItem("OriginalVorgangsNummer", vorgang.OriginalVorgangsNummer?.ToString(CultureInfo.InvariantCulture) ?? string.Empty));
         aktuelleSektion.Items.Add(new gSQLItem("Beleg_IstTestBeleg", vorgang.IstTestbeleg.ToString()));
         result.Sektionen.Add(aktuelleSektion);
 
@@ -95,16 +96,16 @@ public class gSQLExporter
         result.Sektionen.Add(aktuelleSektion);
 
         aktuelleSektion = new gSQLSektion("FussZeilen");
-        aktuelleSektion.Items.Add(new gSQLItem("AnzahlFussZeilen", beleg.Salden.Count.ToString()));
+        aktuelleSektion.Items.Add(new gSQLItem("AnzahlFussZeilen", beleg.Salden.Count.ToString(CultureInfo.InvariantCulture)));
         var counter = 1;
         foreach (var saldo in beleg.Salden)
         {
-            aktuelleSektion.Items.Add(new gSQLItem("FussZeilenNummer", counter.ToString()));
+            aktuelleSektion.Items.Add(new gSQLItem("FussZeilenNummer", counter.ToString(CultureInfo.InvariantCulture)));
             aktuelleSektion.Items.Add(new gSQLItem("FussZeile_Text1", saldo.Text));
             aktuelleSektion.Items.Add(new gSQLItem("FussZeile_Text1_Grundwert", ""));
-            aktuelleSektion.Items.Add(new gSQLItem("FussZeile_Betrag2", saldo.Betrag.ToString()));
+            aktuelleSektion.Items.Add(new gSQLItem("FussZeile_Betrag2", saldo.Betrag.ToString(CultureInfo.InvariantCulture)));
             aktuelleSektion.Items.Add(new gSQLItem("FussZeile_AktionText2", ""));
-            aktuelleSektion.Items.Add(new gSQLItem("FussZeile_Prozent", saldo.Wert.ToString()));
+            aktuelleSektion.Items.Add(new gSQLItem("FussZeile_Prozent", saldo.Wert.ToString(CultureInfo.InvariantCulture)));
             aktuelleSektion.Items.Add(new gSQLItem("FussZeile_passiv", ""));
             counter++;
         }
@@ -123,7 +124,7 @@ public class gSQLExporter
 
             aktuelleSektion.Items.Add(new gSQLItem()); // Leerzeile
             aktuelleSektion.Items.Add(new gSQLItem("Position_PositionsNummer", pos.PositionsNummer));
-            aktuelleSektion.Items.Add(new gSQLItem("Position_LaufendeNummer", pos.LaufendeNummer.ToString()));
+            aktuelleSektion.Items.Add(new gSQLItem("Position_LaufendeNummer", pos.LaufendeNummer.ToString(CultureInfo.InvariantCulture)));
             aktuelleSektion.Items.Add(new gSQLItem("Position_Nummer", pos.PositionsNummer));
             aktuelleSektion.Items.Add(new gSQLItem("Position_PositionsGuid", pos.BelegPositionGuid.ToString()));
 
@@ -142,7 +143,7 @@ public class gSQLExporter
                 aktuelleSektion.Items.Add(new gSQLItem("SystemTyp", "Sonderposition"));
             }
 
-            aktuelleSektion.Items.Add(new gSQLItem("Position_Menge", pos.Menge.ToString()));
+            aktuelleSektion.Items.Add(new gSQLItem("Position_Menge", pos.Menge.ToString(CultureInfo.InvariantCulture)));
             aktuelleSektion.Items.Add(new gSQLItem("Position_MengenEinheit", pos.MengenEinheit));
             aktuelleSektion.Items.Add(new gSQLItem("Position_Besonderheiten", sanitizeString(pos.Besonderheiten)));
             aktuelleSektion.Items.Add(new gSQLItem("Position_ProduktionZusatzInfo", sanitizeString(pos.ProduktionZusatzInfo)));
@@ -204,7 +205,7 @@ public class gSQLExporter
 
             //KederZeigtNachAussen bedeutet dass Fl und Fr in der Produktion getauscht werden (in IBOS1) deshalb muss das hier getauscht werden
             var kederZeigtNachAussen = pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert != null
-                                       && Convert.ToBoolean(pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert);
+                                       && Convert.ToBoolean(pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert, CultureInfo.InvariantCulture);
 
             foreach (var sw in pos.Sonderwuensche)
             {
@@ -245,12 +246,12 @@ public class gSQLExporter
 
                 if (sw.Laenge > 0 || sw.Laenge == -1)
                 {
-                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Laenge", sw.Laenge.ToString()));
+                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Laenge", sw.Laenge.ToString(CultureInfo.InvariantCulture)));
                 }
 
                 if (sw.Hoehe > 0)
                 {
-                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Hoehe", sw.Hoehe.ToString()));
+                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Hoehe", sw.Hoehe.ToString(CultureInfo.InvariantCulture)));
                 }
 
                 if (!string.IsNullOrEmpty(sw.Farbe))

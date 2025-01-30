@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace Gandalan.IDAS.WebApi.Util;
 
@@ -177,7 +178,7 @@ public static class AppSpecificPropertiesExtensions
         // else change type to underlying type
         var value = properties[subObjectName][key] == null
             ? defaultValue
-            : Convert.ChangeType(properties[subObjectName][key], underlyingT);
+            : Convert.ChangeType(properties[subObjectName][key], underlyingT, CultureInfo.InvariantCulture);
         // back to the original type
         return (T)value;
     }

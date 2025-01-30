@@ -110,7 +110,7 @@ public class JwtTokenService
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(rights),
-            NotBefore = DateTime.Parse("2021-01-01 00:00:00"),
+            NotBefore = new DateTime(2021, 1, 1),
             IssuedAt = _issuedAt ?? DateTime.UtcNow,
             Expires = expireDateTime,
             Issuer = Issuer,

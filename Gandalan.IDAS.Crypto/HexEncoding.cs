@@ -97,7 +97,7 @@ public class HexEncoding
         var returnValue = string.Empty;
         foreach (var t in bytes)
         {
-            returnValue += t.ToString("X2");
+            returnValue += t.ToString("X2", CultureInfo.InvariantCulture);
         }
 
         return returnValue;
@@ -157,7 +157,7 @@ public class HexEncoding
             throw new ArgumentException("hex must be 1 or 2 characters in length", nameof(hex));
         }
 
-        return byte.Parse(hex, NumberStyles.HexNumber);
+        return byte.Parse(hex, NumberStyles.HexNumber, CultureInfo.InvariantCulture);
     }
 
     /// <summary>
