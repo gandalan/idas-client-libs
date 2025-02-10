@@ -9,7 +9,7 @@ public class CalculationInfoWebRoutinen(IWebApiConfig settings) : WebRoutinenBas
 {
     private const string CalculationInfoApiRoute = "CalculationInfo";
 
-    public async Task PutCalculationInfoAsync(long mandantId, CalculationInfoDTO calculationInfoDTO)
+    public async Task<CalculationInfoDTO> PutCalculationInfoAsync(long mandantId, CalculationInfoDTO calculationInfoDTO)
         => await PutAsync<CalculationInfoDTO>($"{CalculationInfoApiRoute}?mandantId={mandantId}", calculationInfoDTO);
 
     public async Task<CalculationInfoDTO> GetCalculationInfoAsync(long mandantId, Guid belegPosGuid)

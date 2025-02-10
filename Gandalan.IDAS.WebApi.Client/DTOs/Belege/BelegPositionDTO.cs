@@ -80,6 +80,8 @@ public class BelegPositionDTO : IDTOWithApplicationSpecificProperties
     public decimal? Arbeitsminuten { get; set; }
     public decimal? Elementgewicht { get; set; }
     public bool PreisAufAnfrage { get; set; }
+    public DateTime? CalculationRequestTimestamp { get; set; }
+    public DateTime? CalculatedForTimestamp { get; set; }
 
     public BelegPositionDTO()
     {

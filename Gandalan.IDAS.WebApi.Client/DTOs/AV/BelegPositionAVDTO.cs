@@ -46,6 +46,7 @@ public class BelegPositionAVDTO
 
     public DateTime ErfassungsDatum { get; set; }
     public DateTime ChangedDate { get; set; }
+    public DateTime? CalculatedForTimestamp { get; set; }
 
     public BelegPositionAVDTO()
     {
