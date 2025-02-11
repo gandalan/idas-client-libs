@@ -20,6 +20,7 @@ public class KatalogArtikelIndiDatenDTO
     public int InventurBewertung { get; set; }
 
     public DateTime ChangedDate { get; set; }
+    public string SerializedOptions { get; set; }
 }
 
 public class IndiFarbDatenDTO
