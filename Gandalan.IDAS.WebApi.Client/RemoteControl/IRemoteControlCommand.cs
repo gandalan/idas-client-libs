@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.RemoteControl;
 
 public interface IRemoteControlCommand
 {
     string Uri { get; }
-    object Execute(Dictionary<string, string> parameters);
+    Task<object> Execute(Dictionary<string, string> parameters);
 }
