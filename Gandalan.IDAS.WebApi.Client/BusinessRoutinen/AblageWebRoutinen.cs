@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Client.DTOs.Produktion;
 using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
@@ -37,13 +38,13 @@ public class AblageWebRoutinen : WebRoutinenBase
         await DeleteAsync($"Ablage/?id={guid}");
     }
 
-    public async Task SerienFachverteilungAsync(Guid serieGuid)
+    public async Task<FachzuordnungResultDTO> SerienFachverteilungAsync(Guid serieGuid)
     {
-        await PutAsync($"Ablage/SerienFachverteilung/{serieGuid}", null);
+        return await PutAsync<FachzuordnungResultDTO>($"Ablage/SerienFachverteilung/{serieGuid}", null);
     }
 
-    public async Task FachverteilungAsync(List<Guid> avGuids)
+    public async Task<FachzuordnungResultDTO> FachverteilungAsync(List<Guid> avGuids)
     {
-        await PutAsync("Ablage/Fachverteilung", avGuids);
+        return await PutAsync<FachzuordnungResultDTO>("Ablage/Fachverteilung", avGuids);
     }
 }
