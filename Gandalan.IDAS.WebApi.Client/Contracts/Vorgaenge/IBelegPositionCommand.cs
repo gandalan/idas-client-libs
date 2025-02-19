@@ -20,21 +20,6 @@ public abstract class IBelegPositionCommand : ICommand, INotifyPropertyChanged
         return CanExecute(pos);
     }
 
-    /// <summary>
-    /// Returns wherever this command should be shown or not.
-    /// Sometimes a position should not show some commands if they are not allowed
-    /// </summary>
-    public abstract bool CanHandle(IBelegPositionItem parameter);
-    public bool CanHandle(object parameter)
-    {
-        if (parameter is not IBelegPositionItem pos)
-        {
-            return false;
-        }
-
-        return CanExecute(pos);
-    }
-
     public abstract void Execute(IBelegPositionItem parameter);
     public void Execute(object parameter)
     {
