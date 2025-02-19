@@ -20,4 +20,7 @@ public class GesamtMaterialbedarfWebRoutinen : WebRoutinenBase
 
     public async Task GesamtBedarfUpdateLiefertag(long mandantId, Guid posGuid)
         => await PostAsync($"GesamtMaterialbedarf/GesamtBedarfUpdateLiefertag?mandantId={mandantId}&posGuid={posGuid}", null);
+
+    public async Task RecalculateGesamtbedarf(long mandantId, Guid avPosGuid)
+        => await PostAsync($"GesamtMaterialbedarf/RecalculateGesamtBedarf?mandantId={mandantId}&avPosGuid={avPosGuid}", null, skipAuth: true);
 }

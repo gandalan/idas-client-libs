@@ -18,4 +18,7 @@ public class BelegPositionenAVWebRoutinen : WebRoutinenBase
 
     public async Task<List<MandantAndBelegPosGuidDTO>> GetCalculateItemList()
         => await GetAsync<List<MandantAndBelegPosGuidDTO>>("BelegPositionenAV/GetCalculateItemList", skipAuth: true);
+
+    public async Task<List<Guid>> CheckAndGetAVGuidList(Guid belegPosGuid, long mandantId)
+        => await GetAsync<List<Guid>>($"BelegPositionenAV/CheckAndGetAVGuidList?mandantId={mandantId}&avPosGuid={belegPosGuid}", skipAuth: true);
 }
