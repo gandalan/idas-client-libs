@@ -16,13 +16,13 @@
           <group targetFramework=".NETFramework4.8">
             <dependency id="GDL.IDAS.Logging" version="BUILDVERSION" />
             <dependency id="Newtonsoft.Json" version="13.0.3" />
-            <dependency id="System.IdentityModel.Tokens.Jwt" version="8.5.0" />
+            <dependency id="System.IdentityModel.Tokens.Jwt" version="8.6.0" />
           </group>
 
           <group targetFramework="net8.0">
             <dependency id="GDL.IDAS.Logging" version="BUILDVERSION" />
             <dependency id="Newtonsoft.Json" version="13.0.3" />
-            <dependency id="System.IdentityModel.Tokens.Jwt" version="8.5.0" />
+            <dependency id="System.IdentityModel.Tokens.Jwt" version="8.6.0" />
           </group>
         </dependencies>
     </metadata>
