@@ -29,9 +29,7 @@ public abstract class IBelegItemCommand : ICommand
         Execute(pos);
     }
 
-    /// <summary>
-    /// Wird als Content in den Buttons angezeigt.
-    /// </summary>
-    public object Caption { get; set; } = "?";
-    public string Tooltip { get; set; } = "";
+    public string Caption { get; set; } = "?";
+    public object Icon { get; set; }
+    public string Tooltip { get; set; }
 }
