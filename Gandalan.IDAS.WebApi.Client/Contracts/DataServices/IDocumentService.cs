@@ -16,5 +16,4 @@ public interface IDocumentService
     Task<byte[]> GetAssetAsync(string katalognummer);
     Task<IList<IDocument>> GetAllProductionAssetsAsync();
     Task<Tuple<string, byte[]>> GetProductionAssetsAsync(Guid assetGuid);
-    Task ClearCache();
 }
