@@ -603,16 +603,20 @@ public class WebRoutinenBase
     /// </summary>
     /// <param name="exception">Exception to check</param>
     /// <exception cref="Exception">Throws <paramref name="exception"/>, if no <see cref="CustomExceptionHandler"/> handles the exception</exception>
-    private static void tryHandleException(Exception exception)
+    private void tryHandleException(Exception exception)
     {
         L.Fehler(exception);
 
-        if (CustomExceptionHandler != null && CustomExceptionHandler.GetInvocationList().Cast<ExceptionHandler>().Any(handler => handler(exception)))
+        if (!IgnoreOnErrorOccured)
         {
-            return;
-        }
 
-        throw exception;
+            if (CustomExceptionHandler != null && CustomExceptionHandler.GetInvocationList().Cast<ExceptionHandler>().Any(handler => handler(exception)))
+            {
+                return;
+            }
+
+            throw exception;
+        }
     }
 
     private ApiException handleWebException(HttpRequestException ex, string url, [CallerMemberName] string sender = null)
