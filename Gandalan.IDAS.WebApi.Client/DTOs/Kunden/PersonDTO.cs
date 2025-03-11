@@ -34,10 +34,8 @@ public class PersonDTO : IDTOWithApplicationSpecificProperties
     public string Briefanrede { get; set; }
     public string Anrede { get; set; }
     public string Mailadresse { get; set; }
-    public string Landesvorwahl { get; set; }
-    public string Vorwahl { get; set; }
     public string Telefonnummer { get; set; }
-    public string Durchwahl { get; set; }
+    public string MobileTelefonnummer { get; set; }
     public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
 
     /// <summary>
