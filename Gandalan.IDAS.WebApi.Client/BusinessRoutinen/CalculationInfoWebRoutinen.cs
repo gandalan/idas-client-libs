@@ -11,11 +11,11 @@ public class CalculationInfoWebRoutinen(IWebApiConfig settings) : WebRoutinenBas
     private const string CalculationInfoApiRoute = "CalculationInfo";
 
     public async Task<CalculationInfoDTO> PutCalculationInfoAsync(CalculationInfoDTO calculationInfoDTO)
-        => await PutAsync<CalculationInfoDTO>($"{CalculationInfoApiRoute}", calculationInfoDTO);
+        => await PutAsync<CalculationInfoDTO>($"{CalculationInfoApiRoute}", calculationInfoDTO, skipAuth: true);
 
     public async Task<CalculationInfoDTO> GetCalculationInfoAsync(long mandantId, Guid belegPosGuid)
-        => await GetAsync<CalculationInfoDTO>($"{CalculationInfoApiRoute}?mandantId={mandantId}&belegPosGuid={belegPosGuid}");
+        => await GetAsync<CalculationInfoDTO>($"{CalculationInfoApiRoute}?mandantId={mandantId}&belegPosGuid={belegPosGuid}", skipAuth: true);
 
     public async Task<List<CalculationInfoDTO>> GetIncompleteCalculationInfosAsync()
-        => await GetAsync<List<CalculationInfoDTO>>($"{CalculationInfoApiRoute}/Incomplete");
+        => await GetAsync<List<CalculationInfoDTO>>($"{CalculationInfoApiRoute}/Incomplete", skipAuth: true);
 }
