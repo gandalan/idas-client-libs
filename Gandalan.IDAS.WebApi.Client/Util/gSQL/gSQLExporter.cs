@@ -246,12 +246,12 @@ public class gSQLExporter
 
                 if (sw.Laenge > 0 || sw.Laenge == -1)
                 {
-                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Laenge", sw.Laenge.ToString(CultureInfo.InvariantCulture)));
+                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Laenge", Convert.ToInt32(Math.Ceiling(sw.Laenge)).ToString(CultureInfo.InvariantCulture)));                
                 }
 
                 if (sw.Hoehe > 0)
                 {
-                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Hoehe", sw.Hoehe.ToString(CultureInfo.InvariantCulture)));
+                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Hoehe", Convert.ToInt32(Math.Ceiling(sw.Hoehe)).ToString(CultureInfo.InvariantCulture)));
                 }
 
                 if (!string.IsNullOrEmpty(sw.Farbe))
