@@ -190,7 +190,7 @@ public partial class LoginWindow_v2 : Window
         {
             Email = _viewModel.UserName,
             Settings = _viewModel.ServerEnvironment,
-            Owner = Application.Current.MainWindow,
+            Owner = Application.Current?.MainWindow,
         };
         pwVergessenDialog.ShowDialog();
     }
@@ -200,7 +200,7 @@ public partial class LoginWindow_v2 : Window
         var setupDialog = new SetupDialog
         {
             Settings = _viewModel.ServerEnvironment,
-            Owner = Application.Current.MainWindow,
+            Owner = Application.Current?.MainWindow,
         };
         setupDialog.ShowDialog();
     }
