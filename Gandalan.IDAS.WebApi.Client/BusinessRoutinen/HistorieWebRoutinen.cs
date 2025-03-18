@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
@@ -34,4 +35,10 @@ public class HistorieWebRoutinen : WebRoutinenBase
 
     public async Task AddBelegPositionHistorieFromFunctionAsync(Guid positionGuid, BelegPositionHistorieDTO historyDto, long mandantID)
         => await PostAsync($"AddBelegPositionHistorieFromFunction?positionGuid={positionGuid}&mandantID={mandantID}", historyDto);
+
+    public async Task<string> GetLetzterBearbeiter(Guid belegGuid)
+        => await GetAsync<string>($"HistorieBeleg/LetzterBearbeiter?belegGuid={belegGuid}");
+
+    public async Task<Dictionary<Guid, string>> GetLetzteBearbeiter(IEnumerable<Guid> belegGuids)
+        => await PostAsync<Dictionary<Guid, string>>($"HistorieBeleg/LetzteBearbeiter", belegGuids);
 }
