@@ -67,4 +67,7 @@ public class TagInfoWebRoutinen : WebRoutinenBase
 
     public async Task DeleteTagInfoForFunctionAsync(TagInfoDTO dto, long mandantID)
         => await DeleteAsync($"DeleteTagInfoForFunction?mandantID={mandantID}", dto);
+
+    public async Task CleanUpTagInfos()
+        => await DeleteAsync("CleanUpTagInfos");
 }
