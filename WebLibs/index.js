@@ -8,11 +8,14 @@ export { createAuthManager, fluentIdasAuthManager } from "./api/fluentAuthManage
 export { fetchEnvConfig } from "./api/fluentEnvUtils";
 export { restClient } from "./api/fluentRestClient";
 
+// re-export all modules from the ui folder as named exports
+export * from "./ui/index.js";
+
 /**
  * @typedef {Object} NeherApp3Module
  * @property {string} moduleName
  * @property {(app: NeherApp3) => void} setup 
- * @property {(node : HTMLElement, props : *) => function} mount Must return an unmount function
+ * @property {(node : HTMLElement, props : NeherApp3Props) => function} mount Must return an unmount function
  * @property {string?} embedUrl 
  */
 
@@ -37,6 +40,7 @@ export { restClient } from "./api/fluentRestClient";
  * @property {string} url - Relative URL to use for routes
  * @property {string} text - Display text
  * @property {string} [parent] - Parent menu item (optional). If not set, the item will be added to the top level menu.
+ * @property {boolean} [hidden] - If true, the menu item will not be displayed
  */
 
 /**
@@ -45,3 +49,11 @@ export { restClient } from "./api/fluentRestClient";
  * @global
  */
 globalThis.neherapp3 = globalThis.neherapp3 || {};
+
+/**
+ * @typedef {Object} NeherApp3Props
+ * @property {import("./api/fluentApi").FluentApi} api
+ * @property {import("./api/fluentAuthManager").FluentAuthManager} authManager
+ * @property {import("./api/fluentApi").FluentApi} idas
+ */
+
