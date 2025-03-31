@@ -16,5 +16,5 @@ public interface IHistorieHelper
     Task Error(string text);
     Task Fatal(string text);
     Task Fatal(Exception e, string text);
-    Task<bool> Exception(Exception e);
+    Task<bool> TryHandleException(Exception e);
 }
