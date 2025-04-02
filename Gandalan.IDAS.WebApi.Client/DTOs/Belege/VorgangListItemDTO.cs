@@ -107,5 +107,8 @@ public class VorgangListItemDTO : IDTOWithApplicationSpecificProperties
     public Guid? ExterneMandantenGuid { get; set; }
     public string ExternerFirmenname { get; set; }
 
+    // Guids von "zugehörigen Objekten" (Belegen/BelegPositionen) als JSON-object. Zum Laden von Tags.
+    public string RelatedGuids { get; set; }
+
     public Guid MandantGuid { get; set; }
 }
