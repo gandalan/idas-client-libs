@@ -295,7 +295,7 @@ public class BelegSaldoDruckDTO
             else
             {
                 var vorzeichen = saldo.Typ == "Abschlag" ? '-' : ' ';
-                Betrag = vorzeichen + saldo.Betrag.ToString(culture);
+                Betrag = vorzeichen + saldo.Betrag.ToString("F2", culture);
                 Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29", culture) : "";
             }
         }
