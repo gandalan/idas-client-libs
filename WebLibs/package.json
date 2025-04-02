@@ -1,6 +1,6 @@
 {
   "name": "@gandalan/weblibs",
-  "version": "1.5.7",
+  "version": "1.5.9",
   "description": "WebLibs for Gandalan JS/TS projects",
   "keywords": [
     "gandalan"

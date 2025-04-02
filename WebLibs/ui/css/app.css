@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+h1 { @apply text-2xl font-bold flex items-center; }
+h1 img { @apply pr-3 h-6; }
+button { @apply bg-gray-200 border border-gray-300 text-black px-2 py-2 rounded-md hover:bg-white; }
+input { @apply border border-gray-300 text-black px-2 py-2 rounded-md; }
+table { @apply w-full; }
+th { @apply border border-gray-300 p-1 text-left bg-[#868686] text-white font-normal sticky top-0; }
+td { @apply border border-gray-300 text-black p-1; }
