@@ -16,7 +16,9 @@ export * from "./ui/index.js";
  * @property {string} moduleName
  * @property {(app: NeherApp3) => void} setup 
  * @property {(node : HTMLElement, props : NeherApp3Props) => function} mount Must return an unmount function
- * @property {string?} embedUrl 
+ * @property {string?} embedUrl
+ * @property {string[]} extraCSS
+ * @property {boolean} useShadowDom - If true, the app will be embedded in a shadow DOM. This is required for CSS isolation. 
  */
 
 /**
