@@ -134,7 +134,7 @@ export function createApi() {
  *
  * @export
  * @param {string} url - The base URL for API requests.
- * @param {FluentAuthManager} authManager - The authentication manager instance.
+ * @param {import("./fluentAuthManager").FluentAuthManager} authManager - The authentication manager instance.
  * @return {FluentApi} Configured API instance for local use.
  */
 export function fluentApi(url, authManager) {

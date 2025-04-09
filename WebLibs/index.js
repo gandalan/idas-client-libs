@@ -12,6 +12,12 @@ export { restClient } from "./api/fluentRestClient";
 export * from "./ui/index.js";
 
 /**
+ * @typedef {import("./api/fluentApi").FluentApi} FluentApi
+ * @typedef {import("./api/fluentAuthManager").FluentAuthManager} FluentAuthManager
+ * @typedef {import("./api/fluentApi").FluentApi} IDAS
+ */
+
+/**
  * @typedef {Object} NeherApp3Module
  * @property {string} moduleName
  * @property {(app: NeherApp3) => void} setup 
