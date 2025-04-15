@@ -1,5 +1,4 @@
 # WebLibs for Gandalan JS/TS projects
-
 ## Initialize Fluent IDAS API + local API
 
 Example:
