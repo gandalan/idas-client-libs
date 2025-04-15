@@ -9,7 +9,7 @@ export { fetchEnvConfig } from "./api/fluentEnvUtils";
 export { restClient } from "./api/fluentRestClient";
 
 // re-export all modules from the ui folder as named exports
-export * from "./ui/index.js";
+// export * from "./ui/index.js";
 
 /**
  * @typedef {import("./api/fluentApi").FluentApi} FluentApi
@@ -20,15 +20,15 @@ export * from "./ui/index.js";
 /**
  * @typedef {Object} NeherApp3Module
  * @property {string} moduleName
- * @property {(app: NeherApp3) => void} setup 
+ * @property {(app: NeherApp3) => void} setup
  * @property {(node : HTMLElement, props : NeherApp3Props) => function} mount Must return an unmount function
  * @property {string?} embedUrl
  * @property {string[]} extraCSS
- * @property {boolean} useShadowDom - If true, the app will be embedded in a shadow DOM. This is required for CSS isolation. 
+ * @property {boolean} useShadowDom - If true, the app will be embedded in a shadow DOM. This is required for CSS isolation.
  */
 
 /**
- * @typedef {Object} NeherApp3 
+ * @typedef {Object} NeherApp3
  * @property {(menuItem : NeherApp3MenuItem) => void} addMenuItem
  * @property {(appModule: NeherApp3Module) => void} addApp
  * @property {(message: string, type? : number, cb? : function) => void} notify - Shows a notification. Type defaults to 0 (info). Callback is optional.
@@ -40,7 +40,7 @@ export * from "./ui/index.js";
  * @property {function} getVarianten
  */
 
-/** 
+/**
  * @typedef {Object} NeherApp3MenuItem
  * @property {string} [id] - Unique identifier for the menu item (auto-generated if not provided)
  * @property {boolean} [selected] - Indicates if the menu item is currently selected (managed by the menu system)

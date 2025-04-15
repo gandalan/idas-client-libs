@@ -1,10 +1,10 @@
-<script>
-    let { 
-        data, 
-        hideCols = [], 
-        onclick=(row, col) => {}, 
-        dataCell = defaultDataCell, 
-        headerCell = defaultHeaderCell 
+<!-- <script>
+    let {
+        data,
+        hideCols = [],
+        onclick=(row, col) => {},
+        dataCell = defaultDataCell,
+        headerCell = defaultHeaderCell
     } = $props();
 </script>
 
@@ -41,4 +41,4 @@
 
 {#snippet defaultDataCell(content)}
 {content}
-{/snippet}
+{/snippet} -->
