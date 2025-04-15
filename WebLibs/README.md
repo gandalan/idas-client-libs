@@ -8,6 +8,7 @@ Example:
 import { fetchEnvConfig, fluentApi, fluentIdasAuthManager } from '@gandalan/weblibs';
 
 async function initializeAuthAndApi() {
+    const serviceName = 'myService'
     const appToken = 'your-app-token';
     const envConfig = await fetchEnvConfig('dev'); // Replace 'dev' with your desired environment
 
@@ -16,8 +17,8 @@ async function initializeAuthAndApi() {
         return; // init() has redirected to login.
     }
 
-    globalThis.idas = fluentApi(envConfig.idas, authManager);   // IDAS-API instance
-    globalThis.api = fluentApi("/api/", authManager);           // Local API instance
+    globalThis.idas = fluentApi(envConfig.idas, authManager, serviceName);   // IDAS-API instance
+    globalThis.api = fluentApi("/api/", authManager, serviceName);           // Local API instance
 }
 ```
 
