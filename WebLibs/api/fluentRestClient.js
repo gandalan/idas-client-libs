@@ -141,7 +141,10 @@ export function restClient() {
             return new Headers({
                 ...(contentType && { "Content-Type": contentType }),
                 ...(this.token && { "Authorization": `Bearer ${this.token}` }),
-                ...(this.userAgent && { "User-Agent": this.userAgent })
+                ...(this.userAgent && { "User-Agent": this.userAgent }),
+                // X-User-Agent: workaround for Chromium bug https://issues.chromium.org/issues/40450316
+                ...(this.userAgent && { "X-User-Agent": this.userAgent })
+
             });
         },
 
