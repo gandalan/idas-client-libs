@@ -15,6 +15,8 @@ public class KapazitaetsberechnungWebRoutinen : WebRoutinenBase
         => await PostAsync<Dictionary<Guid, decimal?>>("Kapaziaetsberechnung/GetKapaziaet", positionGuids);
     public async Task CalculateKapazitaetForFunctionAsync(Guid positionGuid, long mandantID)
         => await PostAsync($"Kapaziaetsberechnung/RunKapBerechnung?id={positionGuid}&mandantId={mandantID}", null);
+    public async Task CalculateKapazitaetForAVAsync(List<Guid> avPositionGuids, long mandantID)
+        => await PostAsync($"Kapaziaetsberechnung/RunKapBerechnungForAV?mandantId={mandantID}", avPositionGuids);
     public async Task CalculateItemsAsync()
         => await PostAsync("Kapaziaetsberechnung/CalculateItems", null);
 }
