@@ -12,8 +12,8 @@ public class VorgangStatusTableWebRoutinen : WebRoutinenBase
     }
 
     public async Task UpdateVorgangStatusTableForFunctionAsync(VorgangStatusTableDTO dto)
-        => await PostAsync("VorgangStatus/UpdateVorgangStatusTableForFunction", dto, skipAuth: true);
+        => await PostAsync("VorgangStatus/UpdateVorgangStatusTableForFunction", dto);
 
     public async Task<IList<VorgangStatusTableDTO>> GetNotCalculatedVorgangStatusTableForFunctionAsync()
-        => await GetAsync<IList<VorgangStatusTableDTO>>("VorgangStatus/GetNotCalculatedVorgangStatusTableForFunction", skipAuth: true);
+        => await GetAsync<IList<VorgangStatusTableDTO>>("VorgangStatus/GetNotCalculatedVorgangStatusTableForFunction");
 }

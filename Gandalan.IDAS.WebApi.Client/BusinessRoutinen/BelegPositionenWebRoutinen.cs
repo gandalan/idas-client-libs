@@ -16,5 +16,5 @@ public class BelegPositionenWebRoutinen : WebRoutinenBase
         => await PutAsync<List<Guid>>($"BelegPositionGesperrtStatus/SetStatus/{gesperrtStatus}", positionen);
 
     public async Task<VorgangDTO> GetVorgangForFunctionAsync(Guid belegPositionGuid, long mandantId)
-        => await GetAsync<VorgangDTO>($"BelegPositionen/GetVorgangForFunction?belegPositionGuid={belegPositionGuid}&mandantId={mandantId}", skipAuth: true);
+        => await GetAsync<VorgangDTO>($"BelegPositionen/GetVorgangForFunction?belegPositionGuid={belegPositionGuid}&mandantId={mandantId}");
 }
