@@ -83,8 +83,8 @@ public class VorgangWebRoutinen : WebRoutinenBase
         => await PostAsync($"BelegArt/?bguid={belegGuid}&neueBelegArt={neueBelegArt}", null);
 
     public async Task<Dictionary<long, List<VorgangListItemDTO>>> GetAllVorgangForFunctionAsync(DateTime changedSince)
-        => await GetAsync<Dictionary<long, List<VorgangListItemDTO>>>($"GetAllVorgangForFunction/?changedSince={changedSince:o}");
+        => await GetAsync<Dictionary<long, List<VorgangListItemDTO>>>($"GetAllVorgangForFunction/?changedSince={changedSince:o}", skipAuth: true);
 
     public async Task<VorgangDTO> GetVorgangForFunctionAsync(Guid vorgangGuid, long mandantId)
-        => await GetAsync<VorgangDTO>($"GetVorgangForFunction?id={vorgangGuid}&mandantID={mandantId}");
+        => await GetAsync<VorgangDTO>($"GetVorgangForFunction?id={vorgangGuid}&mandantID={mandantId}", skipAuth: true);
 }

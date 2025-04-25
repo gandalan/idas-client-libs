@@ -57,17 +57,17 @@ public class TagInfoWebRoutinen : WebRoutinenBase
         => await DeleteAsync($"TagVorlagen/DeleteTagVorlage?tagVorlageGuid={tagVorlageGuid}");
 
     public async Task<IList<TagInfoDTO>> GetTagInfoForFunctionAsync(Guid objectGuid, long mandantID)
-        => await GetAsync<List<TagInfoDTO>>($"GetTagInfoForFunction?objectGuid={objectGuid}&mandantID={mandantID}");
+        => await GetAsync<List<TagInfoDTO>>($"GetTagInfoForFunction?objectGuid={objectGuid}&mandantID={mandantID}", skipAuth: true);
 
     public async Task<IDictionary<Guid, IEnumerable<TagInfoDTO>>> GetTagInfoListForFunctionAsync(IEnumerable<Guid> guidList, long mandantID)
-        => await PutAsync<Dictionary<Guid, IEnumerable<TagInfoDTO>>>($"GetTagInfoListForFunction?mandantID={mandantID}", guidList);
+        => await PutAsync<Dictionary<Guid, IEnumerable<TagInfoDTO>>>($"GetTagInfoListForFunction?mandantID={mandantID}", guidList, skipAuth: true);
 
     public async Task AddTagInfoForFunctionAsync(TagInfoDTO dto, long mandantID)
-        => await PostAsync($"AddTagInfoForFunction?mandantID={mandantID}", dto);
+        => await PostAsync($"AddTagInfoForFunction?mandantID={mandantID}", dto, skipAuth: true);
 
     public async Task DeleteTagInfoForFunctionAsync(TagInfoDTO dto, long mandantID)
-        => await DeleteAsync($"DeleteTagInfoForFunction?mandantID={mandantID}", dto);
+        => await DeleteAsync($"DeleteTagInfoForFunction?mandantID={mandantID}", dto, skipAuth: true);
 
-    public async Task CleanUpTagInfos()
-        => await DeleteAsync("CleanUpTagInfos");
+    public async Task CleanUpTagInfos(bool isForFunction = false)
+        => await DeleteAsync("CleanUpTagInfos", skipAuth: isForFunction);
 }
