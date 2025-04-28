@@ -207,6 +207,7 @@ public class gSQLExporter
             var kederZeigtNachAussen = pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert != null
                                        && Convert.ToBoolean(pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert, CultureInfo.InvariantCulture);
 
+            aktuelleSektion.Items.Add(new gSQLItem("SonderWuenscheModelVersion", pos.SonderWuenscheModelVersion.ToString()));
             foreach (var sw in pos.Sonderwuensche)
             {
                 if (sw.InternerName == "KederZeigtNachAussen")
@@ -246,7 +247,7 @@ public class gSQLExporter
 
                 if (sw.Laenge > 0 || sw.Laenge == -1)
                 {
-                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Laenge", Convert.ToInt32(Math.Ceiling(sw.Laenge)).ToString(CultureInfo.InvariantCulture)));                
+                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Laenge", Convert.ToInt32(Math.Ceiling(sw.Laenge)).ToString(CultureInfo.InvariantCulture)));
                 }
 
                 if (sw.Hoehe > 0)
