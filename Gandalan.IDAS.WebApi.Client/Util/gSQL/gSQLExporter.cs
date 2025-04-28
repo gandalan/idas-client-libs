@@ -157,6 +157,8 @@ public class gSQLExporter
             aktuelleSektion.Items.Add(new gSQLItem("Position_AngebotsText", sanitizeString(pos.AngebotsText)));
             aktuelleSektion.Items.Add(new gSQLItem("Position_SonderwunschText", sanitizeString(pos.SonderwunschText)));
             aktuelleSektion.Items.Add(new gSQLItem("Position_SonderwunschAngebotsText", sanitizeString(pos.SonderwunschAngebotsText)));
+            aktuelleSektion.Items.Add(new gSQLItem("Position_SonderWuenscheModelVersion", sanitizeString(pos.SonderWuenscheModelVersion.ToString())));
+
 
             foreach (var konfig in pos.Daten.Where(u => u.UnterkomponenteName == "Variante"))
             {
@@ -207,7 +209,7 @@ public class gSQLExporter
             var kederZeigtNachAussen = pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert != null
                                        && Convert.ToBoolean(pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert, CultureInfo.InvariantCulture);
 
-            aktuelleSektion.Items.Add(new gSQLItem("SonderWuenscheModelVersion", pos.SonderWuenscheModelVersion.ToString()));
+           
             foreach (var sw in pos.Sonderwuensche)
             {
                 if (sw.InternerName == "KederZeigtNachAussen")
