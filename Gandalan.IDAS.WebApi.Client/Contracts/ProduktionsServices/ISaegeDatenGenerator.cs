@@ -8,7 +8,12 @@ namespace Gandalan.Client.Contracts.ProduktionsServices;
 public interface ISaegeDatenGenerator
 {
     /// <summary>
-    /// Information zur Säge (Hersteller, Modellnummer usw.)
+    /// Name der in den Settings angezeigt wird
+    /// </summary>
+    string DisplayName { get; }
+
+    /// <summary>
+    /// Information zur Säge (Hersteller, Modellnummer usw.) (interner Name, der nicht geändert werden darf, da die Settings die Säge über den Namen referenzieren)
     /// </summary>
     string Modell { get; }
     /// <summary>
