@@ -23,6 +23,6 @@ public class SaegeDatenHistorieWebRoutinen : WebRoutinenBase
     public async Task<IList<SaegeDatenHistorieDTO>> GetSaegeDatenHistorieForSerieAsync(Guid serieGuid, bool includeSaegeDatei = false, bool includeMeldungen = false)
     => await GetAsync<IList<SaegeDatenHistorieDTO>>($"SaegeDatenHistorie/?serieGuid={serieGuid}&includeSaegeDatei={includeSaegeDatei}&includeMeldungen={includeMeldungen}");
 
-    public async Task<IList<SaegeDatenHistorieDTO>> GetSaegeDatenHistorie(DateTime sinceWhen, bool includeSaegeDatei = false, bool includeMeldungen = false)
+    public async Task<IList<SaegeDatenHistorieDTO>> GetSaegeDatenHistorieAsync(DateTime sinceWhen, bool includeSaegeDatei = false, bool includeMeldungen = false)
         => await GetAsync<IList<SaegeDatenHistorieDTO>>($"SaegeDatenHistorie/?createdSince={sinceWhen:o}&includeSaegeDatei={includeSaegeDatei}&includeMeldungen={includeMeldungen}");
 }
