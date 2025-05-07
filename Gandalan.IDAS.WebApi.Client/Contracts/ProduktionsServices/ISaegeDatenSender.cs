@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Gandalan.IDAS.WebApi.Client.DTOs.Produktion;
 using Gandalan.IDAS.WebApi.Data.DTOs.Produktion;
 using Gandalan.IDAS.WebApi.Data.DTOs.Reports;
 using Gandalan.IDAS.WebApi.DTO;
@@ -15,5 +16,5 @@ public interface ISaegeDatenSender
     /// </summary>
     /// <param name="saegeKonfiguration">Sägekonfiguration, die genutzt werden soll</param>
     /// <param name="saegeDaten">Sägelisten, für die die SägeDateien erzeugt werden sollen</param>
-    void GenerateAndSave(SaegeKonfigurationDTO saegeKonfiguration, IList<SerienSaegelisteDataDTO> saegeDaten);
+    IList<SaegeDatenResultDTO> GenerateAndSave(SaegeKonfigurationDTO saegeKonfiguration, IList<SerienSaegelisteDataDTO> saegeDaten);
 }

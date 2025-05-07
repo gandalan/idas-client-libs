@@ -39,4 +39,10 @@ public class KontaktWebRoutinen : WebRoutinenBase
 
     public async Task UnarchiveKontakteAsync(List<Guid> kontakteIds)
         => await PutAsync("kontakt/entarchivieren", kontakteIds);
+
+    public async Task<KontaktDTO> GetKontaktForFunctionAsync(Guid kontaktGuid, long mandantId)
+        => await GetAsync<KontaktDTO>($"GetKontaktForFunction?id={kontaktGuid}&mandantId={mandantId}");
+
+    public async Task<Dictionary<long, List<KontaktDTO>>> GetAllKontakteForFunctionAsync(DateTime? changedSince = null)
+        => await GetAsync<Dictionary<long, List<KontaktDTO>>>($"GetAllKontakteForFunction?changedSince={changedSince}");
 }
