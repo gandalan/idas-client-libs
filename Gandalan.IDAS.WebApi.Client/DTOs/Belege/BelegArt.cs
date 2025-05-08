@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace Gandalan.IDAS.WebApi.Data.DTOs.Belege;
 
@@ -6,6 +7,7 @@ public enum BelegArt
 {
     Unbekannt = 0,
     Angebot = 1,
+    [Description("Auftragsbestätigung")]
     AB = 2,
     Rechnung = 3,
     Lieferschein = 4,
