@@ -44,5 +44,5 @@ public class KontaktWebRoutinen : WebRoutinenBase
         => await GetAsync<KontaktDTO>($"GetKontaktForFunction?id={kontaktGuid}&mandantId={mandantId}");
 
     public async Task<Dictionary<long, List<KontaktDTO>>> GetAllKontakteForFunctionAsync(DateTime? changedSince = null)
-        => await GetAsync<Dictionary<long, List<KontaktDTO>>>($"GetAllKontakteForFunction?changedSince={changedSince}");
+        => await GetAsync<Dictionary<long, List<KontaktDTO>>>($"GetAllKontakteForFunction?changedSince={changedSince:o}");
 }
