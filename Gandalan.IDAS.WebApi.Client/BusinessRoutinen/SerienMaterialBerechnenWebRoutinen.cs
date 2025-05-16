@@ -28,4 +28,9 @@ public class SerienMaterialBerechnenWebRoutinen : WebRoutinenBase
 
     public async Task ResetMaterialAsync(Guid serieGuid)
         => await DeleteAsync($"SerieMaterialbedarfBerechnen?serieGuid={serieGuid}");
+
+    public async Task<List<Guid>> MaterialBedarfBerechnenForFunctionAsync(Guid serieGuid, long mandantId)
+        => await PutAsync<List<Guid>>($"SerieMaterialbedarfBerechnen/ForFunction?mandantId={mandantId}&serieGuid={serieGuid}", null, skipAuth: true);
+    public async Task<List<Guid>> MaterialBedarfResetFromAvPosForFunctionAsync(Guid avPosGuid, long mandantId)
+        => await PutAsync<List<Guid>>($"SerieMaterialbedarfBerechnen/ResetFromAvPosForFunction?mandantId={mandantId}&avPosGuid={avPosGuid}", null, skipAuth: true);
 }
