@@ -271,6 +271,7 @@ public class KontaktDTO : IDTOWithApplicationSpecificProperties, INotifyProperty
     public string ProduktionZusatzInfo { get; set; }
     public bool ProduktionZusatzInfoPrintZusatzEtikett { get; set; }
     public bool ProduktionZusatzInfoPrintOnReport { get; set; }
+    public Guid FremdfertigungMandantGuid { get; set; }
 
     public KontaktDTO()
     {
