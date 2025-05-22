@@ -27,6 +27,7 @@ public class WebRoutinenBase
     #region Felder
 
     public IWebApiConfig Settings;
+    private readonly IWebApiConfig _originalSettings;
     public bool IsJwt;
     private RESTRoutinen _restRoutinen;
 
@@ -62,6 +63,7 @@ public class WebRoutinenBase
         // ändern können (vor allem z.B. Base-URL)
         if (settings != null)
         {
+            _originalSettings = settings;
             Settings = new WebApiSettings();
             Settings.CopyToThis(settings);
             if (settings is IJwtWebApiConfig jc)
@@ -179,6 +181,7 @@ public class WebRoutinenBase
             if (result != null)
             {
                 AuthToken = result;
+                _originalSettings.AuthToken = result;
                 initRestRoutinen();
                 Status = "OK";
                 return true;
@@ -522,6 +525,10 @@ public class WebRoutinenBase
         {
             // refresh JWT using refresh token
             var newJwt = await PutAsync<string>("/api/LoginJwt/Refresh", new { Token = refreshToken }, null, true);
+            if (_originalSettings is IJwtWebApiConfig jc)
+            {
+                jc.JwtToken = newJwt;
+            }
             JwtToken = newJwt;
             return true;
         }
