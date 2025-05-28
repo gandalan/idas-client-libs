@@ -12,7 +12,7 @@ public class AvReportDataWebRoutinen(IWebApiConfig settings) : WebRoutinenBase(s
         => await PostAsync<List<AvReportAvBelegPositionDto>>("avreportdata/avpositionen/serie", request);
 
     public async Task<List<AvReportAvBelegPositionDto>> GetAvPositionenForVorgaengeAsync(AvReportVorgangAvPositionenRequestDto request)
-        => await PostAsync<List<AvReportAvBelegPositionDto>>("avreportdata/avpositionen/serie", request);
+        => await PostAsync<List<AvReportAvBelegPositionDto>>("avreportdata/avpositionen/vorgaenge", request);
 
     public async Task<List<AvReportVorgangDto>> GetVorgaengeAsync(AvReportVorgangRequestDto request)
         => await PostAsync<List<AvReportVorgangDto>>("avreportdata/vorgaenge", request);
