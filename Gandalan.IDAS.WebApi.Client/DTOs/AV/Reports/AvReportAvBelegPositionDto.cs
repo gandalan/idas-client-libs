@@ -15,7 +15,6 @@ public record AvReportAvBelegPositionDto
         Material = belegPosAvDto.ProduktionsDaten.Material,
         Variante = belegPosAvDto.Variante,
         Pcode = belegPosAvDto.Pcode,
-        BelegPositionDaten = [.. belegPosAvDto.Position.Daten],
     };
 
     public Guid BelegPositionAVGuid { get; set; }
@@ -29,8 +28,4 @@ public record AvReportAvBelegPositionDto
     public List<MaterialbedarfDTO> Material { get; set; }
     public string Variante { get; set; }
     public string Pcode { get; set; }
-    /// <summary>
-    /// From BelegPositionAV.Position.Daten
-    /// </summary>
-    public virtual List<BelegPositionDatenDTO> BelegPositionDaten { get; set; }
 }
