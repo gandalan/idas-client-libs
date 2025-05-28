@@ -26,6 +26,10 @@ public record AvReportAvBelegPositionDto
     /// From BelegPositionAV.Produktionsdaten.Material
     /// </summary>
     public List<MaterialbedarfDTO> Material { get; set; }
+    /// <summary>
+    /// From BelegPositionAV.Produktionsdaten.Etiketten
+    /// </summary>
+    public List<EtikettDTO> Etiketten { get; set; }
     public string Variante { get; set; }
     public string Pcode { get; set; }
 }
