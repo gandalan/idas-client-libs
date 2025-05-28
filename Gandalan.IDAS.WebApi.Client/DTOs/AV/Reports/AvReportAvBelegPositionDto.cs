@@ -13,6 +13,7 @@ public record AvReportAvBelegPositionDto
         BelegGuid = belegPosAvDto.BelegGuid,
         BelegPositionGuid = belegPosAvDto.BelegPositionGuid,
         Material = belegPosAvDto.ProduktionsDaten.Material,
+        Etiketten = belegPosAvDto.ProduktionsDaten.Etiketten,
         Variante = belegPosAvDto.Variante,
         Pcode = belegPosAvDto.Pcode,
     };
