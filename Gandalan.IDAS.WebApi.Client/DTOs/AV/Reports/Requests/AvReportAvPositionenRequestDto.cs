@@ -29,5 +29,4 @@ public class AvReportVorgangAvPositionenRequestDto : AvReportAvBelegPositionRequ
     };
 
     public List<Guid> VorgangGuids { get; set; }
-
 }

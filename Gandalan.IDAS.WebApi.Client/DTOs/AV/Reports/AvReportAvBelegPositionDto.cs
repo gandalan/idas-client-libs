@@ -15,6 +15,7 @@ public record AvReportAvBelegPositionDto
         Material = belegPosAvDto.ProduktionsDaten.Material,
         Etiketten = belegPosAvDto.ProduktionsDaten.Etiketten,
         Variante = belegPosAvDto.Variante,
+        ArtikelNummer = belegPosAvDto.ArtikelNummer,
         Pcode = belegPosAvDto.Pcode,
     };
 
@@ -32,5 +33,6 @@ public record AvReportAvBelegPositionDto
     /// </summary>
     public List<EtikettDTO> Etiketten { get; set; }
     public string Variante { get; set; }
+    public string ArtikelNummer { get; set; }
     public string Pcode { get; set; }
 }
