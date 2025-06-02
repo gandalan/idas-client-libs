@@ -22,4 +22,5 @@ public record AvReportBelegPositionDto
     public string Text { get; set; }
     public string Einbauort { get; set; }
     public string SonderwunschText { get; set; }
+    public Guid VarianteGuid { get; set; }
 }
