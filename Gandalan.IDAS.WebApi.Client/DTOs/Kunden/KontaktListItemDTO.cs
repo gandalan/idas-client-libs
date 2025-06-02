@@ -6,6 +6,7 @@ public class KontaktListItemDTO
 {
     public Guid KontaktGuid { get; set; }
     public Guid KontaktMandantGuid { get; set; }
+    public Guid FremdfertigungMandantGuid { get; set; }
 
     /// <summary>
     /// Der KontaktMandant hat die App-Verwendung aktiv
@@ -91,6 +92,7 @@ public class KontaktListItemDTO
     {
         newkontakt.KontaktGuid = KontaktGuid;
         newkontakt.KontaktMandantGuid = KontaktMandantGuid;
+        newkontakt.FremdfertigungMandantGuid = FremdfertigungMandantGuid;
         newkontakt.KontaktMandantIstAktiv = KontaktMandantIstAktiv;
         newkontakt.Nachname = Nachname;
         newkontakt.Vorname = Vorname;
