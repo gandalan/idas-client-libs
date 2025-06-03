@@ -10,6 +10,7 @@ public interface IKundeLookup : ILookupDialog<IKundeLookupResult, IKundeLookupPa
 public interface IKundeLookupParams
 {
     Task<KontaktListItemDTO[]> KundenListe { get; }
+    bool? LeereKundenZulassen { get; }
 }
 
 public interface IKundeLookupResult
@@ -21,6 +22,7 @@ public interface IKundeLookupResult
 public class KundeLookupParams : IKundeLookupParams
 {
     public Task<KontaktListItemDTO[]> KundenListe { get; set; }
+    public bool? LeereKundenZulassen { get; set; }
 }
 
 public class KundeLookupResult : IKundeLookupResult

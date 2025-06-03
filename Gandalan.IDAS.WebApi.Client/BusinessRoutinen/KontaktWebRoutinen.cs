@@ -40,6 +40,9 @@ public class KontaktWebRoutinen : WebRoutinenBase
     public async Task UnarchiveKontakteAsync(List<Guid> kontakteIds)
         => await PutAsync("kontakt/entarchivieren", kontakteIds);
 
+    public async Task SetFremdfertigungGuidAsync(IDictionary<Guid, Guid> guidMapping)
+        => await PutAsync($"Kontakt/SetFremdfertigungGuid", guidMapping);
+
     public async Task<KontaktDTO> GetKontaktForFunctionAsync(Guid kontaktGuid, long mandantId)
         => await GetAsync<KontaktDTO>($"GetKontaktForFunction?id={kontaktGuid}&mandantId={mandantId}");
 
