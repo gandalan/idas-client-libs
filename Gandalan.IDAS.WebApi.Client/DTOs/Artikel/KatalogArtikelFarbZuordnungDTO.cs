@@ -21,6 +21,8 @@ public class KatalogArtikelFarbZuordnungDTO
     [JsonConverter(typeof(StringEnumConverter))]
     public FarbArt FarbArt { get; set; }
 
+    public bool WirdAlsStandardFarbeBestellt { get; set; }
+
     public decimal VEMenge { get; set; }
 
     public int MengeGrossVE { get; set; }
