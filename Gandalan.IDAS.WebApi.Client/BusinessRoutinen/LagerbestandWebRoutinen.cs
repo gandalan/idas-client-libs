@@ -61,7 +61,7 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
             return await GetAsync<List<LagerReservierungDTO>>($"LagerReservierungen?artikelnummer={artikelnummer}&farbkuerzel={farbkuerzel}&farbcode={farbcode}&bezug={bezug}&oberflaeche={oberflaeche}&changedSince={changedSince.Value:o}");
         }
 
-        return await GetAsync<List<LagerReservierungDTO>>($"LagerReservierungen?artikelnummer={artikelnummer}&farbkuerzel={farbkuerzel}&farbcode={farbcode}&bezug={bezug}");
+        return await GetAsync<List<LagerReservierungDTO>>($"LagerReservierungen?artikelnummer={artikelnummer}&farbkuerzel={farbkuerzel}&farbcode={farbcode}&bezug={bezug}&oberflaeche={oberflaeche}");
     }
 
     public async Task SaveReservierungenAsync(LagerReservierungDTO[] dtos)
