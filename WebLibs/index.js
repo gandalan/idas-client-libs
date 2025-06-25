@@ -45,9 +45,9 @@ export * from "./ui/index.js";
  * @property {string} [id] - Unique identifier for the menu item (auto-generated if not provided)
  * @property {boolean} [selected] - Indicates if the menu item is currently selected (managed by the menu system)
  * @property {string} [icon] - URL to an icon
- * @property {string} url - Relative URL to use for routes
+ * @property {string|null} [url] - Relative URL to use for routes
  * @property {string} text - Display text
- * @property {string} [parent] - Parent menu item (optional). If not set, the item will be added to the top level menu.
+ * @property {string|null} [parent] - Parent menu item (optional). If not set, the item will be added to the top level menu.
  * @property {boolean} [hidden] - If true, the menu item will not be displayed
  */
 

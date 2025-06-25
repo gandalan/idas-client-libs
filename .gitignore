@@ -401,3 +401,6 @@ FodyWeavers.xsd
 /Gandalan.IDAS.Logging/GDL.IDAS.Logging.xml
 /Gandalan.IDAS.WebApi.Client.Wpf/GDL.IDAS.WebApi.Client.Wpf.xml
 /Gandalan.IDAS.WebApi.Client/GDL.IDAS.WebApi.Client.xml
+
+/WebLibs/gen.js
+/WebLibs/generated/apiClient.js
