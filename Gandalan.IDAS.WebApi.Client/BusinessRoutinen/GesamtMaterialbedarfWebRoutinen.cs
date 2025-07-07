@@ -15,9 +15,9 @@ public class GesamtMaterialbedarfWebRoutinen : WebRoutinenBase
     public async Task<GesamtMaterialbedarfGetReturn> GetAsync(ZusammenfassungsOptionen optionen, bool stangenoptimierung, DateTime? stichTag = null, DateTime? bedarfAb = null, bool filterCsvExportedMaterial = true)
         => await GetAsync<GesamtMaterialbedarfGetReturn>($"GesamtMaterialbedarf?optionen={optionen}&stangenoptimierung={stangenoptimierung}&stichTag={stichTag?.ToString("o")}&bedarfAb={bedarfAb?.ToString("O")}&filterCsvExportedMaterial={filterCsvExportedMaterial}");
 
-    public async Task WebJobAsync()
-        => await PostAsync("GesamtMaterialbedarf/WebJob", null);
-
     public async Task GesamtBedarfUpdateLiefertag(long mandantId, Guid posGuid)
         => await PostAsync($"GesamtMaterialbedarf/GesamtBedarfUpdateLiefertag?mandantId={mandantId}&posGuid={posGuid}", null);
+
+    public async Task RecalculateGesamtbedarf(long mandantId, Guid avPosGuid)
+        => await PostAsync($"GesamtMaterialbedarf/RecalculateGesamtBedarf?mandantId={mandantId}&avPosGuid={avPosGuid}", null, skipAuth: true);
 }

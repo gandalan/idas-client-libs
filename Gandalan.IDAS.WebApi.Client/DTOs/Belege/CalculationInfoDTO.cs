@@ -2,9 +2,9 @@ using System;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class CalculationInfoDTO
+public record CalculationInfoDTO
 {
-    public Guid MandantGuid { get; set; }
+    public long MandantId { get; set; }
     public Guid BelegPositionGuid { get; set; }
     /// <summary>
     /// The timestamp when the calculation was requested.

@@ -58,6 +58,11 @@ public class SerieDTO
     public decimal KapazitaetReserviert { get; set; }
 
     /// <summary>
+    /// Gibt den aktuellen Status des SerienMaterialbedarfs an. Mögliche Werte: NichtBerechnet, BerechnungGestartet, Berechnet
+    /// </summary>
+    public string MaterialBedarfStatus { get; set; }
+
+    /// <summary>
     /// Informationen, wann welcher Anwender welches Dokument gedruckt hat
     /// </summary>
     public List<SerieDruckInfoDTO> DruckInfos { get; set; } = [];

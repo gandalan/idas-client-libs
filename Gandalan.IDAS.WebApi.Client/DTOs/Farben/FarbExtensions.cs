@@ -1,10 +1,11 @@
 using System.Text;
+using Gandalan.IDAS.WebApi.Client.Contracts.AV;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
 public static class FarbExtensions
 {
-    public static string GetProduktionsFarbText(this MaterialbedarfDTO material)
+    public static string GetProduktionsFarbText(this MaterialbedarfDTO material, FarbtextOption? farbtextOption = null)
     {
         var farbText = material.FarbKuerzel;
         if (string.IsNullOrEmpty(farbText))
@@ -15,7 +16,10 @@ public static class FarbExtensions
         // Standardfarbe
         if (!farbText.StartsWith("SF"))
         {
-            // Stand 05.03.2024: Für Standardfarben wird immer das Kürzel angezeigt
+            if (farbtextOption == FarbtextOption.Volltext)
+            {
+                farbText = getProduktionsFarbText(farbText, farbZusatzText: null, material.FarbeItem, material.FarbCode, material.FarbBezeichnung, material.OberflaecheBezeichnung, material.IstBeschichtbar);
+            }
         }
         // Sonderfarben / Trendfarben ("SF" + FarbZusatzText)
         else if (farbText.StartsWith("SF"))

@@ -38,6 +38,9 @@ public class VorgangWebRoutinen : WebRoutinenBase
         }
     }
 
+    public async Task ChangeVorgangsNummerAsync(Guid vorgangGuid, long neueVorgangsNummer)
+        => await PutAsync($"Vorgang/{vorgangGuid}/vorgangsnummer", neueVorgangsNummer);
+
     public async Task<VorgangDTO> SendeVorgangAsync(VorgangDTO vorgang)
         => await PutAsync<VorgangDTO>("Vorgang", vorgang);
 

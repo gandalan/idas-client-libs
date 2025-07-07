@@ -13,6 +13,7 @@ public class TagInfoDTO
     public string IconName { get; set; }
     public string BackgroundColorCode { get; set; }
     public string TextColorCode { get; set; }
+    public bool IsDeleted { get; set; }
 
     public long Version { get; set; }
     public DateTime ChangedDate { get; set; }

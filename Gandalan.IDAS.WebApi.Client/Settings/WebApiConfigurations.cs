@@ -18,10 +18,17 @@ public static class WebApiConfigurations
     private static string _appTokenString;
     private static bool _isInitialized;
 
-    [Obsolete("Call InitializeAsync")]
-    public static async Task Initialize(Guid appToken)
+    public static void Initialize(Guid appToken)
     {
-        await InitializeAsync(appToken);
+        _settings = new Dictionary<string, IWebApiConfig>(StringComparer.OrdinalIgnoreCase);
+        _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
+        _appTokenString = appToken.ToString().Trim('{', '}');
+
+        setupEnvironmentsAsync(appToken).Wait();
+        setupLocalEnvironment(appToken);
+
+        _isInitialized = true;
+
     }
 
     public static async Task InitializeAsync(Guid appToken)

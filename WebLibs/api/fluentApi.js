@@ -4,8 +4,10 @@ import { restClient } from "./fluentRestClient";
  * @typedef {Object} FluentApi
  * @property {string} baseUrl - The base URL for API requests.
  * @property {import("./fluentAuthManager").FluentAuthManager} authManager - The authentication manager.
+ * @property {string} serviceName - The name of the service using this API.
  * @property {function(string) : FluentApi} useBaseUrl - Sets the base URL for API requests and returns the FluentApi object.
  * @property {function(fluentAuthManager) : FluentApi} useAuthManager - Sets the auth manager and returns the FluentApi object.
+ * @property {function(string) : FluentApi} useServiceName - Sets the service name and returns the FluentApi object.
  * @property {function(string) : Promise<object|Array<any>>} get - Async function to perform GET requests.
  * @property {function(string, object|null) : Promise<object|Array<any>>} put - Async function to perform PUT requests with a payload.
  * @property {function(string, object|null) : Promise<object|Array<any>>} post - Async function to perform POST requests with a payload.
@@ -21,6 +23,7 @@ export function createApi() {
     return {
         authManager: {},
         baseUrl: "",
+        serviceName: "unknownService",
 
         /**
          * Sets the base URL for API requests.
@@ -41,6 +44,17 @@ export function createApi() {
          */
         useAuthManager(authManager) {
             this.authManager = authManager;
+            return this;
+        },
+
+        /**
+         * Sets the service name for this API client.
+         *
+         * @param {string} name - The name of the service using this API.
+         * @return {FluentApi}
+         */
+        useServiceName(name) {
+            this.serviceName = name ?? this.serviceName;
             return this;
         },
 
@@ -105,7 +119,10 @@ export function createApi() {
          * @returns {import("./fluentRestClient").FluentRESTClient}
          */
         createRestClient() {
-            return restClient().useBaseUrl(this.baseUrl).useToken(this.authManager?.token);
+            return restClient()
+                .useBaseUrl(this.baseUrl)
+                .useToken(this.authManager?.token)
+                .useUserAgent(`gandalan/weblibs-${this.serviceName}`);
         },
 
         /**
@@ -129,16 +146,18 @@ export function createApi() {
  *
  * - Requests will be sent to the url provided.
  * - Example usage:
- *   const api = fluentApi("https://jsonplaceholder.typicode.com/todos/", null);
+ *   const api = fluentApi("https://jsonplaceholder.typicode.com/todos/", null, "myService");
  *   api.get("1"); // Sends a GET request to https://jsonplaceholder.typicode.com/todos/1.
  *
  * @export
  * @param {string} url - The base URL for API requests.
- * @param {FluentAuthManager} authManager - The authentication manager instance.
+ * @param {import("./fluentAuthManager").FluentAuthManager} authManager - The authentication manager instance.
+ * @param {string} serviceName - The name of the service using this API.
  * @return {FluentApi} Configured API instance for local use.
  */
-export function fluentApi(url, authManager) {
+export function fluentApi(url, authManager, serviceName) {
     return createApi()
         .useAuthManager(authManager)
-        .useBaseUrl(url);
+        .useBaseUrl(url)
+        .useServiceName(serviceName);
 }

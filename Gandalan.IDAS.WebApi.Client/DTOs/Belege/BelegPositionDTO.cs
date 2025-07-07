@@ -44,6 +44,11 @@ public class BelegPositionDTO : IDTOWithApplicationSpecificProperties
     public string MengenEinheit { get; set; }
     public string Text { get; set; }
     public virtual IList<BelegPositionDatenDTO> Daten { get; set; }
+    /// <summary>
+    /// Die Version des Sonderanpassungen-Tabs in der i3 Belegpositionserfassung,
+    /// mit der die Position zuletzt bearbeitet wurde.
+    /// </summary>
+    public int SonderWuenscheModelVersion { get; set; }
     public virtual IList<BelegPositionSonderwunschDTO> Sonderwuensche { get; set; }
     public virtual IList<BelegPositionHistorieDTO> Historie { get; set; }
     public virtual IList<ZusatztextDTO> Zusatztexte { get; set; }

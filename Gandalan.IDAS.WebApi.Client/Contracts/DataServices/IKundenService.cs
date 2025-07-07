@@ -13,4 +13,5 @@ public interface IKundenService
     Task<KontaktDTO> LoadAsync(Guid guid);
     Task ArchiveAsync(List<Guid> kundenGuidList);
     Task UnarchiveAsync(List<Guid> kundenGuidList);
+    Task SetFremdfertigungGuidAsync(IDictionary<Guid, Guid> guidMapping);
 }

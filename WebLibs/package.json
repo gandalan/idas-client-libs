@@ -1,6 +1,6 @@
 {
   "name": "@gandalan/weblibs",
-  "version": "1.5.2",
+  "version": "1.5.13",
   "description": "WebLibs for Gandalan JS/TS projects",
   "keywords": [
     "gandalan"
@@ -21,16 +21,16 @@
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
-    "axios": "^1.7.9",
+    "axios": "^1.8.2",
     "jwt-decode": "^4.0.0",
     "validator": "^13.12.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.8",
+    "@babel/core": "^7.26.9",
     "@babel/eslint-parser": "^7.26.8",
-    "@eslint/js": "^9.20.0",
-    "eslint": "^9.20.0",
-    "globals": "^15.14.0"
+    "@eslint/js": "^9.21.0",
+    "eslint": "^9.21.0",
+    "globals": "^15.15.0"
   },
   "publishConfig": {
     "access": "public"

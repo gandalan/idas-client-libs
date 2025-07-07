@@ -8,6 +8,7 @@ public class SerienPacklisteGruppeDataDTO
     public string Kunde { get; set; }
     public string Ort { get; set; }
     public string Kommission { get; set; }
+    public string PositionsKommission { get; set; }
     public string VorgangsNummer { get; set; }
 
     /// <summary>

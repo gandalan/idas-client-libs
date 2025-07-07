@@ -54,14 +54,14 @@ public class LagerbestandWebRoutinen : WebRoutinenBase
     public async Task<LagerReservierungDTO> GetReservierungAsync(Guid guid)
         => await GetAsync<LagerReservierungDTO>($"LagerReservierungen/?id={guid}");
 
-    public async Task<List<LagerReservierungDTO>> GetAllReservierungenAsync(string artikelnummer = "", string farbkuerzel = "", string farbcode = "", string bezug = "", DateTime? changedSince = null)
+    public async Task<List<LagerReservierungDTO>> GetAllReservierungenAsync(string artikelnummer = "", string farbkuerzel = "", string farbcode = "", string bezug = "", string oberflaeche = "", DateTime? changedSince = null)
     {
         if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
         {
-            return await GetAsync<List<LagerReservierungDTO>>($"LagerReservierungen?artikelnummer={artikelnummer}&farbkuerzel={farbkuerzel}&farbcode={farbcode}&bezug={bezug}&changedSince={changedSince.Value:o}");
+            return await GetAsync<List<LagerReservierungDTO>>($"LagerReservierungen?artikelnummer={artikelnummer}&farbkuerzel={farbkuerzel}&farbcode={farbcode}&bezug={bezug}&oberflaeche={oberflaeche}&changedSince={changedSince.Value:o}");
         }
 
-        return await GetAsync<List<LagerReservierungDTO>>($"LagerReservierungen?artikelnummer={artikelnummer}&farbkuerzel={farbkuerzel}&farbcode={farbcode}&bezug={bezug}");
+        return await GetAsync<List<LagerReservierungDTO>>($"LagerReservierungen?artikelnummer={artikelnummer}&farbkuerzel={farbkuerzel}&farbcode={farbcode}&bezug={bezug}&oberflaeche={oberflaeche}");
     }
 
     public async Task SaveReservierungenAsync(LagerReservierungDTO[] dtos)

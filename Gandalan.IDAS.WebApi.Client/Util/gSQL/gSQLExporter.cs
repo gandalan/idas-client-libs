@@ -157,6 +157,8 @@ public class gSQLExporter
             aktuelleSektion.Items.Add(new gSQLItem("Position_AngebotsText", sanitizeString(pos.AngebotsText)));
             aktuelleSektion.Items.Add(new gSQLItem("Position_SonderwunschText", sanitizeString(pos.SonderwunschText)));
             aktuelleSektion.Items.Add(new gSQLItem("Position_SonderwunschAngebotsText", sanitizeString(pos.SonderwunschAngebotsText)));
+            aktuelleSektion.Items.Add(new gSQLItem("Position_SonderWuenscheModelVersion", sanitizeString(pos.SonderWuenscheModelVersion.ToString())));
+
 
             foreach (var konfig in pos.Daten.Where(u => u.UnterkomponenteName == "Variante"))
             {
@@ -207,6 +209,7 @@ public class gSQLExporter
             var kederZeigtNachAussen = pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert != null
                                        && Convert.ToBoolean(pos.Sonderwuensche.FirstOrDefault(i => i.InternerName == "KederZeigtNachAussen")?.Wert, CultureInfo.InvariantCulture);
 
+           
             foreach (var sw in pos.Sonderwuensche)
             {
                 if (sw.InternerName == "KederZeigtNachAussen")
@@ -246,12 +249,12 @@ public class gSQLExporter
 
                 if (sw.Laenge > 0 || sw.Laenge == -1)
                 {
-                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Laenge", sw.Laenge.ToString(CultureInfo.InvariantCulture)));
+                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Laenge", Convert.ToInt32(Math.Ceiling(sw.Laenge)).ToString(CultureInfo.InvariantCulture)));
                 }
 
                 if (sw.Hoehe > 0)
                 {
-                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Hoehe", sw.Hoehe.ToString(CultureInfo.InvariantCulture)));
+                    aktuelleSektion.Items.Add(new gSQLItem($"Sonder_{swExportParameter}_Hoehe", Convert.ToInt32(Math.Ceiling(sw.Hoehe)).ToString(CultureInfo.InvariantCulture)));
                 }
 
                 if (!string.IsNullOrEmpty(sw.Farbe))

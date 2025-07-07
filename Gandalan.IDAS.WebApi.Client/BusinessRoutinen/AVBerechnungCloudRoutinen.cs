@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Data.DTOs.Produktion;
@@ -14,4 +15,7 @@ public class AVBerechnungCloudRoutinen : WebRoutinenBase
     {
         return await PostAsync<BerechnungParameterDTO>("ProcessIbos/Process", parameter);
     }
+
+    public async Task CalculateAVPosition(long mandantId, Guid avPosGuid)
+        => await PostAsync($"ProcessIbos/CalculateAVPosition?mandantId={mandantId}&avPosGuid={avPosGuid}", null, skipAuth: true);
 }

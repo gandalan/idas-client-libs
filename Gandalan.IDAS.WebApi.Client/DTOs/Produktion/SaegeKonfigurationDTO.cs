@@ -16,6 +16,11 @@ public class SaegeKonfigurationDTO
     public string Modell { get; set; }
 
     /// <summary>
+    /// DisplayName des ISaegeDatenGenerator, der genutzt werden soll
+    /// </summary>
+    public string DisplayName { get; set; }
+
+    /// <summary>
     /// Bezeichnung des SaegemassKorrekturSatzDTO, das genutzt werden soll
     /// </summary>
     public string KorrekturSatz { get; set; }

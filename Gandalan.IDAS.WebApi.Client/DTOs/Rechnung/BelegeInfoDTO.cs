@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Gandalan.IDAS.WebApi.Client.DTOs.Rechnung;
 
@@ -7,7 +8,7 @@ public class BelegeInfoDTO
     public Guid VorgangGuid { get; set; }
     public Guid BelegGuid { get; set; }
     public Guid KontaktGuid { get; set; }
-
+    public List<Guid> BelegPositionGuids { get; set; } = [];
     public string Belegart { get; set; }
     public long Vorgangsnummer { get; set; }
     public long BelegNummer { get; set; }

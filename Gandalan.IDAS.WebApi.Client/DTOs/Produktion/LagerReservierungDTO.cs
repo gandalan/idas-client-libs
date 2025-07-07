@@ -11,6 +11,7 @@ public class LagerReservierungDTO
     public string Artikelnummer { get; set; }
     public string FarbKuerzel { get; set; }
     public string FarbCode { get; set; }
+    public string Oberflaeche { get; set; }
     public string Bezug { get; set; }
 
     public decimal Menge { get; set; }

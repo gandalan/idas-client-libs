@@ -19,6 +19,7 @@ public class FeedbackDTO
     public IList<BelegPositionAVDTO> AVPositionen { get; set; }
     public ProduktionsSettingsDTO ProduktionsSettings { get; set; }
     public string Beschreibung { get; set; }
+    public string ProgramInfos { get; set; }
     public IList<FeedbackAttachmentDTO> Anhaenge { get; set; }
     public IList<FeedbackKommentarDTO> Kommentare { get; set; }
     public string Status { get; set; }
