@@ -22,7 +22,7 @@ public class LieferzusageWebRoutinen : WebRoutinenBase
         => await PostAsync<string>("Lieferzusage", lieferzusage);
 
     public async Task<string> MaterialZusagenAsync(List<LieferzusageDTO> lieferzusagen)
-        => await PostAsync<string>("Lieferzusagen/PutLieferzusagenListe", lieferzusagen);
+        => await PostAsync<string>("Lieferzusage/PutLieferzusagenListe", lieferzusagen);
 
     public async Task ResetZusageAsync(Guid lieferzusageGuid)
         => await DeleteAsync($"Lieferzusage?zusageGuid={lieferzusageGuid}");
