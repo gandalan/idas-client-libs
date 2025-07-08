@@ -8,6 +8,9 @@ namespace Gandalan.IDAS.WebApi.DTO;
 public class LagerReservierungDTO
 {
     public Guid LagerReservierungGuid { get; set; }
+    public Guid? MaterialbedarfGuid { get; set; }
+    public Guid? LieferzusageGuid { get; set; }
+    public Guid? GesamtLieferzusageGuid { get; set; }
     public string Artikelnummer { get; set; }
     public string FarbKuerzel { get; set; }
     public string FarbCode { get; set; }
