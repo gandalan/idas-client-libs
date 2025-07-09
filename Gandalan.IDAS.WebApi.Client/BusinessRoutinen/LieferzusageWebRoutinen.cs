@@ -27,6 +27,6 @@ public class LieferzusageWebRoutinen : WebRoutinenBase
     public async Task ResetZusageAsync(Guid lieferzusageGuid)
         => await DeleteAsync($"Lieferzusage?zusageGuid={lieferzusageGuid}");
 
-    public async Task<List<Guid>> ResetZusagenAsync(List<Guid> lieferzusagenGuids)
-        => await DeleteAsync<List<Guid>>($"Lieferzusage/DeleteLieferzusagen", lieferzusagenGuids);
+    public async Task<string> ResetZusagenAsync(List<Guid> lieferzusagenGuids)
+        => await DeleteAsync<string>($"Lieferzusage/DeleteLieferzusagen", lieferzusagenGuids);
 }
