@@ -18,7 +18,7 @@ public class GesamtLieferzusagenWebRoutinen : WebRoutinenBase
     public async Task PutAsync(GesamtLieferzusageDTO dto)
         => await PutAsync("GesamtLieferzusagen", dto);
     public async Task<string> PutAsync(List<GesamtLieferzusageDTO> dtoSet)
-        => await PostAsync<string>("GesamtLieferzusagen/PutLieferzusagenListe", dtoSet);
+        => await PutAsync<string>("GesamtLieferzusagen/PutGesamtLieferzusagenListe", dtoSet);
 
     public async Task SerieBuchenAsync(Guid serieGuid)
         => await PostAsync($"GesamtLieferzusagen/SerieBuchen?serieGuid={serieGuid}", null);
