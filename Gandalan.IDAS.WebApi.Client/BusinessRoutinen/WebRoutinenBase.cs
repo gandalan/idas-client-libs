@@ -668,7 +668,7 @@ public class WebRoutinenBase
 
         if (!foundUrlInData)
         {
-            exception.Data.Add("URL", url);
+            exception.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
             exception.Data.Add("CallMethod", sender);
             exception.Data.Add("StatusCode", exception.StatusCode);
             exception.Data.Add("Payload", exception.Payload);
