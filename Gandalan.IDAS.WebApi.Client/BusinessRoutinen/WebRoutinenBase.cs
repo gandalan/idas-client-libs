@@ -612,6 +612,9 @@ public class WebRoutinenBase
     /// <exception cref="Exception">Throws <paramref name="exception"/>, if no <see cref="CustomExceptionHandler"/> handles the exception</exception>
     private void tryHandleException(Exception exception)
     {
+        exception.Data.Add("BenutzerGuid", AuthToken?.Benutzer.BenutzerGuid);
+        exception.Data.Add("MandantGuid", AuthToken?.MandantGuid);
+
         L.Fehler(exception);
 
         if (!IgnoreOnErrorOccured)
