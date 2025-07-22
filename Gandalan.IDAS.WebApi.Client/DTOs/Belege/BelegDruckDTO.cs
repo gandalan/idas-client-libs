@@ -384,7 +384,7 @@ public class BelegPositionDruckDTO
             BelegPositionGuid = position.BelegPositionGuid;
             if (preiseAnzeigen)
             {
-                if (position.PreisAufAnfrage || position.IstFehlerhaft)
+                if (position.PreisAufAnfrage)
                 {
                     Rabatt = string.Empty;
                     Farbzuschlag = string.Empty;
