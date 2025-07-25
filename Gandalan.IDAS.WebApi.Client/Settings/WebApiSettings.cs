@@ -28,7 +28,7 @@ public class WebApiSettings : IWebApiConfig
     [JsonIgnore]
     public string UserAgent { get; set; }
     [JsonIgnore]
-    public bool UseCompression { get; set; }
+    public bool UseCompression { get; set; } = true;
 
     /// <summary>
     /// CMSUrl für Dokumente
@@ -107,6 +107,7 @@ public class WebApiSettings : IWebApiConfig
         UserName = settings.UserName;
         InstallationId = settings.InstallationId;
         UserAgent = settings.UserAgent;
+        UseCompression = settings.UseCompression;
 
         Url = settings.Url;
         CMSUrl = settings.CMSUrl;
