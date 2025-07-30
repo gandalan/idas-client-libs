@@ -114,6 +114,10 @@ public static class WebApiConfigurations
                     {
                         localEnvironment.FriendlyName = friendlyName;
                         localEnvironment.AppToken = appToken;
+                        if (string.IsNullOrEmpty(localEnvironment.IDASUrl))
+                        {
+                            localEnvironment.IDASUrl = localEnvironment.Url;
+                        }
                         _settings.Add(friendlyName, localEnvironment);
                         internalLoadSavedAuthToken(friendlyName, localEnvironment);
                     }
@@ -138,6 +142,7 @@ public static class WebApiConfigurations
                 environment = new WebApiSettings
                 {
                     Url = response.IDAS,
+                    IDASUrl = response.IDAS,
                     CMSUrl = response.CMS,
                     DocUrl = response.Docs,
                     FeedbackUrl = response.Feedback,
@@ -170,6 +175,10 @@ public static class WebApiConfigurations
                 AppToken = environment.AppToken
             };
             environment.UserName = savedAuthToken.UserName;
+            if (string.IsNullOrEmpty(environment.IDASUrl))
+            {
+                environment.IDASUrl = environment.Url;
+            }
         }
     }
 

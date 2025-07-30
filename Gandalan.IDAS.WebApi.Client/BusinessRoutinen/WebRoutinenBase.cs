@@ -523,8 +523,17 @@ public class WebRoutinenBase
 
         try
         {
+            var loginConfig = Settings;
+            //temporarily create new Settings if the base url is not the IDASUrl since the refresh can only happen on the IDAS backend
+            if (Settings.Url != Settings.IDASUrl)
+            {
+                loginConfig = new JwtWebApiSettings();
+                loginConfig.CopyToThis(Settings);
+                loginConfig.Url = Settings.IDASUrl;
+            }
+
             // refresh JWT using refresh token
-            var newJwt = await PutAsync<string>("/api/LoginJwt/Refresh", new { Token = refreshToken }, null, true);
+            var newJwt = await new WebRoutinenBase(loginConfig).PutAsync<string>("/api/LoginJwt/Refresh", new { Token = refreshToken }, null, true);
             if (_originalSettings is IJwtWebApiConfig jc)
             {
                 jc.JwtToken = newJwt;

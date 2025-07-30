@@ -26,6 +26,12 @@ public interface IWebApiConfig
     bool UseCompression { get; set; }
 
     /// <summary>
+    /// Base IDAS Url
+    /// </summary>
+    [JsonIgnore]
+    string IDASUrl { get; set; }
+
+    /// <summary>
     /// CMSUrl für Dokumente
     /// </summary>
     string DocUrl { get; set; }
