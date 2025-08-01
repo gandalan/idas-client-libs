@@ -18,4 +18,7 @@ public class CalculationInfoWebRoutinen(IWebApiConfig settings) : WebRoutinenBas
 
     public async Task<List<CalculationInfoDTO>> GetIncompleteCalculationInfosAsync()
         => await GetAsync<List<CalculationInfoDTO>>($"{CalculationInfoApiRoute}/Incomplete", skipAuth: true);
+
+    public async Task<long> GetInCalculationCountAsync()
+        => await GetAsync<long>($"{CalculationInfoApiRoute}/InCalculationCount");
 }
