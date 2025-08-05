@@ -111,4 +111,6 @@ public class VorgangListItemDTO : IDTOWithApplicationSpecificProperties
     public string RelatedGuids { get; set; }
 
     public Guid MandantGuid { get; set; }
+
+    public bool IstBerechnet { get; set; }
 }
