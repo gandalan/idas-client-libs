@@ -89,7 +89,7 @@ public class WebRoutinenBase
         if (!skipAuth && !await LoginAsync())
         {
             var ex = new ApiUnauthorizedException("You are not authorized.");
-            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
+            ex.Data.Add("URL", url);
             ex.Data.Add("CallMethod", sender);
             throw ex;
         }
@@ -128,6 +128,11 @@ public class WebRoutinenBase
 
     protected virtual void OnErrorOccured(ApiErrorArgs e)
     {
+        if (e.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            throw new ApiUnauthorizedException(Status = e.Message);
+        }
+
         ErrorOccured?.Invoke(this, e);
     }
 
@@ -684,20 +689,6 @@ public class WebRoutinenBase
         return exception;
     }
 
-    private static ApiException CreateApiException(string message, HttpStatusCode code, Exception inner)
-    {
-        return code == HttpStatusCode.Unauthorized
-            ? new ApiUnauthorizedException(message, code, inner)
-            : new ApiException(message, code, inner);
-    }
-
-    private static ApiException CreateApiException(string message, HttpStatusCode code, Exception inner, object payload)
-    {
-        return code == HttpStatusCode.Unauthorized
-            ? new ApiUnauthorizedException(message, code, inner, payload)
-            : new ApiException(message, code, inner, payload);
-    }
-
     protected static ApiException TranslateException(HttpRequestException ex, object payload)
     {
         if (ex.Data.Contains("StatusCode"))
@@ -713,7 +704,7 @@ public class WebRoutinenBase
                     try
                     {
                         var original = JsonConvert.DeserializeObject<Exception>(response, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
-                        return CreateApiException(original.Message, code, original, payload);
+                        return new ApiException(original.Message, code, original, payload);
                     }
                     catch
                     {
@@ -724,17 +715,15 @@ public class WebRoutinenBase
                 {
                     var infoObject = JsonConvert.DeserializeObject<dynamic>(response);
                     string status = infoObject.status;
-                    var apiEx = CreateApiException(status, code, ex, payload);
-                    apiEx.ExceptionString = infoObject.exception.ToString();
-                    return apiEx;
+                    return new ApiException(status, code, ex, payload) { ExceptionString = infoObject.exception.ToString() };
                 }
                 catch
                 {
-                    return CreateApiException(response, code, ex, payload);
+                    return new ApiException(response, code, ex, payload);
                 }
             }
 
-            return CreateApiException(ex.Message, code, ex, payload);
+            return new ApiException(ex.Message, code, ex, payload);
         }
 
         return new ApiException(ex.Message, ex, payload);
@@ -752,7 +741,7 @@ public class WebRoutinenBase
                 try
                 {
                     var original = JsonConvert.DeserializeObject<Exception>(response, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
-                    return CreateApiException(original.Message, code, original);
+                    return new ApiException(original.Message, code, original);
                 }
                 catch
                 {
@@ -760,18 +749,16 @@ public class WebRoutinenBase
                     {
                         var infoObject = JsonConvert.DeserializeObject<dynamic>(response);
                         string status = infoObject.status;
-                        var apiEx = CreateApiException(status, code, ex);
-                        apiEx.ExceptionString = infoObject.exception.ToString();
-                        return apiEx;
+                        return new ApiException(status, code, ex) { ExceptionString = infoObject.exception.ToString() };
                     }
                     catch
                     {
-                        return CreateApiException(response, code, ex);
+                        return new ApiException(response, code, ex);
                     }
                 }
             }
 
-            return CreateApiException(ex.Message, code, ex);
+            return new ApiException(ex.Message, code, ex);
         }
 
         return new ApiException(ex.Message, ex);
