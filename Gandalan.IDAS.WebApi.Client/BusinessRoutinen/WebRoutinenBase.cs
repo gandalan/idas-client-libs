@@ -89,7 +89,7 @@ public class WebRoutinenBase
         if (!skipAuth && !await LoginAsync())
         {
             var ex = new ApiUnauthorizedException("You are not authorized.");
-            ex.Data.Add("URL", url);
+            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
             ex.Data.Add("CallMethod", sender);
             throw ex;
         }
