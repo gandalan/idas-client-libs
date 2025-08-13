@@ -128,11 +128,6 @@ public class WebRoutinenBase
 
     protected virtual void OnErrorOccured(ApiErrorArgs e)
     {
-        if (e.StatusCode == HttpStatusCode.Unauthorized)
-        {
-            throw new ApiUnauthorizedException(Status = e.Message);
-        }
-
         ErrorOccured?.Invoke(this, e);
     }
 
@@ -240,8 +235,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -260,8 +255,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -278,8 +273,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -298,8 +293,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -318,8 +313,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -338,8 +333,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -358,8 +353,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -378,8 +373,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -396,8 +391,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -416,8 +411,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
             return null;
         }
     }
@@ -431,8 +426,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -451,8 +446,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -469,8 +464,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -487,8 +482,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -638,15 +633,23 @@ public class WebRoutinenBase
         }
     }
 
-    private ApiException handleWebException(HttpRequestException ex, string url, [CallerMemberName] string sender = null)
+    private Exception handleWebException(HttpRequestException ex, string url, [CallerMemberName] string sender = null)
     {
         var exception = TranslateException(ex);
+        if (exception.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            return new ApiUnauthorizedException(Status = ex.Message);
+        }
         return internalHandleWebException(exception, url, sender);
     }
 
-    private ApiException handleWebException(HttpRequestException ex, string url, object data, [CallerMemberName] string sender = null)
+    private Exception handleWebException(HttpRequestException ex, string url, object data, [CallerMemberName] string sender = null)
     {
         var exception = TranslateException(ex, data);
+        if (exception.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            return new ApiUnauthorizedException(Status = ex.Message);
+        }
         return internalHandleWebException(exception, url, sender);
     }
 
