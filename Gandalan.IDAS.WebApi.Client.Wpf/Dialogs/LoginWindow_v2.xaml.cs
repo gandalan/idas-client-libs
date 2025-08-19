@@ -97,7 +97,7 @@ public partial class LoginWindow_v2 : Window
         // reflect change to env as from selected dropdown
         _webApiSettings.CopyToThis(_viewModel.ServerEnvironment);
         _webApiSettings.UserAgent = userAgent;
-        _webApiSettings.UserName = _viewModel.UserName;
+        _webApiSettings.UserName = _viewModel.UserName.Trim().ToLower();
         _webApiSettings.Passwort = passwordBox.Password;
         _webApiSettings.AuthToken = null;
 
