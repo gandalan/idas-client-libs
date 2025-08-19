@@ -106,7 +106,7 @@ public class WebApiSettings : IWebApiConfig
         FriendlyName = settings.FriendlyName;
         Mandant = settings.Mandant;
         Passwort = settings.Passwort;
-        UserName = settings.UserName;
+        UserName = settings.UserName.Trim().ToLower();
         InstallationId = settings.InstallationId;
         UserAgent = settings.UserAgent;
         UseCompression = settings.UseCompression;
