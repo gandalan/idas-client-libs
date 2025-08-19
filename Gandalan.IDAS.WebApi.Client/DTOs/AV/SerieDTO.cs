@@ -63,6 +63,20 @@ public class SerieDTO
     public string MaterialBedarfStatus { get; set; }
 
     /// <summary>
+    /// Gibt an, ob die Serie gesperrt ist.<br/>
+    /// Wird die Serie gesperrt:
+    /// <ul>
+    /// <li>können keine weiteren Vorgänge automatische hinzugefügt werden.</li>
+    /// <li>wird die eigentlich vorgegebene Kapazität nicht mehr automatisch berücksichtigt.</li>
+    /// <li>kann "Daten aufbereiten" ausgewählt werden.</li>
+    /// <li>kann "Unterlagen drucken" ausgewählt werden.</li>
+    /// <li>kann "Produktionsdateien erzeugen" ausgewählt werden.</li>
+    /// </ul>
+    /// Die Serie kann wieder entsperrt werden.<br/>
+    /// </summary>
+    public bool IstGesperrt { get; set; }
+
+    /// <summary>
     /// Informationen, wann welcher Anwender welches Dokument gedruckt hat
     /// </summary>
     public List<SerieDruckInfoDTO> DruckInfos { get; set; } = [];

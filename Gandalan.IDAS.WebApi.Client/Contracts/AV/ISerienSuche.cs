@@ -7,7 +7,7 @@ namespace Gandalan.IDAS.Client.Contracts.Contracts.AV;
 
 public interface ISerienSuche
 {
-    List<SerieDTO> GetSerienByDate(DateTime datum, bool includeStaendigeSerien = false);
+    List<SerieDTO> GetSerienByDate(DateTime datum, bool includeStaendigeSerien = false, bool includeGesperrte = true);
     Task<bool> CheckCapacity(SerieDTO serie, BelegDTO belegDto);
     Task<bool> CheckCapacity(SerieDTO serie, BelegPositionDTO belegPositionDto);
     Task<bool> CheckCapacityAV(Guid serieGuid, List<Guid> list);
