@@ -397,8 +397,8 @@ public class BelegPositionDruckDTO
                     Farbzuschlag = position.Farbzuschlag.ToString(culture);
                     EinzelpreisOhneFarbzuschlag = position.Einzelpreis.ToString(culture);
                     Rabatt = position.Rabatt.Equals(0m) ? string.Empty : position.Rabatt.ToString(culture);
-                    Gesamtpreis = position.Gesamtpreis.ToString(culture);
-                    Einzelpreis = (position.Einzelpreis + position.Farbzuschlag).ToString(culture);
+                    Gesamtpreis = position.Gesamtpreis.ToString("N2", culture);
+                    Einzelpreis = (position.Einzelpreis + position.Farbzuschlag).ToString("N2", culture);
                 }
             }
         }
