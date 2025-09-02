@@ -67,8 +67,12 @@ public partial class LoginWindow_v2 : Window
         if (settings != null && await TestConnection(settings))
         {
             _webApiSettings.CopyToThis(settings);
-            DialogResult = true;
-            Close();
+
+            if (IsLoaded && IsVisible)
+            {
+                DialogResult = true;
+                Close();
+            }
 
             L.Diagnose($"Connected to backend URL: {settings.Url}");
         }
@@ -108,8 +112,11 @@ public partial class LoginWindow_v2 : Window
                 WebApiConfigurations.Save(_webApiSettings);
             }
 
-            DialogResult = true;
-            Close();
+            if (IsLoaded && IsVisible)
+            {
+                DialogResult = true;
+                Close();
+            }
 
             L.Diagnose($"Connected to backend URL: {_webApiSettings.Url}");
         }
