@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Client.Contracts.Flux;
@@ -15,6 +16,7 @@ public interface IFluxStore
     void HandleSync(IFluxAction action);
     Task Initialize();
     Task Clean();
+    IDictionary<string, Func<IFluxAction, Task>> HandlerMap { get; }
 }
 
 public interface IFluxStore<T> : IFluxStore
