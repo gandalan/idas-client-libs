@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.Client.Contracts.Flux;
 
 namespace Gandalan.IDAS.Client.Contracts.Flux;
 
