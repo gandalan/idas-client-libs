@@ -64,16 +64,16 @@ public interface IFluxConsumer
     /// <example>
     /// <![CDATA[
     /// // Example: configure the consumer's priority and handlers
-    /// Priority = 500; // run earlier than default (1000)
+    /// Priority = 1500; // run earlier than default (1000)
     ///
-    /// HandlerMap = new Dictionary<string, Func<IFluxAction, Task>>
+    /// ConsumerHandlerMap = new Dictionary<string, Func<IFluxStore, IFluxAction, Task>>
     /// {
     ///     { "set-uimachine-result", handleSetUiMachineResult },
-    ///     { "save-vorgang", action => SaveAsync(action) },
+    ///     { "save-vorgang", (store, action) => SaveAsync(store, action) },
     /// };
     /// ]]>
     /// </example>
-    IDictionary<string, Func<IFluxAction, Task>> HandlerMap { get; set; }
+    IDictionary<string, Func<IFluxStore, IFluxAction, Task>> ConsumerHandlerMap { get; set; }
 
 
     /// <summary>

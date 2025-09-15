@@ -7,7 +7,7 @@ namespace Gandalan.IDAS.Client.Contracts.Flux;
 
 public interface IFluxStore
 {
-    IDictionary<string, Func<IFluxAction, Task>> HandlerMap { get; }
+    IDictionary<string, Func<IFluxAction, Task>> StoreHandlerMap { get; }
     void AddTransientConsumer(IFluxConsumer newConsumer);
     void AddPersistentConsumer(IFluxConsumer newConsumer);
     void RemoveTransientConsumer(IFluxConsumer removeableConsumer);
