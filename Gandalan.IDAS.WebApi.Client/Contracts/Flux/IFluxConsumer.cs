@@ -16,7 +16,7 @@ public interface IFluxConsumer
     /// <remarks>
     /// <para>
     /// Ordering applies to transient consumers that are collected and invoked in ascending
-    /// <see cref="Priority"/> order. Persistent consumers are invoked in their registration order.
+    /// <see cref="ConsumerPriority"/> order. Persistent consumers are invoked in their registration order.
     /// </para>
     /// <para>
     /// Priority influences only the notification ordering within a single store dispatch; it does not
@@ -27,7 +27,7 @@ public interface IFluxConsumer
     /// non-critical or UI-related handlers.
     /// </para>
     /// </remarks>
-    int Priority { get; }
+    int ConsumerPriority { get; }
 
     /// <summary>
     /// Maps action verbs to asynchronous handler functions that process those actions.
