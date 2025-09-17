@@ -94,4 +94,19 @@ public interface IFluxConsumer
     /// </para>
     /// </remarks>
     IFluxStore[] RegisteredFluxStores { get; }
+
+    /// <summary>
+    /// Provides a store-level fallback handler that is invoked when no verb-specific handler
+    /// is found in <see cref="FluxConsumerHandlerMap"/>.
+    /// Use this to observe all actions dispatched to a particular store without registering
+    /// each verb explicitly.
+    /// If set, this handler will receive every action for the store, including future verbs
+    /// not yet mapped, ensuring no dispatched action is missed.
+    /// Prefer configuring explicit handlers in <see cref="FluxConsumerHandlerMap"/> when you
+    /// only need to react to specific verbs.
+    ///
+    /// The preferred way is to use the <see cref="FluxConsumerHandlerMap"/> to map verbs to
+    /// handlers.
+    /// </summary>
+    Func<IFluxStore, IFluxAction, Task> FallbackHandler { get; set; }
 }
