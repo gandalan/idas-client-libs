@@ -14,6 +14,8 @@ public class FarbGruppeDTO
     public DateTime ChangedDate { get; set; }
     public int Reihenfolge { get; set; }
 
+    public bool IstGesperrt { get; set; }
+
     public IList<Guid> FarbItemGuids { get; set; }
     public IList<Guid> OberflaecheGuids { get; set; }
 
