@@ -27,5 +27,5 @@ public class LieferzusageWebRoutinen(IWebApiConfig settings) : WebRoutinenBase(s
         => await DeleteAsync<string>("Lieferzusage/DeleteLieferzusagen", lieferzusagenGuids);
 
     public async Task ResetZusagenBySerieAsync(Guid serieGuid, string lieferant = "")
-        => await DeleteAsync($"Lieferzusage/DeleteLieferzusagenBySerie/{serieGuid}/{lieferant}");
+        => await DeleteAsync($"Lieferzusage/DeleteLieferzusagenBySerie/?serieGuid={serieGuid}&lieferant={lieferant}");
 }
