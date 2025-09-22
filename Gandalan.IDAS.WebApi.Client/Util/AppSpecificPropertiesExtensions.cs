@@ -4,7 +4,7 @@ using System.Globalization;
 namespace Gandalan.IDAS.WebApi.Util;
 
 /// <summary>
-/// HandleStoreAction the ApplicationSpecificProperties of a DTO.
+/// Handle the ApplicationSpecificProperties of a DTO.
 /// Includes methods to manage subobjects and key/value pairs, both from the generic "settings" subobject
 /// as well as any other subojects of an application.
 ///
