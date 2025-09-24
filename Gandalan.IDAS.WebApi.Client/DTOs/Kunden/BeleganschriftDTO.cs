@@ -6,7 +6,7 @@ using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class BeleganschriftDTO : IDTOWithApplicationSpecificProperties, INotifyPropertyChanged
+public class BeleganschriftDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties, INotifyPropertyChanged
 {
     public Guid AdressGuid { get; set; }
 
@@ -139,10 +139,12 @@ public class BeleganschriftDTO : IDTOWithApplicationSpecificProperties, INotifyP
     /// Intern
     /// </summary>
     public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
 
     public BeleganschriftDTO()
     {
         ApplicationSpecificProperties = [];
+        AdditionalProperties = [];
         Art = "BelegAdresse";
         AdressGuid = Guid.NewGuid();
     }
@@ -208,5 +210,6 @@ public class BeleganschriftDTO : IDTOWithApplicationSpecificProperties, INotifyP
     /// Erzeugt einen Text aus den Namensfeldern für die Anzeige in
     /// Überschriften, Anschriftenfeldern usw.
     /// </summary>
-    public string AnzeigeName => string.IsNullOrEmpty(Firmenname) ? $"{Anrede} {Titel} {Vorname} {Nachname}".Trim() : Firmenname;
+    public string AnzeigeName =>
+        string.IsNullOrEmpty(Firmenname) ? $"{Anrede} {Titel} {Vorname} {Nachname}".Trim() : Firmenname;
 }
