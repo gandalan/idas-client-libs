@@ -115,7 +115,7 @@ public class BelegDruckDTO
 
             if (preiseAnzeigen)
             {
-                var saldenSorted = beleg.Salden.Where(s => s.Betrag != 0 || s.SaldenStatus == "AufAnfrage").OrderBy(i => i.Reihenfolge);
+                var saldenSorted = beleg.Salden.OrderBy(i => i.Reihenfolge);
                 var aufAnfrage = false;
 #pragma warning disable CS0618 // Suppress the warning for obsolete code
                 if (saldenSorted.AnyOptimized())
