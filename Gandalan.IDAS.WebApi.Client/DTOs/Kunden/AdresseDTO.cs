@@ -4,7 +4,7 @@ using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class AdresseDTO : IDTOWithApplicationSpecificProperties
+public class AdresseDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties
 {
     public Guid AdressGuid { get; set; }
 
@@ -122,4 +122,6 @@ public class AdresseDTO : IDTOWithApplicationSpecificProperties
     /// Intern
     /// </summary>
     public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
 }

@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class BelegDTO : IDTOWithApplicationSpecificProperties, INotifyPropertyChanged
+public class BelegDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties, INotifyPropertyChanged
 {
     public Guid BelegGuid { get; set; }
     public string BelegArt { get; set; }
@@ -37,6 +37,7 @@ public class BelegDTO : IDTOWithApplicationSpecificProperties, INotifyPropertyCh
     public virtual IList<BelegSaldoDTO> Salden { get; set; }
     public IList<BelegHistorieDTO> Historie { get; set; }
     public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
 
     [JsonIgnore]
     public ObservableCollection<BelegPositionDTO> PositionsObjekte { get; set; }

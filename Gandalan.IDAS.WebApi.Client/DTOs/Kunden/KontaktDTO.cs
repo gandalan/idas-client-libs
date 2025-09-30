@@ -6,7 +6,7 @@ using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class KontaktDTO : IDTOWithApplicationSpecificProperties, INotifyPropertyChanged
+public class KontaktDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties, INotifyPropertyChanged
 {
     /// <summary>
     /// Eindeutige GUID
@@ -214,6 +214,7 @@ public class KontaktDTO : IDTOWithApplicationSpecificProperties, INotifyProperty
     /// Intern
     /// </summary>
     public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
 
     public Guid KontaktMandantGuid { get; set; }
     public bool KontaktMandantIstAktiv { get; set; }

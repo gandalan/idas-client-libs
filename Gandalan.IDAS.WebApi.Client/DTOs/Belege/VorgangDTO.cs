@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class VorgangDTO : IDTOWithApplicationSpecificProperties, INotifyPropertyChanged
+public class VorgangDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties, INotifyPropertyChanged
 {
     /// <summary>
     /// Eindeutige GUID
@@ -87,6 +87,7 @@ public class VorgangDTO : IDTOWithApplicationSpecificProperties, INotifyProperty
     public decimal WaehrungsFaktor { get; set; }
     public bool IstBrutto { get; set; }
     public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
     public bool IstZustimmungErteilt { get; set; }
 
     public string InterneNotiz { get; set; }

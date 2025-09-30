@@ -6,7 +6,7 @@ using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class BelegPositionDTO : IDTOWithApplicationSpecificProperties
+public class BelegPositionDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties
 {
     public Guid BelegPositionGuid { get; set; }
     public Guid NachfolgeBelegPositionGuid { get; set; }
@@ -59,6 +59,7 @@ public class BelegPositionDTO : IDTOWithApplicationSpecificProperties
     public bool IstBruttoGesamtpreis { get; set; }
     public bool IstBruttoEinzelpreis { get; set; }
     public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
     public bool IstSonderfarbPosition { get; set; }
     public decimal Farbzuschlag { get; set; }
     public bool IstFarbzuschlagManuell { get; set; }
