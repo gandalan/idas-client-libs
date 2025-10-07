@@ -6,7 +6,7 @@ namespace Gandalan.Client.Contracts.DataServices;
 
 public interface ISettingsService
 {
-    Task<T> Load<T>();
+    Task<T> Load<T>() where T : new();
     Task<T> LoadOrDefault<T>();
     Task Load<T>(T settingsObject);
     Task Save<T>(T settingsObject);
