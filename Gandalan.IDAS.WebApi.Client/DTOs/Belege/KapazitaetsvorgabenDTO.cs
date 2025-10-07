@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -368,6 +369,21 @@ public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
                 Zeitvorgabe = 5,
                 Order = Count
             });
+        }
+
+        if (Version < 5)
+        {
+            Version = 5;
+            var order = this.FirstOrDefault(g => g.GroupName == "Plissee PL2");
+            if (order != null)
+            {
+                IndexOf(order);
+                InsertItem(IndexOf(order) + 1, new Kapazitaetsvorgabe { GroupName = "Plissee PL3", Label = "1 flg. mit Montagerahmen", Produktgruppe = ["PL3"], IstBasisregel = true, Order = order.Order, Zeitvorgabe = 55 });
+            }
+            else
+            {
+                Add(new Kapazitaetsvorgabe { GroupName = "Plissee PL3", Label = "1 flg. mit Montagerahmen", Produktgruppe = ["PL3"], IstBasisregel = true, Order = Count, Zeitvorgabe = 55 });
+            }
         }
     }
 }
