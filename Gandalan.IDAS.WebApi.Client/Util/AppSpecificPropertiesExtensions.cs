@@ -1,5 +1,4 @@
-using System;
-using System.Globalization;
+using Gandalan.IDAS.WebApi.Client.Util;
 
 namespace Gandalan.IDAS.WebApi.Util;
 
@@ -129,30 +128,7 @@ public static class AppSpecificPropertiesExtensions
     /// <param name="value">value to write</param>
     public static void SetProperty<T>(this IDTOWithApplicationSpecificProperties dto, string subObjectName, string key, T value)
     {
-        var properties = dto.ApplicationSpecificProperties;
-
-        //prüfen ob es überhaupt schon properties gibt
-        if (properties == null) //noch kein Objekt für die properties
-        {
-            properties = dto.ApplicationSpecificProperties = [];
-        }
-
-        //prüfen ob es überhaupt properties gibt und auch ob es einen für settings gibt
-        if (!properties.TryGetValue(subObjectName, out var subObj)) //wenn keine properties vorhanden oder noch keine settings da, dann schreiben wir das neue property
-        {
-            subObj = ([]);
-            properties.Add(subObjectName, subObj);
-        }
-
-        //prüfen ob es favorite schon gibt, falls nicht fügen wir es hinzu
-        if (!subObj.ContainsKey(key))
-        {
-            subObj.Add(key, value);
-        }
-        else
-        {
-            subObj[key] = value;
-        }
+        dto.ApplicationSpecificProperties.SetProperty(subObjectName, key, value);
     }
 
     /// <summary>
@@ -166,21 +142,9 @@ public static class AppSpecificPropertiesExtensions
     /// <returns></returns>
     public static T GetProperty<T>(this IDTOWithApplicationSpecificProperties dto, string subObjectName, string key, T defaultValue = default)
     {
-        var properties = dto?.ApplicationSpecificProperties;
-        if (properties == null || properties.Count == 0 || !properties.TryGetValue(subObjectName, out var subObj) || !subObj.ContainsKey(key))
-        {
-            return defaultValue;
-        }
-
-        // to avoid InvalidCastException in Convert.ChangeType we need to change to the underlying type of nullable types
-        var underlyingT = Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T);
-        // if the property value is null => defaultValue
-        // else change type to underlying type
-        var value = properties[subObjectName][key] == null
-            ? defaultValue
-            : Convert.ChangeType(properties[subObjectName][key], underlyingT, CultureInfo.InvariantCulture);
-        // back to the original type
-        return (T)value;
+        return dto?.ApplicationSpecificProperties != null
+            ? dto.ApplicationSpecificProperties.GetProperty(subObjectName, key, defaultValue)
+            : defaultValue;
     }
 
     /// <summary>
@@ -191,13 +155,7 @@ public static class AppSpecificPropertiesExtensions
     /// <returns></returns>
     public static PropertyValueCollection GetSubObject(this IDTOWithApplicationSpecificProperties dto, string subObjectName)
     {
-        var properties = dto.ApplicationSpecificProperties;
-        if (properties == null || properties.Count == 0 || !properties.TryGetValue(subObjectName, out var subObject))
-        {
-            return null;
-        }
-
-        return subObject;
+        return dto.ApplicationSpecificProperties.GetSubObject(subObjectName);
     }
 
     /// <summary>
@@ -208,13 +166,6 @@ public static class AppSpecificPropertiesExtensions
     /// <param name="subObject">subobject data</param>
     public static void SetSubObject(this IDTOWithApplicationSpecificProperties dto, string subObjectName, PropertyValueCollection subObject)
     {
-        var properties = dto.ApplicationSpecificProperties;
-        if (properties == null) //noch kein Objekt für die properties
-        {
-            properties = dto.ApplicationSpecificProperties = [];
-        }
-
-        properties[subObjectName] = subObject;
+        dto.ApplicationSpecificProperties.SetSubObject(subObjectName, subObject);
     }
 }
-
