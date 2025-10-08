@@ -5,7 +5,7 @@ using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class ZusatzanschriftDTO : IDTOWithApplicationSpecificProperties, INotifyPropertyChanged
+public class ZusatzanschriftDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties, INotifyPropertyChanged
 {
     public Guid ZusatzanschriftGuid { get; set; }
 
@@ -105,6 +105,7 @@ public class ZusatzanschriftDTO : IDTOWithApplicationSpecificProperties, INotify
     /// Intern
     /// </summary>
     public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
 
     /// <summary>
     /// Inaktiv Kennzeichen
@@ -114,6 +115,7 @@ public class ZusatzanschriftDTO : IDTOWithApplicationSpecificProperties, INotify
     public ZusatzanschriftDTO()
     {
         ApplicationSpecificProperties = [];
+        AdditionalProperties = [];
         ZusatzanschriftGuid = Guid.NewGuid();
     }
 

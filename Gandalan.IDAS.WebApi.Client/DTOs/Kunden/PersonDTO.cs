@@ -4,7 +4,7 @@ using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class PersonDTO : IDTOWithApplicationSpecificProperties
+public class PersonDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties
 {
     /// <summary>
     /// Eindeutige GUID
@@ -36,7 +36,9 @@ public class PersonDTO : IDTOWithApplicationSpecificProperties
     public string Mailadresse { get; set; }
     public string Telefonnummer { get; set; }
     public string MobileTelefonnummer { get; set; }
+
     public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
 
     /// <summary>
     /// Inaktiv Kennzeichen

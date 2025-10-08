@@ -4,7 +4,7 @@ using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class BelegSaldoDTO : IDTOWithApplicationSpecificProperties
+public class BelegSaldoDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties
 {
     public Guid BelegSaldoGuid { get; set; }
     public int Reihenfolge { get; set; }
@@ -63,4 +63,5 @@ public class BelegSaldoDTO : IDTOWithApplicationSpecificProperties
     public string TemplateText { get; set; }
 
     public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
 }
