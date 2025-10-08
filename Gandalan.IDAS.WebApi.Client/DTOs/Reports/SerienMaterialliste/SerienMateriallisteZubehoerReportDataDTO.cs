@@ -16,4 +16,5 @@ public class SerienMateriallisteZubehoerReportDataDTO
     public string OberflaecheBezeichnung { get; set; }
     public decimal VE_Menge { get; set; }
     public decimal Artikel_VE_Menge { get; set; }
+    public string SerieKuerzel { get; set; }
 }
