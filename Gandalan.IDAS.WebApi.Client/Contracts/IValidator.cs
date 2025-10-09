@@ -19,6 +19,7 @@ public interface IValidator
 public interface IValidator<T> : IValidator
 {
     void Monitor(T data);
+    void StopMonitoring();
     void Validate(T model);
 }
 
@@ -40,6 +41,10 @@ public sealed class NullValidator<T> : IValidator<T>
     }
 
     public void Monitor(T data)
+    {
+    }
+
+    public void StopMonitoring()
     {
     }
 
