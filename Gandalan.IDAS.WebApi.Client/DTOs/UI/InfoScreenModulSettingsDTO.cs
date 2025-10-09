@@ -8,10 +8,8 @@ namespace Gandalan.IDAS.WebApi.DTO;
 /// DTO zur Ablage der Einstellungen einzelner InfoScreen Module innerhalb eines InfoScreens.
 /// Modulspezifische Einstellungen werden in den ApplicationSpecificProperties abgelegt.
 /// </summary>
-public class InfoScreenModulSettingsDTO : IDTOWithApplicationSpecificProperties
+public class InfoScreenModulSettingsDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties
 {
-    public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
-
     public Guid ModuleGuid { get; set; }
 
     public InfoScreenInitTypeDTO InitType { get; set; }
@@ -21,4 +19,7 @@ public class InfoScreenModulSettingsDTO : IDTOWithApplicationSpecificProperties
     public bool NeedsInit { get; set; }
 
     public bool IsValid { get; set; }
+
+    public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
 }
