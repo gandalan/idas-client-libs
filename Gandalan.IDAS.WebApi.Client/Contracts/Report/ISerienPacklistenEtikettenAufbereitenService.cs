@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Gandalan.IDAS.WebApi.Client.Contracts.Settings;
 using Gandalan.IDAS.WebApi.Data.DTOs.Reports;
 using Gandalan.IDAS.WebApi.DTO;
 
