@@ -10,4 +10,5 @@ public interface IReportAuswahlResult
     string FileName { get; set; }
     int Copies { get; set; }
     string Watermark { get; set; }
+    bool ShowSerienName { get; set; }
 }

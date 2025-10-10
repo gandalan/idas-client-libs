@@ -28,4 +28,5 @@ public class ProduktionsLieferscheinData
     public List<ProduktionsLieferscheinPositionData> Positionen { get; set; } = [];
     public List<ProduktionsLieferscheinPositionData> Artikel { get; set; } = [];
     public List<ProduktionsLieferscheinPacklisteData> Packliste { get; set; } = [];
+    public string SerieKuerzel { get; set; }
 }

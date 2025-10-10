@@ -127,7 +127,10 @@ public class ReportExecuteSettings
             PrinterName = result.PrinterName,
             FileName = result.FileName,
             Copies = result.Copies,
-            Watermark = result.Watermark
+            Watermark = result.Watermark,
+            ShowSerienName = result.ShowSerienName,
         };
     }
+
+    public bool ShowSerienName { get; set; }
 }
