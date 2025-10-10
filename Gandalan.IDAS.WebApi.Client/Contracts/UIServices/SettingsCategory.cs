@@ -2,9 +2,9 @@ namespace Gandalan.Client.Contracts.UIServices;
 
 public enum SettingsCategory
 {
-    Produktion,
     Sachbearbeitung,
     Materialbedarf,
+    Produktion,
     Programmeinstellungen,
     Kundenmodul
 }
