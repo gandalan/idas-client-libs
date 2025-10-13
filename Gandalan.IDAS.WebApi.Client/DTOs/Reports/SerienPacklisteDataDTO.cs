@@ -7,4 +7,5 @@ public class SerienPacklisteDataDTO
     public string Titel { get; set; }
     public string Serienkennzeichen { get; set; }
     public List<SerienPacklisteGruppeDataDTO> VorgangsGruppen { get; set; } = [];
+    public string SerienKuerzel { get; set; }
 }

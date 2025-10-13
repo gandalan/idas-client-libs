@@ -10,4 +10,5 @@ public class SerienMateriallisteZuschnittGroupReportDataDTO
     public string Farbe { get; set; }
     public string ProduktionsFarbText { get; set; }
     public List<SerienMateriallisteZuschnittReportDataDTO> ZuschnittItems { get; set; }
+    public string SerieKuerzel { get; set; }
 }

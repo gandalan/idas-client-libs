@@ -10,4 +10,5 @@ public class SerienSaegelisteDataDTO
     public bool EtikettenZugehoerigkeit { get; set; }
     public string Zeitvorgabe { get; set; }
     public List<SerienSaegelisteProfilgruppeDataDTO> Profilgruppen { get; set; } = [];
+    public string SerienKuerzel { get; set; }
 }
