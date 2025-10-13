@@ -17,4 +17,7 @@ public class BelegPositionenWebRoutinen : WebRoutinenBase
 
     public async Task<VorgangDTO> GetVorgangForFunctionAsync(Guid belegPositionGuid, long mandantId)
         => await GetAsync<VorgangDTO>($"BelegPositionen/GetVorgangForFunction?belegPositionGuid={belegPositionGuid}&mandantId={mandantId}");
+
+    public async Task<List<BelegPositionDTO>> GetBelegPositionenFromGuidList(List<Guid> belegPositionGuidList)
+        => await PostAsync<List<BelegPositionDTO>>($"BelegPositionen/GetByGuidList", belegPositionGuidList);
 }
