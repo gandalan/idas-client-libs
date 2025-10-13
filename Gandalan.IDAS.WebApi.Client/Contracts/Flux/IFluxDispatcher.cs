@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.Client.Contracts.Flux;
 
 public interface IFluxDispatcher
 {
-    Task DispatchAsyncNew(IFluxAction action);
-    void DispatchSyncNew(IFluxAction action);
-    Task DispatchToConsumersAsync(IFluxStore sender, IFluxAction action);
+    void RegisterStore(IFluxStore store);
+    void RegisterStore(IFluxStore store, params string[] verbs);
+    void UnregisterStore(IFluxStore store);
+    Task DispatchStoreEventAsync(IFluxAction action);
+    void DispatchStoreEvent(IFluxAction action);
 }
