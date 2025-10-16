@@ -14,7 +14,11 @@ public interface IApplicationConfig
     string StandardReportsDir { get; }
     string StandardReportsDevDir { get; }
     string AddOnDir { get; }
+    string OldCacheDir { get; }
     string CacheDir { get; }
+    string UserFolderDir { get; }
+    string OldUserFolderDir { get; }
+    string OldUserSettingsDir { get; }
     string UserSettingsDir { get; }
     string AppSettingsDir { get; }
     bool DeveloperModeEnabled { get; }
