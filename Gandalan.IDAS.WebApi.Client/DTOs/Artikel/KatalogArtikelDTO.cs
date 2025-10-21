@@ -36,6 +36,7 @@ public class KatalogArtikelDTO : IWithGueltigkeitsZeitraum
     public bool NichtRabattfaehig { get; set; }
     public bool IstEKPArtikel { get; set; }
     public bool IstGewebeArtikel { get; set; }
+    public bool IstSaegbar { get; set; }
     public decimal GewichtInKg { get; set; } // Gewicht pro Mengeneinheit
     public Guid MaterialGuid { get; set; }
     public IList<KatalogArtikelFarbZuordnungDTO> MoeglicheFarben { get; set; }
