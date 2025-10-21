@@ -128,7 +128,14 @@ public static class AppSpecificPropertiesExtensions
     /// <param name="value">value to write</param>
     public static void SetProperty<T>(this IDTOWithApplicationSpecificProperties dto, string subObjectName, string key, T value)
     {
-        dto.ApplicationSpecificProperties.SetProperty(subObjectName, key, value);
+        var properties = dto.ApplicationSpecificProperties;
+
+        if (properties == null)
+        {
+            properties = dto.ApplicationSpecificProperties = [];
+        }
+
+        properties.SetProperty(subObjectName, key, value);
     }
 
     /// <summary>
