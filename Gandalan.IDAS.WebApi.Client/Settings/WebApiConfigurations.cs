@@ -12,33 +12,36 @@ namespace Gandalan.IDAS.WebApi.Client.Settings;
 
 public static class WebApiConfigurations
 {
-    private static readonly string[] _environments = ["dev", "staging", "produktiv"];
     private static string _settingsPath;
     private static Dictionary<string, IWebApiConfig> _settings;
     private static string _appTokenString;
     private static bool _isInitialized;
 
-    public static void Initialize(Guid appToken)
+    public static void Initialize(string stage, Guid appToken)
     {
         _settings = new Dictionary<string, IWebApiConfig>(StringComparer.OrdinalIgnoreCase);
         _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
         _appTokenString = appToken.ToString().Trim('{', '}');
 
-        setupEnvironmentsAsync(appToken).Wait();
+        setupEnvironmentAsync(stage, appToken).Wait();
+#if DEBUG
         setupLocalEnvironment(appToken);
+#endif
 
         _isInitialized = true;
 
     }
 
-    public static async Task InitializeAsync(Guid appToken)
+    public static async Task InitializeAsync(string stage, Guid appToken)
     {
         _settings = new Dictionary<string, IWebApiConfig>(StringComparer.OrdinalIgnoreCase);
         _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
         _appTokenString = appToken.ToString().Trim('{', '}');
 
-        await setupEnvironmentsAsync(appToken);
+        await setupEnvironmentAsync(stage, appToken);
+#if DEBUG
         setupLocalEnvironment(appToken);
+#endif
 
         _isInitialized = true;
     }
@@ -130,43 +133,42 @@ public static class WebApiConfigurations
         }
     }
 
-    private static async Task setupEnvironmentsAsync(Guid appToken)
+    private static async Task setupEnvironmentAsync(string stage, Guid appToken)
     {
         var hub = new ConnectHub();
-        foreach (var env in _environments)
-        {
-            var response = await hub.GetEndpointsAsync("2.1", env, "win");
-            IWebApiConfig environment = null;
-            if (response != null)
-            {
-                environment = new WebApiSettings
-                {
-                    Url = response.IDAS,
-                    IDASUrl = response.IDAS,
-                    CMSUrl = response.CMS,
-                    DocUrl = response.Docs,
-                    FeedbackUrl = response.Feedback,
-                    NotifyUrl = response.Notify,
-                    HelpCenterUrl = response.HelpCenter,
-                    StoreUrl = response.Store,
-                    WebhookServiceUrl = response.WebhookService,
-                    TranslateUrl = response.Translate,
-                    FriendlyName = env,
-                    AppToken = appToken
-                };
-                internalLoadSavedAuthToken(env, environment);
-            }
 
-            if (environment != null)
+        var response = await hub.GetEndpointsAsync("2.1", stage, "win");
+        IWebApiConfig environment = null;
+        if (response != null)
+        {
+            environment = new WebApiSettings
             {
-                _settings.Add(env, environment);
-            }
+                Url = response.IDAS,
+                IDASUrl = response.IDAS,
+                CMSUrl = response.CMS,
+                DocUrl = response.Docs,
+                FeedbackUrl = response.Feedback,
+                NotifyUrl = response.Notify,
+                HelpCenterUrl = response.HelpCenter,
+                StoreUrl = response.Store,
+                WebhookServiceUrl = response.WebhookService,
+                TranslateUrl = response.Translate,
+                FriendlyName = stage,
+                AppToken = appToken
+            };
+            internalLoadSavedAuthToken(stage, environment);
+        }
+
+        if (environment != null)
+        {
+            _settings.Add(stage, environment);
         }
     }
 
     private static void internalLoadSavedAuthToken(string env, IWebApiConfig environment)
     {
         var savedAuthToken = internalLoadSavedAuthToken(env);
+
         if (savedAuthToken != null)
         {
             environment.AuthToken = new UserAuthTokenDTO
@@ -185,14 +187,16 @@ public static class WebApiConfigurations
     private static SavedAuthToken internalLoadSavedAuthToken(string env)
     {
         var configFile = Path.Combine(_settingsPath, env, $"AuthToken_{_appTokenString}.json");
+
         if (File.Exists(configFile))
         {
             try
             {
                 return JsonConvert.DeserializeObject<SavedAuthToken>(File.ReadAllText(configFile));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                L.Info(ex.Message);
                 // damaged file, ignore saved token
             }
         }
