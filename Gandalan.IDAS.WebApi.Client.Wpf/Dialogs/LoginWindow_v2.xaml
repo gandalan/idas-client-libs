@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Gandalan.IDAS.WebApi.Client.Wpf.Dialogs"
         xmlns:controls="clr-namespace:Gandalan.IDAS.WebApi.Client.Wpf.Controls"
         mc:Ignorable="d"
         Title="Neher Cloud - Anmeldung" Height="650" Width="500"
@@ -40,10 +39,9 @@
             <Label FontSize="20" VerticalAlignment="Center" Padding="20,0,0,0">Neher Cloud - Anmeldung</Label>
         </StackPanel>
         <Grid Margin="0,0,0,20">
-            <ProgressBar IsIndeterminate="True" Margin="40,0" Panel.ZIndex="1" Visibility="{Binding LoginInProgress, Converter={StaticResource BoolToVis}}"/>
-            <TextBlock Text="{Binding StatusText}" FontWeight="Bold" Foreground="Red" TextWrapping="Wrap" Margin="40,0" Panel.ZIndex="2" Visibility="{Binding StatusTextvorhanden, Converter={StaticResource BoolToVis}}" MaxHeight="70px"/>
+            <ProgressBar IsIndeterminate="True" Margin="40,0" Panel.ZIndex="1" Visibility="{Binding LoginInProgress, Converter={StaticResource BoolToVis}}" />
+            <TextBlock Text="{Binding StatusText}" FontWeight="Bold" Foreground="Red" TextWrapping="Wrap" Margin="40,0" Panel.ZIndex="2" Visibility="{Binding StatusTextvorhanden, Converter={StaticResource BoolToVis}}" MaxHeight="70px" />
         </Grid>
-        <!--<Label Content="{Binding StatusText}" Margin="40,0" FontWeight="Bold" Foreground="Red" ToolTip="{Binding StatusText}"></Label>-->
         <StackPanel Visibility="{Binding ShowLoggedInEnvironments, Converter={StaticResource BoolToVis}}" Margin="40,0,40,0">
             <Label>Benutzer auswählen:</Label>
             <ItemsControl ItemsSource="{Binding LoggedInEnvironments}">
@@ -112,7 +110,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Content="Anmelden" Margin="5,0" IsDefault="True" Click="anmeldenButtonClick" />
-                    <Button Grid.Column="1" Content="Abbrechen"  Margin="5,0"  IsCancel="True" Click="abbrechenButton_Click" />
+                    <Button Grid.Column="1" Content="Abbrechen" Margin="5,0" IsCancel="True" Click="abbrechenButton_Click" />
 
                     <Button Grid.Column="3" Margin="10,0,0,0" Content="..." Style="{StaticResource ResourceKey=ContextButton}">
                         <Button.ContextMenu>
@@ -123,20 +121,6 @@
                         </Button.ContextMenu>
                     </Button>
                 </Grid>
-
-                <!--<StackPanel Grid.Column="1" Grid.Row="5"  Orientation="Horizontal" Margin="0,10,0,0">
-                    <Button Content="Anmelden"  IsDefault="True" Click="anmeldenButtonClick"  Margin="5" Padding="5"/>
-                    <Button Content="Abbrechen" IsCancel="True" Click="abbrechenButton_Click"  Margin="5" Padding="5"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="1" Grid.Row="6"  Orientation="Horizontal" Margin="0,0,0,0">
-                    <Button BorderThickness="0" Background="Transparent" Padding="0" Click="pwResetButton_Click" Margin="5">
-                        <TextBlock><Run TextDecorations="Underline" Foreground="Blue">Passwort vergessen</Run></TextBlock>
-                    </Button>
-                    <Button BorderThickness="0" Background="Transparent" Padding="0" Click="einrichtenButton_Click" Margin="5">
-                        <TextBlock><Run TextDecorations="Underline" Foreground="Blue">Produzent einrichten...</Run></TextBlock>
-                    </Button>
-                </StackPanel>-->
             </Grid>
         </StackPanel>
         <Button Click="switchToLoginFields" Margin="40" Visibility="{Binding ShowLoggedInEnvironments, Converter={StaticResource BoolToVis}}" Padding="15">
@@ -145,5 +129,6 @@
                 <TextBlock VerticalAlignment="Center" Margin="15,0,0,0">Anderen Benutzer verwenden</TextBlock>
             </StackPanel>
         </Button>
+        <Label Margin="40, 0" FlowDirection="RightToLeft" Visibility="{Binding ShowServerSelection, Converter={StaticResource InvertBool}}" Content="{Binding ServerEnvironment.FriendlyName, Mode=OneWay, StringFormat=Umgebung: {0}}" />
     </StackPanel>
 </Window>
