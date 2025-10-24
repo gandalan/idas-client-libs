@@ -6,12 +6,8 @@ using Gandalan.IDAS.WebApi.Data.DTOs.Produktion;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
 
-public class LieferzusageWebRoutinen : WebRoutinenBase
+public class LieferzusageWebRoutinen(IWebApiConfig settings) : WebRoutinenBase(settings)
 {
-    public LieferzusageWebRoutinen(IWebApiConfig settings) : base(settings)
-    {
-    }
-
     public async Task<List<LieferzusageDTO>> GetAllZusagenAsync(Guid serie, string lieferant = "")
         => await GetAsync<List<LieferzusageDTO>>($"Lieferzusage/?serieGuid={serie}&lieferant={lieferant}");
 
@@ -21,6 +17,15 @@ public class LieferzusageWebRoutinen : WebRoutinenBase
     public async Task<string> MaterialZusagenAsync(LieferzusageDTO lieferzusage)
         => await PostAsync<string>("Lieferzusage", lieferzusage);
 
+    public async Task<string> MaterialZusagenAsync(List<LieferzusageDTO> lieferzusagen)
+        => await PostAsync<string>("Lieferzusage/PutLieferzusagenListe", lieferzusagen);
+
     public async Task ResetZusageAsync(Guid lieferzusageGuid)
         => await DeleteAsync($"Lieferzusage?zusageGuid={lieferzusageGuid}");
+
+    public async Task<string> ResetZusagenAsync(List<Guid> lieferzusagenGuids)
+        => await DeleteAsync<string>("Lieferzusage/DeleteLieferzusagen", lieferzusagenGuids);
+
+    public async Task ResetZusagenBySerieAsync(Guid serieGuid, string lieferant = "")
+        => await DeleteAsync($"Lieferzusage/DeleteLieferzusagenBySerie/?serieGuid={serieGuid}&lieferant={lieferant}");
 }

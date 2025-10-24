@@ -28,31 +28,33 @@ public class WebApiSettings : IWebApiConfig
     [JsonIgnore]
     public string UserAgent { get; set; }
     [JsonIgnore]
-    public bool UseCompression { get; set; }
+    public bool UseCompression { get; set; } = true;
 
-    /// <summary>
-    /// CMSUrl für Dokumente
-    /// </summary>
+    /// <inheritdoc/>
+    public string IDASUrl { get; set; }
+
+    /// <inheritdoc/>
     public string DocUrl { get; set; }
 
-    /// <summary>
-    /// CMS für Variantenspez
-    /// </summary>
+    /// <inheritdoc/>
     public string CMSUrl { get; set; }
 
-    /// <summary>
-    /// Paket-Store
-    /// </summary>
+    /// <inheritdoc/>
     public string StoreUrl { get; set; }
 
-    /// <summary>
-    /// Feedback-Tool
-    /// </summary>
+    /// <inheritdoc/>
     public string FeedbackUrl { get; set; }
 
+    /// <inheritdoc/>
     public string NotifyUrl { get; set; }
+
+    /// <inheritdoc/>
     public string HelpCenterUrl { get; set; }
+
+    /// <inheritdoc/>
     public string WebhookServiceUrl { get; set; }
+
+    /// <inheritdoc/>
     public string TranslateUrl { get; set; }
 
     /// <remarks>
@@ -104,11 +106,13 @@ public class WebApiSettings : IWebApiConfig
         FriendlyName = settings.FriendlyName;
         Mandant = settings.Mandant;
         Passwort = settings.Passwort;
-        UserName = settings.UserName;
+        UserName = settings.UserName?.Trim().ToLower();
         InstallationId = settings.InstallationId;
         UserAgent = settings.UserAgent;
+        UseCompression = settings.UseCompression;
 
         Url = settings.Url;
+        IDASUrl = settings.IDASUrl;
         CMSUrl = settings.CMSUrl;
         DocUrl = settings.DocUrl;
         FeedbackUrl = settings.FeedbackUrl;

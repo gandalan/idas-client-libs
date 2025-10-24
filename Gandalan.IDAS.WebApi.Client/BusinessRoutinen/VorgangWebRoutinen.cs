@@ -44,8 +44,8 @@ public class VorgangWebRoutinen : WebRoutinenBase
     public async Task<VorgangDTO> SendeVorgangAsync(VorgangDTO vorgang)
         => await PutAsync<VorgangDTO>("Vorgang", vorgang);
 
-    public async Task<VorgangDTO> LadeVorgangAsync(Guid vorgangGuid, bool mitKunde)
-        => await GetAsync<VorgangDTO>($"Vorgang/{vorgangGuid}?includeKunde={mitKunde}");
+    public async Task<VorgangDTO> LadeVorgangAsync(Guid vorgangGuid, bool mitKunde, bool returnNullIfNotFound = false)
+        => await GetAsync<VorgangDTO>($"Vorgang/{vorgangGuid}?includeKunde={mitKunde}&returnNullIfNotFound={returnNullIfNotFound}");
 
     public async Task<VorgangDTO> LadeVorgangAsync(long vorgangsNummer, int jahr, bool mitKunde = false)
         => await GetAsync<VorgangDTO>($"Vorgang/{vorgangsNummer}/{jahr}?includeKunde={mitKunde}");

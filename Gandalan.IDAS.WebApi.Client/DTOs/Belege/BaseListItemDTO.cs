@@ -4,7 +4,7 @@ using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class BaseListItemDTO : IDTOWithApplicationSpecificProperties
+public class BaseListItemDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties
 {
     /// <summary>
     /// Eindeutige GUID des Vorgangs
@@ -40,4 +40,5 @@ public class BaseListItemDTO : IDTOWithApplicationSpecificProperties
     public int AnzahlNachrichten { get; set; }
 
     public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
 }

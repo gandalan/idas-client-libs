@@ -4,7 +4,7 @@ using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class VorgangListItemDTO : IDTOWithApplicationSpecificProperties
+public class VorgangListItemDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties
 {
     /// <summary>
     /// Eindeutige GUID
@@ -57,6 +57,11 @@ public class VorgangListItemDTO : IDTOWithApplicationSpecificProperties
     public string AktuelleBelegNummer { get; set; }
 
     /// <summary>
+    /// Aktuelle Rechnungsnummer
+    /// </summary>
+    public string AktuelleRechnungsNummer { get; set; }
+
+    /// <summary>
     /// Die GUID des aktuellen Beleges.
     /// </summary>
     public Guid AktuelleBelegGuid { get; set; }
@@ -82,6 +87,8 @@ public class VorgangListItemDTO : IDTOWithApplicationSpecificProperties
     public string URL { get; set; }
 
     public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
+
     public string Status { get; set; }
     public int AnzahlNachrichten { get; set; }
     public bool IsArchiv { get; set; }
@@ -111,4 +118,6 @@ public class VorgangListItemDTO : IDTOWithApplicationSpecificProperties
     public string RelatedGuids { get; set; }
 
     public Guid MandantGuid { get; set; }
+
+    public bool IstBerechnet { get; set; }
 }

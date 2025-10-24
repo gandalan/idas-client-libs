@@ -21,6 +21,12 @@ public class HistorieWebRoutinen : WebRoutinenBase
     public async Task<BelegPositionHistorienDTO> GetBelegPositionHistorieAsync(Guid positionGuid)
         => await GetAsync<BelegPositionHistorienDTO>($"HistorieBelegPosition?positionGuid={positionGuid}");
 
+    public async Task<List<SerieHistorieDTO>> GetSerieHistorieAsync(DateTime sinceWhen)
+        => await GetAsync<List<SerieHistorieDTO>>($"HistorieSerie?createdSince={sinceWhen:o}");
+
+    public async Task<List<SerieHistorieDTO>> GetSerieHistorieAsync(Guid serieGuid)
+        => await GetAsync<List<SerieHistorieDTO>>($"HistorieSerie?serieGuid={serieGuid}");
+
     public async Task AddVorgangHistorieAsync(Guid vorgangGuid, VorgangHistorieDTO historyDto)
         => await PostAsync($"HistorieVorgang?vorgangGuid={vorgangGuid}", historyDto);
 
@@ -30,11 +36,17 @@ public class HistorieWebRoutinen : WebRoutinenBase
     public async Task AddBelegPositionHistorieAsync(Guid positionGuid, BelegPositionHistorieDTO historyDto)
         => await PostAsync($"HistorieBelegPosition?positionGuid={positionGuid}", historyDto);
 
+    public async Task AddSerieHistorieAsync(SerieHistorieDTO historyDto)
+        => await PostAsync($"HistorieSerie", historyDto);
+
     public async Task AddVorgangHistorieFromFunctionAsync(Guid vorgangGuid, VorgangHistorieDTO historyDto, long mandantID)
         => await PostAsync($"AddVorgangHistorieFromFunction?vorgangGuid={vorgangGuid}&mandantID={mandantID}", historyDto);
 
     public async Task AddBelegPositionHistorieFromFunctionAsync(Guid positionGuid, BelegPositionHistorieDTO historyDto, long mandantID)
         => await PostAsync($"AddBelegPositionHistorieFromFunction?positionGuid={positionGuid}&mandantID={mandantID}", historyDto);
+
+    public async Task AddSerieHistorieFromFunctionAsync(SerieHistorieDTO historyDto, long mandantID)
+        => await PostAsync($"AddBelegPositionHistorieFromFunction?mandantID={mandantID}", historyDto);
 
     public async Task<string> GetLetzterBearbeiter(Guid belegGuid)
         => await GetAsync<string>($"HistorieBeleg/LetzterBearbeiter?belegGuid={belegGuid}");

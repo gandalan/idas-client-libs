@@ -115,7 +115,7 @@ public class BelegDruckDTO
 
             if (preiseAnzeigen)
             {
-                var saldenSorted = beleg.Salden.Where(s => s.Betrag != 0 || s.SaldenStatus == "AufAnfrage").OrderBy(i => i.Reihenfolge);
+                var saldenSorted = beleg.Salden.OrderBy(i => i.Reihenfolge);
                 var aufAnfrage = false;
 #pragma warning disable CS0618 // Suppress the warning for obsolete code
                 if (saldenSorted.AnyOptimized())
@@ -384,7 +384,7 @@ public class BelegPositionDruckDTO
             BelegPositionGuid = position.BelegPositionGuid;
             if (preiseAnzeigen)
             {
-                if (position.PreisAufAnfrage || position.IstFehlerhaft)
+                if (position.PreisAufAnfrage)
                 {
                     Rabatt = string.Empty;
                     Farbzuschlag = string.Empty;
@@ -397,8 +397,8 @@ public class BelegPositionDruckDTO
                     Farbzuschlag = position.Farbzuschlag.ToString(culture);
                     EinzelpreisOhneFarbzuschlag = position.Einzelpreis.ToString(culture);
                     Rabatt = position.Rabatt.Equals(0m) ? string.Empty : position.Rabatt.ToString(culture);
-                    Gesamtpreis = position.Gesamtpreis.ToString(culture);
-                    Einzelpreis = (position.Einzelpreis + position.Farbzuschlag).ToString(culture);
+                    Gesamtpreis = position.Gesamtpreis.ToString("N2", culture);
+                    Einzelpreis = (position.Einzelpreis + position.Farbzuschlag).ToString("N2", culture);
                 }
             }
         }

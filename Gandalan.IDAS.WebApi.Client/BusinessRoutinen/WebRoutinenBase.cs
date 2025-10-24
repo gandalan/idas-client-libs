@@ -89,7 +89,7 @@ public class WebRoutinenBase
         if (!skipAuth && !await LoginAsync())
         {
             var ex = new ApiUnauthorizedException("You are not authorized.");
-            ex.Data.Add("URL", url);
+            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
             ex.Data.Add("CallMethod", sender);
             throw ex;
         }
@@ -128,11 +128,6 @@ public class WebRoutinenBase
 
     protected virtual void OnErrorOccured(ApiErrorArgs e)
     {
-        if (e.StatusCode == HttpStatusCode.Unauthorized)
-        {
-            throw new ApiUnauthorizedException(Status = e.Message);
-        }
-
         ErrorOccured?.Invoke(this, e);
     }
 
@@ -240,8 +235,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -260,8 +255,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -278,8 +273,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -298,8 +293,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -318,8 +313,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -338,8 +333,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -358,8 +353,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -378,8 +373,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -396,8 +391,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -416,8 +411,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
             return null;
         }
     }
@@ -431,8 +426,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -451,8 +446,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -469,8 +464,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri, data);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri, data);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -487,8 +482,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var apiException = handleWebException(ex, uri);
-            tryHandleException(apiException);
+            var exception = handleWebException(ex, uri);
+            tryHandleException(exception);
         }
         catch (Exception e)
         {
@@ -523,8 +518,17 @@ public class WebRoutinenBase
 
         try
         {
+            var loginConfig = Settings;
+            //temporarily create new Settings if the base url is not the IDASUrl since the refresh can only happen on the IDAS backend
+            if (Settings.Url != Settings.IDASUrl)
+            {
+                loginConfig = new JwtWebApiSettings();
+                loginConfig.CopyToThis(Settings);
+                loginConfig.Url = Settings.IDASUrl;
+            }
+
             // refresh JWT using refresh token
-            var newJwt = await PutAsync<string>("/api/LoginJwt/Refresh", new { Token = refreshToken }, null, true);
+            var newJwt = await new WebRoutinenBase(loginConfig).PutAsync<string>("/api/LoginJwt/Refresh", new { Token = refreshToken }, null, true);
             if (_originalSettings is IJwtWebApiConfig jc)
             {
                 jc.JwtToken = newJwt;
@@ -612,6 +616,9 @@ public class WebRoutinenBase
     /// <exception cref="Exception">Throws <paramref name="exception"/>, if no <see cref="CustomExceptionHandler"/> handles the exception</exception>
     private void tryHandleException(Exception exception)
     {
+        exception.Data.Add("BenutzerGuid", AuthToken?.Benutzer?.BenutzerGuid);
+        exception.Data.Add("MandantGuid", AuthToken?.MandantGuid);
+
         L.Fehler(exception);
 
         if (!IgnoreOnErrorOccured)
@@ -626,15 +633,23 @@ public class WebRoutinenBase
         }
     }
 
-    private ApiException handleWebException(HttpRequestException ex, string url, [CallerMemberName] string sender = null)
+    private Exception handleWebException(HttpRequestException ex, string url, [CallerMemberName] string sender = null)
     {
         var exception = TranslateException(ex);
+        if (exception.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            return new ApiUnauthorizedException(Status = ex.Message);
+        }
         return internalHandleWebException(exception, url, sender);
     }
 
-    private ApiException handleWebException(HttpRequestException ex, string url, object data, [CallerMemberName] string sender = null)
+    private Exception handleWebException(HttpRequestException ex, string url, object data, [CallerMemberName] string sender = null)
     {
         var exception = TranslateException(ex, data);
+        if (exception.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            return new ApiUnauthorizedException(Status = ex.Message);
+        }
         return internalHandleWebException(exception, url, sender);
     }
 
@@ -668,7 +683,7 @@ public class WebRoutinenBase
 
         if (!foundUrlInData)
         {
-            exception.Data.Add("URL", url);
+            exception.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
             exception.Data.Add("CallMethod", sender);
             exception.Data.Add("StatusCode", exception.StatusCode);
             exception.Data.Add("Payload", exception.Payload);

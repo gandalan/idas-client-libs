@@ -308,9 +308,9 @@ public class RESTRoutinen : IDisposable
 
     #region private Methods
 
-    private static void AddInfoToException(Exception ex, string url, HttpResponseMessage response = null, string responseContent = null, [CallerMemberName] string sender = null)
+    private void AddInfoToException(Exception ex, string url, HttpResponseMessage response = null, string responseContent = null, [CallerMemberName] string sender = null)
     {
-        ex.Data.Add("URL", url);
+        ex.Data.Add("URL", new Uri(_client.BaseAddress, url).ToString());
         ex.Data.Add("CallMethod", sender);
         ex.Data.Add("StatusCode", response?.StatusCode ?? HttpStatusCode.InternalServerError);
         if (!string.IsNullOrWhiteSpace(responseContent))

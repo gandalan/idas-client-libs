@@ -67,8 +67,12 @@ public partial class LoginWindow_v2 : Window
         if (settings != null && await TestConnection(settings))
         {
             _webApiSettings.CopyToThis(settings);
-            DialogResult = true;
-            Close();
+
+            if (IsLoaded && IsVisible)
+            {
+                DialogResult = true;
+                Close();
+            }
 
             L.Diagnose($"Connected to backend URL: {settings.Url}");
         }
@@ -97,7 +101,7 @@ public partial class LoginWindow_v2 : Window
         // reflect change to env as from selected dropdown
         _webApiSettings.CopyToThis(_viewModel.ServerEnvironment);
         _webApiSettings.UserAgent = userAgent;
-        _webApiSettings.UserName = _viewModel.UserName;
+        _webApiSettings.UserName = _viewModel.UserName.Trim().ToLower();
         _webApiSettings.Passwort = passwordBox.Password;
         _webApiSettings.AuthToken = null;
 
@@ -108,8 +112,11 @@ public partial class LoginWindow_v2 : Window
                 WebApiConfigurations.Save(_webApiSettings);
             }
 
-            DialogResult = true;
-            Close();
+            if (IsLoaded && IsVisible)
+            {
+                DialogResult = true;
+                Close();
+            }
 
             L.Diagnose($"Connected to backend URL: {_webApiSettings.Url}");
         }
