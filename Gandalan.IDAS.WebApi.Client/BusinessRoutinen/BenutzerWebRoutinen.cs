@@ -27,8 +27,9 @@ public class BenutzerWebRoutinen : WebRoutinenBase
     public async Task PasswortResetAsync(string benutzerName) =>
         await GetAsync($"PasswortReset?email={Uri.EscapeDataString(benutzerName)}", true);
 
+    public async Task PasswortAendernAsync(PasswortAendernDTO passwortAendernData)
+        => await PostAsync("PasswortAendern", passwortAendernData);
+
     public async Task SICSyncWebJob()
-    {
-        await PostAsync("Benutzer/SICSyncWebJob", null);
-    }
+        => await PostAsync("Benutzer/SICSyncWebJob", null);
 }
