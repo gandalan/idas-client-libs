@@ -1,13 +1,5 @@
 namespace Gandalan.IDAS.WebApi.Client.Environments;
 
-public enum Stages
-{
-    Prod,
-    Test,
-    Dev,
-    Local
-}
-
 public static class Env
 {
 #if STAGE_DEV
