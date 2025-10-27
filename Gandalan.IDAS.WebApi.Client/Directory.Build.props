@@ -5,4 +5,26 @@
   <PropertyGroup>
       <LangVersion>latest</LangVersion>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <EnvStage>DEV</EnvStage>
+  </PropertyGroup>
+
+  <!-- Normalisieren -->
+  <PropertyGroup>
+    <EnvStageNormalized>$([System.String]::Copy('$(EnvStage)').ToUpperInvariant())</EnvStageNormalized>
+  </PropertyGroup>
+
+  <!-- Symbole ableiten -->
+  <PropertyGroup>
+    <DefineConstants Condition="'$(EnvStageNormalized)'=='DEV'">$(DefineConstants);STAGE_DEV</DefineConstants>
+    <DefineConstants Condition="'$(EnvStageNormalized)'=='TEST'">$(DefineConstants);STAGE_TEST</DefineConstants>
+    <DefineConstants Condition="'$(EnvStageNormalized)'=='PROD'">$(DefineConstants);STAGE_PROD</DefineConstants>
+  </PropertyGroup>
+  
+  <Target Name="ValidateStage" BeforeTargets="BeforeBuild">
+    <Message Importance="High" Text="EnvStage=$(EnvStage) (normalized=$(EnvStageNormalized)); DefineConstants=$(DefineConstants)" />
+    <Error Condition="$([System.String]::Copy('$(DefineConstants)').Contains('STAGE_')) == false"
+           Text="Keine STAGE_* in DefineConstants gesetzt. Bitte EnvStage (DEV/TEST/PROD/LOCAL) setzen." />
+  </Target>
 </Project>
