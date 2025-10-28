@@ -11,7 +11,7 @@ public interface ISettingsService
     Task Load<T>(T settingsObject);
     Task Save<T>(T settingsObject);
     bool IstReady();
-    Task<Dictionary<string, string>> GetAllSettings(SettingsType type);
+    Task<Dictionary<string, string>> LoadAllSettings(SettingsType type);
     bool HasSetting(string name);
 }
 
@@ -22,48 +22,28 @@ public enum SettingsType
     Server
 }
 
-public class UserSettingsObjectAttribute : Attribute
+[AttributeUsage(AttributeTargets.Class)]
+public class UserSettingsObjectAttribute(bool isLocalObject) : Attribute
 {
-    private readonly bool _isUserSettingsObject;
-
-    public UserSettingsObjectAttribute()
+    public UserSettingsObjectAttribute() : this(true)
     {
-        _isUserSettingsObject = true;
     }
 
-    public UserSettingsObjectAttribute(bool isLocalObject)
-    {
-        _isUserSettingsObject = isLocalObject;
-    }
-
-    public bool IsLocalObject => _isUserSettingsObject;
+    public bool IsLocalObject => isLocalObject;
 }
 
-public class AppSettingsObjectAttribute : Attribute
+[AttributeUsage(AttributeTargets.Class)]
+public class AppSettingsObjectAttribute(bool isLocalObject) : Attribute
 {
-    private readonly bool _isAppSettingObject;
-
-    public AppSettingsObjectAttribute()
+    public AppSettingsObjectAttribute() : this(true)
     {
-        _isAppSettingObject = true;
     }
 
-    public AppSettingsObjectAttribute(bool isLocalObject)
-    {
-        _isAppSettingObject = isLocalObject;
-    }
-
-    public bool IsAppSettingObject => _isAppSettingObject;
+    public bool IsAppSettingObject => isLocalObject;
 }
 
-public class SettingsKeyAttribute : Attribute
+[AttributeUsage(AttributeTargets.Class)]
+public class SettingsKeyAttribute(string keyName) : Attribute
 {
-    private readonly string _keyName;
-
-    public SettingsKeyAttribute(string keyName)
-    {
-        _keyName = keyName;
-    }
-
-    public string KeyName => _keyName;
+    public string KeyName => keyName;
 }
