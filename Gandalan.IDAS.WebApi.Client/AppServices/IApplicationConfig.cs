@@ -1,4 +1,5 @@
 using System;
+using Gandalan.IDAS.WebApi.Client.Environments;
 
 namespace Gandalan.Client.Contracts.AppServices;
 
@@ -6,7 +7,7 @@ public interface IApplicationConfig
 {
     Guid AppToken { get; }
     string UpdateUrl { get; }
-    string TargetEnvironment { get; set; }
+    DeploymentEnvironment TargetEnvironment { get; set; }
     string AppConfigDirectory { get; set; }
     string CurrentUser { get; set; }
     Guid InstallationId { get; }
