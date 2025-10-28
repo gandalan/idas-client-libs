@@ -10,6 +10,6 @@ public interface ISettingsService
     Task Load<T>(T settingsObject);
     Task Save<T>(T settingsObject);
     bool IstReady();
-    Task<Dictionary<string, string>> LoadAllSettings(SettingsType type);
+    Task<Dictionary<string, string>> GetAllSettings(SettingsType type);
     bool HasSetting(string name);
 }
