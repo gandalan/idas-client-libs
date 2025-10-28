@@ -80,6 +80,7 @@ public static class WebApiConfigurations
 
         var configPath = Path.Combine(_settingsPath, settings.FriendlyName);
         var configFile = Path.Combine(configPath, $"AuthToken_{_appTokenString}.json");
+
         if (!Directory.Exists(configPath))
         {
             Directory.CreateDirectory(configPath);
@@ -92,6 +93,7 @@ public static class WebApiConfigurations
                 UserName = settings.UserName,
                 AuthTokenGuid = settings.AuthToken?.Token ?? Guid.Empty
             }));
+
             _settings[settings.FriendlyName] = settings;
         }
         catch (Exception ex)
@@ -104,6 +106,7 @@ public static class WebApiConfigurations
     private static void setupLocalEnvironment(Guid appToken)
     {
         var localEnvPath = Path.Combine(_settingsPath, "Local");
+
         if (Directory.Exists(localEnvPath))
         {
             var files = Directory.GetFiles(localEnvPath, "*.json");
@@ -113,14 +116,17 @@ public static class WebApiConfigurations
                 try
                 {
                     var localEnvironment = JsonConvert.DeserializeObject<WebApiSettings>(File.ReadAllText(file));
+
                     if (localEnvironment != null)
                     {
                         localEnvironment.FriendlyName = friendlyName;
                         localEnvironment.AppToken = appToken;
+
                         if (string.IsNullOrEmpty(localEnvironment.IDASUrl))
                         {
                             localEnvironment.IDASUrl = localEnvironment.Url;
                         }
+
                         _settings.Add(friendlyName, localEnvironment);
                         internalLoadSavedAuthToken(friendlyName, localEnvironment);
                     }
@@ -136,9 +142,10 @@ public static class WebApiConfigurations
     private static async Task setupEnvironmentAsync(string stage, Guid appToken)
     {
         var hub = new ConnectHub();
-
         var response = await hub.GetEndpointsAsync("2.1", stage, "win");
+
         IWebApiConfig environment = null;
+
         if (response != null)
         {
             environment = new WebApiSettings
@@ -156,6 +163,7 @@ public static class WebApiConfigurations
                 FriendlyName = stage,
                 AppToken = appToken
             };
+
             internalLoadSavedAuthToken(stage, environment);
         }
 
@@ -169,18 +177,22 @@ public static class WebApiConfigurations
     {
         var savedAuthToken = internalLoadSavedAuthToken(env);
 
-        if (savedAuthToken != null)
+        if (savedAuthToken == null)
         {
-            environment.AuthToken = new UserAuthTokenDTO
-            {
-                Token = savedAuthToken.AuthTokenGuid,
-                AppToken = environment.AppToken
-            };
-            environment.UserName = savedAuthToken.UserName;
-            if (string.IsNullOrEmpty(environment.IDASUrl))
-            {
-                environment.IDASUrl = environment.Url;
-            }
+            return;
+        }
+
+        environment.AuthToken = new UserAuthTokenDTO
+        {
+            Token = savedAuthToken.AuthTokenGuid,
+            AppToken = environment.AppToken
+        };
+
+        environment.UserName = savedAuthToken.UserName;
+
+        if (string.IsNullOrEmpty(environment.IDASUrl))
+        {
+            environment.IDASUrl = environment.Url;
         }
     }
 
@@ -188,17 +200,19 @@ public static class WebApiConfigurations
     {
         var configFile = Path.Combine(_settingsPath, env, $"AuthToken_{_appTokenString}.json");
 
-        if (File.Exists(configFile))
+        if (!File.Exists(configFile))
         {
-            try
-            {
-                return JsonConvert.DeserializeObject<SavedAuthToken>(File.ReadAllText(configFile));
-            }
-            catch (Exception ex)
-            {
-                L.Info(ex.Message);
-                // damaged file, ignore saved token
-            }
+            return null;
+        }
+
+        try
+        {
+            return JsonConvert.DeserializeObject<SavedAuthToken>(File.ReadAllText(configFile));
+        }
+        catch (Exception ex)
+        {
+            L.Info(ex.Message);
+            // damaged file, ignore saved token
         }
 
         return null;
