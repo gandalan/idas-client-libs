@@ -35,13 +35,12 @@ public static class AppEnvironment
 
             // Short
             ["prod"] = DeploymentEnvironment.Production,
-            ["stage"] = DeploymentEnvironment.Staging,
+            ["staging"] = DeploymentEnvironment.Staging,
         };
 
     public static string ToShortName(DeploymentEnvironment deploymentEnvironment) => deploymentEnvironment switch
     {
-        DeploymentEnvironment.Production => "prod",
-        DeploymentEnvironment.Staging => "stage",
+        DeploymentEnvironment.Staging => "staging",
         DeploymentEnvironment.Development => "dev",
         DeploymentEnvironment.Local => "local",
         _ => deploymentEnvironment.ToString().ToLowerInvariant()
