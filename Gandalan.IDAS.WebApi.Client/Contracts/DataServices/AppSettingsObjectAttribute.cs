@@ -2,6 +2,7 @@ using System;
 
 namespace Gandalan.Client.Contracts.DataServices;
 
+[AttributeUsage(AttributeTargets.Class)]
 public class AppSettingsObjectAttribute : Attribute
 {
     private readonly bool _isAppSettingObject;
