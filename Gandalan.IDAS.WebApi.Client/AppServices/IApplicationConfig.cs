@@ -26,5 +26,6 @@ public interface IApplicationConfig
     string ChangeLogFileName { get; set; }
     bool IsSafeMode { get; set; }
     bool UsingAppPath { get; set; }
+    string ErrorReportingMail { get; set; }
 
 }
