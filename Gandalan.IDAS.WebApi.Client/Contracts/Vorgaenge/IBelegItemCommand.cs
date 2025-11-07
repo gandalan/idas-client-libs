@@ -32,4 +32,5 @@ public abstract class IBelegItemCommand : ICommand
     public string Caption { get; set; } = "?";
     public object Icon { get; set; }
     public string Tooltip { get; set; }
+    public int Order { get; set; } = 100;
 }
