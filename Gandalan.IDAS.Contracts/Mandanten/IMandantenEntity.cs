@@ -4,7 +4,7 @@
 /// Interface for entities that support multi-tenancy
 /// Replaces the complex [MandantenFaehig] attribute approach from EF 6
 /// </summary>
-public interface IMandantenFaehig
+public interface IMandantenEntity
 {
     long MandantId { get; set; }
 }
