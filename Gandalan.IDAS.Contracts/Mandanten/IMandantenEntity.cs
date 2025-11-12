@@ -6,5 +6,5 @@
 /// </summary>
 public interface IMandantenEntity
 {
-    long MandantId { get; set; }
+    long? MandantId { get; set; }
 }
