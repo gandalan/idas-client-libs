@@ -7,8 +7,8 @@ namespace Gandalan.Client.Contracts.DataServices;
 
 public interface IKundenService
 {
-    Task<KontaktListItemDTO[]> GetAllAsync();
-    Task<KontaktListItemDTO[]> GetAllAsync(DateTime changedSince);
+    Task<KontaktListItemDTO[]> GetAllAsync(bool includeASP = true, bool includeAdditionalProperties = true);
+    Task<KontaktListItemDTO[]> GetAllAsync(DateTime changedSince, bool includeASP = true, bool includeAdditionalProperties = true);
     Task<KontaktDTO> SaveAsync(KontaktDTO kunde);
     Task<KontaktDTO> LoadAsync(Guid guid);
     Task ArchiveAsync(List<Guid> kundenGuidList);

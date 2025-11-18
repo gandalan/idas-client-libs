@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
+using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class KontaktListItemDTO
+public class KontaktListItemDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties
 {
     public Guid KontaktGuid { get; set; }
     public Guid KontaktMandantGuid { get; set; }
@@ -88,6 +90,9 @@ public class KontaktListItemDTO
     public string URL { get; set; }
     public DateTime ChangedDate { get; set; }
 
+    public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
+
     public void copyproperties(KontaktListItemDTO newkontakt)
     {
         newkontakt.KontaktGuid = KontaktGuid;
@@ -110,5 +115,7 @@ public class KontaktListItemDTO
         newkontakt.Plz = Plz;
         newkontakt.Ort = Ort;
         newkontakt.Telefon = Telefon;
+        newkontakt.ApplicationSpecificProperties = ApplicationSpecificProperties;
+        newkontakt.AdditionalProperties = AdditionalProperties;
     }
 }
