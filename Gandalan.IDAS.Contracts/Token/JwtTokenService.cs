@@ -16,7 +16,7 @@ public class JwtTokenData
     public DateTime Expires { get; set; }
     public Guid AppToken { get; set; }
     public Guid AuthToken { get; set; }
-    public Guid? RefreshToken { get; set; }
+    public Guid? SecuritySecurityRefreshToken { get; set; }
     public TokenType TokenType { get; set; }
     public List<string> Roles { get; set; }
     public List<string> Rights { get; set; }
@@ -52,7 +52,7 @@ public class JwtTokenService
     private const string ClaimBenutzerGuid = "benutzerGuid";
     private const string ClaimAppToken = "appToken";
     private const string ClaimIdasAuthToken = "idasAuthToken";
-    private const string ClaimRefreshToken = "refreshToken";
+    private const string ClaimSecuritySecurityRefreshToken = "refreshToken";
     private const string ClaimTokenType = "type";
     public static string ClaimRole = "role";
     public static string ClaimRights = "rights";
@@ -69,12 +69,12 @@ public class JwtTokenService
     /// Generate JWT token
     /// </summary>
     /// <param name="authToken">User token</param>
-    /// <param name="refreshToken">RefreshTokenDTO</param>
+    /// <param name="refreshToken">SecuritySecurityRefreshTokenDTO</param>
     /// <param name="privateKey">Private key</param>
     /// <param name="expireDateTime">Expiry date (optional, default: 5 minutes)</param>
     /// <param name="tokenType">Token type, default: Normal</param>
     /// <returns>Token string</returns>
-    public string GenerateToken(UserAuthTokenDTO authToken, RefreshTokenDTO refreshToken, string privateKey, DateTime? expireDateTime = null, TokenType tokenType = TokenType.Normal)
+    public string GenerateToken(UserAuthTokenDTO authToken, SecuritySecurityRefreshTokenDTO refreshToken, string privateKey, DateTime? expireDateTime = null, TokenType tokenType = TokenType.Normal)
     {
         if (string.IsNullOrWhiteSpace(privateKey))
         {
@@ -101,7 +101,7 @@ public class JwtTokenService
         rights.Add(new Claim(ClaimAppToken, authToken.AppToken.ToString()));
         rights.Add(new Claim(ClaimBenutzerGuid, authToken.Benutzer.BenutzerGuid.ToString()));
         rights.Add(new Claim(ClaimIdasAuthToken, authToken.Token.ToString()));
-        rights.Add(new Claim(ClaimRefreshToken, refreshToken.Token.ToString()));
+        rights.Add(new Claim(ClaimSecuritySecurityRefreshToken, refreshToken.Token.ToString()));
         rights.Add(new Claim(ClaimTokenType, tokenType.ToString()));
 
         expireDateTime = expireDateTime ?? DateTime.UtcNow.AddMinutes(5);
@@ -149,7 +149,7 @@ public class JwtTokenService
             var mandantGuidClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimMandantGuid);
             var appTokenClaim = jwtToken.Claims.First(x => x.Type == ClaimAppToken);
             var authTokenClaim = jwtToken.Claims.First(x => x.Type == ClaimIdasAuthToken);
-            var refreshTokenClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimRefreshToken);
+            var refreshTokenClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimSecuritySecurityRefreshToken);
             var tokenTypeClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimTokenType);
             var roles = jwtToken.Claims
                 .Where(x => x.Type == ClaimRole)
@@ -170,7 +170,7 @@ public class JwtTokenService
                     MandantGuid = mandantGuidClaim == null ? Guid.Empty : Guid.Parse(mandantGuidClaim.Value),
                     AppToken = appTokenClaim == null ? Guid.Empty : Guid.Parse(appTokenClaim.Value),
                     AuthToken = authTokenClaim == null ? Guid.Empty : Guid.Parse(authTokenClaim.Value),
-                    RefreshToken = refreshTokenClaim == null ? Guid.Empty : Guid.Parse(refreshTokenClaim.Value),
+                    SecuritySecurityRefreshToken = refreshTokenClaim == null ? Guid.Empty : Guid.Parse(refreshTokenClaim.Value),
                     TokenType = tokenTypeClaim == null ? TokenType.Normal : (TokenType)Enum.Parse(typeof(TokenType), tokenTypeClaim.Value),
                     Roles = roles,
                     Rights = rights,
