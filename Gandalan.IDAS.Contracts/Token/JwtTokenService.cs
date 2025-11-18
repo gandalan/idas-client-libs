@@ -74,7 +74,7 @@ public class JwtTokenService
     /// <param name="expireDateTime">Expiry date (optional, default: 5 minutes)</param>
     /// <param name="tokenType">Token type, default: Normal</param>
     /// <returns>Token string</returns>
-    public string GenerateToken(UserAuthTokenDTO authToken, SecuritySecurityRefreshTokenDTO refreshToken, string privateKey, DateTime? expireDateTime = null, TokenType tokenType = TokenType.Normal)
+    public string GenerateToken(UserAuthTokenDTO authToken, SecurityRefreshTokenDTO refreshToken, string privateKey, DateTime? expireDateTime = null, TokenType tokenType = TokenType.Normal)
     {
         if (string.IsNullOrWhiteSpace(privateKey))
         {
