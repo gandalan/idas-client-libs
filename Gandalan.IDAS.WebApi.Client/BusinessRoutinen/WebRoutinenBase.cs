@@ -12,12 +12,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
+
 using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client;
@@ -30,6 +33,7 @@ public class WebRoutinenBase
     private readonly IWebApiConfig _originalSettings;
     public bool IsJwt;
     private RESTRoutinen _restRoutinen;
+    private const string RelativeDateTimePattern = @"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?([+-]\d{2}:\d{2})";
 
     #endregion
 
@@ -85,7 +89,7 @@ public class WebRoutinenBase
         {
             initRestRoutinen();
         }
-
+        
         if (!skipAuth && !await LoginAsync())
         {
             var ex = new ApiUnauthorizedException("You are not authorized.");
@@ -93,6 +97,15 @@ public class WebRoutinenBase
             ex.Data.Add("CallMethod", sender);
             throw ex;
         }
+
+        if (Regex.IsMatch(url, RelativeDateTimePattern))
+        {
+            var ex = new InvalidDateTimeKindException("The URL contains a datetime with a relative timezone offset (e.g. '+02:00'), which is not allowed. Please use ISO 8601 UTC format with a trailing 'Z', e.g. '2025-10-08T22:00:00.0000000Z'.");
+            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
+            ex.Data.Add("CallMethod", sender);
+            throw ex;
+        }
+
     }
 
     private void initRestRoutinen()
@@ -766,4 +779,11 @@ public class WebRoutinenBase
 
         return new ApiException(ex.Message, ex);
     }
+}
+
+internal sealed class InvalidDateTimeKindException : Exception
+{
+    public InvalidDateTimeKindException() : base() { }
+    public InvalidDateTimeKindException(string message) : base(message) { }
+    public InvalidDateTimeKindException(string message, Exception innerException) : base(message, innerException) { }
 }

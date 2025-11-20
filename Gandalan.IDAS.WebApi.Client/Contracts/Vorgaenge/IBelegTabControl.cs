@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
+using Gandalan.IDAS.WebApi.Client.Contracts.Vorgaenge;
 
 namespace Gandalan.IDAS.Client.Contracts.Vorgaenge;
 
