@@ -16,7 +16,7 @@ public class JwtTokenData
     public DateTime Expires { get; set; }
     public Guid AppToken { get; set; }
     public Guid AuthToken { get; set; }
-    public Guid? SecuritySecurityRefreshToken { get; set; }
+    public Guid? SecurityRefreshToken { get; set; }
     public TokenType TokenType { get; set; }
     public List<string> Roles { get; set; }
     public List<string> Rights { get; set; }
@@ -170,7 +170,7 @@ public class JwtTokenService
                     MandantGuid = mandantGuidClaim == null ? Guid.Empty : Guid.Parse(mandantGuidClaim.Value),
                     AppToken = appTokenClaim == null ? Guid.Empty : Guid.Parse(appTokenClaim.Value),
                     AuthToken = authTokenClaim == null ? Guid.Empty : Guid.Parse(authTokenClaim.Value),
-                    SecuritySecurityRefreshToken = refreshTokenClaim == null ? Guid.Empty : Guid.Parse(refreshTokenClaim.Value),
+                    SecurityRefreshToken = refreshTokenClaim == null ? Guid.Empty : Guid.Parse(refreshTokenClaim.Value),
                     TokenType = tokenTypeClaim == null ? TokenType.Normal : (TokenType)Enum.Parse(typeof(TokenType), tokenTypeClaim.Value),
                     Roles = roles,
                     Rights = rights,
