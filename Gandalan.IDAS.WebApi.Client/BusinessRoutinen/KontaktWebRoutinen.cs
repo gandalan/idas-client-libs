@@ -12,17 +12,17 @@ public class KontaktWebRoutinen : WebRoutinenBase
     {
     }
 
-    public async Task<KontaktListItemDTO[]> GetKontakteAsync(bool ohneEndkunden = false)
-        => await GetAsync<KontaktListItemDTO[]>($"Kontakt?ohneEndkunden={ohneEndkunden}");
+    public async Task<KontaktListItemDTO[]> GetKontakteAsync(bool ohneEndkunden = false, bool includeASP = true, bool includeAdditionalProperties = true)
+        => await GetAsync<KontaktListItemDTO[]>($"Kontakt?ohneEndkunden={ohneEndkunden}&includeASP={includeASP}&includeAdditionalProperties={includeAdditionalProperties}");
 
-    public async Task<KontaktListItemDTO[]> GetKontakteAsync(DateTime? changedSince, bool ohneEndkunden = false)
+    public async Task<KontaktListItemDTO[]> GetKontakteAsync(DateTime? changedSince, bool ohneEndkunden = false, bool includeASP = true, bool includeAdditionalProperties = true)
     {
         if (changedSince.HasValue && changedSince.Value > DateTime.MinValue)
         {
-            return await GetAsync<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value:o}&ohneEndkunden={ohneEndkunden}");
+            return await GetAsync<KontaktListItemDTO[]>($"Kontakt?changedSince={changedSince.Value:o}&ohneEndkunden={ohneEndkunden}&includeASP={includeASP}&includeAdditionalProperties={includeAdditionalProperties}");
         }
 
-        return await GetAsync<KontaktListItemDTO[]>($"Kontakt?ohneEndkunden={ohneEndkunden}");
+        return await GetAsync<KontaktListItemDTO[]>($"Kontakt?ohneEndkunden={ohneEndkunden}&includeASP={includeASP}&includeAdditionalProperties={includeAdditionalProperties}");
     }
 
     public async Task<KontaktDTO> GetKontaktAsync(Guid kontaktGuid)
