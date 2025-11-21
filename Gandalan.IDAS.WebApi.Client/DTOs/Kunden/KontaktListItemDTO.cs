@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
+using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class KontaktListItemDTO
+public class KontaktListItemDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties
 {
     public Guid KontaktGuid { get; set; }
     public Guid KontaktMandantGuid { get; set; }
@@ -59,6 +61,11 @@ public class KontaktListItemDTO
     public string Ort { get; set; }
 
     /// <summary>
+    /// Ortsteil
+    /// </summary>
+    public string Ortsteil { get; set; }
+
+    /// <summary>
     /// Telefon (Zentrale)
     /// </summary>
     public string Telefon { get; set; }
@@ -88,27 +95,6 @@ public class KontaktListItemDTO
     public string URL { get; set; }
     public DateTime ChangedDate { get; set; }
 
-    public void copyproperties(KontaktListItemDTO newkontakt)
-    {
-        newkontakt.KontaktGuid = KontaktGuid;
-        newkontakt.KontaktMandantGuid = KontaktMandantGuid;
-        newkontakt.FremdfertigungMandantGuid = FremdfertigungMandantGuid;
-        newkontakt.KontaktMandantIstAktiv = KontaktMandantIstAktiv;
-        newkontakt.Nachname = Nachname;
-        newkontakt.Vorname = Vorname;
-        newkontakt.Firmenname = Firmenname;
-        newkontakt.KundenNummer = KundenNummer;
-        newkontakt.IstEndkunde = IstEndkunde;
-        newkontakt.IstKunde = IstKunde;
-        newkontakt.URL = URL;
-        newkontakt.Email = Email;
-        newkontakt.IstGesperrt = IstGesperrt;
-        newkontakt.IstArchiviert = IstArchiviert;
-        newkontakt.Strasse = Strasse;
-        newkontakt.Hausnummer = Hausnummer;
-        newkontakt.Land = Land;
-        newkontakt.Plz = Plz;
-        newkontakt.Ort = Ort;
-        newkontakt.Telefon = Telefon;
-    }
+    public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
 }
