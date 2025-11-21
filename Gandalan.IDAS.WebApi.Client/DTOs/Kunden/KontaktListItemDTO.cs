@@ -59,6 +59,11 @@ public class KontaktListItemDTO
     public string Ort { get; set; }
 
     /// <summary>
+    /// Ortsteil
+    /// </summary>
+    public string Ortsteil { get; set; }
+
+    /// <summary>
     /// Telefon (Zentrale)
     /// </summary>
     public string Telefon { get; set; }
@@ -87,28 +92,4 @@ public class KontaktListItemDTO
 
     public string URL { get; set; }
     public DateTime ChangedDate { get; set; }
-
-    public void copyproperties(KontaktListItemDTO newkontakt)
-    {
-        newkontakt.KontaktGuid = KontaktGuid;
-        newkontakt.KontaktMandantGuid = KontaktMandantGuid;
-        newkontakt.FremdfertigungMandantGuid = FremdfertigungMandantGuid;
-        newkontakt.KontaktMandantIstAktiv = KontaktMandantIstAktiv;
-        newkontakt.Nachname = Nachname;
-        newkontakt.Vorname = Vorname;
-        newkontakt.Firmenname = Firmenname;
-        newkontakt.KundenNummer = KundenNummer;
-        newkontakt.IstEndkunde = IstEndkunde;
-        newkontakt.IstKunde = IstKunde;
-        newkontakt.URL = URL;
-        newkontakt.Email = Email;
-        newkontakt.IstGesperrt = IstGesperrt;
-        newkontakt.IstArchiviert = IstArchiviert;
-        newkontakt.Strasse = Strasse;
-        newkontakt.Hausnummer = Hausnummer;
-        newkontakt.Land = Land;
-        newkontakt.Plz = Plz;
-        newkontakt.Ort = Ort;
-        newkontakt.Telefon = Telefon;
-    }
 }
