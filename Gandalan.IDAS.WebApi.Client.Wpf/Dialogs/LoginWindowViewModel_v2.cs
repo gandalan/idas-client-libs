@@ -9,10 +9,6 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs;
 
 public class LoginWindowViewModel_v2 : INotifyPropertyChanged
 {
-    private string _url;
-    private string _userName;
-    private string _passwort;
-
     public event PropertyChangedEventHandler PropertyChanged;
 
     public string Title => "Neher Cloud - Anmeldung";
@@ -21,40 +17,9 @@ public class LoginWindowViewModel_v2 : INotifyPropertyChanged
 
     public bool EnvAlsDefault { get; set; }
 
-    public string Url
-    {
-        get => _url;
-        set
-        {
-            _url = value;
-            //SetOrClearMessage("Url", string.IsNullOrEmpty(_url), "Ungültige Serveradresse");
-        }
-    }
-
-    /*private static void SetOrClearMessage(string v1, bool v2, string v3)
-    {
-        // TODO
-    }*/
-
-    public string UserName
-    {
-        get => _userName;
-        set
-        {
-            _userName = value;
-            //SetOrClearMessage("UserName", string.IsNullOrEmpty(_userName), "Ungültiger Benutzername");
-        }
-    }
-
-    public string Passwort
-    {
-        get => _passwort;
-        set
-        {
-            _passwort = value;
-            //SetOrClearMessage("Passwort", string.IsNullOrEmpty(_passwort), "Ungültiges Passwort");
-        }
-    }
+    public string Url { get; set; }
+    public string UserName { get; set; }
+    public string Passwort { get; set; }
 
     public bool SaveCredentials { get; set; } = true;
 
@@ -77,17 +42,11 @@ public class LoginWindowViewModel_v2 : INotifyPropertyChanged
         AlleEnvironments = WebApiConfigurations.GetAll();
         LoggedInEnvironments = AlleEnvironments.Where(e => e.AuthToken != null && e.AuthToken.Token != Guid.Empty);
         ShowLoggedInEnvironments = LoggedInEnvironments.AnyOptimized();
-        ServerEnvironment = AlleEnvironments.FirstOrDefault(e => e.FriendlyName.Equals(webApiSettings.FriendlyName, StringComparison.InvariantCultureIgnoreCase));
+        ServerEnvironment = AlleEnvironments.FirstOrDefault(e =>
+            e.FriendlyName.Equals(webApiSettings.FriendlyName, StringComparison.InvariantCultureIgnoreCase));
 
 #if DEBUG
         ShowServerSelection = true;
 #endif
     }
-
-    /*public LoginWindowViewModel_v2()
-    {
-#if DEBUG
-        ShowServerSelection = true;
-#endif
-    }*/
 }
