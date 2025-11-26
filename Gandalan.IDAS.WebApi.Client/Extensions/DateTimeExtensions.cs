@@ -1,7 +1,21 @@
+using System.Globalization;
+
 namespace System;
 
-public static class WorkingDays
+public static class DateTimeExtensions
 {
+    public static int GetCalendarWeek(this DateTime datum)
+    {
+        if (datum.DayOfWeek >= DayOfWeek.Monday)
+        {
+            datum = datum.AddDays(7 - (int)datum.DayOfWeek);
+        }
+
+        var kw = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(datum, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+
+        return kw;
+    }
+    
     public static DateTime AddWorkingDays(this DateTime datum, int days)
     {
         var direction = days < 0 ? -1 : 1;
