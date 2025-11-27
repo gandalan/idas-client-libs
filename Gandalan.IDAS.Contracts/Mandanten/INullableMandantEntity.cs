@@ -5,5 +5,6 @@
 /// </summary>
 public interface INullableMandantEntity
 {
-    long? MandantId { get; set; }
+    void SetMandantId(long? mandantId);
+    long? GetMandantId();
 }
