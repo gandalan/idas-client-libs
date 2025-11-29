@@ -112,6 +112,6 @@ public class VorgangDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditio
 
     public void Dump()
     {
-        File.WriteAllText($@"c:\temp\dumps\dump-{VorgangsNummer}.json", JsonConvert.SerializeObject(this, Formatting.Indented));
+        File.WriteAllText($@"c:\temp\dumps\dump-{VorgangsNummer}.json", System.Text.Json.JsonSerializer.Serialize(this, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
     }
 }

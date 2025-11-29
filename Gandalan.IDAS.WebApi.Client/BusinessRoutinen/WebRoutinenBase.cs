@@ -89,7 +89,7 @@ public class WebRoutinenBase
         {
             initRestRoutinen();
         }
-        
+
         if (!skipAuth && !await LoginAsync())
         {
             var ex = new ApiUnauthorizedException("You are not authorized.");
