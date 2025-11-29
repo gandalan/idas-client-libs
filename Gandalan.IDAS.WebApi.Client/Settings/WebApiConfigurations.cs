@@ -84,7 +84,7 @@ public static class WebApiConfigurations
 
         try
         {
-            File.WriteAllText(configFile, JsonConvert.SerializeObject(new SavedAuthToken
+            File.WriteAllText(configFile, System.Text.Json.JsonSerializer.Serialize(new SavedAuthToken
             {
                 UserName = settings.UserName,
                 AuthTokenGuid = settings.AuthToken?.Token ?? Guid.Empty
@@ -109,7 +109,7 @@ public static class WebApiConfigurations
                 var friendlyName = Path.GetFileNameWithoutExtension(file);
                 try
                 {
-                    var localEnvironment = JsonConvert.DeserializeObject<WebApiSettings>(File.ReadAllText(file));
+                    var localEnvironment = System.Text.Json.JsonSerializer.Deserialize<WebApiSettings>(File.ReadAllText(file));
                     if (localEnvironment != null)
                     {
                         localEnvironment.FriendlyName = friendlyName;
@@ -189,7 +189,7 @@ public static class WebApiConfigurations
         {
             try
             {
-                return JsonConvert.DeserializeObject<SavedAuthToken>(File.ReadAllText(configFile));
+                return System.Text.Json.JsonSerializer.Deserialize<SavedAuthToken>(File.ReadAllText(configFile));
             }
             catch (Exception)
             {

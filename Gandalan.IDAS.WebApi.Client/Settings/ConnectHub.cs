@@ -23,7 +23,7 @@ public class ConnectHub
         try
         {
             var response = await new HttpClient().GetStringAsync(requestUrl);
-            return JsonConvert.DeserializeObject<HubResponse>(response);
+            return System.Text.Json.JsonSerializer.Deserialize<HubResponse>(response);
         }
         catch (Exception e)
         {

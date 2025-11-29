@@ -19,7 +19,7 @@ public class MailWebRoutinen : WebRoutinenBase
     {
         var content = new MultipartFormDataContent
             {
-                { new StringContent(JsonConvert.SerializeObject(job)), "jobAsString" }
+                { new StringContent(System.Text.Json.JsonSerializer.Serialize(job)), "jobAsString" }
             };
         if (attachments != null && attachments.Count > 0)
         {
@@ -34,7 +34,7 @@ public class MailWebRoutinen : WebRoutinenBase
 
         await PostDataAsync("Mail", content, version: "2.0");
         return new JobStatusResponseDTO();
-        //var response = JsonConvert.DeserializeObject<JobStatusResponseDTO>(await PostDataAsync("Mail", content));
+        //var response = System.Text.Json.JsonSerializer.Deserialize<JobStatusResponseDTO>(await PostDataAsync("Mail", content));
         //return response;
     }
 
