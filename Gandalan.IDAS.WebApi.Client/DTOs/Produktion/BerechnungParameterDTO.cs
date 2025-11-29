@@ -31,8 +31,8 @@ public class BerechnungParameterDTO : ICloneable
 
     public object Clone()
     {
-        var jsonString = JsonConvert.SerializeObject(this);
-        return JsonConvert.DeserializeObject<BerechnungParameterDTO>(jsonString);
+        var jsonString = System.Text.Json.JsonSerializer.Serialize(this);
+        return System.Text.Json.JsonSerializer.Deserialize<BerechnungParameterDTO>(jsonString);
     }
 }
 

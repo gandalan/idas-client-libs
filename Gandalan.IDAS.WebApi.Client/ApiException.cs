@@ -37,23 +37,23 @@ public class ApiException : Exception
 
     public ApiException(string message, object payload) : base(message)
     {
-        Payload = JsonConvert.SerializeObject(payload);
+        Payload = System.Text.Json.JsonSerializer.Serialize(payload);
     }
 
     public ApiException(string message, HttpStatusCode statusCode, object payload) : base(message)
     {
         StatusCode = statusCode;
-        Payload = JsonConvert.SerializeObject(payload);
+        Payload = System.Text.Json.JsonSerializer.Serialize(payload);
     }
 
     public ApiException(string message, Exception innerException, object payload) : base(message, innerException)
     {
-        Payload = JsonConvert.SerializeObject(payload);
+        Payload = System.Text.Json.JsonSerializer.Serialize(payload);
     }
 
     public ApiException(string message, HttpStatusCode statusCode, Exception innerException, object payload) : base(message, innerException)
     {
         StatusCode = statusCode;
-        Payload = JsonConvert.SerializeObject(payload);
+        Payload = System.Text.Json.JsonSerializer.Serialize(payload);
     }
 }

@@ -31,7 +31,7 @@ public class FileWebRoutinen : WebRoutinenBase
 
     public async Task<byte[]> GetFilesZippedAsync(List<string> fileNames)
     {
-        var json = JsonSerializer.Serialize(fileNames);
+        var json = System.Text.Json.JsonSerializer.Serialize(fileNames);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
         return await PutDataAsync("StaticFile", content);
     }
