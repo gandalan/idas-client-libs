@@ -5,5 +5,6 @@
 /// </summary>
 public interface IMandantEntity
 {
-    long MandantId { get; set; }
+    void SetMandantId(long mandantId);
+    long GetMandantId();
 }
