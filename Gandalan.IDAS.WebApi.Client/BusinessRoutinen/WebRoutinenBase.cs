@@ -89,15 +89,40 @@ public class WebRoutinenBase
         {
             initRestRoutinen();
         }
-        
-        if (!skipAuth && !await LoginAsync())
+
+        CheckAndApplyNewApiHeader(url);
+
+        await CheckAuthorizedOrThrow(url, skipAuth, sender);
+        CheckDateTimeInUtcOrThrow(url, sender);
+    }
+
+    private void CheckAndApplyNewApiHeader(string url)
+    {
+        if (Settings?.NewApiOptInUrls is not {Count: > 0})
         {
-            var ex = new ApiUnauthorizedException("You are not authorized.");
-            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
-            ex.Data.Add("CallMethod", sender);
-            throw ex;
+            return;
         }
 
+        var endpoint = url.Split('?')[0].TrimEnd('/');
+
+        var matchingEntry = Settings.NewApiOptInUrls.FirstOrDefault(opt => 
+            endpoint.Equals(opt, StringComparison.OrdinalIgnoreCase) ||
+            endpoint.StartsWith(opt.TrimEnd('/') + "/", StringComparison.OrdinalIgnoreCase) ||
+            endpoint.StartsWith(opt.TrimEnd('/') + "?", StringComparison.OrdinalIgnoreCase)
+        );
+
+        if (!string.IsNullOrEmpty(matchingEntry))
+        {
+            _restRoutinen.AddHeader("X-Gateway-Cluster", "idas");
+        }
+        else
+        {
+            _restRoutinen.RemoveHeader("X-Gateway-Cluster");
+        }
+    }
+
+    private void CheckDateTimeInUtcOrThrow(string url, string sender)
+    {
         if (Regex.IsMatch(url, RelativeDateTimePattern))
         {
             var ex = new InvalidDateTimeKindException("The URL contains a datetime with a relative timezone offset (e.g. '+02:00'), which is not allowed. Please use ISO 8601 UTC format with a trailing 'Z', e.g. '2025-10-08T22:00:00.0000000Z'.");
@@ -105,7 +130,17 @@ public class WebRoutinenBase
             ex.Data.Add("CallMethod", sender);
             throw ex;
         }
+    }
 
+    private async Task CheckAuthorizedOrThrow(string url, bool skipAuth, string sender)
+    {
+        if (!skipAuth && !await LoginAsync())
+        {
+            var ex = new ApiUnauthorizedException("You are not authorized.");
+            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
+            ex.Data.Add("CallMethod", sender);
+            throw ex;
+        }
     }
 
     private void initRestRoutinen()

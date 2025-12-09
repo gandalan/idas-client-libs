@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
@@ -56,6 +57,9 @@ public class WebApiSettings : IWebApiConfig
 
     /// <inheritdoc/>
     public string TranslateUrl { get; set; }
+
+    /// <inheritdoc/>
+    public List<string> NewApiOptInUrls { get; set; } = [];
 
     /// <remarks>
     /// Remember to call <see cref="WebApiConfigurations.InitializeAsync"/> before.
@@ -120,5 +124,6 @@ public class WebApiSettings : IWebApiConfig
         NotifyUrl = settings.NotifyUrl;
         HelpCenterUrl = settings.HelpCenterUrl;
         TranslateUrl = settings.TranslateUrl;
+        NewApiOptInUrls = settings.NewApiOptInUrls;
     }
 }

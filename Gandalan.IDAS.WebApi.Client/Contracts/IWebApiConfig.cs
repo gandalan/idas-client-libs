@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
 
@@ -56,6 +57,12 @@ public interface IWebApiConfig
     string WebhookServiceUrl { get; set; }
 
     string TranslateUrl { get; set; }
+
+    /// <summary>
+    /// List of API endpoints (e.g., /api/VorgangListe) configured to use the new backend API on remote calls.
+    /// This list must be maintained by clients. Available endpoints that can be used with the new API will be announced.
+    /// </summary>
+    List<string> NewApiOptInUrls { get; set; }
 
     void CopyToThis(IWebApiConfig settings);
 }

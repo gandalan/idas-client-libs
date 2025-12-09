@@ -58,7 +58,7 @@ public class RESTRoutinen : IDisposable
     /// <summary>
     /// Holt ein Objekt per HTTP GET
     /// </summary>
-    /// <typeparam name="T">Typsierungsparameter</typeparam>
+    /// <typeparam name="T">Typisierungsparameter</typeparam>
     /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
     /// <param name="settings"></param>
     /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
@@ -125,6 +125,7 @@ public class RESTRoutinen : IDisposable
     {
         string contentAsString = null;
         HttpResponseMessage response = null;
+
         try
         {
             var json = JsonConvert.SerializeObject(data, settings);
@@ -342,5 +343,23 @@ public class RESTRoutinen : IDisposable
         }
 
         return versionClient;
+    }
+
+    /// <summary>
+    /// Adds a header to the default request headers of the HTTP client.
+    /// </summary>
+    /// <param name="headerName">The name of the header</param>
+    /// <param name="headerValue">The value of the header</param>
+    public void AddHeader(string headerName, string headerValue)
+    {
+        if (!_client.DefaultRequestHeaders.Contains(headerName))
+        {
+            _client.DefaultRequestHeaders.Add(headerName, headerValue);
+        }
+    }
+
+    public void RemoveHeader(string headerName)
+    {
+        _client.DefaultRequestHeaders.Remove(headerName);
     }
 }
