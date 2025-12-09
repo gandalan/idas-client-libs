@@ -90,13 +90,13 @@ public class WebRoutinenBase
             initRestRoutinen();
         }
 
-        CheckAndApplyNewApiHeader(url);
+        CheckNewApiOptInAndApplyHeader(url);
 
         await CheckAuthorizedOrThrow(url, skipAuth, sender);
         CheckDateTimeInUtcOrThrow(url, sender);
     }
 
-    private void CheckAndApplyNewApiHeader(string url)
+    private void CheckNewApiOptInAndApplyHeader(string url)
     {
         if (Settings?.NewApiOptInUrls is not {Count: > 0})
         {
