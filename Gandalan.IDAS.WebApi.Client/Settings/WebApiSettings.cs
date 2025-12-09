@@ -59,7 +59,7 @@ public class WebApiSettings : IWebApiConfig
     public string TranslateUrl { get; set; }
 
     /// <inheritdoc/>
-    public List<string> NewApiOptInUrls { get; set; } = [];
+    public List<NewApiOptInEntry> NewApiOptInUrls { get; set; } = [];
 
     /// <remarks>
     /// Remember to call <see cref="WebApiConfigurations.InitializeAsync"/> before.

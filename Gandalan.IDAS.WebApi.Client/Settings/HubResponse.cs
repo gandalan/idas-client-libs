@@ -13,6 +13,5 @@ public class HubResponse
     public string Notify { get; set; }
     public string WebhookService { get; set; }
     public string Translate { get; set; }
-    public List<string> NewApiOptInUrls { get; set; } = [];
-
+    public List<NewApiOptInEntry> NewApiOptInUrls { get; set; } = [];
 }
