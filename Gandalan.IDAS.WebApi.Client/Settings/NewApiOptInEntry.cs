@@ -8,7 +8,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings;
 public class NewApiOptInEntry
 {
     /// <summary>
-    /// The API endpoint path (e.g., "/api/VorgangListe").
+    /// The API endpoint name (e.g., "VorgangListe").
     /// </summary>
     public string Endpoint { get; set; }
 
