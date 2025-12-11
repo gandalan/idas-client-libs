@@ -51,12 +51,12 @@ public static class DateTimeExtensions
     public static DateTime ToDateTime(int year, int week, DayOfWeek dayOfWeek)
     {
         var jan4 = new DateTime(year, month: 1, day: 4);
-        var correction = getWeekday(jan4.DayOfWeek) + 3;
-        var ordinal = (week * 7) + getWeekday(dayOfWeek) - correction;
+        var correction = GetWeekday(jan4.DayOfWeek) + 3;
+        var ordinal = (week * 7) + GetWeekday(dayOfWeek) - correction;
         return new DateTime(year, month: 1, day: 1).AddDays(ordinal - 1);
     }
 
-    private static int getWeekday(DayOfWeek dayOfWeek)
+    private static int GetWeekday(DayOfWeek dayOfWeek)
     {
         return dayOfWeek == DayOfWeek.Sunday ? 7 : (int)dayOfWeek;
     }
@@ -69,6 +69,7 @@ public static class DateTimeExtensions
     {
         if (dateTime1 == null || dateTime2 == null)
             return dateTime1 == dateTime2;
+
         return dateTime1.Value.IsEqualRounded(dateTime2.Value, deltaInMs);
     }
 

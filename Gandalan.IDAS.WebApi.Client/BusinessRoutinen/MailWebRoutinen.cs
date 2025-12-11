@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.Mail;
-using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
 

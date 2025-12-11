@@ -5,7 +5,7 @@ namespace Gandalan.IDAS.WebApi.DTO;
 /// <summary>
 /// Refresh token for JWT
 /// </summary>
-public class SecurityRefreshTokenDTO
+public class RefreshTokenDTO
 {
     /// <summary>
     /// Token GUID

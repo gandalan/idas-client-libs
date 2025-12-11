@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.WebApi.DTO;
-using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings;
 

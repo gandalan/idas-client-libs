@@ -2,7 +2,6 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Logging;
-using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.WebApi.Client.Settings;
 
