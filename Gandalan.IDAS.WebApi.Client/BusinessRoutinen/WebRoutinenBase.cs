@@ -177,7 +177,7 @@ public class WebRoutinenBase
             {
                 if (AuthToken.Expires < DateTime.UtcNow.AddHours(6))
                 {
-                    result = await SecuritySecurityRefreshTokenAsync(AuthToken.Token);
+                    result = await SecurityRefreshTokenAsync(AuthToken.Token);
                 }
                 else
                 {
@@ -227,7 +227,12 @@ public class WebRoutinenBase
         }
     }
 
-    public async Task<UserAuthTokenDTO> SecuritySecurityRefreshTokenAsync(Guid authTokenGuid)
+    public async Task<UserAuthTokenDTO> RefreshTokenAsync(Guid authTokenGuid)
+    {
+        return await SecurityRefreshTokenAsync(authTokenGuid);
+    }
+
+    public async Task<UserAuthTokenDTO> SecurityRefreshTokenAsync(Guid authTokenGuid)
     {
         try
         {

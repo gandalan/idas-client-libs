@@ -140,7 +140,7 @@ public partial class LoginWindow_v2 : Window
         {
             if (settings.AuthToken != null)
             {
-                var refreshResult = await wrb.SecuritySecurityRefreshTokenAsync(settings.AuthToken.Token);
+                var refreshResult = await wrb.RefreshTokenAsync(settings.AuthToken.Token);
                 if (refreshResult != null)
                 {
                     settings.AuthToken = refreshResult;
