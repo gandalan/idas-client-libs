@@ -12,8 +12,6 @@ public class SerienSaegelistenProfilgruppeSchnittDataDTO
     public float SaegeMassEinstellung { get; set; }
     public string LaufendeEtikettenNummer { get; set; }
     public bool IsSonderEtikett { get; set; }
-    //True = Wenn Variante SP1/40 oder SP1/41
-    public bool IsE { get; set; }
     //Serienname + Vorgangsnummer + Positionsnummer
     public string Kennzeichen { get; set; }
     public string VorgangsNummer { get; set; }

@@ -54,6 +54,7 @@ public class ProduktionsSettingsDTO
     public bool LI_TE_Winkelprofil_mit_Schraube_150329_06 { get; set; } = true;
     public string ProdukteMitc3Berechnen { get; set; }
     public bool DF4_DT4_133604 { get; set; } = true;
+    public bool PT2_Griff_Innen_Knopf { get; set; }
 
     //ZusatzRahmen
     public bool ZR_Schraubeckwinkel { get; set; } = true;
