@@ -205,7 +205,7 @@ public static class WebApiConfigurations
         {
             environment.IDASUrl = environment.Url;
         }
-        }
+        
     }
 
     private static SavedAuthToken internalLoadSavedAuthToken(string env)
