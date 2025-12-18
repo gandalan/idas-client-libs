@@ -9,6 +9,7 @@ public class ApiVersionDTO
     public string Version { get; set; }
     public string Environment { get; set; }
     public string BuildTime { get; set; }
+    [Obsolete("Use BuildTime instead.")]
     public string ReleaseTime { get; set; }
 
     public static ApiVersionDTO FromAssembly(Assembly assembly)
@@ -21,7 +22,9 @@ public class ApiVersionDTO
             Version = informationalVersion ?? assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? $"Keine Version gefunden für: {assembly.FullName}",
             Environment = System.Environment.GetEnvironmentVariable("GDL_ENVIRONMENT") ?? System.Environment.GetEnvironmentVariable("GDL.ENVIRONMENT") ?? System.Environment.GetEnvironmentVariable("GDL.Environment") ?? "Development",
             BuildTime = ExtractBuildTimeFromAssembly(assembly) ?? deploymentTime ?? "-",
+#pragma warning disable CS0618 // Type or member is obsolete
             ReleaseTime = deploymentTime ?? "-",
+#pragma warning restore CS0618 // Type or member is obsolete
         };
     }
 

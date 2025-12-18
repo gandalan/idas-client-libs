@@ -195,18 +195,16 @@ public static class WebApiConfigurations
         {
             return;
         }
-
         environment.AuthToken = new UserAuthTokenDTO
         {
             Token = savedAuthToken.AuthTokenGuid,
             AppToken = environment.AppToken
         };
-
-        environment.UserName = savedAuthToken.UserName;
-
+        environment.UserName = savedAuthToken.UserName?.Trim().ToLower();;
         if (string.IsNullOrEmpty(environment.IDASUrl))
         {
             environment.IDASUrl = environment.Url;
+        }
         }
     }
 

@@ -46,7 +46,7 @@ public class JwtWebApiSettings : WebApiSettings, IJwtWebApiConfig
         var authTokenClaim = jwtToken.Claims.First(x => x.Type == "idasAuthToken");
 
         // set settings values from JWT token
-        UserName = userId;
+        UserName = userId?.Trim().ToLower();
         Mandant = "";
         AuthToken = new UserAuthTokenDTO
         {

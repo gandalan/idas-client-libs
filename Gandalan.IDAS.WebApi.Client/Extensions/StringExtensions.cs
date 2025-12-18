@@ -1,6 +1,6 @@
 namespace System;
 
-public static class ContainsInsensitive
+public static class StringExtensions
 {
     public static bool Contains(this string source, string needle, StringComparison comp)
     {
