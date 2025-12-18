@@ -12,18 +12,23 @@ namespace Gandalan.IDAS.WebApi.Client.Settings;
 
 public static class WebApiConfigurations
 {
+    private static string[] _environments = ["dev", "staging", "produktiv"];
     private static string _settingsPath;
     private static Dictionary<string, IWebApiConfig> _settings;
     private static string _appTokenString;
     private static bool _isInitialized;
 
-    public static void Initialize(string stage, Guid appToken)
+    public static void Initialize(Guid appToken, string stage = null)
     {
+        if (stage != null)
+        {
+            _environments = new[] { stage };
+        }
         _settings = new Dictionary<string, IWebApiConfig>(StringComparer.OrdinalIgnoreCase);
         _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
         _appTokenString = appToken.ToString().Trim('{', '}');
 
-        setupEnvironmentAsync(stage, appToken).Wait();
+        setupEnvironmentAsync(appToken).Wait();
 #if DEBUG
         setupLocalEnvironment(appToken);
 #endif
@@ -32,13 +37,18 @@ public static class WebApiConfigurations
 
     }
 
-    public static async Task InitializeAsync(string stage, Guid appToken)
+    public static async Task InitializeAsync(Guid appToken, string stage = null)
     {
+
+        if (stage != null)
+        {
+            _environments = new[] { stage };
+        }
         _settings = new Dictionary<string, IWebApiConfig>(StringComparer.OrdinalIgnoreCase);
         _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
         _appTokenString = appToken.ToString().Trim('{', '}');
 
-        await setupEnvironmentAsync(stage, appToken);
+        await setupEnvironmentAsync(appToken);
 #if DEBUG
         setupLocalEnvironment(appToken);
 #endif
@@ -139,37 +149,41 @@ public static class WebApiConfigurations
         }
     }
 
-    private static async Task setupEnvironmentAsync(string stage, Guid appToken)
+    private static async Task setupEnvironmentAsync(Guid appToken)
     {
         var hub = new ConnectHub();
-        var response = await hub.GetEndpointsAsync("2.1", stage, "win");
 
-        IWebApiConfig environment = null;
-
-        if (response != null)
+        foreach (var env in _environments)
         {
-            environment = new WebApiSettings
+            var response = await hub.GetEndpointsAsync("2.1", env, "win");
+
+            IWebApiConfig environment = null;
+
+            if (response != null)
             {
-                Url = response.IDAS,
-                IDASUrl = response.IDAS,
-                CMSUrl = response.CMS,
-                DocUrl = response.Docs,
-                FeedbackUrl = response.Feedback,
-                NotifyUrl = response.Notify,
-                HelpCenterUrl = response.HelpCenter,
-                StoreUrl = response.Store,
-                WebhookServiceUrl = response.WebhookService,
-                TranslateUrl = response.Translate,
-                FriendlyName = stage,
-                AppToken = appToken
-            };
+                environment = new WebApiSettings
+                {
+                    Url = response.IDAS,
+                    IDASUrl = response.IDAS,
+                    CMSUrl = response.CMS,
+                    DocUrl = response.Docs,
+                    FeedbackUrl = response.Feedback,
+                    NotifyUrl = response.Notify,
+                    HelpCenterUrl = response.HelpCenter,
+                    StoreUrl = response.Store,
+                    WebhookServiceUrl = response.WebhookService,
+                    TranslateUrl = response.Translate,
+                    FriendlyName = env,
+                    AppToken = appToken
+                };
 
-            internalLoadSavedAuthToken(stage, environment);
-        }
+                internalLoadSavedAuthToken(env, environment);
+            }
 
-        if (environment != null)
-        {
-            _settings.Add(stage, environment);
+            if (environment != null)
+            {
+                _settings.Add(env, environment);
+            }
         }
     }
 
