@@ -19,20 +19,16 @@ public partial class LoginWindow_v2 : Window
     private readonly LoginWindowViewModel_v2 _viewModel;
     private string _statusText;
 
-    //public LoginWindow_v2()
-    //{
-    //    InitializeComponent();
-    //}
-
     public LoginWindow_v2(IWebApiConfig webApiSettings)
     {
         _webApiSettings = webApiSettings;
         _viewModel = new LoginWindowViewModel_v2(_webApiSettings);
-        if (Application.Current != null && Application.Current.Windows != null)
+
+        if (Application.Current?.Windows != null)
         {
             foreach (var window in Application.Current.Windows)
             {
-                if (window is Window wpfWindow && wpfWindow.IsVisible)
+                if (window is Window { IsVisible: true } wpfWindow)
                 {
                     Owner = wpfWindow;
                     break;
@@ -44,16 +40,6 @@ public partial class LoginWindow_v2 : Window
         DataContext = _viewModel;
     }
 
-    //public IWebApiConfig Show(IWebApiConfig webApiSettings)
-    //{
-    //    _webApiSettings = webApiSettings;
-    //    _viewModel = new LoginWindowViewModel_v2();
-
-    //    ShowDialog();
-
-    //    return _webApiSettings;
-    //}
-
     private void switchToLoginFields(object sender, RoutedEventArgs e)
     {
         _viewModel.ShowLoggedInEnvironments = !_viewModel.ShowLoggedInEnvironments;
@@ -64,6 +50,7 @@ public partial class LoginWindow_v2 : Window
         _viewModel.LoginInProgress = true;
         _viewModel.StatusText = null;
         var settings = (sender as Button)?.Tag as IWebApiConfig;
+
         if (settings != null && await TestConnection(settings))
         {
             _webApiSettings.CopyToThis(settings);
@@ -175,6 +162,7 @@ public partial class LoginWindow_v2 : Window
     private static string InternalStripHtml(string htmlString)
     {
         var result = htmlString;
+
         if (result.ToLower().Contains("<title>") && result.ToLower().Contains("</title>"))
         {
             var start = result.IndexOf("<title>") + 7;
