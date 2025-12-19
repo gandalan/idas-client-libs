@@ -216,7 +216,7 @@ public static class WebApiConfigurations
             {
                 return System.Text.Json.JsonSerializer.Deserialize<SavedAuthToken>(File.ReadAllText(configFile));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 L.Info(ex.Message);
                 // damaged file, ignore saved token
