@@ -15,6 +15,8 @@ public class BerechnungParameterDTO : ICloneable
 
     public BelegPositionAVDTO BelegPositionAVDTO { get; set; }
 
+    public ProduktionsSettingsDTO ProduktionsSettingsDTO { get; set; }
+
     /// <summary>
     /// Default: -999
     /// </summary>
