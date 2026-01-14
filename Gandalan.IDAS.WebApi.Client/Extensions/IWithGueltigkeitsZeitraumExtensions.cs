@@ -4,30 +4,18 @@ namespace System;
 
 public static class IWithGueltigkeitsZeitraumExtensions
 {
-    public static bool IstGueltig(this IWithGueltigkeitsZeitraum gueltig, DateTime? referenceDate = null)
+    extension(IWithGueltigkeitsZeitraum gueltig)
     {
-        if (gueltig == null)
-        {
-            return false;
-        }
-
-        if (gueltig.GueltigAb == null && gueltig.GueltigBis == null)
-        {
-            return true;
-        }
-
-        referenceDate ??= DateTime.UtcNow;
-
-        if (gueltig.GueltigAb != null && gueltig.GueltigAb.Value.Date < referenceDate.Value.Date)
-        {
-            return false;
-        }
-
-        if (gueltig.GueltigBis != null && gueltig.GueltigBis.Value.Date > referenceDate.Value.Date)
-        {
-            return false;
-        }
-
-        return true;
+        public bool IstGueltig(DateTime? referenceDate = null) =>
+            gueltig switch
+            {
+                null => false,
+                { GueltigAb: null, GueltigBis: null } => true,
+                _ => isWithinValidityPeriod(gueltig, (referenceDate ?? DateTime.UtcNow).Date)
+            };
     }
+
+    private static bool isWithinValidityPeriod(IWithGueltigkeitsZeitraum gueltig, DateTime refDate) =>
+        (gueltig.GueltigAb is null || gueltig.GueltigAb.Value.Date <= refDate)
+        && (gueltig.GueltigBis is null || gueltig.GueltigBis.Value.Date >= refDate);
 }
