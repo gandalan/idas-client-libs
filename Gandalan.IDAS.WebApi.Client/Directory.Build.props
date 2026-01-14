@@ -7,7 +7,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <DeploymentEnvironment>dev</DeploymentEnvironment>
+    <DeploymentEnvironment>prod</DeploymentEnvironment>
   </PropertyGroup>
 
   <!-- Normalisieren -->
@@ -18,14 +18,14 @@
   <!-- Symbole ableiten -->
   <PropertyGroup>
     <DefineConstants Condition="'$(DeploymentEnvironmentNormalized)'=='dev'">$(DefineConstants);DEPLOYMENTENVIRONMENT_DEV</DefineConstants>
-    <DefineConstants Condition="'$(DeploymentEnvironmentNormalized)'=='preview'">$(DefineConstants);DEPLOYMENTENVIRONMENT_STAGE</DefineConstants>
-    <DefineConstants Condition="'$(DeploymentEnvironmentNormalized)'=='release'">$(DefineConstants);DEPLOYMENTENVIRONMENT_PROD</DefineConstants>
-	<DefineConstants Condition="'$(DeploymentEnvironmentNormalized)'=='local'">$(DefineConstants);DEPLOYMENTENVIRONMENT_LOCAL</DefineConstants>
+    <DefineConstants Condition="'$(DeploymentEnvironmentNormalized)'=='stg'">$(DefineConstants);DEPLOYMENTENVIRONMENT_STG</DefineConstants>
+    <DefineConstants Condition="'$(DeploymentEnvironmentNormalized)'=='prod'">$(DefineConstants);DEPLOYMENTENVIRONMENT_PROD</DefineConstants>
+  <DefineConstants Condition="'$(DeploymentEnvironmentNormalized)'=='local'">$(DefineConstants);DEPLOYMENTENVIRONMENT_LOCAL</DefineConstants>
   </PropertyGroup>
   
   <Target Name="ValidateStage" BeforeTargets="BeforeBuild">
     <Message Importance="High" Text="DeploymentEnvironment=$(DeploymentEnvironment) (normalized=$(DeploymentEnvironmentNormalized)); DefineConstants=$(DefineConstants)" />
     <Error Condition="$([System.String]::Copy('$(DefineConstants)').Contains('DEPLOYMENTENVIRONMENT_')) == false"
-           Text="Keine DEPLOYMENTENVIRONMENT_* in DefineConstants gesetzt. Bitte DeploymentEnvironment (dev/preview/release/local) setzen." />
+           Text="Keine DEPLOYMENTENVIRONMENT_* in DefineConstants gesetzt. Bitte DeploymentEnvironment (dev/stg/prod/local) setzen." />
   </Target>
 </Project>

@@ -12,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings;
 
 public static class WebApiConfigurations
 {
-    private static string[] _environments = ["dev", "staging", "produktiv"];
+    private static string[] _environments = ["dev", "stg", "prod"];
     private static string _settingsPath;
     private static Dictionary<string, IWebApiConfig> _settings;
     private static string _appTokenString;
