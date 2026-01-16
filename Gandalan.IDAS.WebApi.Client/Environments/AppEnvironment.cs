@@ -35,23 +35,30 @@ public static class AppEnvironment
 
     public static string ToShortName(DeploymentEnvironment deploymentEnvironment) => deploymentEnvironment switch
     {
-        _ => deploymentEnvironment.ToString().ToLowerInvariant()
-    };
-
-    public static string ToFriendlyName(DeploymentEnvironment deploymentEnvironment) => deploymentEnvironment switch
-    {
-        _ => deploymentEnvironment.ToString().ToLowerInvariant()
-    };
-
-    public static string ToOldName(DeploymentEnvironment deploymentEnvironment) => deploymentEnvironment switch
-    {
-        DeploymentEnvironment.Production => "release",
-        DeploymentEnvironment.Staging => "preview",
+        DeploymentEnvironment.Production => "prod",
+        DeploymentEnvironment.Staging => "stg",
         DeploymentEnvironment.Development => "dev",
         DeploymentEnvironment.Local => "local",
         _ => deploymentEnvironment.ToString().ToLowerInvariant()
     };
 
+    public static string ToFriendlyName(DeploymentEnvironment deploymentEnvironment) => deploymentEnvironment switch
+    {
+        DeploymentEnvironment.Production => "prod",
+        DeploymentEnvironment.Staging => "stg",
+        DeploymentEnvironment.Development => "dev",
+        DeploymentEnvironment.Local => "local",
+        _ => deploymentEnvironment.ToString().ToLowerInvariant()
+    };
+
+    public static string ToOldName(DeploymentEnvironment deploymentEnvironment) => deploymentEnvironment switch
+    {
+        DeploymentEnvironment.Production => "produktiv",
+        DeploymentEnvironment.Staging => "staging",
+        DeploymentEnvironment.Development => "dev",
+        DeploymentEnvironment.Local => "local",
+        _ => deploymentEnvironment.ToString().ToLowerInvariant()
+    };
 
     public static bool TryParse(string name, out DeploymentEnvironment deploymentEnvironment)
     {

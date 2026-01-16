@@ -7,7 +7,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <DeploymentEnvironment>prod</DeploymentEnvironment>
+    <DeploymentEnvironment>dev</DeploymentEnvironment>
   </PropertyGroup>
 
   <!-- Normalisieren -->
