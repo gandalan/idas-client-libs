@@ -183,6 +183,15 @@ public static class WebApiConfigurations
             if (environment != null)
             {
                 _settings.Add(env, environment);
+
+                if (env == "stg")
+                {
+                    _settings.Add("staging", environment);
+                }
+                if (env == "prod")
+                {
+                    _settings.Add("produktiv", environment);
+                }
             }
         }
     }
