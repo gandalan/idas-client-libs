@@ -83,21 +83,52 @@ public class WebRoutinenBase
         }
     }
 
-    private async Task runPreRequestChecks(string url, bool skipAuth = false, [CallerMemberName] string sender = null)
+    private async Task runPreRequestChecks(string url, HttpMethod httpMethod, bool skipAuth = false, [CallerMemberName] string sender = null)
     {
         if (_restRoutinen == null)
         {
             initRestRoutinen();
         }
-        
-        if (!skipAuth && !await LoginAsync())
+
+        CheckNewApiOptInAndApplyHeader(url, httpMethod);
+
+        await CheckAuthorizedOrThrow(url, skipAuth, sender);
+        CheckDateTimeInUtcOrThrow(url, sender);
+    }
+
+    private void CheckNewApiOptInAndApplyHeader(string url, HttpMethod httpMethod)
+    {
+        if (Settings?.NewApiOptInUrls is not { Count: > 0 })
         {
-            var ex = new ApiUnauthorizedException("You are not authorized.");
-            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
-            ex.Data.Add("CallMethod", sender);
-            throw ex;
+            _restRoutinen.RemoveHeader("X-Gateway-Cluster");
+            return;
         }
 
+        var endpoint = url.Split('?')[0].TrimEnd('/');
+
+        var matchingEntry = Settings.NewApiOptInUrls.FirstOrDefault(opt =>
+            opt?.Endpoint != null &&
+            (endpoint.Equals(opt.Endpoint.TrimEnd('/'), StringComparison.OrdinalIgnoreCase) ||
+             endpoint.StartsWith(opt.Endpoint.TrimEnd('/') + "/", StringComparison.OrdinalIgnoreCase)));
+
+        if (matchingEntry != null)
+        {
+            var methodAllowed = matchingEntry.Methods == null ||
+                                matchingEntry.Methods.Count == 0 ||
+                                matchingEntry.Methods.Any(m => m.Equals(httpMethod.Method, StringComparison.OrdinalIgnoreCase));
+
+            if (methodAllowed)
+            {
+                _restRoutinen.AddHeader("X-Gateway-Cluster", "idas");
+                return;
+            }
+        }
+
+        _restRoutinen.RemoveHeader("X-Gateway-Cluster");
+    }
+
+    private void CheckDateTimeInUtcOrThrow(string url, string sender)
+    {
         if (Regex.IsMatch(url, RelativeDateTimePattern))
         {
             var ex = new InvalidDateTimeKindException("The URL contains a datetime with a relative timezone offset (e.g. '+02:00'), which is not allowed. Please use ISO 8601 UTC format with a trailing 'Z', e.g. '2025-10-08T22:00:00.0000000Z'.");
@@ -105,7 +136,17 @@ public class WebRoutinenBase
             ex.Data.Add("CallMethod", sender);
             throw ex;
         }
+    }
 
+    private async Task CheckAuthorizedOrThrow(string url, bool skipAuth, string sender)
+    {
+        if (!skipAuth && !await LoginAsync())
+        {
+            var ex = new ApiUnauthorizedException("You are not authorized.");
+            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
+            ex.Data.Add("CallMethod", sender);
+            throw ex;
+        }
     }
 
     private void initRestRoutinen()
@@ -243,7 +284,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Post, skipAuth);
             return await _restRoutinen.PostAsync<T>(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
@@ -263,7 +304,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Post, skipAuth);
             await _restRoutinen.PostAsync(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
@@ -281,7 +322,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Post, skipAuth);
             return await _restRoutinen.PostDataAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
@@ -301,7 +342,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Post, skipAuth);
             return await _restRoutinen.PostDataAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
@@ -321,7 +362,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Get, skipAuth);
             return await _restRoutinen.GetDataAsync(uri, version: version);
         }
         catch (HttpRequestException ex)
@@ -341,7 +382,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Get, skipAuth);
             return await _restRoutinen.GetAsync(uri, version: version);
         }
         catch (HttpRequestException ex)
@@ -361,7 +402,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Get, skipAuth);
             return await _restRoutinen.GetAsync<T>(uri, settings, version: version);
         }
         catch (HttpRequestException ex)
@@ -381,7 +422,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Put, skipAuth);
             await _restRoutinen.PutAsync(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
@@ -399,7 +440,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Put, skipAuth);
             return await _restRoutinen.PutAsync<T>(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
@@ -419,7 +460,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Put, skipAuth);
             return await _restRoutinen.PutDataAsync(uri, data);
         }
         catch (HttpRequestException ex)
@@ -434,7 +475,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Put, skipAuth);
             return await _restRoutinen.PutDataAsync(uri, data);
         }
         catch (HttpRequestException ex)
@@ -454,7 +495,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Delete, skipAuth);
             await _restRoutinen.DeleteAsync(uri);
         }
         catch (HttpRequestException ex)
@@ -472,7 +513,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Delete, skipAuth);
             await _restRoutinen.DeleteAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
@@ -490,7 +531,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
+            await runPreRequestChecks(uri, HttpMethod.Delete, skipAuth);
             return await _restRoutinen.DeleteAsync<T>(uri, data, version: version);
         }
         catch (HttpRequestException ex)

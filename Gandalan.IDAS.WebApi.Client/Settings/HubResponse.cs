@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Gandalan.IDAS.WebApi.Client.Settings;
 
 public class HubResponse
@@ -11,5 +13,5 @@ public class HubResponse
     public string Notify { get; set; }
     public string WebhookService { get; set; }
     public string Translate { get; set; }
-
+    public List<NewApiOptInEntry> NewApiOptInUrls { get; set; } = [];
 }
