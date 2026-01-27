@@ -1,11 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+
 using Gandalan.IDAS.WebApi.Client;
+using Gandalan.IDAS.WebApi.Client.Exceptions;
+using Gandalan.IDAS.WebApi.Client.RateLimiting;
+
 using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.Web;
@@ -70,6 +75,8 @@ public class RESTRoutinen : IDisposable
 
     public async Task<string> GetAsync(string url, string version = null)
     {
+        CheckRateLimitBeforeRequest();
+
         string contentAsString = null;
         HttpResponseMessage response = null;
         try
@@ -82,6 +89,7 @@ public class RESTRoutinen : IDisposable
         }
         catch (Exception ex)
         {
+            HandleRateLimitResponse(response);
             AddInfoToException(ex, url, response, contentAsString);
             // Für Diagnosezwecke wird hier gefangen und weitergeworfen
             throw;
@@ -90,6 +98,8 @@ public class RESTRoutinen : IDisposable
 
     public async Task<byte[]> GetDataAsync(string url, string version = null)
     {
+        CheckRateLimitBeforeRequest();
+
         string contentAsString = null;
         HttpResponseMessage response = null;
         try
@@ -102,6 +112,7 @@ public class RESTRoutinen : IDisposable
         }
         catch (Exception ex)
         {
+            HandleRateLimitResponse(response);
             AddInfoToException(ex, url, response, contentAsString);
             throw;
         }
@@ -123,6 +134,8 @@ public class RESTRoutinen : IDisposable
 
     public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
     {
+        CheckRateLimitBeforeRequest();
+
         string contentAsString = null;
         HttpResponseMessage response = null;
         try
@@ -136,6 +149,7 @@ public class RESTRoutinen : IDisposable
         }
         catch (Exception ex)
         {
+            HandleRateLimitResponse(response);
             AddInfoToException(ex, url, response, contentAsString);
             throw;
         }
@@ -143,6 +157,8 @@ public class RESTRoutinen : IDisposable
 
     public async Task<byte[]> PostDataAsync(string url, byte[] data, string version = null)
     {
+        CheckRateLimitBeforeRequest();
+
         string contentAsString = null;
         HttpResponseMessage response = null;
         try
@@ -155,6 +171,7 @@ public class RESTRoutinen : IDisposable
         }
         catch (Exception ex)
         {
+            HandleRateLimitResponse(response);
             AddInfoToException(ex, url, response, contentAsString);
             throw;
         }
@@ -162,6 +179,8 @@ public class RESTRoutinen : IDisposable
 
     public async Task<byte[]> PostDataAsync(string url, HttpContent data, string version = null)
     {
+        CheckRateLimitBeforeRequest();
+
         string contentAsString = null;
         HttpResponseMessage response = null;
         try
@@ -174,6 +193,7 @@ public class RESTRoutinen : IDisposable
         }
         catch (Exception ex)
         {
+            HandleRateLimitResponse(response);
             AddInfoToException(ex, url, response, contentAsString);
             throw;
         }
@@ -195,6 +215,8 @@ public class RESTRoutinen : IDisposable
 
     public async Task<string> PutAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
     {
+        CheckRateLimitBeforeRequest();
+
         string contentAsString = null;
         HttpResponseMessage response = null;
         try
@@ -208,6 +230,7 @@ public class RESTRoutinen : IDisposable
         }
         catch (Exception ex)
         {
+            HandleRateLimitResponse(response);
             AddInfoToException(ex, url, response, contentAsString);
             throw;
         }
@@ -215,6 +238,8 @@ public class RESTRoutinen : IDisposable
 
     public async Task<byte[]> PutDataAsync(string url, byte[] data, string version = null)
     {
+        CheckRateLimitBeforeRequest();
+
         string contentAsString = null;
         HttpResponseMessage response = null;
         try
@@ -226,6 +251,7 @@ public class RESTRoutinen : IDisposable
         }
         catch (Exception ex)
         {
+            HandleRateLimitResponse(response);
             AddInfoToException(ex, url, response, contentAsString);
             throw;
         }
@@ -233,6 +259,8 @@ public class RESTRoutinen : IDisposable
 
     public async Task<byte[]> PutDataAsync(string url, HttpContent data, string version = null)
     {
+        CheckRateLimitBeforeRequest();
+
         string contentAsString = null;
         HttpResponseMessage response = null;
         try
@@ -244,6 +272,7 @@ public class RESTRoutinen : IDisposable
         }
         catch (Exception ex)
         {
+            HandleRateLimitResponse(response);
             AddInfoToException(ex, url, response, contentAsString);
             throw;
         }
@@ -257,6 +286,8 @@ public class RESTRoutinen : IDisposable
     /// <returns>Antwort des Servers als String</returns>
     public async Task DeleteAsync(string url, string version = null)
     {
+        CheckRateLimitBeforeRequest();
+
         string contentAsString = null;
         HttpResponseMessage response = null;
         try
@@ -268,6 +299,7 @@ public class RESTRoutinen : IDisposable
         }
         catch (Exception ex)
         {
+            HandleRateLimitResponse(response);
             AddInfoToException(ex, url, response, contentAsString);
             throw;
         }
@@ -275,6 +307,8 @@ public class RESTRoutinen : IDisposable
 
     public async Task<string> DeleteAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
     {
+        CheckRateLimitBeforeRequest();
+
         string contentAsString = null;
         HttpResponseMessage response = null;
         try
@@ -294,6 +328,7 @@ public class RESTRoutinen : IDisposable
         }
         catch (Exception ex)
         {
+            HandleRateLimitResponse(response);
             AddInfoToException(ex, url, response, contentAsString);
             throw;
         }
@@ -306,8 +341,6 @@ public class RESTRoutinen : IDisposable
 
     #endregion
 
-    #region private Methods
-
     private void AddInfoToException(Exception ex, string url, HttpResponseMessage response = null, string responseContent = null, [CallerMemberName] string sender = null)
     {
         ex.Data.Add("URL", new Uri(_client.BaseAddress, url).ToString());
@@ -319,7 +352,49 @@ public class RESTRoutinen : IDisposable
         }
     }
 
-    #endregion
+    private void CheckRateLimitBeforeRequest()
+    {
+        if (RateLimitManager.IsRateLimited(_client.BaseAddress.ToString(), out var resetTime))
+        {
+            var remaining = resetTime - DateTime.UtcNow;
+            throw new RateLimitException(
+                $"Rate limit active. Requests blocked until {resetTime:HH:mm:ss} UTC (in {remaining.TotalSeconds:F0} seconds)",
+                resetTime
+            );
+        }
+    }
+
+    private void HandleRateLimitResponse(HttpResponseMessage response)
+    {
+        if (response?.StatusCode == (HttpStatusCode)429)
+        {
+            DateTime resetTime;
+
+            if (response.Headers.TryGetValues("X-RateLimit-Reset", out var values))
+            {
+                var resetValue = values.FirstOrDefault();
+
+                if (long.TryParse(resetValue, out var unixTimestamp))
+                {
+                    resetTime = DateTimeOffset.FromUnixTimeSeconds(unixTimestamp).UtcDateTime;
+                }
+                else if (DateTime.TryParse(resetValue, out var parsedDate))
+                {
+                    resetTime = parsedDate.ToUniversalTime();
+                }
+                else
+                {
+                    resetTime = DateTime.UtcNow.AddSeconds(60);
+                }
+            }
+            else
+            {
+                resetTime = DateTime.UtcNow.AddSeconds(60);
+            }
+
+            RateLimitManager.SetRateLimited(_client.BaseAddress.ToString(), resetTime);
+        }
+    }
 
     public void Dispose()
     {

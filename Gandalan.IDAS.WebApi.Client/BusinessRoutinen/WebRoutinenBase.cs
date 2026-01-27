@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.Web;
+using Gandalan.IDAS.WebApi.Client.Exceptions;
 using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
 
@@ -634,6 +635,15 @@ public class WebRoutinenBase
 
         L.Fehler(exception);
 
+        if (exception is RateLimitException rateLimitEx)
+        {
+            var remaining = rateLimitEx.RetryAfter.TotalSeconds;
+            OnErrorOccured(new ApiErrorArgs(
+                $"Zu viele Anfragen. Bitte warten Sie {remaining:F0} Sekunden",
+                rateLimitEx.StatusCode
+            ));
+        }
+
         if (!IgnoreOnErrorOccured)
         {
 
@@ -653,16 +663,29 @@ public class WebRoutinenBase
         {
             return new ApiUnauthorizedException(Status = ex.Message);
         }
+
+        if (exception.StatusCode == (HttpStatusCode)429)
+        {
+            return exception;
+        }
+
         return internalHandleWebException(exception, url, sender);
     }
 
     private Exception handleWebException(HttpRequestException ex, string url, object data, [CallerMemberName] string sender = null)
     {
         var exception = TranslateException(ex, data);
+
         if (exception.StatusCode == HttpStatusCode.Unauthorized)
         {
             return new ApiUnauthorizedException(Status = ex.Message);
         }
+
+        if (exception.StatusCode == (HttpStatusCode)429)
+        {
+            return exception;
+        }
+
         return internalHandleWebException(exception, url, sender);
     }
 
