@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
@@ -128,6 +129,8 @@ public class RESTRoutinen : IDisposable
 
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var json = JsonConvert.SerializeObject(data, settings);
             var client = GetClientByVersion(version);
             response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
@@ -262,6 +265,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.DeleteAsync(url);
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -362,4 +367,43 @@ public class RESTRoutinen : IDisposable
     {
         _client.DefaultRequestHeaders.Remove(headerName);
     }
+
+    private void ValidateAndApplyNewApiHeader(string relativeUri)
+    {
+        var config = _client.BaseAddress != null
+            ? _config
+            : null;
+
+        if (config?.NewApiOptInUrls == null || config.NewApiOptInUrls.Length == 0)
+        {
+            RemoveHeader("X-Gateway-Cluster");
+            return;
+        }
+
+        var fullUri = new Uri(_client.BaseAddress, relativeUri);
+        var uriPath = fullUri.AbsolutePath;
+
+        var shouldUseNewApi = config.NewApiOptInUrls.Any(endpoint =>
+            IsPathMatchingEndpoint(uriPath, endpoint));
+
+        if (shouldUseNewApi)
+            AddHeader("X-Gateway-Cluster", "idas");
+        else
+            RemoveHeader("X-Gateway-Cluster");
+    }
+
+    private static bool IsPathMatchingEndpoint(string uriPath, string endpoint)
+    {
+        if (endpoint == null) return false;
+
+        var normalizedEndpoint = endpoint.TrimEnd('/');
+
+        return uriPath.StartsWith(normalizedEndpoint, StringComparison.OrdinalIgnoreCase)
+            && HasValidPathBoundary(uriPath, normalizedEndpoint.Length);
+    }
+
+    private static bool HasValidPathBoundary(string uriPath, int endpointLength)
+        => endpointLength >= uriPath.Length
+            || uriPath[endpointLength] == '/'
+            || uriPath[endpointLength] == '?';
 }

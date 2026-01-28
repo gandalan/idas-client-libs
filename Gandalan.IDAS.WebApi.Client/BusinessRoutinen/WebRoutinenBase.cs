@@ -83,48 +83,15 @@ public class WebRoutinenBase
         }
     }
 
-    private async Task runPreRequestChecks(string url, HttpMethod httpMethod, bool skipAuth = false, [CallerMemberName] string sender = null)
+    private async Task runPreRequestChecks(string url, bool skipAuth = false, [CallerMemberName] string sender = null)
     {
         if (_restRoutinen == null)
         {
             initRestRoutinen();
         }
 
-        CheckNewApiOptInAndApplyHeader(url, httpMethod);
-
         await CheckAuthorizedOrThrow(url, skipAuth, sender);
         CheckDateTimeInUtcOrThrow(url, sender);
-    }
-
-    private void CheckNewApiOptInAndApplyHeader(string url, HttpMethod httpMethod)
-    {
-        if (Settings?.NewApiOptInUrls is not { Count: > 0 })
-        {
-            _restRoutinen.RemoveHeader("X-Gateway-Cluster");
-            return;
-        }
-
-        var endpoint = url.Split('?')[0].TrimEnd('/');
-
-        var matchingEntry = Settings.NewApiOptInUrls.FirstOrDefault(opt =>
-            opt?.Endpoint != null &&
-            (endpoint.Equals(opt.Endpoint.TrimEnd('/'), StringComparison.OrdinalIgnoreCase) ||
-             endpoint.StartsWith(opt.Endpoint.TrimEnd('/') + "/", StringComparison.OrdinalIgnoreCase)));
-
-        if (matchingEntry != null)
-        {
-            var methodAllowed = matchingEntry.Methods == null ||
-                                matchingEntry.Methods.Count == 0 ||
-                                matchingEntry.Methods.Any(m => m.Equals(httpMethod.Method, StringComparison.OrdinalIgnoreCase));
-
-            if (methodAllowed)
-            {
-                _restRoutinen.AddHeader("X-Gateway-Cluster", "idas");
-                return;
-            }
-        }
-
-        _restRoutinen.RemoveHeader("X-Gateway-Cluster");
     }
 
     private void CheckDateTimeInUtcOrThrow(string url, string sender)
@@ -137,7 +104,6 @@ public class WebRoutinenBase
             throw ex;
         }
     }
-
     private async Task CheckAuthorizedOrThrow(string url, bool skipAuth, string sender)
     {
         if (!skipAuth && !await LoginAsync())
@@ -176,6 +142,8 @@ public class WebRoutinenBase
         {
             config.AdditionalHeaders.Add("X-Gdl-InstallationId", Settings.InstallationId.ToString());
         }
+
+        config.NewApiOptInUrls = Settings.NewApiOptInUrls;
 
         _restRoutinen = new RESTRoutinen(config);
     }
@@ -284,7 +252,7 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, HttpMethod.Post, skipAuth);
+            await runPreRequestChecks(uri, skipAuth);
             return await _restRoutinen.PostAsync<T>(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
@@ -300,16 +268,16 @@ public class WebRoutinenBase
         return default;
     }
 
-    public async Task PostAsync(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
+    public async Task PostAsync(string url, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
     {
         try
         {
-            await runPreRequestChecks(uri, HttpMethod.Post, skipAuth);
-            await _restRoutinen.PostAsync(uri, data, settings, version: version);
+            await runPreRequestChecks(url, skipAuth);
+            await _restRoutinen.PostAsync(url, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
+            var exception = handleWebException(ex, url, data);
             tryHandleException(exception);
         }
         catch (Exception e)
@@ -318,36 +286,16 @@ public class WebRoutinenBase
         }
     }
 
-    public async Task<byte[]> PostDataAsync(string uri, byte[] data, bool skipAuth = false, string version = null)
+    public async Task<byte[]> PostDataAsync(string url, byte[] data, bool skipAuth = false, string version = null)
     {
         try
         {
-            await runPreRequestChecks(uri, HttpMethod.Post, skipAuth);
-            return await _restRoutinen.PostDataAsync(uri, data, version: version);
+            await runPreRequestChecks(url, skipAuth);
+            return await _restRoutinen.PostDataAsync(url, data, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
-        }
-        catch (Exception e)
-        {
-            tryHandleException(e);
-        }
-
-        return null;
-    }
-
-    public async Task<byte[]> PostDataAsync(string uri, HttpContent data, bool skipAuth = false, string version = null)
-    {
-        try
-        {
-            await runPreRequestChecks(uri, HttpMethod.Post, skipAuth);
-            return await _restRoutinen.PostDataAsync(uri, data, version: version);
-        }
-        catch (HttpRequestException ex)
-        {
-            var exception = handleWebException(ex, uri, data);
+            var exception = handleWebException(ex, url, data);
             tryHandleException(exception);
         }
         catch (Exception e)
@@ -358,16 +306,16 @@ public class WebRoutinenBase
         return null;
     }
 
-    public async Task<byte[]> GetDataAsync(string uri, bool skipAuth = false, string version = null)
+    public async Task<byte[]> PostDataAsync(string url, HttpContent data, bool skipAuth = false, string version = null)
     {
         try
         {
-            await runPreRequestChecks(uri, HttpMethod.Get, skipAuth);
-            return await _restRoutinen.GetDataAsync(uri, version: version);
+            await runPreRequestChecks(url, skipAuth);
+            return await _restRoutinen.PostDataAsync(url, data, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
+            var exception = handleWebException(ex, url, data);
             tryHandleException(exception);
         }
         catch (Exception e)
@@ -378,16 +326,16 @@ public class WebRoutinenBase
         return null;
     }
 
-    public async Task<string> GetAsync(string uri, bool skipAuth = false, string version = null)
+    public async Task<byte[]> GetDataAsync(string url, bool skipAuth = false, string version = null)
     {
         try
         {
-            await runPreRequestChecks(uri, HttpMethod.Get, skipAuth);
-            return await _restRoutinen.GetAsync(uri, version: version);
+            await runPreRequestChecks(url, skipAuth);
+            return await _restRoutinen.GetDataAsync(url, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
+            var exception = handleWebException(ex, url);
             tryHandleException(exception);
         }
         catch (Exception e)
@@ -398,16 +346,36 @@ public class WebRoutinenBase
         return null;
     }
 
-    public async Task<T> GetAsync<T>(string uri, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
+    public async Task<string> GetAsync(string url, bool skipAuth = false, string version = null)
     {
         try
         {
-            await runPreRequestChecks(uri, HttpMethod.Get, skipAuth);
-            return await _restRoutinen.GetAsync<T>(uri, settings, version: version);
+            await runPreRequestChecks(url, skipAuth);
+            return await _restRoutinen.GetAsync(url, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
+            var exception = handleWebException(ex, url);
+            tryHandleException(exception);
+        }
+        catch (Exception e)
+        {
+            tryHandleException(e);
+        }
+
+        return null;
+    }
+
+    public async Task<T> GetAsync<T>(string url, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
+    {
+        try
+        {
+            await runPreRequestChecks(url, skipAuth);
+            return await _restRoutinen.GetAsync<T>(url, settings, version: version);
+        }
+        catch (HttpRequestException ex)
+        {
+            var exception = handleWebException(ex, url);
             tryHandleException(exception);
         }
         catch (Exception e)
@@ -418,16 +386,16 @@ public class WebRoutinenBase
         return default;
     }
 
-    public async Task PutAsync(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
+    public async Task PutAsync(string url, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
     {
         try
         {
-            await runPreRequestChecks(uri, HttpMethod.Put, skipAuth);
-            await _restRoutinen.PutAsync(uri, data, settings, version: version);
+            await runPreRequestChecks(url, skipAuth);
+            await _restRoutinen.PutAsync(url, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
+            var exception = handleWebException(ex, url, data);
             tryHandleException(exception);
         }
         catch (Exception e)
@@ -436,16 +404,16 @@ public class WebRoutinenBase
         }
     }
 
-    public async Task<T> PutAsync<T>(string uri, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
+    public async Task<T> PutAsync<T>(string url, object data, JsonSerializerSettings settings = null, bool skipAuth = false, string version = null)
     {
         try
         {
-            await runPreRequestChecks(uri, HttpMethod.Put, skipAuth);
-            return await _restRoutinen.PutAsync<T>(uri, data, settings, version: version);
+            await runPreRequestChecks(url, skipAuth);
+            return await _restRoutinen.PutAsync<T>(url, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
+            var exception = handleWebException(ex, url, data);
             tryHandleException(exception);
         }
         catch (Exception e)
@@ -456,31 +424,31 @@ public class WebRoutinenBase
         return default;
     }
 
-    public async Task<byte[]> PutDataAsync(string uri, byte[] data, bool skipAuth = false, string version = null)
+    public async Task<byte[]> PutDataAsync(string url, byte[] data, bool skipAuth = false, string version = null)
     {
         try
         {
-            await runPreRequestChecks(uri, HttpMethod.Put, skipAuth);
-            return await _restRoutinen.PutDataAsync(uri, data);
+            await runPreRequestChecks(url, skipAuth);
+            return await _restRoutinen.PutDataAsync(url, data);
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
+            var exception = handleWebException(ex, url, data);
             tryHandleException(exception);
             return null;
         }
     }
 
-    public async Task<byte[]> PutDataAsync(string uri, HttpContent data, bool skipAuth = false, string version = null)
+    public async Task<byte[]> PutDataAsync(string url, HttpContent data, bool skipAuth = false, string version = null)
     {
         try
         {
-            await runPreRequestChecks(uri, HttpMethod.Put, skipAuth);
-            return await _restRoutinen.PutDataAsync(uri, data);
+            await runPreRequestChecks(url, skipAuth);
+            return await _restRoutinen.PutDataAsync(url, data);
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
+            var exception = handleWebException(ex, url, data);
             tryHandleException(exception);
         }
         catch (Exception e)
@@ -491,16 +459,16 @@ public class WebRoutinenBase
         return null;
     }
 
-    public async Task DeleteAsync(string uri, bool skipAuth = false, string version = null)
+    public async Task DeleteAsync(string url, bool skipAuth = false, string version = null)
     {
         try
         {
-            await runPreRequestChecks(uri, HttpMethod.Delete, skipAuth);
-            await _restRoutinen.DeleteAsync(uri);
+            await runPreRequestChecks(url, skipAuth);
+            await _restRoutinen.DeleteAsync(url);
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
+            var exception = handleWebException(ex, url);
             tryHandleException(exception);
         }
         catch (Exception e)
@@ -509,16 +477,16 @@ public class WebRoutinenBase
         }
     }
 
-    public async Task DeleteAsync(string uri, object data, bool skipAuth = false, string version = null)
+    public async Task DeleteAsync(string url, object data, bool skipAuth = false, string version = null)
     {
         try
         {
-            await runPreRequestChecks(uri, HttpMethod.Delete, skipAuth);
-            await _restRoutinen.DeleteAsync(uri, data, version: version);
+            await runPreRequestChecks(url, skipAuth);
+            await _restRoutinen.DeleteAsync(url, data, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
+            var exception = handleWebException(ex, url, data);
             tryHandleException(exception);
         }
         catch (Exception e)
@@ -527,16 +495,16 @@ public class WebRoutinenBase
         }
     }
 
-    public async Task<T> DeleteAsync<T>(string uri, object data, bool skipAuth = false, string version = null)
+    public async Task<T> DeleteAsync<T>(string url, object data, bool skipAuth = false, string version = null)
     {
         try
         {
-            await runPreRequestChecks(uri, HttpMethod.Delete, skipAuth);
-            return await _restRoutinen.DeleteAsync<T>(uri, data, version: version);
+            await runPreRequestChecks(url, skipAuth);
+            return await _restRoutinen.DeleteAsync<T>(url, data, version: version);
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
+            var exception = handleWebException(ex, url);
             tryHandleException(exception);
         }
         catch (Exception e)

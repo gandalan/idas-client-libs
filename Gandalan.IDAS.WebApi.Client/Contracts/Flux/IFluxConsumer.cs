@@ -75,7 +75,6 @@ public interface IFluxConsumer
     /// </example>
     IDictionary<string, Func<IFluxStore, IFluxAction, Task>> FluxConsumerHandlerMap { get; set; }
 
-
     /// <summary>
     /// Represents an array of <see cref="IFluxStore"/> instances that are registered with the consumer.
     /// </summary>

@@ -6,7 +6,18 @@ namespace Gandalan.IDAS.WebApi.DTO;
 public class ProduktionsSettingsDTO
 {
     public List<ProduktionProduktfamilieSettingsDTO> ProduktionProduktfamilieSettingList { get; set; }
+    /// <summary>
+    /// Aktiviert Sprossenfrei global.
+    /// Die Produktionsberechnung prüft sowohl SprossenfreiEnabled als auch die Aktivierung in der jeweiligen Produktfamilie.
+    /// Wenn gesetzt, ist außerdem die Bearbeitung der Familien-Settings erlaubt.
+    /// </summary>
     public bool SprossenfreiEnabled { get; set; }
+
+    /// <summary>
+    /// Aktiviert Vorbiegen global. 
+    /// Die Produktionsberechnung prüft sowohl VorbiegenEnabled als auch die Aktivierung in der jeweiligen Produktfamilie.
+    /// Wenn gesetzt, ist außerdem die Bearbeitung der Familien-Settings erlaubt.
+    /// </summary>
     public bool VorbiegenEnabled { get; set; }
     public string VorbiegenSprossenfrei { get; set; }
     public string IstAusserhalbGewaehrleistung { get; set; }
@@ -54,6 +65,7 @@ public class ProduktionsSettingsDTO
     public bool LI_TE_Winkelprofil_mit_Schraube_150329_06 { get; set; } = true;
     public string ProdukteMitc3Berechnen { get; set; }
     public bool DF4_DT4_133604 { get; set; } = true;
+    public bool PT2_Griff_Innen_Knopf { get; set; }
 
     //ZusatzRahmen
     public bool ZR_Schraubeckwinkel { get; set; } = true;

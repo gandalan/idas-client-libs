@@ -20,7 +20,6 @@ public interface IDataPrintJobData : IJobData
     int Copies { get; set; }
 }
 
-
 public class DataPrintJobData : IDataPrintJobData
 {
     public Guid PrintGuid { get; set; } = Guid.NewGuid();

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Gandalan.IDAS.WebApi.Client.Settings;
 using Gandalan.IDAS.WebApi.DTO;
 using Newtonsoft.Json;
 
@@ -64,7 +62,7 @@ public interface IWebApiConfig
     /// Each entry specifies the endpoint path and optionally the allowed HTTP methods.
     /// This list must be maintained by clients. Available endpoints that can be used with the new API will be announced.
     /// </summary>
-    List<NewApiOptInEntry> NewApiOptInUrls { get; set; }
+    string[] NewApiOptInUrls { get; set; }
 
     void CopyToThis(IWebApiConfig settings);
 }
