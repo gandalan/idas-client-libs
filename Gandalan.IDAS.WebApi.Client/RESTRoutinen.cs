@@ -75,6 +75,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.GetAsync(url);
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -95,6 +97,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.GetAsync(url);
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -151,6 +155,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.PostAsync(url, new ByteArrayContent(data));
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -170,6 +176,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.PostAsync(url, data);
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -203,6 +211,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var json = JsonConvert.SerializeObject(data, settings);
             var client = GetClientByVersion(version);
             response = await client.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
@@ -223,6 +233,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.PutAsync(url, new ByteArrayContent(data));
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -241,6 +253,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.PutAsync(url, data);
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -285,6 +299,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             var request = new HttpRequestMessage
             {
