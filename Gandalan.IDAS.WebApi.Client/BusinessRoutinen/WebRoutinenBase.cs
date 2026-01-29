@@ -83,29 +83,36 @@ public class WebRoutinenBase
         }
     }
 
-    private async Task runPreRequestChecks(string url, bool skipAuth = false, [CallerMemberName] string sender = null)
+    private async Task runPreRequestChecks(string uri, bool skipAuth = false, [CallerMemberName] string sender = null)
     {
         if (_restRoutinen == null)
         {
             initRestRoutinen();
         }
-        
+
+        await CheckAuthorizedOrThrow(uri, skipAuth, sender);
+        CheckDateTimeInUtcOrThrow(uri, sender);
+    }
+
+    private void CheckDateTimeInUtcOrThrow(string uri, string sender)
+    {
+        if (Regex.IsMatch(uri, RelativeDateTimePattern))
+        {
+            var ex = new InvalidDateTimeKindException("The URL contains a datetime with a relative timezone offset (e.g. '+02:00'), which is not allowed. Please use ISO 8601 UTC format with a trailing 'Z', e.g. '2025-10-08T22:00:00.0000000Z'.");
+            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), uri).ToString());
+            ex.Data.Add("CallMethod", sender);
+            throw ex;
+        }
+    }
+    private async Task CheckAuthorizedOrThrow(string uri, bool skipAuth, string sender)
+    {
         if (!skipAuth && !await LoginAsync())
         {
             var ex = new ApiUnauthorizedException("You are not authorized.");
-            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
+            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), uri).ToString());
             ex.Data.Add("CallMethod", sender);
             throw ex;
         }
-
-        if (Regex.IsMatch(url, RelativeDateTimePattern))
-        {
-            var ex = new InvalidDateTimeKindException("The URL contains a datetime with a relative timezone offset (e.g. '+02:00'), which is not allowed. Please use ISO 8601 UTC format with a trailing 'Z', e.g. '2025-10-08T22:00:00.0000000Z'.");
-            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
-            ex.Data.Add("CallMethod", sender);
-            throw ex;
-        }
-
     }
 
     private void initRestRoutinen()
@@ -135,6 +142,8 @@ public class WebRoutinenBase
         {
             config.AdditionalHeaders.Add("X-Gdl-InstallationId", Settings.InstallationId.ToString());
         }
+
+        config.NewApiOptInUrls = Settings.NewApiOptInUrls;
 
         _restRoutinen = new RESTRoutinen(config);
     }

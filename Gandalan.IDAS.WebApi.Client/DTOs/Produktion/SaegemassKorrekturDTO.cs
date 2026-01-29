@@ -1,4 +1,4 @@
-﻿namespace Gandalan.IDAS.WebApi.DTO;
+namespace Gandalan.IDAS.WebApi.DTO;
 
 /// <summary>
 /// DTO für die Verwaltung der Sägemaßkorrekturen
@@ -19,7 +19,6 @@ public class SaegemassKorrekturDTO
     /// Korrekturmaß bei 45° Schnitt (in mm)
     /// </summary>
     public float Korrektur45Grad { get; set; }
-
 
     /// <summary>
     /// Winkelkorrektur bei 45° Schnitt (in °)

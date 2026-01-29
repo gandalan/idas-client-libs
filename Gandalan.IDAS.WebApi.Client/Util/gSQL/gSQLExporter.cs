@@ -159,7 +159,6 @@ public class gSQLExporter
             aktuelleSektion.Items.Add(new gSQLItem("Position_SonderwunschAngebotsText", sanitizeString(pos.SonderwunschAngebotsText)));
             aktuelleSektion.Items.Add(new gSQLItem("Position_SonderWuenscheModelVersion", sanitizeString(pos.SonderWuenscheModelVersion.ToString())));
 
-
             foreach (var konfig in pos.Daten.Where(u => u.UnterkomponenteName == "Variante"))
             {
                 var key = konfig.KonfigName.Replace("Konfig.", "");

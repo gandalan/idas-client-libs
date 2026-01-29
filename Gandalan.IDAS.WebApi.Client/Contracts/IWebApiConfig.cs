@@ -57,5 +57,12 @@ public interface IWebApiConfig
 
     string TranslateUrl { get; set; }
 
+    /// <summary>
+    /// List of API endpoints configured to use the new backend API on remote calls.
+    /// Each entry specifies the endpoint path and optionally the allowed HTTP methods.
+    /// This list must be maintained by clients. Available endpoints that can be used with the new API will be announced.
+    /// </summary>
+    string[] NewApiOptInUrls { get; set; }
+
     void CopyToThis(IWebApiConfig settings);
 }
