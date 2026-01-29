@@ -379,11 +379,25 @@ public class RESTRoutinen : IDisposable
         }
     }
 
+    /// <summary>
+    /// Removes the specified HTTP header from the default request headers collection.
+    /// </summary>
+    /// <remarks>If the specified header does not exist in the collection, no action is taken.</remarks>
+    /// <param name="headerName">The name of the HTTP header to remove. The comparison is case-insensitive.</param>
     public void RemoveHeader(string headerName)
     {
         _client.DefaultRequestHeaders.Remove(headerName);
     }
 
+    /// <summary>
+    /// Validates whether the specified relative URI should opt in to the new API and applies the appropriate API header
+    /// to the HTTP client request.
+    /// </summary>
+    /// <remarks>If the configuration does not specify any opt-in endpoints, the method ensures the
+    /// 'X-Gateway-Cluster' header is removed. If the relative URI matches an opt-in endpoint, the header is set to
+    /// indicate use of the new API. This method should be called before sending a request to ensure the correct API
+    /// header is applied.</remarks>
+    /// <param name="relativeUri">The relative URI of the request to evaluate for new API opt-in. Must not be null or empty.</param>
     private void ValidateAndApplyNewApiHeader(string relativeUri)
     {
         var config = _client.BaseAddress != null
@@ -408,6 +422,13 @@ public class RESTRoutinen : IDisposable
             RemoveHeader("X-Gateway-Cluster");
     }
 
+    /// <summary>
+    /// Determines whether the specified URI path matches the given configured endpoint, using a case-insensitive comparison and
+    /// ensuring a valid path boundary.
+    /// </summary>
+    /// <param name="uriPath">The URI path to evaluate against the endpoint. This value is compared to the start of the endpoint string.</param>
+    /// <param name="endpoint">The endpoint to match at the start of the URI path. Trailing slashes are ignored. Cannot be null.</param>
+    /// <returns>true if the URI path starts with the endpoint and the match occurs at a valid path boundary; otherwise, false.</returns>
     private static bool IsPathMatchingEndpoint(string uriPath, string endpoint)
     {
         if (endpoint == null) return false;
@@ -418,6 +439,15 @@ public class RESTRoutinen : IDisposable
             && HasValidPathBoundary(uriPath, normalizedEndpoint.Length);
     }
 
+    /// <summary>
+    /// Determines whether the specified endpoint length is at a valid boundary within the given URI path.
+    /// Configured endpoint paths should only match complete segments of the URI path:
+    /// We want to hit /api/Login if it's configured not /api/LoginJwt
+    /// </summary>
+    /// <param name="uriPath">The URI path to evaluate. Cannot be null.</param>
+    /// <param name="endpointLength">The position within the URI path to check for a valid boundary. Must be greater than or equal to 0.</param>
+    /// <returns>true if the endpoint length is at the end of the URI path or is immediately followed by a '/' or '?'; otherwise,
+    /// false.</returns>
     private static bool HasValidPathBoundary(string uriPath, int endpointLength)
         => endpointLength >= uriPath.Length
             || uriPath[endpointLength] == '/'
