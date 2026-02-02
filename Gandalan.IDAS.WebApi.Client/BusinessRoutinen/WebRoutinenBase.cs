@@ -19,7 +19,9 @@ using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.Web;
 using Gandalan.IDAS.WebApi.Client.Exceptions;
+using Gandalan.IDAS.WebApi.Client.RateLimiting;
 using Gandalan.IDAS.WebApi.Client.Settings;
+using Gandalan.IDAS.WebApi.Client.Util;
 using Gandalan.IDAS.WebApi.DTO;
 
 using Newtonsoft.Json;
@@ -90,8 +92,10 @@ public class WebRoutinenBase
         {
             initRestRoutinen();
         }
-        
-        if (!skipAuth && !await LoginAsync())
+
+        ThrowIfRateLimited(Settings.Url, sender);
+
+        if(!skipAuth && !await LoginAsync())
         {
             var ex = new ApiUnauthorizedException("You are not authorized.");
             ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
@@ -99,6 +103,7 @@ public class WebRoutinenBase
             throw ex;
         }
 
+        // TODO: SYSLIB1045 in new Idas Api - upgrade to compile time REGEX for performance
         if (Regex.IsMatch(url, RelativeDateTimePattern))
         {
             var ex = new InvalidDateTimeKindException("The URL contains a datetime with a relative timezone offset (e.g. '+02:00'), which is not allowed. Please use ISO 8601 UTC format with a trailing 'Z', e.g. '2025-10-08T22:00:00.0000000Z'.");
@@ -107,6 +112,20 @@ public class WebRoutinenBase
             throw ex;
         }
 
+    }
+
+    private void ThrowIfRateLimited(string realativePath, string sender = null)
+    {
+        if (RateLimitManager.IsRateLimited(Settings.Url, out var resetTime))
+        {
+            var settingsUrl = new Uri(Settings.Url);
+            var rateLimitEx = new RateLimitException(resetTime, null, AuthToken?.MandantGuid, settingsUrl.Host);
+            var ex = new ApiException(rateLimitEx.Message, rateLimitEx);
+            ex.Data.Add("URL", new Uri(settingsUrl, realativePath).ToString());
+            ex.Data.Add("CallMethod", sender);
+            ex.Data.Add("RateLimitReset", resetTime);
+            throw ex;
+        }
     }
 
     private void initRestRoutinen()
@@ -635,15 +654,6 @@ public class WebRoutinenBase
 
         L.Fehler(exception);
 
-        if (exception is RateLimitException rateLimitEx)
-        {
-            var remaining = rateLimitEx.RetryAfter.TotalSeconds;
-            OnErrorOccured(new ApiErrorArgs(
-                $"Zu viele Anfragen. Bitte warten Sie {remaining:F0} Sekunden",
-                rateLimitEx.StatusCode
-            ));
-        }
-
         if (!IgnoreOnErrorOccured)
         {
 
@@ -664,11 +674,6 @@ public class WebRoutinenBase
             return new ApiUnauthorizedException(Status = ex.Message);
         }
 
-        if (exception.StatusCode == (HttpStatusCode)429)
-        {
-            return exception;
-        }
-
         return internalHandleWebException(exception, url, sender);
     }
 
@@ -679,11 +684,6 @@ public class WebRoutinenBase
         if (exception.StatusCode == HttpStatusCode.Unauthorized)
         {
             return new ApiUnauthorizedException(Status = ex.Message);
-        }
-
-        if (exception.StatusCode == (HttpStatusCode)429)
-        {
-            return exception;
         }
 
         return internalHandleWebException(exception, url, sender);
@@ -730,42 +730,43 @@ public class WebRoutinenBase
 
     protected static ApiException TranslateException(HttpRequestException ex, object payload)
     {
-        if (ex.Data.Contains("StatusCode"))
+        if (!ex.Data.Contains("StatusCode"))
         {
-            var response = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
-            var code = (HttpStatusCode)ex.Data["StatusCode"];
-
-            if (!string.IsNullOrWhiteSpace(response))
-            {
-                // Newtonsoft TypeNameInfo - try to restore original exception from Backend
-                if (response.Contains("$type"))
-                {
-                    try
-                    {
-                        var original = JsonConvert.DeserializeObject<Exception>(response, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
-                        return new ApiException(original.Message, code, original, payload);
-                    }
-                    catch
-                    {
-                    }
-                }
-
-                try
-                {
-                    var infoObject = JsonConvert.DeserializeObject<dynamic>(response);
-                    string status = infoObject.status;
-                    return new ApiException(status, code, ex, payload) { ExceptionString = infoObject.exception.ToString() };
-                }
-                catch
-                {
-                    return new ApiException(response, code, ex, payload);
-                }
-            }
-
-            return new ApiException(ex.Message, code, ex, payload);
+            return new ApiException(ex.Message, ex, payload);
         }
 
-        return new ApiException(ex.Message, ex, payload);
+        var response = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
+        var code = (HttpStatusCode)ex.Data["StatusCode"];
+
+        if (string.IsNullOrWhiteSpace(response))
+        {
+            return new ApiException(ex.Message, code, ex);
+        }
+
+        // Newtonsoft TypeNameInfo - try to restore original exception from Backend
+        if (response.Contains("$type"))
+        {
+            try
+            {
+                var original = JsonConvert.DeserializeObject<Exception>(response, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+                return new ApiException(original.Message, code, original, payload);
+            }
+            catch
+            {
+                // TODO: we should at least log this
+            }
+        }
+
+        try
+        {
+            var infoObject = JsonConvert.DeserializeObject<dynamic>(response);
+            string status = infoObject.status;
+            return new ApiException(status, code, ex, payload) { ExceptionString = infoObject.exception.ToString() };
+        }
+        catch
+        {
+            return new ApiException(response, code, ex, payload);
+        }
     }
 
     protected static ApiException TranslateException(HttpRequestException ex)
@@ -779,6 +780,14 @@ public class WebRoutinenBase
             {
                 try
                 {
+                    if(code is (HttpStatusCode) 429)
+                    {
+                        var problemDetails = JsonConvert.DeserializeObject<ProblemDetails>(response);
+                        ProblemDetails.TryExtractResetTime(response, out var resetDateTimeUtc);
+                        var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
+                        return new ApiException(rateLimitEx.Message, code, rateLimitEx, response);
+                    }
+
                     var original = JsonConvert.DeserializeObject<Exception>(response, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
                     return new ApiException(original.Message, code, original);
                 }
