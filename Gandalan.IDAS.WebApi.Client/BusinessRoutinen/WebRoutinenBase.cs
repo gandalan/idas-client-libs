@@ -95,7 +95,7 @@ public class WebRoutinenBase
 
         ThrowIfRateLimited(Settings.Url, sender);
 
-        if(!skipAuth && !await LoginAsync())
+        if (!skipAuth && !await LoginAsync())
         {
             var ex = new ApiUnauthorizedException("You are not authorized.");
             ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
@@ -725,6 +725,15 @@ public class WebRoutinenBase
             exception.Data.Add("Payload", exception.Payload);
         }
 
+        // Add data from ProblemDetails if available
+        if (exception.ProblemDetails != null)
+        {
+            exception.Data.Add("ProblemDetails.Title", exception.ProblemDetails.Type);
+            exception.Data.Add("ProblemDetails.Type", exception.ProblemDetails.Title);
+            exception.Data.Add("ProblemDetails.Detail", exception.ProblemDetails.Detail);
+            exception.Data.Add("ProblemDetails.Instance", exception.ProblemDetails.Instance);
+        }
+
         return exception;
     }
 
@@ -740,76 +749,127 @@ public class WebRoutinenBase
 
         if (string.IsNullOrWhiteSpace(response))
         {
-            return new ApiException(ex.Message, code, ex);
+            return new ApiException(ex.Message, code, ex, payload);
         }
 
-        // Newtonsoft TypeNameInfo - try to restore original exception from Backend
-        if (response.Contains("$type"))
+        if (TryDeserializeProblemDetails(response, out var problemDetails))
         {
-            try
+            if (problemDetails.Status == 429)
             {
-                var original = JsonConvert.DeserializeObject<Exception>(response, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
-                return new ApiException(original.Message, code, original, payload);
+                ProblemDetails.TryExtractRetryDateTime(response, out var resetDateTimeUtc);
+                var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
+                return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, rateLimitEx, problemDetails);
             }
-            catch
-            {
-                // TODO: we should at least log this
-            }
+
+            return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, problemDetails, payload);
         }
 
-        try
+        if (TryDeserializeException(response, out var originalException))
         {
-            var infoObject = JsonConvert.DeserializeObject<dynamic>(response);
-            string status = infoObject.status;
-            return new ApiException(status, code, ex, payload) { ExceptionString = infoObject.exception.ToString() };
+            return new ApiException(originalException.Message, code, originalException, payload);
         }
-        catch
+
+        if (TryDeserializeDynamic(response, out var status, out var dynamicException))
         {
-            return new ApiException(response, code, ex, payload);
+            return new ApiException(status, code, ex, payload) { ExceptionString = dynamicException };
         }
+
+        return new ApiException(response, code, ex);
     }
 
     protected static ApiException TranslateException(HttpRequestException ex)
     {
-        if (ex.Data.Contains("StatusCode"))
+        if (!ex.Data.Contains("StatusCode"))
         {
-            var response = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
-            var code = (HttpStatusCode)ex.Data["StatusCode"];
+            return new ApiException(ex.Message, ex);
+        }
 
-            if (!string.IsNullOrWhiteSpace(response))
-            {
-                try
-                {
-                    if(code is (HttpStatusCode) 429)
-                    {
-                        var problemDetails = JsonConvert.DeserializeObject<ProblemDetails>(response);
-                        ProblemDetails.TryExtractResetTime(response, out var resetDateTimeUtc);
-                        var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
-                        return new ApiException(rateLimitEx.Message, code, rateLimitEx, response);
-                    }
+        var response = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
+        var code = (HttpStatusCode)ex.Data["StatusCode"];
 
-                    var original = JsonConvert.DeserializeObject<Exception>(response, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
-                    return new ApiException(original.Message, code, original);
-                }
-                catch
-                {
-                    try
-                    {
-                        var infoObject = JsonConvert.DeserializeObject<dynamic>(response);
-                        string status = infoObject.status;
-                        return new ApiException(status, code, ex) { ExceptionString = infoObject.exception.ToString() };
-                    }
-                    catch
-                    {
-                        return new ApiException(response, code, ex);
-                    }
-                }
-            }
-
+        if (string.IsNullOrWhiteSpace(response))
+        {
             return new ApiException(ex.Message, code, ex);
         }
 
-        return new ApiException(ex.Message, ex);
+        if (TryDeserializeProblemDetails(response, out var problemDetails))
+        {
+            if (problemDetails.Status == 429)
+            {
+                ProblemDetails.TryExtractRetryDateTime(response, out var resetDateTimeUtc);
+                var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
+                return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, rateLimitEx, problemDetails);
+            }
+            return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, problemDetails);
+        }
+
+        if (TryDeserializeException(response, out var originalException))
+        {
+            return new ApiException(originalException.Message, code, originalException);
+        }
+
+        if (TryDeserializeDynamic(response, out var status, out var dynamicException))
+        {
+            return new ApiException(status, code, ex) { ExceptionString = dynamicException };
+        }
+
+        return new ApiException(response, code, ex);
+    }
+
+    private static bool TryDeserializeException(string json, out Exception exception)
+    {
+        exception = null!;
+
+        if (!json.Contains("$type"))
+        {
+            return false;
+        }
+
+        try
+        {
+            exception = JsonConvert.DeserializeObject<Exception>(json,
+                new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+            return exception != null;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static bool TryDeserializeProblemDetails(string json, out ProblemDetails problemDetails)
+    {
+        problemDetails = null!;
+
+        try
+        {
+            problemDetails = JsonConvert.DeserializeObject<ProblemDetails>(json);
+            return problemDetails != null;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static bool TryDeserializeDynamic(string json, out string status, out string dynamicException)
+    {
+        status = null!;
+        dynamicException = null!;
+
+        dynamic dynamicObject;
+
+        try
+        {
+            dynamicObject = JsonConvert.DeserializeObject<dynamic>(json);
+            status = dynamicObject.status;
+            dynamicException = dynamicObject.exception?.ToString();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }
 

@@ -29,11 +29,11 @@ public class ProblemDetails
     [JsonExtensionData]
     public IDictionary<string, object> Extensions { get; set; }
 
-    public static bool TryExtractResetTime(
+    public static bool TryExtractRetryDateTime(
         string responseContent,
-        out DateTime resetDateTimeUtc)
+        out DateTime retryDateTimeUtc)
     {
-        resetDateTimeUtc = DateTime.MinValue;
+        retryDateTimeUtc = DateTime.MinValue;
 
         if (string.IsNullOrWhiteSpace(responseContent))
         {
@@ -52,7 +52,7 @@ public class ProblemDetails
                 DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
                 out var resetDatetime))
             {
-                resetDateTimeUtc = resetDatetime;
+                retryDateTimeUtc = resetDatetime;
                 return true;
             }
         }

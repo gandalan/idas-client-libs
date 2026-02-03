@@ -9,7 +9,7 @@ public class RateLimitException : ApiException
     public Guid? MandantGuid { get; }
     public DateTime RetryAfterUtc { get; } = DateTime.UtcNow.AddSeconds(-1);
     public string Host { get; }
-    public TimeSpan RetryAfter
+    public TimeSpan RetryAfterInterval
         => RetryAfterUtc > DateTime.UtcNow ? RetryAfterUtc - DateTime.UtcNow : TimeSpan.Zero;
 
     public string DetailedMessage { get; }
