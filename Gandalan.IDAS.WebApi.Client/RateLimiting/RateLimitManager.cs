@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.RateLimiting;
 
-public class RateLimitManager
+public class RateLimitRegistry
 {
     private static readonly ConcurrentDictionary<string, RateLimitState> _rateLimitsByHost = new();
     private static readonly ConcurrentDictionary<string, SemaphoreSlim> _semaphoresByHost = new();

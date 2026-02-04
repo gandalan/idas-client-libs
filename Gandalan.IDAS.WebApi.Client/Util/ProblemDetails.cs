@@ -29,36 +29,20 @@ public class ProblemDetails
     [JsonExtensionData]
     public IDictionary<string, object> Extensions { get; set; }
 
-    public static bool TryExtractRetryDateTime(
-        string responseContent,
-        out DateTime retryDateTimeUtc)
+    public bool TryGetResetDateTimeUtc(out DateTime resetDateTimeUtc)
     {
-        retryDateTimeUtc = DateTime.MinValue;
+        resetDateTimeUtc = DateTime.MinValue;
 
-        if (string.IsNullOrWhiteSpace(responseContent))
+        if (Extensions != null &&
+            Extensions.TryGetValue("reset", out var resetObj) &&
+            resetObj != null &&
+            DateTime.TryParse(resetObj.ToString(),
+            null,
+            DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+            out var resetDatetime))
         {
-            return false;
-        }
-
-        try
-        {
-            var problemDetails = JsonConvert.DeserializeObject<ProblemDetails>(responseContent);
-
-            if (problemDetails?.Extensions != null &&
-                problemDetails.Extensions.TryGetValue("reset", out var resetObj) &&
-                resetObj != null &&
-                DateTime.TryParse(resetObj.ToString(),
-                null,
-                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
-                out var resetDatetime))
-            {
-                retryDateTimeUtc = resetDatetime;
-                return true;
-            }
-        }
-        catch (JsonException)
-        {
-            // JSON ungültig - ignorieren und false zurückgeben
+            resetDateTimeUtc = resetDatetime;
+            return true;
         }
 
         return false;

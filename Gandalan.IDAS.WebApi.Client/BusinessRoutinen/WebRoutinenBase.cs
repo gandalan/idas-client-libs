@@ -116,10 +116,10 @@ public class WebRoutinenBase
 
     private void ThrowIfRateLimited(string realativePath, string sender = null)
     {
-        if (RateLimitManager.IsRateLimited(Settings.Url, out var resetTime))
+        if (RateLimitRegistry.IsRateLimited(Settings.Url, out var resetTime))
         {
             var settingsUrl = new Uri(Settings.Url);
-            var rateLimitEx = new RateLimitException(resetTime, null, AuthToken?.MandantGuid, settingsUrl.Host);
+            var rateLimitEx = new RateLimitException(resetTime);
             var ex = new ApiException(rateLimitEx.Message, rateLimitEx);
             ex.Data.Add("URL", new Uri(settingsUrl, realativePath).ToString());
             ex.Data.Add("CallMethod", sender);
@@ -669,6 +669,17 @@ public class WebRoutinenBase
     private Exception handleWebException(HttpRequestException ex, string url, [CallerMemberName] string sender = null)
     {
         var exception = TranslateException(ex);
+
+        if (exception is not null &&
+            exception.StatusCode == (HttpStatusCode)429 &&
+            exception.ProblemDetails is not null &&
+            exception.ProblemDetails.TryGetResetDateTimeUtc(out var resetDateTimeUtc))
+        {
+            RateLimitRegistry.SetRateLimited(Settings.Url, resetDateTimeUtc);
+            var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
+            return new ApiException(exception.ProblemDetails.Detail ?? exception.ProblemDetails.Title, exception.StatusCode, rateLimitEx, exception.ProblemDetails);
+        }
+
         if (exception.StatusCode == HttpStatusCode.Unauthorized)
         {
             return new ApiUnauthorizedException(Status = ex.Message);
@@ -754,9 +765,8 @@ public class WebRoutinenBase
 
         if (TryDeserializeProblemDetails(response, out var problemDetails))
         {
-            if (problemDetails.Status == 429)
+            if (problemDetails.Status == 429 && problemDetails.TryGetResetDateTimeUtc(out var resetDateTimeUtc))
             {
-                ProblemDetails.TryExtractRetryDateTime(response, out var resetDateTimeUtc);
                 var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
                 return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, rateLimitEx, problemDetails);
             }
@@ -794,12 +804,6 @@ public class WebRoutinenBase
 
         if (TryDeserializeProblemDetails(response, out var problemDetails))
         {
-            if (problemDetails.Status == 429)
-            {
-                ProblemDetails.TryExtractRetryDateTime(response, out var resetDateTimeUtc);
-                var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
-                return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, rateLimitEx, problemDetails);
-            }
             return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, problemDetails);
         }
 
