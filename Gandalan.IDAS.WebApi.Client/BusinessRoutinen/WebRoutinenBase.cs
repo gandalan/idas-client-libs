@@ -120,7 +120,7 @@ public class WebRoutinenBase
         {
             var settingsUrl = new Uri(Settings.Url);
             var rateLimitEx = new RateLimitException(resetTime);
-            var ex = new ApiException(rateLimitEx.Message, rateLimitEx);
+            var ex = new ApiException(rateLimitEx.Message, (HttpStatusCode)429, rateLimitEx);
             ex.Data.Add("URL", new Uri(settingsUrl, realativePath).ToString());
             ex.Data.Add("CallMethod", sender);
             ex.Data.Add("RateLimitReset", resetTime);
@@ -692,6 +692,16 @@ public class WebRoutinenBase
     {
         var exception = TranslateException(ex, data);
 
+        if (exception is not null &&
+            exception.StatusCode == (HttpStatusCode)429 &&
+            exception.ProblemDetails is not null &&
+            exception.ProblemDetails.TryGetResetDateTimeUtc(out var resetDateTimeUtc))
+        {
+            RateLimitRegistry.SetRateLimited(Settings.Url, resetDateTimeUtc);
+            var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
+            return new ApiException(exception.ProblemDetails.Detail ?? exception.ProblemDetails.Title, exception.StatusCode, rateLimitEx, exception.ProblemDetails);
+        }
+
         if (exception.StatusCode == HttpStatusCode.Unauthorized)
         {
             return new ApiUnauthorizedException(Status = ex.Message);
@@ -739,8 +749,8 @@ public class WebRoutinenBase
         // Add data from ProblemDetails if available
         if (exception.ProblemDetails != null)
         {
-            exception.Data.Add("ProblemDetails.Title", exception.ProblemDetails.Type);
-            exception.Data.Add("ProblemDetails.Type", exception.ProblemDetails.Title);
+            exception.Data.Add("ProblemDetails.Title", exception.ProblemDetails.Title);
+            exception.Data.Add("ProblemDetails.Type", exception.ProblemDetails.Type);
             exception.Data.Add("ProblemDetails.Detail", exception.ProblemDetails.Detail);
             exception.Data.Add("ProblemDetails.Instance", exception.ProblemDetails.Instance);
         }
@@ -768,7 +778,7 @@ public class WebRoutinenBase
             if (problemDetails.Status == 429 && problemDetails.TryGetResetDateTimeUtc(out var resetDateTimeUtc))
             {
                 var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
-                return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, rateLimitEx, problemDetails);
+                return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, rateLimitEx, problemDetails, payload);
             }
 
             return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, problemDetails, payload);
@@ -784,7 +794,7 @@ public class WebRoutinenBase
             return new ApiException(status, code, ex, payload) { ExceptionString = dynamicException };
         }
 
-        return new ApiException(response, code, ex);
+        return new ApiException(response, code, ex, payload);
     }
 
     protected static ApiException TranslateException(HttpRequestException ex)
@@ -848,7 +858,14 @@ public class WebRoutinenBase
         try
         {
             problemDetails = JsonConvert.DeserializeObject<ProblemDetails>(json);
-            return problemDetails != null;
+
+            var isValid = problemDetails != null &&
+                          problemDetails.Status.HasValue &&
+                          (!string.IsNullOrEmpty(problemDetails.Title) ||
+                          !string.IsNullOrEmpty(problemDetails.Type) ||
+                          !string.IsNullOrEmpty(problemDetails.Detail));
+
+            return isValid;
         }
         catch
         {

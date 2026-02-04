@@ -47,6 +47,13 @@ public class ApiException : Exception
         ProblemDetails = problemDetails;
     }
 
+    public ApiException(string message, HttpStatusCode statusCode, Exception innerException, ProblemDetails problemDetails, object payload) : base(message, innerException)
+    {
+        StatusCode = statusCode;
+        ProblemDetails = problemDetails;
+        Payload = JsonConvert.SerializeObject(payload);
+    }
+
     public ApiException(string message, HttpStatusCode statusCode, Exception innerException) : base(message, innerException)
     {
         StatusCode = statusCode;

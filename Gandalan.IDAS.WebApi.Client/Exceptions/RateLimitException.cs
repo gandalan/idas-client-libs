@@ -7,9 +7,6 @@ namespace Gandalan.IDAS.WebApi.Client.Exceptions;
 public class RateLimitException : ApiException
 {
     public DateTime RetryAfterUtc { get; } = DateTime.UtcNow.AddSeconds(-1);
-    public string Host { get; }
-    public TimeSpan RetryAfterInterval
-        => RetryAfterUtc > DateTime.UtcNow ? RetryAfterUtc - DateTime.UtcNow : TimeSpan.Zero;
 
     public string DetailedMessage { get; }
 
