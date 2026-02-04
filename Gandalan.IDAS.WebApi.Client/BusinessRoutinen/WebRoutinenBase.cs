@@ -268,12 +268,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return default;
@@ -288,12 +288,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
     }
 
@@ -306,12 +306,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return null;
@@ -326,12 +326,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return null;
@@ -346,12 +346,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return null;
@@ -366,12 +366,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return null;
@@ -386,12 +386,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return default;
@@ -406,12 +406,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
     }
 
@@ -424,12 +424,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return default;
@@ -444,8 +444,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
             return null;
         }
     }
@@ -459,12 +459,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return null;
@@ -479,12 +479,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
     }
 
@@ -497,12 +497,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
     }
 
@@ -515,12 +515,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return default;
@@ -647,7 +647,7 @@ public class WebRoutinenBase
     /// </summary>
     /// <param name="exception">Exception to check</param>
     /// <exception cref="Exception">Throws <paramref name="exception"/>, if no <see cref="CustomExceptionHandler"/> handles the exception</exception>
-    private void tryHandleException(Exception exception)
+    private void TryHandleException(Exception exception)
     {
         exception.Data.Add("BenutzerGuid", AuthToken?.Benutzer?.BenutzerGuid);
         exception.Data.Add("MandantGuid", AuthToken?.MandantGuid);
@@ -666,51 +666,34 @@ public class WebRoutinenBase
         }
     }
 
-    private Exception handleWebException(HttpRequestException ex, string url, [CallerMemberName] string sender = null)
-    {
-        var exception = TranslateException(ex);
-
-        if (exception is not null &&
-            exception.StatusCode == (HttpStatusCode)429 &&
-            exception.ProblemDetails is not null &&
-            exception.ProblemDetails.TryGetResetDateTimeUtc(out var resetDateTimeUtc))
-        {
-            RateLimitRegistry.SetRateLimited(Settings.Url, resetDateTimeUtc);
-            var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
-            return new ApiException(exception.ProblemDetails.Detail ?? exception.ProblemDetails.Title, exception.StatusCode, rateLimitEx, exception.ProblemDetails);
-        }
-
-        if (exception.StatusCode == HttpStatusCode.Unauthorized)
-        {
-            return new ApiUnauthorizedException(Status = ex.Message);
-        }
-
-        return internalHandleWebException(exception, url, sender);
-    }
-
-    private Exception handleWebException(HttpRequestException ex, string url, object data, [CallerMemberName] string sender = null)
+    private Exception HandleWebException(
+        HttpRequestException ex,
+        string url,
+        object data = null,
+        [CallerMemberName] string sender = null)
     {
         var exception = TranslateException(ex, data);
 
-        if (exception is not null &&
-            exception.StatusCode == (HttpStatusCode)429 &&
-            exception.ProblemDetails is not null &&
-            exception.ProblemDetails.TryGetResetDateTimeUtc(out var resetDateTimeUtc))
-        {
-            RateLimitRegistry.SetRateLimited(Settings.Url, resetDateTimeUtc);
-            var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
-            return new ApiException(exception.ProblemDetails.Detail ?? exception.ProblemDetails.Title, exception.StatusCode, rateLimitEx, exception.ProblemDetails);
-        }
+        TryUpdateRateLimitRegistry(exception);
 
         if (exception.StatusCode == HttpStatusCode.Unauthorized)
         {
             return new ApiUnauthorizedException(Status = ex.Message);
         }
 
-        return internalHandleWebException(exception, url, sender);
+        return InternalHandleWebException(exception, url, sender);
     }
 
-    private ApiException internalHandleWebException(ApiException exception, string url, [CallerMemberName] string sender = null)
+    private void TryUpdateRateLimitRegistry(ApiException exception)
+    {
+        if (exception?.StatusCode == (HttpStatusCode)429 &&
+            exception.ProblemDetails?.TryGetResetDateTimeUtc(out var resetDateTimeUtc) == true)
+        {
+            RateLimitRegistry.SetRateLimited(Settings.Url, resetDateTimeUtc);
+        }
+    }
+
+    private ApiException InternalHandleWebException(ApiException exception, string url, [CallerMemberName] string sender = null)
     {
         if (!IgnoreOnErrorOccured)
         {
@@ -758,7 +741,7 @@ public class WebRoutinenBase
         return exception;
     }
 
-    protected static ApiException TranslateException(HttpRequestException ex, object payload)
+    protected static ApiException TranslateException(HttpRequestException ex, object payload = null)
     {
         if (!ex.Data.Contains("StatusCode"))
         {
@@ -795,39 +778,6 @@ public class WebRoutinenBase
         }
 
         return new ApiException(response, code, ex, payload);
-    }
-
-    protected static ApiException TranslateException(HttpRequestException ex)
-    {
-        if (!ex.Data.Contains("StatusCode"))
-        {
-            return new ApiException(ex.Message, ex);
-        }
-
-        var response = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
-        var code = (HttpStatusCode)ex.Data["StatusCode"];
-
-        if (string.IsNullOrWhiteSpace(response))
-        {
-            return new ApiException(ex.Message, code, ex);
-        }
-
-        if (TryDeserializeProblemDetails(response, out var problemDetails))
-        {
-            return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, problemDetails);
-        }
-
-        if (TryDeserializeException(response, out var originalException))
-        {
-            return new ApiException(originalException.Message, code, originalException);
-        }
-
-        if (TryDeserializeDynamic(response, out var status, out var dynamicException))
-        {
-            return new ApiException(status, code, ex) { ExceptionString = dynamicException };
-        }
-
-        return new ApiException(response, code, ex);
     }
 
     private static bool TryDeserializeException(string json, out Exception exception)
