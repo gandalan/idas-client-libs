@@ -10,6 +10,9 @@ public class RateLimitException : ApiException
 
     public string DetailedMessage { get; }
 
+    public TimeSpan RetryAfterInterval
+        => RetryAfterUtc > DateTime.UtcNow ? RetryAfterUtc - DateTime.UtcNow : TimeSpan.Zero;
+
     public RateLimitException(string message, DateTime resetTimeUtc, Exception innerException = null)
         : base(message, innerException)
     {

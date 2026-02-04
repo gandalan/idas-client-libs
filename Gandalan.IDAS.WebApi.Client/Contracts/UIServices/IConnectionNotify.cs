@@ -6,5 +6,5 @@ public interface IConnectionNotify
 {
     ConnectionNotifyState State { get; }
 
-    public void UpdateState(ConnectionNotifyState state, TimeSpan? message = null);
+    public void UpdateState(ConnectionNotifyState state, TimeSpan? duration = null);
 }
