@@ -94,14 +94,7 @@ public class WebRoutinenBase
         }
 
         ThrowIfRateLimited(Settings.Url, sender);
-
-        if (!skipAuth && !await LoginAsync())
-        {
-            var ex = new ApiUnauthorizedException("You are not authorized.");
-            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
-            ex.Data.Add("CallMethod", sender);
-            throw ex;
-        }
+        await CheckAuthorizedOrThrow(url, skipAuth, sender);
 
         // TODO: SYSLIB1045 in new Idas Api - upgrade to compile time REGEX for performance
         if (Regex.IsMatch(url, RelativeDateTimePattern))
@@ -111,7 +104,17 @@ public class WebRoutinenBase
             ex.Data.Add("CallMethod", sender);
             throw ex;
         }
+    }
 
+    private async Task CheckAuthorizedOrThrow(string url, bool skipAuth, string sender)
+    {
+        if (!skipAuth && !await LoginAsync())
+        {
+            var ex = new ApiUnauthorizedException("You are not authorized.");
+            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
+            ex.Data.Add("CallMethod", sender);
+            throw ex;
+        }
     }
 
     private void ThrowIfRateLimited(string realativePath, string sender = null)
@@ -155,6 +158,8 @@ public class WebRoutinenBase
         {
             config.AdditionalHeaders.Add("X-Gdl-InstallationId", Settings.InstallationId.ToString());
         }
+
+        config.NewApiOptInUrls = Settings.NewApiOptInUrls;
 
         _restRoutinen = new RESTRoutinen(config);
     }
