@@ -1,8 +1,9 @@
 using System;
+using Gandalan.IDAS.WebApi.Client.Contracts;
 
 namespace Gandalan.IDAS.WebApi.Data.DTOs.Salden;
 
-public class StandardSaldoDTO
+public class StandardSaldoDTO : IWithGueltigkeitsZeitraum
 {
     public Guid StandardSaldoGuid { get; set; }
 
