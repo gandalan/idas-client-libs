@@ -37,6 +37,11 @@ public class HttpClientConfig : ICloneable
     /// </summary>
     public bool UseCompression { get; set; }
 
+    /// <summary>
+    /// Gets or sets the collection of URLs that opt-in for new API redirects.
+    /// </summary>
+    public string[] NewApiOptInUrls { get; set; }
+
     public object Clone()
     {
         return new HttpClientConfig

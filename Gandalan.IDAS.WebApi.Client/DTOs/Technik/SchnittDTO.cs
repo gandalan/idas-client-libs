@@ -12,5 +12,4 @@ public partial class SchnittDTO
     public long Version { get; set; }
     public DateTime ChangedDate { get; set; }
 
-
 }
