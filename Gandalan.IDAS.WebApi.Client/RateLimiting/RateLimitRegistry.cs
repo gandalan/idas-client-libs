@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Gandalan.IDAS.WebApi.Client.RateLimiting;
 
-public class RateLimitRegistry
+internal static class RateLimitRegistry
 {
     private static readonly ConcurrentDictionary<string, RateLimitState> _rateLimitsByHost = new();
     private static readonly ConcurrentDictionary<string, SemaphoreSlim> _semaphoresByHost = new();
 
-    public static async Task WaitIfRateLimitedAsync(string baseUrl, CancellationToken cancellationToken = default)
+    internal static async Task WaitIfRateLimitedAsync(string baseUrl, CancellationToken cancellationToken = default)
     {
         var hostKey = GetHostKey(baseUrl);
         var semaphore = _semaphoresByHost.GetOrAdd(hostKey, _ => new SemaphoreSlim(1, 1));
@@ -38,7 +38,7 @@ public class RateLimitRegistry
         }
     }
 
-    public static bool IsRateLimited(string baseUrl, out DateTime resetTime)
+    internal static bool IsRateLimited(string baseUrl, out DateTime resetTime)
     {
         var hostKey = GetHostKey(baseUrl);
 
