@@ -6,7 +6,9 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+
 using Gandalan.IDAS.WebApi.Client;
+
 using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.Web;
@@ -86,7 +88,6 @@ public class RESTRoutinen : IDisposable
         catch (Exception ex)
         {
             AddInfoToException(ex, url, response, contentAsString);
-            // Für Diagnosezwecke wird hier gefangen und weitergeworfen
             throw;
         }
     }
@@ -328,8 +329,6 @@ public class RESTRoutinen : IDisposable
 
     #endregion
 
-    #region private Methods
-
     private void AddInfoToException(Exception ex, string url, HttpResponseMessage response = null, string responseContent = null, [CallerMemberName] string sender = null)
     {
         ex.Data.Add("URL", new Uri(_client.BaseAddress, url).ToString());
@@ -340,8 +339,6 @@ public class RESTRoutinen : IDisposable
             ex.Data.Add("Response", responseContent);
         }
     }
-
-    #endregion
 
     public void Dispose()
     {

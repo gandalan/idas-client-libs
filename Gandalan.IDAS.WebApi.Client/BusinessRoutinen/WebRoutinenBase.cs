@@ -18,7 +18,10 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.Web;
+using Gandalan.IDAS.WebApi.Client.Exceptions;
+using Gandalan.IDAS.WebApi.Client.RateLimiting;
 using Gandalan.IDAS.WebApi.Client.Settings;
+using Gandalan.IDAS.WebApi.Client.Util;
 using Gandalan.IDAS.WebApi.DTO;
 
 using Newtonsoft.Json;
@@ -83,34 +86,47 @@ public class WebRoutinenBase
         }
     }
 
-    private async Task runPreRequestChecks(string uri, bool skipAuth = false, [CallerMemberName] string sender = null)
+    private async Task runPreRequestChecks(string url, bool skipAuth = false, [CallerMemberName] string sender = null)
     {
         if (_restRoutinen == null)
         {
             initRestRoutinen();
         }
 
-        await CheckAuthorizedOrThrow(uri, skipAuth, sender);
-        CheckDateTimeInUtcOrThrow(uri, sender);
-    }
+        ThrowIfRateLimited(Settings.Url, sender);
+        await CheckAuthorizedOrThrow(url, skipAuth, sender);
 
-    private void CheckDateTimeInUtcOrThrow(string uri, string sender)
-    {
-        if (Regex.IsMatch(uri, RelativeDateTimePattern))
+        // TODO: SYSLIB1045 in new Idas Api - upgrade to compile time REGEX for performance
+        if (Regex.IsMatch(url, RelativeDateTimePattern))
         {
             var ex = new InvalidDateTimeKindException("The URL contains a datetime with a relative timezone offset (e.g. '+02:00'), which is not allowed. Please use ISO 8601 UTC format with a trailing 'Z', e.g. '2025-10-08T22:00:00.0000000Z'.");
-            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), uri).ToString());
+            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
             ex.Data.Add("CallMethod", sender);
             throw ex;
         }
     }
-    private async Task CheckAuthorizedOrThrow(string uri, bool skipAuth, string sender)
+
+    private async Task CheckAuthorizedOrThrow(string url, bool skipAuth, string sender)
     {
         if (!skipAuth && !await LoginAsync())
         {
             var ex = new ApiUnauthorizedException("You are not authorized.");
-            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), uri).ToString());
+            ex.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
             ex.Data.Add("CallMethod", sender);
+            throw ex;
+        }
+    }
+
+    private void ThrowIfRateLimited(string realativePath, string sender = null)
+    {
+        if (RateLimitRegistry.IsRateLimited(Settings.Url, out var resetTime))
+        {
+            var settingsUrl = new Uri(Settings.Url);
+            var rateLimitEx = new RateLimitException(resetTime);
+            var ex = new ApiException(rateLimitEx.Message, (HttpStatusCode)429, rateLimitEx);
+            ex.Data.Add("URL", new Uri(settingsUrl, realativePath).ToString());
+            ex.Data.Add("CallMethod", sender);
+            ex.Data.Add("RateLimitReset", resetTime);
             throw ex;
         }
     }
@@ -257,12 +273,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return default;
@@ -277,12 +293,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
     }
 
@@ -295,12 +311,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return null;
@@ -315,12 +331,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return null;
@@ -335,12 +351,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return null;
@@ -355,12 +371,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return null;
@@ -375,12 +391,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return default;
@@ -395,12 +411,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
     }
 
@@ -413,12 +429,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return default;
@@ -433,8 +449,8 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
             return null;
         }
     }
@@ -448,12 +464,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return null;
@@ -468,12 +484,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
     }
 
@@ -486,12 +502,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri, data);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri, data);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
     }
 
@@ -504,12 +520,12 @@ public class WebRoutinenBase
         }
         catch (HttpRequestException ex)
         {
-            var exception = handleWebException(ex, uri);
-            tryHandleException(exception);
+            var exception = HandleWebException(ex, uri);
+            TryHandleException(exception);
         }
         catch (Exception e)
         {
-            tryHandleException(e);
+            TryHandleException(e);
         }
 
         return default;
@@ -636,7 +652,7 @@ public class WebRoutinenBase
     /// </summary>
     /// <param name="exception">Exception to check</param>
     /// <exception cref="Exception">Throws <paramref name="exception"/>, if no <see cref="CustomExceptionHandler"/> handles the exception</exception>
-    private void tryHandleException(Exception exception)
+    private void TryHandleException(Exception exception)
     {
         exception.Data.Add("BenutzerGuid", AuthToken?.Benutzer?.BenutzerGuid);
         exception.Data.Add("MandantGuid", AuthToken?.MandantGuid);
@@ -655,27 +671,34 @@ public class WebRoutinenBase
         }
     }
 
-    private Exception handleWebException(HttpRequestException ex, string url, [CallerMemberName] string sender = null)
-    {
-        var exception = TranslateException(ex);
-        if (exception.StatusCode == HttpStatusCode.Unauthorized)
-        {
-            return new ApiUnauthorizedException(Status = ex.Message);
-        }
-        return internalHandleWebException(exception, url, sender);
-    }
-
-    private Exception handleWebException(HttpRequestException ex, string url, object data, [CallerMemberName] string sender = null)
+    private Exception HandleWebException(
+        HttpRequestException ex,
+        string url,
+        object data = null,
+        [CallerMemberName] string sender = null)
     {
         var exception = TranslateException(ex, data);
+
+        TryUpdateRateLimitRegistry(exception);
+
         if (exception.StatusCode == HttpStatusCode.Unauthorized)
         {
             return new ApiUnauthorizedException(Status = ex.Message);
         }
-        return internalHandleWebException(exception, url, sender);
+
+        return InternalHandleWebException(exception, url, sender);
     }
 
-    private ApiException internalHandleWebException(ApiException exception, string url, [CallerMemberName] string sender = null)
+    private void TryUpdateRateLimitRegistry(ApiException exception)
+    {
+        if (exception?.StatusCode == (HttpStatusCode)429 &&
+            exception.ProblemDetails?.TryGetResetDateTimeUtc(out var resetDateTimeUtc) == true)
+        {
+            RateLimitRegistry.SetRateLimited(Settings.Url, resetDateTimeUtc);
+        }
+    }
+
+    private ApiException InternalHandleWebException(ApiException exception, string url, [CallerMemberName] string sender = null)
     {
         if (!IgnoreOnErrorOccured)
         {
@@ -711,82 +734,118 @@ public class WebRoutinenBase
             exception.Data.Add("Payload", exception.Payload);
         }
 
+        // Add data from ProblemDetails if available
+        if (exception.ProblemDetails != null)
+        {
+            exception.Data.Add("ProblemDetails.Title", exception.ProblemDetails.Title);
+            exception.Data.Add("ProblemDetails.Type", exception.ProblemDetails.Type);
+            exception.Data.Add("ProblemDetails.Detail", exception.ProblemDetails.Detail);
+            exception.Data.Add("ProblemDetails.Instance", exception.ProblemDetails.Instance);
+        }
+
         return exception;
     }
 
-    protected static ApiException TranslateException(HttpRequestException ex, object payload)
+    protected static ApiException TranslateException(HttpRequestException ex, object payload = null)
     {
-        if (ex.Data.Contains("StatusCode"))
+        if (!ex.Data.Contains("StatusCode"))
         {
-            var response = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
-            var code = (HttpStatusCode)ex.Data["StatusCode"];
+            return new ApiException(ex.Message, ex, payload);
+        }
 
-            if (!string.IsNullOrWhiteSpace(response))
-            {
-                // Newtonsoft TypeNameInfo - try to restore original exception from Backend
-                if (response.Contains("$type"))
-                {
-                    try
-                    {
-                        var original = JsonConvert.DeserializeObject<Exception>(response, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
-                        return new ApiException(original.Message, code, original, payload);
-                    }
-                    catch
-                    {
-                    }
-                }
+        var response = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
+        var code = (HttpStatusCode)ex.Data["StatusCode"];
 
-                try
-                {
-                    var infoObject = JsonConvert.DeserializeObject<dynamic>(response);
-                    string status = infoObject.status;
-                    return new ApiException(status, code, ex, payload) { ExceptionString = infoObject.exception.ToString() };
-                }
-                catch
-                {
-                    return new ApiException(response, code, ex, payload);
-                }
-            }
-
+        if (string.IsNullOrWhiteSpace(response))
+        {
             return new ApiException(ex.Message, code, ex, payload);
         }
 
-        return new ApiException(ex.Message, ex, payload);
-    }
-
-    protected static ApiException TranslateException(HttpRequestException ex)
-    {
-        if (ex.Data.Contains("StatusCode"))
+        if (TryDeserializeProblemDetails(response, out var problemDetails))
         {
-            var response = ex.Data.Contains("Response") ? (string)ex.Data["Response"] : string.Empty;
-            var code = (HttpStatusCode)ex.Data["StatusCode"];
-
-            if (!string.IsNullOrWhiteSpace(response))
+            if (problemDetails.Status == 429 && problemDetails.TryGetResetDateTimeUtc(out var resetDateTimeUtc))
             {
-                try
-                {
-                    var original = JsonConvert.DeserializeObject<Exception>(response, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
-                    return new ApiException(original.Message, code, original);
-                }
-                catch
-                {
-                    try
-                    {
-                        var infoObject = JsonConvert.DeserializeObject<dynamic>(response);
-                        string status = infoObject.status;
-                        return new ApiException(status, code, ex) { ExceptionString = infoObject.exception.ToString() };
-                    }
-                    catch
-                    {
-                        return new ApiException(response, code, ex);
-                    }
-                }
+                var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
+                return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, rateLimitEx, problemDetails, payload);
             }
 
-            return new ApiException(ex.Message, code, ex);
+            return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, problemDetails, payload);
         }
 
-        return new ApiException(ex.Message, ex);
+        if (TryDeserializeException(response, out var originalException))
+        {
+            return new ApiException(originalException.Message, code, originalException, payload);
+        }
+
+        if (TryDeserializeDynamic(response, out var status, out var dynamicException))
+        {
+            return new ApiException(status, code, ex, payload) { ExceptionString = dynamicException };
+        }
+
+        return new ApiException(response, code, ex, payload);
+    }
+
+    private static bool TryDeserializeException(string json, out Exception exception)
+    {
+        exception = null!;
+
+        if (!json.Contains("$type"))
+        {
+            return false;
+        }
+
+        try
+        {
+            exception = JsonConvert.DeserializeObject<Exception>(json,
+                new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+            return exception != null;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static bool TryDeserializeProblemDetails(string json, out ProblemDetails problemDetails)
+    {
+        problemDetails = null!;
+
+        try
+        {
+            problemDetails = JsonConvert.DeserializeObject<ProblemDetails>(json);
+
+            var isValid = problemDetails != null &&
+                          problemDetails.Status.HasValue &&
+                          (!string.IsNullOrEmpty(problemDetails.Title) ||
+                          !string.IsNullOrEmpty(problemDetails.Type) ||
+                          !string.IsNullOrEmpty(problemDetails.Detail));
+
+            return isValid;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static bool TryDeserializeDynamic(string json, out string status, out string dynamicException)
+    {
+        status = null!;
+        dynamicException = null!;
+
+        dynamic dynamicObject;
+
+        try
+        {
+            dynamicObject = JsonConvert.DeserializeObject<dynamic>(json);
+            status = dynamicObject.status;
+            dynamicException = dynamicObject.exception?.ToString();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }
 
