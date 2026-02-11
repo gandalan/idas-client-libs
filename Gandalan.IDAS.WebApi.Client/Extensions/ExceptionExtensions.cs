@@ -32,4 +32,10 @@ public static class ExceptionExtensions
 
         return ex.InnerException?.FindInnerExceptionOfType<T>();
     }
+
+    public static bool IsOrContains<T>(this Exception exception, out T foundException) where T : Exception
+    {
+        foundException = exception as T ?? exception.FindInnerExceptionOfType<T>();
+        return foundException != null;
+    }
 }

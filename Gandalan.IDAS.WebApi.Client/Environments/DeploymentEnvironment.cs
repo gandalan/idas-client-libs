@@ -8,11 +8,11 @@ public enum DeploymentEnvironment
 {
     [EnumMember(Value = "Unbekannt")]
     Unknown,
-    [EnumMember(Value = "Release")]
+    [EnumMember(Value = "prod")]
     Production,
-    [EnumMember(Value = "Preview")]
+    [EnumMember(Value = "stg")]
     Staging,
-    [EnumMember(Value = "Dev")]
+    [EnumMember(Value = "dev")]
     Development,
     [EnumMember(Value = "Local")]
     Local

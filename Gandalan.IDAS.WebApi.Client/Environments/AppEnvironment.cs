@@ -7,7 +7,7 @@ public static class AppEnvironment
 {
 #if DEPLOYMENTENVIRONMENT_DEV
     public const DeploymentEnvironment CurrentEnvironment  = DeploymentEnvironment.Development;
-#elif DEPLOYMENTENVIRONMENT_STAGE
+#elif DEPLOYMENTENVIRONMENT_STG
     public const DeploymentEnvironment CurrentEnvironment  = DeploymentEnvironment.Staging;
 #elif DEPLOYMENTENVIRONMENT_PROD
     public const DeploymentEnvironment CurrentEnvironment  = DeploymentEnvironment.Production;
@@ -27,20 +27,16 @@ public static class AppEnvironment
     private static readonly IReadOnlyDictionary<string, DeploymentEnvironment> _nameToEnvironment =
         new Dictionary<string, DeploymentEnvironment>(StringComparer.OrdinalIgnoreCase)
         {
-            // Friendly
-            ["release"] = DeploymentEnvironment.Production,
-            ["preview"] = DeploymentEnvironment.Staging,
+            ["prod"] = DeploymentEnvironment.Production,
+            ["stg"] = DeploymentEnvironment.Staging,
             ["dev"] = DeploymentEnvironment.Development,
             ["local"] = DeploymentEnvironment.Local,
-
-            // Short
-            ["prod"] = DeploymentEnvironment.Production,
-            ["staging"] = DeploymentEnvironment.Staging,
         };
 
     public static string ToShortName(DeploymentEnvironment deploymentEnvironment) => deploymentEnvironment switch
     {
-        DeploymentEnvironment.Staging => "staging",
+        DeploymentEnvironment.Production => "prod",
+        DeploymentEnvironment.Staging => "stg",
         DeploymentEnvironment.Development => "dev",
         DeploymentEnvironment.Local => "local",
         _ => deploymentEnvironment.ToString().ToLowerInvariant()
@@ -48,14 +44,22 @@ public static class AppEnvironment
 
     public static string ToFriendlyName(DeploymentEnvironment deploymentEnvironment) => deploymentEnvironment switch
     {
-        DeploymentEnvironment.Production => "release",
-        DeploymentEnvironment.Staging => "preview",
+        DeploymentEnvironment.Production => "prod",
+        DeploymentEnvironment.Staging => "stg",
         DeploymentEnvironment.Development => "dev",
         DeploymentEnvironment.Local => "local",
         _ => deploymentEnvironment.ToString().ToLowerInvariant()
     };
 
-    
+    public static string ToOldName(DeploymentEnvironment deploymentEnvironment) => deploymentEnvironment switch
+    {
+        DeploymentEnvironment.Production => "produktiv",
+        DeploymentEnvironment.Staging => "staging",
+        DeploymentEnvironment.Development => "dev",
+        DeploymentEnvironment.Local => "local",
+        _ => deploymentEnvironment.ToString().ToLowerInvariant()
+    };
+
     public static bool TryParse(string name, out DeploymentEnvironment deploymentEnvironment)
     {
         deploymentEnvironment = DeploymentEnvironment.Unknown;

@@ -1,8 +1,9 @@
 using System;
+using Gandalan.IDAS.WebApi.Client.Contracts;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class FarbKuerzelDTO
+public class FarbKuerzelDTO : IWithGueltigkeitsZeitraum
 {
     public Guid FarbKuerzelGuid { get; set; }
     public string Kuerzel { get; set; }

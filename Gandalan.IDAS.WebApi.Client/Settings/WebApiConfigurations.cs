@@ -11,7 +11,7 @@ namespace Gandalan.IDAS.WebApi.Client.Settings;
 
 public static class WebApiConfigurations
 {
-    private static string[] _environments = ["dev", "staging", "produktiv"];
+    private static string[] _environments = ["dev", "stg", "prod"];
     private static string _settingsPath;
     private static Dictionary<string, IWebApiConfig> _settings;
     private static string _appTokenString;
@@ -171,6 +171,7 @@ public static class WebApiConfigurations
                     StoreUrl = response.Store,
                     WebhookServiceUrl = response.WebhookService,
                     TranslateUrl = response.Translate,
+                    NewApiOptInUrls = response.NewApiOptInUrls,
                     FriendlyName = env,
                     AppToken = appToken
                 };
@@ -181,6 +182,15 @@ public static class WebApiConfigurations
             if (environment != null)
             {
                 _settings.Add(env, environment);
+
+                if (env == "stg")
+                {
+                    _settings.Add("staging", environment);
+                }
+                if (env == "prod")
+                {
+                    _settings.Add("produktiv", environment);
+                }
             }
         }
     }

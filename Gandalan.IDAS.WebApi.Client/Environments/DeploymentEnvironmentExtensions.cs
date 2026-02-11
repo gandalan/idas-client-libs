@@ -7,4 +7,6 @@ public static class DeploymentEnvironmentExtensions
 
     public static string ToShortName(this DeploymentEnvironment deploymentEnvironment)
         => AppEnvironment.ToShortName(deploymentEnvironment);
+    public static string ToOldName(this DeploymentEnvironment deploymentEnvironment)
+        => AppEnvironment.ToOldName(deploymentEnvironment);
 }

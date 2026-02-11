@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+
 using Gandalan.IDAS.WebApi.Client;
+
 using Newtonsoft.Json;
 
 namespace Gandalan.IDAS.Web;
@@ -58,7 +61,7 @@ public class RESTRoutinen : IDisposable
     /// <summary>
     /// Holt ein Objekt per HTTP GET
     /// </summary>
-    /// <typeparam name="T">Typsierungsparameter</typeparam>
+    /// <typeparam name="T">Typisierungsparameter</typeparam>
     /// <param name="url">Relative URL, bezogen auf die BaseUrl</param>
     /// <param name="settings"></param>
     /// <param name="version">API Version, if omitted, defaults to version 1.0</param>
@@ -74,6 +77,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.GetAsync(url);
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -83,7 +88,6 @@ public class RESTRoutinen : IDisposable
         catch (Exception ex)
         {
             AddInfoToException(ex, url, response, contentAsString);
-            // Für Diagnosezwecke wird hier gefangen und weitergeworfen
             throw;
         }
     }
@@ -94,6 +98,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.GetAsync(url);
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -125,8 +131,11 @@ public class RESTRoutinen : IDisposable
     {
         string contentAsString = null;
         HttpResponseMessage response = null;
+
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var json = JsonConvert.SerializeObject(data, settings);
             var client = GetClientByVersion(version);
             response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
@@ -147,6 +156,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.PostAsync(url, new ByteArrayContent(data));
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -166,6 +177,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.PostAsync(url, data);
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -199,6 +212,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var json = JsonConvert.SerializeObject(data, settings);
             var client = GetClientByVersion(version);
             response = await client.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
@@ -219,6 +234,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.PutAsync(url, new ByteArrayContent(data));
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -237,6 +254,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.PutAsync(url, data);
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -261,6 +280,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             response = await client.DeleteAsync(url);
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -279,6 +300,8 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
+            ValidateAndApplyNewApiHeader(url);
+
             var client = GetClientByVersion(version);
             var request = new HttpRequestMessage
             {
@@ -306,8 +329,6 @@ public class RESTRoutinen : IDisposable
 
     #endregion
 
-    #region private Methods
-
     private void AddInfoToException(Exception ex, string url, HttpResponseMessage response = null, string responseContent = null, [CallerMemberName] string sender = null)
     {
         ex.Data.Add("URL", new Uri(_client.BaseAddress, url).ToString());
@@ -318,8 +339,6 @@ public class RESTRoutinen : IDisposable
             ex.Data.Add("Response", responseContent);
         }
     }
-
-    #endregion
 
     public void Dispose()
     {
@@ -343,4 +362,91 @@ public class RESTRoutinen : IDisposable
 
         return versionClient;
     }
+
+    /// <summary>
+    /// Adds a header to the default request headers of the HTTP client.
+    /// </summary>
+    /// <param name="headerName">The name of the header</param>
+    /// <param name="headerValue">The value of the header</param>
+    public void AddHeader(string headerName, string headerValue)
+    {
+        if (!_client.DefaultRequestHeaders.Contains(headerName))
+        {
+            _client.DefaultRequestHeaders.Add(headerName, headerValue);
+        }
+    }
+
+    /// <summary>
+    /// Removes the specified HTTP header from the default request headers collection.
+    /// </summary>
+    /// <remarks>If the specified header does not exist in the collection, no action is taken.</remarks>
+    /// <param name="headerName">The name of the HTTP header to remove. The comparison is case-insensitive.</param>
+    public void RemoveHeader(string headerName)
+    {
+        _client.DefaultRequestHeaders.Remove(headerName);
+    }
+
+    /// <summary>
+    /// Validates whether the specified relative URI should opt in to the new API and applies the appropriate API header
+    /// to the HTTP client request.
+    /// </summary>
+    /// <remarks>If the configuration does not specify any opt-in endpoints, the method ensures the
+    /// 'X-Gateway-Cluster' header is removed. If the relative URI matches an opt-in endpoint, the header is set to
+    /// indicate use of the new API. This method should be called before sending a request to ensure the correct API
+    /// header is applied.</remarks>
+    /// <param name="relativeUri">The relative URI of the request to evaluate for new API opt-in. Must not be null or empty.</param>
+    private void ValidateAndApplyNewApiHeader(string relativeUri)
+    {
+        var config = _client.BaseAddress != null
+            ? _config
+            : null;
+
+        if (config?.NewApiOptInUrls == null || config.NewApiOptInUrls.Length == 0)
+        {
+            RemoveHeader("X-Gateway-Cluster");
+            return;
+        }
+
+        var fullUri = new Uri(_client.BaseAddress, relativeUri);
+        var uriPath = fullUri.AbsolutePath;
+
+        var shouldUseNewApi = config.NewApiOptInUrls.Any(endpoint =>
+            IsPathMatchingEndpoint(uriPath, endpoint));
+
+        if (shouldUseNewApi)
+            AddHeader("X-Gateway-Cluster", "idas");
+        else
+            RemoveHeader("X-Gateway-Cluster");
+    }
+
+    /// <summary>
+    /// Determines whether the specified URI path matches the given configured endpoint, using a case-insensitive comparison and
+    /// ensuring a valid path boundary.
+    /// </summary>
+    /// <param name="uriPath">The URI path to evaluate against the endpoint. This value is compared to the start of the endpoint string.</param>
+    /// <param name="endpoint">The endpoint to match at the start of the URI path. Trailing slashes are ignored. Cannot be null.</param>
+    /// <returns>true if the URI path starts with the endpoint and the match occurs at a valid path boundary; otherwise, false.</returns>
+    private static bool IsPathMatchingEndpoint(string uriPath, string endpoint)
+    {
+        if (endpoint == null) return false;
+
+        var normalizedEndpoint = endpoint.TrimEnd('/');
+
+        return uriPath.StartsWith(normalizedEndpoint, StringComparison.OrdinalIgnoreCase)
+            && HasValidPathBoundary(uriPath, normalizedEndpoint.Length);
+    }
+
+    /// <summary>
+    /// Determines whether the specified endpoint length is at a valid boundary within the given URI path.
+    /// Configured endpoint paths should only match complete segments of the URI path:
+    /// We want to hit /api/Login if it's configured not /api/LoginJwt
+    /// </summary>
+    /// <param name="uriPath">The URI path to evaluate. Cannot be null.</param>
+    /// <param name="endpointLength">The position within the URI path to check for a valid boundary. Must be greater than or equal to 0.</param>
+    /// <returns>true if the endpoint length is at the end of the URI path or is immediately followed by a '/' or '?'; otherwise,
+    /// false.</returns>
+    private static bool HasValidPathBoundary(string uriPath, int endpointLength)
+        => endpointLength >= uriPath.Length
+            || uriPath[endpointLength] == '/'
+            || uriPath[endpointLength] == '?';
 }
