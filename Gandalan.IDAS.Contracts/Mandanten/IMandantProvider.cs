@@ -10,7 +10,7 @@ public interface IMandantProvider
     /// Gets the current mandant ID
     /// Returns 0 to indicate no mandant filtering (admin/system context)
     /// </summary>
-    long CurrentMandantId { get; }
+    long CurrentMandantId { get; set; }
 }
 
 public interface IHttpContextMandantProvider : IMandantProvider;
