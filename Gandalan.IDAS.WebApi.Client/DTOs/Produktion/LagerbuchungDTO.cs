@@ -5,7 +5,7 @@ namespace Gandalan.IDAS.WebApi.DTO;
 /// <summary>
 /// DTO für eine Lagerbuchung
 /// </summary>
-public class LagerbuchungDTO
+public class LagerbuchungDTO : ILagerLogikDTO
 {
     public Guid KatalogArtikelGuid { get; set; }
     [Obsolete("FarbKuerzelGuid verwenden")]
