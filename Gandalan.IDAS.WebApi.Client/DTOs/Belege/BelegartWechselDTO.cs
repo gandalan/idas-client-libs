@@ -12,4 +12,5 @@ public class BelegartWechselDTO
     public BelegArt NeueBelegArt { get; set; }
     public bool SaldenKopieren { get; set; }
     public RechnungsNummer RechnungsNummer { get; set; }
+    public bool UpdateErfassungsdatum { get; set; }
 }
