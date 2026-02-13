@@ -4,6 +4,10 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.DTO;
+#if NET5_0_OR_GREATER
+using System.Runtime.Versioning;
+#endif
 
 namespace Gandalan.IDAS.WebApi.Client.SSO;
 
@@ -20,6 +24,17 @@ public class SsoLoginService : ISsoLoginService
 
     public async Task<SsoLoginResult> LoginAsync(Guid appGuid, Action<string>? logger = null)
     {
+#if NET5_0_OR_GREATER
+        if (!OperatingSystem.IsWindows())
+        {
+            return new SsoLoginResult
+            {
+                Success = false,
+                ErrorMessage = "SSO login is only supported on Windows."
+            };
+        }
+#endif
+
         if (appGuid == Guid.Empty)
         {
             return new SsoLoginResult
@@ -65,18 +80,29 @@ public class SsoLoginService : ISsoLoginService
             };
         }
 
-        _settings.AuthToken = new WebApi.DTO.UserAuthTokenDTO
+        if (string.IsNullOrWhiteSpace(token) || !Guid.TryParse(token, out var tokenGuid))
         {
-            Token = Guid.Parse(token),
+            return new SsoLoginResult
+            {
+                Success = false,
+                ErrorMessage = "Invalid login token received from SSO callback."
+            };
+        }
+
+        var initialAuthToken = new UserAuthTokenDTO
+        {
+            Token = tokenGuid,
             AppToken = appGuid
         };
+
+        _settings.AuthToken = initialAuthToken;
 
         var client = new WebRoutinenBase(_settings);
         client.IgnoreOnErrorOccured = true;
 
         try
         {
-            var refreshedToken = await client.RefreshTokenAsync(_settings.AuthToken.Token);
+            var refreshedToken = await client.RefreshTokenAsync(tokenGuid);
 
             if (refreshedToken != null)
             {
@@ -91,6 +117,8 @@ public class SsoLoginService : ISsoLoginService
             }
             else
             {
+                // Restore previous token on failure
+                _settings.AuthToken = initialAuthToken;
                 return new SsoLoginResult
                 {
                     Success = false,
@@ -100,6 +128,8 @@ public class SsoLoginService : ISsoLoginService
         }
         catch (Exception ex)
         {
+            // Restore previous token on failure
+            _settings.AuthToken = initialAuthToken;
             var errorMsg = ex.InnerException?.Message ?? ex.Message;
             return new SsoLoginResult
             {

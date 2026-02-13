@@ -4,9 +4,15 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+#if NET5_0_OR_GREATER
+using System.Runtime.Versioning;
+#endif
 
 namespace Gandalan.IDAS.WebApi.Client.SSO;
 
+#if NET5_0_OR_GREATER
+[SupportedOSPlatform("windows")]
+#endif
 public class SsoCallbackServer : IDisposable
 {
     private readonly HttpListener _listener;
@@ -19,21 +25,22 @@ public class SsoCallbackServer : IDisposable
     public SsoCallbackServer(int timeoutSeconds = 120)
     {
         int port = GetFreePort();
-        CallbackUrl = $"http://127.0.0.1:{port}/callback";
+        CallbackUrl = $"http://127.0.0.1:{port}/callback/";
 
         _listener = new HttpListener();
         _listener.Prefixes.Add($"http://127.0.0.1:{port}/callback/");
 
-        _tokenSource = new TaskCompletionSource<string>();
+        _tokenSource = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
         _timeoutSource = new CancellationTokenSource(TimeSpan.FromSeconds(timeoutSeconds));
 
         _timeoutSource.Token.Register(() => _tokenSource.TrySetCanceled());
     }
 
-    public async Task StartAsync()
+    public Task StartAsync()
     {
         _listener.Start();
         _ = HandleRequestAsync();
+        return Task.CompletedTask;
     }
 
     public Task<string> WaitForTokenAsync(CancellationToken cancellationToken = default)
@@ -76,9 +83,11 @@ public class SsoCallbackServer : IDisposable
         }
         catch (HttpListenerException) when (_disposed)
         {
+            // Expected when server is being disposed
         }
         catch (Exception ex)
         {
+            System.Diagnostics.Debug.WriteLine($"Error in SSO callback: {ex.Message}");
             _tokenSource.TrySetException(ex);
         }
         finally
@@ -87,6 +96,9 @@ public class SsoCallbackServer : IDisposable
         }
     }
 
+    #if NET5_0_OR_GREATER
+    [SupportedOSPlatform("windows")]
+    #endif
     private static int GetFreePort()
     {
         TcpListener? listener = null;
@@ -101,6 +113,9 @@ public class SsoCallbackServer : IDisposable
         finally
         {
             listener?.Stop();
+#if NET5_0_OR_GREATER
+            listener?.Dispose();
+#endif
         }
     }
 
@@ -117,7 +132,11 @@ public class SsoCallbackServer : IDisposable
             _listener?.Stop();
             _listener?.Close();
         }
-        catch { }
+        catch (Exception ex)
+        {
+            // Suppress disposal errors
+            System.Diagnostics.Debug.WriteLine($"Error disposing HttpListener: {ex.Message}");
+        }
 
         if (!_tokenSource.Task.IsCompleted)
         {
