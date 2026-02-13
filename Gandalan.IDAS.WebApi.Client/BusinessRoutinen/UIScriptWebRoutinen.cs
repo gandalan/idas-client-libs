@@ -16,6 +16,8 @@ public class UIScriptWebRoutinen : WebRoutinenBase
 
     public async Task<UIScriptDTO> GetUIScript(string name)
         => await GetAsync<UIScriptDTO>($"UIScript?name={name}");
+    public async Task<UIScriptDTO> GetUIScriptForFunction(string name)
+        => await GetAsync<UIScriptDTO>($"UIScript/ForFunction?name={name}");
 
     public async Task SaveAsync(UIScriptDTO dto)
         => await PutAsync("UIScript/", dto);
