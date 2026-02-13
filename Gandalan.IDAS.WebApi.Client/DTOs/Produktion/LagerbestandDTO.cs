@@ -5,7 +5,7 @@ namespace Gandalan.IDAS.WebApi.DTO;
 /// <summary>
 /// DTO für die Lagerverwaltung
 /// </summary>
-public class LagerbestandDTO
+public class LagerbestandDTO : ILagerLogikDTO
 {
     public Guid LagerbestandGuid { get; set; }
     public Guid KatalogArtikelGuid { get; set; }
