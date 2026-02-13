@@ -60,6 +60,11 @@ public class VorgangListItemDTO : IDTOWithApplicationSpecificProperties, IDTOWit
     /// Aktuelle Rechnungsnummer
     /// </summary>
     public string AktuelleRechnungsNummer { get; set; }
+    
+    /// <summary>
+    /// Alle Belegnummern, getrennt mit <c>, </c>
+    /// </summary>
+    public string AlleBelegNummern { get; set; }
 
     /// <summary>
     /// Die GUID des aktuellen Beleges.
