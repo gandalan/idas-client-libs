@@ -5,9 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
-#if NET5_0_OR_GREATER
-using System.Runtime.Versioning;
-#endif
 
 namespace Gandalan.IDAS.WebApi.Client.SSO;
 
@@ -24,17 +21,6 @@ public class SsoLoginService : ISsoLoginService
 
     public async Task<SsoLoginResult> LoginAsync(Guid appGuid, Action<string>? logger = null)
     {
-#if NET5_0_OR_GREATER
-        if (!OperatingSystem.IsWindows())
-        {
-            return new SsoLoginResult
-            {
-                Success = false,
-                ErrorMessage = "SSO login is only supported on Windows."
-            };
-        }
-#endif
-
         if (appGuid == Guid.Empty)
         {
             return new SsoLoginResult
