@@ -33,18 +33,72 @@ public class ProblemDetails
     {
         resetDateTimeUtc = DateTime.MinValue;
 
-        if (Extensions != null &&
-            Extensions.TryGetValue("reset", out var resetObj) &&
-            resetObj != null &&
-            DateTime.TryParse(resetObj.ToString(),
-            null,
-            DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
-            out var resetDatetime))
+        if (Extensions == null)
         {
-            resetDateTimeUtc = resetDatetime;
-            return true;
+            return false;
         }
 
-        return false;
+        return TryGetResetFromUnixTimestamp(out resetDateTimeUtc)
+            || TryGetResetFromDateTimeString(out resetDateTimeUtc)
+            || TryGetResetFromRetryAfter(out resetDateTimeUtc);
+    }
+
+    private bool TryGetResetFromUnixTimestamp(out DateTime resetDateTimeUtc)
+    {
+        resetDateTimeUtc = DateTime.MinValue;
+
+        if (!Extensions.TryGetValue("reset", out var resetObj) || resetObj == null)
+        {
+            return false;
+        }
+
+        if (!long.TryParse(resetObj.ToString(), out var unixTimestamp))
+        {
+            return false;
+        }
+
+        try
+        {
+            resetDateTimeUtc = DateTimeOffset.FromUnixTimeSeconds(unixTimestamp).UtcDateTime;
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private bool TryGetResetFromDateTimeString(out DateTime resetDateTimeUtc)
+    {
+        resetDateTimeUtc = DateTime.MinValue;
+
+        if (!Extensions.TryGetValue("reset", out var resetObj) || resetObj == null)
+        {
+            return false;
+        }
+
+        return DateTime.TryParse(
+            resetObj.ToString(),
+            null,
+            DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+            out resetDateTimeUtc);
+    }
+
+    private bool TryGetResetFromRetryAfter(out DateTime resetDateTimeUtc)
+    {
+        resetDateTimeUtc = DateTime.MinValue;
+
+        if (!Extensions.TryGetValue("retryAfter", out var retryAfterObj) || retryAfterObj == null)
+        {
+            return false;
+        }
+
+        if (!int.TryParse(retryAfterObj.ToString(), out var retryAfterSeconds) || retryAfterSeconds <= 0)
+        {
+            return false;
+        }
+
+        resetDateTimeUtc = DateTime.UtcNow.AddSeconds(retryAfterSeconds);
+        return true;
     }
 }

@@ -763,8 +763,11 @@ public class WebRoutinenBase
 
         if (TryDeserializeProblemDetails(response, out var problemDetails))
         {
-            if (problemDetails.Status == 429 && problemDetails.TryGetResetDateTimeUtc(out var resetDateTimeUtc))
+            if (problemDetails.Status == 429)
             {
+                var resetDateTimeUtc = problemDetails.TryGetResetDateTimeUtc(out var resetTime) 
+                    ? resetTime 
+                    : DateTime.UtcNow.AddMinutes(1);
                 var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
                 return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, rateLimitEx, problemDetails, payload);
             }
