@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.json",
+  "input": "api/csharp/",
+  "output": "api/csharp/",
+  "docusaurus": {
+    "version": "3",
+    "baseUrl": "/docs/api/csharp/",
+    "routeBasePath": "api/csharp",
+    "sidebar": {
+      "categoryLabel": "C# API Reference",
+      "collapsed": false,
+      "collapsible": true
+    },
+    "frontMatter": {
+      "sidebar_position": "auto",
+      "sidebar_label": "{{title}}",
+      "title": "{{title}}",
+      "description": "{{summary}}",
+      "tags": ["csharp", "api", "{{namespace}}"]
+    },
+    "slugPrefix": "csharp-",
+    "cleanUrls": true,
+    "preserveHierarchy": true,
+    "metadata": {
+      "generated": true,
+      "generator": "docfx-to-docusaurus"
+    }
+  },
+  "markdown": {
+    "sanitize": false,
+    "lineBreaks": "gfm",
+    "headingIds": true,
+    "admonitions": {
+      "enabled": true,
+      "types": ["note", "tip", "info", "caution", "danger"]
+    }
+  },
+  "links": {
+    "internal": {
+      "extension": ".md",
+      "relative": true
+    },
+    "external": {
+      "newWindow": true
+    }
+  }
+}

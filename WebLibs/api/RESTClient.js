@@ -1,12 +1,43 @@
+/**
+ * HTTP client for making REST API requests using axios.
+ * Handles GET, POST, PUT, DELETE operations with authentication.
+ * @class
+ * @example
+ * const client = new RESTClient({
+ *   apiBaseurl: 'https://api.example.com',
+ *   token: 'jwt-token-here'
+ * });
+ * const data = await client.get('/users');
+ */
 import axios from "axios";
 import { currentToken } from "./authUtils";
 
 export class RESTClient
 {
+    /**
+     * Last error message from a failed request
+     * @type {string}
+     */
     lastError = "";
+
+    /**
+     * Configuration settings for the client
+     * @type {Object}
+     */
     settings = {};
+
+    /**
+     * Axios instance for making HTTP requests
+     * @type {import('axios').AxiosInstance}
+     */
     axiosInstance = null;
 
+    /**
+     * Creates a new RESTClient instance
+     * @param {Object} settings - Client configuration
+     * @param {string} settings.apiBaseurl - Base URL for API requests
+     * @param {string} [settings.token] - JWT authentication token
+     */
     constructor(settings)
     {
         this.settings = settings;
@@ -38,11 +69,22 @@ export class RESTClient
         }
     }*/
 
+    /**
+     * Gets default URL options for requests
+     * @returns {Object} Options object with withCredentials set to false
+     */
     getUrlOptions()
     {
         return { withCredentials: false };
     }
 
+    /**
+     * Performs a GET request
+     * @async
+     * @param {string} uri - The URI to request (relative to baseURL)
+     * @returns {Promise<any>} The response data
+     * @throws {Error} If the request fails
+     */
     async get(uri)
     {
         try
@@ -58,6 +100,16 @@ export class RESTClient
         }
     }
 
+    /**
+     * Downloads a file from the given URI
+     * @async
+     * @param {string} uri - The URI to request
+     * @returns {Promise<Object>} Object containing data, filename, and contentType
+     * @returns {Blob} return.data - The file data as a Blob
+     * @returns {string} return.filename - The filename from Content-Disposition header
+     * @returns {string} return.contentType - The content type (always "application/pdf")
+     * @throws {Error} If the request fails
+     */
     async getFile(uri)
     {
         try
@@ -80,6 +132,13 @@ export class RESTClient
         }
     }
 
+    /**
+     * Performs a GET request and returns the raw axios response
+     * @async
+     * @param {string} uri - The URI to request
+     * @returns {Promise<import('axios').AxiosResponse>} The full axios response object
+     * @throws {Error} If the request fails
+     */
     async getRaw(uri)
     {
         let response = {};
@@ -97,6 +156,14 @@ export class RESTClient
         return response;
     }
 
+    /**
+     * Performs a POST request
+     * @async
+     * @param {string} uri - The URI to post to
+     * @param {Object} formData - The data to send
+     * @returns {Promise<import('axios').AxiosResponse>} The axios response
+     * @throws {Error} If the request fails
+     */
     async post(uri, formData)
     {
         try
@@ -112,6 +179,14 @@ export class RESTClient
         }
     }
 
+    /**
+     * Performs a PUT request
+     * @async
+     * @param {string} uri - The URI to put to
+     * @param {Object} formData - The data to send
+     * @returns {Promise<import('axios').AxiosResponse>} The axios response
+     * @throws {Error} If the request fails
+     */
     async put(uri, formData)
     {
         try
@@ -127,6 +202,13 @@ export class RESTClient
         }
     }
 
+    /**
+     * Performs a DELETE request
+     * @async
+     * @param {string} uri - The URI to delete
+     * @returns {Promise<import('axios').AxiosResponse>} The axios response
+     * @throws {Error} If the request fails
+     */
     async delete(uri)
     {
         try
@@ -142,6 +224,11 @@ export class RESTClient
         }
     }
 
+    /**
+     * Creates a new axios instance with current authentication
+     * @private
+     * @returns {import('axios').AxiosInstance} A new axios instance
+     */
     getNewAxiosInstance()
     {
         return axios.create({
@@ -152,6 +239,11 @@ export class RESTClient
         });
     }
 
+    /**
+     * Handles errors from axios requests
+     * @private
+     * @param {Error} error - The error object from axios
+     */
     handleError(error)
     {
         if (error.response)

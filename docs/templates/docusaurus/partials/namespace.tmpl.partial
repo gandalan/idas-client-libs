@@ -1,0 +1,82 @@
+{{! Namespace Template for Docusaurus v3 Compatible Output}}
+{{! Outputs markdown suitable for Docusaurus 3.x }}
+
+---
+sidebar_position: auto
+sidebar_label: {{name.0.value}}
+title: Namespace {{name.0.value}}
+{{#summary}}
+description: {{summary}}
+{{/summary}}
+tags: ["csharp", "api", "namespace"]
+---
+
+{{#summary}}
+## Summary
+
+{{summary}}
+{{/summary}}
+
+{{#remarks}}
+## Remarks
+
+{{remarks}}
+{{/remarks}}
+
+{{#classes}}
+## Classes
+
+| Class | Description |
+|-------|-------------|
+{{#classes}}
+| [`{{name}}`](./{{name}}.md) | {{summary}} |
+{{/classes}}
+{{/classes}}
+
+{{#interfaces}}
+## Interfaces
+
+| Interface | Description |
+|-----------|-------------|
+{{#interfaces}}
+| [`{{name}}`](./{{name}}.md) | {{summary}} |
+{{/interfaces}}
+{{/interfaces}}
+
+{{#enums}}
+## Enums
+
+| Enum | Description |
+|------|-------------|
+{{#enums}}
+| [`{{name}}`](./{{name}}.md) | {{summary}} |
+{{/enums}}
+{{/enums}}
+
+{{#structs}}
+## Structs
+
+| Struct | Description |
+|--------|-------------|
+{{#structs}}
+| [`{{name}}`](./{{name}}.md) | {{summary}} |
+{{/structs}}
+{{/structs}}
+
+{{#delegates}}
+## Delegates
+
+| Delegate | Description |
+|----------|-------------|
+{{#delegates}}
+| [`{{name}}`](./{{name}}.md) | {{summary}} |
+{{/delegates}}
+{{/delegates}}
+
+{{#seeAlso}}
+## See Also
+
+{{#seeAlso}}
+- {{.}}
+{{/seeAlso}}
+{{/seeAlso}}

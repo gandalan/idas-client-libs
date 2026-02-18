@@ -1,0 +1,72 @@
+/**
+ * CSS files for the Docusaurus site.
+ */
+
+/* Custom styles for IDAS Client Libraries documentation */
+
+:root {
+  --ifm-color-primary: #0056b3;
+  --ifm-color-primary-dark: #004494;
+  --ifm-color-primary-darker: #003d85;
+  --ifm-color-primary-darkest: #00326d;
+  --ifm-color-primary-light: #0062cc;
+  --ifm-color-primary-lighter: #0069d9;
+  --ifm-color-primary-lightest: #0077f2;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] {
+  --ifm-color-primary: #4dabf7;
+  --ifm-color-primary-dark: #339af0;
+  --ifm-color-primary-darker: #228be6;
+  --ifm-color-primary-darkest: #1971c2;
+  --ifm-color-primary-light: #74c0fc;
+  --ifm-color-primary-lighter: #a5d8ff;
+  --ifm-color-primary-lightest: #e7f5ff;
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.1);
+}
+
+/* Custom styles for API documentation */
+.api-method {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-left: 4px solid var(--ifm-color-primary);
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+.api-method h3 {
+  margin-top: 0;
+  color: var(--ifm-color-primary);
+}
+
+/* Code block improvements */
+pre {
+  border-radius: 8px;
+}
+
+/* Table styles for API reference */
+table {
+  width: 100%;
+}
+
+table th {
+  background-color: var(--ifm-color-emphasis-200);
+  font-weight: 600;
+}
+
+/* Sidebar improvements */
+.theme-doc-sidebar-menu {
+  font-size: 0.95rem;
+}
+
+/* Breadcrumb styles */
+.theme-doc-breadcrumbs {
+  margin-bottom: 1.5rem;
+}
+
+/* Footer improvements */
+.footer {
+  padding: 2rem 0;
+}

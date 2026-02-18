@@ -1,0 +1,28 @@
+{
+  "source": {
+    "include": [
+      "index.js",
+      "api/",
+      "ui/"
+    ],
+    "includePattern": "\\.(js)$",
+    "exclude": [
+      "node_modules/"
+    ]
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "opts": {
+    "destination": "../docs/api/weblibs/",
+    "recurse": true,
+    "template": "node_modules/jsdoc-to-markdown"
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  },
+  "metadata": {
+    "title": "WebLibs API Documentation"
+  }
+}

@@ -1,0 +1,276 @@
+{{! Class Template for Docusaurus v3 Compatible Output}}
+{{! Outputs markdown suitable for Docusaurus 3.x }}
+
+---
+sidebar_position: auto
+sidebar_label: {{name.0.value}}
+title: {{name.0.value}}
+{{#summary}}
+description: {{summary}}
+{{/summary}}
+tags: ["csharp", "api", "{{namespace.0.value}}"]
+---
+
+{{#deprecated}}
+:::caution Deprecated
+This class is deprecated. {{deprecated.reason}}
+:::
+{{/deprecated}}
+
+{{#summary}}
+## Summary
+
+{{summary}}
+{{/summary}}
+
+{{#namespace}}
+**Namespace:** `{{namespace.0.value}}`
+{{/namespace}}
+
+{{#assembly}}
+**Assembly:** `{{assembly}}`
+{{/assembly}}
+
+{{#remarks}}
+## Remarks
+
+{{remarks}}
+{{/remarks}}
+
+{{#syntax}}
+## Syntax
+
+```csharp
+{{syntax.content.0.value}}
+```
+
+{{#syntax.parameters}}
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+{{#syntax.parameters}}
+| `{{name}}` | `{{type}}` | {{description}} |
+{{/syntax.parameters}}
+{{/syntax.parameters}}
+{{/syntax}}
+
+{{#inheritedMembers}}
+## Inheritance
+
+{{#inheritance}}
+- `{{.}}`
+{{/inheritance}}
+{{/inheritedMembers}}
+
+{{#implements}}
+## Implements
+
+{{#implements}}
+- `{{.}}`
+{{/implements}}
+{{/implements}}
+
+{{#derivedClasses}}
+## Derived Classes
+
+{{#derivedClasses}}
+- `{{name}}`
+{{/derivedClasses}}
+{{/derivedClasses}}
+
+{{#constructors}}
+## Constructors
+
+{{#constructors}}
+### {{name}}
+
+```csharp
+{{syntax.content.0.value}}
+```
+
+{{#summary}}
+{{summary}}
+{{/summary}}
+
+{{#parameters}}
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+{{#parameters}}
+| `{{name}}` | `{{type}}` | {{description}} |
+{{/parameters}}
+{{/parameters}}
+
+{{#exceptions}}
+#### Exceptions
+
+| Exception | Condition |
+|-----------|-----------|
+{{#exceptions}}
+| `{{type}}` | {{description}} |
+{{/exceptions}}
+{{/exceptions}}
+
+{{/constructors}}
+{{/constructors}}
+
+{{#properties}}
+## Properties
+
+{{#properties}}
+### {{name}}
+
+{{#syntax}}
+```csharp
+{{syntax.content.0.value}}
+```
+{{/syntax}}
+
+{{#summary}}
+{{summary}}
+{{/summary}}
+
+{{#value}}
+**Value:** {{value}}
+{{/value}}
+
+{{#exceptions}}
+#### Exceptions
+
+| Exception | Condition |
+|-----------|-----------|
+{{#exceptions}}
+| `{{type}}` | {{description}} |
+{{/exceptions}}
+{{/exceptions}}
+
+{{/properties}}
+{{/properties}}
+
+{{#methods}}
+## Methods
+
+{{#methods}}
+### {{name}}
+
+{{#syntax}}
+```csharp
+{{syntax.content.0.value}}
+```
+{{/syntax}}
+
+{{#summary}}
+{{summary}}
+{{/summary}}
+
+{{#parameters}}
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+{{#parameters}}
+| `{{name}}` | `{{type}}` | {{description}} |
+{{/parameters}}
+{{/parameters}}
+
+{{#returns}}
+#### Returns
+
+`{{type}}`: {{description}}
+{{/returns}}
+
+{{#exceptions}}
+#### Exceptions
+
+| Exception | Condition |
+|-----------|-----------|
+{{#exceptions}}
+| `{{type}}` | {{description}} |
+{{/exceptions}}
+{{/exceptions}}
+
+{{#example}}
+#### Example
+
+```csharp
+{{example}}
+```
+{{/example}}
+
+{{/methods}}
+{{/methods}}
+
+{{#events}}
+## Events
+
+{{#events}}
+### {{name}}
+
+{{#syntax}}
+```csharp
+{{syntax.content.0.value}}
+```
+{{/syntax}}
+
+{{#summary}}
+{{summary}}
+{{/summary}}
+
+{{/events}}
+{{/events}}
+
+{{#fields}}
+## Fields
+
+{{#fields}}
+### {{name}}
+
+{{#syntax}}
+```csharp
+{{syntax.content.0.value}}
+```
+{{/syntax}}
+
+{{#summary}}
+{{summary}}
+{{/summary}}
+
+{{#value}}
+**Value:** {{value}}
+{{/value}}
+
+{{/fields}}
+{{/fields}}
+
+{{#extensionMethods}}
+## Extension Methods
+
+{{#extensionMethods}}
+### {{name}}
+
+{{#definedBy}}
+Defined by: `{{definedBy}}`
+{{/definedBy}}
+
+{{#syntax}}
+```csharp
+{{syntax.content.0.value}}
+```
+{{/syntax}}
+
+{{#summary}}
+{{summary}}
+{{/summary}}
+
+{{/extensionMethods}}
+{{/extensionMethods}}
+
+{{#seeAlso}}
+## See Also
+
+{{#seeAlso}}
+- {{.}}
+{{/seeAlso}}
+{{/seeAlso}}

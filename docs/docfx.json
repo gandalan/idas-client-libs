@@ -1,0 +1,127 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": [
+            "**/*.cs"
+          ],
+          "src": "../Gandalan.IDAS.WebApi.Client",
+          "exclude": [
+            "**/bin/**",
+            "**/obj/**"
+          ]
+        }
+      ],
+      "dest": "api/csharp/Gandalan.IDAS.WebApi.Client",
+      "filter": "filterConfig.yml"
+    },
+    {
+      "src": [
+        {
+          "files": [
+            "**/*.cs"
+          ],
+          "src": "../Gandalan.IDAS.Crypto",
+          "exclude": [
+            "**/bin/**",
+            "**/obj/**"
+          ]
+        }
+      ],
+      "dest": "api/csharp/Gandalan.IDAS.Crypto",
+      "filter": "filterConfig.yml"
+    },
+    {
+      "src": [
+        {
+          "files": [
+            "**/*.cs"
+          ],
+          "src": "../Gandalan.IDAS.Logging",
+          "exclude": [
+            "**/bin/**",
+            "**/obj/**"
+          ]
+        }
+      ],
+      "dest": "api/csharp/Gandalan.IDAS.Logging",
+      "filter": "filterConfig.yml"
+    },
+    {
+      "src": [
+        {
+          "files": [
+            "**/*.cs"
+          ],
+          "src": "../Gandalan.IDAS.WebApi.Client.Wpf",
+          "exclude": [
+            "**/bin/**",
+            "**/obj/**"
+          ]
+        }
+      ],
+      "dest": "api/csharp/Gandalan.IDAS.WebApi.Client.Wpf",
+      "filter": "filterConfig.yml"
+    },
+    {
+      "src": [
+        {
+          "files": [
+            "**/*.cs"
+          ],
+          "src": "../Gandalan.IDAS.Contracts",
+          "exclude": [
+            "**/bin/**",
+            "**/obj/**"
+          ]
+        }
+      ],
+      "dest": "api/csharp/Gandalan.IDAS.Contracts",
+      "filter": "filterConfig.yml"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "api/csharp/**/**.yml",
+          "api/csharp/**/**.md"
+        ],
+        "src": ".",
+        "dest": "."
+      }
+    ],
+    "dest": "api/csharp",
+    "template": [
+      "statictoc",
+      "templates/docusaurus"
+    ],
+    "xref": [
+      "https://docs.microsoft.com/en-us/dotnet/.xrefmap.json"
+    ],
+    "globalMetadata": {
+      "_appTitle": "Gandalan IDAS API Documentation",
+      "_appName": "Gandalan.IDAS",
+      "_appFooter": "Copyright © Gandalan GmbH & Co. KG",
+      "_enableSearch": true,
+      "_disableContribution": true,
+      "_langwordMapping": {
+        "true": "True",
+        "false": "False"
+      }
+    },
+    "fileMetadata": {
+      "platform": {
+        "**/Gandalan.IDAS.WebApi.Client.Wpf/**": "WPF, .NET Framework 4.8"
+      }
+    },
+    "exportRawModel": false,
+    "exportViewModel": false,
+    "sitemap": {
+      "baseUrl": "https://docs.gandalan.de/api/csharp/",
+      "changefreq": "weekly",
+      "priority": 0.5
+    }
+  }
+}

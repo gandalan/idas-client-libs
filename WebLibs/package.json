@@ -17,7 +17,8 @@
   "scripts": {
     "lint": "eslint .",
     "lint:prod": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "docs": "jsdoc -c jsdoc.json"
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
@@ -30,7 +31,9 @@
     "@babel/eslint-parser": "^7.26.8",
     "@eslint/js": "^9.21.0",
     "eslint": "^9.21.0",
-    "globals": "^15.15.0"
+    "globals": "^15.15.0",
+    "jsdoc": "^4.0.4",
+    "jsdoc-to-markdown": "^9.1.1"
   },
   "publishConfig": {
     "access": "public"

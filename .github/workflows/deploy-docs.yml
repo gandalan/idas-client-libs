@@ -1,0 +1,119 @@
+# Workflow to deploy documentation to GitHub Pages
+# Note: This workflow is currently disabled (manual trigger only)
+# To enable automatic deployment, see comments below
+
+name: Deploy Documentation to GitHub Pages
+
+on:
+  # Manual trigger only - disabled for now
+  # Uncomment the section below to enable automatic deployment on push to main/master
+  workflow_dispatch:
+  
+  # To enable automatic deployment, uncomment the following:
+  # push:
+  #   branches:
+  #     - main
+  #     - master
+  #   paths:
+  #     - 'docs/**'
+  #     - '.github/workflows/deploy-docs.yml'
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Setup .NET 8.0 for DocFX
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      # Setup Node.js 20
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Install DocFX globally
+      - name: Install DocFX
+        run: |
+          dotnet tool install -g docfx
+          echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+
+      # Build documentation using the build script
+      - name: Build Documentation
+        run: |
+          cd docs
+          ./scripts/build-docs.ps1
+        shell: pwsh
+
+      # Upload the build output as an artifact
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs/build
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          # The directory to publish - should contain the built documentation
+          path: ./docs/build
+
+# ============================================================================
+# REQUIREMENTS FOR GITHUB PAGES:
+# ============================================================================
+#
+# Before this workflow will work, you need to enable GitHub Pages in your
+# repository settings:
+#
+# 1. Go to Settings > Pages
+# 2. Under "Build and deployment", select "GitHub Actions" as the source
+# 3. The workflow will now be able to deploy to GitHub Pages
+#
+# BASE URL CONFIGURATION:
+# -----------------------
+# If your repository is not at the root of your GitHub Pages domain,
+# you may need to configure the base URL in your DocFX configuration.
+#
+# For example, if your repo is at github.com/user/repo and GitHub Pages
+# is hosted at user.github.io/repo, set the baseUrl in docfx.json to:
+#   "baseUrl": "/repo/"
+#
+# This ensures all links work correctly when deployed.
+#
+# ============================================================================
+# ENABLING AUTOMATIC DEPLOYMENT:
+# ============================================================================
+#
+# To enable automatic deployment on push to main/master:
+#
+# 1. Uncomment the "push:" trigger section at the top of this file
+# 2. Commit and push the changes
+# 3. The workflow will now trigger on every push to main/master that
+#    modifies files in the docs/ directory or this workflow file
+#
+# ============================================================================
