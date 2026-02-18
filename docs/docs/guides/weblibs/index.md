@@ -252,4 +252,4 @@ export const { api, authManager } = await initApp();
 - [Getting Started with WebLibs](./getting-started) - Installation and setup
 - [Fluent API Guide](./fluent-api) - Learn the fluent API pattern
 - [Authentication Guide](./authentication) - User authentication and permissions
-- [API Reference](/docs/api/weblibs) - Complete API documentation
+- [API Reference](/api/weblibs) - Complete API documentation

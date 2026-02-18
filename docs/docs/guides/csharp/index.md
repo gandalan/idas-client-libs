@@ -150,7 +150,7 @@ Gandalan.IDAS.Contracts
 
 - [Getting Started with C#](./getting-started) - Learn how to set up your first project
 - [WebApi.Client Guide](./webapi-client) - Deep dive into the REST client
-- [API Reference](/docs/api/csharp) - Browse the complete API documentation
+- [API Reference](/api/csharp) - Browse the complete API documentation
 
 ---
 

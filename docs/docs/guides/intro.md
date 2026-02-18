@@ -69,7 +69,7 @@ The C# libraries consist of **5 NuGet packages** targeting modern .NET platforms
         <p>Explore the complete API documentation for all libraries.</p>
       </div>
       <div className="card__footer">
-        <a className="button button--primary button--block" href="/docs/api/intro">View API Docs</a>
+        <a className="button button--primary button--block" href="/api/csharp">View API Docs</a>
       </div>
     </div>
   </div>

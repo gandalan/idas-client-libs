@@ -286,7 +286,7 @@ Now that you have the basics set up:
 
 - [Fluent API Guide](./fluent-api) - Learn how to make API requests
 - [Authentication Guide](./authentication) - Deep dive into authentication
-- [API Reference](/docs/api/weblibs) - Complete API documentation
+- [API Reference](/api/weblibs) - Complete API documentation
 
 ## Troubleshooting
 
@@ -303,6 +303,6 @@ Ensure you're using ES modules and have the correct import paths.
 
 ### Getting Help
 
-- Check the [API Reference](/docs/api/weblibs)
+- Check the [API Reference](/api/weblibs)
 - Review the [source code on GitHub](https://github.com/gandalan/idas-client-libs)
 - Open an [issue on GitHub](https://github.com/gandalan/idas-client-libs/issues)

@@ -313,4 +313,4 @@ var result = await vorgangRoutinen.GetAsync<MyDto>("api/Public", skipAuth: true)
 
 ---
 
-For complete API documentation, see the [API Reference](/docs/api/csharp).
+For complete API documentation, see the [API Reference](/api/csharp).

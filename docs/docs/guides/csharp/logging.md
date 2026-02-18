@@ -411,4 +411,4 @@ public class LogAggregator
 
 ---
 
-For complete API documentation, see the [API Reference](/docs/api/csharp).
+For complete API documentation, see the [API Reference](/api/csharp).

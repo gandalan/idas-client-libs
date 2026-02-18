@@ -9,13 +9,17 @@ const config = {
   favicon: 'img/favicon.ico',
 
   url: 'https://gandalan.github.io',
-  baseUrl: process.env.DOCS_BASE_URL || (process.env.NODE_ENV === 'production' ? '/idas-client-libs/' : '/'),
+  baseUrl: process.env.DOCS_BASE_URL || '/',
 
   organizationName: 'gandalan',
   projectName: 'idas-client-libs',
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 
   i18n: {
     defaultLocale: 'en',
@@ -78,7 +82,7 @@ const config = {
             items: [
               {
                 label: 'Guides',
-                to: '/guides/intro',
+                to: '/',
               },
               {
                 label: 'C# API',

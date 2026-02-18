@@ -364,4 +364,4 @@ async function loadMultipleResources() {
 
 ---
 
-For complete API documentation, see the [API Reference](/docs/api/weblibs).
+For complete API documentation, see the [API Reference](/api/weblibs).
