@@ -19,7 +19,10 @@ public class SsoLoginService : ISsoLoginService
         _timeoutSeconds = timeoutSeconds;
     }
 
-    public async Task<SsoLoginResult> LoginAsync(Guid appGuid, Action<string>? logger = null)
+    public async Task<SsoLoginResult> LoginAsync(
+        Guid appGuid,
+        Action<string>? logger = null,
+        Func<string, bool>? openBrowser = null)
     {
         if (appGuid == Guid.Empty)
         {
@@ -35,20 +38,33 @@ public class SsoLoginService : ISsoLoginService
 
         var ssoUrl = BuildSsoUrl(appGuid, server.CallbackUrl + "?token=%token%");
         
+        var browserOpened = false;
         try
         {
-            Process.Start(new ProcessStartInfo(ssoUrl) { UseShellExecute = true });
+            if (openBrowser != null)
+            {
+                browserOpened = openBrowser(ssoUrl);
+            }
+            else
+            {
+                Process.Start(new ProcessStartInfo(ssoUrl) { UseShellExecute = true });
+                browserOpened = true;
+            }
         }
         catch (Exception ex)
         {
-            return new SsoLoginResult
-            {
-                Success = false,
-                ErrorMessage = $"Could not open browser: {ex.Message}"
-            };
+            logger?.Invoke($"Could not open browser automatically: {ex.Message}");
         }
 
-        logger?.Invoke("Browser opened. Please log in...");
+        if (browserOpened)
+        {
+            logger?.Invoke("Browser opened. Please log in...");
+        }
+        else
+        {
+            logger?.Invoke("Please open the SSO URL manually to continue the login.");
+            logger?.Invoke($"SSO URL: {ssoUrl}");
+        }
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(_timeoutSeconds));
         string token;
