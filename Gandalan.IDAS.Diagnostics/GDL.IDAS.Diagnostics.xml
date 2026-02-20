@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GDL.IDAS.Diagnostics</name>
+    </assembly>
+    <members>
+        <member name="T:Gandalan.IDAS.Diagnostics.AddonRegistry">
+            <summary>
+            Registry Klasse for Addons
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Diagnostics.AddonRegistry.AddonPackages">
+            <summary>
+            Liste von installierten Addons (zur Diagnose)
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog">
+            <summary>
+            Interaction logic for ErrorDialog.xaml
+            </summary>
+            <summary>
+            ErrorDialog
+            </summary>
+        </member>
+        <member name="E:Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog.PropertyChanged">
+            <inheritdoc />
+        </member>
+        <member name="P:Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog.Exception">
+            <summary>
+            Die aktuelle Exception zum aktuellen Fehler
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog.Message">
+            <summary>
+            Nachricht zum aktuellen Fehler
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog.DetailsString">
+            <summary>
+            Details (StackTrace, etc.) zum aktuellen Fehler
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog.IsFatal">
+            <summary>
+            Gibt an, ob der Fehler fatal ist (Programm muss beendet werden)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog.CanContinue">
+            <summary>
+            Gibt an, ob nach dem Fehler weitergemacht werden kann. (Inverse von <see cref="P:Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog.IsFatal"/>)
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog.ShouldSend">
+            <summary>
+            Gibt an, ob ein Fehlerbericht gesendet werden sollte.
+            </summary>
+        </member>
+        <member name="P:Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog.Hinweis">
+            <summary>
+            Hinweis des Nutzers zum aktuellen Fehler.
+            </summary>
+        </member>
+        <member name="M:Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog.#ctor(Gandalan.Client.Contracts.DataServices.IInternalMailService,Gandalan.IDAS.Client.Contracts.Contracts.IWebApiConfig,Gandalan.Client.Contracts.AppServices.IApplicationConfig)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="internalMailService"><see cref="T:Gandalan.Client.Contracts.DataServices.IInternalMailService"/> zum Senden der Fehlermail</param>
+            <param name="apiConfig"><see cref="T:Gandalan.IDAS.Client.Contracts.Contracts.IWebApiConfig"/> des Nutzers</param>
+            <param name="applicationConfig"><see cref="T:Gandalan.Client.Contracts.AppServices.IApplicationConfig"/> der Anwendung</param>
+        </member>
+        <member name="M:Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog.ShowError(System.String,System.String,System.Exception,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Gandalan.IDAS.Diagnostics.Utils.DiagnosticsUtils">
+            <summary>
+            Helper Klasse zum Generieren von Fehlerberichten
+            </summary>
+        </member>
+        <member name="M:Gandalan.IDAS.Diagnostics.Utils.DiagnosticsUtils.CreateDiagnoseZipFile">
+            <summary>
+            Erstellt eine Diagnose Zip File im Logging Pfad
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Gandalan.IDAS.Diagnostics.Utils.DiagnosticsUtils.GetOSVersion">
+            <summary>
+            Zieht die Windowsversion auf der Registry
+            </summary>
+            <returns>Die Windowsversion z.B. "Windows 10 Pro 22H2 10.0.19045.6216"</returns>
+        </member>
+        <member name="T:Gandalan.IDAS.Diagnostics.Utils.RegistryKeyExtensions">
+            <summary>
+            Helper Klasse zum Arbeiten mit <see cref="T:Microsoft.Win32.RegistryKey"/>s
+            </summary>
+        </member>
+        <member name="M:Gandalan.IDAS.Diagnostics.Utils.RegistryKeyExtensions.TryGetStringValue(Microsoft.Win32.RegistryKey,System.String)">
+            <summary>
+            Zieht den String Wert eines Registry Eintrags oder gibt null zurück, wenn dieser nicht vorhanden ist oder nicht sonst nicht gelesen werden kann.
+            </summary>
+            <param name="key">Der <see cref="T:Microsoft.Win32.RegistryKey"/></param>
+            <param name="name">Name des Registry Eintrags</param>
+            <returns>String Wert des <see cref="T:Microsoft.Win32.RegistryKey"/> oder null</returns>
+        </member>
+    </members>
+</doc>

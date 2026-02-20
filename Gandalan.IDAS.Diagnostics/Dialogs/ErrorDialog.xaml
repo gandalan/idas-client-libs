@@ -1,0 +1,51 @@
+<Window x:Class="Gandalan.IDAS.Diagnostics.Dialogs.ErrorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gandalan.IDAS.Diagnostics.Dialogs"
+        mc:Ignorable="d"
+        Title="ErrorDialog" Width="550" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        d:DataContext="{d:DesignInstance local:ErrorDialog}"
+        Loaded="dialogLoaded" Closing="DialogClosing" >
+    <Window.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GDL.Controls.WPF;component/StandardStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="16" Resources="{StaticResource InputGrid}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="{Binding Path=Message, Mode=OneWay}" MaxHeight="400"></Label>
+        <DockPanel x:Name="DetailPanel" Grid.Row="1" Visibility="Collapsed">
+            <Button DockPanel.Dock="Top" HorizontalAlignment="Left" Click="folderOpenButtonClick">Protokollordner öffnen...</Button>
+
+            <TextBox Text="{Binding DetailsString, Mode=OneWay}" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" MaxHeight="300"/>
+        </DockPanel>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="DetailButton" Grid.Column="0" Click="detailButtonClick">Details >></Button>
+            <Button Grid.Column="2" Click="beendenButtonClick">Programm beenden</Button>
+            <Button Grid.Column="3" Click="weiterButtonClick" IsEnabled="{Binding CanContinue, Mode=OneWay}">Weiter</Button>
+        </Grid>
+        <CheckBox Grid.Row="3" IsChecked="{Binding ShouldSend, Mode=TwoWay}">Fehlerbericht an Gandalan senden</CheckBox>
+        <StackPanel Grid.Row="4" Visibility="{Binding ShouldSend, Converter={StaticResource BoolToVis}}">
+            <Label>Hier können Sie weitere Information zur Beschreibung des Fehlers hinzufügen:</Label>
+            <TextBox TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Height="100" Text="{Binding Hinweis, Mode=TwoWay}" />
+        </StackPanel>
+    </Grid>
+</Window>
