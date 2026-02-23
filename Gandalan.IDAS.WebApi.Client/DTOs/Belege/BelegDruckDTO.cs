@@ -12,7 +12,7 @@ namespace Gandalan.IDAS.WebApi.DTO;
 
 public class BelegDruckDTO
 {
-    public BelegDruckDTO(VorgangDTO vorgang, BelegDTO beleg)
+    public BelegDruckDTO(VorgangDTO vorgang, BelegDTO beleg, bool hasVariantPriceCaptureInfo = false)
     {
         var culture = new CultureInfo("de-de");
         Salden = [];
@@ -38,6 +38,7 @@ public class BelegDruckDTO
             AnsprechpartnerKunde = beleg.AnsprechpartnerKunde ?? "";
             Ansprechpartner = ""; //??? _apiSettings?.AuthToken?.Benutzer?.Vorname + " " + _apiSettings?.AuthToken?.Benutzer?.Nachname;
             Telefonnummer = ""; //??? _apiSettings?.AuthToken?.Benutzer?.TelefonNummer ?? "";
+            HasVariantPriceCaptureInfo = hasVariantPriceCaptureInfo;
 
             if (vorgang.ApplicationSpecificProperties != null && vorgang.ApplicationSpecificProperties.Count != 0 && vorgang.ApplicationSpecificProperties.TryGetValue("settings", out var settings) && settings.TryGetValue("Kontrollkuerzel", out var kontrollkuerzel))
             {
@@ -181,6 +182,12 @@ public class BelegDruckDTO
     public bool IstSelbstabholer { get; set; }
     public long? SammelbelegNummer { get; set; }
     public string Kontrollkuerzel { get; set; }
+
+    /// <summary>
+    /// Gets or sets if positions in the voucher have prices or capture data that are stale and differ to the price list/capture data list that
+    /// was valid on the created date of the voucher
+    /// </summary>
+    public bool HasVariantPriceCaptureInfo { get; set; }
 
     public void SetTextBausteine(object textBausteine)
     {
