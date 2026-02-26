@@ -123,6 +123,7 @@ public class ReportExecuteSettings
     {
         return new ReportExecuteSettings
         {
+            Renderer = result.Renderer,
             ReportAction = result.Action,
             PrinterName = result.PrinterName,
             FileName = result.FileName,
@@ -131,6 +132,8 @@ public class ReportExecuteSettings
             ShowSerienName = result.ShowSerienName,
         };
     }
+
+    public ReportRenderer Renderer { get; set; }
 
     public bool ShowSerienName { get; set; }
 }
