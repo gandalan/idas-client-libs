@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -377,7 +378,6 @@ public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
             var order = this.FirstOrDefault(g => g.GroupName == "Plissee PL2");
             if (order != null)
             {
-                IndexOf(order);
                 InsertItem(IndexOf(order) + 1, new Kapazitaetsvorgabe { GroupName = "Plissee PL3", Label = "1 flg. mit Montagerahmen", Produktgruppe = ["PL3"], IstBasisregel = true, Order = order.Order, Zeitvorgabe = 55 });
             }
             else
@@ -385,6 +385,45 @@ public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
                 Add(new Kapazitaetsvorgabe { GroupName = "Plissee PL3", Label = "1 flg. mit Montagerahmen", Produktgruppe = ["PL3"], IstBasisregel = true, Order = Count, Zeitvorgabe = 55 });
             }
         }
+
+        if (Version < 6)
+        {
+            Version = 6;
+            //SP3 Gruppe
+            var order = this.FirstOrDefault(g => g.Label == "SP2");
+            if (order != null)
+            {
+                InsertItem(IndexOf(order) + 1, new Kapazitaetsvorgabe { GroupName = "Spannrahmen", Label = "SP3", Produktgruppe = ["SP3"], IstBasisregel = true, Order = order.Order, Zeitvorgabe = 25 });
+            }
+            else
+            {
+                Add(new Kapazitaetsvorgabe { GroupName = "Spannrahmen", Label = "SP3", Produktgruppe = ["SP3"], IstBasisregel = true, Order = Count, Zeitvorgabe = 25 });
+                
+            }
+            //Sonstiges
+            TryAddProduktGruppeToExisitng("Metallgewebe (nicht bei Lichtschächten)", "SP3", "SP2");
+            TryAddProduktGruppeToExisitng("Sondergewebe (nicht bei Lichtschächten)", "SP3", "SP2");
+            TryAddProduktGruppeToExisitng("Transpatecgewebe (nicht bei Lichtschächten)", "SP3", "SP2");
+            TryAddProduktGruppeToExisitng("Vorbiegen", "SP3", "SP2");
+            TryAddProduktGruppeToExisitng("Sprosse (im Spannrahmen)", "SP3", "SP2");
+        }
+    }
+
+    private bool TryAddProduktGruppeToExisitng(string label, string produktgruppe, string afterThisValue = null)
+    {
+        var result = this.FirstOrDefault(g => g.Label == label);
+        if(result == null) return false;
+        
+        if (result.Produktgruppe.Contains(produktgruppe)) return true;
+        
+        var order = -1;
+        if (afterThisValue != null)
+        {
+            order = result.Produktgruppe.FindIndex(g => g == afterThisValue);
+        }
+
+        result.Produktgruppe.Insert(order == -1 ? result.Produktgruppe.Count : order + 1, produktgruppe);
+        return true;
     }
 }
 
