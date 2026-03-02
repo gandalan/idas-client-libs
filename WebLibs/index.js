@@ -96,20 +96,10 @@ export * from "./ui/index.js";
 /**
  * @typedef {Object} NeherApp3
  * @property {(menuItem: NeherApp3MenuItem) => void} addMenuItem
- * @property {(appModule: NeherApp3Module | string) => void} addApp
+ * @property {(appModule: NeherApp3Module | string) => Promise<void>} addApp
  * @property {(message: string, type?: NeherApp3NotifyType, cb?: function) => void} notify - Shows a notification. Type defaults to 0 (info). Callback is optional.
  * @property {NeherApp3ArtikelstammApi} artikelstamm
  * @property {NeherApp3ErfassungApi} erfassung
- * @property {() => Promise<ArtikelstammEintrag[]>} getArtikelStamm
- * @property {() => Promise<Object[]>} getWarenGruppen
- * @property {(guid: string) => Promise<ArtikelstammEintrag | undefined>} getArtikelByGuid
- * @property {(nummer: string) => Promise<ArtikelstammEintrag | undefined>} getArtikelByKatalognummer
- * @property {() => Promise<Variante[]>} getVarianten
- * @property {(variantenNameOderKuerzel: string) => Promise<Variante | undefined>} getVariante
- * @property {() => Promise<Werteliste[]>} getWertelisten
- * @property {(name: string) => Promise<Werteliste | undefined>} getWerteliste
- * @property {() => Promise<Object[]>} getScripts
- * @property {(v: Variante) => void} createUIMachine
  */
 
 /**
