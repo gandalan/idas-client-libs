@@ -23,31 +23,44 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Bump WebLibs version + commit + tag
+    - name: Bump WebLibs version (local)
+      shell: bash
+      run: |
+        set -euo pipefail
+        npm version patch --no-git-tag-version --prefix "${WEBLIBS_DIR}"
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        registry-url: 'https://registry.npmjs.org'
+
+    - run: npm ci
+      working-directory: ${{ env.WEBLIBS_DIR }}
+
+    - run: npm run lint:prod
+      working-directory: ${{ env.WEBLIBS_DIR }}
+
+    - name: Verify npm auth (granular token)
+      run: npm whoami
+      working-directory: ${{ env.WEBLIBS_DIR }}
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    - run: npm publish
+      working-directory: ${{ env.WEBLIBS_DIR }}
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    - name: Commit version bump + create tag
       shell: bash
       run: |
         set -euo pipefail
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
-        npm version patch --no-git-tag-version --prefix "${WEBLIBS_DIR}"
         NEW_VERSION=$(node -p "require('./${WEBLIBS_DIR}/package.json').version")
-
         git add "${WEBLIBS_DIR}/package.json"
         git commit -m "CI: WebLibs version bump to WebLibs_${NEW_VERSION}"
-        git tag "WebLibs_${NEW_VERSION}"
-        git push origin HEAD:${GITHUB_REF_NAME} --follow-tags
-
-    # Setup .npmrc file to publish to npm
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 22
-        registry-url: 'https://registry.npmjs.org'
-    - run: npm ci
-      working-directory: ${{ env.WEBLIBS_DIR }}
-    - run: npm run lint:prod
-      working-directory: ${{ env.WEBLIBS_DIR }}
-    - run: npm publish
-      working-directory: ${{ env.WEBLIBS_DIR }}
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        git tag -a "WebLibs_${NEW_VERSION}" -m "WebLibs ${NEW_VERSION}"
+        git push origin HEAD:${GITHUB_REF_NAME}
+        git push origin "WebLibs_${NEW_VERSION}"
