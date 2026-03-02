@@ -13,20 +13,31 @@ env:
 
 jobs:
   build-and-publish-weblibs:
-    if: github.repository_owner == 'gandalan'
+    if: github.repository_owner == 'gandalan' && github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: Automated Version Bump for ${{ env.WEBLIBS_DIR }}
-      uses: phips28/gh-action-bump-version@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PACKAGEJSON_DIR: ${{ env.WEBLIBS_DIR }}
       with:
-        tag-prefix: WebLibs_
-        commit-message: 'CI: WebLibs version bump to {{version}}'
+        fetch-depth: 0
+
+    - name: Bump WebLibs version + commit + tag
+      shell: bash
+      run: |
+        set -euo pipefail
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+        npm version patch --no-git-tag-version --prefix "${WEBLIBS_DIR}"
+        NEW_VERSION=$(node -p "require('./${WEBLIBS_DIR}/package.json').version")
+
+        git add "${WEBLIBS_DIR}/package.json"
+        git commit -m "CI: WebLibs version bump to WebLibs_${NEW_VERSION}"
+        git tag "WebLibs_${NEW_VERSION}"
+        git push origin HEAD:${GITHUB_REF_NAME} --follow-tags
+
     # Setup .npmrc file to publish to npm
     - uses: actions/setup-node@v4
       with:
