@@ -18,26 +18,54 @@ export * from "./ui/index.js";
  */
 
 /**
- * @typedef {Object} NeherApp3Module
- * @property {string} moduleName
- * @property {(app: NeherApp3) => void} setup 
- * @property {(node : HTMLElement, props : NeherApp3Props) => function} mount Must return an unmount function
- * @property {string?} embedUrl
- * @property {string[]} extraCSS
- * @property {boolean} useShadowDom - If true, the app will be embedded in a shadow DOM. This is required for CSS isolation. 
+ * @typedef {0 | 1 | 2} NeherApp3NotifyType
  */
 
 /**
- * @typedef {Object} NeherApp3 
- * @property {(menuItem : NeherApp3MenuItem) => void} addMenuItem
- * @property {(appModule: NeherApp3Module) => void} addApp
- * @property {(message: string, type? : number, cb? : function) => void} notify - Shows a notification. Type defaults to 0 (info). Callback is optional.
- * @property {function} getArtikelStamm
- * @property {function} getWarenGruppen
- * @property {function} getArtikelByGuid
- * @property {function} getWertelisten
- * @property {function} getScripts
- * @property {function} getVarianten
+ * @typedef {Object} ArtikelstammEintrag
+ * @property {string} [KatalogArtikelGuid]
+ * @property {string} [KatalogNummer]
+ * @property {string} [Katalognummer]
+ * @property {string} [Nummer]
+ */
+
+/**
+ * @typedef {Object} Variante
+ * @property {string} [VarianteGuid]
+ * @property {string} [Name]
+ * @property {string} [Kuerzel]
+ */
+
+/**
+ * @typedef {Object} Werteliste
+ * @property {string} [WerteListeGuid]
+ * @property {string} [Name]
+ */
+
+/**
+ * @typedef {Object} NeherApp3ArtikelstammApi
+ * @property {() => Promise<ArtikelstammEintrag[]>} getArtikelStamm
+ * @property {() => Promise<Object[]>} getWarenGruppen
+ * @property {(guid: string) => Promise<ArtikelstammEintrag | undefined>} getArtikelByGuid
+ * @property {(nummer: string) => Promise<ArtikelstammEintrag | undefined>} getArtikelByKatalognummer
+ */
+
+/**
+ * @typedef {Object} NeherApp3ErfassungApi
+ * @property {() => Promise<Variante[]>} getVarianten
+ * @property {(variantenNameOderKuerzel: string) => Promise<Variante | undefined>} getVariante
+ * @property {() => Promise<Werteliste[]>} getWertelisten
+ * @property {(name: string) => Promise<Werteliste | undefined>} getWerteliste
+ * @property {() => Promise<Object[]>} getScripts
+ * @property {(v: Variante) => void} createUIMachine
+ */
+
+/**
+ * @typedef {Object} NeherApp3Props
+ * @property {FluentApi} api
+ * @property {FluentAuthManager} [authManager]
+ * @property {FluentApi} idas
+ * @property {string} [mainCssPath]
  */
 
 /** 
@@ -52,16 +80,42 @@ export * from "./ui/index.js";
  */
 
 /**
+ * @typedef {NeherApp3Props & { neherapp3: NeherApp3 }} NeherApp3SetupContext
+ */
+
+/**
+ * @typedef {Object} NeherApp3Module
+ * @property {string} moduleName
+ * @property {(context: NeherApp3SetupContext) => (void | Promise<void>)} [setup]
+ * @property {(node: HTMLElement, props: NeherApp3SetupContext) => (void | function)} [mount] Must return an optional unmount function
+ * @property {string} [embedUrl]
+ * @property {string[]} [extraCSS]
+ * @property {boolean} [useShadowDom] - If true, the app will be embedded in a shadow DOM. This is required for CSS isolation.
+ */
+
+/**
+ * @typedef {Object} NeherApp3
+ * @property {(menuItem: NeherApp3MenuItem) => void} addMenuItem
+ * @property {(appModule: NeherApp3Module | string) => void} addApp
+ * @property {(message: string, type?: NeherApp3NotifyType, cb?: function) => void} notify - Shows a notification. Type defaults to 0 (info). Callback is optional.
+ * @property {NeherApp3ArtikelstammApi} artikelstamm
+ * @property {NeherApp3ErfassungApi} erfassung
+ * @property {() => Promise<ArtikelstammEintrag[]>} getArtikelStamm
+ * @property {() => Promise<Object[]>} getWarenGruppen
+ * @property {(guid: string) => Promise<ArtikelstammEintrag | undefined>} getArtikelByGuid
+ * @property {(nummer: string) => Promise<ArtikelstammEintrag | undefined>} getArtikelByKatalognummer
+ * @property {() => Promise<Variante[]>} getVarianten
+ * @property {(variantenNameOderKuerzel: string) => Promise<Variante | undefined>} getVariante
+ * @property {() => Promise<Werteliste[]>} getWertelisten
+ * @property {(name: string) => Promise<Werteliste | undefined>} getWerteliste
+ * @property {() => Promise<Object[]>} getScripts
+ * @property {(v: Variante) => void} createUIMachine
+ */
+
+/**
  * Global NeherApp3 instance
  * @type {NeherApp3}
  * @global
  */
 globalThis.neherapp3 = globalThis.neherapp3 || {};
-
-/**
- * @typedef {Object} NeherApp3Props
- * @property {import("./api/fluentApi").FluentApi} api
- * @property {import("./api/fluentAuthManager").FluentAuthManager} authManager
- * @property {import("./api/fluentApi").FluentApi} idas
- */
 
