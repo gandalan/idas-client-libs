@@ -5,12 +5,8 @@ using Gandalan.IDAS.WebApi.DTO.DTOs.Filter;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
 
-public class FilterWebRoutinen : WebRoutinenBase
+public class FilterWebRoutinen(IWebApiConfig settings) : WebRoutinenBase(settings)
 {
-    public FilterWebRoutinen(IWebApiConfig settings) : base(settings)
-    {
-    }
-
     public async Task<FilterItemDTO[]> GetAllAsync()
         => await GetAsync<FilterItemDTO[]>("Filter");
 
@@ -22,4 +18,7 @@ public class FilterWebRoutinen : WebRoutinenBase
 
     public async Task SaveAsync(FilterItemDTO dto)
         => await PutAsync("Filter", dto);
+
+    public async Task DeleteFilterItemAsync(Guid id)
+        => await DeleteAsync($"Filter/{id}");
 }
