@@ -63,12 +63,12 @@ public class Logger : ILogger
     public void SetLogDateiPfad(string pfad = null)
     {
         var datum = DateTime.UtcNow.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-        var app = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly()?.Location ?? "WebApi");
         var user = Environment.UserName;
+        var path = Path.GetDirectoryName(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 
         try
         {
-            LogDateiPfad = pfad ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan", app, "Logs");
+            LogDateiPfad = pfad ?? Path.Combine(path, "Logs");
             LogDateiName = Path.Combine(LogDateiPfad, $"{user}_{datum}.log");
             if (!Directory.Exists(LogDateiPfad))
             {
