@@ -62,6 +62,8 @@ import { createUtilityApi } from "./business/utilityApi";
  * @return {FluentApi} A configured API client instance.
  */
 export function createApi() {
+    // Create a self-referencing object that works with Svelte 5 Proxies
+    // All properties must be defined in the initial object literal
     const api = {
         authManager: {},
         baseUrl: "",
@@ -101,54 +103,54 @@ export function createApi() {
         },
 
         /**
-          * Sends a GET request, ensuring authentication if needed.
-          *
-          * @async
-          * @param {string} [url=""]
-          * @param {boolean} [auth=true]
-          * @returns {Promise<Object>}
-          */
+           * Sends a GET request, ensuring authentication if needed.
+           *
+           * @async
+           * @param {string} [url=""]
+           * @param {boolean} [auth=true]
+           * @returns {Promise<Object>}
+           */
         async get(url = "", auth = true) {
             await this.preCheck(auth);
             return await this.createRestClient().get(url);
         },
 
         /**
-          * Sends a PUT request with a payload, ensuring authentication if needed.
-          *
-          * @async
-          * @param {string} [url=""]
-          * @param {Object} [payload={}]
-          * @param {boolean} [auth=true]
-          * @returns {Promise<Object>}
-          */
+           * Sends a PUT request with a payload, ensuring authentication if needed.
+           *
+           * @async
+           * @param {string} [url=""]
+           * @param {Object} [payload={}]
+           * @param {boolean} [auth=true]
+           * @returns {Promise<Object>}
+           */
         async put(url = "", payload = {}, auth = true) {
             await this.preCheck(auth);
             return await this.createRestClient().put(url, payload);
         },
 
         /**
-          * Sends a POST request with a payload, ensuring authentication if needed.
-          *
-          * @async
-          * @param {string} [url=""]
-          * @param {Object} [payload={}]
-          * @param {boolean} [auth=true]
-          * @returns {Promise<Object>}
-          */
+           * Sends a POST request with a payload, ensuring authentication if needed.
+           *
+           * @async
+           * @param {string} [url=""]
+           * @param {Object} [payload={}]
+           * @param {boolean} [auth=true]
+           * @returns {Promise<Object>}
+           */
         async post(url = "", payload = {}, auth = true) {
             await this.preCheck(auth);
             return await this.createRestClient().post(url, payload);
         },
 
         /**
-         * Sends a DELETE request, ensuring authentication if needed.
-         *
-         * @async
-         * @param {string} [url=""]
-         * @param {boolean} [auth=true]
-         * @returns {Promise<Object>}
-         */
+          * Sends a DELETE request, ensuring authentication if needed.
+          *
+          * @async
+          * @param {string} [url=""]
+          * @param {boolean} [auth=true]
+          * @returns {Promise<Object>}
+          */
         async delete(url = "", auth = true) {
             await this.preCheck(auth);
             return await this.createRestClient().delete(url);
@@ -179,6 +181,43 @@ export function createApi() {
             if (auth && this.authManager) {
                 await this.authManager.ensureAuthenticated();
             }
+        },
+
+        // Business routine APIs - initialized as null, will be set after object creation
+        // This ensures the properties exist for Svelte 5 Proxy tracking
+        vorgang: null,
+        kontakt: null,
+        belegPositionen: null,
+        material: null,
+        serien: null,
+        benutzer: null,
+        artikel: null,
+        beleg: null,
+        produktion: null,
+        faktura: null,
+        settings: null,
+        ui: null,
+        utility: null
+    };
+
+    // Initialize business routine APIs after object creation
+    // This ensures the properties exist for Svelte 5 Proxy tracking
+    api.vorgang = createVorgangApi(api);
+    api.kontakt = createKontaktApi(api);
+    api.belegPositionen = createBelegPositionenApi(api);
+    api.material = createMaterialApi(api);
+    api.serien = createSerienApi(api);
+    api.benutzer = createBenutzerApi(api);
+    api.artikel = createArtikelApi(api);
+    api.beleg = createBelegApi(api);
+    api.produktion = createProduktionApi(api);
+    api.faktura = createFakturaApi(api);
+    api.settings = createSettingsApi(api);
+    api.ui = createUiApi(api);
+    api.utility = createUtilityApi(api);
+
+    return api;
+}
         }
     };
 
