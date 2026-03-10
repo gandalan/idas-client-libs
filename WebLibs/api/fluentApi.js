@@ -181,64 +181,111 @@ export function createApi() {
             }
         },
 
-        // Business routine APIs - initialized on first access
-        // Stored in closure to survive Proxy wrapping
+        // Business routine APIs - lazy loaded on first access
+        /** @type {VorgangApi} */
         get vorgang() {
-            return vorgangApi;
+            if (!this._vorgangApi) {
+                this._vorgangApi = createVorgangApi(this);
+            }
+            return this._vorgangApi;
         },
+
+        /** @type {KontaktApi} */
         get kontakt() {
-            return kontaktApi;
+            if (!this._kontaktApi) {
+                this._kontaktApi = createKontaktApi(this);
+            }
+            return this._kontaktApi;
         },
+
+        /** @type {BelegPositionenApi} */
         get belegPositionen() {
-            return belegPositionenApi;
+            if (!this._belegPositionenApi) {
+                this._belegPositionenApi = createBelegPositionenApi(this);
+            }
+            return this._belegPositionenApi;
         },
+
+        /** @type {MaterialApi} */
         get material() {
-            return materialApi;
+            if (!this._materialApi) {
+                this._materialApi = createMaterialApi(this);
+            }
+            return this._materialApi;
         },
+
+        /** @type {SerienApi} */
         get serien() {
-            return serienApi;
+            if (!this._serienApi) {
+                this._serienApi = createSerienApi(this);
+            }
+            return this._serienApi;
         },
+
+        /** @type {BenutzerApi} */
         get benutzer() {
-            return benutzerApi;
+            if (!this._benutzerApi) {
+                this._benutzerApi = createBenutzerApi(this);
+            }
+            return this._benutzerApi;
         },
+
+        /** @type {ArtikelApi} */
         get artikel() {
-            return artikelApi;
+            if (!this._artikelApi) {
+                this._artikelApi = createArtikelApi(this);
+            }
+            return this._artikelApi;
         },
+
+        /** @type {BelegApi} */
         get beleg() {
-            return belegApi;
+            if (!this._belegApi) {
+                this._belegApi = createBelegApi(this);
+            }
+            return this._belegApi;
         },
+
+        /** @type {ProduktionApi} */
         get produktion() {
-            return produktionApi;
+            if (!this._produktionApi) {
+                this._produktionApi = createProduktionApi(this);
+            }
+            return this._produktionApi;
         },
+
+        /** @type {FakturaApi} */
         get faktura() {
-            return fakturaApi;
+            if (!this._fakturaApi) {
+                this._fakturaApi = createFakturaApi(this);
+            }
+            return this._fakturaApi;
         },
+
+        /** @type {SettingsApi} */
         get settings() {
-            return settingsApi;
+            if (!this._settingsApi) {
+                this._settingsApi = createSettingsApi(this);
+            }
+            return this._settingsApi;
         },
+
+        /** @type {UiApi} */
         get ui() {
-            return uiApi;
+            if (!this._uiApi) {
+                this._uiApi = createUiApi(this);
+            }
+            return this._uiApi;
         },
+
+        /** @type {UtilityApi} */
         get utility() {
-            return utilityApi;
+            if (!this._utilityApi) {
+                this._utilityApi = createUtilityApi(this);
+            }
+            return this._utilityApi;
         }
     };
-
-    // Initialize business APIs in closure (outside the object literal)
-    // This ensures they survive Svelte 5 Proxy wrapping
-    const vorgangApi = createVorgangApi(api);
-    const kontaktApi = createKontaktApi(api);
-    const belegPositionenApi = createBelegPositionenApi(api);
-    const materialApi = createMaterialApi(api);
-    const serienApi = createSerienApi(api);
-    const benutzerApi = createBenutzerApi(api);
-    const artikelApi = createArtikelApi(api);
-    const belegApi = createBelegApi(api);
-    const produktionApi = createProduktionApi(api);
-    const fakturaApi = createFakturaApi(api);
-    const settingsApi = createSettingsApi(api);
-    const uiApi = createUiApi(api);
-    const utilityApi = createUtilityApi(api);
 
     return api;
 }
