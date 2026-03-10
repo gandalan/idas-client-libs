@@ -8,6 +8,26 @@ export { createAuthManager, fluentIdasAuthManager } from "./api/fluentAuthManage
 export { fetchEnvConfig } from "./api/fluentEnvUtils";
 export { restClient } from "./api/fluentRestClient";
 
+// Business Routines APIs
+export {
+    createVorgangApi,
+    createKontaktApi,
+    createBelegPositionenApi,
+    createMaterialApi,
+    createSerienApi,
+    createBenutzerApi,
+    createArtikelApi,
+    createBelegApi,
+    createProduktionApi,
+    createFakturaApi,
+    createSettingsApi,
+    createUiApi,
+    createUtilityApi
+} from "./api/business/index.js";
+
+// DTO Type Definitions (for JSDoc)
+export * from "./api/dtos/index.js";
+
 // re-export all modules from the ui folder as named exports
 export * from "./ui/index.js";
 
@@ -15,6 +35,19 @@ export * from "./ui/index.js";
  * @typedef {import("./api/fluentApi").FluentApi} FluentApi
  * @typedef {import("./api/fluentAuthManager").FluentAuthManager} FluentAuthManager
  * @typedef {import("./api/fluentApi").FluentApi} IDAS
+ * @typedef {import("./api/business/vorgangApi").VorgangApi} VorgangApi
+ * @typedef {import("./api/business/kontaktApi").KontaktApi} KontaktApi
+ * @typedef {import("./api/business/belegPositionenApi").BelegPositionenApi} BelegPositionenApi
+ * @typedef {import("./api/business/materialApi").MaterialApi} MaterialApi
+ * @typedef {import("./api/business/serienApi").SerienApi} SerienApi
+ * @typedef {import("./api/business/benutzerApi").BenutzerApi} BenutzerApi
+ * @typedef {import("./api/business/artikelApi").ArtikelApi} ArtikelApi
+ * @typedef {import("./api/business/belegApi").BelegApi} BelegApi
+ * @typedef {import("./api/business/produktionApi").ProduktionApi} ProduktionApi
+ * @typedef {import("./api/business/fakturaApi").FakturaApi} FakturaApi
+ * @typedef {import("./api/business/settingsApi").SettingsApi} SettingsApi
+ * @typedef {import("./api/business/uiApi").UiApi} UiApi
+ * @typedef {import("./api/business/utilityApi").UtilityApi} UtilityApi
  */
 
 /**
