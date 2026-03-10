@@ -1,8 +1,12 @@
-import { BenutzerDTO, PasswortAendernDTO, RolleDTO } from '../dtos/index.js';
-
 /**
  * @typedef {Object} FluentApi
  * @property {(endpoint: string) => { get: () => Promise<any>, post: (data: any) => Promise<any>, put: (data: any) => Promise<any> }} endpoint
+ */
+
+/**
+ * @typedef {import('../dtos/index.js').BenutzerDTO} BenutzerDTO
+ * @typedef {import('../dtos/index.js').PasswortAendernDTO} PasswortAendernDTO
+ * @typedef {import('../dtos/index.js').RolleDTO} RolleDTO
  */
 
 /**
