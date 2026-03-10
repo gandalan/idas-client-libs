@@ -62,8 +62,6 @@ import { createUtilityApi } from "./business/utilityApi";
  * @return {FluentApi} A configured API client instance.
  */
 export function createApi() {
-    // Create a self-referencing object that works with Svelte 5 Proxies
-    // All properties must be defined in the initial object literal
     const api = {
         authManager: {},
         baseUrl: "",
@@ -103,54 +101,54 @@ export function createApi() {
         },
 
         /**
-           * Sends a GET request, ensuring authentication if needed.
-           *
-           * @async
-           * @param {string} [url=""]
-           * @param {boolean} [auth=true]
-           * @returns {Promise<Object>}
-           */
-        async get(url = "", auth = true) {
-            await this.preCheck(auth);
-            return await this.createRestClient().get(url);
-        },
-
-        /**
-           * Sends a PUT request with a payload, ensuring authentication if needed.
-           *
-           * @async
-           * @param {string} [url=""]
-           * @param {Object} [payload={}]
-           * @param {boolean} [auth=true]
-           * @returns {Promise<Object>}
-           */
-        async put(url = "", payload = {}, auth = true) {
-            await this.preCheck(auth);
-            return await this.createRestClient().put(url, payload);
-        },
-
-        /**
-           * Sends a POST request with a payload, ensuring authentication if needed.
-           *
-           * @async
-           * @param {string} [url=""]
-           * @param {Object} [payload={}]
-           * @param {boolean} [auth=true]
-           * @returns {Promise<Object>}
-           */
-        async post(url = "", payload = {}, auth = true) {
-            await this.preCheck(auth);
-            return await this.createRestClient().post(url, payload);
-        },
-
-        /**
-          * Sends a DELETE request, ensuring authentication if needed.
+          * Sends a GET request, ensuring authentication if needed.
           *
           * @async
           * @param {string} [url=""]
           * @param {boolean} [auth=true]
           * @returns {Promise<Object>}
           */
+        async get(url = "", auth = true) {
+            await this.preCheck(auth);
+            return await this.createRestClient().get(url);
+        },
+
+        /**
+          * Sends a PUT request with a payload, ensuring authentication if needed.
+          *
+          * @async
+          * @param {string} [url=""]
+          * @param {Object} [payload={}]
+          * @param {boolean} [auth=true]
+          * @returns {Promise<Object>}
+          */
+        async put(url = "", payload = {}, auth = true) {
+            await this.preCheck(auth);
+            return await this.createRestClient().put(url, payload);
+        },
+
+        /**
+          * Sends a POST request with a payload, ensuring authentication if needed.
+          *
+          * @async
+          * @param {string} [url=""]
+          * @param {Object} [payload={}]
+          * @param {boolean} [auth=true]
+          * @returns {Promise<Object>}
+          */
+        async post(url = "", payload = {}, auth = true) {
+            await this.preCheck(auth);
+            return await this.createRestClient().post(url, payload);
+        },
+
+        /**
+         * Sends a DELETE request, ensuring authentication if needed.
+         *
+         * @async
+         * @param {string} [url=""]
+         * @param {boolean} [auth=true]
+         * @returns {Promise<Object>}
+         */
         async delete(url = "", auth = true) {
             await this.preCheck(auth);
             return await this.createRestClient().delete(url);
@@ -183,59 +181,64 @@ export function createApi() {
             }
         },
 
-        // Business routine APIs - initialized as null, will be set after object creation
-        // This ensures the properties exist for Svelte 5 Proxy tracking
-        vorgang: null,
-        kontakt: null,
-        belegPositionen: null,
-        material: null,
-        serien: null,
-        benutzer: null,
-        artikel: null,
-        beleg: null,
-        produktion: null,
-        faktura: null,
-        settings: null,
-        ui: null,
-        utility: null
-    };
-
-    // Initialize business routine APIs after object creation
-    // This ensures the properties exist for Svelte 5 Proxy tracking
-    api.vorgang = createVorgangApi(api);
-    api.kontakt = createKontaktApi(api);
-    api.belegPositionen = createBelegPositionenApi(api);
-    api.material = createMaterialApi(api);
-    api.serien = createSerienApi(api);
-    api.benutzer = createBenutzerApi(api);
-    api.artikel = createArtikelApi(api);
-    api.beleg = createBelegApi(api);
-    api.produktion = createProduktionApi(api);
-    api.faktura = createFakturaApi(api);
-    api.settings = createSettingsApi(api);
-    api.ui = createUiApi(api);
-    api.utility = createUtilityApi(api);
-
-    return api;
-}
+        // Business routine APIs - initialized on first access
+        // Stored in closure to survive Proxy wrapping
+        get vorgang() {
+            return vorgangApi;
+        },
+        get kontakt() {
+            return kontaktApi;
+        },
+        get belegPositionen() {
+            return belegPositionenApi;
+        },
+        get material() {
+            return materialApi;
+        },
+        get serien() {
+            return serienApi;
+        },
+        get benutzer() {
+            return benutzerApi;
+        },
+        get artikel() {
+            return artikelApi;
+        },
+        get beleg() {
+            return belegApi;
+        },
+        get produktion() {
+            return produktionApi;
+        },
+        get faktura() {
+            return fakturaApi;
+        },
+        get settings() {
+            return settingsApi;
+        },
+        get ui() {
+            return uiApi;
+        },
+        get utility() {
+            return utilityApi;
         }
     };
 
-    // Initialize business APIs and assign directly to api object
-    // This makes them visible to Svelte 5 Proxies
-    api.vorgang = createVorgangApi(api);
-    api.kontakt = createKontaktApi(api);
-    api.belegPositionen = createBelegPositionenApi(api);
-    api.material = createMaterialApi(api);
-    api.serien = createSerienApi(api);
-    api.benutzer = createBenutzerApi(api);
-    api.artikel = createArtikelApi(api);
-    api.beleg = createBelegApi(api);
-    api.produktion = createProduktionApi(api);
-    api.faktura = createFakturaApi(api);
-    api.settings = createSettingsApi(api);
-    api.ui = createUiApi(api);
-    api.utility = createUtilityApi(api);
+    // Initialize business APIs in closure (outside the object literal)
+    // This ensures they survive Svelte 5 Proxy wrapping
+    const vorgangApi = createVorgangApi(api);
+    const kontaktApi = createKontaktApi(api);
+    const belegPositionenApi = createBelegPositionenApi(api);
+    const materialApi = createMaterialApi(api);
+    const serienApi = createSerienApi(api);
+    const benutzerApi = createBenutzerApi(api);
+    const artikelApi = createArtikelApi(api);
+    const belegApi = createBelegApi(api);
+    const produktionApi = createProduktionApi(api);
+    const fakturaApi = createFakturaApi(api);
+    const settingsApi = createSettingsApi(api);
+    const uiApi = createUiApi(api);
+    const utilityApi = createUtilityApi(api);
 
     return api;
 }
