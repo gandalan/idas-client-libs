@@ -751,9 +751,14 @@
  */
 
 // ============================================================================
-// Type Exports (JSDoc Types)
+// Re-export all DTO modules for JSDoc type imports
 // ============================================================================
-// Note: JSDoc @typedef definitions are not real JavaScript exports.
-// They are only available for type checking and documentation.
-// To use these types, import them via JSDoc: @typedef {import('./dtos/index.js').TypeName}
-// No actual JavaScript exports here - this file is for documentation only.
+// Usage: @typedef {import('@gandalan/idas-weblibs/api/dtos').VorgangDTO} VorgangDTO
+
+// Re-export modules so their JSDoc types are accessible via the index
+export * from './belege.js';
+export * from './kunden.js';
+export * from './ui.js';
+export * from './produktion.js';
+export * from './technik.js';
+export * from './settings.js';

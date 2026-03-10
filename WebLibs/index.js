@@ -25,9 +25,9 @@ export {
     createUtilityApi
 } from "./api/business/index.js";
 
-// Note: DTO Type Definitions are available in ./api/dtos/ for JSDoc imports
-// Import them like: @typedef {import('@gandalan/idas-weblibs/api/dtos/belege.js').VorgangDTO}
-// They are NOT exported here because JSDoc @typedef is not a real JavaScript export
+// DTO Type Definitions - re-exported for JSDoc type imports
+// Usage: @typedef {import('@gandalan/idas-weblibs').VorgangDTO} VorgangDTO
+export * from "./api/dtos/index.js";
 
 // re-export all modules from the ui folder as named exports
 export * from "./ui/index.js";
