@@ -751,77 +751,9 @@
  */
 
 // ============================================================================
-// Type Exports
+// Type Exports (JSDoc Types)
 // ============================================================================
-
-export {
-  // AV
-  AVReserviertItemDTO,
-  BearbeitungsKuerzelDTO,
-  BelegPositionAVDTO,
-  BelegPositionAVListItemDTO,
-  PCodeStatistikDTO,
-  PositionSerieItemDTO,
-  ProfilKuerzelDTO,
-  AvReportVorgangRequestDto,
-  AvReportVorgangDto,
-  AvReportBelegDto,
-  AvReportKontaktDto,
-  SerieAuslastungDTO,
-  SerieDTO,
-  SerieDruckInfoDTO,
-  SerieHistorieDTO,
-  SerienMaterialEditDTO,
-  VirtualSerieWithAuslastungDTO,
-  // Anpassungen
-  AnpassungArtDTO,
-  AnpassungDTO,
-  AnpassungVorlageDTO,
-  AufpreisAnpassungDTO,
-  PreisfaktorDTO,
-  // Benutzer
-  BenutzerDTO,
-  BerechtigungDTO,
-  LoginAttemptDTO,
-  LoginAttemptResultDTO,
-  LoginDTO,
-  PasswortAendernDTO,
-  RefreshTokenDTO,
-  RolleDTO,
-  UserAuthTokenDTO,
-  ZustimmungsInfoDTO,
-  // Druck
-  ILayoutBelegDruck,
-  LayoutBelegDruckDTO,
-  // Feedback
-  FeedbackDTO,
-  FeedbackKommentarDTO,
-  FeedbackAttachmentDTO,
-  FeedbackNotifyItemDTO,
-  // Filter
-  FilterItemDTO,
-  ListItemPropertyFilterDTO,
-  // PositionsDaten
-  PositionsDatenDTO,
-  // Salden
-  StandardSaldoDTO,
-  // Scripts
-  FileInfoDTO,
-  ResourceResolution,
-  ResourceEntry,
-  ResourceRegistry,
-  // Update
-  ChangeDTO,
-  ChangeInfoDTO,
-  DevOpsStatusDTO,
-  UpdateInfoDTO,
-  // API
-  ApiVersionDTO,
-  ExtendedStatusCodeDTO,
-  // Contracts
-  ContractDTO,
-  // LoginJwt
-  CreateServiceTokenRequestDTO,
-  // Produktion
-  MaterialbedarfDTO,
-};
+// Note: JSDoc @typedef definitions are not real JavaScript exports.
+// They are only available for type checking and documentation.
+// To use these types, import them via JSDoc: @typedef {import('./dtos/index.js').TypeName}
+// No actual JavaScript exports here - this file is for documentation only.
