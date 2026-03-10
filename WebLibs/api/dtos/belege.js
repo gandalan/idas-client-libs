@@ -562,5 +562,6 @@
  * @property {string} NeuerTextStatus - Status der in das Feld TextStatus für alle Vorgänge gesetzt werden soll.
  */
 
-// Export all type names for use in TypeScript declaration files
-module.exports = {};
+// Note: All types in this file are JSDoc @typedef declarations
+// They are documentation-only and available for type imports via:
+// @typedef {import('./belege.js').VorgangDTO} VorgangDTO
