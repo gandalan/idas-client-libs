@@ -179,24 +179,66 @@ export function createApi() {
             if (auth && this.authManager) {
                 await this.authManager.ensureAuthenticated();
             }
+        },
+
+        // Business routine APIs - initialized on first access
+        // Stored in closure to survive Proxy wrapping
+        get vorgang() {
+            return vorgangApi;
+        },
+        get kontakt() {
+            return kontaktApi;
+        },
+        get belegPositionen() {
+            return belegPositionenApi;
+        },
+        get material() {
+            return materialApi;
+        },
+        get serien() {
+            return serienApi;
+        },
+        get benutzer() {
+            return benutzerApi;
+        },
+        get artikel() {
+            return artikelApi;
+        },
+        get beleg() {
+            return belegApi;
+        },
+        get produktion() {
+            return produktionApi;
+        },
+        get faktura() {
+            return fakturaApi;
+        },
+        get settings() {
+            return settingsApi;
+        },
+        get ui() {
+            return uiApi;
+        },
+        get utility() {
+            return utilityApi;
         }
     };
 
-    // Initialize business routine APIs directly (not as getters)
-    // to avoid issues with Proxy objects
-    api.vorgang = createVorgangApi(api);
-    api.kontakt = createKontaktApi(api);
-    api.belegPositionen = createBelegPositionenApi(api);
-    api.material = createMaterialApi(api);
-    api.serien = createSerienApi(api);
-    api.benutzer = createBenutzerApi(api);
-    api.artikel = createArtikelApi(api);
-    api.beleg = createBelegApi(api);
-    api.produktion = createProduktionApi(api);
-    api.faktura = createFakturaApi(api);
-    api.settings = createSettingsApi(api);
-    api.ui = createUiApi(api);
-    api.utility = createUtilityApi(api);
+    // Initialize business APIs in closure (outside the object literal)
+    // This ensures they survive Svelte 5 Proxy wrapping
+    const vorgangApi = createVorgangApi(api);
+    const kontaktApi = createKontaktApi(api);
+    const belegPositionenApi = createBelegPositionenApi(api);
+    const materialApi = createMaterialApi(api);
+    const serienApi = createSerienApi(api);
+    const benutzerApi = createBenutzerApi(api);
+    const artikelApi = createArtikelApi(api);
+    const belegApi = createBelegApi(api);
+    const produktionApi = createProduktionApi(api);
+    const fakturaApi = createFakturaApi(api);
+    const settingsApi = createSettingsApi(api);
+    const uiApi = createUiApi(api);
+    const utilityApi = createUtilityApi(api);
 
     return api;
 }
