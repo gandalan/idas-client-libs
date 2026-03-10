@@ -179,113 +179,26 @@ export function createApi() {
             if (auth && this.authManager) {
                 await this.authManager.ensureAuthenticated();
             }
-        },
-
-        // Lazy-loaded business routine APIs
-        /** @type {VorgangApi} */
-        get vorgang() {
-            if (!this._vorgangApi) {
-                this._vorgangApi = createVorgangApi(this);
-            }
-            return this._vorgangApi;
-        },
-
-        /** @type {KontaktApi} */
-        get kontakt() {
-            if (!this._kontaktApi) {
-                this._kontaktApi = createKontaktApi(this);
-            }
-            return this._kontaktApi;
-        },
-
-        /** @type {BelegPositionenApi} */
-        get belegPositionen() {
-            if (!this._belegPositionenApi) {
-                this._belegPositionenApi = createBelegPositionenApi(this);
-            }
-            return this._belegPositionenApi;
-        },
-
-        /** @type {MaterialApi} */
-        get material() {
-            if (!this._materialApi) {
-                this._materialApi = createMaterialApi(this);
-            }
-            return this._materialApi;
-        },
-
-        /** @type {SerienApi} */
-        get serien() {
-            if (!this._serienApi) {
-                this._serienApi = createSerienApi(this);
-            }
-            return this._serienApi;
-        },
-
-        /** @type {BenutzerApi} */
-        get benutzer() {
-            if (!this._benutzerApi) {
-                this._benutzerApi = createBenutzerApi(this);
-            }
-            return this._benutzerApi;
-        },
-
-        /** @type {ArtikelApi} */
-        get artikel() {
-            if (!this._artikelApi) {
-                this._artikelApi = createArtikelApi(this);
-            }
-            return this._artikelApi;
-        },
-
-        /** @type {BelegApi} */
-        get beleg() {
-            if (!this._belegApi) {
-                this._belegApi = createBelegApi(this);
-            }
-            return this._belegApi;
-        },
-
-        /** @type {ProduktionApi} */
-        get produktion() {
-            if (!this._produktionApi) {
-                this._produktionApi = createProduktionApi(this);
-            }
-            return this._produktionApi;
-        },
-
-        /** @type {FakturaApi} */
-        get faktura() {
-            if (!this._fakturaApi) {
-                this._fakturaApi = createFakturaApi(this);
-            }
-            return this._fakturaApi;
-        },
-
-        /** @type {SettingsApi} */
-        get settings() {
-            if (!this._settingsApi) {
-                this._settingsApi = createSettingsApi(this);
-            }
-            return this._settingsApi;
-        },
-
-        /** @type {UiApi} */
-        get ui() {
-            if (!this._uiApi) {
-                this._uiApi = createUiApi(this);
-            }
-            return this._uiApi;
-        },
-
-        /** @type {UtilityApi} */
-        get utility() {
-            if (!this._utilityApi) {
-                this._utilityApi = createUtilityApi(this);
-            }
-            return this._utilityApi;
         }
     };
+
+    // Initialize business routine APIs directly (not as getters)
+    // to avoid issues with Proxy objects
+    api.vorgang = createVorgangApi(api);
+    api.kontakt = createKontaktApi(api);
+    api.belegPositionen = createBelegPositionenApi(api);
+    api.material = createMaterialApi(api);
+    api.serien = createSerienApi(api);
+    api.benutzer = createBenutzerApi(api);
+    api.artikel = createArtikelApi(api);
+    api.beleg = createBelegApi(api);
+    api.produktion = createProduktionApi(api);
+    api.faktura = createFakturaApi(api);
+    api.settings = createSettingsApi(api);
+    api.ui = createUiApi(api);
+    api.utility = createUtilityApi(api);
+
+    return api;
 }
 
 /**
