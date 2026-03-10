@@ -62,7 +62,7 @@ import { createUtilityApi } from "./business/utilityApi";
  * @return {FluentApi} A configured API client instance.
  */
 export function createApi() {
-    return {
+    const api = {
         authManager: {},
         baseUrl: "",
         serviceName: "unknownService",
