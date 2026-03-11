@@ -10,6 +10,8 @@
  * @property {Array<string>} MoeglicheBearbeitungsMethoden
  */
 
+/** @typedef {import('../fluentApi.js').FluentApi} FluentApi */
+
 /**
  * @typedef {Object} MaterialApi
  * @property {() => Promise<MaterialDTO[]>} getAll - Get all materials

@@ -1,3 +1,5 @@
+/** @typedef {import('./ui.js').PropertyValueCollection} PropertyValueCollection */
+
 /**
  * @typedef {Object} KontaktDTO
  * @property {string} KontaktGuid - Eindeutige GUID
@@ -211,3 +213,5 @@
  * @property {string} KundenMandantGuid
  * @property {boolean} KundenMandantIstAktiv
  */
+
+export {};

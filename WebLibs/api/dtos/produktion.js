@@ -571,3 +571,11 @@
 /**
  * @typedef {Object} KatalogArtikelArt
  */
+
+/**
+ * Represents optimization output for one material item.
+ * Keys and values are backend-defined and may vary by optimization strategy.
+ * @typedef {Object.<string, any>} MaterialbedarfCutOptimization
+ */
+
+export {};

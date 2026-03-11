@@ -5,6 +5,7 @@
 
 /** @typedef {import('../dtos/belege.js').BelegPositionDTO} BelegPositionDTO */
 /** @typedef {import('../dtos/belege.js').VorgangDTO} VorgangDTO */
+/** @typedef {import('../fluentApi.js').FluentApi} FluentApi */
 
 /**
  * @typedef {Object} BelegPositionenApi

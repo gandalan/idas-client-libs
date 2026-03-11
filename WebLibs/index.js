@@ -4,6 +4,7 @@ import { initIDAS } from "./api/authUtils";
 export { IDASFactory, initIDAS, RESTClient };
 
 export { createApi, fluentApi } from "./api/fluentApi";
+export { createIDASApi, idasFluentApi } from "./api/idasFluentApi";
 export { createAuthManager, fluentIdasAuthManager } from "./api/fluentAuthManager";
 export { fetchEnvConfig } from "./api/fluentEnvUtils";
 export { restClient } from "./api/fluentRestClient";
@@ -34,6 +35,7 @@ export * from "./ui/index.js";
 
 /**
  * @typedef {import("./api/fluentApi").FluentApi} FluentApi
+ * @typedef {import("./api/idasFluentApi").IDASFluentApi} IDASFluentApi
  * @typedef {import("./api/fluentAuthManager").FluentAuthManager} FluentAuthManager
  * @typedef {import("./api/business/vorgangApi").VorgangApi} VorgangApi
  * @typedef {import("./api/business/kontaktApi").KontaktApi} KontaktApi
@@ -76,7 +78,7 @@ export * from "./ui/index.js";
  */
 
 /**
- * @typedef {Object} NeherApp3ArtikelstammApi
+ * @typedef {Object} NeherApp3ArtikelstammCache
  * @property {() => Promise<ArtikelstammEintrag[]>} getArtikelStamm
  * @property {() => Promise<Object[]>} getWarenGruppen
  * @property {(guid: string) => Promise<ArtikelstammEintrag | undefined>} getArtikelByGuid
@@ -84,7 +86,7 @@ export * from "./ui/index.js";
  */
 
 /**
- * @typedef {Object} NeherApp3ErfassungApi
+ * @typedef {Object} NeherApp3ErfassungCache
  * @property {() => Promise<Variante[]>} getVarianten
  * @property {(variantenNameOderKuerzel: string) => Promise<Variante | undefined>} getVariante
  * @property {() => Promise<Werteliste[]>} getWertelisten
@@ -97,7 +99,7 @@ export * from "./ui/index.js";
  * @typedef {Object} NeherApp3Props
  * @property {FluentApi} api
  * @property {FluentAuthManager} [authManager]
- * @property {FluentApi} idas
+ * @property {IDASFluentApi} idas
  * @property {string} [mainCssPath]
  */
 
@@ -127,17 +129,29 @@ export * from "./ui/index.js";
  */
 
 /**
+ * @typedef {Object} NeherApp3ApiCollection
+ * @property {IDASFluentApi} [idas]
+ * @property {FluentApi} [hostingEnvironment]
+ */
+
+/**
+ * @typedef {Object} NeherApp3CacheCollection
+ * @property {NeherApp3ArtikelstammCache} artikelstamm
+ * @property {NeherApp3ErfassungCache} erfassung
+ */
+
+/**
  * @typedef {Object} NeherApp3
  * @property {(menuItem: NeherApp3MenuItem) => void} addMenuItem
  * @property {(appModule: NeherApp3Module | string) => Promise<void>} addApp
  * @property {(message: string, type?: NeherApp3NotifyType, cb?: function) => void} notify - Shows a notification. Type defaults to 0 (info). Callback is optional.
- * @property {NeherApp3ArtikelstammApi} artikelstamm
- * @property {NeherApp3ErfassungApi} erfassung
+ * @property {NeherApp3ApiCollection} api
+ * @property {NeherApp3CacheCollection} cache
  */
 
 /**
  * Global NeherApp3 instance
- * @type {NeherApp3|undefined}
+ * @type {NeherApp3}
  * @global
  */
 globalThis.neherapp3 = globalThis.neherapp3 || {};

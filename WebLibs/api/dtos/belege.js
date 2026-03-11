@@ -3,6 +3,12 @@
  * Auto-generated from C# DTO files in Gandalan.IDAS.WebApi.Client/DTOs/Belege/
  */
 
+/** @typedef {import('./ui.js').PropertyValueCollection} PropertyValueCollection */
+/** @typedef {import('./kunden.js').BeleganschriftDTO} BeleganschriftDTO */
+/** @typedef {import('./kunden.js').KontaktDTO} KontaktDTO */
+/** @typedef {import('./settings.js').BenutzerDTO} BenutzerDTO */
+/** @typedef {import('./settings.js').MandantDTO} MandantDTO */
+
 /**
  * BelegArt enum values
  * @typedef {0|1|2|3|4|5|6|7|8|9|10|11|12|13} BelegArt
@@ -20,6 +26,13 @@
  * 11: Gutschrift
  * 12: Storno
  * 13: FremdfertigungsAuftrag
+ */
+
+/**
+ * RechnungsNummer enum values
+ * @typedef {0|1} RechnungsNummer
+ * 0: Standard
+ * 1: VorgangsNummer
  */
 
 /**
@@ -101,6 +114,38 @@
  * @property {string} Ortsteil
  * @property {string} Land
  * @property {boolean} IstInland
+ */
+
+/**
+ * @typedef {Object} ZusatztextDTO
+ * @property {string} ObjectGuid
+ * @property {number} LfdNr
+ * @property {string} Context
+ * @property {string} Content
+ */
+
+/**
+ * @typedef {Object} BelegPositionSonderwunschDTO
+ * @property {string} Wert
+ * @property {number} Laenge
+ * @property {string} CalculatedLaenge
+ * @property {number} Hoehe
+ * @property {string} Typ
+ * @property {string} Gruppe
+ * @property {string} Farbe
+ * @property {string} CalculatedFarbe
+ * @property {number} Aufpreis
+ * @property {string} Bezeichnung
+ * @property {string} ExportName
+ * @property {string} Kuerzel
+ * @property {string} GehoertZuProfilMitKuerzel
+ * @property {string} InternerName
+ * @property {string} Standard
+ * @property {string} ListenName
+ * @property {boolean} NichtSaegenMoeglich
+ * @property {boolean} ProfilNichtSaegen
+ * @property {string} BelegPositionSonderwunschGuid
+ * @property {boolean} IstKorrekturAktiv
  */
 
 /**
@@ -565,3 +610,5 @@
 // Note: All types in this file are JSDoc @typedef declarations
 // They are documentation-only and available for type imports via:
 // @typedef {import('./belege.js').VorgangDTO} VorgangDTO
+
+export {};

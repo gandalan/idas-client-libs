@@ -2,13 +2,13 @@
  * @typedef {Object} FluentRESTClient
  * @property {string} baseUrl - The base URL for API requests.
  * @property {string} token - The JWT token for authorization.
- * @property {function(string) : FluentRESTClient} useBaseUrl - Function to set the base URL and return the FluentApi object.
- * @property {function(string) : FluentRESTClient} useToken - Function to set the JWT token and return the FluentApi object.
- * @property {function(string) : FluentRESTClient} useUserAgent - Function to set the user agent and return the FluentApi object.
- * @property {function(string) : object|Array<any>} get - Async function to perform GET requests.
- * @property {function(string, object) : object|Array<any>} put - Async function to perform PUT requests with a payload.
- * @property {function(string, object|FormData) : object|Array<any>} post - Async function to perform POST requests with a payload.
- * @property {function(string) : object|Array<any>} delete - Async function to perform DELETE requests.
+ * @property {(url?: string) => FluentRESTClient} useBaseUrl - Function to set the base URL and return the FluentApi object.
+ * @property {(jwtToken?: string) => FluentRESTClient} useToken - Function to set the JWT token and return the FluentApi object.
+ * @property {(userAgent?: string) => FluentRESTClient} useUserAgent - Function to set the user agent and return the FluentApi object.
+ * @property {(url?: string, auth?: boolean) => Promise<any>} get - Async function to perform GET requests.
+ * @property {(url?: string, payload?: Object) => Promise<any>} put - Async function to perform PUT requests with a payload.
+ * @property {(url?: string, payload?: Object|FormData) => Promise<any>} post - Async function to perform POST requests with a payload.
+ * @property {(url?: string) => Promise<any>} delete - Async function to perform DELETE requests.
  */
 
 /**

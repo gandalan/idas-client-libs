@@ -32,7 +32,6 @@
 /**
  * Utility API - File handling, inventory, delivery promises, and general utilities
  * @param {FluentApi} fluentApi
- * @returns {UtilityApi}
  */
 export function createUtilityApi(fluentApi) {
   return {
@@ -844,3 +843,9 @@ export function createUtilityApi(fluentApi) {
     },
   };
 }
+
+/**
+ * Utility API contract inferred from createUtilityApi implementation.
+ *
+ * @typedef {ReturnType<typeof createUtilityApi>} UtilityApi
+ */

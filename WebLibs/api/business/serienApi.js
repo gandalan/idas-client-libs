@@ -7,8 +7,8 @@
 
 /**
  * @typedef {import('../dtos/produktion.js').SerieDTO} SerieDTO
- * @typedef {import('../dtos/produktion.js').SerieAuslastungDTO} SerieAuslastungDTO
- * @typedef {import('../dtos/produktion.js').VirtualSerieWithAuslastungDTO} VirtualSerieWithAuslastungDTO
+ * @typedef {import('../dtos/index.js').SerieAuslastungDTO} SerieAuslastungDTO
+ * @typedef {import('../dtos/index.js').VirtualSerieWithAuslastungDTO} VirtualSerieWithAuslastungDTO
  * @typedef {import('../dtos/index.js').BelegPositionAVDTO} BelegPositionAVDTO
  * @typedef {import('../dtos/index.js').PositionSerieItemDTO} PositionSerieItemDTO
  * @typedef {import('../fluentApi.js').FluentApi} FluentApi
@@ -339,37 +339,37 @@ export function createSerienApi(fluentApi) {
  * @property {FluentApi} fluentApi
  *
  * // Serie Operations
- * @property {function(string): Promise<void>} releaseElemente
- * @property {function(string, string): Promise<string>} moveElemente
- * @property {function(string): Promise<string>} redistributeElemente
- * @property {function(): Promise<SerieDTO[]>} getAllSerien
- * @property {function(Date): Promise<SerieDTO[]>} getAllSerienChangedSince
- * @property {function(string): Promise<SerieDTO>} getSerie
- * @property {function(SerieDTO): Promise<void>} saveSerie
- * @property {function(string): Promise<void>} deleteSerie
- * @property {function(string): Promise<SerieAuslastungDTO[]>} getAuslastung
- * @property {function(boolean): Promise<Record<string, SerieAuslastungDTO[]>>} getGesamtAuslastung
- * @property {function(Date?, Date?, boolean): Promise<Record<string, SerieAuslastungDTO[]>>} getSerienKapazitaeten
- * @property {function(Date?, Date?): Promise<VirtualSerieWithAuslastungDTO[]>} getAuslastungVirtualSerien
- * @property {function(number, number): Promise<SerieAuslastungDTO[]>} getAuslastungVorgang
+ * @property {(fromSerie: string) => Promise<void>} releaseElemente
+ * @property {(fromSerie: string, toSerie: string) => Promise<string>} moveElemente
+ * @property {(fromSerie: string) => Promise<string>} redistributeElemente
+ * @property {() => Promise<SerieDTO[]>} getAllSerien
+ * @property {(changedSince: Date) => Promise<SerieDTO[]>} getAllSerienChangedSince
+ * @property {(guid: string) => Promise<SerieDTO>} getSerie
+ * @property {(serie: SerieDTO) => Promise<void>} saveSerie
+ * @property {(guid: string) => Promise<void>} deleteSerie
+ * @property {(serie: string) => Promise<SerieAuslastungDTO[]>} getAuslastung
+ * @property {(includeAbgelaufene?: boolean) => Promise<Record<string, SerieAuslastungDTO[]>>} getGesamtAuslastung
+ * @property {(startDate?: Date, endDate?: Date, includeStaendige?: boolean) => Promise<Record<string, SerieAuslastungDTO[]>>} getSerienKapazitaeten
+ * @property {(startDate?: Date, endDate?: Date) => Promise<VirtualSerieWithAuslastungDTO[]>} getAuslastungVirtualSerien
+ * @property {(startVorgangsnummer: number, endVorgangsnummer: number) => Promise<SerieAuslastungDTO[]>} getAuslastungVorgang
  *
  * // AV Position Operations
- * @property {function(): Promise<BelegPositionAVDTO[]>} getAllBelegPositionenAV
- * @property {function(Date): Promise<BelegPositionAVDTO[]>} getAllBelegPositionenAVChangedSince
- * @property {function(boolean, boolean): Promise<BelegPositionAVDTO[]>} getAllBelegPositionenAVWithOptions
- * @property {function(Date, boolean, boolean): Promise<BelegPositionAVDTO[]>} getAllBelegPositionenAVChangedSinceWithOptions
- * @property {function(string, boolean, boolean): Promise<BelegPositionAVDTO[]>} getSerieBelegPositionenAV
- * @property {function(string, boolean, boolean): Promise<BelegPositionAVDTO[]>} getVorgangBelegPositionenAV
- * @property {function(string[], boolean, boolean): Promise<BelegPositionAVDTO[]>} getVorgaengeBelegPositionenAV
- * @property {function(string): Promise<BelegPositionAVDTO[]>} getBelegPositionenAV
- * @property {function(string): Promise<BelegPositionAVDTO>} getBelegPositionAVById
- * @property {function(string, boolean, boolean): Promise<BelegPositionAVDTO[]>} getBelegPositionAVByPCode
- * @property {function(string): Promise<BelegPositionAVDTO[]>} searchBelegPositionAVByPCode
- * @property {function(BelegPositionAVDTO): Promise<void>} saveBelegPositionenAV
- * @property {function(BelegPositionAVDTO[]): Promise<BelegPositionAVDTO[]>} saveBelegPositionenAVBulk
- * @property {function(string, string[]): Promise<BelegPositionAVDTO[]>} saveBelegPositionenAVToSerie
- * @property {function(string[]): Promise<void>} belegPositionenAVBerechnen
- * @property {function(string): Promise<void>} deleteBelegPositionenAV
- * @property {function(string[]): Promise<void>} deleteBelegPositionenAVBulk
- * @property {function(string, PositionSerieItemDTO[]): Promise<void>} belegPositionenSerienZuordnen
+ * @property {() => Promise<BelegPositionAVDTO[]>} getAllBelegPositionenAV
+ * @property {(changedSince: Date) => Promise<BelegPositionAVDTO[]>} getAllBelegPositionenAVChangedSince
+ * @property {(includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>} getAllBelegPositionenAVWithOptions
+ * @property {(changedSince: Date, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>} getAllBelegPositionenAVChangedSinceWithOptions
+ * @property {(serieGuid: string, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>} getSerieBelegPositionenAV
+ * @property {(vorgangGuid: string, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>} getVorgangBelegPositionenAV
+ * @property {(vorgangGuids: string[], includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>} getVorgaengeBelegPositionenAV
+ * @property {(belegpositionGuid: string) => Promise<BelegPositionAVDTO[]>} getBelegPositionenAV
+ * @property {(avGuid: string) => Promise<BelegPositionAVDTO>} getBelegPositionAVById
+ * @property {(pcode: string, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>} getBelegPositionAVByPCode
+ * @property {(search: string) => Promise<BelegPositionAVDTO[]>} searchBelegPositionAVByPCode
+ * @property {(position: BelegPositionAVDTO) => Promise<void>} saveBelegPositionenAV
+ * @property {(positionen: BelegPositionAVDTO[]) => Promise<BelegPositionAVDTO[]>} saveBelegPositionenAVBulk
+ * @property {(serieGuid: string, positionen: string[]) => Promise<BelegPositionAVDTO[]>} saveBelegPositionenAVToSerie
+ * @property {(guids: string[]) => Promise<void>} belegPositionenAVBerechnen
+ * @property {(guid: string) => Promise<void>} deleteBelegPositionenAV
+ * @property {(guids: string[]) => Promise<void>} deleteBelegPositionenAVBulk
+ * @property {(belegGuid: string, positionSerieItems: PositionSerieItemDTO[]) => Promise<void>} belegPositionenSerienZuordnen
  */

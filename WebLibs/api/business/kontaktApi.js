@@ -18,7 +18,7 @@
  */
 
 /**
- * @param {import("../fluentApi").FluentApi} fluentApi
+ * @param {import("../fluentApi.js").FluentApi} fluentApi
  * @returns {KontaktApi}
  */
 export function createKontaktApi(fluentApi) {

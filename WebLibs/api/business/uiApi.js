@@ -11,7 +11,6 @@
 /**
  * UI API - User interface definitions and scripts
  * @param {FluentApi} fluentApi
- * @returns {UiApi}
  */
 export function createUiApi(fluentApi) {
   return {
@@ -251,3 +250,7 @@ export function createUiApi(fluentApi) {
     translate: (language, text) => fluentApi.post(`translate?lang=${language}`, text),
   };
 }
+
+  /**
+   * @typedef {ReturnType<typeof createUiApi>} UiApi
+   */

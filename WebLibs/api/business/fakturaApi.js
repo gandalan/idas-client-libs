@@ -12,7 +12,6 @@
 /**
  * Faktura API - Invoicing and billing management
  * @param {FluentApi} fluentApi
- * @returns {FakturaApi}
  */
 export function createFakturaApi(fluentApi) {
   return {
@@ -221,3 +220,7 @@ export function createFakturaApi(fluentApi) {
       fluentApi.get(`Sammelrechnungen/SearchSammelrechnung?term=${term}`),
   };
 }
+
+/**
+ * @typedef {ReturnType<typeof createFakturaApi>} FakturaApi
+ */

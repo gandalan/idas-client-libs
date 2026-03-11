@@ -1,6 +1,5 @@
 /**
- * @typedef {Object} FluentApi
- * @property {(endpoint: string) => { get: () => Promise<any>, post: (data: any) => Promise<any>, put: (data: any) => Promise<any> }} endpoint
+ * @typedef {import('../fluentApi.js').FluentApi} FluentApi
  */
 
 /**
@@ -12,7 +11,6 @@
 /**
  * Creates a Benutzer API client
  * @param {FluentApi} fluentApi - The fluent API instance
- * @returns {Object} Benutzer API methods
  */
 export function createBenutzerApi(fluentApi) {
     return {
@@ -92,3 +90,7 @@ export function createBenutzerApi(fluentApi) {
         }
     };
 }
+
+/**
+ * @typedef {ReturnType<typeof createBenutzerApi>} BenutzerApi
+ */

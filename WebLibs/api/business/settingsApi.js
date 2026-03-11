@@ -12,7 +12,6 @@
 /**
  * Settings API - Application settings and configuration
  * @param {FluentApi} fluentApi
- * @returns {SettingsApi}
  */
 export function createSettingsApi(fluentApi) {
   return {
@@ -163,3 +162,7 @@ export function createSettingsApi(fluentApi) {
       fluentApi.put('DataMigrationHistory', newVersion.toString()),
   };
 }
+
+/**
+ * @typedef {ReturnType<typeof createSettingsApi>} SettingsApi
+ */
