@@ -35,7 +35,6 @@ export * from "./ui/index.js";
 /**
  * @typedef {import("./api/fluentApi").FluentApi} FluentApi
  * @typedef {import("./api/fluentAuthManager").FluentAuthManager} FluentAuthManager
- * @typedef {import("./api/fluentApi").FluentApi} IDAS
  * @typedef {import("./api/business/vorgangApi").VorgangApi} VorgangApi
  * @typedef {import("./api/business/kontaktApi").KontaktApi} KontaktApi
  * @typedef {import("./api/business/belegPositionenApi").BelegPositionenApi} BelegPositionenApi
@@ -138,7 +137,7 @@ export * from "./ui/index.js";
 
 /**
  * Global NeherApp3 instance
- * @type {NeherApp3}
+ * @type {NeherApp3|undefined}
  * @global
  */
 globalThis.neherapp3 = globalThis.neherapp3 || {};
