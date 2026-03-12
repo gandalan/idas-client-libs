@@ -1,7 +1,7 @@
 /**
  * @typedef {import('../fluentApi.js').FluentApi} FluentApi
- * @typedef {import('../dtos/index.js').AnpassungDTO} AnpassungDTO
- * @typedef {import('../dtos/index.js').AnpassungVorlageDTO} AnpassungVorlageDTO
+ * @typedef {Object & { AnpassungGuid?: string, anpassungGuid?: string }} AnpassungDTO
+ * @typedef {Object & { AnpassungVorlageGuid?: string, anpassungVorlageGuid?: string }} AnpassungVorlageDTO
  */
 
 /**
@@ -22,7 +22,7 @@ export function createAnpassungApi(fluentApi) {
          * @param {AnpassungDTO} dto
          * @returns {Promise<void>}
          */
-        save: (dto) => fluentApi.put(`Anpassungen/${dto.anpassungGuid}`, dto),
+        save: (dto) => fluentApi.put(`Anpassungen/${dto.AnpassungGuid ?? dto.anpassungGuid ?? ""}`, dto),
 
         /**
          * Delete adjustment
@@ -57,7 +57,7 @@ export function createAnpassungApi(fluentApi) {
              * @param {AnpassungVorlageDTO} dto
              * @returns {Promise<void>}
              */
-            save: (dto) => fluentApi.put(`AnpassungVorlagen/${dto.anpassungVorlageGuid}`, dto),
+            save: (dto) => fluentApi.put(`AnpassungVorlagen/${dto.AnpassungVorlageGuid ?? dto.anpassungVorlageGuid ?? ""}`, dto),
 
             /**
              * Delete adjustment template

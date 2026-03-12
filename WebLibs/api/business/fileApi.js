@@ -1,6 +1,6 @@
 /**
  * @typedef {import('../fluentApi.js').FluentApi} FluentApi
- * @typedef {import('../dtos/index.js').FileInfoDTO} FileInfoDTO
+ * @typedef {Object} FileInfoDTO
  */
 
 /**

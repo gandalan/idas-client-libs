@@ -3,7 +3,7 @@
  * @typedef {import('../dtos/index.js').ChangeDTO} ChangeDTO
  * @typedef {import('../dtos/index.js').TagInfoDTO} TagInfoDTO
  * @typedef {import('../dtos/index.js').TagVorlageDTO} TagVorlageDTO
- * @typedef {import('../dtos/index.js').FilterItemDTO} FilterItemDTO
+ * @typedef {Object} FilterItemDTO
  * @typedef {import('../dtos/index.js').ChangeInfoDTO} ChangeInfoDTO
  * @typedef {import('../dtos/index.js').UpdateInfoDTO} UpdateInfoDTO
  */

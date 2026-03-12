@@ -10,7 +10,7 @@
  * @typedef {import('../dtos/belege.js').VorgangHistorienDTO} VorgangHistorienDTO
  * @typedef {import('../dtos/belege.js').BelegHistorienDTO} BelegHistorienDTO
  * @typedef {import('../dtos/belege.js').BelegPositionHistorienDTO} BelegPositionHistorienDTO
- * @typedef {import('../dtos/produktion.js').SerieHistorieDTO} SerieHistorieDTO
+ * @typedef {import('../dtos/av.js').SerieHistorieDTO} SerieHistorieDTO
  * @typedef {import('../dtos/belege.js').VorgangHistorieDTO} VorgangHistorieDTO
  * @typedef {import('../dtos/belege.js').BelegHistorieDTO} BelegHistorieDTO
  * @typedef {import('../dtos/belege.js').BelegPositionHistorieDTO} BelegPositionHistorieDTO

@@ -2,6 +2,8 @@ import { isInvalid, currentToken} from "./authUtils";
 import { RESTClient } from "./RESTClient";
 import { jwtDecode } from "jwt-decode";
 
+/** @typedef {import("jwt-decode").JwtPayload & import("./fluentAuthManager.js").JwtUserInfo & { id?: string }} DecodedToken */
+
 export function IDASFactory(settings)
 {
     if (!isInvalid(settings))
@@ -37,7 +39,7 @@ class IDAS
                 return [];
             }
 
-            const decoded = jwtDecode(currentToken);
+            const decoded = /** @type {DecodedToken} */ (jwtDecode(currentToken));
             if (!decoded.rights)
             {
                 return [];
@@ -52,7 +54,7 @@ class IDAS
                 return [];
             }
 
-            const decoded = jwtDecode(currentToken);
+            const decoded = /** @type {DecodedToken} */ (jwtDecode(currentToken));
             if (!decoded.role)
             {
                 return [];
@@ -75,7 +77,7 @@ class IDAS
                 return undefined;
             }
 
-            const decoded = jwtDecode(currentToken);
+            const decoded = /** @type {DecodedToken} */ (jwtDecode(currentToken));
             return decoded.id;
         },
     };

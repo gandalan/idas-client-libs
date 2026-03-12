@@ -6,8 +6,8 @@
  * @typedef {import('../dtos/produktion.js').ProduktionsDatenDTO} ProduktionsDatenDTO
  * @typedef {import('../dtos/index.js').AVReserviertItemDTO} AVReserviertItemDTO
  * @typedef {import('../dtos/belege.js').CalculationInfoDTO} CalculationInfoDTO
- * @typedef {import('../dtos/produktion.js').AvReportVorgangRequestDto} AvReportVorgangRequestDto
- * @typedef {import('../dtos/produktion.js').AvReportVorgangDto} AvReportVorgangDto
+ * @typedef {Object} AvReportVorgangRequestDto
+ * @typedef {Object} AvReportVorgangDto
  * @typedef {import('../dtos/produktion.js').SaegeDatenHistorieDTO} SaegeDatenHistorieDTO
  * @typedef {import('../dtos/produktion.js').SaegeDatenResultDTO} SaegeDatenResultDTO
  * @typedef {import('../dtos/index.js').MaterialBearbeitungsMethodeDTO} MaterialBearbeitungsMethodeDTO

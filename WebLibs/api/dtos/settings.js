@@ -87,18 +87,7 @@
  * @typedef {('Serienbezogen'|'Stichtagbezogen')} MaterialBedarfLogik
  */
 
-/** @typedef {import('./benutzer.js').BenutzerDTO} BenutzerDTO */
-/** @typedef {import('./mandanten.js').MandantDTO} MandantDTO */
-
-/**
- * @typedef {Object} UserAuthTokenDTO
- * @property {string} AppToken - UUID string
- * @property {string} Expires - ISO 8601 date string
- * @property {string} Token - UUID string
- * @property {BenutzerDTO} Benutzer
- * @property {string} MandantGuid - UUID string
- * @property {MandantDTO} Mandant
- */
+/** @typedef {import('./benutzer.js').UserAuthTokenDTO} UserAuthTokenDTO */
 
 /**
  * @typedef {Object} PreisermittlungsEinstellungenDTO

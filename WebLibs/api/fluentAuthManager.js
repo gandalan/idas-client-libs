@@ -23,10 +23,10 @@ import { popRefreshTokenFromUrl } from "./fluentAuthUtils";
  * @property {(storedRefreshToken?: string|null) => FluentAuthManager} useRefreshToken - Sets the refresh token and returns the FluentApi object.
  * @property {() => Promise<void>} ensureAuthenticated - Ensures the user is authenticated before making a request.
  * @property {() => Promise<void>} authenticate - Authenticates the user with username and password, or refreshes the token.
- * @property {() => Promise<FluentAuthManager>} init - Returns promise for authManager. Returns null if not authenticated.
+ * @property {() => Promise<FluentAuthManager>} init - Returns promise for authManager.
  * @property {(username?: string, password?: string) => Promise<void>} login - Logs in with the provided credentials.
- * @property {(refreshToken?: string) => Promise<unknown>} tryRefreshToken - Attempts to refresh the authentication token using the refresh token.
- * @property {(token: string) => void} updateUserSession - Updates the user session with the new token.
+ * @property {(refreshToken?: string) => Promise<string|null>} tryRefreshToken - Attempts to refresh the authentication token using the refresh token.
+ * @property {(token: string|null) => void} updateUserSession - Updates the user session with the new token.
  * @property {() => void} redirectToLogin - Redirects to the login page.
  * @property {(code: string) => boolean} hasRight - Checks if the user has the specific right.
  * @property {(code: string) => boolean} hasRole - Checks if the user has the specific role.
@@ -118,7 +118,7 @@ export function createAuthManager() {
          * the refreshToken set before.
          *
          * @throws {Error} if JWT token and refreshToken are not set or both are invalid
-         * @return {string} the JWT token
+         * @return {Promise<void>}
          */
         async authenticate() { // benutzt bei existierendem JWT oder RefreshToken, wenn keins vorhanden ERROR
             console.log("authenticating:", this.token ? `token set, exp: ${jwtDecode(this.token).exp - (Date.now() / 1000)}` : "no token,", this.refreshToken, this.appToken);
@@ -154,7 +154,7 @@ export function createAuthManager() {
          * Side effect if refreshToken is not set: tries to get the refreshToken from the URL or localStorage.
          *
          * @async
-         * @return {Promise<FluentAuthManager> | null} the FluentAuthManager or null if not authenticated
+         * @return {Promise<FluentAuthManager>} the FluentAuthManager
          */
         async init() {
             if (!this.refreshToken) {
@@ -182,7 +182,7 @@ export function createAuthManager() {
          * Login with credentials and return the JWT token
          * @param {string} username
          * @param {string} password
-         * @return {string} the JWT token
+         * @return {Promise<void>}
          */
         async login(username = "", password = "") {
             if (username && password) {
@@ -201,7 +201,7 @@ export function createAuthManager() {
          * @async
          * @private
          * @param {string} [refreshToken=""]
-         * @returns {unknown}
+         * @returns {Promise<string|null>}
          */
         async tryRefreshToken(refreshToken = "") {
             const payload = { "Token": refreshToken };

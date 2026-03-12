@@ -43,8 +43,7 @@
  */
 
 /**
- * @typedef {Object} LayoutBelegDruckDTO
- * @extends ILayoutBelegDruck
+ * @typedef {ILayoutBelegDruck} LayoutBelegDruckDTO
  */
 
 export {};

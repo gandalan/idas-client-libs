@@ -23,7 +23,10 @@
  * @returns {MaterialApi}
  */
 export function createMaterialApi(fluentApi) {
-    const api = fluentApi.withBaseUrl("ModellDaten");
+    const api = {
+        get: (url) => fluentApi.get(`ModellDaten/${url}`),
+        put: (url, payload) => fluentApi.put(`ModellDaten/${url}`, payload)
+    };
 
     return {
         async getAll() {

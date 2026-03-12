@@ -6,8 +6,8 @@
 /** @typedef {import('./ui.js').PropertyValueCollection} PropertyValueCollection */
 /** @typedef {import('./kunden.js').BeleganschriftDTO} BeleganschriftDTO */
 /** @typedef {import('./kunden.js').KontaktDTO} KontaktDTO */
-/** @typedef {import('./settings.js').BenutzerDTO} BenutzerDTO */
-/** @typedef {import('./settings.js').MandantDTO} MandantDTO */
+/** @typedef {import('./benutzer.js').BenutzerDTO} BenutzerDTO */
+/** @typedef {import('./mandanten.js').MandantDTO} MandantDTO */
 
 /**
  * BelegArt enum values
@@ -80,13 +80,11 @@
  */
 
 /**
- * @typedef {Object} BestellungListItemDTO
- * @extends {BaseListItemDTO}
+ * @typedef {BaseListItemDTO} BestellungListItemDTO
  */
 
 /**
- * @typedef {Object} MaterialBestellungListItemDTO
- * @extends {BaseListItemDTO}
+ * @typedef {BaseListItemDTO} MaterialBestellungListItemDTO
  */
 
 /**
@@ -460,9 +458,7 @@
  */
 
 /**
- * @typedef {Object} KapazitaetsvorgabenDTO
- * @extends {Array<Kapazitaetsvorgabe>}
- * @property {number} Version
+ * @typedef {Array<Kapazitaetsvorgabe> & { Version: number }} KapazitaetsvorgabenDTO
  */
 
 /**

@@ -27,7 +27,7 @@ export function createFarbeApi(fluentApi) {
          * @param {FarbeDTO} dto
          * @returns {Promise<void>}
          */
-        saveFarbe: (dto) => fluentApi.put(`Farben/${dto.farbItemGuid}`, dto),
+        saveFarbe: (dto) => fluentApi.put(`Farben/${dto.FarbItemGuid}`, dto),
 
         // OberflaechenWebRoutinen
         /**
@@ -41,7 +41,7 @@ export function createFarbeApi(fluentApi) {
          * @param {OberflaecheDTO} dto
          * @returns {Promise<void>}
          */
-        saveOberflaeche: (dto) => fluentApi.put(`Oberflaeche/${dto.oberflaecheGuid}`, dto),
+        saveOberflaeche: (dto) => fluentApi.put(`Oberflaeche/${dto.OberflaecheGuid}`, dto),
 
         // FarbGruppenWebRoutinen
         /**
@@ -55,7 +55,7 @@ export function createFarbeApi(fluentApi) {
          * @param {FarbGruppeDTO} dto
          * @returns {Promise<void>}
          */
-        saveFarbGruppe: (dto) => fluentApi.put(`FarbGruppen/${dto.farbItemGroupGuid}`, dto),
+        saveFarbGruppe: (dto) => fluentApi.put(`FarbGruppen/${dto.FarbItemGroupGuid}`, dto),
 
         // FarbKuerzelWebRoutinen
         /**
@@ -69,7 +69,7 @@ export function createFarbeApi(fluentApi) {
          * @param {FarbKuerzelDTO} dto
          * @returns {Promise<void>}
          */
-        saveFarbKuerzel: (dto) => fluentApi.put(`FarbKuerzel/${dto.farbKuerzelGuid}`, dto),
+        saveFarbKuerzel: (dto) => fluentApi.put(`FarbKuerzel/${dto.FarbKuerzelGuid}`, dto),
 
         // FarbKuerzelGruppenWebRoutinen
         /**
@@ -112,7 +112,7 @@ export function createFarbeApi(fluentApi) {
          * @returns {Promise<void>}
          */
         saveProduzentenFarbGruppe: (dto) =>
-            fluentApi.put(`ProduzentenFarbGruppen/${dto.produzentenFarbGruppeGuid}`, dto),
+            fluentApi.put(`ProduzentenFarbGruppen/${dto.ProduzentenFarbGruppeGuid}`, dto),
 
         /**
          * Delete producer color group

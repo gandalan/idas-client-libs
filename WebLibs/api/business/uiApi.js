@@ -5,7 +5,7 @@
  * @typedef {import('../dtos/index.js').UIEingabeFeldInfoDTO} UIEingabeFeldInfoDTO
  * @typedef {import('../dtos/index.js').TagInfoDTO} TagInfoDTO
  * @typedef {import('../dtos/index.js').TagVorlageDTO} TagVorlageDTO
- * @typedef {import('../dtos/index.js').FilterItemDTO} FilterItemDTO
+ * @typedef {Object} FilterItemDTO
  */
 
 /**
@@ -34,7 +34,7 @@ export function createUiApi(fluentApi) {
      * @returns {Promise<UIDefinitionDTO>}
      */
         saveUiDefinition: (uiDefinition) =>
-            fluentApi.put(`UIDefinition/${uiDefinition.uiDefinitionGuid}`, uiDefinition),
+            fluentApi.put(`UIDefinition/${uiDefinition.UIDefinitionGuid}`, uiDefinition),
 
         // UIScriptWebRoutinen
         /**
@@ -84,7 +84,7 @@ export function createUiApi(fluentApi) {
      * @returns {Promise<UIEingabeFeldInfoDTO>}
      */
         saveUiEingabeFeldInfo: (uiEingabeFeldInfo) =>
-            fluentApi.put(`UIEingabeFeldInfo/${uiEingabeFeldInfo.uiEingabeFeldGuid}`, uiEingabeFeldInfo),
+            fluentApi.put(`UIEingabeFeldInfo/${uiEingabeFeldInfo.UIEingabeFeldGuid}`, uiEingabeFeldInfo),
 
         // TagInfoWebRoutinen
         /**

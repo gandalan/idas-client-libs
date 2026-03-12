@@ -12,9 +12,10 @@
   "license": "ISC",
   "author": "Philipp Reif",
   "main": "index",
-  "typings": "index",
+  "typings": "index.d.ts",
   "type": "module",
   "scripts": {
+    "generate:root-dto-typedefs": "node ./scripts/generate-root-dto-typedefs.mjs",
     "lint": "eslint .",
     "lint:prod": "eslint .",
     "lint:fix": "eslint . --fix"

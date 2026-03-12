@@ -243,6 +243,52 @@ Why:
 - The JS language service resolves explicit file extensions more consistently.
 
 
+## Rule 2a: Root DTO aliases must be generated, not hand-maintained
+
+The package root cannot rely on:
+
+```js
+export * from "./api/dtos/index.js"
+```
+
+to make JSDoc typedef aliases available through:
+
+```js
+import("@gandalan/weblibs").VorgangDTO
+```
+
+Why:
+
+- `export *` only forwards runtime exports.
+- JSDoc `@typedef` aliases are not runtime exports.
+- Root-level package imports therefore degrade to `any` unless the root module defines the aliases itself.
+
+The required pattern is:
+
+- keep `api/dtos/index.js` as the DTO alias source of truth
+- generate matching root typedef aliases into `index.js`
+- generate `index.d.ts` from the full package JSDoc source set for TypeScript consumers
+
+Do not edit the generated root DTO block manually. Regenerate it with:
+
+```bash
+npm run generate:root-dto-typedefs
+```
+
+The generator has two separate responsibilities:
+
+- `index.js`: generate the root DTO alias block for stable JSDoc imports from the package root
+- `index.d.ts`: generate root type exports for all non-trivial JSDoc-defined package types discovered in `index.js`, `api/**/*.js`, and `ui/**/*.js`
+
+For `index.d.ts`, simple local helper aliases like this are intentionally ignored:
+
+```js
+/** @typedef {import('../fluentApi.js').FluentApi} FluentApi */
+```
+
+because those are only local imports, not source type definitions. The declaration generator exports the canonical defining module instead.
+
+
 ## Rule 3: DTO files must import cross-file DTO dependencies locally
 
 If a DTO property references a type from another DTO file, that dependency must be represented in the file itself.

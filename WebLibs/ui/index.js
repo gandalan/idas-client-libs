@@ -1,3 +1,6 @@
-import Grid from "./Grid.svelte";
+// UI exports
+// Auto-generated from ./ui leaf files
+// Do not modify manually - changes will be overwritten
 
-export { Grid };
+export { default as Grid } from './Grid.svelte';
+

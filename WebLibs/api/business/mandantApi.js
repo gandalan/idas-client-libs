@@ -1,6 +1,6 @@
 /**
  * @typedef {import('../fluentApi.js').FluentApi} FluentApi
- * @typedef {import('../dtos/settings.js').MandantDTO} MandantDTO
+ * @typedef {import('../dtos/mandanten.js').MandantDTO} MandantDTO
  * @typedef {import('../dtos/index.js').BenutzerDTO} BenutzerDTO
  * @typedef {import('../dtos/index.js').AppActivationStatusDTO} AppActivationStatusDTO
  */
@@ -15,7 +15,7 @@ export function createMandantApi(fluentApi) {
         /**
          * Sync mandanten list
          * @param {MandantDTO[]} list
-         * @returns {Promise<void>}
+         * @returns {Promise<MandantDTO[]>}
          */
         abgleichen: (list) =>
             Promise.all(list.map(m => fluentApi.put("Mandanten", m))),
@@ -119,7 +119,7 @@ export function createMandantApi(fluentApi) {
              * @returns {Promise<void>}
              */
             deleteBenutzer: (kundeGuid, data) =>
-                fluentApi.delete(`AppBenutzer/?kundeGuid=${kundeGuid}&benutzerGuid=${data.benutzerGuid}`),
+                fluentApi.delete(`AppBenutzer/?kundeGuid=${kundeGuid}&benutzerGuid=${data.BenutzerGuid}`),
 
             /**
              * Activate mandant

@@ -3,15 +3,19 @@ import { restClient } from "./fluentRestClient";
 /**
  * @typedef {Object} FluentApi
  * @property {string} baseUrl - The base URL for API requests.
- * @property {import("./fluentAuthManager").FluentAuthManager} authManager - The authentication manager.
+ * @property {import("./fluentAuthManager").FluentAuthManager|null} authManager - The authentication manager.
  * @property {string} serviceName - The name of the service using this API.
+ * @property {any} [settings] - Legacy settings bag used by older API wrappers.
  * @property {(url?: string) => FluentApi} useBaseUrl - Sets the base URL for API requests and returns the FluentApi object.
  * @property {(authManager: import("./fluentAuthManager").FluentAuthManager) => FluentApi} useAuthManager - Sets the auth manager and returns the FluentApi object.
  * @property {(name: string) => FluentApi} useServiceName - Sets the service name and returns the FluentApi object.
+ * @property {(url?: string) => FluentApi} withBaseUrl - Legacy alias for useBaseUrl.
  * @property {(url?: string, auth?: boolean) => Promise<object|Array<any>>} get - Async function to perform GET requests.
  * @property {(url?: string, payload?: Object, auth?: boolean) => Promise<object|Array<any>>} put - Async function to perform PUT requests with a payload.
  * @property {(url?: string, payload?: Object, auth?: boolean) => Promise<object|Array<any>>} post - Async function to perform POST requests with a payload.
- * @property {(url?: string, auth?: boolean) => Promise<object|Array<any>>} delete - Async function to perform DELETE requests.
+ * @property {(url?: string, payload?: Object|FormData|Array<any>|string[]|string|null, auth?: boolean) => Promise<object|Array<any>>} delete - Async function to perform DELETE requests.
+ * @property {() => import("./fluentRestClient").FluentRESTClient} createRestClient - Creates a configured REST client.
+ * @property {(auth?: boolean) => Promise<void>} preCheck - Ensures authentication before a request when required.
  */
 
 /**
@@ -21,7 +25,7 @@ import { restClient } from "./fluentRestClient";
  */
 export function createApi() {
     const api = {
-        authManager: {},
+        authManager: null,
         baseUrl: "",
         serviceName: "unknownService",
 
@@ -37,9 +41,19 @@ export function createApi() {
         },
 
         /**
+         * Legacy alias for useBaseUrl.
+         *
+         * @param {string} [url=""]
+         * @return {FluentApi}
+         */
+        withBaseUrl(url = "") {
+            return this.useBaseUrl(url);
+        },
+
+        /**
          * Sets the authentication manager.
          *
-         * @param {FluentAuthManager} authManager
+         * @param {import("./fluentAuthManager").FluentAuthManager} authManager
          * @return {FluentApi}
          */
         useAuthManager(authManager) {
@@ -107,9 +121,9 @@ export function createApi() {
          * @param {boolean} [auth=true]
          * @returns {Promise<Object>}
          */
-        async delete(url = "", auth = true) {
+        async delete(url = "", payload = null, auth = true) {
             await this.preCheck(auth);
-            return await this.createRestClient().delete(url);
+            return await this.createRestClient().delete(url, payload);
         },
 
         /**
@@ -131,7 +145,7 @@ export function createApi() {
          * @private
          * @async
          * @param {boolean} [auth=true]
-         * @returns {void}
+         * @returns {Promise<void>}
          */
         async preCheck(auth = true) {
             if (auth && this.authManager) {
@@ -153,13 +167,13 @@ export function createApi() {
  *
  * @export
  * @param {string} url - The base URL for API requests.
- * @param {import("./fluentAuthManager").FluentAuthManager} authManager - The authentication manager instance.
+ * @param {import("./fluentAuthManager").FluentAuthManager|null} authManager - The authentication manager instance.
  * @param {string} serviceName - The name of the service using this API.
  * @return {FluentApi} Configured API instance for local use.
  */
 export function fluentApi(url, authManager, serviceName) {
-    return createApi()
+    return /** @type {FluentApi} */ (createApi()
         .useAuthManager(authManager)
         .useBaseUrl(url)
-        .useServiceName(serviceName);
+        .useServiceName(serviceName));
 }

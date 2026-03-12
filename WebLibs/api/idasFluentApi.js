@@ -125,7 +125,7 @@ import { createAuthApi } from "./business/authApi";
  * @return {IDASFluentApi} A configured IDAS API client instance with business routines.
  */
 export function createIDASApi() {
-    const api = createApi();
+    const api = /** @type {IDASFluentApi} */ (createApi());
 
     // Define all business routine getters - lazy loaded on first access
     Object.defineProperty(api, "vorgang", {
@@ -451,8 +451,8 @@ export function createIDASApi() {
  * @return {IDASFluentApi} Configured IDAS API instance with business routines.
  */
 export function idasFluentApi(url, authManager, serviceName) {
-    return createIDASApi()
+    return /** @type {IDASFluentApi} */ (createIDASApi()
         .useAuthManager(authManager)
         .useBaseUrl(url)
-        .useServiceName(serviceName);
+        .useServiceName(serviceName));
 }

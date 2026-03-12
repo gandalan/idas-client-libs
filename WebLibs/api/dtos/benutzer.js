@@ -3,7 +3,7 @@
  * Auto-generated from C# DTO files in Gandalan.IDAS.WebApi.Client/DTOs/Benutzer/
  */
 
-/** @typedef {import('./settings.js').MandantDTO} MandantDTO */
+/** @typedef {import('./mandanten.js').MandantDTO} MandantDTO */
 
 /**
  * @typedef {Object} BerechtigungDTO

@@ -257,9 +257,8 @@
  */
 
 /**
- * @typedef {Object} ProduktFamilienDTOListe
+ * @typedef {Array<ProduktFamilieDTO>} ProduktFamilienDTOListe
  * @description ObservableCollection of ProduktFamilieDTO
- * @extends {Array<ProduktFamilieDTO>}
  */
 
 /**
@@ -413,15 +412,13 @@
  */
 
 /**
- * @typedef {Object} VarianteDTOListe
+ * @typedef {Array<VarianteDTO>} VarianteDTOListe
  * @description ObservableCollection of VarianteDTO
- * @extends {Array<VarianteDTO>}
  */
 
 /**
- * @typedef {Object} WarenGruppeDTOListe
+ * @typedef {Array<WarenGruppeDTO>} WarenGruppeDTOListe
  * @description ObservableCollection of WarenGruppeDTO
- * @extends {Array<WarenGruppeDTO>}
  */
 
 /**
@@ -435,9 +432,8 @@
  */
 
 /**
- * @typedef {Object} WerteListeDTOListe
+ * @typedef {Array<WerteListeDTO>} WerteListeDTOListe
  * @description ObservableCollection of WerteListeDTO
- * @extends {Array<WerteListeDTO>}
  */
 
 /**

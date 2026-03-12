@@ -29,7 +29,7 @@ export let currentRefreshToken = undefined;
  * @export
  * @async
  * @param {string} appToken, UUID v4 format
- * @returns {Settings} settings object
+ * @returns {Promise<Settings|null>} settings object
  */
 export async function initIDAS(appToken)
 {
@@ -247,5 +247,5 @@ export function redirectToLogin(settings, authPath)
     url.search = `?a=${settings.appToken}&r=${encodeURIComponent(authUrlCallback)}`;
     let jwtUrl = url.toString();
 
-    window.location = jwtUrl;
+    window.location.href = jwtUrl;
 }

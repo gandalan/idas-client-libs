@@ -36,14 +36,14 @@ export function createArtikelApi(fluentApi) {
      * @param {KatalogArtikelDTO} artikel
      * @returns {Promise<KatalogArtikelDTO>}
      */
-        saveArtikel: (artikel) => fluentApi.put(`Artikel/${artikel.katalogArtikelGuid}`, artikel),
+      saveArtikel: (artikel) => fluentApi.put(`Artikel/${artikel.KatalogArtikelGuid}`, artikel),
 
         /**
      * Delete article
      * @param {KatalogArtikelDTO} artikel
      * @returns {Promise<void>}
      */
-        deleteArtikel: (artikel) => fluentApi.delete(`Artikel/${artikel.katalogArtikelGuid}`),
+      deleteArtikel: (artikel) => fluentApi.delete(`Artikel/${artikel.KatalogArtikelGuid}`),
 
         // ArtikelIndiDatenWebRoutinen
         /**
@@ -63,14 +63,14 @@ export function createArtikelApi(fluentApi) {
      * @param {KatalogArtikelIndiDatenDTO} daten
      * @returns {Promise<void>}
      */
-        saveArtikelIndiDaten: (daten) => fluentApi.put(`ArtikelIndiDaten/${daten.katalogArtikelGuid}`, daten),
+      saveArtikelIndiDaten: (daten) => fluentApi.put(`ArtikelIndiDaten/${daten.KatalogArtikelGuid}`, daten),
 
         /**
      * Delete article individual data
      * @param {KatalogArtikelIndiDatenDTO} daten
      * @returns {Promise<void>}
      */
-        deleteArtikelIndiDaten: (daten) => fluentApi.delete(`ArtikelIndiDaten/${daten.katalogArtikelGuid}`),
+      deleteArtikelIndiDaten: (daten) => fluentApi.delete(`ArtikelIndiDaten/${daten.KatalogArtikelGuid}`),
 
         // WarenGruppeWebRoutinen
         /**
@@ -84,7 +84,7 @@ export function createArtikelApi(fluentApi) {
      * @param {WarenGruppeDTO} dto
      * @returns {Promise<void>}
      */
-        saveWarenGruppe: (dto) => fluentApi.put(`WarenGruppe/${dto.warenGruppeGuid}`, dto),
+      saveWarenGruppe: (dto) => fluentApi.put(`WarenGruppe/${dto.WarenGruppeGuid}`, dto),
 
         // ProduktGruppenWebRoutinen
         /**
@@ -101,7 +101,7 @@ export function createArtikelApi(fluentApi) {
      * @returns {Promise<ProduktGruppeDTO>}
      */
         saveProduktGruppe: (produktGruppe) =>
-            fluentApi.put(`ProduktGruppe/${produktGruppe.produktGruppeGuid}`, produktGruppe),
+            fluentApi.put(`ProduktGruppe/${produktGruppe.ProduktGruppeGuid}`, produktGruppe),
 
         // ProduktFamilienWebRoutinen
         /**
@@ -118,7 +118,7 @@ export function createArtikelApi(fluentApi) {
      * @returns {Promise<ProduktFamilieDTO>}
      */
         saveProduktFamilie: (produktFamilie) =>
-            fluentApi.put(`ProduktFamilie/${produktFamilie.produktFamilieGuid}`, produktFamilie),
+            fluentApi.put(`ProduktFamilie/${produktFamilie.ProduktFamilieGuid}`, produktFamilie),
 
         // KomponentenWebRoutinen
         /**
@@ -174,7 +174,7 @@ export function createArtikelApi(fluentApi) {
      * @param {VarianteDTO} variante
      * @returns {Promise<VarianteDTO>}
      */
-        saveVariante: (variante) => fluentApi.put(`Variante/${variante.varianteGuid}`, variante),
+      saveVariante: (variante) => fluentApi.put(`Variante/${variante.VarianteGuid}`, variante),
 
         /**
      * Trigger variant cache web job

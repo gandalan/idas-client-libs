@@ -8,9 +8,12 @@
 /** @typedef {import('./av.js').BelegPositionAVDTO} BelegPositionAVDTO */
 /** @typedef {import('./belege.js').BelegPositionDTO} BelegPositionDTO */
 /** @typedef {import('./av.js').SerieDTO} SerieDTO */
+/** @typedef {import('./lager.js').LagerbestandDTO} LagerbestandDTO */
+/** @typedef {import('./lager.js').LagerbuchungDTO} LagerbuchungDTO */
+/** @typedef {import('./lager.js').LagerReservierungDTO} LagerReservierungDTO */
 /** @typedef {import('./settings.js').ProduktionsSettingsDTO} ProduktionsSettingsDTO */
-/** @typedef {import('./index.js').PositionsDatenDTO} PositionsDatenDTO */
-/** @typedef {import('./index.js').KatalogArtikelArt} KatalogArtikelArt */
+/** @typedef {Object} PositionsDatenDTO */
+/** @typedef {string} KatalogArtikelArt */
 
 // ============================================================================
 // Enums
@@ -239,69 +242,6 @@
  * @property {string} FarbKuerzelGuid
  * @property {string} FarbGuid - Deprecated: FarbKuerzelGuid verwenden
  * @property {string} LagerbestandGuid
- */
-
-/**
- * DTO für die Lagerverwaltung
- * @typedef {Object} LagerbestandDTO
- * @property {string} LagerbestandGuid
- * @property {string} KatalogArtikelGuid
- * @property {string} KatalogNummer
- * @property {string} FarbGuid - Deprecated: FarbKuerzelGuid verwenden
- * @property {string} FarbKuerzelGuid
- * @property {string} FarbKuerzel
- * @property {number} Lagerbestand
- * @property {number} Bestellbestand
- * @property {number} Mindestbestand
- * @property {number} Reserviert
- * @property {number} Maximalbestand
- * @property {number} EisernerBestand
- * @property {string} Einheit
- * @property {string} Lagerplatz
- * @property {string} Charge
- * @property {boolean} IstAktiv
- * @property {string} Seriennummer
- * @property {Date} ChangedDate
- * @property {string} WindowsUser
- */
-
-/**
- * DTO für eine Lagerbuchung
- * @typedef {Object} LagerbuchungDTO
- * @property {string} KatalogArtikelGuid
- * @property {string} FarbGuid - Deprecated: FarbKuerzelGuid verwenden
- * @property {string} FarbKuerzelGuid
- * @property {string} LagerbestandGuid
- * @property {number} Betrag
- * @property {boolean} IstReservierung
- * @property {string} Einheit
- * @property {string} Hinweis
- * @property {string} ArtosUser
- * @property {string} WindowsUser
- * @property {Date} ChangedDate
- * @property {number} BestandAlt
- * @property {number} BestandNeu
- */
-
-/**
- * DTO für die LagerReservierungen
- * @typedef {Object} LagerReservierungDTO
- * @property {string} LagerReservierungGuid
- * @property {string} [MaterialbedarfGuid]
- * @property {string} [LieferzusageGuid]
- * @property {string} [GesamtLieferzusageGuid]
- * @property {string} Artikelnummer
- * @property {string} FarbKuerzel
- * @property {string} FarbCode
- * @property {string} Oberflaeche
- * @property {string} Bezug
- * @property {number} Menge
- * @property {string} Einheit
- * @property {Date} ErstellDatum
- * @property {string} WindowsUser
- * @property {string} ArtosUser
- * @property {Date} ChangedDate
- * @property {number} Version
  */
 
 /**
