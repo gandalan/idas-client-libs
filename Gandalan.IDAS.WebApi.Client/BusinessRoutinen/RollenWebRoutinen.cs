@@ -13,4 +13,7 @@ public class RollenWebRoutinen : WebRoutinenBase
     public async Task<RolleDTO[]> GetAllAsync()
         => await GetAsync<RolleDTO[]>("Rollen");
 
+    public async Task SaveAsync(RolleDTO rolle)
+        => await PutAsync("Rollen", rolle);
+
 }

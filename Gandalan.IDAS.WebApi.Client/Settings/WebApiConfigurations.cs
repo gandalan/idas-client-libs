@@ -18,14 +18,14 @@ public static class WebApiConfigurations
     private static string _appTokenString;
     private static bool _isInitialized;
 
-    public static void Initialize(Guid appToken, string stage = null)
+    public static void Initialize(Guid appToken, string stage = null, string settingsPath = null)
     {
         if (stage != null)
         {
             _environments = new[] { stage };
         }
         _settings = new Dictionary<string, IWebApiConfig>(StringComparer.OrdinalIgnoreCase);
-        _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
+        _settingsPath = settingsPath ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
         _appTokenString = appToken.ToString().Trim('{', '}');
 
         setupEnvironmentAsync(appToken).Wait();
@@ -37,7 +37,7 @@ public static class WebApiConfigurations
 
     }
 
-    public static async Task InitializeAsync(Guid appToken, string stage = null)
+    public static async Task InitializeAsync(Guid appToken, string stage = null, string settingsPath = null)
     {
 
         if (stage != null)
@@ -45,7 +45,7 @@ public static class WebApiConfigurations
             _environments = new[] { stage };
         }
         _settings = new Dictionary<string, IWebApiConfig>(StringComparer.OrdinalIgnoreCase);
-        _settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
+        _settingsPath = settingsPath ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan");
         _appTokenString = appToken.ToString().Trim('{', '}');
 
         await setupEnvironmentAsync(appToken);
