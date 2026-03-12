@@ -81,7 +81,7 @@ export function createSettingsApi(fluentApi) {
      * @param {WerteListeDTO} dto
      * @returns {Promise<void>}
      */
-      saveWerteliste: (dto) => fluentApi.put(`WerteListe/${dto.WerteListeGuid}`, dto),
+        saveWerteliste: (dto) => fluentApi.put(`WerteListe/${dto.WerteListeGuid}`, dto),
 
         // ContractWebRoutinen
         /**
@@ -102,7 +102,7 @@ export function createSettingsApi(fluentApi) {
      * @param {ContractDTO} dto
      * @returns {Promise<void>}
      */
-      deleteContract: (dto) => fluentApi.delete(`Contracts/${dto.ContractGuid}`, dto),
+        deleteContract: (dto) => fluentApi.delete(`Contracts/${dto.ContractGuid}`, dto),
 
         // TemplateWebRoutinen
         /**
@@ -123,7 +123,7 @@ export function createSettingsApi(fluentApi) {
      * @param {TemplateDTO} dto
      * @returns {Promise<void>}
      */
-      saveTemplate: (dto) => fluentApi.put(`Template/${dto.TemplateGuid}`, dto),
+        saveTemplate: (dto) => fluentApi.put(`Template/${dto.TemplateGuid}`, dto),
 
         /**
      * Delete template
