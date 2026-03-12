@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+
+using Gandalan.IDAS.WebApi.Client.DTOs.Mandanten;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
@@ -21,6 +24,10 @@ public class MandantDTO : INotifyPropertyChanged
     public bool ErbtAuswahlOhneSprosse { get; set; }
     public bool StammdatenbearbeitungGesperrt { get; set; }
     public string NeherKundennummer { get; set; }
+
+    public List<MandantGeschaeftsdatenDTO> MandantGeschaefsdatenDTOs { get; set; } = [];
+
+    public List<MandantZahlungsinformationDTO> MandantZahlungsdatenDTOs { get; set; }
 
     public event PropertyChangedEventHandler PropertyChanged;
 }
