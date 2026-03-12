@@ -22,49 +22,49 @@
  * @returns {KontaktApi}
  */
 export function createKontaktApi(fluentApi) {
-  return {
-    async getList(ohneEndkunden = false, includeASP = true, includeAdditionalProperties = true) {
-      return await fluentApi.get(`Kontakt?ohneEndkunden=${ohneEndkunden}&includeASP=${includeASP}&includeAdditionalProperties=${includeAdditionalProperties}`);
-    },
+    return {
+        async getList(ohneEndkunden = false, includeASP = true, includeAdditionalProperties = true) {
+            return await fluentApi.get(`Kontakt?ohneEndkunden=${ohneEndkunden}&includeASP=${includeASP}&includeAdditionalProperties=${includeAdditionalProperties}`);
+        },
 
-    async getListChangedSince(changedSince = null, ohneEndkunden = false, includeASP = true, includeAdditionalProperties = true) {
-      if (changedSince && changedSince > new Date(0)) {
-        return await fluentApi.get(`Kontakt?changedSince=${changedSince.toISOString()}&ohneEndkunden=${ohneEndkunden}&includeASP=${includeASP}&includeAdditionalProperties=${includeAdditionalProperties}`);
-      }
-      return await fluentApi.get(`Kontakt?ohneEndkunden=${ohneEndkunden}&includeASP=${includeASP}&includeAdditionalProperties=${includeAdditionalProperties}`);
-    },
+        async getListChangedSince(changedSince = null, ohneEndkunden = false, includeASP = true, includeAdditionalProperties = true) {
+            if (changedSince && changedSince > new Date(0)) {
+                return await fluentApi.get(`Kontakt?changedSince=${changedSince.toISOString()}&ohneEndkunden=${ohneEndkunden}&includeASP=${includeASP}&includeAdditionalProperties=${includeAdditionalProperties}`);
+            }
+            return await fluentApi.get(`Kontakt?ohneEndkunden=${ohneEndkunden}&includeASP=${includeASP}&includeAdditionalProperties=${includeAdditionalProperties}`);
+        },
 
-    async getByGuid(kontaktGuid) {
-      return await fluentApi.get(`Kontakt/${kontaktGuid}`);
-    },
+        async getByGuid(kontaktGuid) {
+            return await fluentApi.get(`Kontakt/${kontaktGuid}`);
+        },
 
-    async getByKundenNummer(kundenNummer) {
-      return await fluentApi.get(`Kontakt/GetByKundenNummer?kundennummer=${kundenNummer}`);
-    },
+        async getByKundenNummer(kundenNummer) {
+            return await fluentApi.get(`Kontakt/GetByKundenNummer?kundennummer=${kundenNummer}`);
+        },
 
-    async save(kontakt) {
-      return await fluentApi.put("Kontakt", kontakt);
-    },
+        async save(kontakt) {
+            return await fluentApi.put("Kontakt", kontakt);
+        },
 
-    async archive(kontakteIds) {
-      return await fluentApi.put("kontakt/archivieren", kontakteIds);
-    },
+        async archive(kontakteIds) {
+            return await fluentApi.put("kontakt/archivieren", kontakteIds);
+        },
 
-    async unarchive(kontakteIds) {
-      return await fluentApi.put("kontakt/entarchivieren", kontakteIds);
-    },
+        async unarchive(kontakteIds) {
+            return await fluentApi.put("kontakt/entarchivieren", kontakteIds);
+        },
 
-    async setFremdfertigungGuid(guidMapping) {
-      return await fluentApi.put("Kontakt/SetFremdfertigungGuid", guidMapping);
-    },
+        async setFremdfertigungGuid(guidMapping) {
+            return await fluentApi.put("Kontakt/SetFremdfertigungGuid", guidMapping);
+        },
 
-    async getForFunction(kontaktGuid, mandantId) {
-      return await fluentApi.get(`GetKontaktForFunction?id=${kontaktGuid}&mandantId=${mandantId}`);
-    },
+        async getForFunction(kontaktGuid, mandantId) {
+            return await fluentApi.get(`GetKontaktForFunction?id=${kontaktGuid}&mandantId=${mandantId}`);
+        },
 
-    async getAllForFunction(changedSince = null) {
-      const isoString = changedSince ? changedSince.toISOString() : "";
-      return await fluentApi.get(`GetAllKontakteForFunction?changedSince=${isoString}`);
-    }
-  };
+        async getAllForFunction(changedSince = null) {
+            const isoString = changedSince ? changedSince.toISOString() : "";
+            return await fluentApi.get(`GetAllKontakteForFunction?changedSince=${isoString}`);
+        }
+    };
 }

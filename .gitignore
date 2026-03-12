@@ -408,3 +408,6 @@ FodyWeavers.xsd
 # temporary ignore till merge
 docs/
 .cocoindex_code/
+.ck/
+REFACTORING_SUMMARY.md
+CK.md

@@ -4,19 +4,10 @@
  * @typedef {import('../dtos/index.js').KatalogArtikelDTO} KatalogArtikelDTO
  * @typedef {import('../dtos/index.js').ProduktGruppeDTO} ProduktGruppeDTO
  * @typedef {import('../dtos/index.js').ProduktFamilieDTO} ProduktFamilieDTO
- * @typedef {import('../dtos/index.js').FarbGruppeDTO} FarbGruppeDTO
- * @typedef {import('../dtos/index.js').FarbeDTO} FarbeDTO
- * @typedef {import('../dtos/index.js').OberflaecheDTO} OberflaecheDTO
  * @typedef {import('../dtos/index.js').KomponenteDTO} KomponenteDTO
  * @typedef {import('../dtos/index.js').VarianteDTO} VarianteDTO
  * @typedef {import('../dtos/index.js').KonturDTO} KonturDTO
- * @typedef {import('../dtos/index.js').FarbKuerzelDTO} FarbKuerzelDTO
- * @typedef {import('../dtos/index.js').FarbKuerzelGruppeDTO} FarbKuerzelGruppeDTO
- * @typedef {import('../dtos/index.js').FarbgruppenaufpreiseDTO} FarbgruppenaufpreiseDTO
- * @typedef {import('../dtos/index.js').ProduzentenFarbGruppeDTO} ProduzentenFarbGruppeDTO
  * @typedef {import('../dtos/index.js').KatalogArtikelIndiDatenDTO} KatalogArtikelIndiDatenDTO
- * @typedef {import('../dtos/index.js').AnpassungDTO} AnpassungDTO
- * @typedef {import('../dtos/index.js').AnpassungVorlageDTO} AnpassungVorlageDTO
  * @typedef {import('../dtos/index.js').SchnittDTO} SchnittDTO
  * @typedef {import('../dtos/belege.js').BelegDTO} BelegDTO
  */
@@ -129,48 +120,6 @@ export function createArtikelApi(fluentApi) {
         saveProduktFamilie: (produktFamilie) =>
             fluentApi.put(`ProduktFamilie/${produktFamilie.produktFamilieGuid}`, produktFamilie),
 
-        // FarbGruppenWebRoutinen
-        /**
-     * Get all color groups
-     * @returns {Promise<FarbGruppeDTO[]>}
-     */
-        getAllFarbGruppen: () => fluentApi.get("FarbGruppen"),
-
-        /**
-     * Save color group
-     * @param {FarbGruppeDTO} dto
-     * @returns {Promise<void>}
-     */
-        saveFarbGruppe: (dto) => fluentApi.put(`FarbGruppen/${dto.farbItemGroupGuid}`, dto),
-
-        // FarbenWebRoutinen
-        /**
-     * Get all colors
-     * @returns {Promise<FarbeDTO[]>}
-     */
-        getAllFarben: () => fluentApi.get("Farben"),
-
-        /**
-     * Save color
-     * @param {FarbeDTO} dto
-     * @returns {Promise<void>}
-     */
-        saveFarbe: (dto) => fluentApi.put(`Farben/${dto.farbItemGuid}`, dto),
-
-        // OberflaechenWebRoutinen
-        /**
-     * Get all surfaces
-     * @returns {Promise<OberflaecheDTO[]>}
-     */
-        getAllOberflaechen: () => fluentApi.get("Oberflaeche"),
-
-        /**
-     * Save surface
-     * @param {OberflaecheDTO} dto
-     * @returns {Promise<void>}
-     */
-        saveOberflaeche: (dto) => fluentApi.put(`Oberflaeche/${dto.oberflaecheGuid}`, dto),
-
         // KomponentenWebRoutinen
         /**
      * Get all components
@@ -246,125 +195,6 @@ export function createArtikelApi(fluentApi) {
      * @returns {Promise<void>}
      */
         saveKontur: (dto) => fluentApi.put("Kontur", dto),
-
-        // FarbKuerzelWebRoutinen
-        /**
-     * Get all color codes
-     * @returns {Promise<FarbKuerzelDTO[]>}
-     */
-        getAllFarbKuerzel: () => fluentApi.get("FarbKuerzel"),
-
-        /**
-     * Save color code
-     * @param {FarbKuerzelDTO} dto
-     * @returns {Promise<void>}
-     */
-        saveFarbKuerzel: (dto) => fluentApi.put(`FarbKuerzel/${dto.farbKuerzelGuid}`, dto),
-
-        // FarbKuerzelGruppenWebRoutinen
-        /**
-     * Get all color code groups
-     * @returns {Promise<FarbKuerzelGruppeDTO[]>}
-     */
-        getAllFarbKuerzelGruppen: () => fluentApi.get("FarbKuerzelGruppe"),
-
-        /**
-     * Save color code group
-     * @param {FarbKuerzelGruppeDTO} dto
-     * @returns {Promise<void>}
-     */
-        saveFarbKuerzelGruppe: (dto) => fluentApi.put("FarbKuerzelGruppe/", dto),
-
-        // FarbgruppenaufpreisWebRoutinen
-        /**
-     * Get color group surcharges
-     * @returns {Promise<FarbgruppenaufpreiseDTO[]>}
-     */
-        getFarbgruppenaufpreise: () => fluentApi.get("Farbgruppenaufpreis"),
-
-        /**
-     * Save color group surcharge
-     * @param {FarbgruppenaufpreiseDTO} dto
-     * @returns {Promise<void>}
-     */
-        saveFarbgruppenaufpreise: (dto) => fluentApi.put("Farbgruppenaufpreis", dto),
-
-        // ProduzentenFarbGruppenWebRoutinen
-        /**
-     * Get all producer color groups
-     * @returns {Promise<ProduzentenFarbGruppeDTO[]>}
-     */
-        getAllProduzentenFarbGruppen: () => fluentApi.get("ProduzentenFarbGruppen"),
-
-        /**
-     * Save producer color group
-     * @param {ProduzentenFarbGruppeDTO} dto
-     * @returns {Promise<void>}
-     */
-        saveProduzentenFarbGruppe: (dto) => fluentApi.put(`ProduzentenFarbGruppen/${dto.produzentenFarbGruppeGuid}`, dto),
-
-        /**
-     * Delete producer color group
-     * @param {string} produzentenFarbGruppeGuid
-     * @returns {Promise<void>}
-     */
-        deleteProduzentenFarbGruppe: (produzentenFarbGruppeGuid) =>
-            fluentApi.delete(`ProduzentenFarbGruppen/${produzentenFarbGruppeGuid}`),
-
-        // AnpassungenWebRoutinen
-        /**
-     * Get all adjustments
-     * @returns {Promise<AnpassungDTO[]>}
-     */
-        getAllAnpassungen: () => fluentApi.get("Anpassungen"),
-
-        /**
-     * Save adjustment
-     * @param {AnpassungDTO} dto
-     * @returns {Promise<void>}
-     */
-        saveAnpassung: (dto) => fluentApi.put(`Anpassungen/${dto.anpassungGuid}`, dto),
-
-        /**
-     * Delete adjustment
-     * @param {string} anpassungGuid
-     * @returns {Promise<void>}
-     */
-        deleteAnpassung: (anpassungGuid) => fluentApi.delete(`Anpassungen/${anpassungGuid}`),
-
-        /**
-     * Run adjustment web job
-     * @returns {Promise<void>}
-     */
-        anpassungenWebJob: () => fluentApi.post("Anpassungen/WebJob", ""),
-
-        // AnpassungVorlagenWebRoutinen
-        /**
-     * Get all adjustment templates
-     * @returns {Promise<AnpassungVorlageDTO[]>}
-     */
-        getAllAnpassungVorlagen: () => fluentApi.get("AnpassungVorlagen"),
-
-        /**
-     * Get adjustment template by GUID
-     * @param {string} guid
-     * @returns {Promise<AnpassungVorlageDTO>}
-     */
-        getAnpassungVorlage: (guid) => fluentApi.get(`AnpassungVorlagen/${guid}`),
-
-        /**
-     * Save adjustment template
-     * @param {AnpassungVorlageDTO} dto
-     * @returns {Promise<void>}
-     */
-        saveAnpassungVorlage: (dto) => fluentApi.put(`AnpassungVorlagen/${dto.anpassungVorlageGuid}`, dto),
-
-        /**
-     * Delete adjustment template
-     * @param {string} guid
-     * @returns {Promise<void>}
-     */
-        deleteAnpassungVorlage: (guid) => fluentApi.delete(`AnpassungVorlagen/${guid}`),
 
         // SchnitteWebRoutinen
         /**

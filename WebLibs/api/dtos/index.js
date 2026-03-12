@@ -3,205 +3,72 @@
  * Auto-generated from C# DTOs in /Gandalan.IDAS.WebApi.Client/DTOs/
  */
 
-// ============================================================================
-// AV (Arbeitsvorbereitung) DTOs
-// ============================================================================
+/** @typedef {import('./av.js').AVReserviertItemDTO} AVReserviertItemDTO */
+/** @typedef {import('./av.js').BearbeitungsKuerzelDTO} BearbeitungsKuerzelDTO */
+/** @typedef {import('./av.js').BelegPositionAVDTO} BelegPositionAVDTO */
+/** @typedef {import('./av.js').BelegPositionAVListItemDTO} BelegPositionAVListItemDTO */
+/** @typedef {import('./av.js').PCodeStatistikDTO} PCodeStatistikDTO */
+/** @typedef {import('./av.js').PositionSerieItemDTO} PositionSerieItemDTO */
+/** @typedef {import('./av.js').ProfilKuerzelDTO} ProfilKuerzelDTO */
+/** @typedef {import('./av.js').SerieAuslastungDTO} SerieAuslastungDTO */
+/** @typedef {import('./av.js').SerieDTO} SerieDTO */
+/** @typedef {import('./av.js').SerieDruckInfoDTO} SerieDruckInfoDTO */
+/** @typedef {import('./av.js').SerieHistorieDTO} SerieHistorieDTO */
+/** @typedef {import('./av.js').SerienMaterialEditDTO} SerienMaterialEditDTO */
+/** @typedef {import('./av.js').VirtualSerieWithAuslastungDTO} VirtualSerieWithAuslastungDTO */
 
-/**
- * @typedef {Object} AVReserviertItemDTO
- * @property {string} Variante
- * @property {string} ArtikelNummer
- * @property {number} Menge
- * @property {string} Kommission
- * @property {string} Kunde
- * @property {number} VorgangsNummer
- * @property {string} VorgangGuid
- * @property {number} BelegNummer
- */
+/** @typedef {import('./benutzer.js').BenutzerDTO} BenutzerDTO */
+/** @typedef {import('./benutzer.js').BerechtigungDTO} BerechtigungDTO */
+/** @typedef {import('./benutzer.js').RolleDTO} RolleDTO */
+/** @typedef {import('./benutzer.js').LoginDTO} LoginDTO */
+/** @typedef {import('./benutzer.js').LoginAttemptDTO} LoginAttemptDTO */
+/** @typedef {import('./benutzer.js').LoginAttemptResultDTO} LoginAttemptResultDTO */
+/** @typedef {import('./benutzer.js').PasswortAendernDTO} PasswortAendernDTO */
+/** @typedef {import('./benutzer.js').RefreshTokenDTO} RefreshTokenDTO */
+/** @typedef {import('./benutzer.js').UserAuthTokenDTO} UserAuthTokenDTO */
+/** @typedef {import('./benutzer.js').ZustimmungsInfoDTO} ZustimmungsInfoDTO */
 
-/**
- * @typedef {Object} BearbeitungsKuerzelDTO
- * @property {string} BearbeitungsKuerzel
- * @property {string} Beschreibung
- * @property {string[]} VerfuegbarFuer
- * @property {string} FarbCode
- * @property {string} RegularExpression
- */
+/** @typedef {import('./druck.js').ILayoutBelegDruck} ILayoutBelegDruck */
+/** @typedef {import('./druck.js').LayoutBelegDruckDTO} LayoutBelegDruckDTO */
 
-/**
- * @typedef {Object} BelegPositionAVDTO
- * @property {string} BelegPositionAVGuid
- * @property {string} SerieGuid
- * @property {string} BelegPositionGuid
- * @property {string} VorgangGuid
- * @property {string} BelegGuid
- * @property {string} Bereitgestellt - ISO date string
- * @property {string | null} Berechnet - ISO date string
- * @property {boolean} IstBerechnet
- * @property {number} FailedCalculationsCount - Counter for failed calculations
- * @property {boolean} IstProduziert
- * @property {boolean} IstGeloescht
- * @property {boolean} IstStorniert
- * @property {boolean} HatSonderwuensche
- * @property {string} SonderwunschText
- * @property {string} Variante
- * @property {string} ArtikelNummer
- * @property {string} Kommission
- * @property {string} Kunde
- * @property {string} Pcode
- * @property {string} Fehlerlog
- * @property {string} FakturaKennzeichen - "NichtFreigegeben", "Freigegeben", "Abgerechnet"
- * @property {boolean} IstAusserhalbGewaehrleistung
- * @property {number} KapazitaetsBedarf
- * @property {import('./belege.js').BelegPositionDTO | null} Position
- * @property {ProduktionsDatenDTO | null} ProduktionsDaten
- * @property {boolean} IstGedruckt
- * @property {string} ErfassungsDatum - ISO date string
- * @property {string} ChangedDate - ISO date string
- * @property {string | null} CalculatedForTimestamp - ISO date string
- */
+/** @typedef {import('./mandanten.js').MandantDTO} MandantDTO */
+/** @typedef {import('./mandanten.js').MandantFreigabeDTO} MandantFreigabeDTO */
+/** @typedef {import('./mandanten.js').ProduzentAktivierenDTO} ProduzentAktivierenDTO */
+/** @typedef {import('./mandanten.js').FreigabeLevel} FreigabeLevel */
+/** @typedef {import('./mandanten.js').FreigabeArt} FreigabeArt */
 
-/**
- * @typedef {Object} BelegPositionAVListItemDTO
- * @property {string} BelegPositionAVGuid
- * @property {string | null} BelegPositionGuid
- * @property {string} PCode
- * @property {string} ChangedDate - ISO date string
- */
+/** @typedef {import('./lager.js').LagerbestandDTO} LagerbestandDTO */
+/** @typedef {import('./lager.js').LagerbuchungDTO} LagerbuchungDTO */
+/** @typedef {import('./lager.js').LagerReservierungDTO} LagerReservierungDTO */
 
-/**
- * @typedef {Object} PCodeStatistikDTO
- * @property {string} MandantGuid
- * @property {string} MandantName
- * @property {number} UsedPCodes
- */
+/** @typedef {import('./faktura.js').SetFakturaDTO} SetFakturaDTO */
+/** @typedef {import('./faktura.js').BelegeInfoDTO} BelegeInfoDTO */
+/** @typedef {import('./faktura.js').SammelrechnungDTO} SammelrechnungDTO */
+/** @typedef {import('./faktura.js').SammelrechnungListItemDTO} SammelrechnungListItemDTO */
+/** @typedef {import('./faktura.js').SammelrechnungPositionenDTO} SammelrechnungPositionenDTO */
+/** @typedef {import('./faktura.js').SammelrechnungSaldenDTO} SammelrechnungSaldenDTO */
+/** @typedef {import('./faktura.js').CreateSammelrechnungDTO} CreateSammelrechnungDTO */
+/** @typedef {import('./faktura.js').AddRechnungSammelrechnungDTO} AddRechnungSammelrechnungDTO */
+/** @typedef {import('./faktura.js').Lieferungstyp} Lieferungstyp */
 
-/**
- * @typedef {Object} PositionSerieItemDTO
- * @property {string} BelegPositionGuid
- * @property {string} Position
- * @property {number} Menge
- * @property {number} Vorlauf
- * @property {string} SerieAuslastung
- * @property {string} SerieGuid
- * @property {string} ProduktionsDatum - ISO date string
- * @property {string} LieferDatum - ISO date string
- * @property {string} PositionInfo
- * @property {number} KapBedarf
- * @property {number} KapBedarfGes
- * @property {boolean} HatNachfolgeBelegPosition
- * @property {boolean} VeschiedeneSerien - currently only used in client
- * @property {string[] | null} SerienGuids - only set when VeschiedeneSerien is true
- */
+/** @typedef {import('./farben.js').FarbeDTO} FarbeDTO */
+/** @typedef {import('./farben.js').FarbGruppeDTO} FarbGruppeDTO */
+/** @typedef {import('./farben.js').FarbKuerzelDTO} FarbKuerzelDTO */
+/** @typedef {import('./farben.js').FarbKuerzelGruppeDTO} FarbKuerzelGruppeDTO */
+/** @typedef {import('./farben.js').FarbgruppenaufpreiseDTO} FarbgruppenaufpreiseDTO */
+/** @typedef {import('./farben.js').FarbgruppeSettingsDTO} FarbgruppeSettingsDTO */
+/** @typedef {import('./farben.js').ProduzentenFarbGruppeDTO} ProduzentenFarbGruppeDTO */
 
-/**
- * @typedef {Object} ProfilKuerzelDTO
- * @property {string} ProfilKuerzel
- * @property {string} Beschreibung
- * @property {string[]} VerfuegbarFuer
- */
-
-/**
- * @typedef {Object} AvReportVorgangRequestDto
- * @property {string[]} VorgangGuids
- */
-
-/**
- * @typedef {Object} AvReportVorgangDto
- * @description Minimalistic DTO for Vorgang in AV reports
- * @property {string} VorgangGuid
- * @property {number} VorgangsNummer
- * @property {string} Kommission
- * @property {string} Kommission2
- * @property {AvReportBelegDto[]} Belege
- * @property {AvReportKontaktDto} Kunde
- */
-
-/**
- * @typedef {Object} AvReportBelegDto
- * @description Minimalistic DTO for Beleg in AV reports
- * @property {string} BelegGuid
- * @property {import('./kunden.js').BeleganschriftDTO | null} BelegAdresse
- * @property {import('./kunden.js').BeleganschriftDTO | null} VersandAdresse
- * @property {boolean} VersandAdresseGleichBelegAdresse
- * @property {string} BelegArt
- * @property {string} Terminwunsch
- * @property {boolean} IstSelbstabholer
- */
-
-/**
- * @typedef {Object} AvReportKontaktDto
- * @description Minimalistic DTO for Kontakt information in AvReportVorgangDto
- * @property {string} KundenNummer
- * @property {string} Land
- */
-
-/**
- * @typedef {Object} SerieAuslastungDTO
- * @property {boolean} IstSumme
- * @property {string} Produktfamilie
- * @property {number} Anzahl
- * @property {number} Reserviert
- * @property {number} Arbeitsminuten
- * @property {number} ArbeitsminutenReserviert
- * @property {number} Elementgewicht
- * @property {number} ElementgewichtReserviert
- * @property {number} AnzahlMax
- * @property {number} KapazitaetBelegt
- * @property {number} KapazitaetMax
- */
-
-/**
- * @typedef {Object} SerieDTO
- * @property {string} SerieGuid - Eindeutige ID der Serie
- * @property {string} Name - Name der Serie (Langform)
- * @property {string} Kuerzel - Serienkürzel für Ausdrucke, Kurzanzeige usw.
- * @property {string} Start - Beginn der Produktion (erster Produktionstag) - ISO date string
- * @property {string} Ende - Ende der Produktion (letzter Produktionstag) - ISO date string
- * @property {boolean} StaendigeSerie - Ständige Serie
- * @property {string[]} AVBelegPositionen - AV-Positionen in dieser Serie
- * @property {number} Kapazitaet - Kapazität in neutralen Kapazitätseinheiten (alt)
- * @property {number} KapazitaetInMin - Kapazität der Serie in Minuten
- * @property {number} KapazitaetReserviert - Belegung in neutralen Kapazitätseinheiten
- * @property {string} MaterialBedarfStatus - "NichtBerechnet", "BerechnungGestartet", "Berechnet"
- * @property {boolean} IstGesperrt - Serie ist gesperrt
- * @property {SerieDruckInfoDTO[]} DruckInfos
- * @property {string} ChangedDate - ISO date string
- */
-
-/**
- * @typedef {Object} SerieDruckInfoDTO
- * @property {string} SerieDruckInfoGuid
- * @property {string} Benutzername
- * @property {string} DokumentArt
- * @property {string} Zeitstempel - ISO date string (UTC)
- */
-
-/**
- * @typedef {Object} SerieHistorieDTO
- * @property {string} SerieHistorieGuid
- * @property {string} SerieGuid
- * @property {string} SerienName
- * @property {string} Text
- * @property {string} Zeitstempel - ISO date string
- * @property {string} Benutzer
- */
-
-/**
- * @typedef {Object} SerienMaterialEditDTO
- * @property {string} SerieGuid
- * @property {MaterialbedarfDTO[]} MaterialListe
- */
-
-/**
- * @typedef {Object} VirtualSerieWithAuslastungDTO
- * @property {string} SerieGuid - Eindeutige ID der Serie
- * @property {string} Name - Name der Serie (Langform)
- * @property {string} Kuerzel - Serienkürzel für Ausdrucke, Kurzanzeige usw.
- * @property {string} Start - Beginn der Produktion (erster Produktionstag) - ISO date string
- * @property {string} Ende - Ende der Produktion (letzter Produktionstag) - ISO date string
- * @property {SerieAuslastungDTO[]} Auslastungen
- */
+/** @typedef {import('./allgemein.js').ContractDTO} ContractDTO */
+/** @typedef {import('./allgemein.js').TemplateDTO} TemplateDTO */
+/** @typedef {import('./allgemein.js').ChangeDTO} ChangeDTO */
+/** @typedef {import('./allgemein.js').ChangeInfoDTO} ChangeInfoDTO */
+/** @typedef {import('./allgemein.js').UpdateInfoDTO} UpdateInfoDTO */
+/** @typedef {import('./allgemein.js').DevOpsStatusDTO} DevOpsStatusDTO */
+/** @typedef {import('./allgemein.js').WebJobHistorieDTO} WebJobHistorieDTO */
+/** @typedef {import('./allgemein.js').CreateServiceTokenRequestDTO} CreateServiceTokenRequestDTO */
+/** @typedef {import('./allgemein.js').ApiVersionDTO} ApiVersionDTO */
+/** @typedef {import('./allgemein.js').ExtendedStatusCodeDTO} ExtendedStatusCodeDTO */
 
 // ============================================================================
 // Anpassungen DTOs
@@ -257,148 +124,42 @@
  */
 
 // ============================================================================
-// Benutzer DTOs
+// AV Report DTOs
 // ============================================================================
 
 /**
- * @typedef {Object} BenutzerDTO
- * @property {RolleDTO[]} Rollen
- * @property {string} BenutzerGuid
- * @property {string} Benutzername
- * @property {string} Vorname
- * @property {string} Nachname
- * @property {string | null} MandantGuid
- * @property {string} Passwort
- * @property {string} PasswortBCrypt
- * @property {boolean | null} MasterKatalog
- * @property {boolean | null} HauptKatalog
- * @property {number | null} NewsletterId
- * @property {boolean} IstAktiv
- * @property {string[]} GesperrteVarianten
- * @property {string} ChangedDate - ISO date string
- * @property {string} EmailAdresse
- * @property {string} TelefonNummer
- * @property {string} Art
- * @property {boolean} IstSicSynchronized
- * @property {string} LastSicMessage
+ * @typedef {Object} AvReportVorgangRequestDto
+ * @property {string[]} VorgangGuids
  */
 
 /**
- * @typedef {Object} BerechtigungDTO
- * @property {string} Code
- * @property {string} ErklaerungsText
- * @property {string} Level
+ * @typedef {Object} AvReportVorgangDto
+ * @description Minimalistic DTO for Vorgang in AV reports
+ * @property {string} VorgangGuid
+ * @property {number} VorgangsNummer
+ * @property {string} Kommission
+ * @property {string} Kommission2
+ * @property {AvReportBelegDto[]} Belege
+ * @property {AvReportKontaktDto} Kunde
  */
 
 /**
- * @typedef {Object} LoginAttemptDTO
- * @property {string} UserGuid
- * @property {number} FailCount
- * @property {string | null} RequestTime - ISO date string
+ * @typedef {Object} AvReportBelegDto
+ * @description Minimalistic DTO for Beleg in AV reports
+ * @property {string} BelegGuid
+ * @property {import("./kunden.js").BeleganschriftDTO | null} BelegAdresse
+ * @property {import("./kunden.js").BeleganschriftDTO | null} VersandAdresse
+ * @property {boolean} VersandAdresseGleichBelegAdresse
+ * @property {string} BelegArt
+ * @property {string} Terminwunsch
+ * @property {boolean} IstSelbstabholer
  */
 
 /**
- * @typedef {Object} LoginAttemptResultDTO
- * @property {number} FailCount
- * @property {string | null} LastFailedLogin - ISO date string
- */
-
-/**
- * @typedef {Object} LoginDTO
- * @property {string} Email
- * @property {string} Password
- * @property {string} Mandant
- * @property {string} AppToken
- */
-
-/**
- * @typedef {Object} PasswortAendernDTO
- * @property {string} Benutzername
- * @property {string} AltesPasswort
- * @property {string} NeuesPasswort
- */
-
-/**
- * @typedef {Object} RefreshTokenDTO
- * @property {string} Token
- * @property {string} Expires - ISO date string
- * @property {string} UserTokenGuid
- * @property {UserAuthTokenDTO | null} UserToken
- * @property {string} AppToken
- */
-
-/**
- * @typedef {Object} RolleDTO
- * @property {BerechtigungDTO[]} Berechtigungen
- * @property {string} Name
- * @property {string} Beschreibung
- * @property {string} RolleGuid
- */
-
-/**
- * @typedef {Object} UserAuthTokenDTO
- * @property {string} AppToken
- * @property {string} Expires - ISO date string
- * @property {string} Token
- * @property {BenutzerDTO | null} Benutzer
- * @property {string} MandantGuid
- * @property {import('./settings.js').MandantDTO | null} Mandant
- */
-
-/**
- * @typedef {Object} ZustimmungsInfoDTO
- * @property {string} Dokument
- * @property {string} Version
- * @property {string} Zeitstempel - ISO date string
- * @property {string} Plattform
- */
-
-// ============================================================================
-// Druck DTOs
-// ============================================================================
-
-/**
- * @typedef {Object} ILayoutBelegDruck
- * @property {boolean} ShowLogo
- * @property {number} LogoPositionX
- * @property {number} LogoPositionY
- * @property {number} LogoSizeWidth
- * @property {number} LogoSizeHeight
- * @property {number} TabellePositionX
- * @property {number} TabellePositionY_Seite1
- * @property {number} TabellePositionY_AbSeite2
- * @property {number} TabelleHoehe_Seite1
- * @property {number} TabelleHoehe_AbSeite2
- * @property {number} TabelleBreite
- * @property {number} BriefkopfPositionX
- * @property {number} BriefkopfPositionY
- * @property {number} FusszeilePositionX
- * @property {number} FusszeilePositionY
- * @property {number} SeitenrandLinks
- * @property {number} SeitenrandRechts
- * @property {number} SeitenrandUnten
- * @property {number} SeitenrandOben
- * @property {number} KommissionPositionY
- * @property {number} SeitenzaehlerPositionX
- * @property {number} SeitenzaehlerPositionY_Seite1
- * @property {number} SeitenzaehlerPositionY_AbSeite2
- * @property {number} AnschriftPositionX
- * @property {number} AnschriftPositionY
- * @property {number} MicroAnschriftPositionX
- * @property {number} MicroAnschriftPositionY
- * @property {boolean} ShowMicroAnschrift
- * @property {number} BelegKopfPositionX
- * @property {number} BelegKopfPositionY
- * @property {number} BelegKopfPositionY_AbSeite2
- * @property {boolean} ShowHistorie
- * @property {boolean} IsBlankoDruck
- * @property {boolean} IsBestellfixBeleg
- * @property {boolean} IsDiagnoseDruck
- */
-
-/**
- * @typedef {Object} LayoutBelegDruckDTO
- * @extends ILayoutBelegDruck
+ * @typedef {Object} AvReportKontaktDto
+ * @description Minimalistic DTO for Kontakt information in AvReportVorgangDto
+ * @property {string} KundenNummer
+ * @property {string} Land
  */
 
 // ============================================================================
@@ -415,11 +176,11 @@
  * @property {string} Vorgangsnummer
  * @property {string} Positionsnummer
  * @property {string} Benutzername
- * @property {import('./settings.js').MandantDTO | null} Mandant
+ * @property {import("./settings.js").MandantDTO | null} Mandant
  * @property {string} BelegPositionGuid
- * @property {import('./belege.js').BelegPositionDTO | null} BelegPosition
+ * @property {import("./belege.js").BelegPositionDTO | null} BelegPosition
  * @property {BelegPositionAVDTO[] | null} AVPositionen
- * @property {import('./produktion.js').ProduktionsSettingsDTO | null} ProduktionsSettings
+ * @property {import("./produktion.js").ProduktionsSettingsDTO | null} ProduktionsSettings
  * @property {string} Beschreibung
  * @property {string} ProgramInfos
  * @property {FeedbackAttachmentDTO[] | null} Anhaenge
@@ -587,103 +348,6 @@
  */
 
 // ============================================================================
-// Update DTOs
-// ============================================================================
-
-/**
- * @typedef {Object} ChangeDTO
- * @property {string} ChangedGuid
- * @property {string} ChangedWhen - ISO date string
- * @property {string} ChangeType
- * @property {string} ChangeOperation
- * @property {number | null} MandantId
- * @property {string | null} MandantGuid
- * @property {string} Data
- */
-
-/**
- * @typedef {Object} ChangeInfoDTO
- * @property {string} Kontakte - ISO date string
- * @property {string} Vorgaenge - ISO date string
- * @property {string} Serien - ISO date string
- * @property {string} BelegPositionenAV - ISO date string
- * @property {string} Settings - ISO date string
- * @property {string} Lagerbestand - ISO date string
- * @property {string} BelegPositionen - ISO date string
- * @property {string} ProduktionsStati - ISO date string
- * @property {string} TagInfos - ISO date string
- */
-
-/**
- * @typedef {Object} DevOpsStatusDTO
- * @property {string} Env
- * @property {string} DbInfo
- * @property {string} CurrentMigration
- * @property {string[]} PendingMigrations
- */
-
-/**
- * @typedef {Object} UpdateInfoDTO
- * @property {string} KatalogArtikel - ISO date string
- * @property {string} ProduktFamilien - ISO date string
- * @property {string} ProduktGruppen - ISO date string
- * @property {string} Varianten - ISO date string
- * @property {string} UI - ISO date string
- * @property {string} WerteListen - ISO date string
- * @property {string} Farben - ISO date string
- * @property {string} Scripts - ISO date string
- * @property {string} FarbKuerzel - ISO date string
- * @property {string} Oberflaechen - ISO date string
- * @property {string} FarbGruppen - ISO date string
- */
-
-// ============================================================================
-// API DTOs
-// ============================================================================
-
-/**
- * @typedef {Object} ApiVersionDTO
- * @property {string} Version
- * @property {string} Environment
- * @property {string} BuildTime
- * @property {string} ReleaseTime - Deprecated: Use BuildTime instead
- */
-
-/**
- * @typedef {Object} ExtendedStatusCodeDTO
- * @property {Error | null} Exception
- * @property {string} Info
- */
-
-// ============================================================================
-// Contracts DTOs
-// ============================================================================
-
-/**
- * @typedef {Object} ContractDTO
- * @property {string} ContractGuid
- * @property {string} Owner
- * @property {string} Partner
- * @property {string} Context
- * @property {string} Value
- * @property {number} Version
- * @property {string} ChangedDate - ISO date string
- * @property {string} OwnerName
- * @property {string} PartnerName
- * @property {boolean} IsEditable
- * @property {boolean} Inherit
- */
-
-// ============================================================================
-// LoginJwt DTOs
-// ============================================================================
-
-/**
- * @typedef {Object} CreateServiceTokenRequestDTO
- * @property {string} AppTokenGuid
- */
-
-// ============================================================================
 // Produktion (Materialbedarf) DTOs
 // ============================================================================
 
@@ -738,7 +402,7 @@
  * @property {boolean} FromSonderWunsch
  * @property {boolean} IstBeschichtbar
  * @property {string} KatalogArtikelArt
- * @property {import('./produktion.js').MaterialbedarfStatiDTO | null} AktuellerStatus
+ * @property {import("./produktion.js").MaterialbedarfStatiDTO | null} AktuellerStatus
  * @property {boolean} ProfilGedrehtSaegen
  * @property {boolean} IstSonderfarbe
  * @property {string} MaterialPCode
@@ -759,84 +423,79 @@
  * Cross-module DTO aliases so type imports via this index module resolve reliably.
  */
 
-/** @typedef {import('./belege.js').BaseListItemDTO} BaseListItemDTO */
-/** @typedef {import('./belege.js').BelegDTO} BelegDTO */
-/** @typedef {import('./belege.js').BelegHistorieDTO} BelegHistorieDTO */
-/** @typedef {import('./belege.js').BelegHistorienDTO} BelegHistorienDTO */
-/** @typedef {import('./belege.js').BelegPositionHistorieDTO} BelegPositionHistorieDTO */
-/** @typedef {import('./belege.js').BelegPositionHistorienDTO} BelegPositionHistorienDTO */
-/** @typedef {import('./belege.js').BelegStatusDTO} BelegStatusDTO */
-/** @typedef {import('./belege.js').BelegartWechselDTO} BelegartWechselDTO */
-/** @typedef {import('./belege.js').CalculationInfoDTO} CalculationInfoDTO */
-/** @typedef {import('./belege.js').VorgangHistorieDTO} VorgangHistorieDTO */
-/** @typedef {import('./belege.js').VorgangHistorienDTO} VorgangHistorienDTO */
-/** @typedef {import('./belege.js').VorgangDTO} VorgangDTO */
-/** @typedef {import('./belege.js').VorgangListItemDTO} VorgangListItemDTO */
-/** @typedef {import('./belege.js').VorgangStatusDTO} VorgangStatusDTO */
-/** @typedef {import('./belege.js').VorgangStatusTableDTO} VorgangStatusTableDTO */
+/** @typedef {import("./belege.js").BaseListItemDTO} BaseListItemDTO */
+/** @typedef {import("./belege.js").BelegDTO} BelegDTO */
+/** @typedef {import("./belege.js").BelegHistorieDTO} BelegHistorieDTO */
+/** @typedef {import("./belege.js").BelegHistorienDTO} BelegHistorienDTO */
+/** @typedef {import("./belege.js").BelegPositionHistorieDTO} BelegPositionHistorieDTO */
+/** @typedef {import("./belege.js").BelegPositionHistorienDTO} BelegPositionHistorienDTO */
+/** @typedef {import("./belege.js").BelegStatusDTO} BelegStatusDTO */
+/** @typedef {import("./belege.js").BelegartWechselDTO} BelegartWechselDTO */
+/** @typedef {import("./belege.js").CalculationInfoDTO} CalculationInfoDTO */
+/** @typedef {import("./belege.js").VorgangHistorieDTO} VorgangHistorieDTO */
+/** @typedef {import("./belege.js").VorgangHistorienDTO} VorgangHistorienDTO */
+/** @typedef {import("./belege.js").VorgangDTO} VorgangDTO */
+/** @typedef {import("./belege.js").VorgangListItemDTO} VorgangListItemDTO */
+/** @typedef {import("./belege.js").VorgangStatusDTO} VorgangStatusDTO */
+/** @typedef {import("./belege.js").VorgangStatusTableDTO} VorgangStatusTableDTO */
 
-/** @typedef {import('./produktion.js').AblageDTO} AblageDTO */
-/** @typedef {import('./produktion.js').BearbeitungDTO} BearbeitungDTO */
-/** @typedef {import('./produktion.js').BerechnungParameterDTO} BerechnungParameterDTO */
-/** @typedef {import('./produktion.js').FachzuordnungResultDTO} FachzuordnungResultDTO */
-/** @typedef {import('./produktion.js').ProduktionsDatenDTO} ProduktionsDatenDTO */
-/** @typedef {import('./produktion.js').ProduktionsInfoDTO} ProduktionsInfoDTO */
-/** @typedef {import('./produktion.js').ProduktionsStatusDTO} ProduktionsStatusDTO */
-/** @typedef {import('./produktion.js').ProduktionsStatusHistorieDTO} ProduktionsStatusHistorieDTO */
-/** @typedef {import('./produktion.js').ProduktionsfreigabeItemDTO} ProduktionsfreigabeItemDTO */
-/** @typedef {import('./produktion.js').SaegeDatenHistorieDTO} SaegeDatenHistorieDTO */
-/** @typedef {import('./produktion.js').SaegeDatenResultDTO} SaegeDatenResultDTO */
+/** @typedef {import("./produktion.js").AblageDTO} AblageDTO */
+/** @typedef {import("./produktion.js").BearbeitungDTO} BearbeitungDTO */
+/** @typedef {import("./produktion.js").BerechnungParameterDTO} BerechnungParameterDTO */
+/** @typedef {import("./produktion.js").FachzuordnungResultDTO} FachzuordnungResultDTO */
+/** @typedef {import("./produktion.js").ProduktionsDatenDTO} ProduktionsDatenDTO */
+/** @typedef {import("./produktion.js").ProduktionsInfoDTO} ProduktionsInfoDTO */
+/** @typedef {import("./produktion.js").ProduktionsStatusDTO} ProduktionsStatusDTO */
+/** @typedef {import("./produktion.js").ProduktionsStatusHistorieDTO} ProduktionsStatusHistorieDTO */
+/** @typedef {import("./produktion.js").ProduktionsfreigabeItemDTO} ProduktionsfreigabeItemDTO */
+/** @typedef {import("./produktion.js").SaegeDatenHistorieDTO} SaegeDatenHistorieDTO */
+/** @typedef {import("./produktion.js").SaegeDatenResultDTO} SaegeDatenResultDTO */
 
-/** @typedef {import('./ui.js').KatalogArtikelDTO} KatalogArtikelDTO */
-/** @typedef {import('./ui.js').KonfigSatzInfoDTO} KonfigSatzInfoDTO */
-/** @typedef {import('./ui.js').OberflaecheDTO} OberflaecheDTO */
-/** @typedef {import('./ui.js').ProduktFamilieDTO} ProduktFamilieDTO */
-/** @typedef {import('./ui.js').TagInfoDTO} TagInfoDTO */
-/** @typedef {import('./ui.js').TagVorlageDTO} TagVorlageDTO */
-/** @typedef {import('./ui.js').UIDefinitionDTO} UIDefinitionDTO */
-/** @typedef {import('./ui.js').UIEingabeFeldInfoDTO} UIEingabeFeldInfoDTO */
-/** @typedef {import('./ui.js').UIScriptDTO} UIScriptDTO */
-/** @typedef {import('./ui.js').VarianteDTO} VarianteDTO */
-/** @typedef {import('./ui.js').WarenGruppeDTO} WarenGruppeDTO */
-/** @typedef {import('./ui.js').WerteListeDTO} WerteListeDTO */
+/** @typedef {import("./ui.js").KatalogArtikelDTO} KatalogArtikelDTO */
+/** @typedef {import("./ui.js").KonfigSatzInfoDTO} KonfigSatzInfoDTO */
+/** @typedef {import("./ui.js").OberflaecheDTO} OberflaecheDTO */
+/** @typedef {import("./ui.js").ProduktFamilieDTO} ProduktFamilieDTO */
+/** @typedef {import("./ui.js").TagInfoDTO} TagInfoDTO */
+/** @typedef {import("./ui.js").TagVorlageDTO} TagVorlageDTO */
+/** @typedef {import("./ui.js").UIDefinitionDTO} UIDefinitionDTO */
+/** @typedef {import("./ui.js").UIEingabeFeldInfoDTO} UIEingabeFeldInfoDTO */
+/** @typedef {import("./ui.js").UIScriptDTO} UIScriptDTO */
+/** @typedef {import("./ui.js").VarianteDTO} VarianteDTO */
+/** @typedef {import("./ui.js").WarenGruppeDTO} WarenGruppeDTO */
+/** @typedef {import("./ui.js").WerteListeDTO} WerteListeDTO */
 
-/** @typedef {import('./technik.js').KomponenteDTO} KomponenteDTO */
-/** @typedef {import('./technik.js').KonturDTO} KonturDTO */
-/** @typedef {import('./technik.js').SchnittDTO} SchnittDTO */
+/** @typedef {import("./technik.js").KomponenteDTO} KomponenteDTO */
+/** @typedef {import("./technik.js").KonturDTO} KonturDTO */
+/** @typedef {import("./technik.js").SchnittDTO} SchnittDTO */
 
-/** @typedef {import('./settings.js').PreisermittlungsEinstellungenDTO} PreisermittlungsEinstellungenDTO */
+/** @typedef {import("./settings.js").PreisermittlungsEinstellungenDTO} PreisermittlungsEinstellungenDTO */
 
-/**
- * Placeholder DTOs referenced by API JSDoc but not yet modeled in DTO files.
- * These prevent unresolved-type fallback to `any` in tooling.
- */
-/** @typedef {Object} AddRechnungSammelrechnungDTO */
-/** @typedef {Object} BelegeInfoDTO */
-/** @typedef {Object} CreateSammelrechnungDTO */
-/** @typedef {Object} FarbGruppeDTO */
-/** @typedef {Object} FarbKuerzelDTO */
-/** @typedef {Object} FarbKuerzelGruppeDTO */
-/** @typedef {Object} FarbeDTO */
-/** @typedef {Object} FarbgruppenaufpreiseDTO */
-/** @typedef {Object} JobStatusEntryDTO */
-/** @typedef {Object} JobStatusResponseDTO */
-/** @typedef {Object} KatalogArtikelIndiDatenDTO */
-/** @typedef {Object} MailJobInfo */
-/** @typedef {Object} MandantAndBelegPosGuidDTO */
-/** @typedef {Object} MaterialBearbeitungsMethodeDTO */
-/** @typedef {Object} NachrichtenDTO */
-/** @typedef {Object} ProduktGruppeDTO */
-/** @typedef {Object} ProduzentenFarbGruppeDTO */
-/** @typedef {Object} SammelrechnungDTO */
-/** @typedef {Object} SammelrechnungListItemDTO */
-/** @typedef {Object} SetFakturaDTO */
-/** @typedef {Object} TemplateDTO */
-/** @typedef {Object} WebJobHistorieDTO */
+/** @typedef {import("./mail.js").JobStatusEntryDTO} JobStatusEntryDTO */
+/** @typedef {import("./mail.js").JobStatusResponseDTO} JobStatusResponseDTO */
+/** @typedef {import("./mail.js").MailJobInfo} MailJobInfo */
+/** @typedef {import("./artikel.js").KatalogArtikelIndiDatenDTO} KatalogArtikelIndiDatenDTO */
+/** @typedef {import("./webjob.js").MandantAndBelegPosGuidDTO} MandantAndBelegPosGuidDTO */
+/** @typedef {import("./artikel.js").MaterialBearbeitungsMethodeDTO} MaterialBearbeitungsMethodeDTO */
+/** @typedef {import("./nachrichten.js").NachrichtenDTO} NachrichtenDTO */
+/** @typedef {import("./produktGruppen.js").ProduktGruppeDTO} ProduktGruppeDTO */
 
 // Re-export modules so their JSDoc types are accessible via the index
+export * from "./allgemein.js";
+export * from "./artikel.js";
+export * from "./av.js";
 export * from "./belege.js";
+export * from "./benutzer.js";
+export * from "./druck.js";
+export * from "./farben.js";
+export * from "./faktura.js";
 export * from "./kunden.js";
-export * from "./ui.js";
+export * from "./lager.js";
+export * from "./mail.js";
+export * from "./mandanten.js";
+export * from "./nachrichten.js";
 export * from "./produktion.js";
-export * from "./technik.js";
+export * from "./produktGruppen.js";
 export * from "./settings.js";
+export * from "./technik.js";
+export * from "./ui.js";
+export * from "./webjob.js";

@@ -41,7 +41,7 @@ export function createBenutzerApi(fluentApi) {
          */
         saveBenutzerList: async (list) => {
             await Promise.all(list.map(benutzer => 
-                fluentApi.put('Benutzer', benutzer)
+                fluentApi.put("Benutzer", benutzer)
             ));
         },
 
@@ -51,7 +51,7 @@ export function createBenutzerApi(fluentApi) {
          * @returns {Promise<any>} Response
          */
         saveBenutzer: async (benutzer) => {
-            return await fluentApi.put('Benutzer', benutzer);
+            return await fluentApi.put("Benutzer", benutzer);
         },
 
         /**
@@ -70,7 +70,7 @@ export function createBenutzerApi(fluentApi) {
          * @returns {Promise<any>} Response
          */
         passwortAendern: async (passwortAendernData) => {
-            return await fluentApi.post('PasswortAendern', passwortAendernData);
+            return await fluentApi.post("PasswortAendern", passwortAendernData);
         },
 
         /**
@@ -78,7 +78,7 @@ export function createBenutzerApi(fluentApi) {
          * @returns {Promise<any>} Response
          */
         sicSyncWebJob: async () => {
-            return await fluentApi.post('Benutzer/SICSyncWebJob', null);
+            return await fluentApi.post("Benutzer/SICSyncWebJob", null);
         },
 
         /**
@@ -86,7 +86,7 @@ export function createBenutzerApi(fluentApi) {
          * @returns {Promise<RolleDTO[]>} List of all roles
          */
         getRollenAll: async () => {
-            return await fluentApi.get('Rollen');
+            return await fluentApi.get("Rollen");
         }
     };
 }

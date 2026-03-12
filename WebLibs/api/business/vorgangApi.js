@@ -34,95 +34,95 @@
  * @returns {VorgangApi}
  */
 export function createVorgangApi(api) {
-  return {
-    async getList(jahr) {
-      return await api.get(`Vorgang/?jahr=${jahr}`);
-    },
+    return {
+        async getList(jahr) {
+            return await api.get(`Vorgang/?jahr=${jahr}`);
+        },
 
-    async getListByStatus(status, jahr) {
-      return await api.get(`Vorgang/?status=${status}&jahr=${jahr}`);
-    },
+        async getListByStatus(status, jahr) {
+            return await api.get(`Vorgang/?status=${status}&jahr=${jahr}`);
+        },
 
-    async getListByStatusAndChangedSince(status, jahr, changedSince) {
-      return await api.get(`Vorgang/?status=${status}&jahr=${jahr}&changedSince=${changedSince.toISOString()}`);
-    },
+        async getListByStatusAndChangedSince(status, jahr, changedSince) {
+            return await api.get(`Vorgang/?status=${status}&jahr=${jahr}&changedSince=${changedSince.toISOString()}`);
+        },
 
-    async getListWithFilters(changedSince, jahr = 0, status = "Alle", art = "", includeArchive = false, includeOthersData = false, search = "") {
-      return await api.get(`Vorgang/?status=${status}&jahr=${jahr}&changedSince=${changedSince.toISOString()}&art=${art}&includeArchive=${includeArchive}&includeOthersData=${includeOthersData}&search=${search}`);
-    },
+        async getListWithFilters(changedSince, jahr = 0, status = "Alle", art = "", includeArchive = false, includeOthersData = false, search = "") {
+            return await api.get(`Vorgang/?status=${status}&jahr=${jahr}&changedSince=${changedSince.toISOString()}&art=${art}&includeArchive=${includeArchive}&includeOthersData=${includeOthersData}&search=${search}`);
+        },
 
-    async getListByYearAndFilters(jahr, status, changedSince, art = "", includeArchive = false, includeOthersData = false, search = "") {
-      return await api.get(`Vorgang/?status=${status}&jahr=${jahr}&changedSince=${changedSince.toISOString()}&art=${art}&includeArchive=${includeArchive}&includeOthersData=${includeOthersData}&search=${search}`);
-    },
+        async getListByYearAndFilters(jahr, status, changedSince, art = "", includeArchive = false, includeOthersData = false, search = "") {
+            return await api.get(`Vorgang/?status=${status}&jahr=${jahr}&changedSince=${changedSince.toISOString()}&art=${art}&includeArchive=${includeArchive}&includeOthersData=${includeOthersData}&search=${search}`);
+        },
 
-    async getListByKunde(kundeGuid) {
-      return await api.get(`Vorgang/?kundeGuid=${kundeGuid}`);
-    },
+        async getListByKunde(kundeGuid) {
+            return await api.get(`Vorgang/?kundeGuid=${kundeGuid}`);
+        },
 
-    async saveList(list) {
-      for (const vorgang of list) {
-        await this.save(vorgang);
-      }
-    },
+        async saveList(list) {
+            for (const vorgang of list) {
+                await this.save(vorgang);
+            }
+        },
 
-    async changeNummer(vorgangGuid, neueVorgangsNummer) {
-      return await api.put(`Vorgang/${vorgangGuid}/vorgangsnummer`, neueVorgangsNummer);
-    },
+        async changeNummer(vorgangGuid, neueVorgangsNummer) {
+            return await api.put(`Vorgang/${vorgangGuid}/vorgangsnummer`, neueVorgangsNummer);
+        },
 
-    async save(vorgang) {
-      return await api.put("Vorgang", vorgang);
-    },
+        async save(vorgang) {
+            return await api.put("Vorgang", vorgang);
+        },
 
-    async getByGuid(vorgangGuid, includeKunde, returnNullIfNotFound = false) {
-      return await api.get(`Vorgang/${vorgangGuid}?includeKunde=${includeKunde}&returnNullIfNotFound=${returnNullIfNotFound}`);
-    },
+        async getByGuid(vorgangGuid, includeKunde, returnNullIfNotFound = false) {
+            return await api.get(`Vorgang/${vorgangGuid}?includeKunde=${includeKunde}&returnNullIfNotFound=${returnNullIfNotFound}`);
+        },
 
-    async getByNummer(vorgangsNummer, jahr, includeKunde = false) {
-      return await api.get(`Vorgang/${vorgangsNummer}/${jahr}?includeKunde=${includeKunde}`);
-    },
+        async getByNummer(vorgangsNummer, jahr, includeKunde = false) {
+            return await api.get(`Vorgang/${vorgangsNummer}/${jahr}?includeKunde=${includeKunde}`);
+        },
 
-    async getStatus(vorgangGuid) {
-      return await api.get(`VorgangStatus/${vorgangGuid}`);
-    },
+        async getStatus(vorgangGuid) {
+            return await api.get(`VorgangStatus/${vorgangGuid}`);
+        },
 
-    async setStatus(vorgangGuid, statusCode) {
-      const set = {
-        VorgangGuid: vorgangGuid,
-        NeuerStatus: statusCode
-      };
-      return await api.put("VorgangStatus", set);
-    },
+        async setStatus(vorgangGuid, statusCode) {
+            const set = {
+                VorgangGuid: vorgangGuid,
+                NeuerStatus: statusCode
+            };
+            return await api.put("VorgangStatus", set);
+        },
 
-    async setTextStatus(vorgangGuids, textStatus) {
-      const set = {
-        VorgangGuids: vorgangGuids,
-        NeuerTextStatus: textStatus
-      };
-      return await api.post("VorgangTextStatus", set);
-    },
+        async setTextStatus(vorgangGuids, textStatus) {
+            const set = {
+                VorgangGuids: vorgangGuids,
+                NeuerTextStatus: textStatus
+            };
+            return await api.post("VorgangTextStatus", set);
+        },
 
-    async archive(vorgangGuid) {
-      return await api.post(`Archivierung/?vguid=${vorgangGuid}`, null);
-    },
+        async archive(vorgangGuid) {
+            return await api.post(`Archivierung/?vguid=${vorgangGuid}`, null);
+        },
 
-    async archiveList(vorgangGuidList) {
-      return await api.post("Archivierung/", vorgangGuidList);
-    },
+        async archiveList(vorgangGuidList) {
+            return await api.post("Archivierung/", vorgangGuidList);
+        },
 
-    async unarchive(vorgangGuid) {
-      return await api.post(`ArchivierungAufheben/?vguid=${vorgangGuid}`, null);
-    },
+        async unarchive(vorgangGuid) {
+            return await api.post(`ArchivierungAufheben/?vguid=${vorgangGuid}`, null);
+        },
 
-    async changeBelegArt(belegGuid, neueBelegArt) {
-      return await api.post(`BelegArt/?bguid=${belegGuid}&neueBelegArt=${neueBelegArt}`, null);
-    },
+        async changeBelegArt(belegGuid, neueBelegArt) {
+            return await api.post(`BelegArt/?bguid=${belegGuid}&neueBelegArt=${neueBelegArt}`, null);
+        },
 
-    async getAllForFunction(changedSince) {
-      return await api.get(`GetAllVorgangForFunction/?changedSince=${changedSince.toISOString()}`);
-    },
+        async getAllForFunction(changedSince) {
+            return await api.get(`GetAllVorgangForFunction/?changedSince=${changedSince.toISOString()}`);
+        },
 
-    async getForFunction(vorgangGuid, mandantId) {
-      return await api.get(`GetVorgangForFunction?id=${vorgangGuid}&mandantID=${mandantId}`);
-    }
-  };
+        async getForFunction(vorgangGuid, mandantId) {
+            return await api.get(`GetVorgangForFunction?id=${vorgangGuid}&mandantID=${mandantId}`);
+        }
+    };
 }

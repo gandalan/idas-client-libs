@@ -2,6 +2,17 @@
 // Do not modify manually - changes will be overwritten
 
 // ============================================================================
+// Imports from other DTO files
+// ============================================================================
+
+/** @typedef {import('./av.js').BelegPositionAVDTO} BelegPositionAVDTO */
+/** @typedef {import('./belege.js').BelegPositionDTO} BelegPositionDTO */
+/** @typedef {import('./av.js').SerieDTO} SerieDTO */
+/** @typedef {import('./settings.js').ProduktionsSettingsDTO} ProduktionsSettingsDTO */
+/** @typedef {import('./index.js').PositionsDatenDTO} PositionsDatenDTO */
+/** @typedef {import('./index.js').KatalogArtikelArt} KatalogArtikelArt */
+
+// ============================================================================
 // Enums
 // ============================================================================
 
@@ -542,34 +553,6 @@
  * @typedef {Object} SonderwuenscheDTO
  * @property {string} Bezeichnung
  * @property {string} Wert
- */
-
-// ============================================================================
-// Placeholder types (defined in other DTO files)
-// ============================================================================
-
-/**
- * @typedef {Object} BelegPositionAVDTO
- */
-
-/**
- * @typedef {Object} BelegPositionDTO
- */
-
-/**
- * @typedef {Object} SerieDTO
- */
-
-/**
- * @typedef {Object} ProduktionsSettingsDTO
- */
-
-/**
- * @typedef {Object} PositionsDatenDTO
- */
-
-/**
- * @typedef {Object} KatalogArtikelArt
  */
 
 /**

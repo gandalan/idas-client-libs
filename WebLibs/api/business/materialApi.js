@@ -23,15 +23,15 @@
  * @returns {MaterialApi}
  */
 export function createMaterialApi(fluentApi) {
-  const api = fluentApi.withBaseUrl("ModellDaten");
+    const api = fluentApi.withBaseUrl("ModellDaten");
 
-  return {
-    async getAll() {
-      return await api.get("Material");
-    },
+    return {
+        async getAll() {
+            return await api.get("Material");
+        },
 
-    async saveMaterial(material) {
-      return await api.put("Material", material);
-    }
-  };
+        async saveMaterial(material) {
+            return await api.put("Material", material);
+        }
+    };
 }

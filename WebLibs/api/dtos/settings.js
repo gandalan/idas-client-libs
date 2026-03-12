@@ -87,6 +87,9 @@
  * @typedef {('Serienbezogen'|'Stichtagbezogen')} MaterialBedarfLogik
  */
 
+/** @typedef {import('./benutzer.js').BenutzerDTO} BenutzerDTO */
+/** @typedef {import('./mandanten.js').MandantDTO} MandantDTO */
+
 /**
  * @typedef {Object} UserAuthTokenDTO
  * @property {string} AppToken - UUID string
@@ -95,14 +98,6 @@
  * @property {BenutzerDTO} Benutzer
  * @property {string} MandantGuid - UUID string
  * @property {MandantDTO} Mandant
- */
-
-/**
- * @typedef {Object} BenutzerDTO
- */
-
-/**
- * @typedef {Object} MandantDTO
  */
 
 /**
