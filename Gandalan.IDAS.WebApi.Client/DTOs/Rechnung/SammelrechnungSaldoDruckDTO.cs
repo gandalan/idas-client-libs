@@ -17,7 +17,7 @@ public class SammelrechnungSaldoDruckDTO
     {
         Reihenfolge = saldo.Reihenfolge;
         Text = saldo.Text;
-        Betrag = saldo.Betrag.ToString(culture);
+        Betrag = saldo.Betrag.ToString(Global.CultureInfo);
         Rabatt = saldo.Rabatt > 0 ? saldo.Rabatt.ToString("G29", Global.CultureInfo) : "";
         IsLastElement = isLastElement;
     }
