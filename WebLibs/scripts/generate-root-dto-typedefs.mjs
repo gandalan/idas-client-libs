@@ -356,6 +356,148 @@ function normalizeJSDocBlock(block) {
         .trim();
 }
 
+function parseBracketedType(rest) {
+    if (!rest.startsWith("{")) {
+        return null;
+    }
+
+    let braceDepth = 0;
+    let closingBraceIndex = -1;
+
+    for (let index = 0; index < rest.length; index += 1) {
+        const character = rest[index];
+
+        if (character === "{") {
+            braceDepth += 1;
+        } else if (character === "}") {
+            braceDepth -= 1;
+
+            if (braceDepth === 0) {
+                closingBraceIndex = index;
+                break;
+            }
+        }
+    }
+
+    if (closingBraceIndex === -1) {
+        return null;
+    }
+
+    return {
+        typeExpression: rest.slice(1, closingBraceIndex).trim(),
+        remainder: rest.slice(closingBraceIndex + 1).trim()
+    };
+}
+
+function parseTagWithType(line, tagName) {
+    const marker = `@${tagName}`;
+    const tagIndex = line.indexOf(marker);
+
+    if (tagIndex === -1) {
+        return null;
+    }
+
+    const parsed = parseBracketedType(line.slice(tagIndex + marker.length).trimStart());
+
+    if (!parsed) {
+        return null;
+    }
+
+    return parsed;
+}
+
+function parseNameToken(remainder) {
+    const nameMatch = remainder.match(/^(\[[^\]]+\]|[^\s-]+)/);
+
+    if (!nameMatch) {
+        return null;
+    }
+
+    const rawName = nameMatch[1];
+    const optional = rawName.startsWith("[") && rawName.endsWith("]");
+    const normalizedName = optional ? rawName.slice(1, -1).replace(/=.*/, "") : rawName;
+    const description = remainder.slice(nameMatch[0].length).trim().replace(/^-/u, "").trim();
+
+    return {
+        name: normalizedName,
+        optional,
+        description
+    };
+}
+
+function extractPropertyEntries(normalizedBlock) {
+    const properties = [];
+
+    for (const line of normalizedBlock.split("\n")) {
+        if (!line.includes("@property")) {
+            continue;
+        }
+
+        const parsedTag = parseTagWithType(line, "property");
+
+        if (!parsedTag) {
+            continue;
+        }
+
+        const parsedName = parseNameToken(parsedTag.remainder);
+
+        if (!parsedName) {
+            continue;
+        }
+
+        properties.push({
+            name: parsedName.name,
+            optional: parsedName.optional,
+            description: parsedName.description,
+            typeExpression: parsedTag.typeExpression
+        });
+    }
+
+    return properties;
+}
+
+function extractParamEntries(normalizedBlock) {
+    const params = [];
+
+    for (const line of normalizedBlock.split("\n")) {
+        if (!line.includes("@param")) {
+            continue;
+        }
+
+        const parsedTag = parseTagWithType(line, "param");
+
+        if (!parsedTag) {
+            continue;
+        }
+
+        const parsedName = parseNameToken(parsedTag.remainder);
+
+        if (!parsedName) {
+            continue;
+        }
+
+        params.push({
+            name: parsedName.name,
+            optional: parsedName.optional,
+            typeExpression: parsedTag.typeExpression
+        });
+    }
+
+    return params;
+}
+
+function extractReturnsEntry(normalizedBlock) {
+    for (const line of normalizedBlock.split("\n")) {
+        if (!line.includes("@returns") && !line.includes("@return")) {
+            continue;
+        }
+
+        return parseTagWithType(line, line.includes("@returns") ? "returns" : "return");
+    }
+
+    return null;
+}
+
 function extractTypedefEntry(normalizedBlock) {
     const typedefIndex = normalizedBlock.indexOf("@typedef");
 
@@ -399,10 +541,13 @@ function extractTypedefEntry(normalizedBlock) {
         return null;
     }
 
+    const properties = extractPropertyEntries(normalizedBlock);
+
     return {
-        kind: "typedef",
+        kind: typeExpression === "Object" && properties.length > 0 ? "object" : "typedef",
         name: nameMatch[1],
-        typeExpression
+        typeExpression,
+        properties
     };
 }
 
@@ -416,7 +561,9 @@ function extractCallbackEntry(normalizedBlock) {
     return {
         kind: "callback",
         name: callbackMatch[1],
-        typeExpression: null
+        typeExpression: null,
+        params: extractParamEntries(normalizedBlock),
+        returns: extractReturnsEntry(normalizedBlock)?.typeExpression ?? "void"
     };
 }
 
@@ -446,6 +593,135 @@ function extractPublicTypeEntries(source, filePath) {
     }
 
     return entries;
+}
+
+function splitTopLevel(text, delimiterCharacter) {
+    const parts = [];
+    let current = "";
+    let angleDepth = 0;
+    let braceDepth = 0;
+    let bracketDepth = 0;
+    let parenDepth = 0;
+
+    for (const character of text) {
+        if (character === "<") {
+            angleDepth += 1;
+        } else if (character === ">") {
+            angleDepth = Math.max(0, angleDepth - 1);
+        } else if (character === "{") {
+            braceDepth += 1;
+        } else if (character === "}") {
+            braceDepth = Math.max(0, braceDepth - 1);
+        } else if (character === "[") {
+            bracketDepth += 1;
+        } else if (character === "]") {
+            bracketDepth = Math.max(0, bracketDepth - 1);
+        } else if (character === "(") {
+            parenDepth += 1;
+        } else if (character === ")") {
+            parenDepth = Math.max(0, parenDepth - 1);
+        }
+
+        if (character === delimiterCharacter && angleDepth === 0 && braceDepth === 0 && bracketDepth === 0 && parenDepth === 0) {
+            parts.push(current.trim());
+            current = "";
+            continue;
+        }
+
+        current += character;
+    }
+
+    if (current.trim()) {
+        parts.push(current.trim());
+    }
+
+    return parts;
+}
+
+function replaceObjectGenerics(typeExpression, transformTypeExpression) {
+    let result = "";
+
+    for (let index = 0; index < typeExpression.length; index += 1) {
+        if (!typeExpression.startsWith("Object<", index)) {
+            result += typeExpression[index];
+            continue;
+        }
+
+        let angleDepth = 0;
+        let closingIndex = -1;
+
+        for (let cursor = index + "Object".length; cursor < typeExpression.length; cursor += 1) {
+            const character = typeExpression[cursor];
+
+            if (character === "<") {
+                angleDepth += 1;
+            } else if (character === ">") {
+                angleDepth -= 1;
+
+                if (angleDepth === 0) {
+                    closingIndex = cursor;
+                    break;
+                }
+            }
+        }
+
+        if (closingIndex === -1) {
+            result += typeExpression[index];
+            continue;
+        }
+
+        const genericContent = typeExpression.slice(index + "Object<".length, closingIndex);
+        const genericParts = splitTopLevel(genericContent, ",");
+
+        if (genericParts.length === 2) {
+            result += `Record<${transformTypeExpression(genericParts[0])}, ${transformTypeExpression(genericParts[1])}>`;
+        } else {
+            result += "object";
+        }
+
+        index = closingIndex;
+    }
+
+    return result;
+}
+
+function transformTypeExpressionForDts(typeExpression, availableTypeNames) {
+    const normalizedExpression = typeExpression.trim();
+
+    if (normalizedExpression === "*") {
+        return "any";
+    }
+
+    let transformedExpression = normalizedExpression.replace(
+        /import\((?:"|')[^"']+(?:"|')\)\.([A-Za-z0-9_$]+)(\[[^\]]+\])?/g,
+        (fullMatch, typeName, suffix = "") => availableTypeNames.has(typeName) ? `${typeName}${suffix}` : fullMatch
+    );
+
+    transformedExpression = replaceObjectGenerics(transformedExpression, (innerExpression) => transformTypeExpressionForDts(innerExpression, availableTypeNames));
+    transformedExpression = transformedExpression.replace(/\bObject\b/g, "object");
+    transformedExpression = transformedExpression.replace(/\bfunction\b/g, "Function");
+
+    return transformedExpression;
+}
+
+function renderTypeEntryAsDts(entry, availableTypeNames) {
+    if (entry.kind === "object") {
+        const lines = [`export type ${entry.name} = {`];
+
+        for (const property of entry.properties) {
+            lines.push(`    ${property.name}${property.optional ? "?" : ""}: ${transformTypeExpressionForDts(property.typeExpression, availableTypeNames)};`);
+        }
+
+        lines.push("};", "");
+        return lines;
+    }
+
+    if (entry.kind === "callback") {
+        const params = entry.params.map((param) => `${param.name}${param.optional ? "?" : ""}: ${transformTypeExpressionForDts(param.typeExpression, availableTypeNames)}`).join(", ");
+        return [`export type ${entry.name} = (${params}) => ${transformTypeExpressionForDts(entry.returns, availableTypeNames)};`, ""];
+    }
+
+    return [`export type ${entry.name} = ${transformTypeExpressionForDts(entry.typeExpression, availableTypeNames)};`, ""];
 }
 
 function buildTypeExportMap(typeEntries) {
@@ -647,61 +923,20 @@ function replaceGeneratedBlock(source, startMarker, endMarker, generatedBlock, t
     return `${before}${generatedBlock}${after}`;
 }
 
-function buildRootDts(dtoAliases, sourceByFilePath, allJsFilesByDirectory) {
-    const dtoAliasNames = new Set(dtoAliases.map((alias) => alias.name));
+function buildRootDts(publicTypeEntries) {
     const lines = [
         "export * from \"./index.js\";",
         ""
     ];
 
-    const sourceFiles = [rootIndexPath];
-
-    for (const directory of sourceDirectories) {
-        sourceFiles.push(...allJsFilesByDirectory.get(directory));
-    }
-
-    const discoveredTypeEntries = [];
-
-    for (const filePath of sourceFiles) {
-        const source = sourceByFilePath.get(filePath);
-        discoveredTypeEntries.push(...extractPublicTypeEntries(source, filePath));
-    }
-
-    const canonicalizedTypeEntries = discoveredTypeEntries.filter((entry) => {
-        const relativeFilePath = toPosixRelativePath(entry.filePath);
-        const isDtoLeafFile = relativeFilePath.startsWith("api/dtos/") && relativeFilePath !== "api/dtos/index.js";
-
-        if (isDtoLeafFile && dtoAliasNames.has(entry.name)) {
-            return false;
-        }
-
-        return true;
-    });
-
-    const typeExportMap = buildTypeExportMap(canonicalizedTypeEntries);
+    const typeExportMap = buildTypeExportMap(publicTypeEntries);
     const sortedEntries = [...typeExportMap.values()].sort((left, right) => left.name.localeCompare(right.name));
+    const availableTypeNames = new Set(sortedEntries.map((entry) => entry.name));
 
     for (const entry of sortedEntries) {
-        if (dtoAliasNames.has(entry.name)) {
-            lines.push(`export type ${entry.name} = import("./api/dtos/index.js").${entry.name};`);
-            dtoAliasNames.delete(entry.name);
-            continue;
-        }
-
-        const relativeImportPath = `./${toPosixRelativePath(entry.filePath)}`;
-            const dtsImportPath = toRelativeDtsImportPath(rootDtsPath, entry.filePath);
-            lines.push(`export type ${entry.name} = import("${dtsImportPath}").${entry.name};`);
+        lines.push(...renderTypeEntryAsDts(entry, availableTypeNames));
     }
 
-    for (const alias of dtoAliases) {
-        if (!dtoAliasNames.has(alias.name)) {
-            continue;
-        }
-
-        lines.push(`export type ${alias.name} = import("./api/dtos/index.js").${alias.name};`);
-    }
-
-    lines.push("");
     return `${lines.join("\n")}\n`;
 }
 
@@ -725,6 +960,12 @@ for (const filePath of [rootIndexPath, ...dtoLeafFiles, ...businessLeafFiles, ..
 const dtoEntries = buildTypeExportMap(dtoLeafFiles.flatMap((filePath) => extractPublicTypeEntries(sourceByFilePath.get(filePath), filePath)));
 const dtoAliases = buildDtoAliases(dtoEntries);
 const businessAliases = buildBusinessAliases(businessLeafFiles, sourceByFilePath);
+const publicTypeEntries = [
+    ...dtoLeafFiles.flatMap((filePath) => extractPublicTypeEntries(sourceByFilePath.get(filePath), filePath)),
+    ...businessLeafFiles.flatMap((filePath) => extractPublicTypeEntries(sourceByFilePath.get(filePath), filePath)),
+    ...otherApiJsFiles.flatMap((filePath) => extractPublicTypeEntries(sourceByFilePath.get(filePath), filePath)),
+    ...uiLeafFiles.filter((filePath) => path.extname(filePath) === ".js").flatMap((filePath) => extractPublicTypeEntries(sourceByFilePath.get(filePath), filePath))
+];
 
 const generatedDtoIndexSource = buildDtoIndexSource(dtoAliases);
 const generatedBusinessIndexSource = buildBusinessIndexSource(businessAliases);
@@ -768,12 +1009,7 @@ const updatedRootIndexSource = replaceGeneratedBlock(rootIndexWithDtoAliases, bu
 await writeFile(rootIndexPath, updatedRootIndexSource);
 sourceByFilePath.set(rootIndexPath, updatedRootIndexSource);
 
-const allJsFilesByDirectory = new Map([
-    ["api", [...dtoLeafFiles, ...businessLeafFiles, ...otherApiJsFiles].sort()],
-    ["ui", uiLeafFiles.filter((filePath) => path.extname(filePath) === ".js").sort()]
-]);
-
-const generatedRootDts = buildRootDts(dtoAliases, sourceByFilePath, allJsFilesByDirectory);
+const generatedRootDts = buildRootDts(publicTypeEntries);
 await writeFile(rootDtsPath, generatedRootDts);
 
 console.log(`Updated ${toPosixRelativePath(dtoIndexPath)} with ${dtoAliases.length} generated DTO aliases.`);
