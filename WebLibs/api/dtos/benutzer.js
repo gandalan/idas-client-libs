@@ -9,7 +9,6 @@
  * @typedef {Object} BerechtigungDTO
  * @property {string} Code
  * @property {string} ErklaerungsText
- * @property {string} Level
  */
 
 /**

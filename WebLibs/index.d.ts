@@ -637,7 +637,6 @@ export type BerechnungResultDTO = {
 export type BerechtigungDTO = {
     Code: string;
     ErklaerungsText: string;
-    Level: string;
 };
 
 export type BestellungListItemDTO = BaseListItemDTO;

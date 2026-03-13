@@ -32,5 +32,5 @@ public enum Permission
 
 public interface IPermissions
 {
-    bool HasPermission(Permission permission, PermissionLevel minLevel);
+    bool HasPermission(Permission permission);
 }
