@@ -11,6 +11,8 @@ const rootDtsPath = path.join(rootDir, "index.d.ts");
 const dtoIndexPath = path.join(rootDir, "api", "dtos", "index.js");
 const businessIndexPath = path.join(rootDir, "api", "business", "index.js");
 const uiIndexPath = path.join(rootDir, "ui", "index.js");
+const neherApp3TypesJsPath = path.join(rootDir, "api", "neherApp3Types.js");
+const neherApp3TypesDtsPath = path.join(rootDir, "api", "neherApp3Types.d.ts");
 
 const dtoLeafDirectory = path.join(rootDir, "api", "dtos");
 const businessLeafDirectory = path.join(rootDir, "api", "business");
@@ -24,6 +26,193 @@ const businessRootMarkerStart = "// BEGIN GENERATED ROOT BUSINESS TYPEDEFS";
 const businessRootMarkerEnd = "// END GENERATED ROOT BUSINESS TYPEDEFS";
 
 const simpleImportTypePattern = /^import\((?:"|').+(?:"|')\)\.[A-Za-z0-9_$]+$/;
+
+const rawType = (js, ts = js) => ({ kind: "raw", js, ts });
+const refType = (name) => rawType(name);
+const importType = (importPath, name) => rawType(`import("${importPath}").${name}`);
+const arrayType = (elementType) => ({ kind: "array", elementType });
+const promiseType = (valueType) => ({ kind: "promise", valueType });
+const unionType = (...types) => ({ kind: "union", types });
+const intersectionType = (...types) => ({ kind: "intersection", types });
+const functionType = (params, returnType) => ({ kind: "function", params, returnType });
+const objectLiteralType = (properties) => ({ kind: "objectLiteral", properties });
+
+const stringType = refType("string");
+const booleanType = refType("boolean");
+const voidType = refType("void");
+const jsObjectType = rawType("Object", "object");
+const jsFunctionType = rawType("function", "Function");
+
+const neherApp3JsImports = [
+    { importPath: "./fluentApi.js", name: "FluentApi" },
+    { importPath: "./idasFluentApi.js", name: "IDASFluentApi" },
+    { importPath: "./fluentAuthManager.js", name: "FluentAuthManager" }
+];
+
+const neherApp3TypeDefinitions = [
+    {
+        kind: "alias",
+        name: "NeherApp3NotifyType",
+        type: unionType(rawType("0"), rawType("1"), rawType("2"))
+    },
+    {
+        kind: "object",
+        name: "ArtikelstammEintrag",
+        properties: [
+            { name: "KatalogArtikelGuid", type: stringType, optional: true },
+            { name: "KatalogNummer", type: stringType, optional: true },
+            { name: "Katalognummer", type: stringType, optional: true },
+            { name: "Nummer", type: stringType, optional: true }
+        ]
+    },
+    {
+        kind: "object",
+        name: "Variante",
+        properties: [
+            { name: "VarianteGuid", type: stringType, optional: true },
+            { name: "Name", type: stringType, optional: true },
+            { name: "Kuerzel", type: stringType, optional: true }
+        ]
+    },
+    {
+        kind: "object",
+        name: "Werteliste",
+        properties: [
+            { name: "WerteListeGuid", type: stringType, optional: true },
+            { name: "Name", type: stringType, optional: true }
+        ]
+    },
+    {
+        kind: "object",
+        name: "NeherApp3ArtikelstammCache",
+        properties: [
+            { name: "getArtikelStamm", type: functionType([], promiseType(arrayType(refType("ArtikelstammEintrag")))) },
+            { name: "getWarenGruppen", type: functionType([], promiseType(arrayType(jsObjectType))) },
+            {
+                name: "getArtikelByGuid",
+                type: functionType([{ name: "guid", type: stringType }], promiseType(unionType(refType("ArtikelstammEintrag"), rawType("undefined"))))
+            },
+            {
+                name: "getArtikelByKatalognummer",
+                type: functionType([{ name: "nummer", type: stringType }], promiseType(unionType(refType("ArtikelstammEintrag"), rawType("undefined"))))
+            }
+        ]
+    },
+    {
+        kind: "object",
+        name: "NeherApp3ErfassungCache",
+        properties: [
+            { name: "getVarianten", type: functionType([], promiseType(arrayType(refType("Variante")))) },
+            {
+                name: "getVariante",
+                type: functionType([{ name: "variantenNameOderKuerzel", type: stringType }], promiseType(unionType(refType("Variante"), rawType("undefined"))))
+            },
+            { name: "getWertelisten", type: functionType([], promiseType(arrayType(refType("Werteliste")))) },
+            {
+                name: "getWerteliste",
+                type: functionType([{ name: "name", type: stringType }], promiseType(unionType(refType("Werteliste"), rawType("undefined"))))
+            },
+            { name: "getScripts", type: functionType([], promiseType(arrayType(jsObjectType))) },
+            { name: "createUIMachine", type: functionType([{ name: "v", type: refType("Variante") }], voidType) }
+        ]
+    },
+    {
+        kind: "object",
+        name: "NeherApp3Props",
+        properties: [
+            { name: "api", type: importType("./fluentApi.js", "FluentApi") },
+            { name: "authManager", type: importType("./fluentAuthManager.js", "FluentAuthManager"), optional: true },
+            { name: "idas", type: importType("./idasFluentApi.js", "IDASFluentApi") },
+            { name: "mainCssPath", type: stringType, optional: true }
+        ]
+    },
+    {
+        kind: "object",
+        name: "NeherApp3MenuItem",
+        properties: [
+            { name: "id", type: stringType, optional: true, description: "Unique identifier for the menu item (auto-generated if not provided)" },
+            { name: "selected", type: booleanType, optional: true, description: "Indicates if the menu item is currently selected (managed by the menu system)" },
+            { name: "icon", type: stringType, optional: true, description: "URL to an icon" },
+            { name: "url", type: unionType(stringType, rawType("null")), optional: true, description: "Relative URL to use for routes" },
+            { name: "text", type: stringType, description: "Display text" },
+            { name: "parent", type: unionType(stringType, rawType("null")), optional: true, description: "Parent menu item (optional). If not set, the item will be added to the top level menu." },
+            { name: "hidden", type: booleanType, optional: true, description: "If true, the menu item will not be displayed" }
+        ]
+    },
+    {
+        kind: "alias",
+        name: "NeherApp3SetupContext",
+        type: intersectionType(
+            refType("NeherApp3Props"),
+            objectLiteralType([{ name: "neherapp3", type: refType("NeherApp3") }])
+        )
+    },
+    {
+        kind: "object",
+        name: "NeherApp3Module",
+        properties: [
+            { name: "moduleName", type: stringType },
+            {
+                name: "setup",
+                type: functionType([{ name: "context", type: refType("NeherApp3SetupContext") }], unionType(voidType, promiseType(voidType))),
+                optional: true
+            },
+            {
+                name: "mount",
+                type: functionType(
+                    [
+                        { name: "node", type: refType("HTMLElement") },
+                        { name: "props", type: refType("NeherApp3SetupContext") }
+                    ],
+                    unionType(voidType, jsFunctionType)
+                ),
+                optional: true,
+                description: "Must return an optional unmount function"
+            },
+            { name: "embedUrl", type: stringType, optional: true },
+            { name: "extraCSS", type: arrayType(stringType), optional: true },
+            { name: "useShadowDom", type: booleanType, optional: true, description: "If true, the app will be embedded in a shadow DOM. This is required for CSS isolation." }
+        ]
+    },
+    {
+        kind: "object",
+        name: "NeherApp3ApiCollection",
+        properties: [
+            { name: "idas", type: importType("./idasFluentApi.js", "IDASFluentApi"), optional: true },
+            { name: "hostingEnvironment", type: importType("./fluentApi.js", "FluentApi"), optional: true }
+        ]
+    },
+    {
+        kind: "object",
+        name: "NeherApp3CacheCollection",
+        properties: [
+            { name: "artikelstamm", type: refType("NeherApp3ArtikelstammCache") },
+            { name: "erfassung", type: refType("NeherApp3ErfassungCache") }
+        ]
+    },
+    {
+        kind: "object",
+        name: "NeherApp3",
+        properties: [
+            { name: "addMenuItem", type: functionType([{ name: "menuItem", type: refType("NeherApp3MenuItem") }], voidType) },
+            { name: "addApp", type: functionType([{ name: "appModule", type: unionType(refType("NeherApp3Module"), stringType) }], promiseType(voidType)) },
+            {
+                name: "notify",
+                type: functionType(
+                    [
+                        { name: "message", type: stringType },
+                        { name: "type", type: refType("NeherApp3NotifyType"), optional: true },
+                        { name: "cb", type: jsFunctionType, optional: true }
+                    ],
+                    voidType
+                ),
+                description: "Shows a notification. Type defaults to 0 (info). Callback is optional."
+            },
+            { name: "api", type: refType("NeherApp3ApiCollection") },
+            { name: "cache", type: refType("NeherApp3CacheCollection") }
+        ]
+    }
+];
 
 async function collectFiles(directoryPath, allowedExtensions) {
     const entries = await readdir(directoryPath, { withFileTypes: true });
@@ -54,8 +243,107 @@ function toRelativeImportPath(fromFilePath, targetFilePath) {
     return relativePath.startsWith(".") ? relativePath : `./${relativePath}`;
 }
 
+function toRelativeDtsImportPath(fromFilePath, targetFilePath) {
+    const importPath = toRelativeImportPath(fromFilePath, targetFilePath);
+
+    if (targetFilePath === path.join(rootDir, "api", "neherApp3Types.js")) {
+        return importPath.replace(/\.js$/, "");
+    }
+
+    return importPath;
+}
+
 function getJSDocBlocks(source) {
     return source.match(/\/\*\*[\s\S]*?\*\//g) ?? [];
+}
+
+function renderTypeExpression(typeExpression, format) {
+    switch (typeExpression.kind) {
+        case "raw":
+            return format === "js" ? typeExpression.js : typeExpression.ts;
+        case "array":
+            return `${renderTypeExpression(typeExpression.elementType, format)}[]`;
+        case "promise":
+            return `Promise<${renderTypeExpression(typeExpression.valueType, format)}>`;
+        case "union":
+            return typeExpression.types.map((type) => renderTypeExpression(type, format)).join(" | ");
+        case "intersection":
+            return typeExpression.types.map((type) => renderTypeExpression(type, format)).join(" & ");
+        case "function":
+            return `(${typeExpression.params.map((param) => `${param.name}${param.optional ? "?" : ""}: ${renderTypeExpression(param.type, format)}`).join(", ")}) => ${renderTypeExpression(typeExpression.returnType, format)}`;
+        case "objectLiteral":
+            return `{ ${typeExpression.properties.map((property) => `${property.name}${property.optional ? "?" : ""}: ${renderTypeExpression(property.type, format)}`).join("; ")} }`;
+        default:
+            throw new Error(`Unsupported type expression kind: ${typeExpression.kind}`);
+    }
+}
+
+function buildNeherApp3TypesJsSource() {
+    const lines = [
+        "/**",
+        " * Auto-generated NeherApp3 root type definitions.",
+        " * Do not modify manually - changes will be overwritten by scripts/generate-root-dto-typedefs.mjs",
+        " */",
+        ""
+    ];
+
+    for (const jsImport of neherApp3JsImports) {
+        lines.push(`/** @typedef {import("${jsImport.importPath}").${jsImport.name}} ${jsImport.name} */`);
+    }
+
+    lines.push("");
+
+    for (const definition of neherApp3TypeDefinitions) {
+        if (definition.kind === "alias") {
+            lines.push("/**");
+            lines.push(` * @typedef {${renderTypeExpression(definition.type, "js")}} ${definition.name}`);
+            lines.push(" */");
+            lines.push("");
+            continue;
+        }
+
+        lines.push("/**");
+        lines.push(` * @typedef {Object} ${definition.name}`);
+
+        for (const property of definition.properties) {
+            const propertyName = property.optional ? `[${property.name}]` : property.name;
+            const propertyLine = ` * @property {${renderTypeExpression(property.type, "js")}} ${propertyName}`;
+            lines.push(property.description ? `${propertyLine} - ${property.description}` : propertyLine);
+        }
+
+        lines.push(" */");
+        lines.push("");
+    }
+
+    lines.push("export {};");
+    return `${lines.join("\n")}\n`;
+}
+
+function buildNeherApp3TypesDtsSource() {
+    const lines = [
+        "// Auto-generated NeherApp3 root type definitions.",
+        "// Do not modify manually - changes will be overwritten by scripts/generate-root-dto-typedefs.mjs",
+        ""
+    ];
+
+    for (const definition of neherApp3TypeDefinitions) {
+        if (definition.kind === "alias") {
+            lines.push(`export type ${definition.name} = ${renderTypeExpression(definition.type, "ts")};`);
+            lines.push("");
+            continue;
+        }
+
+        lines.push(`export type ${definition.name} = {`);
+
+        for (const property of definition.properties) {
+            lines.push(`    ${property.name}${property.optional ? "?" : ""}: ${renderTypeExpression(property.type, "ts")};`);
+        }
+
+        lines.push("};");
+        lines.push("");
+    }
+
+    return `${lines.join("\n")}\n`;
 }
 
 function normalizeJSDocBlock(block) {
@@ -401,7 +689,8 @@ function buildRootDts(dtoAliases, sourceByFilePath, allJsFilesByDirectory) {
         }
 
         const relativeImportPath = `./${toPosixRelativePath(entry.filePath)}`;
-        lines.push(`export type ${entry.name} = import("${relativeImportPath}").${entry.name};`);
+            const dtsImportPath = toRelativeDtsImportPath(rootDtsPath, entry.filePath);
+            lines.push(`export type ${entry.name} = import("${dtsImportPath}").${entry.name};`);
     }
 
     for (const alias of dtoAliases) {
@@ -440,14 +729,19 @@ const businessAliases = buildBusinessAliases(businessLeafFiles, sourceByFilePath
 const generatedDtoIndexSource = buildDtoIndexSource(dtoAliases);
 const generatedBusinessIndexSource = buildBusinessIndexSource(businessAliases);
 const generatedUiIndexSource = buildUiIndexSource(uiLeafFiles, sourceByFilePath);
+const generatedNeherApp3TypesJsSource = buildNeherApp3TypesJsSource();
+const generatedNeherApp3TypesDtsSource = buildNeherApp3TypesDtsSource();
 
 await writeFile(dtoIndexPath, generatedDtoIndexSource);
 await writeFile(businessIndexPath, generatedBusinessIndexSource);
 await writeFile(uiIndexPath, generatedUiIndexSource);
+await writeFile(neherApp3TypesJsPath, generatedNeherApp3TypesJsSource);
+await writeFile(neherApp3TypesDtsPath, generatedNeherApp3TypesDtsSource);
 
 sourceByFilePath.set(dtoIndexPath, generatedDtoIndexSource);
 sourceByFilePath.set(businessIndexPath, generatedBusinessIndexSource);
 sourceByFilePath.set(uiIndexPath, generatedUiIndexSource);
+sourceByFilePath.set(neherApp3TypesJsPath, generatedNeherApp3TypesJsSource);
 
 const dtoRootBlock = buildRootAliasBlock(
     dtoRootMarkerStart,
@@ -485,5 +779,7 @@ await writeFile(rootDtsPath, generatedRootDts);
 console.log(`Updated ${toPosixRelativePath(dtoIndexPath)} with ${dtoAliases.length} generated DTO aliases.`);
 console.log(`Updated ${toPosixRelativePath(businessIndexPath)} with ${businessAliases.length} generated business API exports.`);
 console.log(`Updated ${toPosixRelativePath(uiIndexPath)} with ${uiLeafFiles.length} generated UI exports.`);
+console.log(`Updated ${toPosixRelativePath(neherApp3TypesJsPath)} generated NeherApp3 JSDoc type exports.`);
+console.log(`Updated ${toPosixRelativePath(neherApp3TypesDtsPath)} generated NeherApp3 declaration exports.`);
 console.log(`Updated ${toPosixRelativePath(rootIndexPath)} generated JSDoc alias blocks.`);
 console.log(`Wrote ${toPosixRelativePath(rootDtsPath)} with full package type exports.`);
