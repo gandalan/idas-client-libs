@@ -44,8 +44,6 @@ public class BelegDruckDTO
     public AdresseDruckDTO RechnungsstellerAdresse { get; set; }
     public string RechnungsstellerAdresseString { get; set; }
 
-    public 
-
     public ObservableCollection<BelegPositionDruckDTO> PositionsObjekte { get; set; } = [];
     public IList<BelegSaldoDruckDTO> Salden { get; set; } = [];
     public int CountValuePositionen { get; set; }
