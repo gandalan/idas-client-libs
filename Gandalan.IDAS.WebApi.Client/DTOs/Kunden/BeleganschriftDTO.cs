@@ -41,6 +41,11 @@ public class BeleganschriftDTO : IDTOWithApplicationSpecificProperties, IDTOWith
     public string Firmenname { get; set; }
 
     /// <summary>
+    /// Gibt an, ob es sich bei der hier ausgefertigten Adresse um die Anschrift eines Endkunden handelt. Wird zur Generierung der Adresstexte im DTO benötigt.
+    /// </summary>
+    public bool IstEndkunde { get; set; }
+
+    /// <summary>
     /// Zusätzliche Information zur Firma
     /// </summary>
     public string Zusatz { get; set; }
@@ -165,13 +170,25 @@ public class BeleganschriftDTO : IDTOWithApplicationSpecificProperties, IDTOWith
             sb.AppendLine(Anrede);
         }
 
+        var namensZeile = $"{Titel} {Vorname} {Nachname}".Trim();
+
+        // Ist die Anschrift eine Privatkundenadresse, kommt der Name vor einem evtl. eingetragenen vorhandenem Firmennamen
+        if (IstEndkunde && !string.IsNullOrEmpty(namensZeile))
+        {
+            sb.AppendLine(namensZeile);
+        }
+
         if (!string.IsNullOrEmpty(Firmenname))
         {
-            sb.AppendLine(Firmenname);
+            if (!namensZeile.Equals(Firmenname, StringComparison.OrdinalIgnoreCase))
+            {
+                sb.AppendLine(Firmenname);
+            }
         }
-        else if (!string.IsNullOrEmpty(Titel) || !string.IsNullOrEmpty(Vorname) || !string.IsNullOrEmpty(Nachname))
+
+        if (!IstEndkunde && !string.IsNullOrEmpty(namensZeile))
         {
-            sb.AppendLine($"{Titel} {Vorname} {Nachname}".Trim());
+            sb.AppendLine(namensZeile);
         }
 
         if (!string.IsNullOrEmpty(AdressZusatz1))
