@@ -6,12 +6,8 @@ using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client;
 
-public class MandantenWebRoutinen : WebRoutinenBase
+public class MandantenWebRoutinen(IWebApiConfig settings) : WebRoutinenBase(settings)
 {
-    public MandantenWebRoutinen(IWebApiConfig settings) : base(settings)
-    {
-    }
-
     public async Task MandantenAbgleichen(List<MandantDTO> list)
         => await Task.Run(() => list.ForEach(async m => await PutAsync("Mandanten", m)));
 
