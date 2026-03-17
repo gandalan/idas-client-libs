@@ -5,6 +5,7 @@ public enum SettingsCategory
     Sachbearbeitung,
     Materialbedarf,
     Produktion,
+    Mandanteneinstellungen,
     Programmeinstellungen,
     Kundenmodul
 }
