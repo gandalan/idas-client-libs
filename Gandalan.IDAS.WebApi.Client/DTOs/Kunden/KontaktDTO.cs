@@ -299,6 +299,7 @@ public class KontaktDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditio
             rechnungsAdresse.Nachname = rechnungsanschrift.Nachname;
             rechnungsAdresse.Vorname = rechnungsanschrift.Vorname;
             rechnungsAdresse.Firmenname = rechnungsanschrift.Firmenname;
+            rechnungsAdresse.IstEndkunde = rechnungsanschrift.IstEndkunde;
             rechnungsAdresse.Hausnummer = rechnungsanschrift.Hausnummer;
             rechnungsAdresse.Strasse = rechnungsanschrift.Strasse;
             rechnungsAdresse.Titel = rechnungsanschrift.Titel;
@@ -317,6 +318,7 @@ public class KontaktDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditio
             rechnungsAdresse.Nachname = Nachname;
             rechnungsAdresse.Vorname = Vorname;
             rechnungsAdresse.Firmenname = Firmenname;
+            rechnungsAdresse.IstEndkunde = IstEndkunde;
             rechnungsAdresse.Hausnummer = Hausnummer;
             rechnungsAdresse.Strasse = Strasse;
             rechnungsAdresse.Titel = Titel;
