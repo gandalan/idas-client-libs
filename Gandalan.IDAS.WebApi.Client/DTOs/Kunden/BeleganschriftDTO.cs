@@ -172,7 +172,7 @@ public class BeleganschriftDTO : IDTOWithApplicationSpecificProperties, IDTOWith
 
         var namensZeile = $"{Titel} {Vorname} {Nachname}".Trim();
 
-        // Ist die Anschrift eine Privatkundenadresse, kommt der Name vor einem evtl. eingetragenen vorhandenem Firmennamen
+        // Ist die Anschrift eine Privatkundenadresse, kommt der Name vor einem ggf. vorhandenen/eingetragenen Firmennamen
         if (IstEndkunde && !string.IsNullOrEmpty(namensZeile))
         {
             sb.AppendLine(namensZeile);
