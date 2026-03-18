@@ -33,6 +33,11 @@ public class ZusatzanschriftDTO : IDTOWithApplicationSpecificProperties, IDTOWit
     /// Für juristische Personen/Körperschaften: exakte Firmierung mit Zusatz der Gesellschaftsform, z.B. "Fensterbau Maier GmbH &amp; Co. KG"
     /// </summary>
     public string Firmenname { get; set; }
+    
+    /// <summary>
+    /// Gibt an, ob die Adresse einem Endkunden gehört. Dadurch wird die Generierung der Adresstexte im DTO beeinflusst.
+    /// </summary>
+    public bool IstEndkunde { get; set; }
 
     /// <summary>
     /// Adresszusatz, z.B. "c/o" (belegbezogen)
