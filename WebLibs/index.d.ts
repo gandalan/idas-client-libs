@@ -1,12 +1,6 @@
 export * from "./index.js";
 export { IDASFactory } from "./api/IDAS.js";
 export { RESTClient } from "./api/RESTClient.js";
-export { initIDAS } from "./api/authUtils.js";
-export { createApi, fluentApi } from "./api/fluentApi.js";
-export { createIDASApi, idasFluentApi } from "./api/idasFluentApi.js";
-export { createAuthManager, fluentIdasAuthManager } from "./api/fluentAuthManager.js";
-export { fetchEnvConfig } from "./api/fluentEnvUtils.js";
-export { restClient } from "./api/fluentRestClient.js";
 export function createApi(): FluentApi;
 export function fluentApi(url: string, authManager: FluentAuthManager | null, serviceName: string): FluentApi;
 export function createIDASApi(): IDASFluentApi;
