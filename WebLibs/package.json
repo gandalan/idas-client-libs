@@ -15,7 +15,7 @@
   "typings": "index.d.ts",
   "type": "module",
   "scripts": {
-    "generate:root-dto-typedefs": "node ./scripts/generate-root-dto-typedefs.mjs",
+    "generate:dts": "node ./scripts/generate-dts.mjs",
     "lint": "eslint .",
     "lint:prod": "eslint .",
     "lint:fix": "eslint . --fix"

@@ -1961,6 +1961,7 @@ export type NeherApp3 = {
     notify: (message: string, type?: NeherApp3NotifyType, cb?: Function) => void;
     api: NeherApp3ApiCollection;
     cache: NeherApp3CacheCollection;
+    isEmbedded: boolean;
 };
 
 export type NeherApp3ApiCollection = {

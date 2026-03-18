@@ -102,6 +102,7 @@
  * @property {(message: string, type?: NeherApp3NotifyType, cb?: function) => void} notify - Shows a notification. Type defaults to 0 (info). Callback is optional.
  * @property {NeherApp3ApiCollection} api
  * @property {NeherApp3CacheCollection} cache
+ * @property {boolean} isEmbedded - Indicates if the app is embedded inside i3
  */
 
 export {};
