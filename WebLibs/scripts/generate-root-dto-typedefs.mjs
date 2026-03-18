@@ -18,12 +18,21 @@ const dtoLeafDirectory = path.join(rootDir, "api", "dtos");
 const businessLeafDirectory = path.join(rootDir, "api", "business");
 const uiLeafDirectory = path.join(rootDir, "ui");
 
-const sourceDirectories = ["api", "ui"];
-
 const dtoRootMarkerStart = "// BEGIN GENERATED ROOT DTO TYPEDEFS";
 const dtoRootMarkerEnd = "// END GENERATED ROOT DTO TYPEDEFS";
 const businessRootMarkerStart = "// BEGIN GENERATED ROOT BUSINESS TYPEDEFS";
 const businessRootMarkerEnd = "// END GENERATED ROOT BUSINESS TYPEDEFS";
+
+const rootValueExportStatements = [
+    "export { IDASFactory } from \"./api/IDAS.js\";",
+    "export { RESTClient } from \"./api/RESTClient.js\";",
+    "export { initIDAS } from \"./api/authUtils.js\";",
+    "export { createApi, fluentApi } from \"./api/fluentApi.js\";",
+    "export { createIDASApi, idasFluentApi } from \"./api/idasFluentApi.js\";",
+    "export { createAuthManager, fluentIdasAuthManager } from \"./api/fluentAuthManager.js\";",
+    "export { fetchEnvConfig } from \"./api/fluentEnvUtils.js\";",
+    "export { restClient } from \"./api/fluentRestClient.js\";"
+];
 
 const simpleImportTypePattern = /^import\((?:"|').+(?:"|')\)\.[A-Za-z0-9_$]+$/;
 const returnTypeOfCreateApiPattern = /^ReturnType<\s*typeof\s+(create[A-Za-z0-9_$]+Api)\s*>$/;
@@ -242,16 +251,6 @@ function toPosixRelativePath(filePath) {
 function toRelativeImportPath(fromFilePath, targetFilePath) {
     const relativePath = path.relative(path.dirname(fromFilePath), targetFilePath).replace(/\\/g, "/");
     return relativePath.startsWith(".") ? relativePath : `./${relativePath}`;
-}
-
-function toRelativeDtsImportPath(fromFilePath, targetFilePath) {
-    const importPath = toRelativeImportPath(fromFilePath, targetFilePath);
-
-    if (targetFilePath === path.join(rootDir, "api", "neherApp3Types.js")) {
-        return importPath.replace(/\.js$/, "");
-    }
-
-    return importPath;
 }
 
 function getJSDocBlocks(source) {
@@ -1501,6 +1500,7 @@ function replaceGeneratedBlock(source, startMarker, endMarker, generatedBlock, t
 function buildRootDts(publicTypeEntries) {
     const lines = [
         "export * from \"./index.js\";",
+        ...rootValueExportStatements,
         ""
     ];
 

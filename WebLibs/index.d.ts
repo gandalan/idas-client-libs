@@ -1,4 +1,12 @@
 export * from "./index.js";
+export { IDASFactory } from "./api/IDAS.js";
+export { RESTClient } from "./api/RESTClient.js";
+export { initIDAS } from "./api/authUtils.js";
+export { createApi, fluentApi } from "./api/fluentApi.js";
+export { createIDASApi, idasFluentApi } from "./api/idasFluentApi.js";
+export { createAuthManager, fluentIdasAuthManager } from "./api/fluentAuthManager.js";
+export { fetchEnvConfig } from "./api/fluentEnvUtils.js";
+export { restClient } from "./api/fluentRestClient.js";
 
 export type AblageApi = {
     get: (guid: string) => Promise<AblageDTO>;
