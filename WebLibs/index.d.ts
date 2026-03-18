@@ -7,6 +7,15 @@ export { createIDASApi, idasFluentApi } from "./api/idasFluentApi.js";
 export { createAuthManager, fluentIdasAuthManager } from "./api/fluentAuthManager.js";
 export { fetchEnvConfig } from "./api/fluentEnvUtils.js";
 export { restClient } from "./api/fluentRestClient.js";
+export function createApi(): FluentApi;
+export function fluentApi(url: string, authManager: FluentAuthManager | null, serviceName: string): FluentApi;
+export function createIDASApi(): IDASFluentApi;
+export function idasFluentApi(url: string, authManager: FluentAuthManager, serviceName: string): IDASFluentApi;
+export function createAuthManager(): FluentAuthManager;
+export function fluentIdasAuthManager(appToken: string, authBaseUrl: string): FluentAuthManager;
+export function fetchEnvConfig(envConfig?: string): Promise<EnvironmentConfig>;
+export function restClient(): FluentRESTClient;
+export function initIDAS(appToken: string): Promise<Settings | null>;
 
 export type AblageApi = {
     get: (guid: string) => Promise<AblageDTO>;

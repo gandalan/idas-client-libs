@@ -34,6 +34,18 @@ const rootValueExportStatements = [
     "export { restClient } from \"./api/fluentRestClient.js\";"
 ];
 
+const rootFunctionDeclarationStatements = [
+    "export function createApi(): FluentApi;",
+    "export function fluentApi(url: string, authManager: FluentAuthManager | null, serviceName: string): FluentApi;",
+    "export function createIDASApi(): IDASFluentApi;",
+    "export function idasFluentApi(url: string, authManager: FluentAuthManager, serviceName: string): IDASFluentApi;",
+    "export function createAuthManager(): FluentAuthManager;",
+    "export function fluentIdasAuthManager(appToken: string, authBaseUrl: string): FluentAuthManager;",
+    "export function fetchEnvConfig(envConfig?: string): Promise<EnvironmentConfig>;",
+    "export function restClient(): FluentRESTClient;",
+    "export function initIDAS(appToken: string): Promise<Settings | null>;"
+];
+
 const simpleImportTypePattern = /^import\((?:"|').+(?:"|')\)\.[A-Za-z0-9_$]+$/;
 const returnTypeOfCreateApiPattern = /^ReturnType<\s*typeof\s+(create[A-Za-z0-9_$]+Api)\s*>$/;
 
@@ -1501,6 +1513,7 @@ function buildRootDts(publicTypeEntries) {
     const lines = [
         "export * from \"./index.js\";",
         ...rootValueExportStatements,
+        ...rootFunctionDeclarationStatements,
         ""
     ];
 
