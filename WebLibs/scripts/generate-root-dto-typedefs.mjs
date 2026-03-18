@@ -26,6 +26,7 @@ const businessRootMarkerStart = "// BEGIN GENERATED ROOT BUSINESS TYPEDEFS";
 const businessRootMarkerEnd = "// END GENERATED ROOT BUSINESS TYPEDEFS";
 
 const simpleImportTypePattern = /^import\((?:"|').+(?:"|')\)\.[A-Za-z0-9_$]+$/;
+const returnTypeOfCreateApiPattern = /^ReturnType<\s*typeof\s+(create[A-Za-z0-9_$]+Api)\s*>$/;
 
 const rawType = (js, ts = js) => ({ kind: "raw", js, ts });
 const refType = (name) => rawType(name);
@@ -356,6 +357,569 @@ function normalizeJSDocBlock(block) {
         .trim();
 }
 
+function skipQuotedString(source, startIndex, quoteCharacter) {
+    let index = startIndex + 1;
+
+    while (index < source.length) {
+        const character = source[index];
+
+        if (character === "\\") {
+            index += 2;
+            continue;
+        }
+
+        if (character === quoteCharacter) {
+            return index + 1;
+        }
+
+        index += 1;
+    }
+
+    return source.length;
+}
+
+function skipBlockComment(source, startIndex) {
+    const endIndex = source.indexOf("*/", startIndex + 2);
+    return endIndex === -1 ? source.length : endIndex + 2;
+}
+
+function skipLineComment(source, startIndex) {
+    const endIndex = source.indexOf("\n", startIndex + 2);
+    return endIndex === -1 ? source.length : endIndex + 1;
+}
+
+function findMatchingDelimiter(source, startIndex, openCharacter, closeCharacter) {
+    let depth = 1;
+
+    for (let index = startIndex + 1; index < source.length; index += 1) {
+        const character = source[index];
+        const nextCharacter = source[index + 1];
+
+        if (character === "\"" || character === "'") {
+            index = skipQuotedString(source, index, character) - 1;
+            continue;
+        }
+
+        if (character === "`") {
+            index = skipTemplateLiteral(source, index) - 1;
+            continue;
+        }
+
+        if (character === "/" && nextCharacter === "*") {
+            index = skipBlockComment(source, index) - 1;
+            continue;
+        }
+
+        if (character === "/" && nextCharacter === "/") {
+            index = skipLineComment(source, index) - 1;
+            continue;
+        }
+
+        if (character === openCharacter) {
+            depth += 1;
+            continue;
+        }
+
+        if (character === closeCharacter) {
+            depth -= 1;
+
+            if (depth === 0) {
+                return index;
+            }
+        }
+    }
+
+    return -1;
+}
+
+function skipTemplateLiteral(source, startIndex) {
+    let index = startIndex + 1;
+
+    while (index < source.length) {
+        const character = source[index];
+
+        if (character === "\\") {
+            index += 2;
+            continue;
+        }
+
+        if (character === "`") {
+            return index + 1;
+        }
+
+        if (character === "$" && source[index + 1] === "{") {
+            const closingIndex = findMatchingDelimiter(source, index + 1, "{", "}");
+
+            if (closingIndex === -1) {
+                return source.length;
+            }
+
+            index = closingIndex + 1;
+            continue;
+        }
+
+        index += 1;
+    }
+
+    return source.length;
+}
+
+function skipWhitespace(value, startIndex) {
+    let index = startIndex;
+
+    while (index < value.length && /\s/u.test(value[index])) {
+        index += 1;
+    }
+
+    return index;
+}
+
+function skipWhitespaceAndComments(source, startIndex) {
+    let index = startIndex;
+
+    while (index < source.length) {
+        index = skipWhitespace(source, index);
+
+        if (source.startsWith("/**", index) || source.startsWith("/*", index)) {
+            index = skipBlockComment(source, index);
+            continue;
+        }
+
+        if (source.startsWith("//", index)) {
+            index = skipLineComment(source, index);
+            continue;
+        }
+
+        break;
+    }
+
+    return index;
+}
+
+function isIdentifierStart(character) {
+    return /[A-Za-z_$]/u.test(character);
+}
+
+function isIdentifierPart(character) {
+    return /[A-Za-z0-9_$]/u.test(character);
+}
+
+function buildFunctionTypeExpressionFromJSDoc(block) {
+    const normalizedBlock = normalizeJSDocBlock(block);
+    const params = extractParamEntries(normalizedBlock);
+    const returns = extractReturnsEntry(normalizedBlock)?.typeExpression ?? "void";
+
+    return `(${params.map((param) => `${param.name}${param.optional ? "?" : ""}: ${param.typeExpression}`).join(", ")}) => ${returns}`;
+}
+
+function buildObjectLiteralTypeExpression(properties) {
+    return `{ ${properties.map((property) => `${property.name}${property.optional ? "?" : ""}: ${property.typeExpression}`).join("; ")} }`;
+}
+
+function parseFunctionParameterTypes(jsDocBlock) {
+    if (!jsDocBlock) {
+        return new Map();
+    }
+
+    const normalizedBlock = normalizeJSDocBlock(jsDocBlock);
+    const params = extractParamEntries(normalizedBlock);
+
+    return new Map(params.map((param) => [param.name, param.typeExpression]));
+}
+
+function readLeadingJSDoc(source, startIndex) {
+    let index = startIndex;
+    let jsDocBlock = null;
+
+    while (index < source.length) {
+        index = skipWhitespace(source, index);
+
+        if (source.startsWith("/**", index)) {
+            const endIndex = skipBlockComment(source, index);
+            jsDocBlock = source.slice(index, endIndex);
+            index = endIndex;
+            continue;
+        }
+
+        if (source.startsWith("/*", index)) {
+            index = skipBlockComment(source, index);
+            continue;
+        }
+
+        if (source.startsWith("//", index)) {
+            index = skipLineComment(source, index);
+            continue;
+        }
+
+        break;
+    }
+
+    return {
+        jsDocBlock,
+        nextIndex: index
+    };
+}
+
+function findExpressionEnd(source, startIndex) {
+    let braceDepth = 0;
+    let bracketDepth = 0;
+    let parenDepth = 0;
+
+    for (let index = startIndex; index < source.length; index += 1) {
+        const character = source[index];
+        const nextCharacter = source[index + 1];
+
+        if (character === "\"" || character === "'") {
+            index = skipQuotedString(source, index, character) - 1;
+            continue;
+        }
+
+        if (character === "`") {
+            index = skipTemplateLiteral(source, index) - 1;
+            continue;
+        }
+
+        if (character === "/" && nextCharacter === "*") {
+            index = skipBlockComment(source, index) - 1;
+            continue;
+        }
+
+        if (character === "/" && nextCharacter === "/") {
+            index = skipLineComment(source, index) - 1;
+            continue;
+        }
+
+        if (character === "{") {
+            braceDepth += 1;
+            continue;
+        }
+
+        if (character === "}") {
+            if (braceDepth === 0 && bracketDepth === 0 && parenDepth === 0) {
+                return index;
+            }
+
+            braceDepth = Math.max(0, braceDepth - 1);
+            continue;
+        }
+
+        if (character === "[") {
+            bracketDepth += 1;
+            continue;
+        }
+
+        if (character === "]") {
+            bracketDepth = Math.max(0, bracketDepth - 1);
+            continue;
+        }
+
+        if (character === "(") {
+            parenDepth += 1;
+            continue;
+        }
+
+        if (character === ")") {
+            parenDepth = Math.max(0, parenDepth - 1);
+            continue;
+        }
+
+        if (character === "," && braceDepth === 0 && bracketDepth === 0 && parenDepth === 0) {
+            return index;
+        }
+    }
+
+    return source.length;
+}
+
+function inferTypeExpressionFromInitializer(initializerSource, scopeTypeMap) {
+    const trimmedInitializer = initializerSource.trim();
+
+    if (!trimmedInitializer) {
+        return "any";
+    }
+
+    if (scopeTypeMap.has(trimmedInitializer)) {
+        return scopeTypeMap.get(trimmedInitializer);
+    }
+
+    if (trimmedInitializer === "null") {
+        return "null";
+    }
+
+    if (trimmedInitializer === "true" || trimmedInitializer === "false") {
+        return "boolean";
+    }
+
+    if (/^[-+]?\d+(?:\.\d+)?$/u.test(trimmedInitializer)) {
+        return "number";
+    }
+
+    if ((trimmedInitializer.startsWith("\"") && trimmedInitializer.endsWith("\"")) || (trimmedInitializer.startsWith("'") && trimmedInitializer.endsWith("'"))) {
+        return "string";
+    }
+
+    return "any";
+}
+
+function parseObjectLiteralProperties(objectSource, scopeTypeMap) {
+    if (!objectSource.startsWith("{")) {
+        throw new Error("Expected object literal source to start with '{'.");
+    }
+
+    const properties = [];
+    let index = 1;
+
+    while (index < objectSource.length) {
+        const { jsDocBlock, nextIndex } = readLeadingJSDoc(objectSource, index);
+        index = nextIndex;
+
+        if (objectSource[index] === "}") {
+            break;
+        }
+
+        let propertyName = null;
+
+        if (objectSource.startsWith("async", index) && !isIdentifierPart(objectSource[index + 5] ?? "")) {
+            index = skipWhitespace(objectSource, index + 5);
+        }
+
+        if (objectSource[index] === "\"" || objectSource[index] === "'") {
+            const quoteCharacter = objectSource[index];
+            const endIndex = skipQuotedString(objectSource, index, quoteCharacter);
+            propertyName = objectSource.slice(index + 1, endIndex - 1);
+            index = endIndex;
+        } else if (isIdentifierStart(objectSource[index] ?? "")) {
+            const nameStart = index;
+            index += 1;
+
+            while (index < objectSource.length && isIdentifierPart(objectSource[index])) {
+                index += 1;
+            }
+
+            propertyName = objectSource.slice(nameStart, index);
+        }
+
+        if (!propertyName) {
+            index += 1;
+            continue;
+        }
+
+        index = skipWhitespaceAndComments(objectSource, index);
+
+        let typeExpression = "any";
+        let optional = false;
+
+        if (objectSource[index] === ":") {
+            index = skipWhitespaceAndComments(objectSource, index + 1);
+
+            if (objectSource[index] === "{") {
+                const objectEndIndex = findMatchingDelimiter(objectSource, index, "{", "}");
+
+                if (objectEndIndex === -1) {
+                    throw new Error(`Could not find end of nested object literal for property ${propertyName}`);
+                }
+
+                const nestedProperties = parseObjectLiteralProperties(objectSource.slice(index, objectEndIndex + 1), scopeTypeMap);
+                typeExpression = buildObjectLiteralTypeExpression(nestedProperties);
+                index = objectEndIndex + 1;
+            } else {
+                const expressionEndIndex = findExpressionEnd(objectSource, index);
+                const initializerSource = objectSource.slice(index, expressionEndIndex);
+                typeExpression = jsDocBlock ? buildFunctionTypeExpressionFromJSDoc(jsDocBlock) : inferTypeExpressionFromInitializer(initializerSource, scopeTypeMap);
+                index = expressionEndIndex;
+            }
+        } else if (objectSource[index] === "(") {
+            const paramsEndIndex = findMatchingDelimiter(objectSource, index, "(", ")");
+
+            if (paramsEndIndex === -1) {
+                throw new Error(`Could not find end of parameter list for property ${propertyName}`);
+            }
+
+            index = skipWhitespaceAndComments(objectSource, paramsEndIndex + 1);
+
+            if (objectSource[index] === "{") {
+                const methodEndIndex = findMatchingDelimiter(objectSource, index, "{", "}");
+
+                if (methodEndIndex === -1) {
+                    throw new Error(`Could not find end of method body for property ${propertyName}`);
+                }
+
+                index = methodEndIndex + 1;
+            }
+
+            typeExpression = jsDocBlock ? buildFunctionTypeExpressionFromJSDoc(jsDocBlock) : "(...args: any[]) => any";
+        } else {
+            typeExpression = scopeTypeMap.get(propertyName) ?? "any";
+        }
+
+        properties.push({
+            name: propertyName,
+            optional,
+            typeExpression
+        });
+
+        index = skipWhitespaceAndComments(objectSource, index);
+
+        if (objectSource[index] === ",") {
+            index += 1;
+        }
+    }
+
+    return properties;
+}
+
+function getNearestLeadingJSDoc(source, startIndex) {
+    let cursor = startIndex;
+
+    while (cursor > 0 && /\s/u.test(source[cursor - 1])) {
+        cursor -= 1;
+    }
+
+    if (!source.startsWith("*/", cursor - 2)) {
+        return null;
+    }
+
+    const blockStartIndex = source.lastIndexOf("/**", cursor - 2);
+    return blockStartIndex === -1 ? null : source.slice(blockStartIndex, cursor);
+}
+
+function extractCreateFunctionInfo(source, createFunctionName) {
+    const functionPattern = new RegExp(`export\\s+(?:async\\s+)?function\\s+${createFunctionName}\\s*\\(`);
+    const functionMatch = functionPattern.exec(source);
+
+    if (functionMatch) {
+        const functionIndex = functionMatch.index;
+        const functionBodyStartIndex = source.indexOf("{", functionIndex);
+        const functionBodyEndIndex = functionBodyStartIndex === -1 ? -1 : findMatchingDelimiter(source, functionBodyStartIndex, "{", "}");
+
+        if (functionBodyStartIndex === -1 || functionBodyEndIndex === -1) {
+            return null;
+        }
+
+        return {
+            jsDocBlock: getNearestLeadingJSDoc(source, functionIndex),
+            bodySource: source.slice(functionBodyStartIndex + 1, functionBodyEndIndex)
+        };
+    }
+
+    const constPattern = new RegExp(`export\\s+const\\s+${createFunctionName}\\s*=\\s*(?:async\\s*)?\\([^)]*\\)\\s*=>\\s*\\{`);
+    const constMatch = constPattern.exec(source);
+
+    if (!constMatch) {
+        return null;
+    }
+
+    const arrowBodyStartIndex = source.indexOf("{", constMatch.index);
+    const arrowBodyEndIndex = arrowBodyStartIndex === -1 ? -1 : findMatchingDelimiter(source, arrowBodyStartIndex, "{", "}");
+
+    if (arrowBodyStartIndex === -1 || arrowBodyEndIndex === -1) {
+        return null;
+    }
+
+    return {
+        jsDocBlock: getNearestLeadingJSDoc(source, constMatch.index),
+        bodySource: source.slice(arrowBodyStartIndex + 1, arrowBodyEndIndex)
+    };
+}
+
+function extractTopLevelReturnedObjectSource(functionBodySource, createFunctionName) {
+    let braceDepth = 0;
+    let bracketDepth = 0;
+    let parenDepth = 0;
+
+    for (let index = 0; index < functionBodySource.length; index += 1) {
+        const character = functionBodySource[index];
+        const nextCharacter = functionBodySource[index + 1];
+
+        if (character === "\"" || character === "'") {
+            index = skipQuotedString(functionBodySource, index, character) - 1;
+            continue;
+        }
+
+        if (character === "`") {
+            index = skipTemplateLiteral(functionBodySource, index) - 1;
+            continue;
+        }
+
+        if (character === "/" && nextCharacter === "*") {
+            index = skipBlockComment(functionBodySource, index) - 1;
+            continue;
+        }
+
+        if (character === "/" && nextCharacter === "/") {
+            index = skipLineComment(functionBodySource, index) - 1;
+            continue;
+        }
+
+        if (character === "{") {
+            braceDepth += 1;
+            continue;
+        }
+
+        if (character === "}") {
+            braceDepth = Math.max(0, braceDepth - 1);
+            continue;
+        }
+
+        if (character === "[") {
+            bracketDepth += 1;
+            continue;
+        }
+
+        if (character === "]") {
+            bracketDepth = Math.max(0, bracketDepth - 1);
+            continue;
+        }
+
+        if (character === "(") {
+            parenDepth += 1;
+            continue;
+        }
+
+        if (character === ")") {
+            parenDepth = Math.max(0, parenDepth - 1);
+            continue;
+        }
+
+        if (braceDepth === 0 && bracketDepth === 0 && parenDepth === 0 && functionBodySource.startsWith("return", index) && !isIdentifierPart(functionBodySource[index - 1] ?? "") && !isIdentifierPart(functionBodySource[index + 6] ?? "")) {
+            const objectStartIndex = skipWhitespaceAndComments(functionBodySource, index + 6);
+
+            if (functionBodySource[objectStartIndex] !== "{") {
+                continue;
+            }
+
+            const objectEndIndex = findMatchingDelimiter(functionBodySource, objectStartIndex, "{", "}");
+
+            if (objectEndIndex === -1) {
+                throw new Error(`Could not find end of returned object literal for ${createFunctionName}`);
+            }
+
+            return functionBodySource.slice(objectStartIndex, objectEndIndex + 1);
+        }
+    }
+
+    throw new Error(`Could not find top-level returned object literal for ${createFunctionName}`);
+}
+
+function inferReturnTypeObjectEntry(source, filePath, typeName, createFunctionName) {
+    const functionInfo = extractCreateFunctionInfo(source, createFunctionName);
+
+    if (!functionInfo) {
+        return null;
+    }
+
+    const returnedObjectSource = extractTopLevelReturnedObjectSource(functionInfo.bodySource, createFunctionName);
+    const scopeTypeMap = parseFunctionParameterTypes(functionInfo.jsDocBlock);
+    const properties = parseObjectLiteralProperties(returnedObjectSource, scopeTypeMap);
+
+    return {
+        kind: "object",
+        name: typeName,
+        properties,
+        filePath
+    };
+}
+
 function parseBracketedType(rest) {
     if (!rest.startsWith("{")) {
         return null;
@@ -578,6 +1142,17 @@ function extractPublicTypeEntries(source, filePath) {
         const typedefEntry = extractTypedefEntry(block);
 
         if (typedefEntry) {
+            const inferredCreateApiName = typedefEntry.typeExpression.match(returnTypeOfCreateApiPattern)?.[1] ?? null;
+
+            if (inferredCreateApiName) {
+                const inferredObjectEntry = inferReturnTypeObjectEntry(source, filePath, typedefEntry.name, inferredCreateApiName);
+
+                if (inferredObjectEntry) {
+                    entries.push(inferredObjectEntry);
+                    continue;
+                }
+            }
+
             if (!isSimpleImportAlias(typedefEntry.typeExpression)) {
                 entries.push({ ...typedefEntry, filePath });
             }
