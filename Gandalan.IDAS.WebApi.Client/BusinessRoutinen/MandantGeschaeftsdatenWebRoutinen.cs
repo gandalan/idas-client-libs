@@ -10,14 +10,14 @@ namespace Gandalan.IDAS.WebApi.Client;
 public class MandantGeschaeftsdatenWebRoutinen(IWebApiConfig settings) : WebRoutinenBase(settings)
 {
     public async Task<List<MandantGeschaeftsdatenDTO>> LadeMandantGeschaeftsdatenAsync()
-    => await GetAsync<List<MandantGeschaeftsdatenDTO>>("Mandanten/Geschaeftsdaten");
+    => await GetAsync<List<MandantGeschaeftsdatenDTO>>("MandantenGeschaeftsdaten");
 
     public async Task<MandantGeschaeftsdatenDTO> MandantGeschaeftsdatenAnlegenAsync(MandantGeschaeftsdatenDTO geschaeftsdaten)
-        => await PostAsync<MandantGeschaeftsdatenDTO>("Mandanten/Geschaeftsdaten", geschaeftsdaten);
+        => await PostAsync<MandantGeschaeftsdatenDTO>("MandantenGeschaeftsdaten", geschaeftsdaten);
 
     public async Task<MandantGeschaeftsdatenDTO> SpeichereMandantGeschaeftsdatenAsync(MandantGeschaeftsdatenDTO geschaeftsdaten)
-        => await PutAsync<MandantGeschaeftsdatenDTO>($"Mandanten/Geschaeftsdaten/{geschaeftsdaten.MandantGeschaeftsdatenGuid}", geschaeftsdaten);
+        => await PutAsync<MandantGeschaeftsdatenDTO>($"MandantenGeschaeftsdaten/{geschaeftsdaten.MandantGeschaeftsdatenGuid}", geschaeftsdaten);
 
     public async Task LoescheMandantGeschaeftsdatenAsync(Guid guid)
-        => await DeleteAsync($"Mandanten/Geschaeftsdaten/{guid}");
+        => await DeleteAsync($"MandantenGeschaeftsdaten/{guid}");
 }
