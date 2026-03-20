@@ -12,11 +12,8 @@ public class MandantGeschaeftsdatenWebRoutinen(IWebApiConfig settings) : WebRout
     public async Task<List<MandantGeschaeftsdatenDTO>> LadeMandantGeschaeftsdatenAsync()
     => await GetAsync<List<MandantGeschaeftsdatenDTO>>("MandantenGeschaeftsdaten");
 
-    public async Task<MandantGeschaeftsdatenDTO> MandantGeschaeftsdatenAnlegenAsync(MandantGeschaeftsdatenDTO geschaeftsdaten)
-        => await PostAsync<MandantGeschaeftsdatenDTO>("MandantenGeschaeftsdaten", geschaeftsdaten);
-
-    public async Task<MandantGeschaeftsdatenDTO> SpeichereMandantGeschaeftsdatenAsync(MandantGeschaeftsdatenDTO geschaeftsdaten)
-        => await PutAsync<MandantGeschaeftsdatenDTO>($"MandantenGeschaeftsdaten/{geschaeftsdaten.MandantGeschaeftsdatenGuid}", geschaeftsdaten);
+    public async Task<MandantGeschaeftsdatenDTO> UpsertMandantGeschaeftsdatenAsync(MandantGeschaeftsdatenDTO geschaeftsdaten)
+        => await PostAsync<MandantGeschaeftsdatenDTO>($"MandantenGeschaeftsdaten", geschaeftsdaten);
 
     public async Task LoescheMandantGeschaeftsdatenAsync(Guid guid)
         => await DeleteAsync($"MandantenGeschaeftsdaten/{guid}");

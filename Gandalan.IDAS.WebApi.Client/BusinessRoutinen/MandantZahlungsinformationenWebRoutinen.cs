@@ -10,11 +10,10 @@ namespace Gandalan.IDAS.WebApi.Client;
 public class MandantZahlungsinformationenWebRoutinen(IWebApiConfig settings) : WebRoutinenBase(settings)
 {
     public async Task<List<MandantZahlungsinformationDTO>> LadeMandantZahlungsinformationenAsync()
-        => await GetAsync<List<MandantZahlungsinformationDTO>>("Mandanten/Zahlungsinformationen");
-    public async Task<MandantZahlungsinformationDTO> MandantZahlungsinformationenAnlegenAsync(MandantZahlungsinformationDTO zahlungsinformationen)
-        => await PostAsync<MandantZahlungsinformationDTO>("Mandanten/Zahlungsinformationen", zahlungsinformationen);
-    public async Task<MandantZahlungsinformationDTO> SpeichereMandantZahlungsinformationenAsync(MandantZahlungsinformationDTO zahlungsinformationen)
-        => await PutAsync<MandantZahlungsinformationDTO>($"Mandanten/Zahlungsinformationen/{zahlungsinformationen.MandantZahlungsinformationGuid}", zahlungsinformationen);
+        => await GetAsync<List<MandantZahlungsinformationDTO>>("MandantZahlungsinformationen");
+    public async Task<MandantZahlungsinformationDTO> UpsertMandantZahlungsinformationenAsync(MandantZahlungsinformationDTO zahlungsinformationen)
+        => await PostAsync<MandantZahlungsinformationDTO>("MandantZahlungsinformationen", zahlungsinformationen);
+
     public async Task LoescheMandantZahlungsinformationenAsync(Guid guid)
-        => await DeleteAsync($"Mandanten/Zahlungsinformationen/{guid}");
+        => await DeleteAsync($"MandantZahlungsinformationen/{guid}");
 }
