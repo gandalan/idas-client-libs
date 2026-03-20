@@ -133,4 +133,5 @@ public class ReportExecuteSettings
     }
 
     public bool ShowSerienName { get; set; }
+    public bool IsEtikettReport { get; set; }
 }
