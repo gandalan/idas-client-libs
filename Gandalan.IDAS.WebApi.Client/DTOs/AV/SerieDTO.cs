@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class SerieDTO
+public class SerieDTO : IDTOWithApplicationSpecificProperties, IDTOWithAdditionalProperties
 {
     /// <summary>
     /// Eindeutige ID der Serie
@@ -85,6 +86,8 @@ public class SerieDTO
     /// Änderungsdatum des Datensatzes
     /// </summary>
     public DateTime ChangedDate { get; set; }
+    public Dictionary<string, PropertyValueCollection> ApplicationSpecificProperties { get; set; }
+    public Dictionary<string, PropertyValueCollection> AdditionalProperties { get; set; }
 
     public void AddDruckInfo(string dokumentArt, string benutzerName)
     {
