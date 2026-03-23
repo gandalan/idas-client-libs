@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Client.DTOs.Benutzer;
 using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client;
@@ -34,4 +35,17 @@ public class MandantenAdminWebRoutinen : WebRoutinenBase
 
     public async Task AddAdminRechteAsync(string email)
         => await PostAsync($"MandantenAdmin/SetAdminRechte?email={Uri.EscapeDataString(email)}", null);
+
+    public async Task<BenutzerDiagnoseDatenDTO> GetDiagnoseDataAsync(string benutzerMailAdresse)
+        => await GetAsync<BenutzerDiagnoseDatenDTO>($"MandantenAdmin/GetBenutzerDiagnoseDaten?emailadresse={Uri.EscapeDataString(benutzerMailAdresse)}");
+
+    public async Task ResetPasswortResetCounterAsync(string email)
+        => await PostAsync($"MandantenAdmin/ResetPasswortResetCounter?email={Uri.EscapeDataString(email)}", null);
+
+    public async Task ResetBenutzerMandantCacheAsync(string email)
+        => await PostAsync($"MandantenAdmin/ResetBenutzerMandantCache?email={Uri.EscapeDataString(email)}", null);
+
+    public async Task<string> SetNeuesPasswortAsync(PasswortAendernDTO dto)
+        => await PostAsync<string>($"MandantenAdmin/SetNeuesPasswort", dto);
+
 }
