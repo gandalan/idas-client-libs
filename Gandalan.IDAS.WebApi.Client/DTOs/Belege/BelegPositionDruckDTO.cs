@@ -41,7 +41,7 @@ public class BelegPositionDruckDTO
 
     public BelegPositionDruckDTO(BelegPositionDTO positionDto, bool preiseAnzeigen = true)
     {
-        if (_positionDto == null)
+        if (positionDto == null)
         {
             return;
         }
@@ -50,7 +50,7 @@ public class BelegPositionDruckDTO
 
         InitialisiereGrunddaten();
         BestimmeMengenEinheit();
-        IntegrieereEinbauort();
+        IntegriereEinbauort();
         InitialisiereProduktionsdaten();
         InitialisierePreise(preiseAnzeigen);
     }
@@ -100,7 +100,7 @@ public class BelegPositionDruckDTO
         }
     }
 
-    private void IntegrieereEinbauort()
+    private void IntegriereEinbauort()
     {
         var einbauortPraefix = ErstelleEinbauortPraefix();
         Text = einbauortPraefix + _positionDto.Text;

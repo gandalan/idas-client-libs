@@ -66,7 +66,7 @@ public class BelegDruckDTO
 
     public BelegDruckDTO(VorgangDTO vorgangDto, BelegDTO belegDto, MandantDTO mandantDto = null, bool hasVariantPriceCaptureInfo = false)
     {
-        if (_belegDto == null || _vorgangDto == null)
+        if (belegDto == null || vorgangDto == null)
         {
             return;
         }
