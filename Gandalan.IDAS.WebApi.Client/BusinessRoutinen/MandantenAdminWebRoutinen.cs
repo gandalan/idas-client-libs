@@ -48,4 +48,7 @@ public class MandantenAdminWebRoutinen : WebRoutinenBase
     public async Task<string> SetNeuesPasswortAsync(PasswortAendernDTO dto)
         => await PostAsync<string>($"MandantenAdmin/SetNeuesPasswort", dto);
 
+    public async Task<UserAuthTokenDTO> GetUserAuthTokenAsync(string email)
+        => await GetAsync<UserAuthTokenDTO>($"MandantenAdmin/GetUserAuthToken?emailadresse={Uri.EscapeDataString(email)}", null);
+
 }
