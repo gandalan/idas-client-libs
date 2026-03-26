@@ -1,6 +1,7 @@
 /**
  * @typedef {import('../fluentApi.js').FluentApi} FluentApi
  * @typedef {import('../dtos/index.js').WarenGruppeDTO} WarenGruppeDTO
+ * @typedef {import('../dtos/index.js').WarenGruppeListDTO} WarenGruppeListDTO
  * @typedef {import('../dtos/index.js').KatalogArtikelDTO} KatalogArtikelDTO
  * @typedef {import('../dtos/index.js').ProduktGruppeDTO} ProduktGruppeDTO
  * @typedef {import('../dtos/index.js').ProduktFamilieDTO} ProduktFamilieDTO
@@ -75,12 +76,13 @@ export function createArtikelApi(fluentApi) {
       // WarenGruppeWebRoutinen
       /**
        * Get all commodity groups
+       * @param {Date} [changedSince] - Filter by change date
+       * @param {boolean} [includeArtikel=true] - Whether to include full article data
        * @returns {Promise<WarenGruppeDTO[]>}
        */
-      getAllWarenGruppen: (changedSince) => {
-         const url = changedSince
-            ? `WarenGruppe?changedSince=${changedSince.toISOString()}`
-            : "WarenGruppe";
+      getAllWarenGruppen: (changedSince, includeArtikel = true) => {
+         let url = `WarenGruppe?includeArtikel=${includeArtikel}`;
+         if (changedSince) url += `&changedSince=${changedSince.toISOString()}`;
          return fluentApi.get(url);
       },
 
