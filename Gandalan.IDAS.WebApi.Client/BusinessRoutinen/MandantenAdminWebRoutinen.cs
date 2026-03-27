@@ -51,4 +51,8 @@ public class MandantenAdminWebRoutinen : WebRoutinenBase
     public async Task<UserAuthTokenDTO> GetUserAuthTokenAsync(string email)
         => await GetAsync<UserAuthTokenDTO>($"MandantenAdmin/GetUserAuthToken?emailadresse={Uri.EscapeDataString(email)}", null);
 
+    public async Task<string> MandantDeaktivierenAsync(string email)
+        => await PostAsync<string>($"MandantenAdmin/MandantDeaktivieren?emailadresse={Uri.EscapeDataString(email)}", null);
+    
+
 }
