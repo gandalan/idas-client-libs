@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -21,7 +22,7 @@ public class RESTRoutinen : IDisposable
 {
     private readonly HttpClientConfig _config;
     private readonly HttpClient _client;
-    private readonly Dictionary<string, HttpClient> _versionClients = [];
+    private readonly ConcurrentDictionary<string, HttpClient> _versionClients = new();
 
     #region Constructors
 
@@ -77,10 +78,9 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
-            ValidateAndApplyNewApiHeader(url);
-
             var client = GetClientByVersion(version);
-            response = await client.GetAsync(url);
+            var request = BuildRequestMessage(HttpMethod.Get, url);
+            response = await client.SendAsync(request);
             contentAsString = await response.Content?.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
             return contentAsString;
@@ -98,10 +98,9 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
-            ValidateAndApplyNewApiHeader(url);
-
             var client = GetClientByVersion(version);
-            response = await client.GetAsync(url);
+            var request = BuildRequestMessage(HttpMethod.Get, url);
+            response = await client.SendAsync(request);
             contentAsString = await response.Content?.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
             return await response.Content?.ReadAsByteArrayAsync();
@@ -134,11 +133,11 @@ public class RESTRoutinen : IDisposable
 
         try
         {
-            ValidateAndApplyNewApiHeader(url);
-
             var json = JsonConvert.SerializeObject(data, settings);
             var client = GetClientByVersion(version);
-            response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+            var request = BuildRequestMessage(HttpMethod.Post, url);
+            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            response = await client.SendAsync(request);
             contentAsString = await response.Content?.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
             return contentAsString;
@@ -156,10 +155,10 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
-            ValidateAndApplyNewApiHeader(url);
-
             var client = GetClientByVersion(version);
-            response = await client.PostAsync(url, new ByteArrayContent(data));
+            var request = BuildRequestMessage(HttpMethod.Post, url);
+            request.Content = new ByteArrayContent(data);
+            response = await client.SendAsync(request);
             contentAsString = await response.Content?.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
             return await response.Content?.ReadAsByteArrayAsync();
@@ -177,10 +176,10 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
-            ValidateAndApplyNewApiHeader(url);
-
             var client = GetClientByVersion(version);
-            response = await client.PostAsync(url, data);
+            var request = BuildRequestMessage(HttpMethod.Post, url);
+            request.Content = data;
+            response = await client.SendAsync(request);
             contentAsString = await response.Content?.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
             return await response.Content?.ReadAsByteArrayAsync();
@@ -212,11 +211,11 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
-            ValidateAndApplyNewApiHeader(url);
-
             var json = JsonConvert.SerializeObject(data, settings);
             var client = GetClientByVersion(version);
-            response = await client.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+            var request = BuildRequestMessage(HttpMethod.Put, url);
+            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            response = await client.SendAsync(request);
             contentAsString = await response.Content?.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
             return contentAsString;
@@ -234,10 +233,10 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
-            ValidateAndApplyNewApiHeader(url);
-
             var client = GetClientByVersion(version);
-            response = await client.PutAsync(url, new ByteArrayContent(data));
+            var request = BuildRequestMessage(HttpMethod.Put, url);
+            request.Content = new ByteArrayContent(data);
+            response = await client.SendAsync(request);
             contentAsString = await response.Content?.ReadAsStringAsync();
             return await response.Content?.ReadAsByteArrayAsync();
         }
@@ -254,10 +253,10 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
-            ValidateAndApplyNewApiHeader(url);
-
             var client = GetClientByVersion(version);
-            response = await client.PutAsync(url, data);
+            var request = BuildRequestMessage(HttpMethod.Put, url);
+            request.Content = data;
+            response = await client.SendAsync(request);
             contentAsString = await response.Content?.ReadAsStringAsync();
             return await response.Content?.ReadAsByteArrayAsync();
         }
@@ -280,10 +279,9 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
-            ValidateAndApplyNewApiHeader(url);
-
             var client = GetClientByVersion(version);
-            response = await client.DeleteAsync(url);
+            var request = BuildRequestMessage(HttpMethod.Delete, url);
+            response = await client.SendAsync(request);
             contentAsString = await response.Content?.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
         }
@@ -300,15 +298,9 @@ public class RESTRoutinen : IDisposable
         HttpResponseMessage response = null;
         try
         {
-            ValidateAndApplyNewApiHeader(url);
-
             var client = GetClientByVersion(version);
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Delete,
-                RequestUri = new Uri(client.BaseAddress, url),
-                Content = new StringContent(JsonConvert.SerializeObject(data, settings), Encoding.UTF8, "application/json")
-            };
+            var request = BuildRequestMessage(HttpMethod.Delete, url);
+            request.Content = new StringContent(JsonConvert.SerializeObject(data, settings), Encoding.UTF8, "application/json");
 
             response = await client.SendAsync(request);
             contentAsString = await response.Content?.ReadAsStringAsync();
@@ -351,72 +343,43 @@ public class RESTRoutinen : IDisposable
             return _client;
         }
 
-        if (!_versionClients.TryGetValue(version, out var versionClient))
+        return _versionClients.GetOrAdd(version, v =>
         {
             var config = (HttpClientConfig)_config.Clone();
-            config.AdditionalHeaders.Add("api-version", version);
-
-            _versionClients.Add(version, HttpClientFactory.GetInstance(config));
-            return _versionClients[version];
-        }
-
-        return versionClient;
+            config.AdditionalHeaders.Add("api-version", v);
+            return HttpClientFactory.GetInstance(config);
+        });
     }
 
     /// <summary>
-    /// Adds a header to the default request headers of the HTTP client.
+    /// Builds an <see cref="HttpRequestMessage"/> and applies the X-Gateway-Cluster header
+    /// per-request without mutating the shared <see cref="HttpClient.DefaultRequestHeaders"/>.
     /// </summary>
-    /// <param name="headerName">The name of the header</param>
-    /// <param name="headerValue">The value of the header</param>
-    public void AddHeader(string headerName, string headerValue)
+    private HttpRequestMessage BuildRequestMessage(HttpMethod method, string url)
     {
-        if (!_client.DefaultRequestHeaders.Contains(headerName))
-        {
-            _client.DefaultRequestHeaders.Add(headerName, headerValue);
-        }
+        var request = new HttpRequestMessage(method, url);
+        var clusterHeaderValue = ResolveGatewayClusterHeader(url);
+        if (clusterHeaderValue != null)
+            request.Headers.TryAddWithoutValidation("X-Gateway-Cluster", clusterHeaderValue);
+        return request;
     }
 
     /// <summary>
-    /// Removes the specified HTTP header from the default request headers collection.
+    /// Determines the X-Gateway-Cluster header value for the given URL without mutating any shared state.
+    /// Returns "idas" if the URL matches a new-API opt-in endpoint, otherwise null.
     /// </summary>
-    /// <remarks>If the specified header does not exist in the collection, no action is taken.</remarks>
-    /// <param name="headerName">The name of the HTTP header to remove. The comparison is case-insensitive.</param>
-    public void RemoveHeader(string headerName)
+    private string ResolveGatewayClusterHeader(string relativeUri)
     {
-        _client.DefaultRequestHeaders.Remove(headerName);
-    }
-
-    /// <summary>
-    /// Validates whether the specified relative URI should opt in to the new API and applies the appropriate API header
-    /// to the HTTP client request.
-    /// </summary>
-    /// <remarks>If the configuration does not specify any opt-in endpoints, the method ensures the
-    /// 'X-Gateway-Cluster' header is removed. If the relative URI matches an opt-in endpoint, the header is set to
-    /// indicate use of the new API. This method should be called before sending a request to ensure the correct API
-    /// header is applied.</remarks>
-    /// <param name="relativeUri">The relative URI of the request to evaluate for new API opt-in. Must not be null or empty.</param>
-    private void ValidateAndApplyNewApiHeader(string relativeUri)
-    {
-        var config = _client.BaseAddress != null
-            ? _config
-            : null;
-
+        var config = _client.BaseAddress != null ? _config : null;
         if (config?.NewApiOptInUrls == null || config.NewApiOptInUrls.Length == 0)
-        {
-            RemoveHeader("X-Gateway-Cluster");
-            return;
-        }
+            return null;
 
         var fullUri = new Uri(_client.BaseAddress, relativeUri);
         var uriPath = fullUri.AbsolutePath;
 
-        var shouldUseNewApi = config.NewApiOptInUrls.Any(endpoint =>
-            IsPathMatchingEndpoint(uriPath, endpoint));
-
-        if (shouldUseNewApi)
-            AddHeader("X-Gateway-Cluster", "idas");
-        else
-            RemoveHeader("X-Gateway-Cluster");
+        return config.NewApiOptInUrls.Any(endpoint => IsPathMatchingEndpoint(uriPath, endpoint))
+            ? "idas"
+            : null;
     }
 
     /// <summary>
