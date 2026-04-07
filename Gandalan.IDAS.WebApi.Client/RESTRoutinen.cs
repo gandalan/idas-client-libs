@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -90,42 +88,18 @@ public class RESTRoutinen : IDisposable
 
     public async Task<string> GetAsync(string url, string version = null)
     {
-        string contentAsString = null;
-        HttpResponseMessage response = null;
-        try
-        {
-            var client = GetClientByVersion(version);
-            var request = BuildRequestMessage(HttpMethod.Get, url);
-            response = await client.SendAsync(request);
-            contentAsString = await response.Content?.ReadAsStringAsync();
-            response.EnsureSuccessStatusCode();
-            return contentAsString;
-        }
-        catch (Exception ex)
-        {
-            AddInfoToException(ex, url, response, contentAsString);
-            throw;
-        }
+        var client = GetClientByVersion(version);
+        var request = BuildRequestMessage(HttpMethod.Get, url);
+        var response = await client.SendAsync(request);
+        return await response.Content.ReadAsStringAsync();
     }
 
     public async Task<byte[]> GetDataAsync(string url, string version = null)
     {
-        string contentAsString = null;
-        HttpResponseMessage response = null;
-        try
-        {
-            var client = GetClientByVersion(version);
-            var request = BuildRequestMessage(HttpMethod.Get, url);
-            response = await client.SendAsync(request);
-            contentAsString = await response.Content?.ReadAsStringAsync();
-            response.EnsureSuccessStatusCode();
-            return await response.Content?.ReadAsByteArrayAsync();
-        }
-        catch (Exception ex)
-        {
-            AddInfoToException(ex, url, response, contentAsString);
-            throw;
-        }
+        var client = GetClientByVersion(version);
+        var request = BuildRequestMessage(HttpMethod.Get, url);
+        var response = await client.SendAsync(request);
+        return await response.Content.ReadAsByteArrayAsync();
     }
 
     /// <summary>
@@ -144,67 +118,30 @@ public class RESTRoutinen : IDisposable
 
     public async Task<string> PostAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
     {
-        string contentAsString = null;
-        HttpResponseMessage response = null;
-
-        try
-        {
-            var json = JsonConvert.SerializeObject(data, settings);
-            var client = GetClientByVersion(version);
-            var request = BuildRequestMessage(HttpMethod.Post, url);
-            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            response = await client.SendAsync(request);
-            contentAsString = await response.Content?.ReadAsStringAsync();
-            response.EnsureSuccessStatusCode();
-            return contentAsString;
-        }
-        catch (Exception ex)
-        {
-            AddInfoToException(ex, url, response, contentAsString);
-            throw;
-        }
+        var json = JsonConvert.SerializeObject(data, settings);
+        var client = GetClientByVersion(version);
+        var request = BuildRequestMessage(HttpMethod.Post, url);
+        request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await client.SendAsync(request);
+        return await response.Content.ReadAsStringAsync();
     }
 
     public async Task<byte[]> PostDataAsync(string url, byte[] data, string version = null)
     {
-        string contentAsString = null;
-        HttpResponseMessage response = null;
-        try
-        {
-            var client = GetClientByVersion(version);
-            var request = BuildRequestMessage(HttpMethod.Post, url);
-            request.Content = new ByteArrayContent(data);
-            response = await client.SendAsync(request);
-            contentAsString = await response.Content?.ReadAsStringAsync();
-            response.EnsureSuccessStatusCode();
-            return await response.Content?.ReadAsByteArrayAsync();
-        }
-        catch (Exception ex)
-        {
-            AddInfoToException(ex, url, response, contentAsString);
-            throw;
-        }
+        var client = GetClientByVersion(version);
+        var request = BuildRequestMessage(HttpMethod.Post, url);
+        request.Content = new ByteArrayContent(data);
+        var response = await client.SendAsync(request);
+        return await response.Content.ReadAsByteArrayAsync();
     }
 
     public async Task<byte[]> PostDataAsync(string url, HttpContent data, string version = null)
     {
-        string contentAsString = null;
-        HttpResponseMessage response = null;
-        try
-        {
-            var client = GetClientByVersion(version);
-            var request = BuildRequestMessage(HttpMethod.Post, url);
-            request.Content = data;
-            response = await client.SendAsync(request);
-            contentAsString = await response.Content?.ReadAsStringAsync();
-            response.EnsureSuccessStatusCode();
-            return await response.Content?.ReadAsByteArrayAsync();
-        }
-        catch (Exception ex)
-        {
-            AddInfoToException(ex, url, response, contentAsString);
-            throw;
-        }
+        var client = GetClientByVersion(version);
+        var request = BuildRequestMessage(HttpMethod.Post, url);
+        request.Content = data;
+        var response = await client.SendAsync(request);
+        return await response.Content.ReadAsByteArrayAsync();
     }
 
     /// <summary>
@@ -223,64 +160,30 @@ public class RESTRoutinen : IDisposable
 
     public async Task<string> PutAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
     {
-        string contentAsString = null;
-        HttpResponseMessage response = null;
-        try
-        {
-            var json = JsonConvert.SerializeObject(data, settings);
-            var client = GetClientByVersion(version);
-            var request = BuildRequestMessage(HttpMethod.Put, url);
-            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            response = await client.SendAsync(request);
-            contentAsString = await response.Content?.ReadAsStringAsync();
-            response.EnsureSuccessStatusCode();
-            return contentAsString;
-        }
-        catch (Exception ex)
-        {
-            AddInfoToException(ex, url, response, contentAsString);
-            throw;
-        }
+        var json = JsonConvert.SerializeObject(data, settings);
+        var client = GetClientByVersion(version);
+        var request = BuildRequestMessage(HttpMethod.Put, url);
+        request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await client.SendAsync(request);
+        return await response.Content.ReadAsStringAsync();
     }
 
     public async Task<byte[]> PutDataAsync(string url, byte[] data, string version = null)
     {
-        string contentAsString = null;
-        HttpResponseMessage response = null;
-        try
-        {
-            var client = GetClientByVersion(version);
-            var request = BuildRequestMessage(HttpMethod.Put, url);
-            request.Content = new ByteArrayContent(data);
-            response = await client.SendAsync(request);
-            contentAsString = await response.Content?.ReadAsStringAsync();
-            return await response.Content?.ReadAsByteArrayAsync();
-        }
-        catch (Exception ex)
-        {
-            AddInfoToException(ex, url, response, contentAsString);
-            throw;
-        }
+        var client = GetClientByVersion(version);
+        var request = BuildRequestMessage(HttpMethod.Put, url);
+        request.Content = new ByteArrayContent(data);
+        var response = await client.SendAsync(request);
+        return await response.Content.ReadAsByteArrayAsync();
     }
 
     public async Task<byte[]> PutDataAsync(string url, HttpContent data, string version = null)
     {
-        string contentAsString = null;
-        HttpResponseMessage response = null;
-        try
-        {
-            var client = GetClientByVersion(version);
-            var request = BuildRequestMessage(HttpMethod.Put, url);
-            request.Content = data;
-            response = await client.SendAsync(request);
-            contentAsString = await response.Content?.ReadAsStringAsync();
-            return await response.Content?.ReadAsByteArrayAsync();
-        }
-        catch (Exception ex)
-        {
-            AddInfoToException(ex, url, response, contentAsString);
-            throw;
-        }
+        var client = GetClientByVersion(version);
+        var request = BuildRequestMessage(HttpMethod.Put, url);
+        request.Content = data;
+        var response = await client.SendAsync(request);
+        return await response.Content.ReadAsByteArrayAsync();
     }
 
     /// <summary>
@@ -291,43 +194,18 @@ public class RESTRoutinen : IDisposable
     /// <returns>Antwort des Servers als String</returns>
     public async Task DeleteAsync(string url, string version = null)
     {
-        string contentAsString = null;
-        HttpResponseMessage response = null;
-        try
-        {
-            var client = GetClientByVersion(version);
-            var request = BuildRequestMessage(HttpMethod.Delete, url);
-            response = await client.SendAsync(request);
-            contentAsString = await response.Content?.ReadAsStringAsync();
-            response.EnsureSuccessStatusCode();
-        }
-        catch (Exception ex)
-        {
-            AddInfoToException(ex, url, response, contentAsString);
-            throw;
-        }
+        var client = GetClientByVersion(version);
+        var request = BuildRequestMessage(HttpMethod.Delete, url);
+        await client.SendAsync(request);
     }
 
     public async Task<string> DeleteAsync(string url, object data, JsonSerializerSettings settings = null, string version = null)
     {
-        string contentAsString = null;
-        HttpResponseMessage response = null;
-        try
-        {
-            var client = GetClientByVersion(version);
-            var request = BuildRequestMessage(HttpMethod.Delete, url);
-            request.Content = new StringContent(JsonConvert.SerializeObject(data, settings), Encoding.UTF8, "application/json");
-
-            response = await client.SendAsync(request);
-            contentAsString = await response.Content?.ReadAsStringAsync();
-            response.EnsureSuccessStatusCode();
-            return await response.Content?.ReadAsStringAsync();
-        }
-        catch (Exception ex)
-        {
-            AddInfoToException(ex, url, response, contentAsString);
-            throw;
-        }
+        var client = GetClientByVersion(version);
+        var request = BuildRequestMessage(HttpMethod.Delete, url);
+        request.Content = new StringContent(JsonConvert.SerializeObject(data, settings), Encoding.UTF8, "application/json");
+        var response = await client.SendAsync(request);
+        return await response.Content.ReadAsStringAsync();
     }
 
     public async Task<T> DeleteAsync<T>(string url, object data, JsonSerializerSettings settings = null, string version = null)
@@ -336,17 +214,6 @@ public class RESTRoutinen : IDisposable
     }
 
     #endregion
-
-    private void AddInfoToException(Exception ex, string url, HttpResponseMessage response = null, string responseContent = null, [CallerMemberName] string sender = null)
-    {
-        ex.Data.Add("URL", new Uri(_client.BaseAddress, url).ToString());
-        ex.Data.Add("CallMethod", sender);
-        ex.Data.Add("StatusCode", response?.StatusCode ?? HttpStatusCode.InternalServerError);
-        if (!string.IsNullOrWhiteSpace(responseContent))
-        {
-            ex.Data.Add("Response", responseContent);
-        }
-    }
 
     public void Dispose()
     {
@@ -369,7 +236,7 @@ public class RESTRoutinen : IDisposable
 
     /// <summary>
     /// Builds an <see cref="HttpRequestMessage"/> and applies per-request headers
-    /// (auth, X-Gateway-Cluster) without mutating the shared <see cref="HttpClient.DefaultRequestHeaders"/>.
+    /// (auth) without mutating the shared <see cref="HttpClient.DefaultRequestHeaders"/>.
     /// </summary>
     private HttpRequestMessage BuildRequestMessage(HttpMethod method, string url)
     {
@@ -382,58 +249,6 @@ public class RESTRoutinen : IDisposable
                 request.Headers.TryAddWithoutValidation(kvp.Key, kvp.Value);
         }
 
-        var clusterHeaderValue = ResolveGatewayClusterHeader(url);
-        if (clusterHeaderValue != null)
-            request.Headers.TryAddWithoutValidation("X-Gateway-Cluster", clusterHeaderValue);
         return request;
     }
-
-    /// <summary>
-    /// Determines the X-Gateway-Cluster header value for the given URL without mutating any shared state.
-    /// Returns "idas" if the URL matches a new-API opt-in endpoint, otherwise null.
-    /// </summary>
-    private string ResolveGatewayClusterHeader(string relativeUri)
-    {
-        var config = _client.BaseAddress != null ? _config : null;
-        if (config?.NewApiOptInUrls == null || config.NewApiOptInUrls.Length == 0)
-            return null;
-
-        var fullUri = new Uri(_client.BaseAddress, relativeUri);
-        var uriPath = fullUri.AbsolutePath;
-
-        return config.NewApiOptInUrls.Any(endpoint => IsPathMatchingEndpoint(uriPath, endpoint))
-            ? "idas"
-            : null;
-    }
-
-    /// <summary>
-    /// Determines whether the specified URI path matches the given configured endpoint, using a case-insensitive comparison and
-    /// ensuring a valid path boundary.
-    /// </summary>
-    /// <param name="uriPath">The URI path to evaluate against the endpoint. This value is compared to the start of the endpoint string.</param>
-    /// <param name="endpoint">The endpoint to match at the start of the URI path. Trailing slashes are ignored. Cannot be null.</param>
-    /// <returns>true if the URI path starts with the endpoint and the match occurs at a valid path boundary; otherwise, false.</returns>
-    private static bool IsPathMatchingEndpoint(string uriPath, string endpoint)
-    {
-        if (endpoint == null) return false;
-
-        var normalizedEndpoint = endpoint.TrimEnd('/');
-
-        return uriPath.StartsWith(normalizedEndpoint, StringComparison.OrdinalIgnoreCase)
-            && HasValidPathBoundary(uriPath, normalizedEndpoint.Length);
-    }
-
-    /// <summary>
-    /// Determines whether the specified endpoint length is at a valid boundary within the given URI path.
-    /// Configured endpoint paths should only match complete segments of the URI path:
-    /// We want to hit /api/Login if it's configured not /api/LoginJwt
-    /// </summary>
-    /// <param name="uriPath">The URI path to evaluate. Cannot be null.</param>
-    /// <param name="endpointLength">The position within the URI path to check for a valid boundary. Must be greater than or equal to 0.</param>
-    /// <returns>true if the endpoint length is at the end of the URI path or is immediately followed by a '/' or '?'; otherwise,
-    /// false.</returns>
-    private static bool HasValidPathBoundary(string uriPath, int endpointLength)
-        => endpointLength >= uriPath.Length
-            || uriPath[endpointLength] == '/'
-            || uriPath[endpointLength] == '?';
 }

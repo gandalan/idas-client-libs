@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 
+using Gandalan.IDAS.WebApi.Client.Handlers;
+
 namespace Gandalan.IDAS.WebApi.Client;
 
 public class HttpClientConfig : ICloneable
@@ -84,6 +86,20 @@ public class HttpClientConfig : ICloneable
             }
         }
 
+        // Compare NewApiOptInUrls
+        if (NewApiOptInUrls == null != (other.NewApiOptInUrls == null))
+            return false;
+        if (NewApiOptInUrls != null)
+        {
+            if (NewApiOptInUrls.Length != other.NewApiOptInUrls.Length)
+                return false;
+            for (int i = 0; i < NewApiOptInUrls.Length; i++)
+            {
+                if (!string.Equals(NewApiOptInUrls[i], other.NewApiOptInUrls[i], StringComparison.Ordinal))
+                    return false;
+            }
+        }
+
         return true;
     }
 
@@ -102,6 +118,11 @@ public class HttpClientConfig : ICloneable
         foreach (var header in AdditionalHeaders)
         {
             hash ^= header.Key.GetHashCode() ^ header.Value.GetHashCode();
+        }
+        if (NewApiOptInUrls != null)
+        {
+            foreach (var url in NewApiOptInUrls)
+                hash ^= url?.GetHashCode() ?? 0;
         }
         return hash;
     }
@@ -143,14 +164,18 @@ public class HttpClientFactory
     /// </summary>
     private static HttpClient createWebClient(HttpClientConfig config)
     {
-        var handler = new HttpClientHandler
+        // Build the DelegatingHandler pipeline:
+        // ErrorEnrichmentHandler → GatewayClusterHandler → HttpClientHandler
+        HttpMessageHandler pipeline = new HttpClientHandler
         {
             AutomaticDecompression = config.UseCompression ? DecompressionMethods.GZip | DecompressionMethods.Deflate : DecompressionMethods.None,
             Credentials = config.Credentials,
             Proxy = config.Proxy
         };
+        pipeline = new GatewayClusterHandler(config.NewApiOptInUrls) { InnerHandler = pipeline };
+        pipeline = new ErrorEnrichmentHandler { InnerHandler = pipeline };
 
-        var client = new HttpClient(handler);
+        var client = new HttpClient(pipeline);
         client.BaseAddress = new Uri(config.BaseUrl);
         client.DefaultRequestHeaders.Add("Accept-Charset", "utf-8");
         client.DefaultRequestHeaders.Add("Accept", "application/json");

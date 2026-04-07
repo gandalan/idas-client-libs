@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net10.0;net8.0;net48</TargetFrameworks>
@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <NoWarn>$(NoWarn);CS1591;</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;NU1900;</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -29,7 +29,7 @@
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416</WarningsAsErrors>
-    <NoWarn>CS0067;CS1572;CS1573;CS1591;</NoWarn>
+    <NoWarn>CS0067;CS1572;CS1573;CS1591;NU1900;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

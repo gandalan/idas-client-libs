@@ -751,10 +751,10 @@ public class WebRoutinenBase
             OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
         }
 
-        var foundUrlInData = false;
+        var foundUrlInData = exception.Data.Contains("URL");
 
-        // Check if we already have data from RESTRoutinen.AddInfoToException()
-        if (!exception.Data.Contains("URL"))
+        // Check if ErrorEnrichmentHandler already enriched an inner exception with URL/StatusCode/Response
+        if (!foundUrlInData)
         {
             var innerException = exception.InnerException;
             while (innerException != null)
@@ -762,22 +762,24 @@ public class WebRoutinenBase
                 if (innerException.Data.Contains("URL"))
                 {
                     foundUrlInData = true;
+                    break;
                 }
 
                 innerException = innerException.InnerException;
             }
         }
-        else
-        {
-            foundUrlInData = true;
-        }
 
         if (!foundUrlInData)
         {
             exception.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
-            exception.Data.Add("CallMethod", sender);
             exception.Data.Add("StatusCode", exception.StatusCode);
             exception.Data.Add("Payload", exception.Payload);
+        }
+
+        // Always add CallMethod so the calling WebRoutinen method is traceable
+        if (!exception.Data.Contains("CallMethod"))
+        {
+            exception.Data.Add("CallMethod", sender);
         }
 
         // Add data from ProblemDetails if available
