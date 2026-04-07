@@ -48,6 +48,11 @@ public class RESTRoutinen : IDisposable
 
     #endregion Constructors
 
+    /// <summary>
+    /// Setting the UserAgent on a shared <see cref="HttpClient"/> is not thread-safe.
+    /// Configure the UserAgent via <see cref="HttpClientConfig.UserAgent"/> instead.
+    /// </summary>
+    [Obsolete("Setting UserAgent on a shared HttpClient is not thread-safe. Use HttpClientConfig.UserAgent instead.")]
     public string UserAgent
     {
         set
@@ -55,6 +60,17 @@ public class RESTRoutinen : IDisposable
             _client.DefaultRequestHeaders.UserAgent.Clear();
             _client.DefaultRequestHeaders.UserAgent.TryParseAdd(value);
         }
+    }
+
+    private volatile Dictionary<string, string> _perRequestHeaders;
+
+    /// <summary>
+    /// Replaces the set of headers that are added to every outgoing request (e.g. auth headers).
+    /// Thread-safe via an atomic reference swap — in-flight requests use the previous snapshot.
+    /// </summary>
+    internal void UpdatePerRequestHeaders(Dictionary<string, string> headers)
+    {
+        _perRequestHeaders = headers != null ? new Dictionary<string, string>(headers) : null;
     }
 
     #region public Methods
@@ -352,12 +368,20 @@ public class RESTRoutinen : IDisposable
     }
 
     /// <summary>
-    /// Builds an <see cref="HttpRequestMessage"/> and applies the X-Gateway-Cluster header
-    /// per-request without mutating the shared <see cref="HttpClient.DefaultRequestHeaders"/>.
+    /// Builds an <see cref="HttpRequestMessage"/> and applies per-request headers
+    /// (auth, X-Gateway-Cluster) without mutating the shared <see cref="HttpClient.DefaultRequestHeaders"/>.
     /// </summary>
     private HttpRequestMessage BuildRequestMessage(HttpMethod method, string url)
     {
         var request = new HttpRequestMessage(method, url);
+
+        var perRequest = _perRequestHeaders; // single volatile read for consistency
+        if (perRequest != null)
+        {
+            foreach (var kvp in perRequest)
+                request.Headers.TryAddWithoutValidation(kvp.Key, kvp.Value);
+        }
+
         var clusterHeaderValue = ResolveGatewayClusterHeader(url);
         if (clusterHeaderValue != null)
             request.Headers.TryAddWithoutValidation("X-Gateway-Cluster", clusterHeaderValue);

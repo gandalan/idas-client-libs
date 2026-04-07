@@ -51,7 +51,8 @@ public class HttpClientConfig : ICloneable
             Credentials = Credentials,
             UserAgent = UserAgent,
             UseCompression = UseCompression,
-            AdditionalHeaders = new Dictionary<string, string>(AdditionalHeaders)
+            AdditionalHeaders = new Dictionary<string, string>(AdditionalHeaders),
+            NewApiOptInUrls = NewApiOptInUrls
         };
     }
 

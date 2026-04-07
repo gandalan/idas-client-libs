@@ -7,6 +7,7 @@
 // *****************************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
@@ -35,7 +36,8 @@ public class WebRoutinenBase
     public IWebApiConfig Settings;
     private readonly IWebApiConfig _originalSettings;
     public bool IsJwt;
-    private RESTRoutinen _restRoutinen;
+    private volatile RESTRoutinen _restRoutinen;
+    private readonly object _restRoutineInitLock = new object();
     private const string RelativeDateTimePattern = @"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?([+-]\d{2}:\d{2})";
 
     #endregion
@@ -90,7 +92,13 @@ public class WebRoutinenBase
     {
         if (_restRoutinen == null)
         {
-            initRestRoutinen();
+            lock (_restRoutineInitLock)
+            {
+                if (_restRoutinen == null)
+                {
+                    initRestRoutinen();
+                }
+            }
         }
 
         ThrowIfRateLimited(Settings.Url, sender);
@@ -145,15 +153,10 @@ public class WebRoutinenBase
             UserAgent = Settings.UserAgent
         };
 
-        if (IsJwt && !string.IsNullOrEmpty(JwtToken))
-        {
-            config.AdditionalHeaders.Add("Authorization", $"Bearer {JwtToken}");
-        }
-        else if (AuthToken != null)
-        {
-            config.AdditionalHeaders.Add("X-Gdl-AuthToken", AuthToken.Token.ToString());
-        }
-
+        // InstallationId is stable and can remain in DefaultRequestHeaders.
+        // Auth headers (token / JWT) are intentionally excluded here: they are
+        // injected per-request via UpdatePerRequestHeaders so that token refreshes
+        // never cause a new HttpClient to be created in the static factory cache.
         if (Settings.InstallationId != Guid.Empty)
         {
             config.AdditionalHeaders.Add("X-Gdl-InstallationId", Settings.InstallationId.ToString());
@@ -162,6 +165,36 @@ public class WebRoutinenBase
         config.NewApiOptInUrls = Settings.NewApiOptInUrls;
 
         _restRoutinen = new RESTRoutinen(config);
+        _restRoutinen.UpdatePerRequestHeaders(BuildAuthHeaders());
+    }
+
+    private Dictionary<string, string> BuildAuthHeaders()
+    {
+        var headers = new Dictionary<string, string>();
+        if (IsJwt && !string.IsNullOrEmpty(JwtToken))
+        {
+            headers["Authorization"] = $"Bearer {JwtToken}";
+        }
+        else if (AuthToken != null)
+        {
+            headers["X-Gdl-AuthToken"] = AuthToken.Token.ToString();
+        }
+        return headers.Count > 0 ? headers : null;
+    }
+
+    private void updateAuthInRestRoutinen()
+    {
+        _restRoutinen?.UpdatePerRequestHeaders(BuildAuthHeaders());
+    }
+
+    /// <summary>
+    /// Propagates the current <see cref="AuthToken"/> / <see cref="JwtToken"/> to all subsequent
+    /// outgoing requests as per-request headers. Call this after manually setting
+    /// <see cref="AuthToken"/> outside of <see cref="LoginAsync"/>.
+    /// </summary>
+    public void UpdateAuthHeaders()
+    {
+        updateAuthInRestRoutinen();
     }
 
     protected virtual void OnErrorOccured(ApiErrorArgs e)
@@ -215,7 +248,7 @@ public class WebRoutinenBase
             {
                 AuthToken = result;
                 _originalSettings.AuthToken = result;
-                initRestRoutinen();
+                updateAuthInRestRoutinen();
                 Status = "OK";
                 return true;
             }
@@ -252,11 +285,23 @@ public class WebRoutinenBase
         }
     }
 
+    /// <summary>
+    /// Erneuert das Auth-Token am Endpunkt /api/Login/Update und aktualisiert
+    /// die Instanz sowie alle ausgehenden Requests sofort mit dem neuen Token.
+    /// Konsistent mit dem Verhalten von <see cref="LoginAsync"/>.
+    /// </summary>
     public async Task<UserAuthTokenDTO> RefreshTokenAsync(Guid authTokenGuid)
     {
         try
         {
-            return await PutAsync<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO { Token = authTokenGuid }, null, true);
+            var result = await PutAsync<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO { Token = authTokenGuid }, null, true);
+            if (result != null)
+            {
+                AuthToken = result;
+                _originalSettings.AuthToken = result;
+                updateAuthInRestRoutinen();
+            }
+            return result;
         }
         catch (Exception)
         {
@@ -572,6 +617,7 @@ public class WebRoutinenBase
                 jc.JwtToken = newJwt;
             }
             JwtToken = newJwt;
+            updateAuthInRestRoutinen();
             return true;
         }
         catch (ApiException apiEx)
