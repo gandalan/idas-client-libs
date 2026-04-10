@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
@@ -64,7 +64,7 @@ public class RESTRoutinen : IDisposable
 
     /// <summary>
     /// Replaces the set of headers that are added to every outgoing request (e.g. auth headers).
-    /// Thread-safe via an atomic reference swap — in-flight requests use the previous snapshot.
+    /// Thread-safe via an atomic reference swap -- in-flight requests use the previous snapshot.
     /// </summary>
     internal void UpdatePerRequestHeaders(Dictionary<string, string> headers)
     {
@@ -242,7 +242,7 @@ public class RESTRoutinen : IDisposable
     {
         var request = new HttpRequestMessage(method, url);
 
-        var perRequest = _perRequestHeaders; // single volatile read for consistency
+        var perRequest = _perRequestHeaders; // single volatile read -- consistent snapshot
         if (perRequest != null)
         {
             foreach (var kvp in perRequest)

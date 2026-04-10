@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 
@@ -44,6 +45,15 @@ public class HttpClientConfig : ICloneable
     /// </summary>
     public string[] NewApiOptInUrls { get; set; }
 
+    /// <summary>
+    /// Maximum number of concurrent TCP connections per server endpoint.
+    /// On .NET Framework 4.8, <see cref="System.Net.HttpWebRequest"/> routes through
+    /// <see cref="System.Net.ServicePointManager"/> which defaults to 2 — far too low
+    /// for applications making parallel API calls. This property raises that limit.
+    /// On .NET 8+, <c>SocketsHttpHandler</c> already uses <see cref="int.MaxValue"/> internally.
+    /// </summary>
+    public int MaxConnectionsPerServer { get; set; } = 30;
+
     public object Clone()
     {
         return new HttpClientConfig
@@ -54,7 +64,8 @@ public class HttpClientConfig : ICloneable
             UserAgent = UserAgent,
             UseCompression = UseCompression,
             AdditionalHeaders = new Dictionary<string, string>(AdditionalHeaders),
-            NewApiOptInUrls = NewApiOptInUrls
+            NewApiOptInUrls = NewApiOptInUrls,
+            MaxConnectionsPerServer = MaxConnectionsPerServer
         };
     }
 
@@ -87,44 +98,69 @@ public class HttpClientConfig : ICloneable
         }
 
         // Compare NewApiOptInUrls
-        if (NewApiOptInUrls == null != (other.NewApiOptInUrls == null))
+        if (!NullableSequenceEqual(NewApiOptInUrls, other.NewApiOptInUrls))
             return false;
-        if (NewApiOptInUrls != null)
-        {
-            if (NewApiOptInUrls.Length != other.NewApiOptInUrls.Length)
-                return false;
-            for (int i = 0; i < NewApiOptInUrls.Length; i++)
-            {
-                if (!string.Equals(NewApiOptInUrls[i], other.NewApiOptInUrls[i], StringComparison.Ordinal))
-                    return false;
-            }
-        }
+
+        if (MaxConnectionsPerServer != other.MaxConnectionsPerServer)
+            return false;
 
         return true;
     }
 
+    private static bool NullableSequenceEqual(string[] a, string[] b)
+    {
+        if (ReferenceEquals(a, b)) return true;
+        if (a is null || b is null) return false;
+        return a.SequenceEqual(b, StringComparer.Ordinal);
+    }
+
     public override int GetHashCode()
     {
-        // Hash each property and combine them to generate a unique hash
-        var hash = BaseUrl.GetHashCode() ^ UseCompression.GetHashCode() ^ (UserAgent?.GetHashCode() ?? 0);
-        if (Credentials != null)
+        // NOTE: HttpClientConfig is used as a dictionary key and must not be mutated
+        // after being added to a dictionary. Properties are mutable by design for
+        // construction convenience, but treat instances as effectively immutable once in use.
+#if NETFRAMEWORK
+        unchecked
         {
-            hash ^= Credentials.GetHashCode();
+            int hash = 17;
+            hash = hash * 31 + (BaseUrl?.GetHashCode() ?? 0);
+            hash = hash * 31 + UseCompression.GetHashCode();
+            hash = hash * 31 + (UserAgent != null ? StringComparer.Ordinal.GetHashCode(UserAgent) : 0);
+            hash = hash * 31 + (Credentials?.GetHashCode() ?? 0);
+            hash = hash * 31 + (Proxy?.GetHashCode() ?? 0);
+            foreach (var header in AdditionalHeaders)
+            {
+                hash = hash * 31 + StringComparer.Ordinal.GetHashCode(header.Key);
+                hash = hash * 31 + StringComparer.Ordinal.GetHashCode(header.Value);
+            }
+            if (NewApiOptInUrls != null)
+            {
+                foreach (var url in NewApiOptInUrls)
+                    hash = hash * 31 + (url != null ? StringComparer.Ordinal.GetHashCode(url) : 0);
+            }
+            hash = hash * 31 + MaxConnectionsPerServer.GetHashCode();
+            return hash;
         }
-        if (Proxy != null)
-        {
-            hash ^= Proxy.GetHashCode();
-        }
+#else
+        var hash = new HashCode();
+        hash.Add(BaseUrl);
+        hash.Add(UseCompression);
+        hash.Add(UserAgent, StringComparer.Ordinal);
+        hash.Add(Credentials);
+        hash.Add(Proxy);
         foreach (var header in AdditionalHeaders)
         {
-            hash ^= header.Key.GetHashCode() ^ header.Value.GetHashCode();
+            hash.Add(header.Key, StringComparer.Ordinal);
+            hash.Add(header.Value, StringComparer.Ordinal);
         }
         if (NewApiOptInUrls != null)
         {
             foreach (var url in NewApiOptInUrls)
-                hash ^= url?.GetHashCode() ?? 0;
+                hash.Add(url, StringComparer.Ordinal);
         }
-        return hash;
+        hash.Add(MaxConnectionsPerServer);
+        return hash.ToHashCode();
+#endif
     }
 }
 
@@ -172,6 +208,17 @@ public class HttpClientFactory
             Credentials = config.Credentials,
             Proxy = config.Proxy
         };
+
+#if NETFRAMEWORK
+        // .NET Framework routes HttpClient through ServicePointManager, which caps
+        // concurrent TCP connections per host at 2 by default. Raise it explicitly
+        // so parallel API calls are not serialised at the socket level.
+        if (Uri.TryCreate(config.BaseUrl, UriKind.Absolute, out var baseUri))
+        {
+            ServicePointManager.FindServicePoint(baseUri).ConnectionLimit = config.MaxConnectionsPerServer;
+        }
+#endif
+
         pipeline = new GatewayClusterHandler(config.NewApiOptInUrls) { InnerHandler = pipeline };
         pipeline = new ErrorEnrichmentHandler { InnerHandler = pipeline };
 

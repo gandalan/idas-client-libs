@@ -27,13 +27,12 @@ internal sealed class ErrorEnrichmentHandler : DelegatingHandler
                 return response;
 
             // Pre-read the response body so it is available for exception enrichment.
-            responseContent = response.Content != null
+            responseContent =
 #if NET5_0_OR_GREATER
-                ? await response.Content.ReadAsStringAsync(cancellationToken)
+                await response.Content.ReadAsStringAsync(cancellationToken);
 #else
-                ? await response.Content.ReadAsStringAsync()
+                await response.Content.ReadAsStringAsync();
 #endif
-                : null;
 
             response.EnsureSuccessStatusCode(); // always throws here since !IsSuccessStatusCode
             return response; // unreachable, satisfies compiler
