@@ -16,6 +16,26 @@ public class KapazitaetsberechnungWebRoutinen : WebRoutinenBase
         => await PostAsync<Dictionary<Guid, decimal?>>("Kapaziaetsberechnung/GetKapaziaet", positionGuids);
     public async Task CalculateKapazitaetForFunctionAsync(Guid positionGuid, long mandantID)
         => await PostAsync($"Kapaziaetsberechnung/RunKapBerechnung?id={positionGuid}&mandantId={mandantID}", null, skipAuth: true);
+
+    /// <summary>
+    /// Startet die Kapazitätsberechnung im Backend mit Callback-URL.
+    /// Das Backend sendet das Ergebnis per POST an die callbackUrl, sobald die Berechnung abgeschlossen ist.
+    /// </summary>
+    public async Task StartKapBerechnungWithCallbackAsync(Guid positionGuid, long mandantId, string callbackUrl)
+        => await PostAsync($"Kapaziaetsberechnung/RunKapBerechnungWithCallback?id={positionGuid}&mandantId={mandantId}",
+            new KapBerechnungCallbackRequest { CallbackUrl = callbackUrl }, skipAuth: true);
+
+    /// <summary>
+    /// Startet die Kapazitätsberechnung im Backend als Batch mit Callback-URL.
+    /// Das Backend verarbeitet alle Positionen und sendet das aggregierte Ergebnis
+    /// per POST an die callbackUrl.
+    /// </summary>
+    public async Task StartKapBerechnungBatchWithCallbackAsync(
+        List<KapBerechnungPosition> positions, string callbackUrl)
+        => await PostAsync("Kapaziaetsberechnung/RunKapBerechnungBatchWithCallback",
+            new KapBerechnungBatchCallbackRequest { Positions = positions, CallbackUrl = callbackUrl },
+            skipAuth: true);
+
     public async Task CalculateKapazitaetForAVAsync(List<Guid> avPositionGuids, long mandantID)
         => await PostAsync($"Kapaziaetsberechnung/RunKapBerechnungForAV?mandantId={mandantID}", avPositionGuids, skipAuth: true);
     public async Task CalculateItemsAsync()
