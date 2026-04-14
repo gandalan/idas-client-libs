@@ -48,6 +48,13 @@ public class VariantenWebRoutinen : WebRoutinenBase
     public async Task<AsyncJobResultDTO> GetCacheWebJobStatusAsync(Guid jobId)
         => await GetAsync<AsyncJobResultDTO>($"Variante/CacheWebJob/Status/{jobId}");
 
+    /// <summary>
+    /// Startet den CacheWebJob mit Callback-URL.
+    /// Das Backend ruft die Callback-URL per POST auf, sobald der Job abgeschlossen ist.
+    /// </summary>
+    public async Task StartCacheWebJobWithCallbackAsync(string callbackUrl)
+        => await PostAsync("Variante/CacheWebJob/StartWithCallback", new VariantenCacheCallbackRequest { CallbackUrl = callbackUrl });
+
     [Obsolete("Funktion 'SaveVarianteAsync()' verwenden")]
     public async Task SaveAsync(VarianteDTO dto)
         => await PutAsync($"Variante/{dto.VarianteGuid}", dto);
