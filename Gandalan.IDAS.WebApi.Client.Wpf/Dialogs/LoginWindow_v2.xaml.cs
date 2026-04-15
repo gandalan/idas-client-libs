@@ -138,7 +138,7 @@ public partial class LoginWindow_v2 : Window
             var result = await wrb.LoginAsync();
 
             _statusText = wrb.Status;
-            if (_statusText.Contains("<title>"))
+            if (_statusText.Contains("<title>", StringComparison.InvariantCultureIgnoreCase))
             {
                 _statusText = InternalStripHtml(_statusText);
             }
@@ -163,10 +163,10 @@ public partial class LoginWindow_v2 : Window
     {
         var result = htmlString;
 
-        if (result.ToLower().Contains("<title>") && result.ToLower().Contains("</title>"))
+        if (result.Contains("<title>", StringComparison.InvariantCultureIgnoreCase) && result.Contains("</title>", StringComparison.InvariantCultureIgnoreCase))
         {
-            var start = result.IndexOf("<title>") + 7;
-            var end = result.IndexOf("</title>");
+            var start = result.IndexOf("<title>", StringComparison.InvariantCultureIgnoreCase) + 7;
+            var end = result.IndexOf("</title>", StringComparison.InvariantCultureIgnoreCase);
             result = $"Interner Serverfehler (\"{result.Substring(start, end - start)}\"). Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.";
         }
 
