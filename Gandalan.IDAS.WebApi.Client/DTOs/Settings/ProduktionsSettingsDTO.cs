@@ -64,6 +64,7 @@ public class ProduktionsSettingsDTO
     //ZusatzRahmen
     public bool ZR_Schraubeckwinkel { get; set; } = true;
     public bool ZR_Verstanzen { get; set; }
+    public int? ZR_Eckwinkel_Breite { get; set; }
     public int? ZR_Verstanzen_Mass { get; set; }
     public bool ZR_Eckwinkel { get; set; }
 
