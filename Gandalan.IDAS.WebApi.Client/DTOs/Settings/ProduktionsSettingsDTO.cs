@@ -13,12 +13,6 @@ public class ProduktionsSettingsDTO
     /// </summary>
     public bool SprossenfreiEnabled { get; set; }
 
-    /// <summary>
-    /// Aktiviert Vorbiegen global. 
-    /// Die Produktionsberechnung prüft sowohl VorbiegenEnabled als auch die Aktivierung in der jeweiligen Produktfamilie.
-    /// Wenn gesetzt, ist außerdem die Bearbeitung der Familien-Settings erlaubt.
-    /// </summary>
-    public bool VorbiegenEnabled { get; set; }
     public string VorbiegenSprossenfrei { get; set; }
     public string IstAusserhalbGewaehrleistung { get; set; }
     public string VorbiegenGrenzwert { get; set; }
