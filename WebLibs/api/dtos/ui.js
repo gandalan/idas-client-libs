@@ -100,6 +100,19 @@
  * @property {string} FrontendLogik
  */
 
+/**
+ * @typedef {Object} WarenGruppeListDTO
+ * @property {string} WarenGruppeGuid
+ * @property {number} Nummer
+ * @property {string} Bezeichnung
+ * @property {boolean} IstEKPWarengruppe
+ * @property {string} FrontendLogik
+ * @property {number} Version
+ * @property {string} ChangedDate
+ * @property {number} ArtikelAnzahl
+ * @property {string[]} ArtikelGuids
+ */
+
 // ============================================================================
 // Enums
 // ============================================================================
@@ -457,11 +470,11 @@ export const DTO_TYPES = {
     KatalogArtikelFarbZuordnungDTO: "KatalogArtikelFarbZuordnungDTO",
     KatalogArtikelDTO: "KatalogArtikelDTO",
     WarenGruppeDTO: "WarenGruppeDTO",
-  
+
     // Enums
     FarbArt: "FarbArt",
     UIEingabeFeldRegelNames: "UIEingabeFeldRegelNames",
-  
+
     // UI DTOs
     GuidListDTO: "GuidListDTO",
     InfoScreenConfigDTO: "InfoScreenConfigDTO",

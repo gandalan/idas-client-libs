@@ -223,10 +223,11 @@
 /** @typedef {import("./ui.js").VarianteDTOListe} VarianteDTOListe */
 /** @typedef {import("./ui.js").WarenGruppeDTO} WarenGruppeDTO */
 /** @typedef {import("./ui.js").WarenGruppeDTOListe} WarenGruppeDTOListe */
+/** @typedef {import("./ui.js").WarenGruppeListDTO} WarenGruppeListDTO */
 /** @typedef {import("./ui.js").WerteListeDTO} WerteListeDTO */
 /** @typedef {import("./ui.js").WerteListeDTOListe} WerteListeDTOListe */
 /** @typedef {import("./ui.js").WerteListeItemDTO} WerteListeItemDTO */
 
 /** @typedef {import("./webjob.js").MandantAndBelegPosGuidDTO} MandantAndBelegPosGuidDTO */
 
-export {};
+export { };
