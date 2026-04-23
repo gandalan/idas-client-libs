@@ -98,7 +98,9 @@
 
 /**
  * @typedef {Object} NeherApp3
- * @property {(menuItem: NeherApp3MenuItem) => void} addMenuItem
+ * @property {(menuItem: NeherApp3MenuItem) => void} addMenuItem - Adds a menu item. If an item with the same `id` already exists it is replaced.
+ * @property {(id: string, patch: Partial<NeherApp3MenuItem>) => boolean} updateMenuItem - Updates properties of an existing menu item by `id`. Only keys present in `patch` are changed; the `id` is preserved. Returns `true` if the item existed. Relative icon URLs are resolved against the module's base URL.
+ * @property {(id: string) => boolean} removeMenuItem - Removes the menu item with the given `id`. Returns `true` if an item was removed.
  * @property {(appModule: NeherApp3Module | string) => Promise<void>} addApp
  * @property {(message: string, type?: NeherApp3NotifyType, cb?: function) => void} notify - Shows a notification. Type defaults to 0 (info). Callback is optional.
  * @property {NeherApp3ApiCollection} api
