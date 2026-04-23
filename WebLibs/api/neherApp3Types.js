@@ -64,9 +64,10 @@
  * @property {boolean} [selected] - Indicates if the menu item is currently selected (managed by the menu system)
  * @property {string} [icon] - URL to an icon
  * @property {string | null} [url] - Relative URL to use for routes
- * @property {string} text - Display text
+ * @property {string} [text] - Display text (ignored for separator items)
  * @property {string | null} [parent] - Parent menu item (optional). If not set, the item will be added to the top level menu.
  * @property {boolean} [hidden] - If true, the menu item will not be displayed
+ * @property {boolean} [separator] - If true, renders as a non-interactive divider between items (text/icon/url are ignored). Use `parent` to place the separator inside a sub-menu.
  */
 
 /**

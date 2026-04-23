@@ -1995,9 +1995,10 @@ export type NeherApp3MenuItem = {
     selected?: boolean;
     icon?: string;
     url?: string | null;
-    text: string;
+    text?: string;
     parent?: string | null;
     hidden?: boolean;
+    separator?: boolean;
 };
 
 export type NeherApp3Module = {
