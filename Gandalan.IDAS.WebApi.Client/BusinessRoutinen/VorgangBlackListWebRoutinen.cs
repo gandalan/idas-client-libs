@@ -13,11 +13,11 @@ public class VorgangBlackListWebRoutinen : WebRoutinenBase
     }
 
     public async Task<List<VorgangBlackListEntryDTO>> GetAllBlackListEntryAsync()
-        => await GetAsync<List<VorgangBlackListEntryDTO>>($"api/VorgangBlackList/GetAllBlackListEntry");
+        => await GetAsync<List<VorgangBlackListEntryDTO>>($"VorgangBlackList/GetAllBlackListEntry");
 
     public async Task AddBlackListEntryAsync(Guid vorgangGuid, Guid appGuid, bool onlyUser)
-        => await PostAsync($"api/VorgangBlackList/AddBlackListEntry?vorgangGuid={vorgangGuid}&appGuid={appGuid}&onlyUser={onlyUser}", null);
+        => await PostAsync($"VorgangBlackList/AddBlackListEntry?vorgangGuid={vorgangGuid}&appGuid={appGuid}&onlyUser={onlyUser}", null);
 
     public async Task RemoveBlackListEntryAsync(Guid vorgangBlackListGuid)
-        => await DeleteAsync($"api/VorgangBlackList/RemoveBlackListEntry?vorgangBlackListGuid={vorgangBlackListGuid}");
+        => await DeleteAsync($"VorgangBlackList/RemoveBlackListEntry?vorgangBlackListGuid={vorgangBlackListGuid}");
 }
