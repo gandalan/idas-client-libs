@@ -1957,6 +1957,8 @@ export type NachrichtenDTO = {
 
 export type NeherApp3 = {
     addMenuItem: (menuItem: NeherApp3MenuItem) => void;
+    updateMenuItem: (id: string, patch: Partial<NeherApp3MenuItem>) => boolean;
+    removeMenuItem: (id: string) => boolean;
     addApp: (appModule: NeherApp3Module | string) => Promise<void>;
     notify: (message: string, type?: NeherApp3NotifyType, cb?: Function) => void;
     api: NeherApp3ApiCollection;
@@ -1995,9 +1997,10 @@ export type NeherApp3MenuItem = {
     selected?: boolean;
     icon?: string;
     url?: string | null;
-    text: string;
+    text?: string;
     parent?: string | null;
     hidden?: boolean;
+    separator?: boolean;
 };
 
 export type NeherApp3Module = {
