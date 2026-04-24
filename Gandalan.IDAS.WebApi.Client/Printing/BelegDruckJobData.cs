@@ -27,6 +27,7 @@ public class BelegDruckJobData : IBelegPrintJobData
     public int Copies { get; set; }
     public Guid VorgangGuid { get; set; }
     public bool UseIronPdfRenderer { get; set; }
+    public bool UseIronPdfEngineRenderer { get; set; }
 }
 
 public enum JobArt
