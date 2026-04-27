@@ -7,12 +7,14 @@
 // *****************************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Gandalan.IDAS.Client.Contracts.Contracts;
@@ -35,7 +37,7 @@ public class WebRoutinenBase
     public IWebApiConfig Settings;
     private readonly IWebApiConfig _originalSettings;
     public bool IsJwt;
-    private RESTRoutinen _restRoutinen;
+    private readonly Lazy<RESTRoutinen> _restRoutinen;
     private const string RelativeDateTimePattern = @"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?([+-]\d{2}:\d{2})";
 
     #endregion
@@ -84,14 +86,13 @@ public class WebRoutinenBase
                 AuthToken = settings.AuthToken;
             }
         }
+
+        _restRoutinen = new Lazy<RESTRoutinen>(InitRestRoutinen, LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
-    private async Task runPreRequestChecks(string url, bool skipAuth = false, [CallerMemberName] string sender = null)
+    private async Task RunPreRequestChecks(string url, bool skipAuth = false, [CallerMemberName] string sender = null)
     {
-        if (_restRoutinen == null)
-        {
-            initRestRoutinen();
-        }
+        _ = _restRoutinen.Value;
 
         ThrowIfRateLimited(Settings.Url, sender);
         await CheckAuthorizedOrThrow(url, skipAuth, sender);
@@ -131,7 +132,7 @@ public class WebRoutinenBase
         }
     }
 
-    private void initRestRoutinen()
+    private RESTRoutinen InitRestRoutinen()
     {
         if (string.IsNullOrWhiteSpace(Settings.Url))
         {
@@ -145,15 +146,10 @@ public class WebRoutinenBase
             UserAgent = Settings.UserAgent
         };
 
-        if (IsJwt && !string.IsNullOrEmpty(JwtToken))
-        {
-            config.AdditionalHeaders.Add("Authorization", $"Bearer {JwtToken}");
-        }
-        else if (AuthToken != null)
-        {
-            config.AdditionalHeaders.Add("X-Gdl-AuthToken", AuthToken.Token.ToString());
-        }
-
+        // InstallationId is stable and can remain in DefaultRequestHeaders.
+        // Auth headers (token / JWT) are intentionally excluded here: they are
+        // injected per-request via UpdatePerRequestHeaders so that token refreshes
+        // never cause a new HttpClient to be created in the static factory cache.
         if (Settings.InstallationId != Guid.Empty)
         {
             config.AdditionalHeaders.Add("X-Gdl-InstallationId", Settings.InstallationId.ToString());
@@ -161,7 +157,39 @@ public class WebRoutinenBase
 
         config.NewApiOptInUrls = Settings.NewApiOptInUrls;
 
-        _restRoutinen = new RESTRoutinen(config);
+        var restRoutinen = new RESTRoutinen(config);
+        restRoutinen.UpdatePerRequestHeaders(BuildAuthHeaders());
+        return restRoutinen;
+    }
+
+    private Dictionary<string, string> BuildAuthHeaders()
+    {
+        var headers = new Dictionary<string, string>();
+        if (IsJwt && !string.IsNullOrEmpty(JwtToken))
+        {
+            headers["Authorization"] = $"Bearer {JwtToken}";
+        }
+        else if (AuthToken != null)
+        {
+            headers["X-Gdl-AuthToken"] = AuthToken.Token.ToString();
+        }
+        return headers.Count > 0 ? headers : null;
+    }
+
+    private void UpdateAuthInRestRoutinen()
+    {
+        if (_restRoutinen.IsValueCreated)
+            _restRoutinen.Value.UpdatePerRequestHeaders(BuildAuthHeaders());
+    }
+
+    /// <summary>
+    /// Propagates the current <see cref="AuthToken"/> / <see cref="JwtToken"/> to all subsequent
+    /// outgoing requests as per-request headers. Call this after manually setting
+    /// <see cref="AuthToken"/> outside of <see cref="LoginAsync"/>.
+    /// </summary>
+    public void UpdateAuthHeaders()
+    {
+        UpdateAuthInRestRoutinen();
     }
 
     protected virtual void OnErrorOccured(ApiErrorArgs e)
@@ -179,7 +207,7 @@ public class WebRoutinenBase
     {
         if (IsJwt)
         {
-            return await checkJwtTokenAsync();
+            return await CheckJwtTokenAsync();
         }
 
         try
@@ -215,7 +243,7 @@ public class WebRoutinenBase
             {
                 AuthToken = result;
                 _originalSettings.AuthToken = result;
-                initRestRoutinen();
+                UpdateAuthInRestRoutinen();
                 Status = "OK";
                 return true;
             }
@@ -230,7 +258,7 @@ public class WebRoutinenBase
             Status = apiEx.Message;
             if (Status.ToLower().Contains("<title>"))
             {
-                Status = internalStripHtml(Status);
+                Status = InternalStripHtml(Status);
             }
 
             var innerException = apiEx.InnerException;
@@ -252,11 +280,23 @@ public class WebRoutinenBase
         }
     }
 
+    /// <summary>
+    /// Erneuert das Auth-Token am Endpunkt /api/Login/Update und aktualisiert
+    /// die Instanz sowie alle ausgehenden Requests sofort mit dem neuen Token.
+    /// Konsistent mit dem Verhalten von <see cref="LoginAsync"/>.
+    /// </summary>
     public async Task<UserAuthTokenDTO> RefreshTokenAsync(Guid authTokenGuid)
     {
         try
         {
-            return await PutAsync<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO { Token = authTokenGuid }, null, true);
+            var result = await PutAsync<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO { Token = authTokenGuid }, null, true);
+            if (result != null)
+            {
+                AuthToken = result;
+                _originalSettings.AuthToken = result;
+                UpdateAuthInRestRoutinen();
+            }
+            return result;
         }
         catch (Exception)
         {
@@ -268,8 +308,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.PostAsync<T>(uri, data, settings, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.PostAsync<T>(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
@@ -288,8 +328,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            await _restRoutinen.PostAsync(uri, data, settings, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            await _restRoutinen.Value.PostAsync(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
@@ -306,8 +346,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.PostDataAsync(uri, data, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.PostDataAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
         {
@@ -326,8 +366,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.PostDataAsync(uri, data, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.PostDataAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
         {
@@ -346,8 +386,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.GetDataAsync(uri, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.GetDataAsync(uri, version: version);
         }
         catch (HttpRequestException ex)
         {
@@ -366,8 +406,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.GetAsync(uri, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.GetAsync(uri, version: version);
         }
         catch (HttpRequestException ex)
         {
@@ -386,8 +426,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.GetAsync<T>(uri, settings, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.GetAsync<T>(uri, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
@@ -406,8 +446,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            await _restRoutinen.PutAsync(uri, data, settings, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            await _restRoutinen.Value.PutAsync(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
@@ -424,8 +464,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.PutAsync<T>(uri, data, settings, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.PutAsync<T>(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
@@ -444,8 +484,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.PutDataAsync(uri, data);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.PutDataAsync(uri, data);
         }
         catch (HttpRequestException ex)
         {
@@ -459,8 +499,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.PutDataAsync(uri, data);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.PutDataAsync(uri, data);
         }
         catch (HttpRequestException ex)
         {
@@ -479,8 +519,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            await _restRoutinen.DeleteAsync(uri);
+            await RunPreRequestChecks(uri, skipAuth);
+            await _restRoutinen.Value.DeleteAsync(uri);
         }
         catch (HttpRequestException ex)
         {
@@ -497,8 +537,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            await _restRoutinen.DeleteAsync(uri, data, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            await _restRoutinen.Value.DeleteAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
         {
@@ -515,8 +555,8 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.DeleteAsync<T>(uri, data, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.DeleteAsync<T>(uri, data, version: version);
         }
         catch (HttpRequestException ex)
         {
@@ -531,7 +571,7 @@ public class WebRoutinenBase
         return default;
     }
 
-    private static string internalStripHtml(string htmlString)
+    private static string InternalStripHtml(string htmlString)
     {
         var result = htmlString;
         if (result.ToLower().Contains("<title>") && result.ToLower().Contains("</title>"))
@@ -547,7 +587,7 @@ public class WebRoutinenBase
         return result;
     }
 
-    private async Task<bool> checkJwtTokenAsync()
+    private async Task<bool> CheckJwtTokenAsync()
     {
         if (internalCheckJwtToken(out var refreshToken, out var checkResult))
         {
@@ -572,6 +612,7 @@ public class WebRoutinenBase
                 jc.JwtToken = newJwt;
             }
             JwtToken = newJwt;
+            UpdateAuthInRestRoutinen();
             return true;
         }
         catch (ApiException apiEx)
@@ -580,7 +621,7 @@ public class WebRoutinenBase
             Status = apiEx.Message;
             if (Status.ToLower().Contains("<title>"))
             {
-                Status = internalStripHtml(Status);
+                Status = InternalStripHtml(Status);
             }
 
             var innerException = apiEx.InnerException;
@@ -705,10 +746,10 @@ public class WebRoutinenBase
             OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
         }
 
-        var foundUrlInData = false;
+        var foundUrlInData = exception.Data.Contains("URL");
 
-        // Check if we already have data from RESTRoutinen.AddInfoToException()
-        if (!exception.Data.Contains("URL"))
+        // Check if ErrorEnrichmentHandler already enriched an inner exception with URL/StatusCode/Response
+        if (!foundUrlInData)
         {
             var innerException = exception.InnerException;
             while (innerException != null)
@@ -716,22 +757,24 @@ public class WebRoutinenBase
                 if (innerException.Data.Contains("URL"))
                 {
                     foundUrlInData = true;
+                    break;
                 }
 
                 innerException = innerException.InnerException;
             }
         }
-        else
-        {
-            foundUrlInData = true;
-        }
 
         if (!foundUrlInData)
         {
             exception.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
-            exception.Data.Add("CallMethod", sender);
             exception.Data.Add("StatusCode", exception.StatusCode);
             exception.Data.Add("Payload", exception.Payload);
+        }
+
+        // Always add CallMethod so the calling WebRoutinen method is traceable
+        if (!exception.Data.Contains("CallMethod"))
+        {
+            exception.Data.Add("CallMethod", sender);
         }
 
         // Add data from ProblemDetails if available
@@ -765,8 +808,8 @@ public class WebRoutinenBase
         {
             if (problemDetails.Status == 429)
             {
-                var resetDateTimeUtc = problemDetails.TryGetResetDateTimeUtc(out var resetTime) 
-                    ? resetTime 
+                var resetDateTimeUtc = problemDetails.TryGetResetDateTimeUtc(out var resetTime)
+                    ? resetTime
                     : DateTime.UtcNow.AddMinutes(1);
                 var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
                 return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, rateLimitEx, problemDetails, payload);
