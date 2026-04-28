@@ -134,4 +134,7 @@ public class ReportExecuteSettings
 
     public bool ShowSerienName { get; set; }
     public bool IsEtikettReport { get; set; }
+    public int Dpi { get; set; }
+    public double ContentOffsetX { get; set; }
+    public double ContentOffsetY { get; set; }
 }
