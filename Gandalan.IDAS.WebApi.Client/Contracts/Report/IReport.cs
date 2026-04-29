@@ -102,6 +102,8 @@ public enum ReportCapability
 public class ReportExecuteSettings
 {
     public string ReportName { get; set; }
+
+    public PrintMethod PrintMethod { get; set; }
     public ReportAction ReportAction { get; set; }
     public string PrinterName { get; set; }
 
@@ -123,6 +125,7 @@ public class ReportExecuteSettings
     {
         return new ReportExecuteSettings
         {
+            PrintMethod = result.PrintMethod,
             ReportAction = result.Action,
             PrinterName = result.PrinterName,
             FileName = result.FileName,
