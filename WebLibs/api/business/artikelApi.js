@@ -1,6 +1,7 @@
 /**
  * @typedef {import('../fluentApi.js').FluentApi} FluentApi
  * @typedef {import('../dtos/index.js').WarenGruppeDTO} WarenGruppeDTO
+ * @typedef {import('../dtos/index.js').WarenGruppeListDTO} WarenGruppeListDTO
  * @typedef {import('../dtos/index.js').KatalogArtikelDTO} KatalogArtikelDTO
  * @typedef {import('../dtos/index.js').ProduktGruppeDTO} ProduktGruppeDTO
  * @typedef {import('../dtos/index.js').ProduktFamilieDTO} ProduktFamilieDTO
@@ -18,12 +19,12 @@
  */
 export function createArtikelApi(fluentApi) {
     return {
-    // ArtikelWebRoutinen
-    /**
-     * Get all articles
-     * @param {Date} [changedSince] - Filter by change date
-     * @returns {Promise<WarenGruppeDTO[]>}
-     */
+        // ArtikelWebRoutinen
+        /**
+         * Get all articles
+         * @param {Date} [changedSince] - Filter by change date
+         * @returns {Promise<WarenGruppeDTO[]>}
+         */
         getAll: (changedSince) => {
             const url = changedSince
                 ? `Artikel?changedSince=${changedSince.toISOString()}`
@@ -32,25 +33,25 @@ export function createArtikelApi(fluentApi) {
         },
 
         /**
-     * Save article
-     * @param {KatalogArtikelDTO} artikel
-     * @returns {Promise<KatalogArtikelDTO>}
-     */
+         * Save article
+         * @param {KatalogArtikelDTO} artikel
+         * @returns {Promise<KatalogArtikelDTO>}
+         */
         saveArtikel: (artikel) => fluentApi.put(`Artikel/${artikel.KatalogArtikelGuid}`, artikel),
 
         /**
-     * Delete article
-     * @param {KatalogArtikelDTO} artikel
-     * @returns {Promise<void>}
-     */
+         * Delete article
+         * @param {KatalogArtikelDTO} artikel
+         * @returns {Promise<void>}
+         */
         deleteArtikel: (artikel) => fluentApi.delete(`Artikel/${artikel.KatalogArtikelGuid}`),
 
         // ArtikelIndiDatenWebRoutinen
         /**
-     * Get all article individual data
-     * @param {Date} [changedSince] - Filter by change date
-     * @returns {Promise<KatalogArtikelIndiDatenDTO[]>}
-     */
+         * Get all article individual data
+         * @param {Date} [changedSince] - Filter by change date
+         * @returns {Promise<KatalogArtikelIndiDatenDTO[]>}
+         */
         getAllIndiDaten: (changedSince) => {
             const url = changedSince
                 ? `ArtikelIndiDaten?changedSince=${changedSince.toISOString()}`
@@ -59,99 +60,132 @@ export function createArtikelApi(fluentApi) {
         },
 
         /**
-     * Save article individual data
-     * @param {KatalogArtikelIndiDatenDTO} daten
-     * @returns {Promise<void>}
-     */
+         * Save article individual data
+         * @param {KatalogArtikelIndiDatenDTO} daten
+         * @returns {Promise<void>}
+         */
         saveArtikelIndiDaten: (daten) => fluentApi.put(`ArtikelIndiDaten/${daten.KatalogArtikelGuid}`, daten),
 
         /**
-     * Delete article individual data
-     * @param {KatalogArtikelIndiDatenDTO} daten
-     * @returns {Promise<void>}
-     */
+         * Delete article individual data
+         * @param {KatalogArtikelIndiDatenDTO} daten
+         * @returns {Promise<void>}
+         * */
         deleteArtikelIndiDaten: (daten) => fluentApi.delete(`ArtikelIndiDaten/${daten.KatalogArtikelGuid}`),
 
         // WarenGruppeWebRoutinen
         /**
-     * Get all product groups
-     * @returns {Promise<WarenGruppeDTO[]>}
-     */
-        getAllWarenGruppen: () => fluentApi.get("WarenGruppe"),
+         * Get all commodity groups
+         * @param {Date} [changedSince] - Filter by change date
+         * @param {boolean} [includeArtikel=true] - Whether to include full article data
+         * @returns {Promise<WarenGruppeDTO[]>}
+         */
+        getAllWarenGruppen: (changedSince, includeArtikel = true) => {
+            let url = `WarenGruppe?includeArtikel=${includeArtikel}`;
+            if (changedSince) url += `&changedSince=${changedSince.toISOString()}`;
+            return fluentApi.get(url);
+        },
 
         /**
-     * Save product group
-     * @param {WarenGruppeDTO} dto
-     * @returns {Promise<void>}
-     */
+         * Get compact commodity group list (with ArtikelGuids, without full article graph)
+         * @param {Date} [changedSince] - Filter by change date
+         * @returns {Promise<WarenGruppeListDTO[]>}
+         */
+        getWarenGruppenList: (changedSince) => {
+            const url = changedSince
+                ? `WarenGruppe/list?changedSince=${changedSince.toISOString()}`
+                : "WarenGruppe/list";
+            return fluentApi.get(url);
+        },
+
+        /**
+         * Save commodity group
+         * @param {WarenGruppeDTO} dto
+         * @returns {Promise<void>}
+        **/
         saveWarenGruppe: (dto) => fluentApi.put(`WarenGruppe/${dto.WarenGruppeGuid}`, dto),
+
+        /**
+         * Get commodity group by GUID
+         * @param {string} warenGruppeGuid - The GUID of the commodity group
+         * @param {boolean} [includeArtikel=true] - Whether to include articles
+         * @returns {Promise<WarenGruppeDTO>}
+         */
+        getWarenGruppe: (warenGruppeGuid, includeArtikel = true) => fluentApi.get(`WarenGruppe/${warenGruppeGuid}?includeArtikel=${includeArtikel}`),
+
+        /**
+         * Get articles for a commodity group
+         * @param {string} warenGruppeGuid - The GUID of the commodity group
+         * @returns {Promise<KatalogArtikelDTO[]>}
+         */
+        getArtikelForWarengruppe: (warenGruppeGuid) => fluentApi.get(`WarenGruppe/${warenGruppeGuid}/artikel`),
 
         // ProduktGruppenWebRoutinen
         /**
-     * Get all product groups
-     * @param {boolean} [includeFamilien=true] - Include families and variants
-     * @returns {Promise<ProduktGruppeDTO[]>}
-     */
+         * Get all product groups
+         * @param {boolean} [includeFamilien=true] - Include families and variants
+         * @returns {Promise<ProduktGruppeDTO[]>}
+         */
         getAllProduktGruppen: (includeFamilien = true) =>
             fluentApi.get(`ProduktGruppe?includeFamilien=${includeFamilien}&includeVarianten=${includeFamilien}&includeUIDefs=${includeFamilien}&maxLevel=99`),
 
         /**
-     * Save product group
-     * @param {ProduktGruppeDTO} produktGruppe
-     * @returns {Promise<ProduktGruppeDTO>}
-     */
+         * Save product group
+         * @param {ProduktGruppeDTO} produktGruppe
+         * @returns {Promise<ProduktGruppeDTO>}
+         */
         saveProduktGruppe: (produktGruppe) =>
             fluentApi.put(`ProduktGruppe/${produktGruppe.ProduktGruppeGuid}`, produktGruppe),
 
         // ProduktFamilienWebRoutinen
         /**
-     * Get all product families
-     * @param {boolean} [includeVarianten=true] - Include variants
-     * @returns {Promise<ProduktFamilieDTO[]>}
-     */
+         * Get all product families
+         * @param {boolean} [includeVarianten=true] - Include variants
+         * @returns {Promise<ProduktFamilieDTO[]>}
+         */
         getAllProduktFamilien: (includeVarianten = true) =>
             fluentApi.get(`ProduktFamilie?includeVarianten=${includeVarianten}&includeUIDefs=${includeVarianten}&maxLevel=99`),
 
         /**
-     * Save product family
-     * @param {ProduktFamilieDTO} produktFamilie
-     * @returns {Promise<ProduktFamilieDTO>}
-     */
+         * Save product family
+         * @param {ProduktFamilieDTO} produktFamilie
+         * @returns {Promise<ProduktFamilieDTO>}
+         */
         saveProduktFamilie: (produktFamilie) =>
             fluentApi.put(`ProduktFamilie/${produktFamilie.ProduktFamilieGuid}`, produktFamilie),
 
         // KomponentenWebRoutinen
         /**
-     * Get all components
-     * @returns {Promise<KomponenteDTO[]>}
-     */
+         * Get all components
+         * @returns {Promise<KomponenteDTO[]>}
+         */
         getAllKomponenten: () => fluentApi.get("Komponente"),
 
         /**
-     * Save component
-     * @param {KomponenteDTO} dto
-     * @returns {Promise<void>}
-     */
+         * Save component
+         * @param {KomponenteDTO} dto
+         * @returns {Promise<void>}
+         */
         saveKomponente: (dto) => fluentApi.put("Komponente", dto),
 
         // VariantenWebRoutinen
         /**
-     * Get all variants
-     * @returns {Promise<VarianteDTO[]>}
-     */
+         * Get all variants
+         * @returns {Promise<VarianteDTO[]>}
+         */
         getAllVarianten: () => fluentApi.get("Variante?includeUIDefs=true&maxLevel=99"),
 
         /**
-     * Get all variant GUIDs
-     * @returns {Promise<string[]>}
-     */
+         * Get all variant GUIDs
+         * @returns {Promise<string[]>}
+         */
         getAllVariantenGuids: () => fluentApi.get("Variante/GetAllGuids"),
 
         /**
-     * Get all variant changes since date
-     * @param {Date} [changedSince]
-     * @returns {Promise<string[]>}
-     */
+         * Get all variant changes since date
+         * @param {Date} [changedSince]
+         * @returns {Promise<string[]>}
+         */
         getAllVariantenChanges: (changedSince) => {
             const url = changedSince
                 ? `Variante/GetAllVariantenChanges?changedSince=${changedSince.toISOString()}`
@@ -160,83 +194,83 @@ export function createArtikelApi(fluentApi) {
         },
 
         /**
-     * Get variant by GUID
-     * @param {string} varianteGuid
-     * @param {boolean} [includeUIDefs=true]
-     * @param {boolean} [includeKonfigs=true]
-     * @returns {Promise<VarianteDTO>}
-     */
+         * Get variant by GUID
+         * @param {string} varianteGuid
+         * @param {boolean} [includeUIDefs=true]
+         * @param {boolean} [includeKonfigs=true]
+         * @returns {Promise<VarianteDTO>}
+         */
         getVariante: (varianteGuid, includeUIDefs = true, includeKonfigs = true) =>
             fluentApi.get(`Variante/${varianteGuid}?includeUIDefs=${includeUIDefs}&maxLevel=99&includeKonfigs=${includeKonfigs}`),
 
         /**
-     * Save variant
-     * @param {VarianteDTO} variante
-     * @returns {Promise<VarianteDTO>}
-     */
+         * Save variant
+         * @param {VarianteDTO} variante
+         * @returns {Promise<VarianteDTO>}
+         */
         saveVariante: (variante) => fluentApi.put(`Variante/${variante.VarianteGuid}`, variante),
 
         /**
-     * Trigger variant cache web job
-     * @returns {Promise<void>}
-     */
+         * Trigger variant cache web job
+         * @returns {Promise<void>}
+         */
         cacheWebJob: () => fluentApi.post("Variante/CacheWebJob", null),
 
         // KonturenWebRoutinen
         /**
-     * Get all contours
-     * @returns {Promise<KonturDTO[]>}
-     */
+         * Get all contours
+         * @returns {Promise<KonturDTO[]>}
+         */
         getAllKonturen: () => fluentApi.get("Kontur"),
 
         /**
-     * Save contour
-     * @param {KonturDTO} dto
-     * @returns {Promise<void>}
-     */
+         * Save contour
+         * @param {KonturDTO} dto
+         * @returns {Promise<void>}
+         */
         saveKontur: (dto) => fluentApi.put("Kontur", dto),
 
         // SchnitteWebRoutinen
         /**
-     * Get all cuts
-     * @returns {Promise<SchnittDTO[]>}
-     */
+         * Get all cuts
+         * @returns {Promise<SchnittDTO[]>}
+         */
         getAllSchnitte: () => fluentApi.get("Schnitt"),
 
         /**
-     * Save cut
-     * @param {SchnittDTO} dto
-     * @returns {Promise<void>}
-     */
+         * Save cut
+         * @param {SchnittDTO} dto
+         * @returns {Promise<void>}
+         */
         saveSchnitt: (dto) => fluentApi.put("Schnitt", dto),
 
         // SonderfarbWebRoutinen
         /**
-     * Calculate special colors for beleg
-     * @param {string} belegGuid
-      * @returns {Promise<BelegDTO>}
-     */
+         * Calculate special colors for beleg
+         * @param {string} belegGuid
+         * @returns {Promise<BelegDTO>}
+         */
         berechneSonderfarben: (belegGuid) => fluentApi.post(`BelegSonderfarben?bguid=${belegGuid}`, null),
 
         // BenutzerVariantenWebRoutinen
         /**
-     * Get user variants
-     * @param {string} benutzerGuid
-     * @param {boolean} mitSperrliste
-     * @returns {Promise<VarianteDTO[]>}
-     */
+         * Get user variants
+         * @param {string} benutzerGuid
+         * @param {boolean} mitSperrliste
+         * @returns {Promise<VarianteDTO[]>}
+         */
         getBenutzerVarianten: (benutzerGuid, mitSperrliste) =>
             fluentApi.get(`BenutzerVarianten?id=${benutzerGuid}&mitSperrliste=${mitSperrliste}`),
 
         // ResetCacheVariantenListenWebRoutinen
         /**
-     * Reset variant list cache
-     * @returns {Promise<void>}
-     */
+         * Reset variant list cache
+         * @returns {Promise<void>}
+         */
         resetCacheVariantenListen: () => fluentApi.put("ResetCacheVariantenListen", null),
     };
 }
 
 /**
-   * @typedef {ReturnType<typeof createArtikelApi>} ArtikelApi
-   */
+                                * @typedef {ReturnType<typeof createArtikelApi>} ArtikelApi
+                                */

@@ -1,9 +1,18 @@
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace Gandalan.Client.Contracts.Navigation;
 
-public interface INavigationItem
+public enum NotifyStatusEnum
+{
+    NoNotification,
+    Info,
+    Alert
+}
+
+
+public interface INavigationItem : INotifyPropertyChanged
 {
     string Group { get; }
     string SubGroup { get; }
@@ -11,6 +20,9 @@ public interface INavigationItem
     object Icon { get; }
     int Order { get; }
     bool IsVisible { get; set; }
+    
+    NotifyStatusEnum NotifyStatus { get; set; }
+    int NotifyCount { get; set; }
 
     Func<Task> Execute { get; }
 }
