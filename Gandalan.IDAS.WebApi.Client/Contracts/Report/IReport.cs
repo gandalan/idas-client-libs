@@ -132,6 +132,9 @@ public class ReportExecuteSettings
             Copies = result.Copies,
             Watermark = result.Watermark,
             ShowSerienName = result.ShowSerienName,
+            SelectedPrinterPaperWidthMm = result.SelectedPrinterPaperWidthMm,
+            SelectedPrinterPaperHeightMm = result.SelectedPrinterPaperHeightMm,
+            Dpi = result.SelectedPrinterDpi,
         };
     }
 
@@ -140,4 +143,6 @@ public class ReportExecuteSettings
     public int Dpi { get; set; }
     public double ContentOffsetX { get; set; }
     public double ContentOffsetY { get; set; }
+    public double SelectedPrinterPaperWidthMm { get; set; }
+    public double SelectedPrinterPaperHeightMm { get; set; }
 }
