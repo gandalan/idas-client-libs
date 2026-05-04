@@ -131,18 +131,21 @@ public class ReportExecuteSettings
             FileName = result.FileName,
             Copies = result.Copies,
             Watermark = result.Watermark,
+            PrinterPaperName = result.PrinterPaperName,
             ShowSerienName = result.ShowSerienName,
-            SelectedPrinterPaperWidthMm = result.SelectedPrinterPaperWidthMm,
-            SelectedPrinterPaperHeightMm = result.SelectedPrinterPaperHeightMm,
-            Dpi = result.SelectedPrinterDpi,
+            PrinterPaperWidthMm = result.PrinterPaperWidthMm,
+            PrinterPaperHeightMm = result.PrinterPaperHeightMm,
+            PrinterDpi = result.PrinterDpi,
         };
     }
 
+
     public bool ShowSerienName { get; set; }
     public bool IsEtikettReport { get; set; }
-    public int Dpi { get; set; }
     public double ContentOffsetX { get; set; }
     public double ContentOffsetY { get; set; }
-    public double SelectedPrinterPaperWidthMm { get; set; }
-    public double SelectedPrinterPaperHeightMm { get; set; }
+    public string PrinterPaperName { get; set; }
+    public double PrinterPaperWidthMm { get; set; }
+    public double PrinterPaperHeightMm { get; set; }
+    public int PrinterDpi { get; set; }
 }
