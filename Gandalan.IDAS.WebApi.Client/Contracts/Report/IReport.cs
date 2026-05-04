@@ -110,12 +110,12 @@ public class ReportExecuteSettings
     /// <summary>
     /// Page width in mm
     /// </summary>
-    public double PageWidth { get; set; } = 210;
+    public double MediaPageWidthMm { get; set; } = 210;
 
     /// <summary>
     /// Page height in mm
     /// </summary>
-    public double PageHeight { get; set; } = 297;
+    public double MediaPageHeightMm { get; set; } = 297;
 
     public string FileName { get; set; }
     public int Copies { get; set; } = 1;

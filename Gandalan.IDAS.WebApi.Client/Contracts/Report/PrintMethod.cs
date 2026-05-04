@@ -2,7 +2,7 @@
 
 public enum PrintMethod
 {
-    TerminalWorksPrint,
-    DynamicPdfPrint,
-    IronPdfPrint
+    TerminalWorksPrint = 0,
+    DynamicPdfPrint = 1,
+    IronPdfPrint = 2
 }
