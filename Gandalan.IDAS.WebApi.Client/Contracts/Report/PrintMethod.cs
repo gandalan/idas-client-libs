@@ -4,5 +4,6 @@ public enum PrintMethod
 {
     TerminalWorksPrint = 0,
     DynamicPdfPrint = 1,
-    IronPdfPrint = 2
+    IronPdfPrint = 2,
+    WebView2Printer = 3
 }
