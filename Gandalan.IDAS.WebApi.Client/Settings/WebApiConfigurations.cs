@@ -115,7 +115,7 @@ public static class WebApiConfigurations
 
     private static void setupLocalEnvironment(Guid appToken)
     {
-        var localEnvPath = Path.Combine(_settingsPath, "Local");
+        var localEnvPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Gandalan", "Local");
 
         if (Directory.Exists(localEnvPath))
         {
