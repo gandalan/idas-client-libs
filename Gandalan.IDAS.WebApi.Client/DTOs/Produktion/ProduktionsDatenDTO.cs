@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Gandalan.IDAS.WebApi.Client.DTOs.Produktion;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 

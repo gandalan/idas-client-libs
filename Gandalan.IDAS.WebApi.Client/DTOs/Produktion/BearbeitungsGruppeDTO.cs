@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Gandalan.IDAS.WebApi.Client.DTOs.Produktion;
+namespace Gandalan.IDAS.WebApi.DTO;
 
 public class BearbeitungsGruppeDTO
 {
