@@ -28,6 +28,10 @@ public class ProduktionsDatenDTO
     /// CNC-Bearbeitungen
     /// </summary>
     public List<BearbeitungDTO> Bearbeitungen { get; set; } = [];
+
+    /// <summary>
+    /// Gruppen fachlich zusammengehöriger Bearbeitungen mit gemeinsamem Anker-Punkt für die SLK
+    /// </summary>
     public List<BearbeitungsGruppeDTO> BearbeitungsGruppen { get; set; } = [];
 
     /// <summary>
