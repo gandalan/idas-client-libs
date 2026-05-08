@@ -56,4 +56,5 @@ public class BearbeitungDTO
     public bool NichtFreigegeben { get; set; }
     public bool MassXEditierbar { get; set; }
     public bool GroesseEditierbar { get; set; }
+    public Guid? BearbeitungsGruppeGuid { get; set; }
 }
