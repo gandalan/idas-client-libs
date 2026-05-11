@@ -11,7 +11,6 @@ public interface IReportAuswahlResult
     int Copies { get; set; }
     string Watermark { get; set; }
     bool ShowSerienName { get; set; }
-    PrintMethod PrintMethod { get; set; }
     double PrinterPaperWidthMm { get; set; }
     double PrinterPaperHeightMm { get; set; }
     int PrinterDpi { get; set; }
