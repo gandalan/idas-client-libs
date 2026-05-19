@@ -25,4 +25,10 @@ public interface IAblageService
     /// </summary>
     /// <param name="ablageDTO">AblageDTO, das entfernt werden soll</param>
     Task DeleteAsync(AblageDTO ablageDTO);
+
+    /// <summary>
+    /// Erstellt die Standardablagen, wenn es keine Ablagen gibt für den Mandanten
+    /// </summary>
+    /// <returns>Die erstellten Ablagen</returns>
+    Task<List<AblageDTO>> CreateDefaults();
 }
