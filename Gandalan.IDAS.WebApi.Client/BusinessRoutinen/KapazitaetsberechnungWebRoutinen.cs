@@ -52,4 +52,13 @@ public class KapazitaetsberechnungWebRoutinen : WebRoutinenBase
     /// </summary>
     public async Task<AsyncJobResultDTO> GetCalculateItemsStatusAsync(Guid jobId)
         => await GetAsync<AsyncJobResultDTO>($"Kapaziaetsberechnung/CalculateItems/Status/{jobId}");
+
+    /// <summary>
+    /// Startet den CalculateItems-Bulk-Job im Backend mit Callback-URL.
+    /// Das Backend sendet das Ergebnis per POST an die callbackUrl, sobald der Job
+    /// abgeschlossen (oder fehlgeschlagen) ist.
+    /// </summary>
+    public async Task StartCalculateItemsWithCallbackAsync(string callbackUrl)
+        => await PostAsync("Kapaziaetsberechnung/CalculateItems/StartWithCallback",
+            new KapBerechnungCallbackRequest { CallbackUrl = callbackUrl }, skipAuth: true);
 }
