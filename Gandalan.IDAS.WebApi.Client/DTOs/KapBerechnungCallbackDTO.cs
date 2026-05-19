@@ -56,3 +56,14 @@ public class KapBerechnungBatchCallbackResult
   public int FailCount { get; set; }
   public long TotalDurationMs { get; set; }
 }
+
+/// <summary>
+/// Ergebnis, das das Backend per POST an die Callback-URL sendet,
+/// sobald der CalculateItems-Bulk-Job abgeschlossen (oder fehlgeschlagen) ist.
+/// </summary>
+public class CalculateItemsCallbackResult
+{
+  public bool Success { get; set; }
+  public string Error { get; set; }
+  public long DurationMs { get; set; }
+}
