@@ -8,6 +8,10 @@ on:
       - 'WebLibs/**'
       - '.github/workflows/publish-weblibs.yml'
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 env:
   WEBLIBS_DIR: WebLibs
 
@@ -33,6 +37,7 @@ jobs:
       with:
         node-version: 22
         registry-url: 'https://registry.npmjs.org'
+        package-manager-cache: false  # never use caching in release builds
 
     - run: npm ci
       working-directory: ${{ env.WEBLIBS_DIR }}
@@ -43,16 +48,8 @@ jobs:
     - run: npm run lint:prod
       working-directory: ${{ env.WEBLIBS_DIR }}
 
-    - name: Verify npm auth (granular token)
-      run: npm whoami
-      working-directory: ${{ env.WEBLIBS_DIR }}
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
     - run: npm publish
       working-directory: ${{ env.WEBLIBS_DIR }}
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     - name: Commit version bump + create tag
       shell: bash
