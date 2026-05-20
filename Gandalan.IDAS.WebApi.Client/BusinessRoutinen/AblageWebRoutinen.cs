@@ -47,4 +47,9 @@ public class AblageWebRoutinen : WebRoutinenBase
     {
         return await PutAsync<FachzuordnungResultDTO>("Ablage/Fachverteilung", avGuids);
     }
+
+    public async Task<List<AblageDTO>> CreateDefaults()
+    {
+        return await PutAsync<List<AblageDTO>>("Ablage/CreateDefaults", null);
+    }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@gandalan/weblibs",
-  "version": "1.5.31",
+  "version": "1.5.37",
   "description": "WebLibs for Gandalan JS/TS projects",
   "keywords": [
     "gandalan"
@@ -34,6 +34,7 @@
     "globals": "^15.15.0"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -102,18 +102,19 @@ public enum ReportCapability
 public class ReportExecuteSettings
 {
     public string ReportName { get; set; }
+
     public ReportAction ReportAction { get; set; }
     public string PrinterName { get; set; }
 
     /// <summary>
     /// Page width in mm
     /// </summary>
-    public double PageWidth { get; set; } = 210;
+    public double MediaPageWidthMm { get; set; } = 210;
 
     /// <summary>
     /// Page height in mm
     /// </summary>
-    public double PageHeight { get; set; } = 297;
+    public double MediaPageHeightMm { get; set; } = 297;
 
     public string FileName { get; set; }
     public int Copies { get; set; } = 1;
@@ -128,10 +129,21 @@ public class ReportExecuteSettings
             FileName = result.FileName,
             Copies = result.Copies,
             Watermark = result.Watermark,
+            PrinterPaperName = result.PrinterPaperName,
             ShowSerienName = result.ShowSerienName,
+            PrinterPaperWidthMm = result.PrinterPaperWidthMm,
+            PrinterPaperHeightMm = result.PrinterPaperHeightMm,
+            PrinterDpi = result.PrinterDpi,
         };
     }
 
+
     public bool ShowSerienName { get; set; }
     public bool IsEtikettReport { get; set; }
+    public double ContentOffsetXMm { get; set; }
+    public double ContentOffsetYMm { get; set; }
+    public string PrinterPaperName { get; set; }
+    public double PrinterPaperWidthMm { get; set; }
+    public double PrinterPaperHeightMm { get; set; }
+    public int PrinterDpi { get; set; }
 }

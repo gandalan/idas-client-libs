@@ -221,6 +221,7 @@ export * from "./api/dtos/index.js";
 /** @typedef {import("./api/dtos/index.js").VarianteDTOListe} VarianteDTOListe */
 /** @typedef {import("./api/dtos/index.js").WarenGruppeDTO} WarenGruppeDTO */
 /** @typedef {import("./api/dtos/index.js").WarenGruppeDTOListe} WarenGruppeDTOListe */
+/** @typedef {import("./api/dtos/index.js").WarenGruppeListDTO} WarenGruppeListDTO */
 /** @typedef {import("./api/dtos/index.js").WerteListeDTO} WerteListeDTO */
 /** @typedef {import("./api/dtos/index.js").WerteListeDTOListe} WerteListeDTOListe */
 /** @typedef {import("./api/dtos/index.js").WerteListeItemDTO} WerteListeItemDTO */

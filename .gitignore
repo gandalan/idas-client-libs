@@ -411,3 +411,4 @@ docs/
 .ck/
 REFACTORING_SUMMARY.md
 CK.md
+*.lscache
