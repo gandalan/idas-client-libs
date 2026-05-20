@@ -20,4 +20,7 @@ public class VorgangBlackListWebRoutinen : WebRoutinenBase
 
     public async Task RemoveBlackListEntryAsync(Guid vorgangBlackListGuid)
         => await DeleteAsync($"VorgangBlackList/RemoveBlackListEntry?vorgangBlackListGuid={vorgangBlackListGuid}");
+    
+    public async Task RemoveBlackListEntryAsync(Guid vorgangGuid, Guid appGuid, bool onlyUser)
+        => await DeleteAsync($"VorgangBlackList/RemoveBlackListEntry?vorgangGuid={vorgangGuid}&appGuid={appGuid}&onlyUser={onlyUser}");
 }
