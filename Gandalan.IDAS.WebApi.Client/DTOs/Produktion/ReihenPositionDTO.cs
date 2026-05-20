@@ -4,6 +4,6 @@ namespace Gandalan.IDAS.WebApi.DTO;
 
 public class ReihenPositionDTO
 {
-    public Guid ReiheGuid { get; set; }
+    public Guid ReihenGuid { get; set; }
     public int Index { get; set; }
 }
