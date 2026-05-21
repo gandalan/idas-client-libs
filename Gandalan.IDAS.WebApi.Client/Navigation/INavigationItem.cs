@@ -11,7 +11,6 @@ public enum NotifyStatusEnum
     Alert
 }
 
-
 public interface INavigationItem : INotifyPropertyChanged
 {
     string Group { get; }
