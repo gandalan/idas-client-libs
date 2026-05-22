@@ -273,37 +273,39 @@ public class WebRoutinenBase
             }
         }
 
-        if (exception is ApiException apiEx)
+        if (exception is ApiException apiException)
         {
-            TryAdd("StatusCode", apiEx.StatusCode);
-            if (!string.IsNullOrEmpty(apiEx.Payload))
+            TryAdd("StatusCode", apiException.StatusCode);
+            if (!string.IsNullOrEmpty(apiException.Payload))
             {
-                TryAdd("Payload", apiEx.Payload);
+                TryAdd("Payload", apiException.Payload);
             }
 
-            if (!string.IsNullOrEmpty(apiEx.ExceptionString))
+            if (!string.IsNullOrEmpty(apiException.ExceptionString))
             {
-                TryAdd("ExceptionString", apiEx.ExceptionString);
+                TryAdd("ExceptionString", apiException.ExceptionString);
             }
 
-            if (apiEx.ProblemDetails != null)
+            if (apiException.ProblemDetails != null)
             {
-                TryAdd("ProblemDetails.Title", apiEx.ProblemDetails.Title);
-                TryAdd("ProblemDetails.Type", apiEx.ProblemDetails.Type);
-                TryAdd("ProblemDetails.Detail", apiEx.ProblemDetails.Detail);
-                TryAdd("ProblemDetails.Instance", apiEx.ProblemDetails.Instance);
-                TryAdd("ProblemDetails.Status", apiEx.ProblemDetails.Status);
+                TryAdd("ProblemDetails.Title", apiException.ProblemDetails.Title);
+                TryAdd("ProblemDetails.Type", apiException.ProblemDetails.Type);
+                TryAdd("ProblemDetails.Detail", apiException.ProblemDetails.Detail);
+                TryAdd("ProblemDetails.Instance", apiException.ProblemDetails.Instance);
+                TryAdd("ProblemDetails.Status", apiException.ProblemDetails.Status);
             }
         }
 
         // Promote response body from inner HttpRequestException into top-level Data so it shows up in dumps
-        Exception walker = exception;
+        var currentException = exception;
+
         var depth = 0;
-        while (walker != null && depth < 10)
+
+        while (currentException != null && depth < 10)
         {
-            if (walker.Data.Contains("Response"))
+            if (currentException.Data.Contains("Response"))
             {
-                var resp = walker.Data["Response"]?.ToString();
+                var resp = currentException.Data["Response"]?.ToString();
                 if (!string.IsNullOrEmpty(resp))
                 {
                     if (resp.Length > 4000)
@@ -321,7 +323,7 @@ public class WebRoutinenBase
                 break;
             }
 
-            walker = walker.InnerException;
+            currentException = currentException.InnerException;
             depth++;
         }
     }
