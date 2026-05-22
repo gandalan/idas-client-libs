@@ -11,9 +11,10 @@ public static class ExportHelper
                 ? ExportArtikelArt.Ueberschriebene
                 : ExportArtikelArt.Neher;
 
-    public static ExportFarbArt GetExportFarbArt(string farbKuerzel, string farbZusatzText) => farbKuerzel != "SF"
-            ? ExportFarbArt.Standardfarbe
-            : farbKuerzel == "SF" && !string.IsNullOrEmpty(farbZusatzText)
-                ? ExportFarbArt.Trendfarbe
-                : ExportFarbArt.Sonderfarbe;
+    public static ExportFarbArt GetExportFarbArt(string farbKuerzel, string farbZusatzText) =>
+        !string.IsNullOrEmpty(farbZusatzText) 
+            ? ExportFarbArt.Trendfarbe 
+            : farbKuerzel == "SF" 
+                ? ExportFarbArt.Sonderfarbe
+                : ExportFarbArt.Standardfarbe;
 }
