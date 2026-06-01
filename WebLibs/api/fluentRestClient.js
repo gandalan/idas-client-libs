@@ -60,14 +60,15 @@ export function restClient() {
          * @async
          * @param {string} [url=""]
          * @param {boolean} [auth=true]
+         * @param {boolean} [skipResponseParsing=false]
          * @returns {Promise<any>}
          */
-        async get(url = "", auth = true) {
+        async get(url = "", auth = true, skipResponseParsing = false) {
             const finalUrl = `${this.baseUrl}${url}`;
             const headers = this._createHeaders();
             const res = await fetch(finalUrl, { method: "GET", headers });
             if (res.ok) {
-                return await this._parseReponse(res);
+                return skipResponseParsing ? res : await this._parseReponse(res); 
             }
 
             throw new Error(`GET ${finalUrl} failed: ${res.status} ${res.statusText}`);
@@ -79,14 +80,15 @@ export function restClient() {
          * @async
          * @param {string} [url=""]
          * @param {Object} [payload={}]
+         * @param {boolean} [skipResponseParsing=false]
          * @returns {Promise<any>}
          */
-        async put(url = "", payload = {}) {
+        async put(url = "", payload = {}, skipResponseParsing = false) {
             const finalUrl = `${this.baseUrl}${url}`;
             const headers = this._createHeaders("application/json");
             const res = await fetch(finalUrl, { method: "PUT", body: JSON.stringify(payload), headers });
             if (res.ok) {
-                return await this._parseReponse(res);
+                return skipResponseParsing ? res : await this._parseReponse(res);
             }
 
             throw new Error(`PUT ${finalUrl} failed: ${res.status} ${res.statusText}`);
@@ -98,9 +100,10 @@ export function restClient() {
          * @async
          * @param {string} [url=""]
          * @param {Object|FormData} [payload={}]
+         * @param {boolean} [skipResponseParsing=false]
          * @returns {Promise<any>}
          */
-        async post(url = "", payload = {}) {
+        async post(url = "", payload = {}, skipResponseParsing = false) {
             const finalUrl = `${this.baseUrl}${url}`;
             let headers;
 
@@ -116,7 +119,7 @@ export function restClient() {
 
             const res = await fetch(finalUrl, { method: "POST", body, headers });
             if (res.ok) {
-                return await this._parseReponse(res);
+                return skipResponseParsing ? res : await this._parseReponse(res);
             }
 
             throw new Error(`POST ${finalUrl} failed: ${res.status} ${res.statusText}`);
@@ -127,9 +130,11 @@ export function restClient() {
          *
          * @async
          * @param {string} [url=""]
+         * @param {Object|FormData} [payload=null]
+         * @param {boolean} [skipResponseParsing=false]
          * @returns {Promise<any>}
          */
-        async delete(url = "", payload = null) {
+        async delete(url = "", payload = null, skipResponseParsing = false) {
             const finalUrl = `${this.baseUrl}${url}`;
             const hasBody = payload !== null && payload !== undefined;
             const isFormData = payload instanceof FormData;
@@ -137,7 +142,7 @@ export function restClient() {
             const body = !hasBody ? undefined : isFormData ? payload : JSON.stringify(payload);
             const res = await fetch(finalUrl, { method: "DELETE", headers, body });
             if (res.ok) {
-                return await this._parseReponse(res);
+                return skipResponseParsing ? res : await this._parseReponse(res);
             }
 
             throw new Error(`DELETE ${finalUrl} failed: ${res.status} ${res.statusText}`);

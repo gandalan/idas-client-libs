@@ -73,44 +73,47 @@ export function createApi() {
         },
 
         /**
-          * Sends a GET request, ensuring authentication if needed.
-          *
-          * @async
-          * @param {string} [url=""]
-          * @param {boolean} [auth=true]
-          * @returns {Promise<Object>}
-          */
-        async get(url = "", auth = true) {
+         * Sends a GET request, ensuring authentication if needed.
+         *
+         * @async
+         * @param {string} [url=""]
+         * @param {boolean} [auth=true]
+         * @param {boolean} [skipResponseParsing=false]
+         * @returns {Promise<Object>}
+         */
+        async get(url = "", auth = true, skipResponseParsing = false) {
             await this.preCheck(auth);
-            return await this.createRestClient().get(url);
+            return await this.createRestClient().get(url, auth, skipResponseParsing);
         },
 
         /**
-          * Sends a PUT request with a payload, ensuring authentication if needed.
-          *
-          * @async
-          * @param {string} [url=""]
-          * @param {Object} [payload={}]
-          * @param {boolean} [auth=true]
-          * @returns {Promise<Object>}
-          */
-        async put(url = "", payload = {}, auth = true) {
+         * Sends a PUT request with a payload, ensuring authentication if needed.
+         *
+         * @async
+         * @param {string} [url=""]
+         * @param {Object} [payload={}]
+         * @param {boolean} [auth=true]
+         * @param {boolean} [skipResponseParsing=false]
+         * @returns {Promise<Object>}
+         */
+        async put(url = "", payload = {}, auth = true, skipResponseParsing = false) {
             await this.preCheck(auth);
-            return await this.createRestClient().put(url, payload);
+            return await this.createRestClient().put(url, payload, skipResponseParsing);
         },
 
         /**
-          * Sends a POST request with a payload, ensuring authentication if needed.
-          *
-          * @async
-          * @param {string} [url=""]
-          * @param {Object} [payload={}]
-          * @param {boolean} [auth=true]
-          * @returns {Promise<Object>}
-          */
-        async post(url = "", payload = {}, auth = true) {
+         * Sends a POST request with a payload, ensuring authentication if needed.
+         *
+         * @async
+         * @param {string} [url=""]
+         * @param {Object} [payload={}]
+         * @param {boolean} [auth=true]
+         * @param {boolean} [skipResponseParsing=false]
+         * @returns {Promise<Object>}
+         */
+        async post(url = "", payload = {}, auth = true, skipResponseParsing = false) {
             await this.preCheck(auth);
-            return await this.createRestClient().post(url, payload);
+            return await this.createRestClient().post(url, payload, skipResponseParsing);
         },
 
         /**
@@ -118,12 +121,14 @@ export function createApi() {
          *
          * @async
          * @param {string} [url=""]
+         * @param {Object|FormData} [payload=null]
          * @param {boolean} [auth=true]
+         * @param {boolean} [skipResponseParsing=false]
          * @returns {Promise<Object>}
          */
-        async delete(url = "", payload = null, auth = true) {
+        async delete(url = "", payload = null, auth = true, skipResponseParsing = false) {
             await this.preCheck(auth);
-            return await this.createRestClient().delete(url, payload);
+            return await this.createRestClient().delete(url, payload, skipResponseParsing);
         },
 
         /**
