@@ -26,5 +26,6 @@ public interface IApplicationConfig
     bool IsAdditionalInstance { get; set; }
     bool IsSafeMode { get; set; }
     bool UsingAppPath { get; set; }
+    string WebView2UserDataPath { get; }
 
 }
