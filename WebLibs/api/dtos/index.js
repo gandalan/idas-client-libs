@@ -230,4 +230,4 @@
 
 /** @typedef {import("./webjob.js").MandantAndBelegPosGuidDTO} MandantAndBelegPosGuidDTO */
 
-export { };
+export {};

@@ -1,6 +1,6 @@
 {
   "name": "@gandalan/weblibs",
-  "version": "1.5.37",
+  "version": "2.0.0",
   "description": "WebLibs for Gandalan JS/TS projects",
   "keywords": [
     "gandalan"
@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
-    "axios": "^1.8.2",
     "jwt-decode": "^4.0.0",
     "validator": "^13.12.0"
   },
