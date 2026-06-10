@@ -1,6 +1,4 @@
 export * from "./index.js";
-export { IDASFactory } from "./api/IDAS.js";
-export { RESTClient } from "./api/RESTClient.js";
 export function createApi(): FluentApi;
 export function fluentApi(url: string, authManager: FluentAuthManager | null, serviceName: string): FluentApi;
 export function createIDASApi(): IDASFluentApi;
@@ -9,7 +7,6 @@ export function createAuthManager(): FluentAuthManager;
 export function fluentIdasAuthManager(appToken: string, authBaseUrl: string): FluentAuthManager;
 export function fetchEnvConfig(envConfig?: string): Promise<EnvironmentConfig>;
 export function restClient(): FluentRESTClient;
-export function initIDAS(appToken: string): Promise<Settings | null>;
 
 export type AblageApi = {
     get: (guid: string) => Promise<AblageDTO>;
@@ -116,8 +113,11 @@ export type ArtikelApi = {
     getAllIndiDaten: (changedSince?: Date) => Promise<KatalogArtikelIndiDatenDTO[]>;
     saveArtikelIndiDaten: (daten: KatalogArtikelIndiDatenDTO) => Promise<void>;
     deleteArtikelIndiDaten: (daten: KatalogArtikelIndiDatenDTO) => Promise<void>;
-    getAllWarenGruppen: () => Promise<WarenGruppeDTO[]>;
+    getAllWarenGruppen: (changedSince?: Date, includeArtikel?: boolean) => Promise<WarenGruppeDTO[]>;
+    getWarenGruppenList: (changedSince?: Date) => Promise<WarenGruppeListDTO[]>;
     saveWarenGruppe: (dto: WarenGruppeDTO) => Promise<void>;
+    getWarenGruppe: (warenGruppeGuid: string, includeArtikel?: boolean) => Promise<WarenGruppeDTO>;
+    getArtikelForWarengruppe: (warenGruppeGuid: string) => Promise<KatalogArtikelDTO[]>;
     getAllProduktGruppen: (includeFamilien?: boolean) => Promise<ProduktGruppeDTO[]>;
     saveProduktGruppe: (produktGruppe: ProduktGruppeDTO) => Promise<ProduktGruppeDTO>;
     getAllProduktFamilien: (includeVarianten?: boolean) => Promise<ProduktFamilieDTO[]>;
@@ -334,6 +334,7 @@ export type BelegApi = {
     getBelegStatus: (belegGuid: string) => Promise<BelegStatusDTO>;
     setBelegStatus: (belegGuid: string, statusCode: string, statusText?: string) => Promise<BelegStatusDTO>;
     belegKopieren: (belegGuid: string, neueBelegArt: string, saldenKopieren?: boolean) => Promise<VorgangDTO>;
+    belegListe: (jahr: number, belegart: string, kundennummer: string, includeArtikel?: boolean) => Promise<VorgangListItemDTO[]>;
     belegWechsel: (dto: BelegartWechselDTO) => Promise<VorgangDTO>;
     belegLoeschen: (belegGuid: string) => Promise<VorgangDTO>;
     ladeVorgangsListeByJahr: (jahr: number, includeASP?: boolean, includeAdditionalProperties?: boolean) => Promise<VorgangListItemDTO[]>;
@@ -851,8 +852,6 @@ export type CsvExportCombinationDTO = {
     ExportArtikelArten: ExportArtikelArt[];
     ExportFarbArten: ExportFarbArt[];
 };
-
-export type DecodedToken = import("jwt-decode").JwtPayload & JwtUserInfo & { id?: string };
 
 export type DevOpsStatusDTO = {
     Env: string;
@@ -2653,13 +2652,6 @@ export type SetFakturaDTO = {
     Kennzeichen: string;
 };
 
-export type Settings = {
-    appToken: string;
-    mandantGuid: string;
-    apiBaseurl: string;
-    authUrl: string;
-};
-
 export type SettingsApi = {
     getAllSettings: () => Promise<Record<string, object>>;
     saveSetting: (key: string, value: object) => Promise<void>;
@@ -3125,6 +3117,18 @@ export type WarenGruppeDTO = {
 };
 
 export type WarenGruppeDTOListe = Array<WarenGruppeDTO>;
+
+export type WarenGruppeListDTO = {
+    WarenGruppeGuid: string;
+    Nummer: number;
+    Bezeichnung: string;
+    IstEKPWarengruppe: boolean;
+    FrontendLogik: string;
+    Version: number;
+    ChangedDate: string;
+    ArtikelAnzahl: number;
+    ArtikelGuids: string[];
+};
 
 export type WebJobHistorieDTO = {
     WebJobHistorieGuid: string;
