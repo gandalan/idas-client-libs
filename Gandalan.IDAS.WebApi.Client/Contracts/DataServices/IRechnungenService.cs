@@ -14,4 +14,6 @@ public interface IRechnungenService
     Task SetBelegePrintedAsync(List<Guid> belegListe);
     Task SetBelegeExportedAsync(List<Guid> belegListe);
     Task<Dictionary<Guid, Guid>> ErstelleRechnungenAsync(List<BelegartWechselDTO> belegeWechsel);
+    Task<string> GetZugferdXmlAsync(Guid belegGuid);
+    Task<string> GetZugferdSammelrechnungXmlAsync(Guid sammelrechnungGuid);
 }
