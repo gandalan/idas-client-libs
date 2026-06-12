@@ -21,10 +21,7 @@ const dtoRootMarkerEnd = "// END GENERATED ROOT DTO TYPEDEFS";
 const businessRootMarkerStart = "// BEGIN GENERATED ROOT BUSINESS TYPEDEFS";
 const businessRootMarkerEnd = "// END GENERATED ROOT BUSINESS TYPEDEFS";
 
-const rootValueExportStatements = [
-    "export { IDASFactory } from \"./api/IDAS.js\";",
-    "export { RESTClient } from \"./api/RESTClient.js\";"
-];
+const rootValueExportStatements = [];
 
 const rootFunctionDeclarationStatements = [
     "export function createApi(): FluentApi;",
@@ -34,8 +31,7 @@ const rootFunctionDeclarationStatements = [
     "export function createAuthManager(): FluentAuthManager;",
     "export function fluentIdasAuthManager(appToken: string, authBaseUrl: string): FluentAuthManager;",
     "export function fetchEnvConfig(envConfig?: string): Promise<EnvironmentConfig>;",
-    "export function restClient(): FluentRESTClient;",
-    "export function initIDAS(appToken: string): Promise<Settings | null>;"
+    "export function restClient(): FluentRESTClient;"
 ];
 
 const simpleImportTypePattern = /^import\((?:"|').+(?:"|')\)\.[A-Za-z0-9_$]+$/;

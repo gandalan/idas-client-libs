@@ -1,8 +1,3 @@
-import { IDASFactory } from "./api/IDAS";
-import { RESTClient } from "./api/RESTClient";
-import { initIDAS } from "./api/authUtils";
-export { IDASFactory, initIDAS, RESTClient };
-
 export { createApi, fluentApi } from "./api/fluentApi";
 export { createIDASApi, idasFluentApi } from "./api/idasFluentApi";
 export { createAuthManager, fluentIdasAuthManager } from "./api/fluentAuthManager";

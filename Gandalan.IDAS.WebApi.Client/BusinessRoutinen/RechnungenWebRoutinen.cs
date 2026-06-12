@@ -27,4 +27,10 @@ public class RechnungenWebRoutinen : WebRoutinenBase
 
     public async Task<Dictionary<Guid, Guid>> ErstelleRechnungenAsync(List<BelegartWechselDTO> belegeWechsel)
         => await PostAsync<Dictionary<Guid, Guid>>("Rechnungen/ErstelleRechnungen", belegeWechsel);
+
+    public async Task<string> GetZugferdXmlAsync(Guid belegGuid)
+        => await GetAsync($"Rechnungen/xml?belegGuid={belegGuid}");
+
+    public async Task<string> GetZugferdSammelrechnungXmlAsync(Guid sammelrechnungGuid)
+        => await GetAsync($"Sammelrechnungen/xml?sammelrechnungGuid={sammelrechnungGuid}");
 }
