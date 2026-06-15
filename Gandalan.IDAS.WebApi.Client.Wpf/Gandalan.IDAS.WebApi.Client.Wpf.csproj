@@ -52,7 +52,13 @@
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!--
+    These WPF assemblies are referenced by simple name only for .NET Framework (net48).
+    For the .NET (Core) -windows TFMs, UseWPF=true + the Windows Desktop SDK already
+    provide them; adding bare <Reference> items there causes MSB3245/MSB3243 resolution
+    conflicts (and breaks resolution entirely when building on non-Windows).
+  -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System.Xaml" />
