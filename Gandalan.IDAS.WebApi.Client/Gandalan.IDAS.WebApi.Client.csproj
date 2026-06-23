@@ -11,7 +11,7 @@
     <Version>2099.0.0-alpha</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Configurations>Debug;Release;Debug - Core only</Configurations>
+    <Configurations>Debug;Release</Configurations>
     <DocumentationFile>..\Gandalan.IDAS.WebApi.Client\GDL.IDAS.WebApi.Client.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -20,10 +20,6 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416;</WarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Debug - Core only'">
     <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416;</WarningsAsErrors>
   </PropertyGroup>
 
