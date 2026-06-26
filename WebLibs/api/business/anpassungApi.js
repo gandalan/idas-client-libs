@@ -1,7 +1,31 @@
 /**
  * @typedef {import('../fluentApi.js').FluentApi} FluentApi
- * @typedef {Object & { AnpassungGuid?: string, anpassungGuid?: string }} AnpassungDTO
- * @typedef {Object & { AnpassungVorlageGuid?: string, anpassungVorlageGuid?: string }} AnpassungVorlageDTO
+ */
+
+/**
+ * @typedef {Object} AnpassungDTO
+ * @property {string} AnpassungGuid
+ * @property {string} Art
+ * @property {boolean} GiltFuerBesitzer
+ * @property {boolean} GiltFuerAlleUntermandanten
+ * @property {boolean} GiltFuerZielMandant
+ * @property {string} ZielMandantGuid
+ * @property {string} Content
+ * @property {string} WarengruppeGuid
+ * @property {string} ArtikelGuid
+ * @property {number} Version
+ * @property {string} ChangedDate - ISO date string
+ */
+
+/**
+ * @typedef {Object} AnpassungVorlageDTO
+ * @property {string} AnpassungVorlageGuid
+ * @property {string} Art
+ * @property {string} Name
+ * @property {string} Beschreibung
+ * @property {string} Content
+ * @property {number} Version
+ * @property {string} ChangedDate - ISO date string
  */
 
 /**

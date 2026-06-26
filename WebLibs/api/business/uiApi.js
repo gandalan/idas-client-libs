@@ -5,7 +5,7 @@
  * @typedef {import('../dtos/index.js').UIEingabeFeldInfoDTO} UIEingabeFeldInfoDTO
  * @typedef {import('../dtos/index.js').TagInfoDTO} TagInfoDTO
  * @typedef {import('../dtos/index.js').TagVorlageDTO} TagVorlageDTO
- * @typedef {Object} FilterItemDTO
+ * @typedef {import('./systemApi.js').FilterItemDTO} FilterItemDTO
  */
 
 /**

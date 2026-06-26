@@ -93,6 +93,30 @@ export type AnpassungApi = {
     vorlage: { getAll: () => Promise<AnpassungVorlageDTO[]>; get: (guid: string) => Promise<AnpassungVorlageDTO>; save: (dto: AnpassungVorlageDTO) => Promise<void>; delete: (guid: string) => Promise<void> };
 };
 
+export type AnpassungDTO = {
+    AnpassungGuid: string;
+    Art: string;
+    GiltFuerBesitzer: boolean;
+    GiltFuerAlleUntermandanten: boolean;
+    GiltFuerZielMandant: boolean;
+    ZielMandantGuid: string;
+    Content: string;
+    WarengruppeGuid: string;
+    ArtikelGuid: string;
+    Version: number;
+    ChangedDate: string;
+};
+
+export type AnpassungVorlageDTO = {
+    AnpassungVorlageGuid: string;
+    Art: string;
+    Name: string;
+    Beschreibung: string;
+    Content: string;
+    Version: number;
+    ChangedDate: string;
+};
+
 export type ApiVersionDTO = {
     Version: string;
     Environment: string;
@@ -210,6 +234,34 @@ export type AvApi = {
     getAllMaterialBearbeitungsMethoden: () => Promise<MaterialBearbeitungsMethodeDTO[]>;
     saveMaterialBearbeitungsMethode: (dto: MaterialBearbeitungsMethodeDTO) => Promise<void>;
     material: { serieBerechnen: (serieGuid: string) => Promise<void>; getForSerie: (serieGuid: string) => Promise<MaterialbedarfDTO[]>; getOffenerBedarfV2: (serieGuid: string, filterCsvExportedMaterial?: boolean) => Promise<MaterialbedarfDTO[]>; getOffenerBedarf: (serieGuid: string) => Promise<MaterialbedarfDTO[]>; resetForSerie: (serieGuid: string) => Promise<void>; berechnenForFunction: (serieGuid: string, mandantId: number) => Promise<string[]>; resetFromAvPosForFunction: (avPosGuid: string, mandantId: number) => Promise<string[]>; addOrUpdate: (dto: MaterialbedarfDTO) => Promise<SerienMaterialEditDTO>; delete: (materialbedarfGuid: string) => Promise<void> };
+};
+
+export type AvReportBelegDto = {
+    BelegGuid: string;
+    BelegAdresse: BeleganschriftDTO;
+    VersandAdresse: BeleganschriftDTO;
+    VersandAdresseGleichBelegAdresse: boolean;
+    BelegArt: string;
+    Terminwunsch: string;
+    IstSelbstabholer: boolean;
+};
+
+export type AvReportKontaktDto = {
+    KundenNummer: string;
+    Land: string;
+};
+
+export type AvReportVorgangDto = {
+    VorgangGuid: string;
+    VorgangsNummer: number;
+    Kommission: string;
+    Kommission2: string;
+    Belege: Array<AvReportBelegDto>;
+    Kunde: AvReportKontaktDto;
+};
+
+export type AvReportVorgangRequestDto = {
+    VorgangGuids: Array<string>;
 };
 
 export type AVReserviertItemDTO = {
@@ -853,11 +905,25 @@ export type CsvExportCombinationDTO = {
     ExportFarbArten: ExportFarbArt[];
 };
 
+export type Delivery = {
+    delivered: boolean;
+    recipients: number;
+    queued: boolean;
+};
+
 export type DevOpsStatusDTO = {
     Env: string;
     DbInfo: string;
     CurrentMigration: string;
     PendingMigrations: string[];
+};
+
+export type Endpoint = {
+    name: string;
+    on: (type: TypePattern, handler: MessageHandler) => (() => void);
+    send: (to: string, type: string, payload?: any, options?: SendOptions) => Delivery;
+    broadcast: (type: string, payload?: any, options?: SendOptions) => Delivery;
+    dispose: () => void;
 };
 
 export type EnvironmentConfig = {
@@ -1016,6 +1082,28 @@ export type FileApi = {
     getList: () => Promise<FileInfoDTO[]>;
     getZipped: (fileNames: string[]) => Promise<Uint8Array>;
     data: { get: (filename: string) => Promise<Uint8Array>; getList: (directory?: string) => Promise<FileInfoDTO[]>; save: (fileName: string, data: Uint8Array) => Promise<void>; delete: (filename: string) => Promise<void> };
+};
+
+export type FileInfoDTO = {
+    FileName: string;
+    FileSize: number;
+    Modified: string;
+    Created: string;
+    GueltigBis: string | null;
+    MandantGuid: string | null;
+};
+
+export type FilterItemDTO = {
+    FilterGuid: string;
+    MandantGuid: string;
+    BenutzerGuid: string;
+    Title: string;
+    Context: string;
+    SerializedFilterSetting: string;
+    Version: number;
+    ChangedDate: string;
+    IsDeleted: boolean;
+    Reihenfolge: number;
 };
 
 export type FluentApi = {
@@ -1841,7 +1929,7 @@ export type MaterialBearbeitungsMethodeDTO = {
     ChangedDate: string;
 };
 
-export type MaterialbedarfCutOptimization = object.<string, any>;
+export type MaterialbedarfCutOptimization = Record<string, any>;
 
 export type MaterialbedarfDTO = {
     MaterialBedarfGuid: string;
@@ -1942,6 +2030,8 @@ export type MaterialDTO = {
     MoeglicheBearbeitungsMethoden: Array<string>;
 };
 
+export type MessageHandler = (message: NeherMessage) => void;
+
 export type NachrichtenDTO = {
     NachrichtGuid: string;
     MandantGuid: string;
@@ -1961,6 +2051,7 @@ export type NeherApp3 = {
     notify: (message: string, type?: NeherApp3NotifyType, cb?: Function) => void;
     api: NeherApp3ApiCollection;
     cache: NeherApp3CacheCollection;
+    messages: NeherApp3Messages;
     isEmbedded: boolean;
 };
 
@@ -2001,6 +2092,15 @@ export type NeherApp3MenuItem = {
     separator?: boolean;
 };
 
+export type NeherApp3Messages = {
+    register: (moduleName: string) => Endpoint;
+    send: (to: string, type: string, payload?: any, options?: SendOptions) => Delivery;
+    broadcast: (type: string, payload?: any, options?: SendOptions) => Delivery;
+    isReachable: (moduleName: string) => boolean;
+    isKnown: (moduleName: string) => boolean;
+    reachable: string[];
+};
+
 export type NeherApp3Module = {
     moduleName: string;
     setup?: (context: NeherApp3SetupContext) => void | Promise<void>;
@@ -2020,6 +2120,15 @@ export type NeherApp3Props = {
 };
 
 export type NeherApp3SetupContext = NeherApp3Props & { neherapp3: NeherApp3 };
+
+export type NeherMessage = {
+    id: string;
+    type: string;
+    to: string | null;
+    from: string | null;
+    payload: any;
+    ts: number;
+};
 
 export type OberflaecheDTO = {
     OberflaecheGuid: string;
@@ -2095,11 +2204,11 @@ export type PreisermittlungsEinstellungenDTO = {
     EndpreisRundungsModus: string;
     SonderfarbZuschlaege: string;
     BruttoPreisErmitteln: boolean;
-    AufpreisAnpassungen: object.<string, AufpreisAnpassungDTO[]>;
-    PreisfaktorAnpassungen: object.<string, number>;
-    ZuschnittpreisfaktorAnpassungen: object.<string, number>;
-    AufpreisfaktorAnpassungen: object.<string, number>;
-    GrenzfreigabeAnpassungen: object.<string, boolean>;
+    AufpreisAnpassungen: Record<string, AufpreisAnpassungDTO[]>;
+    PreisfaktorAnpassungen: Record<string, number>;
+    ZuschnittpreisfaktorAnpassungen: Record<string, number>;
+    AufpreisfaktorAnpassungen: Record<string, number>;
+    GrenzfreigabeAnpassungen: Record<string, boolean>;
     MbAufpreis: number;
     Mb_v_Fix_Aufpreis: number|null;
     Mb_Klebeband_Aufpreis: number|null;
@@ -2548,6 +2657,16 @@ export type SchnittKonturOperationDTO = {
 
 export type SchnittoptimierungsOptionen = ('Keine'|'Lieferdatum'|'Serie'|'FarbeOberflaeche');
 
+export type SendOptions = {
+    from?: string;
+    retain?: boolean;
+    requireRecipient?: boolean;
+    deliverWhenAvailable?: boolean;
+    echo?: boolean;
+    ttlMs?: number;
+    onUndeliverable?: (message: NeherMessage) => void;
+};
+
 export type SerieAuslastungDTO = {
     IstSumme: boolean;
     Produktfamilie: string;
@@ -2726,6 +2845,8 @@ export type TemplateDTO = {
     ChangedDate: string;
     Benutzer: string;
 };
+
+export type TypePattern = string | string[];
 
 export type UiApi = {
     getAllUiDefinitions: () => Promise<UIDefinitionDTO[]>;
