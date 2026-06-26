@@ -2085,6 +2085,7 @@ export type NeherApp3MenuItem = {
     id?: string;
     selected?: boolean;
     icon?: string;
+    iconAdaptive?: boolean;
     url?: string | null;
     text?: string;
     parent?: string | null;

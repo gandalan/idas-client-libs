@@ -63,6 +63,7 @@
  * @property {string} [id] - Unique identifier for the menu item (auto-generated if not provided)
  * @property {boolean} [selected] - Indicates if the menu item is currently selected (managed by the menu system)
  * @property {string} [icon] - URL to an icon
+ * @property {boolean} [iconAdaptive] - If true, the icon adapts to the active theme (e.g. inverted in dark mode via the host's `icon-adaptive` styling).
  * @property {string | null} [url] - Relative URL to use for routes
  * @property {string} [text] - Display text (ignored for separator items)
  * @property {string | null} [parent] - Parent menu item (optional). If not set, the item will be added to the top level menu.
