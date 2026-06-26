@@ -97,6 +97,74 @@
  */
 
 /**
+ * A single message envelope delivered to handlers.
+ * @typedef {Object} NeherMessage
+ * @property {string} id - Unique message id (`crypto.randomUUID`).
+ * @property {string} type - Message kind, e.g. `"artikel.selected"`.
+ * @property {string | null} to - Target module name (directed) or `null` (broadcast).
+ * @property {string | null} from - Sender module name (stamped by the endpoint) or `null`.
+ * @property {any} payload - Arbitrary payload.
+ * @property {number} ts - Timestamp (`Date.now`).
+ */
+
+/**
+ * Handler invoked with the full message envelope.
+ * @callback MessageHandler
+ * @param {NeherMessage} message
+ * @returns {void}
+ */
+
+/**
+ * Subscription type pattern: exact (`"a.b"`), prefix glob (`"a.*"`), all (`"*"`)
+ * or a list of patterns.
+ * @typedef {string | string[]} TypePattern
+ */
+
+/**
+ * Options for `send`/`broadcast`.
+ * @typedef {Object} SendOptions
+ * @property {string} [from] - Sender module name (bus-level `send`/`broadcast` only; set automatically via an endpoint).
+ * @property {boolean} [retain] - Keep this `(to, type)` as a last value; subscribers that register later receive it immediately. Default `false`.
+ * @property {boolean} [requireRecipient] - If nobody received it, call `onUndeliverable` instead of silently dropping. Default `false`.
+ * @property {boolean} [deliverWhenAvailable] - If nobody is listening, buffer the directed message and deliver it when the target registers. Default `false`.
+ * @property {boolean} [echo] - For broadcast: also deliver to the sender itself. Default `false`.
+ * @property {number} [ttlMs] - Lifetime for buffered messages. Default `30000`.
+ * @property {(message: NeherMessage) => void} [onUndeliverable] - Callback invoked with the envelope when `requireRecipient` and no recipient.
+ */
+
+/**
+ * Delivery information returned by `send`/`broadcast` — never the result of a handler.
+ * @typedef {Object} Delivery
+ * @property {boolean} delivered - At least one recipient was reached.
+ * @property {number} recipients - Number of distinct modules delivered to.
+ * @property {boolean} queued - Buffered for a later recipient.
+ */
+
+/**
+ * A registered endpoint, returned by `messages.register`. `register` is
+ * idempotent; each handle's `dispose` only removes subscriptions made through it.
+ * @typedef {Object} Endpoint
+ * @property {string} name - The module name of this endpoint.
+ * @property {(type: TypePattern, handler: MessageHandler) => (() => void)} on - Subscribe; returns an unsubscribe function.
+ * @property {(to: string, type: string, payload?: any, options?: SendOptions) => Delivery} send - Directed message (`from` is stamped automatically).
+ * @property {(type: string, payload?: any, options?: SendOptions) => Delivery} broadcast - Broadcast (`from` is stamped automatically).
+ * @property {() => void} dispose - Remove all subscriptions created through this handle.
+ */
+
+/**
+ * In-realm message bus for module-to-module communication, exposed at
+ * `neherapp3.messages`. Messaging, not RPC: `send`/`broadcast` return delivery
+ * information, never a handler's result.
+ * @typedef {Object} NeherApp3Messages
+ * @property {(moduleName: string) => Endpoint} register - Register a module as a reachable endpoint.
+ * @property {(to: string, type: string, payload?: any, options?: SendOptions) => Delivery} send - Directed message (`from` via `options.from`).
+ * @property {(type: string, payload?: any, options?: SendOptions) => Delivery} broadcast - Broadcast to all subscribers (`from` via `options.from`).
+ * @property {(moduleName: string) => boolean} isReachable - Does the module have at least one live handler?
+ * @property {(moduleName: string) => boolean} isKnown - Is the module registered (loaded via `addApp`)?
+ * @property {string[]} reachable - Reactive list of all currently reachable module names.
+ */
+
+/**
  * @typedef {Object} NeherApp3
  * @property {(menuItem: NeherApp3MenuItem) => void} addMenuItem - Adds a menu item. If an item with the same `id` already exists it is replaced.
  * @property {(id: string, patch: Partial<NeherApp3MenuItem>) => boolean} updateMenuItem - Updates properties of an existing menu item by `id`. Only keys present in `patch` are changed; the `id` is preserved. Returns `true` if the item existed. Relative icon URLs are resolved against the module's base URL.
@@ -105,6 +173,7 @@
  * @property {(message: string, type?: NeherApp3NotifyType, cb?: function) => void} notify - Shows a notification. Type defaults to 0 (info). Callback is optional.
  * @property {NeherApp3ApiCollection} api
  * @property {NeherApp3CacheCollection} cache
+ * @property {NeherApp3Messages} messages - In-realm message bus for module-to-module communication.
  * @property {boolean} isEmbedded - Indicates if the app is embedded inside i3
  */
 

@@ -3,9 +3,22 @@
  * @typedef {import('../dtos/index.js').ChangeDTO} ChangeDTO
  * @typedef {import('../dtos/index.js').TagInfoDTO} TagInfoDTO
  * @typedef {import('../dtos/index.js').TagVorlageDTO} TagVorlageDTO
- * @typedef {Object} FilterItemDTO
  * @typedef {import('../dtos/index.js').ChangeInfoDTO} ChangeInfoDTO
  * @typedef {import('../dtos/index.js').UpdateInfoDTO} UpdateInfoDTO
+ */
+
+/**
+ * @typedef {Object} FilterItemDTO
+ * @property {string} FilterGuid
+ * @property {string} MandantGuid
+ * @property {string} BenutzerGuid
+ * @property {string} Title
+ * @property {string} Context
+ * @property {string} SerializedFilterSetting
+ * @property {number} Version
+ * @property {string} ChangedDate - ISO date string
+ * @property {boolean} IsDeleted
+ * @property {number} Reihenfolge
  */
 
 /**
