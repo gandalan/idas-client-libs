@@ -441,6 +441,13 @@ public class Kapazitaetsvorgabe : INotifyPropertyChanged
     public decimal Zeitvorgabe { get; set; }
     public decimal Gewicht { get; set; }
     public bool IstBasisregel { get; set; }
+
+    /// <summary>
+    /// Wenn true, wird die Zeitvorgabe (und das Gewicht) dieser Regel bei der Etiketten-Auswertung
+    /// für jedes zutreffende Etikett aufaddiert, statt nur einmal zu zählen. Default: false.
+    /// </summary>
+    public bool Mehrfachregel { get; set; }
+
     public int Order { get; set; }
 }
 
