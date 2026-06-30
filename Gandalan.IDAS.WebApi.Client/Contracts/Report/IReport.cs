@@ -17,6 +17,7 @@ public abstract class IReport
     public abstract ReportTypeDTO ReportType { get; set; }
     public abstract ReportAction[] AllowedActions { get; }
     public abstract ReportCapability[] Capabilities { get; }
+    public virtual bool IsLandscape => false;
 
     public abstract bool CanHandle(object data = null);
 
@@ -115,10 +116,12 @@ public class ReportExecuteSettings
     /// Page height in mm
     /// </summary>
     public double MediaPageHeightMm { get; set; } = 297;
+    public bool IsLandscape { get; set; }
 
     public string FileName { get; set; }
     public int Copies { get; set; } = 1;
     public string Watermark { get; set; }
+    
 
     public static ReportExecuteSettings FromReportAuswahlResult(IReportAuswahlResult result)
     {
@@ -134,6 +137,7 @@ public class ReportExecuteSettings
             PrinterPaperWidthMm = result.PrinterPaperWidthMm,
             PrinterPaperHeightMm = result.PrinterPaperHeightMm,
             PrinterDpi = result.PrinterDpi,
+            IsLandscape = result.Report.IsLandscape,
         };
     }
 
