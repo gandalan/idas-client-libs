@@ -16,7 +16,6 @@ public class KatalogArtikelDTO : IWithGueltigkeitsZeitraum
     public string Art { get; set; }
 
     public Guid WarenGruppeGuid { get; set; }
-    public string ImageFileName { get; set; }
     public string Einheit { get; set; }
 
     // Regeln für die Bestellung
