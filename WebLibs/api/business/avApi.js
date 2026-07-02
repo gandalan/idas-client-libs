@@ -128,18 +128,11 @@ export function createAvApi(fluentApi) {
          * @param {string} pcode
          * @param {boolean} [includeOriginalBeleg=true]
          * @param {boolean} [includeProdDaten=true]
+         * @param {boolean} [includeI3Etiketten=false]
          * @returns {Promise<BelegPositionAVDTO[]>}
          */
-        getByPCode: (pcode, includeOriginalBeleg = true, includeProdDaten = true) =>
-            fluentApi.get(`BelegPositionenAVByPCode/${pcode}?includeOriginalBeleg=${includeOriginalBeleg}&includeProdDaten=${includeProdDaten}`),
-
-        /**
-         * Search AV positions by PCode
-         * @param {string} search
-         * @returns {Promise<BelegPositionAVDTO[]>}
-         */
-        searchByPCode: (search) =>
-            fluentApi.get(`BelegPositionenAVSearchByPCode?search=${encodeURIComponent(search)}`),
+        getByPCode: (pcode, includeOriginalBeleg = true, includeProdDaten = true, includeI3Etiketten = false) =>
+            fluentApi.get(`BelegPositionenAVByPCode/${encodeURIComponent(pcode)}?includeOriginalBeleg=${includeOriginalBeleg}&includeProdDaten=${includeProdDaten}&includeI3Etiketten=${includeI3Etiketten}`),
 
         /**
          * Save AV position
