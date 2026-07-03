@@ -1,6 +1,4 @@
 export * from "./index.js";
-export { IDASFactory } from "./api/IDAS.js";
-export { RESTClient } from "./api/RESTClient.js";
 export function createApi(): FluentApi;
 export function fluentApi(url: string, authManager: FluentAuthManager | null, serviceName: string): FluentApi;
 export function createIDASApi(): IDASFluentApi;
@@ -9,7 +7,6 @@ export function createAuthManager(): FluentAuthManager;
 export function fluentIdasAuthManager(appToken: string, authBaseUrl: string): FluentAuthManager;
 export function fetchEnvConfig(envConfig?: string): Promise<EnvironmentConfig>;
 export function restClient(): FluentRESTClient;
-export function initIDAS(appToken: string): Promise<Settings | null>;
 
 export type AblageApi = {
     get: (guid: string) => Promise<AblageDTO>;
@@ -96,6 +93,30 @@ export type AnpassungApi = {
     vorlage: { getAll: () => Promise<AnpassungVorlageDTO[]>; get: (guid: string) => Promise<AnpassungVorlageDTO>; save: (dto: AnpassungVorlageDTO) => Promise<void>; delete: (guid: string) => Promise<void> };
 };
 
+export type AnpassungDTO = {
+    AnpassungGuid: string;
+    Art: string;
+    GiltFuerBesitzer: boolean;
+    GiltFuerAlleUntermandanten: boolean;
+    GiltFuerZielMandant: boolean;
+    ZielMandantGuid: string;
+    Content: string;
+    WarengruppeGuid: string;
+    ArtikelGuid: string;
+    Version: number;
+    ChangedDate: string;
+};
+
+export type AnpassungVorlageDTO = {
+    AnpassungVorlageGuid: string;
+    Art: string;
+    Name: string;
+    Beschreibung: string;
+    Content: string;
+    Version: number;
+    ChangedDate: string;
+};
+
 export type ApiVersionDTO = {
     Version: string;
     Environment: string;
@@ -116,8 +137,11 @@ export type ArtikelApi = {
     getAllIndiDaten: (changedSince?: Date) => Promise<KatalogArtikelIndiDatenDTO[]>;
     saveArtikelIndiDaten: (daten: KatalogArtikelIndiDatenDTO) => Promise<void>;
     deleteArtikelIndiDaten: (daten: KatalogArtikelIndiDatenDTO) => Promise<void>;
-    getAllWarenGruppen: () => Promise<WarenGruppeDTO[]>;
+    getAllWarenGruppen: (changedSince?: Date, includeArtikel?: boolean) => Promise<WarenGruppeDTO[]>;
+    getWarenGruppenList: (changedSince?: Date) => Promise<WarenGruppeListDTO[]>;
     saveWarenGruppe: (dto: WarenGruppeDTO) => Promise<void>;
+    getWarenGruppe: (warenGruppeGuid: string, includeArtikel?: boolean) => Promise<WarenGruppeDTO>;
+    getArtikelForWarengruppe: (warenGruppeGuid: string) => Promise<KatalogArtikelDTO[]>;
     getAllProduktGruppen: (includeFamilien?: boolean) => Promise<ProduktGruppeDTO[]>;
     saveProduktGruppe: (produktGruppe: ProduktGruppeDTO) => Promise<ProduktGruppeDTO>;
     getAllProduktFamilien: (includeVarianten?: boolean) => Promise<ProduktFamilieDTO[]>;
@@ -176,8 +200,7 @@ export type AvApi = {
     getByVorgangGuids: (vorgangGuids: string[], includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
     getByBelegPosition: (belegpositionGuid: string) => Promise<BelegPositionAVDTO[]>;
     getById: (avGuid: string) => Promise<BelegPositionAVDTO>;
-    getByPCode: (pcode: string, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    searchByPCode: (search: string) => Promise<BelegPositionAVDTO[]>;
+    getByPCode: (pcode: string, includeOriginalBeleg?: boolean, includeProdDaten?: boolean, includeI3Etiketten?: boolean) => Promise<BelegPositionAVDTO[]>;
     save: (position: BelegPositionAVDTO) => Promise<void>;
     saveList: (positionen: BelegPositionAVDTO[]) => Promise<BelegPositionAVDTO[]>;
     saveToSerie: (serieGuid: string, positionGuids: string[]) => Promise<BelegPositionAVDTO[]>;
@@ -210,6 +233,34 @@ export type AvApi = {
     getAllMaterialBearbeitungsMethoden: () => Promise<MaterialBearbeitungsMethodeDTO[]>;
     saveMaterialBearbeitungsMethode: (dto: MaterialBearbeitungsMethodeDTO) => Promise<void>;
     material: { serieBerechnen: (serieGuid: string) => Promise<void>; getForSerie: (serieGuid: string) => Promise<MaterialbedarfDTO[]>; getOffenerBedarfV2: (serieGuid: string, filterCsvExportedMaterial?: boolean) => Promise<MaterialbedarfDTO[]>; getOffenerBedarf: (serieGuid: string) => Promise<MaterialbedarfDTO[]>; resetForSerie: (serieGuid: string) => Promise<void>; berechnenForFunction: (serieGuid: string, mandantId: number) => Promise<string[]>; resetFromAvPosForFunction: (avPosGuid: string, mandantId: number) => Promise<string[]>; addOrUpdate: (dto: MaterialbedarfDTO) => Promise<SerienMaterialEditDTO>; delete: (materialbedarfGuid: string) => Promise<void> };
+};
+
+export type AvReportBelegDto = {
+    BelegGuid: string;
+    BelegAdresse: BeleganschriftDTO;
+    VersandAdresse: BeleganschriftDTO;
+    VersandAdresseGleichBelegAdresse: boolean;
+    BelegArt: string;
+    Terminwunsch: string;
+    IstSelbstabholer: boolean;
+};
+
+export type AvReportKontaktDto = {
+    KundenNummer: string;
+    Land: string;
+};
+
+export type AvReportVorgangDto = {
+    VorgangGuid: string;
+    VorgangsNummer: number;
+    Kommission: string;
+    Kommission2: string;
+    Belege: Array<AvReportBelegDto>;
+    Kunde: AvReportKontaktDto;
+};
+
+export type AvReportVorgangRequestDto = {
+    VorgangGuids: Array<string>;
 };
 
 export type AVReserviertItemDTO = {
@@ -334,6 +385,7 @@ export type BelegApi = {
     getBelegStatus: (belegGuid: string) => Promise<BelegStatusDTO>;
     setBelegStatus: (belegGuid: string, statusCode: string, statusText?: string) => Promise<BelegStatusDTO>;
     belegKopieren: (belegGuid: string, neueBelegArt: string, saldenKopieren?: boolean) => Promise<VorgangDTO>;
+    belegListe: (jahr: number, belegart: string, kundennummer: string, includeArtikel?: boolean) => Promise<VorgangListItemDTO[]>;
     belegWechsel: (dto: BelegartWechselDTO) => Promise<VorgangDTO>;
     belegLoeschen: (belegGuid: string) => Promise<VorgangDTO>;
     ladeVorgangsListeByJahr: (jahr: number, includeASP?: boolean, includeAdditionalProperties?: boolean) => Promise<VorgangListItemDTO[]>;
@@ -786,7 +838,6 @@ export type BerechnungResultDTO = {
 export type BerechtigungDTO = {
     Code: string;
     ErklaerungsText: string;
-    Level: string;
 };
 
 export type BestellungListItemDTO = BaseListItemDTO;
@@ -853,13 +904,25 @@ export type CsvExportCombinationDTO = {
     ExportFarbArten: ExportFarbArt[];
 };
 
-export type DecodedToken = import("jwt-decode").JwtPayload & JwtUserInfo & { id?: string };
+export type Delivery = {
+    delivered: boolean;
+    recipients: number;
+    queued: boolean;
+};
 
 export type DevOpsStatusDTO = {
     Env: string;
     DbInfo: string;
     CurrentMigration: string;
     PendingMigrations: string[];
+};
+
+export type Endpoint = {
+    name: string;
+    on: (type: TypePattern, handler: MessageHandler) => (() => void);
+    send: (to: string, type: string, payload?: any, options?: SendOptions) => Delivery;
+    broadcast: (type: string, payload?: any, options?: SendOptions) => Delivery;
+    dispose: () => void;
 };
 
 export type EnvironmentConfig = {
@@ -1018,6 +1081,28 @@ export type FileApi = {
     getList: () => Promise<FileInfoDTO[]>;
     getZipped: (fileNames: string[]) => Promise<Uint8Array>;
     data: { get: (filename: string) => Promise<Uint8Array>; getList: (directory?: string) => Promise<FileInfoDTO[]>; save: (fileName: string, data: Uint8Array) => Promise<void>; delete: (filename: string) => Promise<void> };
+};
+
+export type FileInfoDTO = {
+    FileName: string;
+    FileSize: number;
+    Modified: string;
+    Created: string;
+    GueltigBis: string | null;
+    MandantGuid: string | null;
+};
+
+export type FilterItemDTO = {
+    FilterGuid: string;
+    MandantGuid: string;
+    BenutzerGuid: string;
+    Title: string;
+    Context: string;
+    SerializedFilterSetting: string;
+    Version: number;
+    ChangedDate: string;
+    IsDeleted: boolean;
+    Reihenfolge: number;
 };
 
 export type FluentApi = {
@@ -1843,7 +1928,7 @@ export type MaterialBearbeitungsMethodeDTO = {
     ChangedDate: string;
 };
 
-export type MaterialbedarfCutOptimization = object.<string, any>;
+export type MaterialbedarfCutOptimization = Record<string, any>;
 
 export type MaterialbedarfDTO = {
     MaterialBedarfGuid: string;
@@ -1944,6 +2029,8 @@ export type MaterialDTO = {
     MoeglicheBearbeitungsMethoden: Array<string>;
 };
 
+export type MessageHandler = (message: NeherMessage) => void;
+
 export type NachrichtenDTO = {
     NachrichtGuid: string;
     MandantGuid: string;
@@ -1957,10 +2044,13 @@ export type NachrichtenDTO = {
 
 export type NeherApp3 = {
     addMenuItem: (menuItem: NeherApp3MenuItem) => void;
+    updateMenuItem: (id: string, patch: Partial<NeherApp3MenuItem>) => boolean;
+    removeMenuItem: (id: string) => boolean;
     addApp: (appModule: NeherApp3Module | string) => Promise<void>;
     notify: (message: string, type?: NeherApp3NotifyType, cb?: Function) => void;
     api: NeherApp3ApiCollection;
     cache: NeherApp3CacheCollection;
+    messages: NeherApp3Messages;
     isEmbedded: boolean;
 };
 
@@ -1994,10 +2084,21 @@ export type NeherApp3MenuItem = {
     id?: string;
     selected?: boolean;
     icon?: string;
+    iconAdaptive?: boolean;
     url?: string | null;
-    text: string;
+    text?: string;
     parent?: string | null;
     hidden?: boolean;
+    separator?: boolean;
+};
+
+export type NeherApp3Messages = {
+    register: (moduleName: string) => Endpoint;
+    send: (to: string, type: string, payload?: any, options?: SendOptions) => Delivery;
+    broadcast: (type: string, payload?: any, options?: SendOptions) => Delivery;
+    isReachable: (moduleName: string) => boolean;
+    isKnown: (moduleName: string) => boolean;
+    reachable: string[];
 };
 
 export type NeherApp3Module = {
@@ -2019,6 +2120,15 @@ export type NeherApp3Props = {
 };
 
 export type NeherApp3SetupContext = NeherApp3Props & { neherapp3: NeherApp3 };
+
+export type NeherMessage = {
+    id: string;
+    type: string;
+    to: string | null;
+    from: string | null;
+    payload: any;
+    ts: number;
+};
 
 export type OberflaecheDTO = {
     OberflaecheGuid: string;
@@ -2094,11 +2204,11 @@ export type PreisermittlungsEinstellungenDTO = {
     EndpreisRundungsModus: string;
     SonderfarbZuschlaege: string;
     BruttoPreisErmitteln: boolean;
-    AufpreisAnpassungen: object.<string, AufpreisAnpassungDTO[]>;
-    PreisfaktorAnpassungen: object.<string, number>;
-    ZuschnittpreisfaktorAnpassungen: object.<string, number>;
-    AufpreisfaktorAnpassungen: object.<string, number>;
-    GrenzfreigabeAnpassungen: object.<string, boolean>;
+    AufpreisAnpassungen: Record<string, AufpreisAnpassungDTO[]>;
+    PreisfaktorAnpassungen: Record<string, number>;
+    ZuschnittpreisfaktorAnpassungen: Record<string, number>;
+    AufpreisfaktorAnpassungen: Record<string, number>;
+    GrenzfreigabeAnpassungen: Record<string, boolean>;
     MbAufpreis: number;
     Mb_v_Fix_Aufpreis: number|null;
     Mb_Klebeband_Aufpreis: number|null;
@@ -2547,6 +2657,16 @@ export type SchnittKonturOperationDTO = {
 
 export type SchnittoptimierungsOptionen = ('Keine'|'Lieferdatum'|'Serie'|'FarbeOberflaeche');
 
+export type SendOptions = {
+    from?: string;
+    retain?: boolean;
+    requireRecipient?: boolean;
+    deliverWhenAvailable?: boolean;
+    echo?: boolean;
+    ttlMs?: number;
+    onUndeliverable?: (message: NeherMessage) => void;
+};
+
 export type SerieAuslastungDTO = {
     IstSumme: boolean;
     Produktfamilie: string;
@@ -2621,24 +2741,6 @@ export type SerienApi = {
     getSerienKapazitaeten: (startDate?: Date, endDate?: Date, includeStaendige?: boolean) => Promise<Record<string, SerieAuslastungDTO[]>>;
     getAuslastungVirtualSerien: (startDate?: Date, endDate?: Date) => Promise<VirtualSerieWithAuslastungDTO[]>;
     getAuslastungVorgang: (startVorgangsnummer: number, endVorgangsnummer: number) => Promise<SerieAuslastungDTO[]>;
-    getAllBelegPositionenAV: () => Promise<BelegPositionAVDTO[]>;
-    getAllBelegPositionenAVChangedSince: (changedSince: Date) => Promise<BelegPositionAVDTO[]>;
-    getAllBelegPositionenAVWithOptions: (includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    getAllBelegPositionenAVChangedSinceWithOptions: (changedSince: Date, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    getSerieBelegPositionenAV: (serieGuid: string, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    getVorgangBelegPositionenAV: (vorgangGuid: string, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    getVorgaengeBelegPositionenAV: (vorgangGuids: string[], includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    getBelegPositionenAV: (belegpositionGuid: string) => Promise<BelegPositionAVDTO[]>;
-    getBelegPositionAVById: (avGuid: string) => Promise<BelegPositionAVDTO>;
-    getBelegPositionAVByPCode: (pcode: string, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    searchBelegPositionAVByPCode: (search: string) => Promise<BelegPositionAVDTO[]>;
-    saveBelegPositionenAV: (position: BelegPositionAVDTO) => Promise<void>;
-    saveBelegPositionenAVBulk: (positionen: BelegPositionAVDTO[]) => Promise<BelegPositionAVDTO[]>;
-    saveBelegPositionenAVToSerie: (serieGuid: string, positionen: string[]) => Promise<BelegPositionAVDTO[]>;
-    belegPositionenAVBerechnen: (guids: string[]) => Promise<void>;
-    deleteBelegPositionenAV: (guid: string) => Promise<void>;
-    deleteBelegPositionenAVBulk: (guids: string[]) => Promise<void>;
-    belegPositionenSerienZuordnen: (belegGuid: string, positionSerieItems: PositionSerieItemDTO[]) => Promise<void>;
 };
 
 export type SerienMaterialEditDTO = {
@@ -2649,13 +2751,6 @@ export type SerienMaterialEditDTO = {
 export type SetFakturaDTO = {
     GuidList: string[];
     Kennzeichen: string;
-};
-
-export type Settings = {
-    appToken: string;
-    mandantGuid: string;
-    apiBaseurl: string;
-    authUrl: string;
 };
 
 export type SettingsApi = {
@@ -2732,6 +2827,8 @@ export type TemplateDTO = {
     ChangedDate: string;
     Benutzer: string;
 };
+
+export type TypePattern = string | string[];
 
 export type UiApi = {
     getAllUiDefinitions: () => Promise<UIDefinitionDTO[]>;
@@ -3123,6 +3220,18 @@ export type WarenGruppeDTO = {
 };
 
 export type WarenGruppeDTOListe = Array<WarenGruppeDTO>;
+
+export type WarenGruppeListDTO = {
+    WarenGruppeGuid: string;
+    Nummer: number;
+    Bezeichnung: string;
+    IstEKPWarengruppe: boolean;
+    FrontendLogik: string;
+    Version: number;
+    ChangedDate: string;
+    ArtikelAnzahl: number;
+    ArtikelGuids: string[];
+};
 
 export type WebJobHistorieDTO = {
     WebJobHistorieGuid: string;

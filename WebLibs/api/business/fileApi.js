@@ -1,6 +1,15 @@
 /**
  * @typedef {import('../fluentApi.js').FluentApi} FluentApi
+ */
+
+/**
  * @typedef {Object} FileInfoDTO
+ * @property {string} FileName
+ * @property {number} FileSize
+ * @property {string} Modified - ISO date string
+ * @property {string} Created - ISO date string
+ * @property {string | null} GueltigBis - ISO date string
+ * @property {string | null} MandantGuid
  */
 
 /**

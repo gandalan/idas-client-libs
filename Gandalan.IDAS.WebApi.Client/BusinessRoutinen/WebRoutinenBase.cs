@@ -7,12 +7,14 @@
 // *****************************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Gandalan.IDAS.Client.Contracts.Contracts;
@@ -35,7 +37,7 @@ public class WebRoutinenBase
     public IWebApiConfig Settings;
     private readonly IWebApiConfig _originalSettings;
     public bool IsJwt;
-    private RESTRoutinen _restRoutinen;
+    private readonly Lazy<RESTRoutinen> _restRoutinen;
     private const string RelativeDateTimePattern = @"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?([+-]\d{2}:\d{2})";
 
     #endregion
@@ -84,14 +86,13 @@ public class WebRoutinenBase
                 AuthToken = settings.AuthToken;
             }
         }
+
+        _restRoutinen = new Lazy<RESTRoutinen>(InitRestRoutinen, LazyThreadSafetyMode.ExecutionAndPublication);
     }
 
-    private async Task runPreRequestChecks(string url, bool skipAuth = false, [CallerMemberName] string sender = null)
+    private async Task RunPreRequestChecks(string url, bool skipAuth = false, [CallerMemberName] string sender = null)
     {
-        if (_restRoutinen == null)
-        {
-            initRestRoutinen();
-        }
+        _ = _restRoutinen.Value;
 
         ThrowIfRateLimited(Settings.Url, sender);
         await CheckAuthorizedOrThrow(url, skipAuth, sender);
@@ -131,7 +132,7 @@ public class WebRoutinenBase
         }
     }
 
-    private void initRestRoutinen()
+    private RESTRoutinen InitRestRoutinen()
     {
         if (string.IsNullOrWhiteSpace(Settings.Url))
         {
@@ -145,15 +146,10 @@ public class WebRoutinenBase
             UserAgent = Settings.UserAgent
         };
 
-        if (IsJwt && !string.IsNullOrEmpty(JwtToken))
-        {
-            config.AdditionalHeaders.Add("Authorization", $"Bearer {JwtToken}");
-        }
-        else if (AuthToken != null)
-        {
-            config.AdditionalHeaders.Add("X-Gdl-AuthToken", AuthToken.Token.ToString());
-        }
-
+        // InstallationId is stable and can remain in DefaultRequestHeaders.
+        // Auth headers (token / JWT) are intentionally excluded here: they are
+        // injected per-request via UpdatePerRequestHeaders so that token refreshes
+        // never cause a new HttpClient to be created in the static factory cache.
         if (Settings.InstallationId != Guid.Empty)
         {
             config.AdditionalHeaders.Add("X-Gdl-InstallationId", Settings.InstallationId.ToString());
@@ -161,7 +157,185 @@ public class WebRoutinenBase
 
         config.NewApiOptInUrls = Settings.NewApiOptInUrls;
 
-        _restRoutinen = new RESTRoutinen(config);
+        var restRoutinen = new RESTRoutinen(config);
+        restRoutinen.UpdatePerRequestHeaders(BuildAuthHeaders());
+        return restRoutinen;
+    }
+
+    private Dictionary<string, string> BuildAuthHeaders()
+    {
+        var headers = new Dictionary<string, string>();
+        if (IsJwt && !string.IsNullOrEmpty(JwtToken))
+        {
+            headers["Authorization"] = $"Bearer {JwtToken}";
+        }
+        else if (AuthToken != null)
+        {
+            headers["X-Gdl-AuthToken"] = AuthToken.Token.ToString();
+        }
+        return headers.Count > 0 ? headers : null;
+    }
+
+    private void UpdateAuthInRestRoutinen()
+    {
+        if (_restRoutinen.IsValueCreated)
+            _restRoutinen.Value.UpdatePerRequestHeaders(BuildAuthHeaders());
+    }
+
+    /// <summary>
+    /// Annotates <paramref name="exception"/>.Data with every diagnostic field we know about at this point
+    /// (URL, status, payload, settings, auth state, response body, ProblemDetails, etc.) so the failure
+    /// is fully reconstructable from logs / forwarded mails. Idempotent: keys already present are kept.
+    /// </summary>
+    private void EnrichExceptionData(Exception exception, string relativeUrl, object payload, string sender)
+    {
+        if (exception == null)
+        {
+            return;
+        }
+
+        void TryAdd(string key, object value)
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            try
+            {
+                if (exception.Data.Contains(key))
+                {
+                    return;
+                }
+
+                exception.Data.Add(key, value);
+            }
+            catch
+            {
+                // value not serializable into IDictionary — ignore, never let diagnostics break the failure path
+            }
+        }
+
+        TryAdd("TimestampUtc", DateTime.UtcNow.ToString("O"));
+        TryAdd("CallMethod", sender);
+
+        if (!string.IsNullOrEmpty(relativeUrl))
+        {
+            if (!string.IsNullOrEmpty(Settings?.Url))
+            {
+                try
+                {
+                    TryAdd("URL", new Uri(new Uri(Settings.Url), relativeUrl).ToString());
+                }
+                catch
+                {
+                    TryAdd("URL", relativeUrl);
+                }
+            }
+            else
+            {
+                TryAdd("URL", relativeUrl);
+            }
+        }
+
+        TryAdd("BaseUrl", Settings?.Url);
+        TryAdd("UserAgent", Settings?.UserAgent);
+        TryAdd("UserName", Settings?.UserName);
+
+        if (Settings != null && Settings.InstallationId != Guid.Empty)
+        {
+            TryAdd("InstallationId", Settings.InstallationId.ToString());
+        }
+
+        TryAdd("AuthMode", IsJwt ? "JWT" : (AuthToken != null ? "AuthToken" : "None"));
+
+        if (IsJwt)
+        {
+            TryAdd("HasJwtToken", (!string.IsNullOrEmpty(JwtToken)).ToString());
+        }
+
+        if (AuthToken != null)
+        {
+            TryAdd("AuthTokenExpiresUtc", AuthToken.Expires.ToString("O"));
+            TryAdd("BenutzerGuid", AuthToken.Benutzer?.BenutzerGuid);
+            TryAdd("MandantGuid", AuthToken.MandantGuid);
+        }
+
+        if (payload != null && !exception.Data.Contains("Payload"))
+        {
+            try
+            {
+                TryAdd("Payload", JsonConvert.SerializeObject(payload));
+            }
+            catch
+            {
+                TryAdd("Payload", payload.ToString());
+            }
+        }
+
+        if (exception is ApiException apiException)
+        {
+            TryAdd("StatusCode", apiException.StatusCode);
+            if (!string.IsNullOrEmpty(apiException.Payload))
+            {
+                TryAdd("Payload", apiException.Payload);
+            }
+
+            if (!string.IsNullOrEmpty(apiException.ExceptionString))
+            {
+                TryAdd("ExceptionString", apiException.ExceptionString);
+            }
+
+            if (apiException.ProblemDetails != null)
+            {
+                TryAdd("ProblemDetails.Title", apiException.ProblemDetails.Title);
+                TryAdd("ProblemDetails.Type", apiException.ProblemDetails.Type);
+                TryAdd("ProblemDetails.Detail", apiException.ProblemDetails.Detail);
+                TryAdd("ProblemDetails.Instance", apiException.ProblemDetails.Instance);
+                TryAdd("ProblemDetails.Status", apiException.ProblemDetails.Status);
+            }
+        }
+
+        // Promote response body from inner HttpRequestException into top-level Data so it shows up in dumps
+        var currentException = exception;
+
+        var depth = 0;
+
+        while (currentException != null && depth < 10)
+        {
+            if (currentException.Data.Contains("Response"))
+            {
+                var resp = currentException.Data["Response"]?.ToString();
+                if (!string.IsNullOrEmpty(resp))
+                {
+                    if (resp.Length > 4000)
+                    {
+#if NET48
+                        resp = resp.Substring(0, 4000) + " ...(truncated)";
+#else
+                        resp = string.Concat(resp.AsSpan(0, 4000), " ...(truncated)");
+#endif
+                    }
+
+                    TryAdd("Response", resp);
+                }
+
+                break;
+            }
+
+            currentException = currentException.InnerException;
+            depth++;
+        }
+    }
+
+    /// <summary>
+    /// Propagates the current <see cref="AuthToken"/> / <see cref="JwtToken"/> to all subsequent
+    /// outgoing requests as per-request headers. Call this after manually setting
+    /// <see cref="AuthToken"/> outside of <see cref="LoginAsync"/>.
+    /// </summary>
+    public void UpdateAuthHeaders()
+    {
+        UpdateAuthInRestRoutinen();
     }
 
     protected virtual void OnErrorOccured(ApiErrorArgs e)
@@ -179,7 +353,7 @@ public class WebRoutinenBase
     {
         if (IsJwt)
         {
-            return await checkJwtTokenAsync();
+            return await CheckJwtTokenAsync();
         }
 
         try
@@ -215,7 +389,7 @@ public class WebRoutinenBase
             {
                 AuthToken = result;
                 _originalSettings.AuthToken = result;
-                initRestRoutinen();
+                UpdateAuthInRestRoutinen();
                 Status = "OK";
                 return true;
             }
@@ -230,7 +404,7 @@ public class WebRoutinenBase
             Status = apiEx.Message;
             if (Status.ToLower().Contains("<title>"))
             {
-                Status = internalStripHtml(Status);
+                Status = InternalStripHtml(Status);
             }
 
             var innerException = apiEx.InnerException;
@@ -252,11 +426,23 @@ public class WebRoutinenBase
         }
     }
 
+    /// <summary>
+    /// Erneuert das Auth-Token am Endpunkt /api/Login/Update und aktualisiert
+    /// die Instanz sowie alle ausgehenden Requests sofort mit dem neuen Token.
+    /// Konsistent mit dem Verhalten von <see cref="LoginAsync"/>.
+    /// </summary>
     public async Task<UserAuthTokenDTO> RefreshTokenAsync(Guid authTokenGuid)
     {
         try
         {
-            return await PutAsync<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO { Token = authTokenGuid }, null, true);
+            var result = await PutAsync<UserAuthTokenDTO>("/api/Login/Update", new UserAuthTokenDTO { Token = authTokenGuid }, null, true);
+            if (result != null)
+            {
+                AuthToken = result;
+                _originalSettings.AuthToken = result;
+                UpdateAuthInRestRoutinen();
+            }
+            return result;
         }
         catch (Exception)
         {
@@ -268,17 +454,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.PostAsync<T>(uri, data, settings, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.PostAsync<T>(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri, data);
-            TryHandleException(exception);
+            TryHandleException(exception, uri, data);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            TryHandleException(e, uri, data);
         }
 
         return default;
@@ -288,17 +474,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            await _restRoutinen.PostAsync(uri, data, settings, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            await _restRoutinen.Value.PostAsync(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri, data);
-            TryHandleException(exception);
+            TryHandleException(exception, uri, data);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            TryHandleException(e, uri, data);
         }
     }
 
@@ -306,17 +492,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.PostDataAsync(uri, data, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.PostDataAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri, data);
-            TryHandleException(exception);
+            TryHandleException(exception, uri, data);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            TryHandleException(e, uri, data);
         }
 
         return null;
@@ -326,17 +512,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.PostDataAsync(uri, data, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.PostDataAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri, data);
-            TryHandleException(exception);
+            TryHandleException(exception, uri, data);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            TryHandleException(e, uri, data);
         }
 
         return null;
@@ -346,17 +532,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.GetDataAsync(uri, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.GetDataAsync(uri, version: version);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri);
-            TryHandleException(exception);
+            TryHandleException(exception, uri);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            TryHandleException(e, uri);
         }
 
         return null;
@@ -366,17 +552,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.GetAsync(uri, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.GetAsync(uri, version: version);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri);
-            TryHandleException(exception);
+            TryHandleException(exception, uri);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            TryHandleException(e, uri);
         }
 
         return null;
@@ -386,17 +572,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.GetAsync<T>(uri, settings, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.GetAsync<T>(uri, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri);
-            TryHandleException(exception);
+            TryHandleException(exception, uri);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            TryHandleException(e, uri);
         }
 
         return default;
@@ -406,17 +592,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            await _restRoutinen.PutAsync(uri, data, settings, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            await _restRoutinen.Value.PutAsync(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri, data);
-            TryHandleException(exception);
+            TryHandleException(exception, uri, data);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            TryHandleException(e, uri, data);
         }
     }
 
@@ -424,17 +610,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.PutAsync<T>(uri, data, settings, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.PutAsync<T>(uri, data, settings, version: version);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri, data);
-            TryHandleException(exception);
+            TryHandleException(exception, uri, data);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            TryHandleException(e, uri, data);
         }
 
         return default;
@@ -444,13 +630,13 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.PutDataAsync(uri, data);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.PutDataAsync(uri, data);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri, data);
-            TryHandleException(exception);
+            TryHandleException(exception, uri, data);
             return null;
         }
     }
@@ -459,17 +645,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.PutDataAsync(uri, data);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.PutDataAsync(uri, data);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri, data);
-            TryHandleException(exception);
+            TryHandleException(exception, uri, data);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            TryHandleException(e, uri, data);
         }
 
         return null;
@@ -479,17 +665,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            await _restRoutinen.DeleteAsync(uri);
+            await RunPreRequestChecks(uri, skipAuth);
+            await _restRoutinen.Value.DeleteAsync(uri);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri);
-            TryHandleException(exception);
+            TryHandleException(exception, uri);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            TryHandleException(e, uri);
         }
     }
 
@@ -497,17 +683,17 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            await _restRoutinen.DeleteAsync(uri, data, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            await _restRoutinen.Value.DeleteAsync(uri, data, version: version);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri, data);
-            TryHandleException(exception);
+            TryHandleException(exception, uri, data);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            TryHandleException(e, uri, data);
         }
     }
 
@@ -515,23 +701,23 @@ public class WebRoutinenBase
     {
         try
         {
-            await runPreRequestChecks(uri, skipAuth);
-            return await _restRoutinen.DeleteAsync<T>(uri, data, version: version);
+            await RunPreRequestChecks(uri, skipAuth);
+            return await _restRoutinen.Value.DeleteAsync<T>(uri, data, version: version);
         }
         catch (HttpRequestException ex)
         {
             var exception = HandleWebException(ex, uri);
-            TryHandleException(exception);
+            TryHandleException(exception, uri);
         }
         catch (Exception e)
         {
-            TryHandleException(e);
+            TryHandleException(e, uri);
         }
 
         return default;
     }
 
-    private static string internalStripHtml(string htmlString)
+    private static string InternalStripHtml(string htmlString)
     {
         var result = htmlString;
         if (result.ToLower().Contains("<title>") && result.ToLower().Contains("</title>"))
@@ -547,7 +733,7 @@ public class WebRoutinenBase
         return result;
     }
 
-    private async Task<bool> checkJwtTokenAsync()
+    private async Task<bool> CheckJwtTokenAsync()
     {
         if (internalCheckJwtToken(out var refreshToken, out var checkResult))
         {
@@ -572,6 +758,7 @@ public class WebRoutinenBase
                 jc.JwtToken = newJwt;
             }
             JwtToken = newJwt;
+            UpdateAuthInRestRoutinen();
             return true;
         }
         catch (ApiException apiEx)
@@ -580,7 +767,7 @@ public class WebRoutinenBase
             Status = apiEx.Message;
             if (Status.ToLower().Contains("<title>"))
             {
-                Status = internalStripHtml(Status);
+                Status = InternalStripHtml(Status);
             }
 
             var innerException = apiEx.InnerException;
@@ -649,13 +836,16 @@ public class WebRoutinenBase
 
     /// <summary>
     /// Checks if a <see cref="CustomExceptionHandler"/> can handle the exception. If not, will throw the Exception.
+    /// Also enriches <paramref name="exception"/>.Data with full request/auth/state diagnostics before logging.
     /// </summary>
     /// <param name="exception">Exception to check</param>
+    /// <param name="url">Relative URL of the failing request, used for the URL diagnostic field</param>
+    /// <param name="payload">Request payload to serialize into Data if not already captured</param>
+    /// <param name="sender">Calling method (auto-filled via <see cref="CallerMemberNameAttribute"/>)</param>
     /// <exception cref="Exception">Throws <paramref name="exception"/>, if no <see cref="CustomExceptionHandler"/> handles the exception</exception>
-    private void TryHandleException(Exception exception)
+    private void TryHandleException(Exception exception, string url = null, object payload = null, [CallerMemberName] string sender = null)
     {
-        exception.Data.Add("BenutzerGuid", AuthToken?.Benutzer?.BenutzerGuid);
-        exception.Data.Add("MandantGuid", AuthToken?.MandantGuid);
+        EnrichExceptionData(exception, url, payload, sender);
 
         L.Fehler(exception);
 
@@ -683,10 +873,12 @@ public class WebRoutinenBase
 
         if (exception.StatusCode == HttpStatusCode.Unauthorized)
         {
-            return new ApiUnauthorizedException(Status = ex.Message);
+            var unauthorized = new ApiUnauthorizedException(Status = ex.Message);
+            EnrichExceptionData(unauthorized, url, data, sender);
+            return unauthorized;
         }
 
-        return InternalHandleWebException(exception, url, sender);
+        return InternalHandleWebException(exception, url, data, sender);
     }
 
     private void TryUpdateRateLimitRegistry(ApiException exception)
@@ -698,50 +890,14 @@ public class WebRoutinenBase
         }
     }
 
-    private ApiException InternalHandleWebException(ApiException exception, string url, [CallerMemberName] string sender = null)
+    private ApiException InternalHandleWebException(ApiException exception, string url, object payload = null, [CallerMemberName] string sender = null)
     {
         if (!IgnoreOnErrorOccured)
         {
             OnErrorOccured(new ApiErrorArgs(exception.Message, exception.StatusCode));
         }
 
-        var foundUrlInData = false;
-
-        // Check if we already have data from RESTRoutinen.AddInfoToException()
-        if (!exception.Data.Contains("URL"))
-        {
-            var innerException = exception.InnerException;
-            while (innerException != null)
-            {
-                if (innerException.Data.Contains("URL"))
-                {
-                    foundUrlInData = true;
-                }
-
-                innerException = innerException.InnerException;
-            }
-        }
-        else
-        {
-            foundUrlInData = true;
-        }
-
-        if (!foundUrlInData)
-        {
-            exception.Data.Add("URL", new Uri(new Uri(Settings.Url), url).ToString());
-            exception.Data.Add("CallMethod", sender);
-            exception.Data.Add("StatusCode", exception.StatusCode);
-            exception.Data.Add("Payload", exception.Payload);
-        }
-
-        // Add data from ProblemDetails if available
-        if (exception.ProblemDetails != null)
-        {
-            exception.Data.Add("ProblemDetails.Title", exception.ProblemDetails.Title);
-            exception.Data.Add("ProblemDetails.Type", exception.ProblemDetails.Type);
-            exception.Data.Add("ProblemDetails.Detail", exception.ProblemDetails.Detail);
-            exception.Data.Add("ProblemDetails.Instance", exception.ProblemDetails.Instance);
-        }
+        EnrichExceptionData(exception, url, payload, sender);
 
         return exception;
     }
@@ -763,16 +919,23 @@ public class WebRoutinenBase
 
         if (TryDeserializeProblemDetails(response, out var problemDetails))
         {
+            // Title/Detail can both be null when only Type is set — fall back so the base Exception.Message
+            // is never the default "Exception of type 'X' was thrown" placeholder.
+            var problemMessage = problemDetails.Detail
+                ?? problemDetails.Title
+                ?? problemDetails.Type
+                ?? $"HTTP {(int)code} {code}";
+
             if (problemDetails.Status == 429)
             {
-                var resetDateTimeUtc = problemDetails.TryGetResetDateTimeUtc(out var resetTime) 
-                    ? resetTime 
+                var resetDateTimeUtc = problemDetails.TryGetResetDateTimeUtc(out var resetTime)
+                    ? resetTime
                     : DateTime.UtcNow.AddMinutes(1);
                 var rateLimitEx = new RateLimitException(resetDateTimeUtc, ex);
-                return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, rateLimitEx, problemDetails, payload);
+                return new ApiException(problemMessage, code, rateLimitEx, problemDetails, payload);
             }
 
-            return new ApiException(problemDetails.Detail ?? problemDetails.Title, code, problemDetails, payload);
+            return new ApiException(problemMessage, code, problemDetails, payload);
         }
 
         if (TryDeserializeException(response, out var originalException))

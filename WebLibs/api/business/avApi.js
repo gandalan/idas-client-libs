@@ -6,14 +6,48 @@
  * @typedef {import('../dtos/produktion.js').ProduktionsDatenDTO} ProduktionsDatenDTO
  * @typedef {import('../dtos/index.js').AVReserviertItemDTO} AVReserviertItemDTO
  * @typedef {import('../dtos/belege.js').CalculationInfoDTO} CalculationInfoDTO
- * @typedef {Object} AvReportVorgangRequestDto
- * @typedef {Object} AvReportVorgangDto
+ * @typedef {import('../dtos/index.js').BeleganschriftDTO} BeleganschriftDTO
  * @typedef {import('../dtos/produktion.js').SaegeDatenHistorieDTO} SaegeDatenHistorieDTO
  * @typedef {import('../dtos/produktion.js').SaegeDatenResultDTO} SaegeDatenResultDTO
  * @typedef {import('../dtos/index.js').MaterialBearbeitungsMethodeDTO} MaterialBearbeitungsMethodeDTO
  * @typedef {import('../dtos/index.js').MaterialbedarfDTO} MaterialbedarfDTO
  * @typedef {import('../dtos/index.js').MandantAndBelegPosGuidDTO} MandantAndBelegPosGuidDTO
  * @typedef {import('../dtos/av.js').SerienMaterialEditDTO} SerienMaterialEditDTO
+ */
+
+/**
+ * @typedef {Object} AvReportVorgangRequestDto
+ * @property {Array<string>} VorgangGuids
+ */
+
+/**
+ * Minimalistic DTO for Vorgang in AV reports.
+ * @typedef {Object} AvReportVorgangDto
+ * @property {string} VorgangGuid
+ * @property {number} VorgangsNummer
+ * @property {string} Kommission
+ * @property {string} Kommission2
+ * @property {Array<AvReportBelegDto>} Belege
+ * @property {AvReportKontaktDto} Kunde
+ */
+
+/**
+ * Minimalistic DTO for Beleg in AV reports.
+ * @typedef {Object} AvReportBelegDto
+ * @property {string} BelegGuid
+ * @property {BeleganschriftDTO} BelegAdresse
+ * @property {BeleganschriftDTO} VersandAdresse
+ * @property {boolean} VersandAdresseGleichBelegAdresse
+ * @property {string} BelegArt
+ * @property {string} Terminwunsch
+ * @property {boolean} IstSelbstabholer
+ */
+
+/**
+ * Minimalistic DTO for Kontakt information in AvReportVorgangDto.
+ * @typedef {Object} AvReportKontaktDto
+ * @property {string} KundenNummer
+ * @property {string} Land
  */
 
 /**
@@ -94,18 +128,11 @@ export function createAvApi(fluentApi) {
          * @param {string} pcode
          * @param {boolean} [includeOriginalBeleg=true]
          * @param {boolean} [includeProdDaten=true]
+         * @param {boolean} [includeI3Etiketten=false]
          * @returns {Promise<BelegPositionAVDTO[]>}
          */
-        getByPCode: (pcode, includeOriginalBeleg = true, includeProdDaten = true) =>
-            fluentApi.get(`BelegPositionenAVByPCode/${pcode}?includeOriginalBeleg=${includeOriginalBeleg}&includeProdDaten=${includeProdDaten}`),
-
-        /**
-         * Search AV positions by PCode
-         * @param {string} search
-         * @returns {Promise<BelegPositionAVDTO[]>}
-         */
-        searchByPCode: (search) =>
-            fluentApi.get(`BelegPositionenAVSearchByPCode?search=${encodeURIComponent(search)}`),
+        getByPCode: (pcode, includeOriginalBeleg = true, includeProdDaten = true, includeI3Etiketten = false) =>
+            fluentApi.get(`BelegPositionenAVByPCode/${encodeURIComponent(pcode)}?includeOriginalBeleg=${includeOriginalBeleg}&includeProdDaten=${includeProdDaten}&includeI3Etiketten=${includeI3Etiketten}`),
 
         /**
          * Save AV position

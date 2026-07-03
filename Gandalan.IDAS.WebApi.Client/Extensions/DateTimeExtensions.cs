@@ -44,6 +44,13 @@ public static class DateTimeExtensions
 
         return datum;
     }
+    
+    public static int GetCalendarWeekYear(this DateTime date)
+    {
+        var monday = date.FirstDayOfWeek();
+        var thursday = monday.AddDays(3);
+        return thursday.Year;
+    }
 
     /// <summary>
     /// From <see href="https://github.com/dotnet/corert/blob/master/src/System.Private.CoreLib/shared/System/Globalization/ISOWeek.cs"/>
@@ -55,6 +62,20 @@ public static class DateTimeExtensions
         var ordinal = (week * 7) + getWeekday(dayOfWeek) - correction;
         return new DateTime(year, month: 1, day: 1).AddDays(ordinal - 1);
     }
+
+    public static bool TryToDateTime(int year, int week, DayOfWeek dayOfWeek, out DateTime dateTime)
+    {
+        try
+        {
+            dateTime = ToDateTime(year, week, dayOfWeek);
+            return true;
+        }catch
+        {
+            dateTime = default;
+            return false;
+        }
+    }
+    
 
     private static int getWeekday(DayOfWeek dayOfWeek)
     {
@@ -79,5 +100,11 @@ public static class DateTimeExtensions
     public static bool IsEqualRounded(this DateTime dateTime1, DateTime dateTime2, int deltaInMs = 10)
     {
         return Math.Abs((dateTime1.Subtract(dateTime2)).TotalMilliseconds) <= deltaInMs;
+    }
+    
+    public static DateTime FirstDayOfWeek(this DateTime dateTime, DayOfWeek startOfWeek = DayOfWeek.Monday)
+    {
+        var diff = (7 + (dateTime.DayOfWeek - startOfWeek)) % 7;
+        return dateTime.AddDays(-1 * diff).Date;
     }
 }

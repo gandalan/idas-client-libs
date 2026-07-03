@@ -30,6 +30,11 @@ public class ProduktionsDatenDTO
     public List<BearbeitungDTO> Bearbeitungen { get; set; } = [];
 
     /// <summary>
+    /// Gruppen fachlich zusammengehöriger Bearbeitungen mit gemeinsamem Anker-Punkt für die SLK
+    /// </summary>
+    public List<BearbeitungsGruppeDTO> BearbeitungsGruppen { get; set; } = [];
+
+    /// <summary>
     /// Daten der Original-Belegposition
     /// </summary>
     public PositionsDatenDTO PositionsDaten { get; set; }

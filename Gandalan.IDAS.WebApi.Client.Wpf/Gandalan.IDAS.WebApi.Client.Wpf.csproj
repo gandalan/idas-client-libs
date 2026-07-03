@@ -13,7 +13,7 @@
     <Version>2099.0.0-alpha</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Configurations>Debug;Release;Debug - Core only</Configurations>
+    <Configurations>Debug;Release</Configurations>
     <DocumentationFile>..\Gandalan.IDAS.WebApi.Client.Wpf\GDL.IDAS.WebApi.Client.Wpf.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -22,10 +22,6 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <WarningsAsErrors>$(WarningsAsErrors);NU1605;</WarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Debug - Core only'">
     <WarningsAsErrors>$(WarningsAsErrors);NU1605;</WarningsAsErrors>
   </PropertyGroup>
 
@@ -52,7 +48,13 @@
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!--
+    These WPF assemblies are referenced by simple name only for .NET Framework (net48).
+    For the .NET (Core) -windows TFMs, UseWPF=true + the Windows Desktop SDK already
+    provide them; adding bare <Reference> items there causes MSB3245/MSB3243 resolution
+    conflicts (and breaks resolution entirely when building on non-Windows).
+  -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System.Xaml" />

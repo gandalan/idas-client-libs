@@ -21,10 +21,7 @@ const dtoRootMarkerEnd = "// END GENERATED ROOT DTO TYPEDEFS";
 const businessRootMarkerStart = "// BEGIN GENERATED ROOT BUSINESS TYPEDEFS";
 const businessRootMarkerEnd = "// END GENERATED ROOT BUSINESS TYPEDEFS";
 
-const rootValueExportStatements = [
-    "export { IDASFactory } from \"./api/IDAS.js\";",
-    "export { RESTClient } from \"./api/RESTClient.js\";"
-];
+const rootValueExportStatements = [];
 
 const rootFunctionDeclarationStatements = [
     "export function createApi(): FluentApi;",
@@ -34,8 +31,7 @@ const rootFunctionDeclarationStatements = [
     "export function createAuthManager(): FluentAuthManager;",
     "export function fluentIdasAuthManager(appToken: string, authBaseUrl: string): FluentAuthManager;",
     "export function fetchEnvConfig(envConfig?: string): Promise<EnvironmentConfig>;",
-    "export function restClient(): FluentRESTClient;",
-    "export function initIDAS(appToken: string): Promise<Settings | null>;"
+    "export function restClient(): FluentRESTClient;"
 ];
 
 const simpleImportTypePattern = /^import\((?:"|').+(?:"|')\)\.[A-Za-z0-9_$]+$/;
@@ -433,7 +429,7 @@ function parseObjectLiteralProperties(objectSource, scopeTypeMap) {
 
         index = skipWhitespaceAndComments(objectSource, index);
 
-        let typeExpression = "any";
+        let typeExpression;
         let optional = false;
 
         if (objectSource[index] === ":") {
@@ -862,35 +858,56 @@ function isSimpleImportAlias(typeExpression) {
     return simpleImportTypePattern.test(typeExpression.replace(/\s+/g, ""));
 }
 
+function splitBlockByTagBoundaries(normalizedBlock) {
+    const tagPattern = /@(?:typedef|callback)\b/g;
+    const startIndices = [];
+    let match;
+
+    while ((match = tagPattern.exec(normalizedBlock)) !== null) {
+        startIndices.push(match.index);
+    }
+
+    if (startIndices.length <= 1) {
+        return [normalizedBlock];
+    }
+
+    return startIndices.map((startIndex, position) => {
+        const endIndex = position + 1 < startIndices.length ? startIndices[position + 1] : normalizedBlock.length;
+        return normalizedBlock.slice(startIndex, endIndex);
+    });
+}
+
 function extractPublicTypeEntries(source, filePath) {
     const entries = [];
 
     for (const block of getJSDocBlocks(source).map(normalizeJSDocBlock)) {
-        const typedefEntry = extractTypedefEntry(block);
+        for (const segment of splitBlockByTagBoundaries(block)) {
+            const typedefEntry = extractTypedefEntry(segment);
 
-        if (typedefEntry) {
-            const inferredCreateApiName = typedefEntry.typeExpression.match(returnTypeOfCreateApiPattern)?.[1] ?? null;
+            if (typedefEntry) {
+                const inferredCreateApiName = typedefEntry.typeExpression.match(returnTypeOfCreateApiPattern)?.[1] ?? null;
 
-            if (inferredCreateApiName) {
-                const inferredObjectEntry = inferReturnTypeObjectEntry(source, filePath, typedefEntry.name, inferredCreateApiName);
+                if (inferredCreateApiName) {
+                    const inferredObjectEntry = inferReturnTypeObjectEntry(source, filePath, typedefEntry.name, inferredCreateApiName);
 
-                if (inferredObjectEntry) {
-                    entries.push(inferredObjectEntry);
-                    continue;
+                    if (inferredObjectEntry) {
+                        entries.push(inferredObjectEntry);
+                        continue;
+                    }
                 }
+
+                if (!isSimpleImportAlias(typedefEntry.typeExpression)) {
+                    entries.push({ ...typedefEntry, filePath });
+                }
+
+                continue;
             }
 
-            if (!isSimpleImportAlias(typedefEntry.typeExpression)) {
-                entries.push({ ...typedefEntry, filePath });
+            const callbackEntry = extractCallbackEntry(segment);
+
+            if (callbackEntry) {
+                entries.push({ ...callbackEntry, filePath });
             }
-
-            continue;
-        }
-
-        const callbackEntry = extractCallbackEntry(block);
-
-        if (callbackEntry) {
-            entries.push({ ...callbackEntry, filePath });
         }
     }
 
@@ -944,15 +961,20 @@ function replaceObjectGenerics(typeExpression, transformTypeExpression) {
     let result = "";
 
     for (let index = 0; index < typeExpression.length; index += 1) {
-        if (!typeExpression.startsWith("Object<", index)) {
+        // Support both the TypeScript form (Object<...>) and the dotted JSDoc form (Object.<...>).
+        const isDottedForm = typeExpression.startsWith("Object.<", index);
+        const isPlainForm = typeExpression.startsWith("Object<", index);
+
+        if (!isDottedForm && !isPlainForm) {
             result += typeExpression[index];
             continue;
         }
 
+        const openAngleIndex = index + (isDottedForm ? "Object.".length : "Object".length);
         let angleDepth = 0;
         let closingIndex = -1;
 
-        for (let cursor = index + "Object".length; cursor < typeExpression.length; cursor += 1) {
+        for (let cursor = openAngleIndex; cursor < typeExpression.length; cursor += 1) {
             const character = typeExpression[cursor];
 
             if (character === "<") {
@@ -972,7 +994,7 @@ function replaceObjectGenerics(typeExpression, transformTypeExpression) {
             continue;
         }
 
-        const genericContent = typeExpression.slice(index + "Object<".length, closingIndex);
+        const genericContent = typeExpression.slice(openAngleIndex + 1, closingIndex);
         const genericParts = splitTopLevel(genericContent, ",");
 
         if (genericParts.length === 2) {

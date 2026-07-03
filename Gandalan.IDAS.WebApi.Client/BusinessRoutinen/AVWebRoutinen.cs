@@ -79,14 +79,9 @@ public class AVWebRoutinen : WebRoutinenBase
         return await GetAsync<BelegPositionAVDTO>($"BelegPositionenAVById/{avGuid}");
     }
 
-    public async Task<IList<BelegPositionAVDTO>> GetBelegPositionAVByPCodeAsync(string pcode, bool includeOriginalBeleg = true, bool includeProdDaten = true)
+    public async Task<IList<BelegPositionAVDTO>> GetBelegPositionAVByPCodeAsync(string pcode, bool includeOriginalBeleg = true, bool includeProdDaten = true, bool includeI3Etiketten = false)
     {
-        return await GetAsync<IList<BelegPositionAVDTO>>($"BelegPositionenAVByPCode/{pcode}?includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}");
-    }
-
-    public async Task<IList<BelegPositionAVDTO>> SearchBelegPositionAVByPCodeAsync(string search)
-    {
-        return await GetAsync<IList<BelegPositionAVDTO>>($"BelegPositionenAVSearchByPCode?search={Uri.EscapeDataString(search)}");
+        return await GetAsync<IList<BelegPositionAVDTO>>($"BelegPositionenAVByPCode/{pcode}?includeOriginalBeleg={includeOriginalBeleg}&includeProdDaten={includeProdDaten}&includeI3Etiketten={includeI3Etiketten}");
     }
 
     public async Task DeleteBelegPositionenAVAsync(Guid guid)
