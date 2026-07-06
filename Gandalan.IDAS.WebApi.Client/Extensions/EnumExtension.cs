@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 
 // ReSharper disable once CheckNamespace
@@ -11,5 +13,11 @@ public static class EnumExtension
         var field = value.GetType().GetField(value.ToString());
         var attribute = field.GetCustomAttribute<DescriptionAttribute>();
         return attribute == null ? value.ToString() : attribute.Description;
+    }
+
+    extension<T>(T) where T : Enum
+    {
+        public static Dictionary<T, string> GetDisplaySourceDictionary()
+            => Enum.GetValues(typeof(T)).Cast<T>().ToDictionary(x => x, x => x.GetDescription());
     }
 }

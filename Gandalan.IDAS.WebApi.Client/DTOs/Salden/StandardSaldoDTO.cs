@@ -39,4 +39,11 @@ public class StandardSaldoDTO : IWithGueltigkeitsZeitraum
     public DateTime? GueltigBis { get; set; }
     public int Order { get; set; }
     public bool UseKundenrabatt { get; set; }
+
+    /// <summary>
+    /// Bezugsdatum für den Gültigkeitszeitraum.
+    /// </summary>
+    /// <seealso cref="GueltigAb"/>
+    /// <seealso cref="GueltigBis"/>
+    public string Gueltigkeitsbezug { get; set; } = "Erfassungsdatum";
 }
