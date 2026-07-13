@@ -111,10 +111,10 @@ export function createMandantApi(fluentApi) {
              */
             createOrUpdateBenutzer: (kundeGuid, data, pwSenden = false, passwort = "") =>
                 fluentApi.post(`AppBenutzer`, {
-                    BenutzerData = data,
-                    KundeGuid = kundeGuid,
-                    Passwort = passwort,
-                    PasswortSenden = pwSenden
+                    BenutzerData:  data,
+                    KundeGuid: kundeGuid,
+                    Passwort: passwort,
+                    PasswortSenden: pwSenden
                 }),
 
             /**
