@@ -110,7 +110,12 @@ export function createMandantApi(fluentApi) {
              * @returns {Promise<BenutzerDTO>}
              */
             createOrUpdateBenutzer: (kundeGuid, data, pwSenden = false, passwort = "") =>
-                fluentApi.post(`AppBenutzer/?kundeGuid=${kundeGuid}&pwSenden=${pwSenden}&passwort=${passwort}`, data),
+                fluentApi.post(`AppBenutzer`, {
+                    BenutzerData = data,
+                    KundeGuid = kundeGuid,
+                    Passwort = passwort,
+                    PasswortSenden = pwSenden
+                }),
 
             /**
              * Delete user by customer
