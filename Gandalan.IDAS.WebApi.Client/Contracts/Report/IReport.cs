@@ -106,6 +106,7 @@ public class ReportExecuteSettings
 
     public ReportAction ReportAction { get; set; }
     public string PrinterName { get; set; }
+    public string PaperSourceName { get; set; }
 
     /// <summary>
     /// Page width in mm
@@ -121,7 +122,7 @@ public class ReportExecuteSettings
     public string FileName { get; set; }
     public int Copies { get; set; } = 1;
     public string Watermark { get; set; }
-    
+
 
     public static ReportExecuteSettings FromReportAuswahlResult(IReportAuswahlResult result)
     {
@@ -129,6 +130,7 @@ public class ReportExecuteSettings
         {
             ReportAction = result.Action,
             PrinterName = result.PrinterName,
+            PaperSourceName = result.PaperSourceName,
             FileName = result.FileName,
             Copies = result.Copies,
             Watermark = result.Watermark,
@@ -143,7 +145,6 @@ public class ReportExecuteSettings
 
 
     public bool ShowSerienName { get; set; }
-    public bool IsEtikettReport { get; set; }
     public double ContentOffsetXMm { get; set; }
     public double ContentOffsetYMm { get; set; }
     public string PrinterPaperName { get; set; }
