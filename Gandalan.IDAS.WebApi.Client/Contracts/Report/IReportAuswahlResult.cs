@@ -15,4 +15,5 @@ public interface IReportAuswahlResult
     double PrinterPaperHeightMm { get; set; }
     int PrinterDpi { get; set; }
     string PrinterPaperName { get; set; }
+    string PaperSourceName { get; set; }
 }
