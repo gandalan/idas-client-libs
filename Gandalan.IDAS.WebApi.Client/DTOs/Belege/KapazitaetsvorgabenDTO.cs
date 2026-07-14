@@ -407,6 +407,31 @@ public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
             TryAddProduktGruppeToExisitng("Vorbiegen", "SP3", "SP2");
             TryAddProduktGruppeToExisitng("Sprosse (im Spannrahmen)", "SP3", "SP2");
         }
+        if (Version < 7)
+        {
+            Version = 7;
+            Add(new Kapazitaetsvorgabe
+            {
+                GroupName = "Sonstiges",
+                Label = "Profilfahnenanpassung > 19 mm",
+                Produktgruppe = ["PF2", "PT2"],
+                Etikettentext = ["PFL_20", "PFL_21", "PFL_22", "PFL_23", "PFL_24", "PFL_25", "PFL_26", "PFL_27", "PFL_28", "PFL_29", "PFL_30",
+                    "PFL_31", "PFL_32", "PFL_33", "PFL_34", "PFL_35", "PFL_36", "PFL_37", "PFL_38",
+                    "PFL_39", "PFL_40", "PFL_41", "PFL_42", "PFL_43", "PFL_44", "PFL_45", "PFL_46", "PFL_47", "PFL_48", "PFL_49", "PFL_50"],
+                Zeitvorgabe = 9,
+                Mehrfachregel = true,
+                Order = Count
+            }); Add(new Kapazitaetsvorgabe
+            {
+                GroupName = "Sonstiges",
+                Label = "Profilfahnenanpassung < 19 mm",
+                Produktgruppe = ["PF2", "PT2"],
+                Etikettentext = ["PFL_3", "PFL_4", "PFL_5", "PFL_6", "PFL_7", "PFL_8", "PFL_9", "PFL_10", "PFL_11", "PFL_12", "PFL_13", "PFL_14", "PFL_15", "PFL_16", "PFL_17", "PFL_18"],
+                Zeitvorgabe = 5,
+                Mehrfachregel = true,
+                Order = Count
+            });
+        }
     }
 
     private bool TryAddProduktGruppeToExisitng(string label, string produktgruppe, string afterThisValue = null)
