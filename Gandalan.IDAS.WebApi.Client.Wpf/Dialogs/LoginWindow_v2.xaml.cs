@@ -122,7 +122,7 @@ public partial class LoginWindow_v2 : Window
 
     private async Task<bool> TestConnection(IWebApiConfig settings)
     {
-        var wrb = new WebRoutinenBase(settings);
+        var wrb = new WebRoutinenBase(settings) { DisableCustomExceptionHandler = true };
         try
         {
             if (settings.AuthToken != null)
@@ -137,7 +137,7 @@ public partial class LoginWindow_v2 : Window
 
             var result = await wrb.LoginAsync();
 
-            _statusText = wrb.Status;
+            _statusText = tryTranslateToUserFriendlyMessage(wrb.Status);
             if (_statusText.Contains("<title>", StringComparison.InvariantCultureIgnoreCase))
             {
                 _statusText = InternalStripHtml(_statusText);
@@ -152,11 +152,43 @@ public partial class LoginWindow_v2 : Window
         }
         catch (Exception ex)
         {
-            _statusText = ex.Message;
+            _statusText = tryTranslateToUserFriendlyMessage(ex.Message);
             L.Fehler(ex, "Login Exception");
 
             return false;
         }
+    }
+
+    private static string tryTranslateToUserFriendlyMessage(string exMessage)
+    {
+        if (exMessage.Contains("temporär gesperrt", StringComparison.InvariantCultureIgnoreCase))
+        {
+            return "Dieser Benutzer ist temporär gesperrt.";
+        }
+
+        if (exMessage.Contains("Invalid credentials", StringComparison.InvariantCultureIgnoreCase))
+        {
+            return "Benutzername oder Password ungültig.";
+        }
+
+        //TODO: remove
+        if (exMessage.Contains("Invalid user", StringComparison.InvariantCultureIgnoreCase))
+        {
+            return "Benutzer ungültig.";
+        }
+
+        //TODO: remove
+        if (exMessage.Contains("Invalid password", StringComparison.InvariantCultureIgnoreCase))
+        {
+            return "Password ungültig.";
+        }
+
+        if (exMessage.Contains("locked", StringComparison.InvariantCultureIgnoreCase))
+        {
+            return "Dieser Benutzer ist gesperrt.";
+        }
+
+        return exMessage;
     }
 
     private static string InternalStripHtml(string htmlString)
