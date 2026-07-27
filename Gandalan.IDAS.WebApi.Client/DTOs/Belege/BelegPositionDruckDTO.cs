@@ -77,7 +77,7 @@ public class BelegPositionDruckDTO
         var hatZuschnittLaenge = _positionDto.Daten.FirstOrDefault(d => d.KonfigName.Equals("Konfig.ZuschnittLaenge")) != null;
         if (hatZuschnittLaenge)
         {
-            MengenEinheit = "Stk.";
+            MengenEinheit = Einheit.Stueck;
             return;
         }
 
@@ -93,11 +93,8 @@ public class BelegPositionDruckDTO
             MengenEinheit = _positionDto.MengenEinheit;
         }
 
-        // Normalisierung auf Standard
-        if (string.IsNullOrEmpty(MengenEinheit) || MengenEinheit.Equals("st", StringComparison.InvariantCultureIgnoreCase))
-        {
-            MengenEinheit = "Stk.";
-        }
+        // Normalisierung auf die kanonische Schreibweise
+        MengenEinheit = MengenEinheit.AsNormalizedEinheit();
     }
 
     private void IntegriereEinbauort()
