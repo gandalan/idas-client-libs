@@ -58,9 +58,14 @@ public class WebRoutinenBase
     public delegate bool ExceptionHandler(Exception ex);
 
     /// <summary>
-    /// Used to register custom handlers to catch Exceptions thrown by <see cref="WebRoutinenBase"/>
+    /// Used to register custom handlers to catch Exceptions thrown by all <see cref="WebRoutinenBase"/>
+    /// <seealso cref="DisableCustomExceptionHandler"/>
     /// </summary>
     public static event ExceptionHandler CustomExceptionHandler;
+    /// <summary>
+    /// Disable/ignore registered <see cref="CustomExceptionHandler"/> for this instance
+    /// </summary>
+    public bool DisableCustomExceptionHandler { get; set; }
 
     public delegate void ErrorOccuredEventHandler(object sender, ApiErrorArgs e);
 
@@ -849,16 +854,17 @@ public class WebRoutinenBase
 
         L.Fehler(exception);
 
-        if (!IgnoreOnErrorOccured)
+        if (IgnoreOnErrorOccured)
         {
-
-            if (CustomExceptionHandler != null && CustomExceptionHandler.GetInvocationList().Cast<ExceptionHandler>().Any(handler => handler(exception)))
-            {
-                return;
-            }
-
-            throw exception;
+            return;
         }
+
+        if (!DisableCustomExceptionHandler && CustomExceptionHandler != null && CustomExceptionHandler.GetInvocationList().Cast<ExceptionHandler>().Any(handler => handler(exception)))
+        {
+            return;
+        }
+
+        throw exception;
     }
 
     private Exception HandleWebException(
@@ -873,7 +879,8 @@ public class WebRoutinenBase
 
         if (exception.StatusCode == HttpStatusCode.Unauthorized)
         {
-            var unauthorized = new ApiUnauthorizedException(Status = ex.Message);
+            Status = ex.Message;
+            var unauthorized = new ApiUnauthorizedException(exception.Message);
             EnrichExceptionData(unauthorized, url, data, sender);
             return unauthorized;
         }
