@@ -16,7 +16,7 @@ public static class Einheit
     public const string Laufmeter = "lfm";
     public const string Satz = "Sa.";
     public const string Millimeter = "mm";
-    public const string Quadratmeter = "m²";
+    public const string Quadratmeter = "qm";
     public const string Stunde = "Std.";
     public const string Kilogramm = "kg";
     public const string Liter = "l";
@@ -52,10 +52,10 @@ public static class Einheit
             ["std"] = Stunde,
             ["std."] = Stunde,
 
-            // m²
+            // qm
+            ["qm"] = Quadratmeter,
             ["m²"] = Quadratmeter,
             ["m2"] = Quadratmeter,
-            ["qm"] = Quadratmeter,
             ["quadratmeter"] = Quadratmeter,
 
             // mm
