@@ -2,7 +2,7 @@ export { createApi, fluentApi } from "./api/fluentApi";
 export { createIDASApi, idasFluentApi } from "./api/idasFluentApi";
 export { createAuthManager, fluentIdasAuthManager } from "./api/fluentAuthManager";
 export { fetchEnvConfig } from "./api/fluentEnvUtils";
-export { restClient } from "./api/fluentRestClient";
+export { restClient, RestError } from "./api/fluentRestClient";
 
 // Business Routines APIs
 export * from "./api/business/index.js";

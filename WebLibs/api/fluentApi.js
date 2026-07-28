@@ -1,4 +1,4 @@
-import { restClient } from "./fluentRestClient";
+import { restClient, RestError } from "./fluentRestClient";
 
 /**
  * @typedef {Object} FluentApi
@@ -16,6 +16,7 @@ import { restClient } from "./fluentRestClient";
  * @property {(url?: string, payload?: Object|FormData|Array<any>|string[]|string|null, auth?: boolean) => Promise<object|Array<any>>} delete - Async function to perform DELETE requests.
  * @property {() => import("./fluentRestClient").FluentRESTClient} createRestClient - Creates a configured REST client.
  * @property {(auth?: boolean) => Promise<void>} preCheck - Ensures authentication before a request when required.
+ * @property {(auth: boolean, executeRequest: () => Promise<any>) => Promise<any>} _executeRequest - Runs a request with authentication and a one-time retry on 401.
  */
 
 /**
@@ -82,8 +83,7 @@ export function createApi() {
          * @returns {Promise<Object>}
          */
         async get(url = "", auth = true, skipResponseParsing = false) {
-            await this.preCheck(auth);
-            return await this.createRestClient().get(url, auth, skipResponseParsing);
+            return await this._executeRequest(auth, () => this.createRestClient().get(url, auth, skipResponseParsing));
         },
 
         /**
@@ -97,8 +97,7 @@ export function createApi() {
          * @returns {Promise<Object>}
          */
         async put(url = "", payload = {}, auth = true, skipResponseParsing = false) {
-            await this.preCheck(auth);
-            return await this.createRestClient().put(url, payload, skipResponseParsing);
+            return await this._executeRequest(auth, () => this.createRestClient().put(url, payload, skipResponseParsing));
         },
 
         /**
@@ -112,8 +111,7 @@ export function createApi() {
          * @returns {Promise<Object>}
          */
         async post(url = "", payload = {}, auth = true, skipResponseParsing = false) {
-            await this.preCheck(auth);
-            return await this.createRestClient().post(url, payload, skipResponseParsing);
+            return await this._executeRequest(auth, () => this.createRestClient().post(url, payload, skipResponseParsing));
         },
 
         /**
@@ -127,8 +125,35 @@ export function createApi() {
          * @returns {Promise<Object>}
          */
         async delete(url = "", payload = null, auth = true, skipResponseParsing = false) {
+            return await this._executeRequest(auth, () => this.createRestClient().delete(url, payload, skipResponseParsing));
+        },
+
+        /**
+         * Runs a request with authentication and retries it once if the server
+         * answered 401 Unauthorized: the cached token is discarded, a fresh one
+         * is obtained via the auth manager and the request is repeated. This
+         * covers tokens that expired server-side (e.g. after hours of
+         * inactivity) as well as refresh races between parallel requests.
+         *
+         * @private
+         * @async
+         * @param {boolean} auth - Whether the request requires authentication.
+         * @param {() => Promise<any>} executeRequest - Performs the request; must create the rest client inside so a retry picks up the fresh token.
+         * @returns {Promise<any>}
+         */
+        async _executeRequest(auth, executeRequest) {
             await this.preCheck(auth);
-            return await this.createRestClient().delete(url, payload, skipResponseParsing);
+            try {
+                return await executeRequest();
+            } catch (e) {
+                if (!auth || !this.authManager || !(e instanceof RestError) || e.status !== 401) {
+                    throw e;
+                }
+
+                this.authManager.token = "";
+                await this.authManager.ensureAuthenticated();
+                return await executeRequest();
+            }
         },
 
         /**

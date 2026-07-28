@@ -7,6 +7,7 @@ export function createAuthManager(): FluentAuthManager;
 export function fluentIdasAuthManager(appToken: string, authBaseUrl: string): FluentAuthManager;
 export function fetchEnvConfig(envConfig?: string): Promise<EnvironmentConfig>;
 export function restClient(): FluentRESTClient;
+export class RestError extends Error { method: string; url: string; status: number; statusText: string; constructor(method: string, url: string, res: Response); }
 
 export type AblageApi = {
     get: (guid: string) => Promise<AblageDTO>;
@@ -1120,6 +1121,7 @@ export type FluentApi = {
     delete: (url?: string, payload?: object|FormData|Array<any>|string[]|string|null, auth?: boolean) => Promise<object|Array<any>>;
     createRestClient: () => FluentRESTClient;
     preCheck: (auth?: boolean) => Promise<void>;
+    _executeRequest: (auth: boolean, executeRequest: () => Promise<any>) => Promise<any>;
 };
 
 export type FluentAuthManager = {
@@ -1134,6 +1136,8 @@ export type FluentAuthManager = {
     useRefreshToken: (storedRefreshToken?: string|null) => FluentAuthManager;
     ensureAuthenticated: () => Promise<void>;
     authenticate: () => Promise<void>;
+    _doAuthenticate: () => Promise<void>;
+    _authenticatePromise: Promise<void>|null;
     init: () => Promise<FluentAuthManager>;
     login: (username?: string, password?: string) => Promise<void>;
     tryRefreshToken: (refreshToken?: string) => Promise<string|null>;
