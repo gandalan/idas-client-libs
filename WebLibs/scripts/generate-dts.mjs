@@ -31,7 +31,8 @@ const rootFunctionDeclarationStatements = [
     "export function createAuthManager(): FluentAuthManager;",
     "export function fluentIdasAuthManager(appToken: string, authBaseUrl: string): FluentAuthManager;",
     "export function fetchEnvConfig(envConfig?: string): Promise<EnvironmentConfig>;",
-    "export function restClient(): FluentRESTClient;"
+    "export function restClient(): FluentRESTClient;",
+    "export class RestError extends Error { method: string; url: string; status: number; statusText: string; constructor(method: string, url: string, res: Response); }"
 ];
 
 const simpleImportTypePattern = /^import\((?:"|').+(?:"|')\)\.[A-Za-z0-9_$]+$/;

@@ -15,6 +15,27 @@
  */
 
 /**
+ * Error thrown for non-ok HTTP responses. Carries the status code so callers
+ * can react to specific statuses (e.g. the automatic 401 retry in fluentApi)
+ * without parsing the message.
+ */
+export class RestError extends Error {
+    /**
+     * @param {string} method - HTTP method of the failed request.
+     * @param {string} url - Full URL of the failed request.
+     * @param {Response} res - The non-ok fetch response.
+     */
+    constructor(method, url, res) {
+        super(`${method} ${url} failed: ${res.status} ${res.statusText}`);
+        this.name = "RestError";
+        this.method = method;
+        this.url = url;
+        this.status = res.status;
+        this.statusText = res.statusText;
+    }
+}
+
+/**
  * Creates a REST client object with fluent API for making HTTP requests.
  * @returns {FluentRESTClient} The REST client object.
  */
@@ -71,7 +92,7 @@ export function restClient() {
                 return skipResponseParsing ? res : await this._parseReponse(res); 
             }
 
-            throw new Error(`GET ${finalUrl} failed: ${res.status} ${res.statusText}`);
+            throw new RestError("GET", finalUrl, res);
         },
 
         /**
@@ -91,7 +112,7 @@ export function restClient() {
                 return skipResponseParsing ? res : await this._parseReponse(res);
             }
 
-            throw new Error(`PUT ${finalUrl} failed: ${res.status} ${res.statusText}`);
+            throw new RestError("PUT", finalUrl, res);
         },
 
         /**
@@ -122,7 +143,7 @@ export function restClient() {
                 return skipResponseParsing ? res : await this._parseReponse(res);
             }
 
-            throw new Error(`POST ${finalUrl} failed: ${res.status} ${res.statusText}`);
+            throw new RestError("POST", finalUrl, res);
         },
 
         /**
@@ -145,7 +166,7 @@ export function restClient() {
                 return skipResponseParsing ? res : await this._parseReponse(res);
             }
 
-            throw new Error(`DELETE ${finalUrl} failed: ${res.status} ${res.statusText}`);
+            throw new RestError("DELETE", finalUrl, res);
         },
 
         _createHeaders(contentType) {

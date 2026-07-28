@@ -23,6 +23,8 @@ import { popRefreshTokenFromUrl } from "./fluentAuthUtils";
  * @property {(storedRefreshToken?: string|null) => FluentAuthManager} useRefreshToken - Sets the refresh token and returns the FluentApi object.
  * @property {() => Promise<void>} ensureAuthenticated - Ensures the user is authenticated before making a request.
  * @property {() => Promise<void>} authenticate - Authenticates the user with username and password, or refreshes the token.
+ * @property {() => Promise<void>} _doAuthenticate - Performs the actual token refresh (single-flight worker behind authenticate).
+ * @property {Promise<void>|null} _authenticatePromise - In-flight authentication promise shared by concurrent callers.
  * @property {() => Promise<FluentAuthManager>} init - Returns promise for authManager.
  * @property {(username?: string, password?: string) => Promise<void>} login - Logs in with the provided credentials.
  * @property {(refreshToken?: string) => Promise<string|null>} tryRefreshToken - Attempts to refresh the authentication token using the refresh token.
@@ -45,6 +47,7 @@ export function createAuthManager() {
         token: "",
         refreshToken: "",
         userInfo: {},
+        _authenticatePromise: null,
 
         /**
          * app token to use for authentication
@@ -117,10 +120,35 @@ export function createAuthManager() {
          * Authenticates the user with the JWT token or refreshes the token with
          * the refreshToken set before.
          *
+         * Single-flight: concurrent callers (e.g. parallel requests firing after
+         * the token expired) share one refresh instead of racing each other with
+         * the same refresh token — with token rotation only the first refresh
+         * would succeed and all others would end up with a 401.
+         *
          * @throws {Error} if JWT token and refreshToken are not set or both are invalid
          * @return {Promise<void>}
          */
         async authenticate() { // benutzt bei existierendem JWT oder RefreshToken, wenn keins vorhanden ERROR
+            if (this.token && isTokenValid(this.token)) {
+                return;
+            }
+
+            this._authenticatePromise ??= this._doAuthenticate()
+                .finally(() => { this._authenticatePromise = null; });
+
+            return this._authenticatePromise;
+        },
+
+        /**
+         * Performs the actual authentication/refresh. Never call directly —
+         * always go through authenticate(), which ensures only one refresh
+         * runs at a time.
+         *
+         * @private
+         * @throws {Error} if JWT token and refreshToken are not set or both are invalid
+         * @return {Promise<void>}
+         */
+        async _doAuthenticate() {
             console.log("authenticating:", this.token ? `token set, exp: ${jwtDecode(this.token).exp - (Date.now() / 1000)}` : "no token,", this.refreshToken, this.appToken);
 
             if (this.token && isTokenValid(this.token)) {
