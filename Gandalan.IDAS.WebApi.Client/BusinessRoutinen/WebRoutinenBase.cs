@@ -919,8 +919,18 @@ public class WebRoutinenBase
     {
         var apiException = TranslateExceptionCore(ex, payload);
 
-        // Operation-Id primär aus dem Response-Header (von ErrorEnrichmentHandler nach ex.Data
-        // übernommen), sonst aus der ProblemDetails-Extension im Body.
+        SetOperationId(apiException, ex);
+
+        return apiException;
+    }
+
+    /// <summary>
+    /// Übernimmt die Telemetrie-Operation-Id primär aus dem Response-Header (den der
+    /// <c>ErrorEnrichmentHandler</c> nach <c>ex.Data</c> gelegt hat), sonst aus der
+    /// ProblemDetails-Extension im Body.
+    /// </summary>
+    private static void SetOperationId(ApiException apiException, HttpRequestException ex)
+    {
         if (ex.Data.Contains("OperationId"))
         {
             apiException.OperationId = ex.Data["OperationId"]?.ToString();
@@ -932,8 +942,6 @@ public class WebRoutinenBase
         {
             apiException.OperationId = operationIdFromBody?.ToString();
         }
-
-        return apiException;
     }
 
     private static ApiException TranslateExceptionCore(HttpRequestException ex, object payload)

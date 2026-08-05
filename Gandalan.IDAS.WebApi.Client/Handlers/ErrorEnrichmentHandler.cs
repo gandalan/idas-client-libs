@@ -47,17 +47,25 @@ internal sealed class ErrorEnrichmentHandler : DelegatingHandler
             if (!string.IsNullOrWhiteSpace(responseContent))
                 ex.Data["Response"] = responseContent;
 
-            // App-Insights-Operation-Id des fehlgeschlagenen Requests (nur bei Fehler-Responses gesetzt) -
-            // erlaubt es, den Fehler im Fehlerbericht direkt in der Telemetrie nachzuschlagen.
-            if (response != null &&
-                response.Headers.TryGetValues(ApiHeaderNames.OperationId, out var operationIds))
-            {
-                var operationId = operationIds.FirstOrDefault();
-                if (!string.IsNullOrWhiteSpace(operationId))
-                    ex.Data["OperationId"] = operationId;
-            }
+            addOperationId(ex, response);
 
             throw;
         }
+    }
+
+    /// <summary>
+    /// Übernimmt die App-Insights-Operation-Id, die das Backend nur bei Fehler-Responses als Header
+    /// mitschickt. Damit lässt sich ein gemeldeter Fehler direkt in der Telemetrie nachschlagen.
+    /// </summary>
+    private static void addOperationId(Exception ex, HttpResponseMessage response)
+    {
+        if (response == null ||
+            !response.Headers.TryGetValues(ApiHeaderNames.OperationId, out var operationIds))
+            return;
+
+        var operationId = operationIds.FirstOrDefault();
+
+        if (!string.IsNullOrWhiteSpace(operationId))
+            ex.Data["OperationId"] = operationId;
     }
 }
