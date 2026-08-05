@@ -1,8 +1,11 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Gandalan.IDAS.WebApi.Client.Constants;
 
 namespace Gandalan.IDAS.WebApi.Client.Handlers;
 
@@ -43,6 +46,17 @@ internal sealed class ErrorEnrichmentHandler : DelegatingHandler
             ex.Data["StatusCode"] = response?.StatusCode ?? HttpStatusCode.InternalServerError;
             if (!string.IsNullOrWhiteSpace(responseContent))
                 ex.Data["Response"] = responseContent;
+
+            // App-Insights-Operation-Id des fehlgeschlagenen Requests (nur bei Fehler-Responses gesetzt) -
+            // erlaubt es, den Fehler im Fehlerbericht direkt in der Telemetrie nachzuschlagen.
+            if (response != null &&
+                response.Headers.TryGetValues(ApiHeaderNames.OperationId, out var operationIds))
+            {
+                var operationId = operationIds.FirstOrDefault();
+                if (!string.IsNullOrWhiteSpace(operationId))
+                    ex.Data["OperationId"] = operationId;
+            }
+
             throw;
         }
     }
