@@ -15,6 +15,8 @@ namespace Gandalan.IDAS.WebApi.Client.Wpf.Dialogs;
 /// </summary>
 public partial class LoginWindow_v2 : Window
 {
+    private const string InvalidCredentialsMessage = "Benutzername oder Password ungültig.";
+
     private readonly IWebApiConfig _webApiSettings;
     private readonly LoginWindowViewModel_v2 _viewModel;
     private string _statusText;
@@ -67,13 +69,13 @@ public partial class LoginWindow_v2 : Window
         _viewModel.LoginInProgress = false;
         _viewModel.StatusText = $"Fehler: {_statusText}";
 
-        if (_statusText == "Invalid password" || _statusText == "Error")
+        if (_statusText == InvalidCredentialsMessage || _statusText == "Error")
         {
             _viewModel.ShowLoggedInEnvironments = false;
             _viewModel.UserName = settings.UserName;
         }
         else if (_statusText != null &&
-                 !_statusText.Contains("Invalid user") &&
+                 _statusText != InvalidCredentialsMessage &&
                  !_statusText.Contains("Login Exception")) // Do not log exception twice
         {
             L.Fehler($"URL: {settings.Url}: {_statusText}");
@@ -112,8 +114,7 @@ public partial class LoginWindow_v2 : Window
         _viewModel.StatusText = $"Fehler: {_statusText}";
 
         if (_statusText != null &&
-            _statusText != "Invalid password" &&
-            !_statusText.Contains("Invalid user") &&
+            _statusText != InvalidCredentialsMessage &&
             !_statusText.Contains("Login Exception")) // Do not log exception twice
         {
             L.Fehler($"URL: {_webApiSettings.Url}: {_statusText}");
@@ -166,21 +167,11 @@ public partial class LoginWindow_v2 : Window
             return "Dieser Benutzer ist temporär gesperrt.";
         }
 
-        if (exMessage.Contains("Invalid credentials", StringComparison.InvariantCultureIgnoreCase))
+        if (exMessage.Contains("Invalid credentials", StringComparison.InvariantCultureIgnoreCase) ||
+            exMessage.Contains("Invalid user", StringComparison.InvariantCultureIgnoreCase) ||
+            exMessage.Contains("Invalid password", StringComparison.InvariantCultureIgnoreCase))
         {
-            return "Benutzername oder Password ungültig.";
-        }
-
-        //TODO: remove
-        if (exMessage.Contains("Invalid user", StringComparison.InvariantCultureIgnoreCase))
-        {
-            return "Benutzer ungültig.";
-        }
-
-        //TODO: remove
-        if (exMessage.Contains("Invalid password", StringComparison.InvariantCultureIgnoreCase))
-        {
-            return "Password ungültig.";
+            return InvalidCredentialsMessage;
         }
 
         if (exMessage.Contains("locked", StringComparison.InvariantCultureIgnoreCase))
