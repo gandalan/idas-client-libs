@@ -20,7 +20,8 @@ public static class StringJoiner
 
     /// <summary>
     /// Verbindet alle gefüllten Teile mit dem Trenner. Null-, leere und
-    /// Whitespace-Teile werden übersprungen.
+    /// Whitespace-Teile werden übersprungen, gefüllte Teile werden getrimmt,
+    /// damit kein doppeltes Whitespace um den Trenner entsteht.
     /// </summary>
     public static string JoinNonEmpty(string separator, IEnumerable<string> parts)
     {
@@ -29,7 +30,9 @@ public static class StringJoiner
             return string.Empty;
         }
 
-        return string.Join(separator, parts.Where(p => !string.IsNullOrWhiteSpace(p)));
+        return string.Join(separator, parts
+            .Where(p => !string.IsNullOrWhiteSpace(p))
+            .Select(p => p.Trim()));
     }
 
     /// <summary>
