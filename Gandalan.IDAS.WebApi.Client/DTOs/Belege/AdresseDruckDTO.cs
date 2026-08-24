@@ -46,25 +46,26 @@ public class AdresseDruckDTO
     {
         StringBuilder adressText = new();
 
-        adressText.AppendLine(Anrede);
-        adressText.AppendLine(BuildAnschriftsName());
+        // kein AppendLine um Window NewLine zu erzwingen
+        adressText.Append(Anrede).Append("\r\n");
+        adressText.Append(BuildAnschriftsName()).Append("\r\n");
 
         if (!string.IsNullOrEmpty(AdressZusatz1))
         {
-            adressText.AppendLine(AdressZusatz1);
+            adressText.Append(AdressZusatz1).Append("\r\n");
         }
 
         if (!string.IsNullOrEmpty(Ortsteil))
         {
-            adressText.AppendLine(Ortsteil);
+            adressText.Append(Ortsteil).Append("\r\n");
         }
 
-        adressText.AppendLine($"{Strasse} {Hausnummer}");
+        adressText.Append($"{Strasse} {Hausnummer}").Append("\r\n");
         adressText.Append($"{Postleitzahl} {Ort}");
 
         if (!IstInland)
         {
-            adressText.AppendLine().Append(Land?.ToUpper());
+            adressText.Append("\r\n").Append(Land?.ToUpper());
         }
 
         return adressText.ToString();

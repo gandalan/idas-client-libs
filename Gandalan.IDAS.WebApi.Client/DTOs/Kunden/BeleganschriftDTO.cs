@@ -165,9 +165,10 @@ public class BeleganschriftDTO : IDTOWithApplicationSpecificProperties, IDTOWith
     {
         var sb = new StringBuilder();
 
+        // kein AppendLine um Window NewLine zu erzwingen
         if (!string.IsNullOrEmpty(Anrede))
         {
-            sb.AppendLine(Anrede);
+            sb.Append(Anrede).Append("\r\n");
         }
 
         var namensZeile = $"{Titel} {Vorname} {Nachname}".Trim();
@@ -175,45 +176,45 @@ public class BeleganschriftDTO : IDTOWithApplicationSpecificProperties, IDTOWith
         // Ist die Anschrift eine Privatkundenadresse, kommt der Name vor einem ggf. vorhandenen/eingetragenen Firmennamen
         if (IstEndkunde && !string.IsNullOrEmpty(namensZeile))
         {
-            sb.AppendLine(namensZeile);
+            sb.Append(namensZeile).Append("\r\n");
         }
 
         if (!string.IsNullOrEmpty(Firmenname))
         {
             if (!namensZeile.Equals(Firmenname, StringComparison.OrdinalIgnoreCase))
             {
-                sb.AppendLine(Firmenname);
+                sb.Append(Firmenname).Append("\r\n");
             }
         }
 
         if (!IstEndkunde && !string.IsNullOrEmpty(namensZeile))
         {
-            sb.AppendLine(namensZeile);
+            sb.Append(namensZeile).Append("\r\n");
         }
 
         if (!string.IsNullOrEmpty(AdressZusatz1))
         {
-            sb.AppendLine(AdressZusatz1);
+            sb.Append(AdressZusatz1).Append("\r\n");
         }
 
         if (!string.IsNullOrEmpty(AdressZusatz2))
         {
-            sb.AppendLine(AdressZusatz2);
+            sb.Append(AdressZusatz2).Append("\r\n");
         }
 
         if (!string.IsNullOrEmpty(Ortsteil))
         {
-            sb.AppendLine($"OT {Ortsteil}");
+            sb.Append($"OT {Ortsteil}").Append("\r\n");
         }
 
         if (!string.IsNullOrEmpty(Strasse) || !string.IsNullOrEmpty(Hausnummer))
         {
-            sb.AppendLine($"{Strasse} {Hausnummer}".Trim());
+            sb.Append($"{Strasse} {Hausnummer}".Trim()).Append("\r\n");
         }
 
         if (!string.IsNullOrEmpty(Land) || !string.IsNullOrEmpty(Postleitzahl) || !string.IsNullOrEmpty(Ort))
         {
-            sb.AppendLine($"{Land} {Postleitzahl} {Ort}".Trim());
+            sb.Append($"{Land} {Postleitzahl} {Ort}".Trim()).Append("\r\n");
         }
 
         return sb.ToString().Trim();
