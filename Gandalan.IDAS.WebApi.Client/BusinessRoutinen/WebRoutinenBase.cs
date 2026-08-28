@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.Web;
+using Gandalan.IDAS.WebApi.Client.Constants;
 using Gandalan.IDAS.WebApi.Client.Exceptions;
 using Gandalan.IDAS.WebApi.Client.RateLimiting;
 using Gandalan.IDAS.WebApi.Client.Settings;
@@ -289,6 +290,11 @@ public class WebRoutinenBase
             if (!string.IsNullOrEmpty(apiException.ExceptionString))
             {
                 TryAdd("ExceptionString", apiException.ExceptionString);
+            }
+
+            if (!string.IsNullOrEmpty(apiException.OperationId))
+            {
+                TryAdd("OperationId", apiException.OperationId);
             }
 
             if (apiException.ProblemDetails != null)
@@ -910,6 +916,35 @@ public class WebRoutinenBase
     }
 
     protected static ApiException TranslateException(HttpRequestException ex, object payload = null)
+    {
+        var apiException = TranslateExceptionCore(ex, payload);
+
+        SetOperationId(apiException, ex);
+
+        return apiException;
+    }
+
+    /// <summary>
+    /// Übernimmt die Telemetrie-Operation-Id primär aus dem Response-Header (den der
+    /// <c>ErrorEnrichmentHandler</c> nach <c>ex.Data</c> gelegt hat), sonst aus der
+    /// ProblemDetails-Extension im Body.
+    /// </summary>
+    private static void SetOperationId(ApiException apiException, HttpRequestException ex)
+    {
+        if (ex.Data.Contains("OperationId"))
+        {
+            apiException.OperationId = ex.Data["OperationId"]?.ToString();
+        }
+
+        if (string.IsNullOrEmpty(apiException.OperationId) &&
+            apiException.ProblemDetails?.Extensions?.TryGetValue(
+                ApiHeaderNames.OperationIdProblemDetailsExtension, out var operationIdFromBody) == true)
+        {
+            apiException.OperationId = operationIdFromBody?.ToString();
+        }
+    }
+
+    private static ApiException TranslateExceptionCore(HttpRequestException ex, object payload)
     {
         if (!ex.Data.Contains("StatusCode"))
         {

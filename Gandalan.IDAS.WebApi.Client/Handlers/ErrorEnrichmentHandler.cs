@@ -1,8 +1,11 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Gandalan.IDAS.WebApi.Client.Constants;
 
 namespace Gandalan.IDAS.WebApi.Client.Handlers;
 
@@ -43,7 +46,26 @@ internal sealed class ErrorEnrichmentHandler : DelegatingHandler
             ex.Data["StatusCode"] = response?.StatusCode ?? HttpStatusCode.InternalServerError;
             if (!string.IsNullOrWhiteSpace(responseContent))
                 ex.Data["Response"] = responseContent;
+
+            addOperationId(ex, response);
+
             throw;
         }
+    }
+
+    /// <summary>
+    /// Übernimmt die App-Insights-Operation-Id, die das Backend nur bei Fehler-Responses als Header
+    /// mitschickt. Damit lässt sich ein gemeldeter Fehler direkt in der Telemetrie nachschlagen.
+    /// </summary>
+    private static void addOperationId(Exception ex, HttpResponseMessage response)
+    {
+        if (response == null ||
+            !response.Headers.TryGetValues(ApiHeaderNames.OperationId, out var operationIds))
+            return;
+
+        var operationId = operationIds.FirstOrDefault();
+
+        if (!string.IsNullOrWhiteSpace(operationId))
+            ex.Data["OperationId"] = operationId;
     }
 }
