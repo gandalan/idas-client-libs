@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Gandalan.IDAS.WebApi.Client.Contracts;
 
 namespace System;
@@ -11,6 +13,10 @@ public static class IWithGueltigkeitsZeitraumExtensions
             { GueltigAb: null, GueltigBis: null } => true,
             _ => isWithinValidityPeriod(gueltig, (referenceDate ?? DateTime.UtcNow).Date)
         };
+
+    public static IEnumerable<T> WhereIstGueltig<T>(this IEnumerable<T> list, DateTime? referenceDate = null)
+        where T : IWithGueltigkeitsZeitraum
+        => list.Where(i => i.IstGueltig(referenceDate));
 
     private static bool isWithinValidityPeriod(IWithGueltigkeitsZeitraum gueltig, DateTime refDate) =>
         (gueltig.GueltigAb is null || gueltig.GueltigAb.Value.Date <= refDate)
