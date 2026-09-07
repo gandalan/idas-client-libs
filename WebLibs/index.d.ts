@@ -1847,6 +1847,26 @@ export type LieferzusageDTO = {
     ChangedDate: Date;
 };
 
+export type Localize = {
+    (key: string, params?: LocalizeParams, namespace?: string): string;
+    (node: Element, options?: LocalizeActionOptions): LocalizeActionHandle;
+};
+
+export type LocalizeActionHandle = {
+    update: (options?: LocalizeActionOptions) => void;
+    destroy: () => void;
+};
+
+export type LocalizeActionOptions = {
+    text?: string;
+    html?: string;
+    params?: LocalizeParams;
+    attrs?: Record<string, string>;
+    ns?: string;
+};
+
+export type LocalizeParams = Record<string, string | number>;
+
 export type LoginAttemptDTO = {
     UserGuid: string;
     FailCount: number;
@@ -2055,6 +2075,8 @@ export type NeherApp3 = {
     api: NeherApp3ApiCollection;
     cache: NeherApp3CacheCollection;
     messages: NeherApp3Messages;
+    i18n: NeherApp3I18n;
+    localize: Localize;
     isEmbedded: boolean;
 };
 
@@ -2084,6 +2106,32 @@ export type NeherApp3ErfassungCache = {
     createUIMachine: (v: Variante) => void;
 };
 
+export type NeherApp3I18n = {
+    register: (namespace: string, translations?: TranslationCatalogs) => NeherApp3I18nEndpoint;
+    localize: Localize;
+    has: (key: string, namespace?: string) => boolean;
+    compare: (a: string, b: string) => number;
+    sort: <T>(items: readonly T[], selector?: (item: T) => string) => T[];
+    setLocale: (code: string) => void;
+    onLocaleChange: (listener: (locale: string) => void) => (() => void);
+    sourceLocale: string;
+    locale: string;
+    locales: NeherApp3LocaleInfo[];
+};
+
+export type NeherApp3I18nEndpoint = {
+    namespace: string;
+    localize: Localize;
+    add: (translations: TranslationCatalogs) => void;
+    has: (key: string) => boolean;
+    dispose: () => void;
+};
+
+export type NeherApp3LocaleInfo = {
+    code: string;
+    label: string;
+};
+
 export type NeherApp3MenuItem = {
     id?: string;
     selected?: boolean;
@@ -2094,6 +2142,7 @@ export type NeherApp3MenuItem = {
     parent?: string | null;
     hidden?: boolean;
     separator?: boolean;
+    i18nNamespace?: string;
 };
 
 export type NeherApp3Messages = {
@@ -2831,6 +2880,10 @@ export type TemplateDTO = {
     ChangedDate: string;
     Benutzer: string;
 };
+
+export type TranslationCatalogs = Record<string, TranslationTable>;
+
+export type TranslationTable = Record<string, string>;
 
 export type TypePattern = string | string[];
 

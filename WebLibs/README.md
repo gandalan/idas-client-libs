@@ -14,6 +14,15 @@
 - IDAS API (Swagger): https://api.dev.idas-cloudservices.net/swagger/
 - JSDoc-Regeln und Typing-Konventionen: [JSDOC.md](./JSDOC.md)
 
+### NeherApp3-Hosttypen
+`api/neherApp3Types.js` ist die Master-Referenz fuer die Vertraege der
+NeherApp3-Rahmen-App: `NeherApp3` (Host-API), `NeherApp3Module` (Modul-Einstieg),
+`NeherApp3Messages` (In-Realm-Nachrichtenbus) und `NeherApp3I18n`
+(Lokalisierung: `localize` als Funktion *und* Svelte-Action, Modul-Kataloge,
+sprachrichtige Sortierung). Die Datei enthaelt nur Typen und wird von Hand
+gepflegt; die Leitfaeden liegen im NeherApp3-Repository
+(`docs/MODULE.md`, `docs/MESSAGING.md`, `docs/I18N.md`).
+
 ### Voraussetzungen
 - Browser-Umgebung
 - Gueltiger App-Token im UUID-Format
