@@ -51,7 +51,7 @@ public static class BelegPositionDTOExtension
         var zumErfassungsdatum = FindMatchingVersion(versionen, erfassungsDatum);
         var heute = FindMatchingVersion(versionen, DateTime.UtcNow);
 
-        return zumErfassungsdatum?.Pfad != heute?.Pfad;
+        return !string.Equals(zumErfassungsdatum?.Pfad, heute?.Pfad, StringComparison.OrdinalIgnoreCase);
     }
 
     /// <summary>
