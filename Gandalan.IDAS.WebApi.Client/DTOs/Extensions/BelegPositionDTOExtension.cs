@@ -6,10 +6,13 @@ namespace System;
 public static class BelegPositionDTOExtension
 {
     /// <summary>
-    /// Prüft, ob zu einer Belegposition eine neuere Version der Aufpreise oder der Preisliste existiert, die nach dem Erfassungsdatum der Position gültig wird.
+    /// Prüft, ob zu einer Belegposition eine Version der Aufpreise oder der Preisliste existiert, die nach dem
+    /// Erfassungsdatum der Position gültig geworden und inzwischen in Kraft ist.
     /// Wenn ja, könnte dies bedeuten, dass die Position mit veralteten Preisen erfasst wurde und möglicherweise aktualisiert werden muss.
+    /// Versionen, deren Gültigkeit erst in der Zukunft beginnt, zählen nicht: Aufpreis- und Preislisten werden
+    /// bewusst im Voraus angelegt und sollen bis zu ihrem Gültigkeitsbeginn keine Warnung auslösen.
     /// </summary>
-    /// <returns>True, wenn eine neuere Version der Aufpreise oder Preisliste existiert, sonst False.</returns>
+    /// <returns>True, wenn eine inzwischen gültige, neuere Version der Aufpreise oder Preisliste existiert, sonst False.</returns>
     public static bool CheckPreisListeZuErfassungsdatum(this BelegPositionDTO belegPosition, ResourceRegistry registry)
     {
         if (belegPosition is null || registry?.Ressourcen is null)
@@ -41,6 +44,6 @@ public static class BelegPositionDTOExtension
 
         return category is not null
             && category.TryGetValue(resourceName, out var versionen)
-            && versionen?.Any(v => v.GueltigAb > erfassungsDatum) == true;
+            && versionen?.Any(v => v.GueltigAb > erfassungsDatum && v.GueltigAb <= DateTime.UtcNow) == true;
     }
 }
