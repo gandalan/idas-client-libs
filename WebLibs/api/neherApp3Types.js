@@ -269,6 +269,92 @@
  */
 
 /**
+ * Settings handle of a single namespace — what
+ * `neherapp3.settings.register("my-module")` returns.
+ * @typedef {Object} NeherApp3SettingsHandle
+ * @property {string} namespace - The bound namespace (lower case).
+ * @property {(key: string, fallback?: any) => any} get - Value of a setting, or `fallback`. Reactive.
+ * @property {(key: string, value: unknown) => void} set - Store a value: applied locally at once, sent to the server coalesced.
+ * @property {(key: string) => void} remove - Drop a setting; the user is back to its default.
+ * @property {() => Record<string, unknown>} all - All settings of this namespace.
+ * @property {() => Promise<void>} flush - Write pending changes now. Call before a reload.
+ */
+
+/**
+ * User settings, exposed at `neherapp3.settings`.
+ *
+ * The store is the **database**, not `localStorage`: inside the i3 WebView
+ * `localStorage` is ephemeral and would lose every setting on each start. A
+ * setting is addressed by namespace and key, both lower case; `shell` belongs
+ * to the framework, every module uses its own namespace — the same one it uses
+ * for `i18n.register`. Values are arbitrary JSON.
+ *
+ * Reads are reactive. Writes are applied locally at once and sent to the
+ * server after a short coalescing delay, so call `flush()` before a reload.
+ * @typedef {Object} NeherApp3Settings
+ * @property {string} scope - Namespace of the framework (`"shell"`).
+ * @property {boolean} loaded - `true` once the values from the database have arrived.
+ * @property {(namespace: string) => NeherApp3SettingsHandle} register - Settings handle bound to a module's namespace.
+ * @property {(scope: string, key: string, fallback?: any) => any} get - Value of a setting, or `fallback`. Reactive.
+ * @property {(scope: string, key: string, value: unknown) => void} set - Store a value.
+ * @property {(scope: string, key: string) => void} remove - Drop a setting.
+ * @property {(scope: string) => Record<string, unknown>} all - All settings of one namespace.
+ * @property {() => Promise<void>} flush - Write pending changes now. Call before a reload.
+ */
+
+/**
+ * The profile of *another* user, as returned by `profile.byEmail` and friends.
+ *
+ * Identity comes from the platform's user table — whoever has signed in here at
+ * least once; the remaining fields are filled in only where that user curated
+ * them.
+ * @typedef {Object} NeherApp3PublicProfile
+ * @property {string} userId - The user's `benutzerGuid`.
+ * @property {string} userName - Login name.
+ * @property {string} email - E-mail address.
+ * @property {string | null} displayName - Self-chosen name shown in the interface.
+ * @property {string | null} initials - Self-chosen initials, up to 3 characters.
+ * @property {string | null} jobTitle - Job title / function.
+ * @property {string | null} department - Department.
+ * @property {string | null} location - Site / plant.
+ * @property {string | null} mobile - Mobile number.
+ * @property {string | null} avatar - The avatar as a data URL, or `null` when none is stored.
+ * @property {string | null} avatarUpdatedAt - When the avatar was last uploaded.
+ */
+
+/**
+ * The signed-in user, exposed at `neherapp3.profile`.
+ *
+ * Two sources in one place: identity comes from the IDAS token (user id, login
+ * name, e-mail, roles, rights), the remaining fields from the platform's own
+ * profile table — above all the avatar, which IDAS does not carry.
+ *
+ * Read-only and reactive: the local fields arrive shortly after start and are
+ * edited in the framework's settings, not by a module. The same object carries
+ * the lookup of *other* users' profiles (`byEmail`, `byEmails`, `byUserId`) —
+ * the way to put a name and a face next to a user id in a list.
+ * @typedef {Object} NeherApp3Profile
+ * @property {string} userId - `benutzerGuid` from the token.
+ * @property {string} userName - Login name (`id` claim).
+ * @property {string} email - E-mail address from the token.
+ * @property {string[]} roles - Roles from the token.
+ * @property {string[]} rights - Rights from the token.
+ * @property {string} displayName - Best available name: the self-chosen one, otherwise the token's.
+ * @property {string} initials - Up to 3 characters: self-chosen, otherwise derived from the name.
+ * @property {string | null} avatar - The avatar as a data URL, or `null` when none is stored.
+ * @property {string | null} jobTitle - Job title / function.
+ * @property {string | null} department - Department.
+ * @property {string | null} location - Site / plant.
+ * @property {string | null} mobile - Mobile number (IDAS carries only one phone number).
+ * @property {boolean} loaded - `true` once the local profile has been fetched.
+ * @property {() => Promise<void>} reload - Fetch the local profile again.
+ * @property {(email: string) => Promise<NeherApp3PublicProfile | null>} byEmail - The profile of another user by e-mail address; `null` when this platform does not know them. Calls made close together are coalesced into one request and cached for the session.
+ * @property {(emails: string[]) => Promise<NeherApp3PublicProfile[]>} byEmails - The profiles of several users; unknown addresses are absent from the result.
+ * @property {(userId: string) => Promise<NeherApp3PublicProfile | null>} byUserId - The profile of another user by their `benutzerGuid`.
+ * @property {() => void} clearCache - Discard the cached profiles, so the next lookup asks again.
+ */
+
+/**
  * @typedef {Object} NeherApp3
  * @property {(menuItem: NeherApp3MenuItem) => void} addMenuItem - Adds a menu item. If an item with the same `id` already exists it is replaced.
  * @property {(id: string, patch: Partial<NeherApp3MenuItem>) => boolean} updateMenuItem - Updates properties of an existing menu item by `id`. Only keys present in `patch` are changed; the `id` is preserved. Returns `true` if the item existed. Relative icon URLs are resolved against the module's base URL.
@@ -280,6 +366,8 @@
  * @property {NeherApp3Messages} messages - In-realm message bus for module-to-module communication.
  * @property {NeherApp3I18n} i18n - Localization: register a module's translation catalog, translate, switch language, sort language-aware.
  * @property {Localize} localize - Shorthand for `i18n.localize` (namespace `shell`): a function for strings, a `use:` action for elements.
+ * @property {NeherApp3Settings} settings - Per-user settings, stored in the database (not `localStorage`).
+ * @property {NeherApp3Profile} profile - The signed-in user: identity from the IDAS token plus the platform's own profile fields (avatar, job title, …).
  * @property {boolean} isEmbedded - Indicates if the app is embedded inside i3
  */
 

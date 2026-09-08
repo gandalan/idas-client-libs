@@ -2077,6 +2077,8 @@ export type NeherApp3 = {
     messages: NeherApp3Messages;
     i18n: NeherApp3I18n;
     localize: Localize;
+    settings: NeherApp3Settings;
+    profile: NeherApp3Profile;
     isEmbedded: boolean;
 };
 
@@ -2165,11 +2167,66 @@ export type NeherApp3Module = {
 
 export type NeherApp3NotifyType = 0 | 1 | 2;
 
+export type NeherApp3Profile = {
+    userId: string;
+    userName: string;
+    email: string;
+    roles: string[];
+    rights: string[];
+    displayName: string;
+    initials: string;
+    avatar: string | null;
+    jobTitle: string | null;
+    department: string | null;
+    location: string | null;
+    mobile: string | null;
+    loaded: boolean;
+    reload: () => Promise<void>;
+    byEmail: (email: string) => Promise<NeherApp3PublicProfile | null>;
+    byEmails: (emails: string[]) => Promise<NeherApp3PublicProfile[]>;
+    byUserId: (userId: string) => Promise<NeherApp3PublicProfile | null>;
+    clearCache: () => void;
+};
+
 export type NeherApp3Props = {
     api: FluentApi;
     authManager?: FluentAuthManager;
     idas: IDASFluentApi;
     mainCssPath?: string;
+};
+
+export type NeherApp3PublicProfile = {
+    userId: string;
+    userName: string;
+    email: string;
+    displayName: string | null;
+    initials: string | null;
+    jobTitle: string | null;
+    department: string | null;
+    location: string | null;
+    mobile: string | null;
+    avatar: string | null;
+    avatarUpdatedAt: string | null;
+};
+
+export type NeherApp3Settings = {
+    scope: string;
+    loaded: boolean;
+    register: (namespace: string) => NeherApp3SettingsHandle;
+    get: (scope: string, key: string, fallback?: any) => any;
+    set: (scope: string, key: string, value: unknown) => void;
+    remove: (scope: string, key: string) => void;
+    all: (scope: string) => Record<string, unknown>;
+    flush: () => Promise<void>;
+};
+
+export type NeherApp3SettingsHandle = {
+    namespace: string;
+    get: (key: string, fallback?: any) => any;
+    set: (key: string, value: unknown) => void;
+    remove: (key: string) => void;
+    all: () => Record<string, unknown>;
+    flush: () => Promise<void>;
 };
 
 export type NeherApp3SetupContext = NeherApp3Props & { neherapp3: NeherApp3 };
