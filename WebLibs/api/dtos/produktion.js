@@ -113,6 +113,7 @@
  * @property {string} BelegPositionGuid
  * @property {string} RawDataFileContent
  * @property {ProduktionsDatenDTO} ProduktionsDaten
+ * @property {string} Meldung
  */
 
 /**
