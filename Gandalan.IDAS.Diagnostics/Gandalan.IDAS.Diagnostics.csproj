@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net48</TargetFrameworks>
+    <AssemblyName>GDL.IDAS.Diagnostics</AssemblyName>
+    <UseWPF>true</UseWPF>
+
+    <AssemblyVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</AssemblyVersion>
+    <AssemblyVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</AssemblyVersion>
+    <FileVersion Condition=" '$(BUILDNUMBER)' == '' ">0.0.1</FileVersion>
+    <FileVersion Condition=" '$(BUILDNUMBER)' != '' ">$(BUILDNUMBER)</FileVersion>
+    <Version>2099.0.0-alpha</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Configurations>Debug;Release;Debug - Core only</Configurations>
+    <DocumentationFile>..\Gandalan.IDAS.Diagnostics\GDL.IDAS.Diagnostics.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416;</WarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug - Core only'">
+    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416;</WarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <WarningsAsErrors>$(WarningsAsErrors);NU1605;CA1416;</WarningsAsErrors>
+    <NoWarn>CS1572;CS1573;CS1591;</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Link="README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Gandalan.IDAS.Logging\Gandalan.IDAS.Logging.csproj"/>
+    <ProjectReference Include="..\Gandalan.IDAS.WebApi.Client\Gandalan.IDAS.WebApi.Client.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.IO.Compression" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All"  />
+  </ItemGroup>
+</Project>
