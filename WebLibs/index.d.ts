@@ -2144,6 +2144,7 @@ export type NeherApp3MenuItem = {
     parent?: string | null;
     hidden?: boolean;
     separator?: boolean;
+    heading?: boolean;
     i18nNamespace?: string;
 };
 
