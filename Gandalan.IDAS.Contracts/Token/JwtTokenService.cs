@@ -21,6 +21,7 @@ public class JwtTokenData
     /// <summary>
     /// Mailadresse des Benutzers, ausschliesslich fuer Mailversand und Anzeige. Null bei Tokens,
     /// die vor #16404 ausgestellt wurden - dort steckt die Mailadresse in <see cref="Id"/>.
+    /// In 99% der Fälle ist Id und Email identisch.
     /// </summary>
     public string Email { get; set; }
 
