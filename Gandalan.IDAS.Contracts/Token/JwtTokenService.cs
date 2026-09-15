@@ -11,7 +11,20 @@ namespace Gandalan.IDAS.Contracts.Token;
 
 public class JwtTokenData
 {
+    /// <summary>
+    /// Kennung des Benutzers: der <c>Benutzername</c>. Tokens, die vor #16404 ausgestellt wurden,
+    /// tragen hier noch die Mailadresse - Service-Tokens laufen drei Jahre, also ist damit bis
+    /// dahin zu rechnen.
+    /// </summary>
     public string Id { get; set; }
+
+    /// <summary>
+    /// Mailadresse des Benutzers, ausschliesslich fuer Mailversand und Anzeige. Null bei Tokens,
+    /// die vor #16404 ausgestellt wurden - dort steckt die Mailadresse in <see cref="Id"/>.
+    /// In 99% der Fälle ist Id und Email identisch.
+    /// </summary>
+    public string Email { get; set; }
+
     public Guid MandantGuid { get; set; }
     public DateTime Expires { get; set; }
     public Guid AppToken { get; set; }
@@ -48,6 +61,7 @@ public class JwtTokenService
     private const string Issuer = "https://gandalan.de";
     private readonly DateTime? _issuedAt;
     private const string ClaimId = "id";
+    private const string ClaimEmail = "email";
     private const string ClaimMandantGuid = "mandantGuid";
     private const string ClaimBenutzerGuid = "benutzerGuid";
     private const string ClaimAppToken = "appToken";
@@ -96,7 +110,19 @@ public class JwtTokenService
         var rights = new List<Claim>();
         rights.AddRange(roleCodes.Select(c => new Claim(ClaimRole, c)));
         rights.AddRange(rightCodes.Select(c => new Claim(ClaimRights, c)));
-        rights.Add(new Claim(ClaimId, authToken.Benutzer.EmailAdresse));
+        // #16404: `id` ist der Benutzername, nicht die Mailadresse. Die Mailadresse steht im
+        // separaten `email`-Claim und ist nur fuer Mailversand und Anzeige gedacht.
+        if (string.IsNullOrWhiteSpace(authToken.Benutzer?.Benutzername))
+        {
+            throw new ArgumentException("Benutzer.Benutzername muss gesetzt sein, er fuellt den id-Claim.", nameof(authToken));
+        }
+
+        rights.Add(new Claim(ClaimId, authToken.Benutzer.Benutzername));
+        if (!string.IsNullOrWhiteSpace(authToken.Benutzer.EmailAdresse))
+        {
+            rights.Add(new Claim(ClaimEmail, authToken.Benutzer.EmailAdresse));
+        }
+
         rights.Add(new Claim(ClaimMandantGuid, authToken.MandantGuid.ToString()));
         rights.Add(new Claim(ClaimAppToken, authToken.AppToken.ToString()));
         rights.Add(new Claim(ClaimBenutzerGuid, authToken.Benutzer.BenutzerGuid.ToString()));
@@ -146,6 +172,8 @@ public class JwtTokenService
 
             var jwtToken = (JwtSecurityToken)validatedToken;
             var userId = jwtToken.Claims.First(x => x.Type == ClaimId).Value;
+            // Fehlt bei Tokens von vor #16404; dort traegt `id` die Mailadresse.
+            var emailClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimEmail);
             var mandantGuidClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimMandantGuid);
             var appTokenClaim = jwtToken.Claims.First(x => x.Type == ClaimAppToken);
             var authTokenClaim = jwtToken.Claims.First(x => x.Type == ClaimIdasAuthToken);
@@ -166,6 +194,7 @@ public class JwtTokenService
                 Token = new JwtTokenData
                 {
                     Id = userId,
+                    Email = emailClaim?.Value,
                     Expires = validatedToken.ValidTo,
                     MandantGuid = mandantGuidClaim == null ? Guid.Empty : Guid.Parse(mandantGuidClaim.Value),
                     AppToken = appTokenClaim == null ? Guid.Empty : Guid.Parse(appTokenClaim.Value),
