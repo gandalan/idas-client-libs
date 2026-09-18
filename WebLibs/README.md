@@ -17,9 +17,10 @@
 ### NeherApp3-Hosttypen
 `api/neherApp3Types.js` ist die Master-Referenz fuer die Vertraege der
 NeherApp3-Rahmen-App: `NeherApp3` (Host-API), `NeherApp3Module` (Modul-Einstieg),
-`NeherApp3Messages` (In-Realm-Nachrichtenbus) und `NeherApp3I18n`
+`NeherApp3Messages` (In-Realm-Nachrichtenbus), `NeherApp3I18n`
 (Lokalisierung: `localize` als Funktion *und* Svelte-Action, Modul-Kataloge,
-sprachrichtige Sortierung). Die Datei enthaelt nur Typen und wird von Hand
+sprachrichtige Sortierung) und `NeherApp3Theme` (Hell-/Dunkel-Modus; Module im
+Shadow DOM liefern beide Themes mit, das `data-theme` setzt die Rahmen-App). Die Datei enthaelt nur Typen und wird von Hand
 gepflegt; die Leitfaeden liegen im NeherApp3-Repository
 (`docs/MODULE.md`, `docs/MESSAGING.md`, `docs/I18N.md`).
 

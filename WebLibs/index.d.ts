@@ -2079,6 +2079,7 @@ export type NeherApp3 = {
     localize: Localize;
     settings: NeherApp3Settings;
     profile: NeherApp3Profile;
+    theme: NeherApp3Theme;
     isEmbedded: boolean;
 };
 
@@ -2231,6 +2232,22 @@ export type NeherApp3SettingsHandle = {
 };
 
 export type NeherApp3SetupContext = NeherApp3Props & { neherapp3: NeherApp3 };
+
+export type NeherApp3Theme = {
+    current: NeherApp3ThemeName;
+    preference: NeherApp3ThemePreference;
+    isDark: boolean;
+    set: (preference: NeherApp3ThemePreference) => void;
+    toggle: () => void;
+    subscribe: (listener: (theme: NeherApp3ThemeName) => void) => (() => void);
+    LIGHT: "neher";
+    DARK: "neher-dark";
+    SYSTEM: "system";
+};
+
+export type NeherApp3ThemeName = "neher" | "neher-dark";
+
+export type NeherApp3ThemePreference = NeherApp3ThemeName | "system";
 
 export type NeherMessage = {
     id: string;

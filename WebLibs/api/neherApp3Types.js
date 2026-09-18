@@ -85,7 +85,7 @@
  * @property {(node: HTMLElement, props: NeherApp3SetupContext) => void | function} [mount] - Must return an optional unmount function
  * @property {string} [embedUrl]
  * @property {string[]} [extraCSS]
- * @property {boolean} [useShadowDom] - If true, the app will be embedded in a shadow DOM. This is required for CSS isolation.
+ * @property {boolean} [useShadowDom] - If true, the app will be embedded in a shadow DOM. This is required for CSS isolation. The module then ships all of its styles itself — including **both** themes (`neher`, `neher-dark`), because the shell mirrors `data-theme` onto the module's root inside the shadow root (see `NeherApp3Theme`).
  */
 
 /**
@@ -356,6 +356,43 @@
  */
 
 /**
+ * Theme handle, exposed at `neherapp3.theme`.
+ *
+ * The shell writes the resolved theme name to `data-theme` on `<html>`, so
+ * anything in the light DOM follows it by inheritance. **Inside a Shadow DOM
+ * module it does not**: an attribute selector never crosses the shadow
+ * boundary, and the module's own `:host` rules override the inherited custom
+ * properties — a module built with the shell's daisyUI setup would stay light
+ * forever. The shell therefore mirrors `data-theme` onto the module's root
+ * element inside the shadow root and keeps it in sync; a module only needs to
+ * ship both themes (`neher`, `neher-dark`) in its stylesheet.
+ *
+ * `subscribe` is for consumers without Svelte reactivity (and for reacting to
+ * a switch, e.g. to repaint a canvas or reload a themed asset).
+ * @typedef {Object} NeherApp3Theme
+ * @property {NeherApp3ThemeName} current - Active, resolved theme name (reactive).
+ * @property {NeherApp3ThemePreference} preference - Stored choice, including `"system"` (reactive).
+ * @property {boolean} isDark - Shorthand for `current === "neher-dark"` (reactive).
+ * @property {(preference: NeherApp3ThemePreference) => void} set - Store a preference and apply it.
+ * @property {() => void} toggle - Switch light/dark as an explicit choice (replaces `"system"`).
+ * @property {(listener: (theme: NeherApp3ThemeName) => void) => (() => void)} subscribe - Listen for theme changes; called immediately with the current theme, returns an unsubscribe function.
+ * @property {"neher"} LIGHT - Theme name of the light mode.
+ * @property {"neher-dark"} DARK - Theme name of the dark mode.
+ * @property {"system"} SYSTEM - Preference "follow the operating system".
+ */
+
+/**
+ * Resolved theme name — the value of the `data-theme` attribute.
+ * @typedef {"neher" | "neher-dark"} NeherApp3ThemeName
+ */
+
+/**
+ * Stored theme choice: a theme name, or `"system"` to follow
+ * `prefers-color-scheme` live.
+ * @typedef {NeherApp3ThemeName | "system"} NeherApp3ThemePreference
+ */
+
+/**
  * @typedef {Object} NeherApp3
  * @property {(menuItem: NeherApp3MenuItem) => void} addMenuItem - Adds a menu item. If an item with the same `id` already exists it is replaced.
  * @property {(id: string, patch: Partial<NeherApp3MenuItem>) => boolean} updateMenuItem - Updates properties of an existing menu item by `id`. Only keys present in `patch` are changed; the `id` is preserved. Returns `true` if the item existed. Relative icon URLs are resolved against the module's base URL.
@@ -369,6 +406,7 @@
  * @property {Localize} localize - Shorthand for `i18n.localize` (namespace `shell`): a function for strings, a `use:` action for elements.
  * @property {NeherApp3Settings} settings - Per-user settings, stored in the database (not `localStorage`).
  * @property {NeherApp3Profile} profile - The signed-in user: identity from the IDAS token plus the platform's own profile fields (avatar, job title, …).
+ * @property {NeherApp3Theme} theme - Light/dark mode: the active theme, the stored preference, and a subscription for theme changes.
  * @property {boolean} isEmbedded - Indicates if the app is embedded inside i3
  */
 
