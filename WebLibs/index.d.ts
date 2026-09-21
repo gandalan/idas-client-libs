@@ -834,6 +834,7 @@ export type BerechnungResultDTO = {
     BelegPositionGuid: string;
     RawDataFileContent: string;
     ProduktionsDaten: ProduktionsDatenDTO;
+    Meldung: string;
 };
 
 export type BerechtigungDTO = {
