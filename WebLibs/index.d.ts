@@ -7,7 +7,7 @@ export function createAuthManager(): FluentAuthManager;
 export function fluentIdasAuthManager(appToken: string, authBaseUrl: string): FluentAuthManager;
 export function fetchEnvConfig(envConfig?: string): Promise<EnvironmentConfig>;
 export function restClient(): FluentRESTClient;
-export class RestError extends Error { method: string; url: string; status: number; statusText: string; constructor(method: string, url: string, res: Response); }
+export class RestError extends Error { method: string; url: string; status: number; statusText: string; body: string | null; detail: string | null; constructor(method: string, url: string, res: Response, body?: string | null); static fromResponse(method: string, url: string, res: Response): Promise<RestError>; static extractDetail(body: string | null, contentType: string | null): string | null; }
 
 export type AblageApi = {
     get: (guid: string) => Promise<AblageDTO>;
