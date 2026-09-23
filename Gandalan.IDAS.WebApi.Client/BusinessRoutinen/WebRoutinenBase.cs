@@ -297,6 +297,11 @@ public class WebRoutinenBase
                 TryAdd("OperationId", apiException.OperationId);
             }
 
+            if (!string.IsNullOrEmpty(apiException.GatewayBackend))
+            {
+                TryAdd("GatewayBackend", apiException.GatewayBackend);
+            }
+
             if (apiException.ProblemDetails != null)
             {
                 TryAdd("ProblemDetails.Title", apiException.ProblemDetails.Title);
@@ -920,6 +925,7 @@ public class WebRoutinenBase
         var apiException = TranslateExceptionCore(ex, payload);
 
         SetOperationId(apiException, ex);
+        SetGatewayBackend(apiException, ex);
 
         return apiException;
     }
@@ -941,6 +947,18 @@ public class WebRoutinenBase
                 ApiHeaderNames.OperationIdProblemDetailsExtension, out var operationIdFromBody) == true)
         {
             apiException.OperationId = operationIdFromBody?.ToString();
+        }
+    }
+
+    /// <summary>
+    /// Übernimmt die Backend-Kennung, die der <c>ErrorEnrichmentHandler</c> aus dem Response-Header
+    /// nach <c>ex.Data</c> gelegt hat. Anders als bei der Operation-Id gibt es keinen Fallback im Body.
+    /// </summary>
+    private static void SetGatewayBackend(ApiException apiException, HttpRequestException ex)
+    {
+        if (ex.Data.Contains("GatewayBackend"))
+        {
+            apiException.GatewayBackend = ex.Data["GatewayBackend"]?.ToString();
         }
     }
 
