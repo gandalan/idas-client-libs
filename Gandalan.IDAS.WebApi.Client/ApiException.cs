@@ -26,6 +26,12 @@ public class ApiException : Exception
     /// </summary>
     public string OperationId { get; set; }
 
+    /// <summary>
+    /// Welches Backend hinter dem Gateway geantwortet hat (<c>new</c> oder <c>legacy</c>), aus dem
+    /// Header <c>X-Gateway-Backend</c>. Leer, wenn der Aufruf nicht über das Gateway lief.
+    /// </summary>
+    public string GatewayBackend { get; set; }
+
     public ApiException()
     {
     }

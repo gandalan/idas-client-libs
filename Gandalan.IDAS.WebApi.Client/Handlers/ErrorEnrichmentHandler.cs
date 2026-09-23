@@ -48,6 +48,7 @@ internal sealed class ErrorEnrichmentHandler : DelegatingHandler
                 ex.Data["Response"] = responseContent;
 
             addOperationId(ex, response);
+            copyHeaderToData(ex, response, ApiHeaderNames.GatewayBackend, "GatewayBackend");
 
             throw;
         }
@@ -58,14 +59,20 @@ internal sealed class ErrorEnrichmentHandler : DelegatingHandler
     /// mitschickt. Damit lässt sich ein gemeldeter Fehler direkt in der Telemetrie nachschlagen.
     /// </summary>
     private static void addOperationId(Exception ex, HttpResponseMessage response)
+        => copyHeaderToData(ex, response, ApiHeaderNames.OperationId, "OperationId");
+
+    /// <summary>
+    /// Übernimmt einen Diagnose-Header der Antwort nach <see cref="Exception.Data"/>, damit
+    /// <c>WebRoutinenBase.TranslateException</c> ihn in die <c>ApiException</c> heben kann.
+    /// </summary>
+    private static void copyHeaderToData(Exception ex, HttpResponseMessage response, string headerName, string dataKey)
     {
-        if (response == null ||
-            !response.Headers.TryGetValues(ApiHeaderNames.OperationId, out var operationIds))
+        if (response == null || !response.Headers.TryGetValues(headerName, out var values))
             return;
 
-        var operationId = operationIds.FirstOrDefault();
+        var value = values.FirstOrDefault();
 
-        if (!string.IsNullOrWhiteSpace(operationId))
-            ex.Data["OperationId"] = operationId;
+        if (!string.IsNullOrWhiteSpace(value))
+            ex.Data[dataKey] = value;
     }
 }
