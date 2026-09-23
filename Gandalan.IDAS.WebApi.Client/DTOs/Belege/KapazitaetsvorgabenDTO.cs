@@ -472,6 +472,8 @@ public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
                 },
                 new Kapazitaetsvorgabe
                 {
+                    GroupName = "Sonstiges",
+                    Label = "Standflügelarretierung",
                     Produktgruppe = ["PF2", "PT2"],
                     Artikelliste = ["133472"],
                     Etikettentext = ["ExV_"],
