@@ -82,10 +82,10 @@
  * @typedef {Object} NeherApp3Module
  * @property {string} moduleName
  * @property {(context: NeherApp3SetupContext) => void | Promise<void>} [setup]
- * @property {(node: HTMLElement, props: NeherApp3SetupContext) => void | function} [mount] - Must return an optional unmount function
+ * @property {(node: HTMLElement, props: NeherApp3SetupContext) => void | function} [mount] - Must return an optional unmount function. `node` sits inside the shell's content area, a size container named `content` whose width depends on the navigation layout (sidebars vs. menu flyout), not only on the viewport: lay out with container queries (`@container content (…)`, Tailwind `@3xl/content:`), not viewport breakpoints.
  * @property {string} [embedUrl]
  * @property {string[]} [extraCSS]
- * @property {boolean} [useShadowDom] - If true, the app will be embedded in a shadow DOM. This is required for CSS isolation. The module then ships all of its styles itself — including **both** themes (`neher`, `neher-dark`), because the shell mirrors `data-theme` onto the module's root inside the shadow root (see `NeherApp3Theme`).
+ * @property {boolean} [useShadowDom] - If true, the app will be embedded in a shadow DOM. This is required for CSS isolation. The module then ships all of its styles itself — including **both** themes (`neher`, `neher-dark`), because the shell mirrors `data-theme` onto the module's root inside the shadow root (see `NeherApp3Theme`). Shell-wide base rules do not reach the shadow root either — e.g. the `option` colours that keep native `<select>` popups readable in dark mode.
  */
 
 /**
