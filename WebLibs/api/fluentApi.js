@@ -131,7 +131,8 @@ export function createApi() {
         /**
          * Runs a request with authentication and retries it once if the server
          * answered 401 Unauthorized: the cached token is discarded, a fresh one
-         * is obtained via the auth manager and the request is repeated. This
+         * is obtained via the auth manager and the request is repeated — but
+         * only if the refresh actually delivered a new token. This
          * covers tokens that expired server-side (e.g. after hours of
          * inactivity) as well as refresh races between parallel requests.
          *
@@ -143,6 +144,7 @@ export function createApi() {
          */
         async _executeRequest(auth, executeRequest) {
             await this.preCheck(auth);
+            const usedToken = this.authManager?.token;
             try {
                 return await executeRequest();
             } catch (e) {
@@ -150,8 +152,20 @@ export function createApi() {
                     throw e;
                 }
 
-                this.authManager.token = "";
+                // Only discard the token this request was sent with — a parallel
+                // request may already have replaced it with a fresh one.
+                if (this.authManager.token === usedToken) {
+                    this.authManager.token = "";
+                }
                 await this.authManager.ensureAuthenticated();
+
+                // Retry only with a new token: never repeat the request without
+                // an Authorization header or with the token that just failed.
+                const freshToken = this.authManager.token;
+                if (!freshToken || freshToken === usedToken) {
+                    throw e;
+                }
+
                 return await executeRequest();
             }
         },

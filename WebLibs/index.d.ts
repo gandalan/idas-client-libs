@@ -1,4 +1,6 @@
 export * from "./index.js";
+export const AUTH_REFRESHED_EVENT: "idas-auth-refreshed";
+export const AUTH_EXPIRED_EVENT: "idas-auth-expired";
 export function createApi(): FluentApi;
 export function fluentApi(url: string, authManager: FluentAuthManager | null, serviceName: string): FluentApi;
 export function createIDASApi(): IDASFluentApi;
@@ -191,6 +193,14 @@ export type AuthApi = {
     createServiceToken: (dto?: CreateServiceTokenRequestDTO) => Promise<string>;
     removeExpiredTokens: () => Promise<void>;
     getFremdAppAuthToken: (fremdApp: string) => Promise<UserAuthTokenDTO>;
+};
+
+export type AuthExpiredEventDetail = {
+    reason: string;
+};
+
+export type AuthRefreshedEventDetail = {
+    expiresAt: number;
 };
 
 export type AvApi = {
@@ -1137,7 +1147,7 @@ export type FluentAuthManager = {
     useRefreshToken: (storedRefreshToken?: string|null) => FluentAuthManager;
     ensureAuthenticated: () => Promise<void>;
     authenticate: () => Promise<void>;
-    _doAuthenticate: () => Promise<void>;
+    _doAuthenticate: (force?: boolean) => Promise<void>;
     _authenticatePromise: Promise<void>|null;
     init: () => Promise<FluentAuthManager>;
     login: (username?: string, password?: string) => Promise<void>;
@@ -1146,6 +1156,16 @@ export type FluentAuthManager = {
     redirectToLogin: () => void;
     hasRight: (code: string) => boolean;
     hasRole: (code: string) => boolean;
+    _runRefresh?: (force?: boolean, notifyExpired?: boolean) => Promise<void>;
+    _refreshLocked?: (force: boolean) => Promise<void>;
+    _currentRefreshToken?: () => string|null;
+    _requestRefresh?: (refreshToken: string) => Promise<{token: string|null, status: number}>;
+    _expire?: (reason: string, rejectedRefreshToken?: string|null) => void;
+    _notifyExpired?: (reason: string) => void;
+    _scheduleProactiveRefresh?: (delay?: number) => void;
+    _stopProactiveRefresh?: () => void;
+    _proactiveRefresh?: () => void;
+    _installBrowserListeners?: () => void;
 };
 
 export type FluentRESTClient = {

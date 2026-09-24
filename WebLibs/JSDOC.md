@@ -213,6 +213,15 @@ Rule of thumb:
 - runtime export alone is not enough
 - consumers need the root declaration too
 
+Root constants work the same way: export them from `index.js` and add the
+declaration to `rootValueExportStatements` in `scripts/generate-dts.mjs`,
+e.g. the auth event names from `api/authEvents.js`:
+
+```ts
+export const AUTH_REFRESHED_EVENT: "idas-auth-refreshed";
+export const AUTH_EXPIRED_EVENT: "idas-auth-expired";
+```
+
 
 ### Add a public class for consumption
 

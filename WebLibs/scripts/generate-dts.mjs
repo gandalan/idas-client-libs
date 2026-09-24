@@ -21,7 +21,10 @@ const dtoRootMarkerEnd = "// END GENERATED ROOT DTO TYPEDEFS";
 const businessRootMarkerStart = "// BEGIN GENERATED ROOT BUSINESS TYPEDEFS";
 const businessRootMarkerEnd = "// END GENERATED ROOT BUSINESS TYPEDEFS";
 
-const rootValueExportStatements = [];
+const rootValueExportStatements = [
+    "export const AUTH_REFRESHED_EVENT: \"idas-auth-refreshed\";",
+    "export const AUTH_EXPIRED_EVENT: \"idas-auth-expired\";"
+];
 
 const rootFunctionDeclarationStatements = [
     "export function createApi(): FluentApi;",

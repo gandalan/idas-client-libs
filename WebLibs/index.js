@@ -1,6 +1,7 @@
 export { createApi, fluentApi } from "./api/fluentApi";
 export { createIDASApi, idasFluentApi } from "./api/idasFluentApi";
 export { createAuthManager, fluentIdasAuthManager } from "./api/fluentAuthManager";
+export { AUTH_EXPIRED_EVENT, AUTH_REFRESHED_EVENT } from "./api/authEvents";
 export { fetchEnvConfig } from "./api/fluentEnvUtils";
 export { restClient, RestError } from "./api/fluentRestClient";
 

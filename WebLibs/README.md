@@ -69,11 +69,29 @@ async function initializeApis() {
 - Versucht bei vorhandenem Refresh-Token ein JWT zu erneuern
 - Kann bei fehlender gueltiger Session auf Login umleiten und dabei werfen
 
+### Token-Erneuerung und Auth-Ereignisse
+- Das JWT wird vor jedem Request erneuert, wenn es weniger als 30 s gilt, und zusaetzlich proaktiv (nur bei sichtbarem Dokument; war es verborgen, beim naechsten `visibilitychange`)
+- Der proaktive Zeitpunkt ergibt sich aus der Token-Laufzeit (`exp - iat`) ab Empfang, nicht aus der Client-Uhr: `max(Laufzeit - 60 s, Laufzeit / 2, 30 s)`; zwischen zwei proaktiven Refreshes liegen mindestens 30 s (auch bei falsch gehender Uhr oder sehr kurzlebigen JWTs keine Refresh-Schleife)
+- Der gesamte Sitzungszustand (Tokens, `userInfo`, Timer, Listener, Ablauf-Flag) liegt in einer Closure; `token`, `refreshToken` und `userInfo` sind Accessoren darauf. Ein tiefer Proxy auf den Auth-Manager (z. B. Svelte 5 `$state`) teilt sich deshalb Sitzung, Timer und Ereignisse mit dem Original
+- Refreshes laufen tab-uebergreifend serialisiert (`navigator.locks`, Name `idas-refresh`); vor dem Refresh wird `localStorage["idas-refresh-token"]` neu gelesen, damit ein von einem anderen Tab rotiertes Token uebernommen wird
+- Gehoert das mit einem uebernommenen Token erneuerte JWT zu einem anderen Benutzer (`benutzerGuid`/`id`) oder Mandanten (`mandantGuid`), wird es nicht uebernommen: die Sitzung endet mit `reason: "identity-changed"` (neu laden bzw. neu anmelden)
+- Lehnt der Server den Refresh ab (jeder 4xx ausser 408/429), wird genau einmal mit einem inzwischen geaenderten Token aus `localStorage` erneut versucht; danach gilt die Sitzung als abgelaufen: Tokens werden geleert, das abgelehnte Token wird aus `localStorage` entfernt, bis zum naechsten Login/Refresh gehen keine Refresh-Requests mehr raus
+- Netzwerkfehler, Timeouts, 408/429 und 5xx behalten das Refresh-Token; `init()` wirft sie weiter, statt zur Anmeldung umzuleiten
+- Ein 401 wird nur wiederholt, wenn der Refresh ein neues Token geliefert hat
+- Ereignisse auf `window` (ohne Tokens), Namen auch als Konstanten exportiert:
+  - `AUTH_REFRESHED_EVENT` = `"idas-auth-refreshed"`, `detail: { expiresAt }` (ms) — nach jedem erfolgreichen Refresh/Login
+  - `AUTH_EXPIRED_EVENT` = `"idas-auth-expired"`, `detail: { reason }` (`"refresh-rejected"`, `"no-refresh-token"`, `"identity-changed"`) — einmal je Ablauf und Auth-Manager, wenn die Sitzung nicht mehr erneuert werden kann
+
+```js
+window.addEventListener("idas-auth-expired", () => authManager.redirectToLogin());
+```
+
 ### Wichtige Exporte
 - `fetchEnvConfig(env)`
 - `fluentIdasAuthManager(appToken, authBaseUrl)`
 - `fluentApi(baseUrl, authManager, serviceName)`
 - `idasFluentApi(baseUrl, authManager, serviceName)`
+- `AUTH_REFRESHED_EVENT`, `AUTH_EXPIRED_EVENT`
 
 ### Wichtige Hinweise
 - `idasFluentApi(...)` fuer IDAS-Business-Routinen verwenden
