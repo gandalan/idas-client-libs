@@ -25,6 +25,7 @@ internal sealed class ErrorEnrichmentHandler : DelegatingHandler
         try
         {
             response = await base.SendAsync(request, cancellationToken);
+            GatewayBackendMonitor.Observe(response);
 
             if (response.IsSuccessStatusCode)
                 return response;
