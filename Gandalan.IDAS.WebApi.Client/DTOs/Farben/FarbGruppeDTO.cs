@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Gandalan.IDAS.WebApi.Client.Contracts;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class FarbGruppeDTO
+public class FarbGruppeDTO : IWithGueltigkeitsZeitraum
 {
     public string Bezeichnung { get; set; }
     public string AnzeigeName { get; set; }

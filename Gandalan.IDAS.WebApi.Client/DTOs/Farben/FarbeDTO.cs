@@ -1,8 +1,9 @@
 using System;
+using Gandalan.IDAS.WebApi.Client.Contracts;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
-public class FarbeDTO
+public class FarbeDTO : IWithGueltigkeitsZeitraum
 {
     public Guid FarbItemGuid { get; set; }
     public string Bezeichnung { get; set; }
