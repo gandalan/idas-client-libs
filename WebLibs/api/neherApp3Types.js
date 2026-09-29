@@ -13,45 +13,6 @@
  */
 
 /**
- * @typedef {Object} ArtikelstammEintrag
- * @property {string} [KatalogArtikelGuid]
- * @property {string} [KatalogNummer]
- * @property {string} [Katalognummer]
- * @property {string} [Nummer]
- */
-
-/**
- * @typedef {Object} Variante
- * @property {string} [VarianteGuid]
- * @property {string} [Name]
- * @property {string} [Kuerzel]
- */
-
-/**
- * @typedef {Object} Werteliste
- * @property {string} [WerteListeGuid]
- * @property {string} [Name]
- */
-
-/**
- * @typedef {Object} NeherApp3ArtikelstammCache
- * @property {() => Promise<ArtikelstammEintrag[]>} getArtikelStamm
- * @property {() => Promise<Object[]>} getWarenGruppen
- * @property {(guid: string) => Promise<ArtikelstammEintrag | undefined>} getArtikelByGuid
- * @property {(nummer: string) => Promise<ArtikelstammEintrag | undefined>} getArtikelByKatalognummer
- */
-
-/**
- * @typedef {Object} NeherApp3ErfassungCache
- * @property {() => Promise<Variante[]>} getVarianten
- * @property {(variantenNameOderKuerzel: string) => Promise<Variante | undefined>} getVariante
- * @property {() => Promise<Werteliste[]>} getWertelisten
- * @property {(name: string) => Promise<Werteliste | undefined>} getWerteliste
- * @property {() => Promise<Object[]>} getScripts
- * @property {(v: Variante) => void} createUIMachine
- */
-
-/**
  * @typedef {Object} NeherApp3Props
  * @property {import("./fluentApi.js").FluentApi} api
  * @property {import("./fluentAuthManager.js").FluentAuthManager} [authManager]
@@ -92,12 +53,6 @@
  * @typedef {Object} NeherApp3ApiCollection
  * @property {import("./idasFluentApi.js").IDASFluentApi} [idas]
  * @property {import("./fluentApi.js").FluentApi} [hostingEnvironment]
- */
-
-/**
- * @typedef {Object} NeherApp3CacheCollection
- * @property {NeherApp3ArtikelstammCache} artikelstamm
- * @property {NeherApp3ErfassungCache} erfassung
  */
 
 /**
@@ -400,7 +355,6 @@
  * @property {(appModule: NeherApp3Module | string) => Promise<void>} addApp
  * @property {(message: string, type?: NeherApp3NotifyType, cb?: function) => void} notify - Shows a notification. Type defaults to 0 (info). Callback is optional.
  * @property {NeherApp3ApiCollection} api
- * @property {NeherApp3CacheCollection} cache
  * @property {NeherApp3Messages} messages - In-realm message bus for module-to-module communication.
  * @property {NeherApp3I18n} i18n - Localization: register a module's translation catalog, translate, switch language, sort language-aware.
  * @property {Localize} localize - Shorthand for `i18n.localize` (namespace `shell`): a function for strings, a `use:` action for elements.

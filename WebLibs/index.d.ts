@@ -166,13 +166,6 @@ export type ArtikelApi = {
     resetCacheVariantenListen: () => Promise<void>;
 };
 
-export type ArtikelstammEintrag = {
-    KatalogArtikelGuid?: string;
-    KatalogNummer?: string;
-    Katalognummer?: string;
-    Nummer?: string;
-};
-
 export type ArtosStartSettingsDTO = {
     MaterialBedarfLogik: MaterialBedarfLogik;
     UserAuthToken: UserAuthTokenDTO;
@@ -2094,7 +2087,6 @@ export type NeherApp3 = {
     addApp: (appModule: NeherApp3Module | string) => Promise<void>;
     notify: (message: string, type?: NeherApp3NotifyType, cb?: Function) => void;
     api: NeherApp3ApiCollection;
-    cache: NeherApp3CacheCollection;
     messages: NeherApp3Messages;
     i18n: NeherApp3I18n;
     localize: Localize;
@@ -2107,27 +2099,6 @@ export type NeherApp3 = {
 export type NeherApp3ApiCollection = {
     idas?: IDASFluentApi;
     hostingEnvironment?: FluentApi;
-};
-
-export type NeherApp3ArtikelstammCache = {
-    getArtikelStamm: () => Promise<ArtikelstammEintrag[]>;
-    getWarenGruppen: () => Promise<object[]>;
-    getArtikelByGuid: (guid: string) => Promise<ArtikelstammEintrag | undefined>;
-    getArtikelByKatalognummer: (nummer: string) => Promise<ArtikelstammEintrag | undefined>;
-};
-
-export type NeherApp3CacheCollection = {
-    artikelstamm: NeherApp3ArtikelstammCache;
-    erfassung: NeherApp3ErfassungCache;
-};
-
-export type NeherApp3ErfassungCache = {
-    getVarianten: () => Promise<Variante[]>;
-    getVariante: (variantenNameOderKuerzel: string) => Promise<Variante | undefined>;
-    getWertelisten: () => Promise<Werteliste[]>;
-    getWerteliste: (name: string) => Promise<Werteliste | undefined>;
-    getScripts: () => Promise<object[]>;
-    createUIMachine: (v: Variante) => void;
 };
 
 export type NeherApp3I18n = {
@@ -3158,12 +3129,6 @@ export type UtilityApi = {
     getOneBenutzerByKunde: (kundeGuid: string, email: string) => Promise<BenutzerDTO | undefined>;
 };
 
-export type Variante = {
-    VarianteGuid?: string;
-    Name?: string;
-    Kuerzel?: string;
-};
-
 export type VarianteDTO = {
     VarianteGuid: string;
     UIDefinitionGuid: string;
@@ -3392,11 +3357,6 @@ export type WebJobHistorieDTO = {
     Timestamp: string;
     Status: string;
     Text: string;
-};
-
-export type Werteliste = {
-    WerteListeGuid?: string;
-    Name?: string;
 };
 
 export type WerteListeDTO = {
