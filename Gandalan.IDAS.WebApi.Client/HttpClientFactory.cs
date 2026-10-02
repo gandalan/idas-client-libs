@@ -46,6 +46,11 @@ public class HttpClientConfig : ICloneable
     public string[] NewApiOptInUrls { get; set; }
 
     /// <summary>
+    /// Sends <c>X-Gateway-Cluster: legacy</c> on every request instead of evaluating <see cref="NewApiOptInUrls"/>.
+    /// </summary>
+    public bool ForceLegacyApi { get; set; }
+
+    /// <summary>
     /// Maximum number of concurrent TCP connections per server endpoint.
     /// On .NET Framework 4.8, <see cref="System.Net.HttpWebRequest"/> routes through
     /// <see cref="System.Net.ServicePointManager"/> which defaults to 2 — far too low
@@ -65,6 +70,7 @@ public class HttpClientConfig : ICloneable
             UseCompression = UseCompression,
             AdditionalHeaders = new Dictionary<string, string>(AdditionalHeaders),
             NewApiOptInUrls = NewApiOptInUrls,
+            ForceLegacyApi = ForceLegacyApi,
             MaxConnectionsPerServer = MaxConnectionsPerServer
         };
     }
@@ -76,6 +82,7 @@ public class HttpClientConfig : ICloneable
         // Compare base properties
         if (BaseUrl != other.BaseUrl ||
             UseCompression != other.UseCompression ||
+            ForceLegacyApi != other.ForceLegacyApi ||
             UserAgent != other.UserAgent ||
             !Equals(Credentials, other.Credentials) ||
             !Equals(Proxy, other.Proxy))
@@ -125,6 +132,7 @@ public class HttpClientConfig : ICloneable
             int hash = 17;
             hash = hash * 31 + (BaseUrl?.GetHashCode() ?? 0);
             hash = hash * 31 + UseCompression.GetHashCode();
+            hash = hash * 31 + ForceLegacyApi.GetHashCode();
             hash = hash * 31 + (UserAgent != null ? StringComparer.Ordinal.GetHashCode(UserAgent) : 0);
             hash = hash * 31 + (Credentials?.GetHashCode() ?? 0);
             hash = hash * 31 + (Proxy?.GetHashCode() ?? 0);
@@ -145,6 +153,7 @@ public class HttpClientConfig : ICloneable
         var hash = new HashCode();
         hash.Add(BaseUrl);
         hash.Add(UseCompression);
+        hash.Add(ForceLegacyApi);
         hash.Add(UserAgent, StringComparer.Ordinal);
         hash.Add(Credentials);
         hash.Add(Proxy);
@@ -219,7 +228,7 @@ public class HttpClientFactory
         }
 #endif
 
-        pipeline = new GatewayClusterHandler(config.NewApiOptInUrls) { InnerHandler = pipeline };
+        pipeline = new GatewayClusterHandler(config.NewApiOptInUrls, config.ForceLegacyApi) { InnerHandler = pipeline };
         pipeline = new ErrorEnrichmentHandler { InnerHandler = pipeline };
 
         var client = new HttpClient(pipeline);

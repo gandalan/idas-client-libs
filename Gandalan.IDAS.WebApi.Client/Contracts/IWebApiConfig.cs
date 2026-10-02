@@ -64,5 +64,12 @@ public interface IWebApiConfig
     /// </summary>
     string[] NewApiOptInUrls { get; set; }
 
+    /// <summary>
+    /// Sends <c>X-Gateway-Cluster: legacy</c> on every request, so the gateway routes it to the legacy API even
+    /// where the new API is its default. Takes precedence over <see cref="NewApiOptInUrls"/>. A local client
+    /// decision, never delivered by the hub, therefore not copied by <see cref="CopyToThis"/>.
+    /// </summary>
+    bool ForceLegacyApi { get; set; }
+
     void CopyToThis(IWebApiConfig settings);
 }

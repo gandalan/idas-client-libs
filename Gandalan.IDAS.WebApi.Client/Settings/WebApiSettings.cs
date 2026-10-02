@@ -60,6 +60,9 @@ public class WebApiSettings : IWebApiConfig
     /// <inheritdoc/>
     public string[] NewApiOptInUrls { get; set; } = [];
 
+    /// <inheritdoc/>
+    public bool ForceLegacyApi { get; set; }
+
     /// <remarks>
     /// Remember to call <see cref="WebApiConfigurations.InitializeAsync"/> before.
     /// </remarks>
