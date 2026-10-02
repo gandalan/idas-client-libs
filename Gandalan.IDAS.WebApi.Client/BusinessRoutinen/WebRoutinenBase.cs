@@ -162,6 +162,7 @@ public class WebRoutinenBase
         }
 
         config.NewApiOptInUrls = Settings.NewApiOptInUrls;
+        config.ForceLegacyApi = Settings.ForceLegacyApi;
 
         var restRoutinen = new RESTRoutinen(config);
         restRoutinen.UpdatePerRequestHeaders(BuildAuthHeaders());

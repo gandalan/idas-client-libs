@@ -10,24 +10,34 @@ namespace Gandalan.IDAS.WebApi.Client.Handlers;
 /// Adds the <c>X-Gateway-Cluster</c> header to outgoing requests whose URI path
 /// matches one of the configured opt-in endpoints for the new IDAS API backend.
 /// Configured per <see cref="HttpClient"/> via <see cref="HttpClientConfig.NewApiOptInUrls"/>.
+/// <see cref="HttpClientConfig.ForceLegacyApi"/> overrides the opt-in list and sends <c>X-Gateway-Cluster: legacy</c>
+/// on every request instead.
 /// </summary>
 internal sealed class GatewayClusterHandler : DelegatingHandler
 {
-    private readonly string[] _newApiOptInUrls;
+    private const string GatewayClusterHeader = "X-Gateway-Cluster";
 
-    internal GatewayClusterHandler(string[] newApiOptInUrls)
+    private readonly string[] _newApiOptInUrls;
+    private readonly bool _forceLegacyApi;
+
+    internal GatewayClusterHandler(string[] newApiOptInUrls, bool forceLegacyApi)
     {
         _newApiOptInUrls = newApiOptInUrls;
+        _forceLegacyApi = forceLegacyApi;
     }
 
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        if (_newApiOptInUrls != null && _newApiOptInUrls.Length > 0)
+        if (_forceLegacyApi)
+        {
+            request.Headers.TryAddWithoutValidation(GatewayClusterHeader, "legacy");
+        }
+        else if (_newApiOptInUrls != null && _newApiOptInUrls.Length > 0)
         {
             var uriPath = request.RequestUri?.AbsolutePath;
             if (uriPath != null && _newApiOptInUrls.Any(endpoint => IsPathMatchingEndpoint(uriPath, endpoint)))
             {
-                request.Headers.TryAddWithoutValidation("X-Gateway-Cluster", "idas");
+                request.Headers.TryAddWithoutValidation(GatewayClusterHeader, "idas");
             }
         }
 
