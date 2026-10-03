@@ -58,16 +58,9 @@ public interface IWebApiConfig
     string TranslateUrl { get; set; }
 
     /// <summary>
-    /// List of API endpoints configured to use the new backend API on remote calls.
-    /// Each entry specifies the endpoint path and optionally the allowed HTTP methods.
-    /// This list must be maintained by clients. Available endpoints that can be used with the new API will be announced.
-    /// </summary>
-    string[] NewApiOptInUrls { get; set; }
-
-    /// <summary>
     /// Sends <c>X-Gateway-Cluster: legacy</c> on every request, so the gateway routes it to the legacy API even
-    /// where the new API is its default. Takes precedence over <see cref="NewApiOptInUrls"/>. A local client
-    /// decision, never delivered by the hub, therefore not copied by <see cref="CopyToThis"/>.
+    /// where the new API is its default. A local client decision, never delivered by the hub, therefore not
+    /// copied by <see cref="CopyToThis"/>.
     /// </summary>
     bool ForceLegacyApi { get; set; }
 

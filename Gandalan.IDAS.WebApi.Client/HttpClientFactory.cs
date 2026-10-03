@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 
@@ -41,12 +40,7 @@ public class HttpClientConfig : ICloneable
     public bool UseCompression { get; set; }
 
     /// <summary>
-    /// Gets or sets the collection of URLs that opt-in for new API redirects.
-    /// </summary>
-    public string[] NewApiOptInUrls { get; set; }
-
-    /// <summary>
-    /// Sends <c>X-Gateway-Cluster: legacy</c> on every request instead of evaluating <see cref="NewApiOptInUrls"/>.
+    /// Sends <c>X-Gateway-Cluster: legacy</c> on every request.
     /// </summary>
     public bool ForceLegacyApi { get; set; }
 
@@ -69,7 +63,6 @@ public class HttpClientConfig : ICloneable
             UserAgent = UserAgent,
             UseCompression = UseCompression,
             AdditionalHeaders = new Dictionary<string, string>(AdditionalHeaders),
-            NewApiOptInUrls = NewApiOptInUrls,
             ForceLegacyApi = ForceLegacyApi,
             MaxConnectionsPerServer = MaxConnectionsPerServer
         };
@@ -104,21 +97,10 @@ public class HttpClientConfig : ICloneable
             }
         }
 
-        // Compare NewApiOptInUrls
-        if (!NullableSequenceEqual(NewApiOptInUrls, other.NewApiOptInUrls))
-            return false;
-
         if (MaxConnectionsPerServer != other.MaxConnectionsPerServer)
             return false;
 
         return true;
-    }
-
-    private static bool NullableSequenceEqual(string[] a, string[] b)
-    {
-        if (ReferenceEquals(a, b)) return true;
-        if (a is null || b is null) return false;
-        return a.SequenceEqual(b, StringComparer.Ordinal);
     }
 
     public override int GetHashCode()
@@ -141,11 +123,6 @@ public class HttpClientConfig : ICloneable
                 hash = hash * 31 + StringComparer.Ordinal.GetHashCode(header.Key);
                 hash = hash * 31 + StringComparer.Ordinal.GetHashCode(header.Value);
             }
-            if (NewApiOptInUrls != null)
-            {
-                foreach (var url in NewApiOptInUrls)
-                    hash = hash * 31 + (url != null ? StringComparer.Ordinal.GetHashCode(url) : 0);
-            }
             hash = hash * 31 + MaxConnectionsPerServer.GetHashCode();
             return hash;
         }
@@ -161,11 +138,6 @@ public class HttpClientConfig : ICloneable
         {
             hash.Add(header.Key, StringComparer.Ordinal);
             hash.Add(header.Value, StringComparer.Ordinal);
-        }
-        if (NewApiOptInUrls != null)
-        {
-            foreach (var url in NewApiOptInUrls)
-                hash.Add(url, StringComparer.Ordinal);
         }
         hash.Add(MaxConnectionsPerServer);
         return hash.ToHashCode();
@@ -228,7 +200,7 @@ public class HttpClientFactory
         }
 #endif
 
-        pipeline = new GatewayClusterHandler(config.NewApiOptInUrls, config.ForceLegacyApi) { InnerHandler = pipeline };
+        pipeline = new GatewayClusterHandler(config.ForceLegacyApi) { InnerHandler = pipeline };
         pipeline = new ErrorEnrichmentHandler { InnerHandler = pipeline };
 
         var client = new HttpClient(pipeline);

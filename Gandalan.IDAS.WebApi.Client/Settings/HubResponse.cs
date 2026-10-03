@@ -11,5 +11,4 @@ public class HubResponse
     public string Notify { get; set; }
     public string WebhookService { get; set; }
     public string Translate { get; set; }
-    public string[] NewApiOptInUrls { get; set; } = [];
 }

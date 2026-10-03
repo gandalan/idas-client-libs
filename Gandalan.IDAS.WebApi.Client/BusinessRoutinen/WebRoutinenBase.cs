@@ -161,7 +161,6 @@ public class WebRoutinenBase
             config.AdditionalHeaders.Add("X-Gdl-InstallationId", Settings.InstallationId.ToString());
         }
 
-        config.NewApiOptInUrls = Settings.NewApiOptInUrls;
         config.ForceLegacyApi = Settings.ForceLegacyApi;
 
         var restRoutinen = new RESTRoutinen(config);
