@@ -912,7 +912,6 @@ export type CsvExportCombinationDTO = {
 export type Delivery = {
     delivered: boolean;
     recipients: number;
-    queued: boolean;
 };
 
 export type DevOpsStatusDTO = {
@@ -2143,11 +2142,7 @@ export type NeherApp3MenuItem = {
 
 export type NeherApp3Messages = {
     register: (moduleName: string) => Endpoint;
-    send: (to: string, type: string, payload?: any, options?: SendOptions) => Delivery;
-    broadcast: (type: string, payload?: any, options?: SendOptions) => Delivery;
     isReachable: (moduleName: string) => boolean;
-    isKnown: (moduleName: string) => boolean;
-    reachable: string[];
 };
 
 export type NeherApp3Module = {
@@ -2778,13 +2773,7 @@ export type SchnittKonturOperationDTO = {
 export type SchnittoptimierungsOptionen = ('Keine'|'Lieferdatum'|'Serie'|'FarbeOberflaeche');
 
 export type SendOptions = {
-    from?: string;
     retain?: boolean;
-    requireRecipient?: boolean;
-    deliverWhenAvailable?: boolean;
-    echo?: boolean;
-    ttlMs?: number;
-    onUndeliverable?: (message: NeherMessage) => void;
 };
 
 export type SerieAuslastungDTO = {
