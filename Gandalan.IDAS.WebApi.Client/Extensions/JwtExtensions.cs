@@ -28,6 +28,7 @@ public static class JwtExtensions
 
         var newSettings = new JwtWebApiSettings();
         newSettings.CopyToThis(config);
+        newSettings.ForceLegacyApi = config.ForceLegacyApi;
         newSettings.JwtToken = await config.GetJwt();
         return newSettings;
     }

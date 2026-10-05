@@ -81,6 +81,7 @@ public class WebRoutinenBase
             _originalSettings = settings;
             Settings = new WebApiSettings();
             Settings.CopyToThis(settings);
+            Settings.ForceLegacyApi = settings.ForceLegacyApi;
             if (settings is IJwtWebApiConfig jc)
             {
                 IsJwt = true;
@@ -764,6 +765,7 @@ public class WebRoutinenBase
             {
                 loginConfig = new JwtWebApiSettings();
                 loginConfig.CopyToThis(Settings);
+                loginConfig.ForceLegacyApi = Settings.ForceLegacyApi;
                 loginConfig.Url = Settings.IDASUrl;
             }
 
