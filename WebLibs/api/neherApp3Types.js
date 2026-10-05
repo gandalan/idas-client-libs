@@ -98,7 +98,7 @@
  * @typedef {Object} Endpoint
  * @property {string} name - The module name of this endpoint.
  * @property {(type: TypePattern, handler: MessageHandler) => (() => void)} on - Subscribe; returns an unsubscribe function.
- * @property {(to: string, type: string, payload?: any, options?: SendOptions) => Delivery} send - Directed message (`from` is stamped automatically).
+ * @property {(to: string, type: string, payload?: any, options?: SendOptions) => Delivery} send - Directed message (`from` is stamped automatically). `to` is a module name, or `user:…`/`bot:…` for delivery via the server (`delivered` then means "handed to the server"; replies arrive as local broadcasts).
  * @property {(type: string, payload?: any, options?: SendOptions) => Delivery} broadcast - Broadcast to all other endpoints (`from` is stamped automatically; the sender does not receive its own broadcast).
  * @property {() => void} dispose - Remove all subscriptions created through this handle.
  */
