@@ -60,8 +60,8 @@
  * @typedef {Object} NeherMessage
  * @property {string} id - Unique message id (`crypto.randomUUID`).
  * @property {string} type - Message kind, e.g. `"artikel.selected"`.
- * @property {string | null} to - Target module name (directed) or `null` (broadcast).
- * @property {string | null} from - Sender module name (stamped by the endpoint) or `null`.
+ * @property {string | null} to - Target: module name, a server address (`user:…`, `app:…`, `bot:…`) or `null` (broadcast).
+ * @property {string | null} from - Sender, always stamped: the module name locally; from the server `user:<guid>/app:<module>`, `bot:<name>`, `service/app:<module>` (an app backend sending with an IDAS ServiceToken) or `system`.
  * @property {any} payload - JSON-serializable payload.
  * @property {number} ts - Timestamp (`Date.now`).
  */
@@ -98,7 +98,7 @@
  * @typedef {Object} Endpoint
  * @property {string} name - The module name of this endpoint.
  * @property {(type: TypePattern, handler: MessageHandler) => (() => void)} on - Subscribe; returns an unsubscribe function.
- * @property {(to: string, type: string, payload?: any, options?: SendOptions) => Delivery} send - Directed message (`from` is stamped automatically). `to` is a module name, or `user:…`/`bot:…` for delivery via the server (`delivered` then means "handed to the server"; replies arrive as local broadcasts).
+ * @property {(to: string, type: string, payload?: any, options?: SendOptions) => Delivery} send - Directed message (`from` is stamped automatically). `to` is a module name, or `user:…`/`app:…`/`bot:…` for delivery via the server (`delivered` then means "handed to the server"; replies arrive as local broadcasts).
  * @property {(type: string, payload?: any, options?: SendOptions) => Delivery} broadcast - Broadcast to all other endpoints (`from` is stamped automatically; the sender does not receive its own broadcast).
  * @property {() => void} dispose - Remove all subscriptions created through this handle.
  */
