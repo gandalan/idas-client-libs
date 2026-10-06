@@ -1,4 +1,6 @@
 export * from "./index.js";
+export const AUTH_REFRESHED_EVENT: "idas-auth-refreshed";
+export const AUTH_EXPIRED_EVENT: "idas-auth-expired";
 export function createApi(): FluentApi;
 export function fluentApi(url: string, authManager: FluentAuthManager | null, serviceName: string): FluentApi;
 export function createIDASApi(): IDASFluentApi;
@@ -7,6 +9,7 @@ export function createAuthManager(): FluentAuthManager;
 export function fluentIdasAuthManager(appToken: string, authBaseUrl: string): FluentAuthManager;
 export function fetchEnvConfig(envConfig?: string): Promise<EnvironmentConfig>;
 export function restClient(): FluentRESTClient;
+export class RestError extends Error { method: string; url: string; status: number; statusText: string; body: string | null; detail: string | null; constructor(method: string, url: string, res: Response, body?: string | null); static fromResponse(method: string, url: string, res: Response): Promise<RestError>; static extractDetail(body: string | null, contentType: string | null): string | null; }
 
 export type AblageApi = {
     get: (guid: string) => Promise<AblageDTO>;
@@ -163,13 +166,6 @@ export type ArtikelApi = {
     resetCacheVariantenListen: () => Promise<void>;
 };
 
-export type ArtikelstammEintrag = {
-    KatalogArtikelGuid?: string;
-    KatalogNummer?: string;
-    Katalognummer?: string;
-    Nummer?: string;
-};
-
 export type ArtosStartSettingsDTO = {
     MaterialBedarfLogik: MaterialBedarfLogik;
     UserAuthToken: UserAuthTokenDTO;
@@ -192,6 +188,14 @@ export type AuthApi = {
     getFremdAppAuthToken: (fremdApp: string) => Promise<UserAuthTokenDTO>;
 };
 
+export type AuthExpiredEventDetail = {
+    reason: string;
+};
+
+export type AuthRefreshedEventDetail = {
+    expiresAt: number;
+};
+
 export type AvApi = {
     getAll: (includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
     getAllChangedSince: (changedSince: Date, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
@@ -200,8 +204,7 @@ export type AvApi = {
     getByVorgangGuids: (vorgangGuids: string[], includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
     getByBelegPosition: (belegpositionGuid: string) => Promise<BelegPositionAVDTO[]>;
     getById: (avGuid: string) => Promise<BelegPositionAVDTO>;
-    getByPCode: (pcode: string, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    searchByPCode: (search: string) => Promise<BelegPositionAVDTO[]>;
+    getByPCode: (pcode: string, includeOriginalBeleg?: boolean, includeProdDaten?: boolean, includeI3Etiketten?: boolean) => Promise<BelegPositionAVDTO[]>;
     save: (position: BelegPositionAVDTO) => Promise<void>;
     saveList: (positionen: BelegPositionAVDTO[]) => Promise<BelegPositionAVDTO[]>;
     saveToSerie: (serieGuid: string, positionGuids: string[]) => Promise<BelegPositionAVDTO[]>;
@@ -834,6 +837,7 @@ export type BerechnungResultDTO = {
     BelegPositionGuid: string;
     RawDataFileContent: string;
     ProduktionsDaten: ProduktionsDatenDTO;
+    Meldung: string;
 };
 
 export type BerechtigungDTO = {
@@ -908,7 +912,6 @@ export type CsvExportCombinationDTO = {
 export type Delivery = {
     delivered: boolean;
     recipients: number;
-    queued: boolean;
 };
 
 export type DevOpsStatusDTO = {
@@ -1121,6 +1124,7 @@ export type FluentApi = {
     delete: (url?: string, payload?: object|FormData|Array<any>|string[]|string|null, auth?: boolean) => Promise<object|Array<any>>;
     createRestClient: () => FluentRESTClient;
     preCheck: (auth?: boolean) => Promise<void>;
+    _executeRequest: (auth: boolean, executeRequest: () => Promise<any>) => Promise<any>;
 };
 
 export type FluentAuthManager = {
@@ -1135,6 +1139,8 @@ export type FluentAuthManager = {
     useRefreshToken: (storedRefreshToken?: string|null) => FluentAuthManager;
     ensureAuthenticated: () => Promise<void>;
     authenticate: () => Promise<void>;
+    _doAuthenticate: (force?: boolean) => Promise<void>;
+    _authenticatePromise: Promise<void>|null;
     init: () => Promise<FluentAuthManager>;
     login: (username?: string, password?: string) => Promise<void>;
     tryRefreshToken: (refreshToken?: string) => Promise<string|null>;
@@ -1142,6 +1148,16 @@ export type FluentAuthManager = {
     redirectToLogin: () => void;
     hasRight: (code: string) => boolean;
     hasRole: (code: string) => boolean;
+    _runRefresh?: (force?: boolean, notifyExpired?: boolean) => Promise<void>;
+    _refreshLocked?: (force: boolean) => Promise<void>;
+    _currentRefreshToken?: () => string|null;
+    _requestRefresh?: (refreshToken: string) => Promise<{token: string|null, status: number}>;
+    _expire?: (reason: string, rejectedRefreshToken?: string|null) => void;
+    _notifyExpired?: (reason: string) => void;
+    _scheduleProactiveRefresh?: (delay?: number) => void;
+    _stopProactiveRefresh?: () => void;
+    _proactiveRefresh?: () => void;
+    _installBrowserListeners?: () => void;
 };
 
 export type FluentRESTClient = {
@@ -1844,6 +1860,26 @@ export type LieferzusageDTO = {
     ChangedDate: Date;
 };
 
+export type Localize = {
+    (key: string, params?: LocalizeParams, namespace?: string): string;
+    (node: Element, options?: LocalizeActionOptions): LocalizeActionHandle;
+};
+
+export type LocalizeActionHandle = {
+    update: (options?: LocalizeActionOptions) => void;
+    destroy: () => void;
+};
+
+export type LocalizeActionOptions = {
+    text?: string;
+    html?: string;
+    params?: LocalizeParams;
+    attrs?: Record<string, string>;
+    ns?: string;
+};
+
+export type LocalizeParams = Record<string, string | number>;
+
 export type LoginAttemptDTO = {
     UserGuid: string;
     FailCount: number;
@@ -2050,8 +2086,12 @@ export type NeherApp3 = {
     addApp: (appModule: NeherApp3Module | string) => Promise<void>;
     notify: (message: string, type?: NeherApp3NotifyType, cb?: Function) => void;
     api: NeherApp3ApiCollection;
-    cache: NeherApp3CacheCollection;
     messages: NeherApp3Messages;
+    i18n: NeherApp3I18n;
+    localize: Localize;
+    settings: NeherApp3Settings;
+    profile: NeherApp3Profile;
+    theme: NeherApp3Theme;
     isEmbedded: boolean;
 };
 
@@ -2060,25 +2100,30 @@ export type NeherApp3ApiCollection = {
     hostingEnvironment?: FluentApi;
 };
 
-export type NeherApp3ArtikelstammCache = {
-    getArtikelStamm: () => Promise<ArtikelstammEintrag[]>;
-    getWarenGruppen: () => Promise<object[]>;
-    getArtikelByGuid: (guid: string) => Promise<ArtikelstammEintrag | undefined>;
-    getArtikelByKatalognummer: (nummer: string) => Promise<ArtikelstammEintrag | undefined>;
+export type NeherApp3I18n = {
+    register: (namespace: string, translations?: TranslationCatalogs) => NeherApp3I18nEndpoint;
+    localize: Localize;
+    has: (key: string, namespace?: string) => boolean;
+    compare: (a: string, b: string) => number;
+    sort: <T>(items: readonly T[], selector?: (item: T) => string) => T[];
+    setLocale: (code: string) => void;
+    onLocaleChange: (listener: (locale: string) => void) => (() => void);
+    sourceLocale: string;
+    locale: string;
+    locales: NeherApp3LocaleInfo[];
 };
 
-export type NeherApp3CacheCollection = {
-    artikelstamm: NeherApp3ArtikelstammCache;
-    erfassung: NeherApp3ErfassungCache;
+export type NeherApp3I18nEndpoint = {
+    namespace: string;
+    localize: Localize;
+    add: (translations: TranslationCatalogs) => void;
+    has: (key: string) => boolean;
+    dispose: () => void;
 };
 
-export type NeherApp3ErfassungCache = {
-    getVarianten: () => Promise<Variante[]>;
-    getVariante: (variantenNameOderKuerzel: string) => Promise<Variante | undefined>;
-    getWertelisten: () => Promise<Werteliste[]>;
-    getWerteliste: (name: string) => Promise<Werteliste | undefined>;
-    getScripts: () => Promise<object[]>;
-    createUIMachine: (v: Variante) => void;
+export type NeherApp3LocaleInfo = {
+    code: string;
+    label: string;
 };
 
 export type NeherApp3MenuItem = {
@@ -2091,15 +2136,13 @@ export type NeherApp3MenuItem = {
     parent?: string | null;
     hidden?: boolean;
     separator?: boolean;
+    heading?: boolean;
+    i18nNamespace?: string;
 };
 
 export type NeherApp3Messages = {
     register: (moduleName: string) => Endpoint;
-    send: (to: string, type: string, payload?: any, options?: SendOptions) => Delivery;
-    broadcast: (type: string, payload?: any, options?: SendOptions) => Delivery;
     isReachable: (moduleName: string) => boolean;
-    isKnown: (moduleName: string) => boolean;
-    reachable: string[];
 };
 
 export type NeherApp3Module = {
@@ -2113,6 +2156,27 @@ export type NeherApp3Module = {
 
 export type NeherApp3NotifyType = 0 | 1 | 2;
 
+export type NeherApp3Profile = {
+    userId: string;
+    userName: string;
+    email: string;
+    roles: string[];
+    rights: string[];
+    displayName: string;
+    initials: string;
+    avatar: string | null;
+    jobTitle: string | null;
+    department: string | null;
+    location: string | null;
+    mobile: string | null;
+    loaded: boolean;
+    reload: () => Promise<void>;
+    byEmail: (email: string) => Promise<NeherApp3PublicProfile | null>;
+    byEmails: (emails: string[]) => Promise<NeherApp3PublicProfile[]>;
+    byUserId: (userId: string) => Promise<NeherApp3PublicProfile | null>;
+    clearCache: () => void;
+};
+
 export type NeherApp3Props = {
     api: FluentApi;
     authManager?: FluentAuthManager;
@@ -2120,7 +2184,57 @@ export type NeherApp3Props = {
     mainCssPath?: string;
 };
 
+export type NeherApp3PublicProfile = {
+    userId: string;
+    userName: string;
+    email: string;
+    displayName: string | null;
+    initials: string | null;
+    jobTitle: string | null;
+    department: string | null;
+    location: string | null;
+    mobile: string | null;
+    avatar: string | null;
+    avatarUpdatedAt: string | null;
+};
+
+export type NeherApp3Settings = {
+    scope: string;
+    loaded: boolean;
+    register: (namespace: string) => NeherApp3SettingsHandle;
+    get: (scope: string, key: string, fallback?: any) => any;
+    set: (scope: string, key: string, value: unknown) => void;
+    remove: (scope: string, key: string) => void;
+    all: (scope: string) => Record<string, unknown>;
+    flush: () => Promise<void>;
+};
+
+export type NeherApp3SettingsHandle = {
+    namespace: string;
+    get: (key: string, fallback?: any) => any;
+    set: (key: string, value: unknown) => void;
+    remove: (key: string) => void;
+    all: () => Record<string, unknown>;
+    flush: () => Promise<void>;
+};
+
 export type NeherApp3SetupContext = NeherApp3Props & { neherapp3: NeherApp3 };
+
+export type NeherApp3Theme = {
+    current: NeherApp3ThemeName;
+    preference: NeherApp3ThemePreference;
+    isDark: boolean;
+    set: (preference: NeherApp3ThemePreference) => void;
+    toggle: () => void;
+    subscribe: (listener: (theme: NeherApp3ThemeName) => void) => (() => void);
+    LIGHT: "neher";
+    DARK: "neher-dark";
+    SYSTEM: "system";
+};
+
+export type NeherApp3ThemeName = "neher" | "neher-dark";
+
+export type NeherApp3ThemePreference = NeherApp3ThemeName | "system";
 
 export type NeherMessage = {
     id: string;
@@ -2659,13 +2773,7 @@ export type SchnittKonturOperationDTO = {
 export type SchnittoptimierungsOptionen = ('Keine'|'Lieferdatum'|'Serie'|'FarbeOberflaeche');
 
 export type SendOptions = {
-    from?: string;
     retain?: boolean;
-    requireRecipient?: boolean;
-    deliverWhenAvailable?: boolean;
-    echo?: boolean;
-    ttlMs?: number;
-    onUndeliverable?: (message: NeherMessage) => void;
 };
 
 export type SerieAuslastungDTO = {
@@ -2742,24 +2850,6 @@ export type SerienApi = {
     getSerienKapazitaeten: (startDate?: Date, endDate?: Date, includeStaendige?: boolean) => Promise<Record<string, SerieAuslastungDTO[]>>;
     getAuslastungVirtualSerien: (startDate?: Date, endDate?: Date) => Promise<VirtualSerieWithAuslastungDTO[]>;
     getAuslastungVorgang: (startVorgangsnummer: number, endVorgangsnummer: number) => Promise<SerieAuslastungDTO[]>;
-    getAllBelegPositionenAV: () => Promise<BelegPositionAVDTO[]>;
-    getAllBelegPositionenAVChangedSince: (changedSince: Date) => Promise<BelegPositionAVDTO[]>;
-    getAllBelegPositionenAVWithOptions: (includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    getAllBelegPositionenAVChangedSinceWithOptions: (changedSince: Date, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    getSerieBelegPositionenAV: (serieGuid: string, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    getVorgangBelegPositionenAV: (vorgangGuid: string, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    getVorgaengeBelegPositionenAV: (vorgangGuids: string[], includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    getBelegPositionenAV: (belegpositionGuid: string) => Promise<BelegPositionAVDTO[]>;
-    getBelegPositionAVById: (avGuid: string) => Promise<BelegPositionAVDTO>;
-    getBelegPositionAVByPCode: (pcode: string, includeOriginalBeleg?: boolean, includeProdDaten?: boolean) => Promise<BelegPositionAVDTO[]>;
-    searchBelegPositionAVByPCode: (search: string) => Promise<BelegPositionAVDTO[]>;
-    saveBelegPositionenAV: (position: BelegPositionAVDTO) => Promise<void>;
-    saveBelegPositionenAVBulk: (positionen: BelegPositionAVDTO[]) => Promise<BelegPositionAVDTO[]>;
-    saveBelegPositionenAVToSerie: (serieGuid: string, positionen: string[]) => Promise<BelegPositionAVDTO[]>;
-    belegPositionenAVBerechnen: (guids: string[]) => Promise<void>;
-    deleteBelegPositionenAV: (guid: string) => Promise<void>;
-    deleteBelegPositionenAVBulk: (guids: string[]) => Promise<void>;
-    belegPositionenSerienZuordnen: (belegGuid: string, positionSerieItems: PositionSerieItemDTO[]) => Promise<void>;
 };
 
 export type SerienMaterialEditDTO = {
@@ -2846,6 +2936,10 @@ export type TemplateDTO = {
     ChangedDate: string;
     Benutzer: string;
 };
+
+export type TranslationCatalogs = Record<string, TranslationTable>;
+
+export type TranslationTable = Record<string, string>;
 
 export type TypePattern = string | string[];
 
@@ -3022,12 +3116,6 @@ export type UtilityApi = {
     getGsqlBeleg: (belegGuid: string) => Promise<string>;
     getAllNotifications: () => Promise<NachrichtenDTO[]>;
     getOneBenutzerByKunde: (kundeGuid: string, email: string) => Promise<BenutzerDTO | undefined>;
-};
-
-export type Variante = {
-    VarianteGuid?: string;
-    Name?: string;
-    Kuerzel?: string;
 };
 
 export type VarianteDTO = {
@@ -3258,11 +3346,6 @@ export type WebJobHistorieDTO = {
     Timestamp: string;
     Status: string;
     Text: string;
-};
-
-export type Werteliste = {
-    WerteListeGuid?: string;
-    Name?: string;
 };
 
 export type WerteListeDTO = {

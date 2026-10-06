@@ -18,6 +18,20 @@ public class ApiException : Exception
 
     public ProblemDetails ProblemDetails { get; set; }
 
+    /// <summary>
+    /// Application-Insights-Operation-Id des fehlgeschlagenen Requests, sofern das Backend sie
+    /// mitgeliefert hat (Header <c>X-Gdl-OperationId</c> oder ProblemDetails-Extension
+    /// <c>operationId</c>). Damit lässt sich der Fehler in der Telemetrie nachschlagen:
+    /// <c>union requests, exceptions, traces | where operation_Id == "..."</c>.
+    /// </summary>
+    public string OperationId { get; set; }
+
+    /// <summary>
+    /// Welches Backend hinter dem Gateway geantwortet hat (<c>new</c> oder <c>legacy</c>), aus dem
+    /// Header <c>X-Gateway-Backend</c>. Leer, wenn der Aufruf nicht über das Gateway lief.
+    /// </summary>
+    public string GatewayBackend { get; set; }
+
     public ApiException()
     {
     }

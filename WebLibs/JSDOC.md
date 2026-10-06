@@ -213,6 +213,15 @@ Rule of thumb:
 - runtime export alone is not enough
 - consumers need the root declaration too
 
+Root constants work the same way: export them from `index.js` and add the
+declaration to `rootValueExportStatements` in `scripts/generate-dts.mjs`,
+e.g. the auth event names from `api/authEvents.js`:
+
+```ts
+export const AUTH_REFRESHED_EVENT: "idas-auth-refreshed";
+export const AUTH_EXPIRED_EVENT: "idas-auth-expired";
+```
+
 
 ### Add a public class for consumption
 
@@ -272,6 +281,35 @@ export {};
 
 If that type must be visible to consumers, make sure the file is part of the generator input and regenerate declarations.
 
+
+### Add an overloaded function type
+
+Some public entry points behave differently depending on the argument type —
+`NeherApp3I18n.localize` translates a string but acts as a Svelte action when
+it gets a DOM node. `@callback` cannot express that (one signature only), so
+write the type as a typedef with **call signatures**:
+
+```js
+/**
+ * @typedef {{
+ *     (key: string, params?: LocalizeParams, namespace?: string): string;
+ *     (node: Element, options?: LocalizeActionOptions): LocalizeActionHandle;
+ * }} Localize
+ */
+```
+
+The generator copies the type expression verbatim, so `index.d.ts` gets a real
+overload set and consumers see the precise return type per call form.
+
+Two things to know when a consumer *implements* such a type:
+
+- Annotate the implementation with the type instead of repeating `@overload`
+  blocks — `/** @type {Localize} */ const localize = (…) => …`. Two separately
+  declared overload sets are not assignable to each other in TypeScript, even
+  when they look identical.
+- The implementation itself has one signature, so widen its return
+  (`/** @type {*} */ (…)`) and give trailing parameters defaults so it also
+  accepts the shorter call form.
 
 ## Root Consumption Model
 

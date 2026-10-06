@@ -24,7 +24,7 @@ public class GesamtLieferzusagenWebRoutinen : WebRoutinenBase
         => await PostAsync($"GesamtLieferzusagen/SerieBuchen?serieGuid={serieGuid}", null);
 
     public async Task DeleteZusageAsync(Guid gesamtLieferzusageGuid)
-        => await DeleteAsync($"GesamtLieferzusage?gesamtLieferzusageGuid={gesamtLieferzusageGuid}");
+        => await DeleteAsync($"GesamtLieferzusagen?gesamtLieferzusageGuid={gesamtLieferzusageGuid}");
 
     public async Task<string> DeleteZusagenAsync(List<Guid> gesamtLieferzusagenGuids)
         => await DeleteAsync<string>($"GesamtLieferzusage/DeleteGesamtLieferzusagen", gesamtLieferzusagenGuids);

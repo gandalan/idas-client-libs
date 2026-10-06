@@ -21,7 +21,10 @@ const dtoRootMarkerEnd = "// END GENERATED ROOT DTO TYPEDEFS";
 const businessRootMarkerStart = "// BEGIN GENERATED ROOT BUSINESS TYPEDEFS";
 const businessRootMarkerEnd = "// END GENERATED ROOT BUSINESS TYPEDEFS";
 
-const rootValueExportStatements = [];
+const rootValueExportStatements = [
+    "export const AUTH_REFRESHED_EVENT: \"idas-auth-refreshed\";",
+    "export const AUTH_EXPIRED_EVENT: \"idas-auth-expired\";"
+];
 
 const rootFunctionDeclarationStatements = [
     "export function createApi(): FluentApi;",
@@ -31,7 +34,8 @@ const rootFunctionDeclarationStatements = [
     "export function createAuthManager(): FluentAuthManager;",
     "export function fluentIdasAuthManager(appToken: string, authBaseUrl: string): FluentAuthManager;",
     "export function fetchEnvConfig(envConfig?: string): Promise<EnvironmentConfig>;",
-    "export function restClient(): FluentRESTClient;"
+    "export function restClient(): FluentRESTClient;",
+    "export class RestError extends Error { method: string; url: string; status: number; statusText: string; body: string | null; detail: string | null; constructor(method: string, url: string, res: Response, body?: string | null); static fromResponse(method: string, url: string, res: Response): Promise<RestError>; static extractDetail(body: string | null, contentType: string | null): string | null; }"
 ];
 
 const simpleImportTypePattern = /^import\((?:"|').+(?:"|')\)\.[A-Za-z0-9_$]+$/;

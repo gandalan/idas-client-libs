@@ -44,4 +44,7 @@ public class BerechnungResultDTO
     public Guid BelegPositionGuid { get; set; }
     public string RawDataFileContent { get; set; }
     public ProduktionsDatenDTO ProduktionsDaten { get; set; }
+
+    /// <summary>Meldung des Microservice, z.B. der Grund für eine unterbundene Berechnung.</summary>
+    public string Meldung { get; set; }
 }

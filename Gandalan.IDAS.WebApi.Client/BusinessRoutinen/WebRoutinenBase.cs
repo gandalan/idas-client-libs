@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.Logging;
 using Gandalan.IDAS.Web;
+using Gandalan.IDAS.WebApi.Client.Constants;
 using Gandalan.IDAS.WebApi.Client.Exceptions;
 using Gandalan.IDAS.WebApi.Client.RateLimiting;
 using Gandalan.IDAS.WebApi.Client.Settings;
@@ -58,9 +59,14 @@ public class WebRoutinenBase
     public delegate bool ExceptionHandler(Exception ex);
 
     /// <summary>
-    /// Used to register custom handlers to catch Exceptions thrown by <see cref="WebRoutinenBase"/>
+    /// Used to register custom handlers to catch Exceptions thrown by all <see cref="WebRoutinenBase"/>
+    /// <seealso cref="DisableCustomExceptionHandler"/>
     /// </summary>
     public static event ExceptionHandler CustomExceptionHandler;
+    /// <summary>
+    /// Disable/ignore registered <see cref="CustomExceptionHandler"/> for this instance
+    /// </summary>
+    public bool DisableCustomExceptionHandler { get; set; }
 
     public delegate void ErrorOccuredEventHandler(object sender, ApiErrorArgs e);
 
@@ -75,6 +81,7 @@ public class WebRoutinenBase
             _originalSettings = settings;
             Settings = new WebApiSettings();
             Settings.CopyToThis(settings);
+            Settings.ForceLegacyApi = settings.ForceLegacyApi;
             if (settings is IJwtWebApiConfig jc)
             {
                 IsJwt = true;
@@ -155,7 +162,7 @@ public class WebRoutinenBase
             config.AdditionalHeaders.Add("X-Gdl-InstallationId", Settings.InstallationId.ToString());
         }
 
-        config.NewApiOptInUrls = Settings.NewApiOptInUrls;
+        config.ForceLegacyApi = Settings.ForceLegacyApi;
 
         var restRoutinen = new RESTRoutinen(config);
         restRoutinen.UpdatePerRequestHeaders(BuildAuthHeaders());
@@ -284,6 +291,16 @@ public class WebRoutinenBase
             if (!string.IsNullOrEmpty(apiException.ExceptionString))
             {
                 TryAdd("ExceptionString", apiException.ExceptionString);
+            }
+
+            if (!string.IsNullOrEmpty(apiException.OperationId))
+            {
+                TryAdd("OperationId", apiException.OperationId);
+            }
+
+            if (!string.IsNullOrEmpty(apiException.GatewayBackend))
+            {
+                TryAdd("GatewayBackend", apiException.GatewayBackend);
             }
 
             if (apiException.ProblemDetails != null)
@@ -748,6 +765,7 @@ public class WebRoutinenBase
             {
                 loginConfig = new JwtWebApiSettings();
                 loginConfig.CopyToThis(Settings);
+                loginConfig.ForceLegacyApi = Settings.ForceLegacyApi;
                 loginConfig.Url = Settings.IDASUrl;
             }
 
@@ -849,16 +867,17 @@ public class WebRoutinenBase
 
         L.Fehler(exception);
 
-        if (!IgnoreOnErrorOccured)
+        if (IgnoreOnErrorOccured)
         {
-
-            if (CustomExceptionHandler != null && CustomExceptionHandler.GetInvocationList().Cast<ExceptionHandler>().Any(handler => handler(exception)))
-            {
-                return;
-            }
-
-            throw exception;
+            return;
         }
+
+        if (!DisableCustomExceptionHandler && CustomExceptionHandler != null && CustomExceptionHandler.GetInvocationList().Cast<ExceptionHandler>().Any(handler => handler(exception)))
+        {
+            return;
+        }
+
+        throw exception;
     }
 
     private Exception HandleWebException(
@@ -873,7 +892,8 @@ public class WebRoutinenBase
 
         if (exception.StatusCode == HttpStatusCode.Unauthorized)
         {
-            var unauthorized = new ApiUnauthorizedException(Status = ex.Message);
+            Status = ex.Message;
+            var unauthorized = new ApiUnauthorizedException(exception.Message);
             EnrichExceptionData(unauthorized, url, data, sender);
             return unauthorized;
         }
@@ -903,6 +923,48 @@ public class WebRoutinenBase
     }
 
     protected static ApiException TranslateException(HttpRequestException ex, object payload = null)
+    {
+        var apiException = TranslateExceptionCore(ex, payload);
+
+        SetOperationId(apiException, ex);
+        SetGatewayBackend(apiException, ex);
+
+        return apiException;
+    }
+
+    /// <summary>
+    /// Übernimmt die Telemetrie-Operation-Id primär aus dem Response-Header (den der
+    /// <c>ErrorEnrichmentHandler</c> nach <c>ex.Data</c> gelegt hat), sonst aus der
+    /// ProblemDetails-Extension im Body.
+    /// </summary>
+    private static void SetOperationId(ApiException apiException, HttpRequestException ex)
+    {
+        if (ex.Data.Contains("OperationId"))
+        {
+            apiException.OperationId = ex.Data["OperationId"]?.ToString();
+        }
+
+        if (string.IsNullOrEmpty(apiException.OperationId) &&
+            apiException.ProblemDetails?.Extensions?.TryGetValue(
+                ApiHeaderNames.OperationIdProblemDetailsExtension, out var operationIdFromBody) == true)
+        {
+            apiException.OperationId = operationIdFromBody?.ToString();
+        }
+    }
+
+    /// <summary>
+    /// Übernimmt die Backend-Kennung, die der <c>ErrorEnrichmentHandler</c> aus dem Response-Header
+    /// nach <c>ex.Data</c> gelegt hat. Anders als bei der Operation-Id gibt es keinen Fallback im Body.
+    /// </summary>
+    private static void SetGatewayBackend(ApiException apiException, HttpRequestException ex)
+    {
+        if (ex.Data.Contains("GatewayBackend"))
+        {
+            apiException.GatewayBackend = ex.Data["GatewayBackend"]?.ToString();
+        }
+    }
+
+    private static ApiException TranslateExceptionCore(HttpRequestException ex, object payload)
     {
         if (!ex.Data.Contains("StatusCode"))
         {

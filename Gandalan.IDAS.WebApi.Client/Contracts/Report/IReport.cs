@@ -17,6 +17,7 @@ public abstract class IReport
     public abstract ReportTypeDTO ReportType { get; set; }
     public abstract ReportAction[] AllowedActions { get; }
     public abstract ReportCapability[] Capabilities { get; }
+    public virtual bool IsLandscape => false;
 
     public abstract bool CanHandle(object data = null);
 
@@ -105,6 +106,7 @@ public class ReportExecuteSettings
 
     public ReportAction ReportAction { get; set; }
     public string PrinterName { get; set; }
+    public string PaperSourceName { get; set; }
 
     /// <summary>
     /// Page width in mm
@@ -115,10 +117,12 @@ public class ReportExecuteSettings
     /// Page height in mm
     /// </summary>
     public double MediaPageHeightMm { get; set; } = 297;
+    public bool IsLandscape { get; set; }
 
     public string FileName { get; set; }
     public int Copies { get; set; } = 1;
     public string Watermark { get; set; }
+
 
     public static ReportExecuteSettings FromReportAuswahlResult(IReportAuswahlResult result)
     {
@@ -126,6 +130,7 @@ public class ReportExecuteSettings
         {
             ReportAction = result.Action,
             PrinterName = result.PrinterName,
+            PaperSourceName = result.PaperSourceName,
             FileName = result.FileName,
             Copies = result.Copies,
             Watermark = result.Watermark,
@@ -134,12 +139,12 @@ public class ReportExecuteSettings
             PrinterPaperWidthMm = result.PrinterPaperWidthMm,
             PrinterPaperHeightMm = result.PrinterPaperHeightMm,
             PrinterDpi = result.PrinterDpi,
+            IsLandscape = result.Report.IsLandscape,
         };
     }
 
 
     public bool ShowSerienName { get; set; }
-    public bool IsEtikettReport { get; set; }
     public double ContentOffsetXMm { get; set; }
     public double ContentOffsetYMm { get; set; }
     public string PrinterPaperName { get; set; }

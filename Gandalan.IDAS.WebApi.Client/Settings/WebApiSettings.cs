@@ -58,7 +58,7 @@ public class WebApiSettings : IWebApiConfig
     public string TranslateUrl { get; set; }
 
     /// <inheritdoc/>
-    public string[] NewApiOptInUrls { get; set; } = [];
+    public bool ForceLegacyApi { get; set; }
 
     /// <remarks>
     /// Remember to call <see cref="WebApiConfigurations.InitializeAsync"/> before.
@@ -123,6 +123,5 @@ public class WebApiSettings : IWebApiConfig
         NotifyUrl = settings.NotifyUrl;
         HelpCenterUrl = settings.HelpCenterUrl;
         TranslateUrl = settings.TranslateUrl;
-        NewApiOptInUrls = settings.NewApiOptInUrls;
     }
 }

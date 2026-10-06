@@ -398,7 +398,6 @@ public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
             else
             {
                 Add(new Kapazitaetsvorgabe { GroupName = "Spannrahmen", Label = "SP3", Produktgruppe = ["SP3"], IstBasisregel = true, Order = Count, Zeitvorgabe = 25 });
-                
             }
             //Sonstiges
             TryAddProduktGruppeToExisitng("Metallgewebe (nicht bei Lichtschächten)", "SP3", "SP2");
@@ -407,15 +406,112 @@ public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
             TryAddProduktGruppeToExisitng("Vorbiegen", "SP3", "SP2");
             TryAddProduktGruppeToExisitng("Sprosse (im Spannrahmen)", "SP3", "SP2");
         }
+
+        if (Version < 7)
+        {
+            Version = 7;
+            Add(new Kapazitaetsvorgabe
+            {
+                GroupName = "Sonstiges",
+                Label = "Profilfahnenanpassung > 19 mm",
+                Produktgruppe = ["PF2", "PT2"],
+                Etikettentext = ["PFL_20", "PFL_21", "PFL_22", "PFL_23", "PFL_24", "PFL_25", "PFL_26", "PFL_27", "PFL_28", "PFL_29", "PFL_30",
+                    "PFL_31", "PFL_32", "PFL_33", "PFL_34", "PFL_35", "PFL_36", "PFL_37", "PFL_38",
+                    "PFL_39", "PFL_40", "PFL_41", "PFL_42", "PFL_43", "PFL_44", "PFL_45", "PFL_46", "PFL_47", "PFL_48", "PFL_49", "PFL_50"],
+                Zeitvorgabe = 9,
+                Mehrfachregel = true,
+                Order = Count
+            });
+            Add(new Kapazitaetsvorgabe
+            {
+                GroupName = "Sonstiges",
+                Label = "Profilfahnenanpassung < 19 mm",
+                Produktgruppe = ["PF2", "PT2"],
+                Etikettentext = ["PFL_3", "PFL_4", "PFL_5", "PFL_6", "PFL_7", "PFL_8", "PFL_9", "PFL_10", "PFL_11", "PFL_12", "PFL_13", "PFL_14", "PFL_15", "PFL_16", "PFL_17", "PFL_18"],
+                Zeitvorgabe = 5,
+                Mehrfachregel = true,
+                Order = Count
+            });
+        }
+
+        if (Version < 8)
+        {
+            Version = 8;
+            //#16255
+            TryUpdate(
+                new Kapazitaetsvorgabe
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Fußbedienmulde",
+                    Produktgruppe = ["ST3", "ST4"],
+                    Artikelliste = ["103518", "134852"],
+                    Etikettentext = ["SpSoB", "Fb_"],
+                    Zeitvorgabe = 10,
+                },
+                new Kapazitaetsvorgabe
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Fußbedienmulde",
+                    Produktgruppe = ["ST3", "ST4"],
+                    Artikelliste = ["103518", "134852"],
+                    Etikettentext = ["Fb_"],
+                    Zeitvorgabe = 5,
+                }
+            );
+
+            //#16253
+            TryUpdate(
+                new Kapazitaetsvorgabe
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Standflügelarretierung",
+                    Produktgruppe = ["PF2", "PT2"],
+                    Artikelliste = ["133470"],
+                    Etikettentext = ["ExV_"],
+                    Zeitvorgabe = 12,
+                },
+                new Kapazitaetsvorgabe
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Standflügelarretierung",
+                    Produktgruppe = ["PF2", "PT2"],
+                    Artikelliste = ["133472"],
+                    Etikettentext = ["ExV_"],
+                    Zeitvorgabe = 12
+                }
+            );
+        }
+    }
+
+
+    public void TryUpdate(Kapazitaetsvorgabe oldValue, Kapazitaetsvorgabe newValue)
+    {
+        var existing = this.FirstOrDefault(g => g.IsEqualTo(oldValue));
+        if (existing == null)
+        {
+            return;
+        }
+
+        existing.GroupName = newValue.GroupName;
+        existing.Label = newValue.Label;
+        existing.FarbArt = newValue.FarbArt;
+        existing.Zeitvorgabe = newValue.Zeitvorgabe;
+        existing.Gewicht = newValue.Gewicht;
+        existing.IstBasisregel = newValue.IstBasisregel;
+        existing.Mehrfachregel = newValue.Mehrfachregel;
+        existing.Produktgruppe = newValue.Produktgruppe;
+        existing.Artikelliste = newValue.Artikelliste;
+        existing.Bearbeitungen = newValue.Bearbeitungen;
+        existing.Etikettentext = newValue.Etikettentext;
     }
 
     private bool TryAddProduktGruppeToExisitng(string label, string produktgruppe, string afterThisValue = null)
     {
         var result = this.FirstOrDefault(g => g.Label == label);
         if(result == null) return false;
-        
+
         if (result.Produktgruppe.Contains(produktgruppe)) return true;
-        
+
         var order = -1;
         if (afterThisValue != null)
         {
@@ -449,6 +545,23 @@ public class Kapazitaetsvorgabe : INotifyPropertyChanged
     public bool Mehrfachregel { get; set; }
 
     public int Order { get; set; }
+
+    public bool IsEqualTo(Kapazitaetsvorgabe other) =>
+        this.GroupName == other.GroupName &&
+        this.Label == other.Label &&
+        this.FarbArt == other.FarbArt &&
+        this.Zeitvorgabe == other.Zeitvorgabe &&
+        this.Gewicht == other.Gewicht &&
+        this.IstBasisregel == other.IstBasisregel &&
+        this.Mehrfachregel == other.Mehrfachregel &&
+        (this.Produktgruppe == other.Produktgruppe ||
+         (this.Produktgruppe != null && other.Produktgruppe != null && this.Produktgruppe.SequenceEqual(other.Produktgruppe))) &&
+        (this.Artikelliste == other.Artikelliste ||
+         (this.Artikelliste != null && other.Artikelliste != null && this.Artikelliste.SequenceEqual(other.Artikelliste))) &&
+        (this.Bearbeitungen == other.Bearbeitungen ||
+         (this.Bearbeitungen != null && other.Bearbeitungen != null && this.Bearbeitungen.SequenceEqual(other.Bearbeitungen))) &&
+        (this.Etikettentext == other.Etikettentext ||
+         (this.Etikettentext != null && other.Etikettentext != null && this.Etikettentext.SequenceEqual(other.Etikettentext)));
 }
 
 /// <summary>

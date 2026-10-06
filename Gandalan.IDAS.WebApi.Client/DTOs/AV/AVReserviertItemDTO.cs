@@ -6,7 +6,7 @@ public class AVReserviertItemDTO
 {
     public string Variante { get; set; }
     public string ArtikelNummer { get; set; }
-    public int Menge { get; set; }
+    public decimal Menge { get; set; }
     public string Kommission { get; set; }
     public string Kunde { get; set; }
     public long VorgangsNummer { get; set; }

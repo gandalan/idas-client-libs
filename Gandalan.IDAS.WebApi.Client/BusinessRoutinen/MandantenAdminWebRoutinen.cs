@@ -53,6 +53,13 @@ public class MandantenAdminWebRoutinen : WebRoutinenBase
 
     public async Task<string> MandantDeaktivierenAsync(string email)
         => await PostAsync<string>($"MandantenAdmin/MandantDeaktivieren?emailadresse={Uri.EscapeDataString(email)}", null);
-    
 
+    /// <summary>
+    /// Benennt die Anmelde-E-Mail eines Händlers um: legt einen neuen Benutzer mit der
+    /// neuen Adresse an, hängt alle Vorgänge um und archiviert die bisherigen Benutzer
+    /// des Mandanten. Erfordert serverseitig die Berechtigung <c>admin.mandantumzug</c>.
+    /// </summary>
+    public async Task<HaendlerArchivierenResultDTO> HaendlerArchivierenAsync(string alteMail, string neueMail)
+        => await PostAsync<HaendlerArchivierenResultDTO>(
+            $"HaendlerArchivieren?alteMail={Uri.EscapeDataString(alteMail)}&neueMail={Uri.EscapeDataString(neueMail)}", null);
 }

@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Data.SqlTypes;
 
 namespace System;
 
@@ -44,7 +45,7 @@ public static class DateTimeExtensions
 
         return datum;
     }
-    
+
     public static int GetCalendarWeekYear(this DateTime date)
     {
         var monday = date.FirstDayOfWeek();
@@ -75,7 +76,7 @@ public static class DateTimeExtensions
             return false;
         }
     }
-    
+
 
     private static int getWeekday(DayOfWeek dayOfWeek)
     {
@@ -101,7 +102,28 @@ public static class DateTimeExtensions
     {
         return Math.Abs((dateTime1.Subtract(dateTime2)).TotalMilliseconds) <= deltaInMs;
     }
-    
+
+    public static DateTime RoundToSqlDateTime(this DateTime dateTime)
+    {
+        if (dateTime < SqlDateTime.MinValue.Value || dateTime > SqlDateTime.MaxValue.Value)
+        {
+            return dateTime;
+        }
+
+        return new SqlDateTime(dateTime).Value;
+    }
+
+    public static DateTime? RoundToSqlDateTime(this DateTime? dateTime)
+    {
+        return dateTime?.RoundToSqlDateTime();
+    }
+
+    public static DateTimeOffset RoundToSqlDateTime(this DateTimeOffset dateTimeOffset)
+    {
+        var roundedDateTime = dateTimeOffset.DateTime.RoundToSqlDateTime();
+        return new DateTimeOffset(roundedDateTime, dateTimeOffset.Offset);
+    }
+
     public static DateTime FirstDayOfWeek(this DateTime dateTime, DayOfWeek startOfWeek = DayOfWeek.Monday)
     {
         var diff = (7 + (dateTime.DayOfWeek - startOfWeek)) % 7;

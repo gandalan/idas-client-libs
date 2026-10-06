@@ -13,12 +13,6 @@ public class ProduktionsSettingsDTO
     /// </summary>
     public bool SprossenfreiEnabled { get; set; }
 
-    /// <summary>
-    /// Aktiviert Vorbiegen global. 
-    /// Die Produktionsberechnung prüft sowohl VorbiegenEnabled als auch die Aktivierung in der jeweiligen Produktfamilie.
-    /// Wenn gesetzt, ist außerdem die Bearbeitung der Familien-Settings erlaubt.
-    /// </summary>
-    public bool VorbiegenEnabled { get; set; }
     public string VorbiegenSprossenfrei { get; set; }
     public string IstAusserhalbGewaehrleistung { get; set; }
     public string VorbiegenGrenzwert { get; set; }
@@ -70,6 +64,8 @@ public class ProduktionsSettingsDTO
     //ZusatzRahmen
     public bool ZR_Schraubeckwinkel { get; set; } = true;
     public bool ZR_Verstanzen { get; set; }
+    public bool ZR_Schraubeckwinkel_Breite { get; set; }
+    public int? ZR_Eckwinkel_Breite { get; set; }
     public int? ZR_Verstanzen_Mass { get; set; }
     public bool ZR_Eckwinkel { get; set; }
 

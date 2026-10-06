@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
+using Gandalan.IDAS.WebApi.Client.DTOs.Benutzer;
 using Gandalan.IDAS.WebApi.DTO;
 
 namespace Gandalan.IDAS.WebApi.Client.BusinessRoutinen;
@@ -44,9 +45,19 @@ public class AppWebRoutinen : WebRoutinenBase
         return await PutAsync<MandantDTO>("Mandanten", data);
     }
 
-    public async Task<BenutzerDTO> CreateOrUpdateBenutzerByKundeAsync(Guid kundeGuid, BenutzerDTO data, bool pwSenden = false, string passwort = "")
+    [Obsolete("Use CreateOrUpdateBenutzerByKundeAsync(AppBenutzerRequestDTO) instead")]
+    public async Task<BenutzerDTO> CreateOrUpdateBenutzerByKundeAsync(Guid kundeGuid, BenutzerDTO data, bool pwSenden = false, string passwort = "") =>
+        await CreateOrUpdateBenutzerByKundeAsync(new AppBenutzerRequestDTO
+        {
+            BenutzerData = data,
+            KundeGuid = kundeGuid,
+            Passwort = passwort,
+            PasswortSenden = pwSenden
+        });
+
+    public async Task<BenutzerDTO> CreateOrUpdateBenutzerByKundeAsync(AppBenutzerRequestDTO data)
     {
-        return await PostAsync<BenutzerDTO>($"AppBenutzer/?kundeGuid={kundeGuid}&pwSenden={pwSenden}&passwort={passwort}", data);
+        return await PostAsync<BenutzerDTO>($"AppBenutzer", data);
     }
 
     public async Task DeleteBenutzerByKundeAsync(Guid kundeGuid, BenutzerDTO data)

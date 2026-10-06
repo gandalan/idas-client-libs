@@ -35,13 +35,13 @@ public class gSQLInhalt
         var sb = new StringBuilder();
         foreach (var sektion in Sektionen)
         {
-            sb.AppendLine(sektion.Name);
+            sb.Append(sektion.Name).Append("\r\n");
             foreach (var item in sektion.Items)
             {
-                sb.AppendLine(item.ToString());
+                sb.Append(item.ToString()).Append("\r\n");
             }
 
-            sb.AppendLine();
+            sb.Append("\r\n");
         }
 
         return sb.ToString();
