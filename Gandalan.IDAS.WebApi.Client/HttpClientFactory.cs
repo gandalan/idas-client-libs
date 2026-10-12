@@ -182,7 +182,7 @@ public class HttpClientFactory
     private static HttpClient createWebClient(HttpClientConfig config)
     {
         // Build the DelegatingHandler pipeline:
-        // ErrorEnrichmentHandler → GatewayClusterHandler → HttpClientHandler
+        // ErrorEnrichmentHandler → TimingHandler → GatewayClusterHandler → HttpClientHandler
         HttpMessageHandler pipeline = new HttpClientHandler
         {
             AutomaticDecompression = config.UseCompression ? DecompressionMethods.GZip | DecompressionMethods.Deflate : DecompressionMethods.None,
@@ -201,6 +201,7 @@ public class HttpClientFactory
 #endif
 
         pipeline = new GatewayClusterHandler(config.ForceLegacyApi) { InnerHandler = pipeline };
+        pipeline = new TimingHandler { InnerHandler = pipeline };
         pipeline = new ErrorEnrichmentHandler { InnerHandler = pipeline };
 
         var client = new HttpClient(pipeline);
