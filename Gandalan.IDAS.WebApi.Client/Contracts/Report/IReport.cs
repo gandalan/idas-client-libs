@@ -103,6 +103,7 @@ public enum ReportCapability
 public class ReportExecuteSettings
 {
     public string ReportName { get; set; }
+    public IEtikettenPrintLayoutSettings LayoutSettings { get; set; }
 
     public ReportAction ReportAction { get; set; }
     public string PrinterName { get; set; }
@@ -128,6 +129,7 @@ public class ReportExecuteSettings
     {
         return new ReportExecuteSettings
         {
+            LayoutSettings = result.LayoutSettings,
             ReportAction = result.Action,
             PrinterName = result.PrinterName,
             PaperSourceName = result.PaperSourceName,
