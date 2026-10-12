@@ -12,7 +12,7 @@ public sealed record HttpTimingInfo(
     Uri Url,
     int? Status,
     long DauerMs,
-    long? Bytes,
+    long Bytes,
     string GatewayBackend,
     string OperationId,
     string Fehler,
@@ -21,8 +21,17 @@ public sealed record HttpTimingInfo(
     public string Methode { get; } = Methode;
     public Uri Url { get; } = Url;
     public int? Status { get; } = Status;
+
+    /// <summary>
+    /// Dauer vom Absenden bis der Antwort-Body vollständig gelesen ist, bzw. bis zum Abbruch oder Verwerfen des ungelesenen Bodys.
+    /// </summary>
     public long DauerMs { get; } = DauerMs;
-    public long? Bytes { get; } = Bytes;
+
+    /// <summary>
+    /// Tatsächlich gelesene Body-Bytes nach Dekompression; 0, wenn der Body nie gelesen wurde.
+    /// </summary>
+    public long Bytes { get; } = Bytes;
+
     public string GatewayBackend { get; } = GatewayBackend;
     public string OperationId { get; } = OperationId;
     public string Fehler { get; } = Fehler;
