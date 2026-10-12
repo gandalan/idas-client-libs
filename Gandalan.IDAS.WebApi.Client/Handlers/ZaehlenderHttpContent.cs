@@ -13,6 +13,8 @@ namespace Gandalan.IDAS.WebApi.Client.Handlers;
 /// <see cref="HttpTimingMonitor"/>, sobald der Body vollständig gelesen, beim Lesen abgebrochen oder ungelesen verworfen wurde.
 /// Nötig, weil <see cref="HttpClient"/> den Body erst nach der Handler-Pipeline puffert und die automatische
 /// Dekompression den Content-Length-Header entfernt.
+/// Bei aktivem Zuhörer puffert auch <see cref="HttpContent.ReadAsStreamAsync()"/> den ganzen Body (kein Streaming);
+/// das ist bewusst so, weil die Lib nur gepufferte Antworten liest und die Messung den vollständigen Body abdecken soll.
 /// </summary>
 internal sealed class ZaehlenderHttpContent : HttpContent
 {
@@ -23,6 +25,7 @@ internal sealed class ZaehlenderHttpContent : HttpContent
     private readonly HttpResponseMessage _response;
     private readonly Stopwatch _stoppuhr;
     private long _gelesen;
+    private int _lesenBegonnen;
     private int _gemeldet;
 
     public ZaehlenderHttpContent(HttpContent inhalt, HttpRequestMessage request, HttpResponseMessage response, Stopwatch stoppuhr)
@@ -40,6 +43,22 @@ internal sealed class ZaehlenderHttpContent : HttpContent
 #if NET5_0_OR_GREATER
     protected override Task SerializeToStreamAsync(Stream stream, TransportContext context, CancellationToken cancellationToken)
         => uebertrageAsync(stream, cancellationToken);
+
+    protected override void SerializeToStream(Stream stream, TransportContext context, CancellationToken cancellationToken)
+    {
+        Interlocked.Exchange(ref _lesenBegonnen, 1);
+        try
+        {
+            using var quelle = _inhalt.ReadAsStream(cancellationToken);
+            kopiereZaehlend(quelle, stream, cancellationToken);
+            melde(null);
+        }
+        catch (Exception ex)
+        {
+            melde(ex);
+            throw;
+        }
+    }
 #endif
 
     protected override bool TryComputeLength(out long length)
@@ -53,7 +72,7 @@ internal sealed class ZaehlenderHttpContent : HttpContent
     {
         if (disposing)
         {
-            melde(null);
+            meldeVerworfen();
             _inhalt.Dispose();
         }
 
@@ -68,6 +87,7 @@ internal sealed class ZaehlenderHttpContent : HttpContent
 
     private async Task uebertrageAsync(Stream ziel, CancellationToken cancellationToken)
     {
+        Interlocked.Exchange(ref _lesenBegonnen, 1);
         try
         {
             using var quelle = await leseInhaltAsync(cancellationToken).ConfigureAwait(false);
@@ -101,6 +121,18 @@ internal sealed class ZaehlenderHttpContent : HttpContent
     }
 
 #if NET5_0_OR_GREATER
+    private void kopiereZaehlend(Stream quelle, Stream ziel, CancellationToken cancellationToken)
+    {
+        var puffer = new byte[PUFFER_GROESSE];
+        int anzahl;
+        while ((anzahl = quelle.Read(puffer.AsSpan())) > 0)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            ziel.Write(puffer.AsSpan(0, anzahl));
+            Interlocked.Add(ref _gelesen, anzahl);
+        }
+    }
+
     private static ValueTask<int> leseBlockAsync(Stream quelle, byte[] puffer, CancellationToken cancellationToken)
         => quelle.ReadAsync(puffer.AsMemory(), cancellationToken);
 
@@ -113,6 +145,20 @@ internal sealed class ZaehlenderHttpContent : HttpContent
     private static Task schreibeBlockAsync(Stream ziel, byte[] puffer, int anzahl, CancellationToken cancellationToken)
         => ziel.WriteAsync(puffer, 0, anzahl, cancellationToken);
 #endif
+
+    private void meldeVerworfen()
+    {
+        if (Volatile.Read(ref _lesenBegonnen) == 0)
+        {
+            melde(null);
+            return;
+        }
+
+        if (Volatile.Read(ref _gemeldet) == 1)
+            return;
+
+        melde(new ObjectDisposedException(nameof(ZaehlenderHttpContent), "Antwort-Body wurde vor dem vollständigen Lesen verworfen."));
+    }
 
     private void melde(Exception fehler)
     {

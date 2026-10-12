@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Gandalan.IDAS.Logging;
+
 namespace Gandalan.IDAS.WebApi.Client.Handlers;
 
 /// <summary>
@@ -47,6 +49,13 @@ public sealed class TimingHandler : DelegatingHandler
             return;
         }
 
-        response.Content = new ZaehlenderHttpContent(response.Content, request, response, stoppuhr);
+        try
+        {
+            response.Content = new ZaehlenderHttpContent(response.Content, request, response, stoppuhr);
+        }
+        catch (Exception ex)
+        {
+            L.Fehler(ex, "TimingHandler konnte den Antwort-Body nicht zur Messung umhüllen");
+        }
     }
 }
