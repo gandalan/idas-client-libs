@@ -103,6 +103,7 @@ public enum ReportCapability
 public class ReportExecuteSettings
 {
     public string ReportName { get; set; }
+    /// <summary>The selected label layout, retained as report data after its printer settings have been applied.</summary>
     public IEtikettenPrintLayoutSettings LayoutSettings { get; set; }
 
     public ReportAction ReportAction { get; set; }
@@ -127,9 +128,8 @@ public class ReportExecuteSettings
 
     public static ReportExecuteSettings FromReportAuswahlResult(IReportAuswahlResult result)
     {
-        return new ReportExecuteSettings
+        var settings = new ReportExecuteSettings
         {
-            LayoutSettings = result.LayoutSettings,
             ReportAction = result.Action,
             PrinterName = result.PrinterName,
             PaperSourceName = result.PaperSourceName,
@@ -143,6 +143,29 @@ public class ReportExecuteSettings
             PrinterDpi = result.PrinterDpi,
             IsLandscape = result.Report.IsLandscape,
         };
+        return result.LayoutSettings == null ? settings : settings.WithEtikettenLayout(result.LayoutSettings);
+    }
+
+    /// <summary>
+    /// Applies a selected label layout to the printer and page settings and retains it as report data.
+    /// Call during preparation; execution must use the prepared values without applying the layout again.
+    /// The report orientation and other execution options remain unchanged.
+    /// </summary>
+    public ReportExecuteSettings WithEtikettenLayout(IEtikettenPrintLayoutSettings layout)
+    {
+        LayoutSettings = layout ?? throw new ArgumentNullException(nameof(layout));
+        PrinterName = layout.DruckerName;
+        PaperSourceName = layout.PaperSourceName;
+        PrinterDpi = layout.Dpi;
+        ContentOffsetXMm = layout.ContentOffsetXMm;
+        ContentOffsetYMm = layout.ContentOffsetYMm;
+        if (layout.Papierformat is not { WidthMM: > 0, HeightMM: > 0 } paper) return this;
+        PrinterPaperName = paper.Name;
+        PrinterPaperHeightMm = paper.HeightMM;
+        PrinterPaperWidthMm = paper.WidthMM;
+        MediaPageHeightMm = paper.HeightMM;
+        MediaPageWidthMm = paper.WidthMM;
+        return this;
     }
 
 
