@@ -103,7 +103,7 @@ public enum ReportCapability
 public class ReportExecuteSettings
 {
     public string ReportName { get; set; }
-    /// <summary>The selected label layout, retained as report data after its printer settings have been applied.</summary>
+    /// <summary>Das ausgewählte Etikettenlayout bleibt nach Übernahme seiner Druckparameter als Reportkonfiguration erhalten.</summary>
     public IEtikettenPrintLayoutSettings LayoutSettings { get; set; }
 
     public ReportAction ReportAction { get; set; }
@@ -147,9 +147,9 @@ public class ReportExecuteSettings
     }
 
     /// <summary>
-    /// Applies a selected label layout to the printer and page settings and retains it as report data.
-    /// Call during preparation; execution must use the prepared values without applying the layout again.
-    /// The report orientation and other execution options remain unchanged.
+    /// Übernimmt das ausgewählte Etikettenlayout in die Drucker- und Seiteneinstellungen und hält es als Reportkonfiguration fest.
+    /// Während der Vorbereitung aufrufen; die Ausführung verwendet die vorbereiteten Werte ohne erneute Übernahme des Layouts.
+    /// Die Reportausrichtung und die übrigen Ausführungsoptionen bleiben unverändert.
     /// </summary>
     public ReportExecuteSettings WithEtikettenLayout(IEtikettenPrintLayoutSettings layout)
     {
