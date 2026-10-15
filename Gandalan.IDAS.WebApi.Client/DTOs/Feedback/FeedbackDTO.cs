@@ -43,6 +43,8 @@ public class FeedbackAttachmentDTO
     public string URL { get; set; }
     /// <summary>Benutzer, der den Anhang hochgeladen hat; leer bei älteren Anhängen.</summary>
     public string HochgeladenVon { get; set; }
+    /// <summary>BenutzerGuid des Hochladers (für die Rechteprüfung); leer bei älteren Anhängen.</summary>
+    public Guid? HochgeladenVonGuid { get; set; }
 }
 
 public class FeedbackNotifyItemDTO
