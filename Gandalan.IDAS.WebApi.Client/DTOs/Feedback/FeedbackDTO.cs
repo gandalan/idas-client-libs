@@ -41,6 +41,8 @@ public class FeedbackAttachmentDTO
     public DateTime Zeitstempel { get; set; }
     public string Filename { get; set; }
     public string URL { get; set; }
+    /// <summary>Benutzer, der den Anhang hochgeladen hat; leer bei älteren Anhängen.</summary>
+    public string HochgeladenVon { get; set; }
 }
 
 public class FeedbackNotifyItemDTO
