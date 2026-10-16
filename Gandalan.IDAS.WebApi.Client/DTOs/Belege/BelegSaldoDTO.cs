@@ -48,6 +48,11 @@ public class BelegSaldoDTO : IDTOWithApplicationSpecificProperties, IDTOWithAddi
     public bool IstInaktiv { get; set; }
 
     /// <summary>
+    /// Die Salde wurde im Vorgang trotz Transportkostenbefreiung manuell aktiviert und wird von der automatischen Befreiungsregel nicht mehr verändert.
+    /// </summary>
+    public bool IstManuellUebersteuert { get; set; }
+
+    /// <summary>
     /// In diesem Tag können belibige interne Informationen als String gespeichert werden.
     /// </summary>
     public string Tag { get; set; }
