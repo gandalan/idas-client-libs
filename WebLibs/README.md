@@ -93,6 +93,22 @@ window.addEventListener("idas-auth-expired", () => authManager.redirectToLogin()
 - `idasFluentApi(baseUrl, authManager, serviceName)`
 - `AUTH_REFRESHED_EVENT`, `AUTH_EXPIRED_EVENT`
 
+### Theme (`ui/theme`)
+Zentrales Theme mit den Themes `neher`, `neher-dark` und `i3` als rohes CSS; gebaut wird im Zielprojekt.
+- `neher-tokens.css`: reines CSS, nur Variablen (Farben, Schrift, Radien), ohne Tailwind und daisyUI nutzbar
+- `neher-theme.css`: fuer Tailwind 4 + daisyUI 5, bindet die Tokens ein und ergaenzt den Feinschliff auf die daisyUI-Klassen; `tailwindcss` und `daisyui` bringt die App selbst mit
+
+```css
+@import "tailwindcss";
+@import "@gandalan/weblibs/ui/theme/neher-theme.css";
+
+/* optional: einzelne Variablen nach dem Import ueberschreiben */
+[data-theme="neher"] { --color-primary: #5a9a1f; }
+```
+
+- Das Theme waehlt die App ueber `data-theme` (`neher`, `neher-dark`, `i3`); ohne Attribut gilt `neher`. In NeherApp3 setzt die Shell `data-theme` auch im Shadow DOM.
+- Die ueberschreibbaren Variablen stehen im Kopf von `neher-tokens.css`.
+
 ### Wichtige Hinweise
 - `idasFluentApi(...)` fuer IDAS-Business-Routinen verwenden
 - `fluentApi(...)` fuer generische REST-Endpunkte verwenden
