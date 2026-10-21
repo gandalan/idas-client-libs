@@ -757,6 +757,7 @@ export type BelegSaldoDTO = {
     Name: string;
     SaldenStatus: string;
     IstInaktiv: boolean;
+    IstManuellUebersteuert: boolean;
     Tag: string;
     Rabatt: number;
     TemplateText: string;
