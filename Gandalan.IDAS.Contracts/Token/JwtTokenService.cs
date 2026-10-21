@@ -26,6 +26,12 @@ public class JwtTokenData
     public string Email { get; set; }
 
     public Guid MandantGuid { get; set; }
+
+    /// <summary>
+    /// Name des Mandanten (#17074). Null bei Tokens, die vor #17074 ausgestellt wurden.
+    /// </summary>
+    public string MandantName { get; set; }
+
     public DateTime Expires { get; set; }
     public Guid AppToken { get; set; }
     public Guid AuthToken { get; set; }
@@ -63,6 +69,7 @@ public class JwtTokenService
     private const string ClaimId = "id";
     private const string ClaimEmail = "email";
     private const string ClaimMandantGuid = "mandantGuid";
+    private const string ClaimMandantName = "mandantName";
     private const string ClaimBenutzerGuid = "benutzerGuid";
     private const string ClaimAppToken = "appToken";
     private const string ClaimIdasAuthToken = "idasAuthToken";
@@ -124,6 +131,12 @@ public class JwtTokenService
         }
 
         rights.Add(new Claim(ClaimMandantGuid, authToken.MandantGuid.ToString()));
+        // #17074: Mandantenname fuer Dienste wie NeherApp3, die den Mandanten nur aus dem Token kennen.
+        if (!string.IsNullOrWhiteSpace(authToken.Mandant?.Name))
+        {
+            rights.Add(new Claim(ClaimMandantName, authToken.Mandant.Name));
+        }
+
         rights.Add(new Claim(ClaimAppToken, authToken.AppToken.ToString()));
         rights.Add(new Claim(ClaimBenutzerGuid, authToken.Benutzer.BenutzerGuid.ToString()));
         rights.Add(new Claim(ClaimIdasAuthToken, authToken.Token.ToString()));
@@ -175,6 +188,7 @@ public class JwtTokenService
             // Fehlt bei Tokens von vor #16404; dort traegt `id` die Mailadresse.
             var emailClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimEmail);
             var mandantGuidClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimMandantGuid);
+            var mandantNameClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimMandantName);
             var appTokenClaim = jwtToken.Claims.First(x => x.Type == ClaimAppToken);
             var authTokenClaim = jwtToken.Claims.First(x => x.Type == ClaimIdasAuthToken);
             var refreshTokenClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimRefreshToken);
@@ -197,6 +211,7 @@ public class JwtTokenService
                     Email = emailClaim?.Value,
                     Expires = validatedToken.ValidTo,
                     MandantGuid = mandantGuidClaim == null ? Guid.Empty : Guid.Parse(mandantGuidClaim.Value),
+                    MandantName = mandantNameClaim?.Value,
                     AppToken = appTokenClaim == null ? Guid.Empty : Guid.Parse(appTokenClaim.Value),
                     AuthToken = authTokenClaim == null ? Guid.Empty : Guid.Parse(authTokenClaim.Value),
                     RefreshToken = refreshTokenClaim == null ? Guid.Empty : Guid.Parse(refreshTokenClaim.Value),
