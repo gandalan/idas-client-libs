@@ -1,4 +1,5 @@
 import { restClient, RestError } from "./fluentRestClient";
+import { AuthError, isTokenExpired } from "./fluentAuthManager";
 
 /**
  * @typedef {Object} FluentApi
@@ -15,7 +16,7 @@ import { restClient, RestError } from "./fluentRestClient";
  * @property {(url?: string, payload?: Object, auth?: boolean) => Promise<object|Array<any>>} post - Async function to perform POST requests with a payload.
  * @property {(url?: string, payload?: Object|FormData|Array<any>|string[]|string|null, auth?: boolean) => Promise<object|Array<any>>} delete - Async function to perform DELETE requests.
  * @property {() => import("./fluentRestClient").FluentRESTClient} createRestClient - Creates a configured REST client.
- * @property {(auth?: boolean) => Promise<void>} preCheck - Ensures authentication before a request when required.
+ * @property {(auth?: boolean) => Promise<void>} preCheck - Ensures a usable JWT before a request when required; throws an AuthError (request not sent) otherwise.
  * @property {(auth: boolean, executeRequest: () => Promise<any>) => Promise<any>} _executeRequest - Runs a request with authentication and a one-time retry on 401.
  */
 
@@ -130,11 +131,16 @@ export function createApi() {
 
         /**
          * Runs a request with authentication and retries it once if the server
-         * answered 401 Unauthorized: the cached token is discarded, a fresh one
-         * is obtained via the auth manager and the request is repeated — but
-         * only if the refresh actually delivered a new token. This
-         * covers tokens that expired server-side (e.g. after hours of
-         * inactivity) as well as refresh races between parallel requests.
+         * answered 401 Unauthorized: the token is marked as rejected (not
+         * discarded), a fresh one is obtained via the auth manager and the
+         * request is repeated — but only if the refresh actually delivered a
+         * new token. This covers tokens that expired server-side (e.g. after
+         * hours of inactivity) as well as refresh races between parallel
+         * requests.
+         *
+         * With `auth=true` and an auth manager, a request is never sent without
+         * an Authorization header: if no usable JWT can be obtained, an
+         * AuthError is thrown before sending (see preCheck).
          *
          * @private
          * @async
@@ -152,12 +158,25 @@ export function createApi() {
                     throw e;
                 }
 
-                // Only discard the token this request was sent with — a parallel
-                // request may already have replaced it with a fresh one.
-                if (this.authManager.token === usedToken) {
+                // Only invalidate the token this request was sent with — a parallel
+                // request may already have replaced it with a fresh one. Marking
+                // instead of clearing it: a cleared token would let the next
+                // request go out without Authorization header if the refresh
+                // fails transiently.
+                if (typeof this.authManager.invalidateToken === "function") {
+                    this.authManager.invalidateToken(usedToken);
+                } else if (this.authManager.token === usedToken) {
+                    // auth manager of an older weblibs version (e.g. passed in by the host)
                     this.authManager.token = "";
                 }
-                await this.authManager.ensureAuthenticated();
+
+                try {
+                    await this.preCheck(auth);
+                } catch {
+                    // no new token: report the original 401 (AUTH_EXPIRED_EVENT
+                    // was dispatched if the session ended)
+                    throw e;
+                }
 
                 // Retry only with a new token: never repeat the request without
                 // an Authorization header or with the token that just failed.
@@ -184,16 +203,31 @@ export function createApi() {
         },
 
         /**
-         * Ensures the user is authenticated before making a request.
+         * Ensures a usable JWT before an authenticated request. Without auth
+         * manager (or with `auth=false`) nothing is checked and the request is
+         * sent without Authorization header.
          *
          * @private
          * @async
          * @param {boolean} [auth=true]
+         * @throws {AuthError} if no usable JWT is available — the request must not be sent
          * @returns {Promise<void>}
          */
         async preCheck(auth = true) {
-            if (auth && this.authManager) {
-                await this.authManager.ensureAuthenticated();
+            if (!auth || !this.authManager) {
+                return;
+            }
+
+            if (typeof this.authManager.getAuthorizationToken === "function") {
+                await this.authManager.getAuthorizationToken();
+                return;
+            }
+
+            // auth manager of an older weblibs version (e.g. passed in by the host)
+            await this.authManager.ensureAuthenticated();
+            const token = this.authManager.token;
+            if (!token || isTokenExpired(token)) {
+                throw new AuthError("no-token", false);
             }
         }
     };
