@@ -115,6 +115,19 @@ Zentrales Theme mit den Themes `neher`, `neher-dark` und `i3` als rohes CSS; geb
 - Das Theme waehlt die App ueber `data-theme` (`neher`, `neher-dark`, `i3`); ohne Attribut gilt `neher`. In NeherApp3 setzt die Shell `data-theme` auch im Shadow DOM.
 - Die ueberschreibbaren Variablen stehen im Kopf von `neher-tokens.css`.
 
+### NeherApp3-Typen
+Die Typen der NeherApp3-Host-API (`NeherApp3`, `NeherApp3Module`, `NeherMessage`, `NeherApp3I18n`, `NeherApp3Settings`, `NeherApp3Profile`, `NeherApp3Theme`, ...) stehen in `api/neherApp3Types.js` und sind ueber den Paket-Root importierbar:
+
+```js
+/** @type {import("@gandalan/weblibs").NeherApp3Module} */
+export default { moduleName: "mein-modul", setup({ neherapp3 }) { /* ... */ } };
+```
+
+- Master ist NeherApp3 (`frontend/src/neherApp3Types.js`); die Datei hier ist eine Kopie und wird nicht von Hand bearbeitet
+- Die NeherApp3-Pipeline (Stage `SyncWeblibsTypes`) uebernimmt Aenderungen automatisch per PR (Branch `neherapp3/host-api-types`)
+- Die Beschreibungen erscheinen in `index.d.ts` als Doku-Kommentare
+- Ausfuehrliche Doku zur Host-API: `docs/MODULE.md` in NeherApp3
+
 ### Wichtige Hinweise
 - `idasFluentApi(...)` fuer IDAS-Business-Routinen verwenden
 - `fluentApi(...)` fuer generische REST-Endpunkte verwenden

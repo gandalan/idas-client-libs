@@ -1,7 +1,18 @@
+// Kopie aus NeherApp3 (frontend/src/neherApp3Types.js) — hier nicht bearbeiten.
+// Änderungen dort; übernommen per NeherApp3-Pipeline (Stage SyncWeblibsTypes)
+// bzw. lokal mit dem NeherApp3-Skript `npm run sync:weblibs-types` in NeherApp3/frontend.
+
 /**
- * NeherApp3 root type definitions — the master reference for the shell's host
- * API. Maintained by hand; `scripts/generate-dts.mjs` reads these typedefs and
- * emits them into `index.d.ts`.
+ * NeherApp3 host API types (`globalThis.neherapp3`).
+ *
+ * Master: NeherApp3, `frontend/src/neherApp3Types.js`, next to the
+ * implementation. `@gandalan/weblibs` carries a copy as `api/neherApp3Types.js`,
+ * kept in sync by NeherApp3's `SyncWeblibsTypes` pipeline stage (locally: the
+ * NeherApp3 script `npm run sync:weblibs-types` in `NeherApp3/frontend`); the
+ * weblibs' `scripts/generate-dts.mjs` emits the typedefs into `index.d.ts`.
+ *
+ * Types of the weblibs themselves are referenced only through the aliases
+ * below; the sync rewrites them to the weblibs-internal paths.
  */
 
 /** @typedef {import("./fluentApi.js").FluentApi} FluentApi */
@@ -14,9 +25,9 @@
 
 /**
  * @typedef {Object} NeherApp3Props
- * @property {import("./fluentApi.js").FluentApi} api
- * @property {import("./fluentAuthManager.js").FluentAuthManager} [authManager]
- * @property {import("./idasFluentApi.js").IDASFluentApi} idas
+ * @property {FluentApi} api
+ * @property {FluentAuthManager} [authManager]
+ * @property {IDASFluentApi} idas
  * @property {string} [mainCssPath]
  */
 
@@ -25,7 +36,7 @@
  * @property {string} [id] - Unique identifier for the menu item (auto-generated if not provided)
  * @property {boolean} [selected] - Indicates if the menu item is currently selected (managed by the menu system)
  * @property {string} [icon] - URL to an icon
- * @property {boolean} [iconAdaptive] - If true, the icon adapts to the active theme (e.g. inverted in dark mode via the host's `icon-adaptive` styling).
+ * @property {boolean} [iconAdaptive] - Whether the icon adapts to the active theme (monochrome icons are inverted in dark mode via the host's `icon-adaptive` styling). Default `true`; set `false` for coloured/branded icons that must stay unchanged.
  * @property {string | null} [url] - Relative URL to use for routes
  * @property {string} [text] - Display text (ignored for separator items)
  * @property {string | null} [parent] - Parent menu item (optional). If not set, the item will be added to the top level menu.
@@ -40,10 +51,17 @@
  */
 
 /**
+ * What `mount` receives: the setup context plus the route's hash parameters as
+ * strings (`#my-module/key:value` → `props.key === "value"`). A parameter that
+ * is not in the URL is `undefined`.
+ * @typedef {NeherApp3SetupContext & { [param: string]: string | undefined }} NeherApp3MountProps
+ */
+
+/**
  * @typedef {Object} NeherApp3Module
  * @property {string} moduleName
  * @property {(context: NeherApp3SetupContext) => void | Promise<void>} [setup]
- * @property {(node: HTMLElement, props: NeherApp3SetupContext) => void | function} [mount] - Must return an optional unmount function. `node` sits inside the shell's content area, a size container named `content` whose width depends on the navigation layout (sidebars vs. menu flyout), not only on the viewport: lay out with container queries (`@container content (…)`, Tailwind `@3xl/content:`), not viewport breakpoints.
+ * @property {(node: HTMLElement, props: NeherApp3MountProps) => void | function} [mount] - Must return an optional unmount function. `props` is the setup context plus the route's hash parameters (see `NeherApp3MountProps`). `node` sits inside the shell's content area, a size container named `content` whose width depends on the navigation layout (sidebars vs. menu flyout), not only on the viewport: lay out with container queries (`@container content (…)`, Tailwind `@3xl/content:`), not viewport breakpoints.
  * @property {string} [embedUrl]
  * @property {string[]} [extraCSS]
  * @property {boolean} [useShadowDom] - If true, the app will be embedded in a shadow DOM. This is required for CSS isolation. The module then ships all of its styles itself — including **both** themes (`neher`, `neher-dark`), because the shell mirrors `data-theme` onto the module's root inside the shadow root (see `NeherApp3Theme`). Shell-wide base rules do not reach the shadow root either — e.g. the `option` colours that keep native `<select>` popups readable in dark mode.
@@ -51,8 +69,8 @@
 
 /**
  * @typedef {Object} NeherApp3ApiCollection
- * @property {import("./idasFluentApi.js").IDASFluentApi} [idas]
- * @property {import("./fluentApi.js").FluentApi} [hostingEnvironment]
+ * @property {IDASFluentApi} [idas]
+ * @property {FluentApi} [hostingEnvironment]
  */
 
 /**
