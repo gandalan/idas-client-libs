@@ -322,6 +322,20 @@ There are two public surfaces:
 
 Do not hand-edit generated root blocks unless you are changing the generator itself.
 
+Descriptions travel into `index.d.ts`: the free text of a `@typedef`/`@callback`
+block, every `@property` description (including continuation lines) and the
+leading text of a business API method's JSDoc are emitted as `/** … */`
+comments, so consumers see them in IntelliSense. Write them for the consumer.
+
+### NeherApp3 host API types
+
+`api/neherApp3Types.js` (`NeherApp3`, `NeherApp3Module`, messaging, i18n,
+settings, profile, theme) is **not maintained here**. The master lives in
+NeherApp3 (`frontend/src/neherApp3Types.js`, next to the implementation); its
+`SyncWeblibsTypes` pipeline stage copies it here and opens a PR (branch
+`neherapp3/host-api-types`), locally `npm run sync:weblibs-types` in
+`NeherApp3/frontend`. Edits made here are overwritten by the next sync.
+
 
 ## What to Prefer
 
