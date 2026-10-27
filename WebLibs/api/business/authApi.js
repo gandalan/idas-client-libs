@@ -16,7 +16,8 @@ export function createAuthApi(fluentApi) {
          * @param {LoginDTO} dto
          * @returns {Promise<string>}
          */
-        authenticate: (dto) => fluentApi.post("LoginJwt/Authenticate", dto),
+        // anonymous endpoint (login): must work without a session
+        authenticate: (dto) => fluentApi.post("LoginJwt/Authenticate", dto, false),
 
         /**
          * Authenticate for function
@@ -31,7 +32,8 @@ export function createAuthApi(fluentApi) {
          * @param {string} token
          * @returns {Promise<string>}
          */
-        refreshToken: (token) => fluentApi.put("LoginJwt/Refresh", token),
+        // anonymous endpoint: the refresh token in the body is the credential
+        refreshToken: (token) => fluentApi.put("LoginJwt/Refresh", token, false),
 
         /**
          * Create service token

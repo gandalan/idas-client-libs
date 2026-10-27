@@ -22,7 +22,9 @@ import { AUTH_EXPIRED_EVENT, AUTH_REFRESHED_EVENT, dispatchAuthEvent } from "./a
  * @property {(url?: string) => FluentAuthManager} useBaseUrl - Sets the base URL for authentication and returns the FluentApi object.
  * @property {(jwtToken?: string|null) => FluentAuthManager} useToken - Sets the JWT token and returns the FluentApi object. Only intended for usage with Service Tokens.
  * @property {(storedRefreshToken?: string|null) => FluentAuthManager} useRefreshToken - Sets the refresh token and returns the FluentApi object.
- * @property {() => Promise<void>} ensureAuthenticated - Ensures the user is authenticated before making a request.
+ * @property {() => Promise<void>} ensureAuthenticated - Tries to provide a valid JWT (refresh if needed); never throws, a failed refresh is only logged. Requests use getAuthorizationToken instead.
+ * @property {() => Promise<string>} [getAuthorizationToken] - Returns the JWT to send with an authenticated request (refreshed if needed). Throws an AuthError instead of ever returning without a usable token.
+ * @property {(token: string) => void} [invalidateToken] - Marks the JWT a request was sent with as rejected by the server (401) without discarding it; the next request refreshes first.
  * @property {() => Promise<void>} authenticate - Authenticates the user with username and password, or refreshes the token.
  * @property {(force?: boolean) => Promise<void>} _doAuthenticate - Performs the actual token refresh (single-flight worker behind authenticate).
  * @property {Promise<void>|null} _authenticatePromise - In-flight authentication promise shared by concurrent callers (read-only).
@@ -77,6 +79,8 @@ export function createAuthManager() {
         sessionStarted: false,
         /** identity (user + mandant) of the current session, null if unknown */
         identity: /** @type {string|null} */ (null),
+        /** JWT the server answered with 401 (see invalidateToken); refreshed before the next request */
+        invalidatedToken: "",
         /** refresh tokens the server rejected; never sent again */
         rejectedRefreshTokens: /** @type {Set<string>} */ (new Set()),
         /** last value of localStorage["idas-refresh-token"] written or adopted */
@@ -92,6 +96,15 @@ export function createAuthManager() {
         refreshDueWhileHidden: false,
         browserListenersInstalled: false,
     };
+
+    /**
+     * true if the current JWT can be used without a refresh: set, not within
+     * the JWT_SAFE_RENEWAL window and not rejected by the server (401)
+     * @returns {boolean}
+     */
+    const hasValidToken = () => Boolean(session.token)
+        && session.token !== internal.invalidatedToken
+        && isTokenValid(session.token);
 
     /** @type {FluentAuthManager} */
     const self = {
@@ -161,7 +174,7 @@ export function createAuthManager() {
          * @private
          */
         async ensureAuthenticated() {
-            if (session.token && isTokenValid(session.token)) {
+            if (hasValidToken()) {
                 return;
             }
 
@@ -170,6 +183,72 @@ export function createAuthManager() {
             } catch (e) {
                 // no redirect to login, because we're in a request
                 console.error("not authenticated", e);
+            }
+        },
+
+        /**
+         * Returns the JWT for an authenticated request, refreshing it first if
+         * needed. Never resolves without a token — a request with `auth=true`
+         * must not go out without an Authorization header:
+         *
+         * - session ended for good (refresh rejected, no refresh token,
+         *   identity changed) or no session at all: throws an AuthError with
+         *   `sessionEnded` (AUTH_EXPIRED_EVENT was dispatched for a running session)
+         * - transient refresh failure (network, timeout, 5xx, 408, 429): the
+         *   current JWT is still returned if it has not really expired yet
+         *   (only within the JWT_SAFE_RENEWAL window) and the server has not
+         *   rejected it; otherwise an AuthError with `code: "refresh-failed"`
+         *
+         * @async
+         * @throws {AuthError}
+         * @return {Promise<string>}
+         */
+        async getAuthorizationToken() {
+            /** @type {any} */
+            let failure = null;
+            try {
+                await this.authenticate();
+            } catch (e) {
+                failure = e;
+            }
+
+            if (hasValidToken()) {
+                return session.token;
+            }
+
+            if (!failure?.sessionEnded && session.token && session.token !== internal.invalidatedToken && !isTokenExpired(session.token)) {
+                if (failure) {
+                    console.warn("token refresh failed, using the still valid JWT", failure);
+                }
+                return session.token;
+            }
+
+            if (failure instanceof AuthError) {
+                throw failure;
+            }
+
+            if (failure) {
+                // network error, timeout (AbortError) etc. of the refresh request
+                throw authError("refresh-failed", false, `not authenticated: token refresh failed (${failure?.message ?? failure})`, undefined, failure);
+            }
+
+            // refresh "succeeded" without leaving a usable JWT (should not happen)
+            throw authError("no-token", false);
+        },
+
+        /**
+         * Marks a JWT as rejected by the server (the request was answered with
+         * 401). Unlike clearing `token` the session is kept: the next
+         * getAuthorizationToken refreshes first and never sends the rejected
+         * JWT again — and never sends a request without one. Ignored if the
+         * JWT was replaced meanwhile (e.g. by a parallel refresh).
+         *
+         * @param {string} token - the JWT the failed request was sent with
+         * @return {void}
+         */
+        invalidateToken(token) {
+            if (token && session.token === token) {
+                internal.invalidatedToken = token;
             }
         },
 
@@ -188,7 +267,7 @@ export function createAuthManager() {
          * @return {Promise<void>}
          */
         async authenticate() { // benutzt bei existierendem JWT oder RefreshToken, wenn keins vorhanden ERROR
-            if (session.token && isTokenValid(session.token)) {
+            if (hasValidToken()) {
                 return;
             }
 
@@ -237,7 +316,7 @@ export function createAuthManager() {
          * @return {Promise<void>}
          */
         async _doAuthenticate(force = false) {
-            if (!force && session.token && isTokenValid(session.token)) {
+            if (!force && hasValidToken()) {
                 return;
             }
 
@@ -248,7 +327,16 @@ export function createAuthManager() {
             }
 
             if (!this._currentRefreshToken()) {
-                const sessionEnded = Boolean(session.token) || internal.sessionStarted;
+                // A JWT without refresh token (service token via useToken) stays
+                // usable until it really expired — also within the
+                // JWT_SAFE_RENEWAL window, the server still accepts it there.
+                if (session.token && session.token !== internal.invalidatedToken && !isTokenExpired(session.token)) {
+                    throw authError("no-refresh-token", false);
+                }
+
+                // internal.expired: the session already ended (e.g. useToken
+                // session without login) — later requests report that as well
+                const sessionEnded = Boolean(session.token) || internal.sessionStarted || internal.expired;
                 if (sessionEnded) {
                     this._expire("no-refresh-token");
                 }
@@ -278,7 +366,7 @@ export function createAuthManager() {
          * @return {Promise<void>}
          */
         async _refreshLocked(force) {
-            if (!force && session.token && isTokenValid(session.token)) {
+            if (!force && hasValidToken()) {
                 return;
             }
 
@@ -473,6 +561,7 @@ export function createAuthManager() {
                 writeStoredRefreshToken(session.refreshToken);
                 internal.storedRefreshTokenSeen = session.refreshToken;
                 internal.identity = getIdentity(token);
+                internal.invalidatedToken = "";
                 internal.expired = false;
                 internal.sessionStarted = true;
                 internal.rejectedRefreshTokens.clear();
@@ -787,20 +876,50 @@ function isRejectionStatus(status) {
 }
 
 /**
+ * Error thrown when an authenticated request (`auth=true`) cannot get a
+ * usable JWT. The request was NOT sent.
+ *
+ * - `code`: "refresh-rejected", "no-refresh-token", "identity-changed"
+ *   (session ended, or no session at all if `sessionEnded` is false),
+ *   "refresh-failed" (transient: network, timeout, 5xx, 408, 429 — try
+ *   again later) or "no-token" (auth manager without getAuthorizationToken
+ *   left no token)
+ * - `sessionEnded`: true if a running session ended for good; the user has
+ *   to log in again (AUTH_EXPIRED_EVENT was dispatched)
+ * - `status`: 401 if not authenticated, for "refresh-failed" the HTTP status
+ *   of the refresh request (undefined for network errors) — so code that
+ *   checks `err.status === 401` like for a RestError keeps working
+ */
+export class AuthError extends Error {
+    /**
+     * @param {string} code
+     * @param {boolean} sessionEnded
+     * @param {string} [message="not authenticated"]
+     * @param {number} [status]
+     * @param {unknown} [cause]
+     */
+    constructor(code, sessionEnded, message = "not authenticated", status = undefined, cause = undefined) {
+        super(message, cause === undefined ? undefined : { cause });
+        this.name = "AuthError";
+        /** @type {string} */
+        this.code = code;
+        /** @type {boolean} */
+        this.sessionEnded = sessionEnded;
+        /** @type {number|undefined} */
+        this.status = status ?? (code === "refresh-failed" ? undefined : 401);
+    }
+}
+
+/**
  * @param {string} code - machine readable reason
  * @param {boolean} sessionEnded - true if a running session ended (AUTH_EXPIRED_EVENT is due)
  * @param {string} [message="not authenticated"]
  * @param {number} [status]
- * @returns {Error & {code: string, sessionEnded: boolean, status?: number}}
+ * @param {unknown} [cause]
+ * @returns {AuthError}
  */
-function authError(code, sessionEnded, message = "not authenticated", status = undefined) {
-    const error = /** @type {Error & {code: string, sessionEnded: boolean, status?: number}} */ (new Error(message));
-    error.code = code;
-    error.sessionEnded = sessionEnded;
-    if (status !== undefined) {
-        error.status = status;
-    }
-    return error;
+function authError(code, sessionEnded, message = "not authenticated", status = undefined, cause = undefined) {
+    return new AuthError(code, sessionEnded, message, status, cause);
 }
 
 /**
@@ -915,6 +1034,24 @@ export function isTokenValid(token) {
     }
     catch {
         return false;
+    }
+}
+
+/**
+ * check if the token really expired (`exp` passed by the client clock, no
+ * JWT_SAFE_RENEWAL buffer); an undecodable token counts as expired
+ *
+ * @export
+ * @param {string} token
+ * @returns {boolean}
+ */
+export function isTokenExpired(token) {
+    try {
+        const decoded = jwtDecode(token);
+        return !decoded?.exp || decoded.exp <= Date.now() / 1000;
+    }
+    catch {
+        return true;
     }
 }
 
