@@ -3088,7 +3088,7 @@ export type NeherApp3Settings = {
 export type NeherApp3SettingsHandle = {
     /** The bound namespace (lower case). */
     namespace: string;
-    /** Value of a setting, or `fallback`. Reactive. */
+    /** Value of a setting, or `fallback`. Reactive in the shell's Svelte runtime only; a module with its own Svelte reads once and keeps the value in `$state`. */
     get: (key: string, fallback?: any) => any;
     /** Store a value: applied locally at once, sent to the server coalesced. */
     set: (key: string, value: unknown) => void;
