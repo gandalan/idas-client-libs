@@ -236,7 +236,7 @@
  * `neherapp3.settings.register("my-module")` returns.
  * @typedef {Object} NeherApp3SettingsHandle
  * @property {string} namespace - The bound namespace (lower case).
- * @property {(key: string, fallback?: any) => any} get - Value of a setting, or `fallback`. Reactive.
+ * @property {(key: string, fallback?: any) => any} get - Value of a setting, or `fallback`. Reactive in the shell's Svelte runtime only; a module with its own Svelte reads once and keeps the value in `$state`.
  * @property {(key: string, value: unknown) => void} set - Store a value: applied locally at once, sent to the server coalesced.
  * @property {(key: string) => void} remove - Drop a setting; the user is back to its default.
  * @property {() => Record<string, unknown>} all - All settings of this namespace.
