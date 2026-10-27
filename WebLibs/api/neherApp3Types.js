@@ -1,14 +1,17 @@
-// Synchronisiert aus NeherApp3 (frontend/src/neherApp3Types.js) — hier nicht bearbeiten,
-// Änderungen gehen dort hinein und kommen per `npm run sync:weblibs-types` hierher.
+// Kopie aus NeherApp3 (frontend/src/neherApp3Types.js) — hier nicht bearbeiten.
+// Änderungen dort; übernommen per NeherApp3-Pipeline (Stage SyncWeblibsTypes)
+// bzw. lokal mit dem NeherApp3-Skript `npm run sync:weblibs-types` in NeherApp3/frontend.
 
 /**
- * NeherApp3 root type definitions — the master reference for the shell's host
- * API (`globalThis.neherapp3`). Maintained here, next to the implementation;
- * `npm run sync:weblibs-types` (and the `SyncWeblibsTypes` pipeline stage)
- * copies this file into `@gandalan/weblibs` as `api/neherApp3Types.js`, where
- * `scripts/generate-dts.mjs` emits the typedefs into `index.d.ts`.
+ * NeherApp3 host API types (`globalThis.neherapp3`).
  *
- * Types from the weblibs themselves are referenced only through the aliases
+ * Master: NeherApp3, `frontend/src/neherApp3Types.js`, next to the
+ * implementation. `@gandalan/weblibs` carries a copy as `api/neherApp3Types.js`,
+ * kept in sync by NeherApp3's `SyncWeblibsTypes` pipeline stage (locally: the
+ * NeherApp3 script `npm run sync:weblibs-types` in `NeherApp3/frontend`); the
+ * weblibs' `scripts/generate-dts.mjs` emits the typedefs into `index.d.ts`.
+ *
+ * Types of the weblibs themselves are referenced only through the aliases
  * below; the sync rewrites them to the weblibs-internal paths.
  */
 
@@ -48,10 +51,17 @@
  */
 
 /**
+ * What `mount` receives: the setup context plus the route's hash parameters as
+ * strings (`#my-module/key:value` → `props.key === "value"`). A parameter that
+ * is not in the URL is `undefined`.
+ * @typedef {NeherApp3SetupContext & { [param: string]: string | undefined }} NeherApp3MountProps
+ */
+
+/**
  * @typedef {Object} NeherApp3Module
  * @property {string} moduleName
  * @property {(context: NeherApp3SetupContext) => void | Promise<void>} [setup]
- * @property {(node: HTMLElement, props: NeherApp3SetupContext) => void | function} [mount] - Must return an optional unmount function. `props` is the setup context plus the route's hash parameters as strings (`#my-module/key:value` → `props.key === "value"`). `node` sits inside the shell's content area, a size container named `content` whose width depends on the navigation layout (sidebars vs. menu flyout), not only on the viewport: lay out with container queries (`@container content (…)`, Tailwind `@3xl/content:`), not viewport breakpoints.
+ * @property {(node: HTMLElement, props: NeherApp3MountProps) => void | function} [mount] - Must return an optional unmount function. `props` is the setup context plus the route's hash parameters (see `NeherApp3MountProps`). `node` sits inside the shell's content area, a size container named `content` whose width depends on the navigation layout (sidebars vs. menu flyout), not only on the viewport: lay out with container queries (`@container content (…)`, Tailwind `@3xl/content:`), not viewport breakpoints.
  * @property {string} [embedUrl]
  * @property {string[]} [extraCSS]
  * @property {boolean} [useShadowDom] - If true, the app will be embedded in a shadow DOM. This is required for CSS isolation. The module then ships all of its styles itself — including **both** themes (`neher`, `neher-dark`), because the shell mirrors `data-theme` onto the module's root inside the shadow root (see `NeherApp3Theme`). Shell-wide base rules do not reach the shadow root either — e.g. the `option` colours that keep native `<select>` popups readable in dark mode.

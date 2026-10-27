@@ -2943,13 +2943,20 @@ export type NeherApp3Messages = {
 export type NeherApp3Module = {
     moduleName: string;
     setup?: (context: NeherApp3SetupContext) => void | Promise<void>;
-    /** Must return an optional unmount function. `props` is the setup context plus the route's hash parameters as strings (`#my-module/key:value` → `props.key === "value"`). `node` sits inside the shell's content area, a size container named `content` whose width depends on the navigation layout (sidebars vs. menu flyout), not only on the viewport: lay out with container queries (`@container content (…)`, Tailwind `@3xl/content:`), not viewport breakpoints. */
-    mount?: (node: HTMLElement, props: NeherApp3SetupContext) => void | Function;
+    /** Must return an optional unmount function. `props` is the setup context plus the route's hash parameters (see `NeherApp3MountProps`). `node` sits inside the shell's content area, a size container named `content` whose width depends on the navigation layout (sidebars vs. menu flyout), not only on the viewport: lay out with container queries (`@container content (…)`, Tailwind `@3xl/content:`), not viewport breakpoints. */
+    mount?: (node: HTMLElement, props: NeherApp3MountProps) => void | Function;
     embedUrl?: string;
     extraCSS?: string[];
     /** If true, the app will be embedded in a shadow DOM. This is required for CSS isolation. The module then ships all of its styles itself — including **both** themes (`neher`, `neher-dark`), because the shell mirrors `data-theme` onto the module's root inside the shadow root (see `NeherApp3Theme`). Shell-wide base rules do not reach the shadow root either — e.g. the `option` colours that keep native `<select>` popups readable in dark mode. */
     useShadowDom?: boolean;
 };
+
+/**
+ * What `mount` receives: the setup context plus the route's hash parameters as
+ * strings (`#my-module/key:value` → `props.key === "value"`). A parameter that
+ * is not in the URL is `undefined`.
+ */
+export type NeherApp3MountProps = NeherApp3SetupContext & { [param: string]: string | undefined };
 
 export type NeherApp3NotifyType = 0 | 1 | 2;
 
