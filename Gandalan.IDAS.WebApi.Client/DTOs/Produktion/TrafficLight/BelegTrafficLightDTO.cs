@@ -17,4 +17,9 @@ public class BelegTrafficLightDTO
     public List<TrafficLightReasonDTO> Reasons { get; set; } = [];
 
     public List<PositionTrafficLightDTO> Positionen { get; set; } = [];
+
+    /// <summary>
+    /// Nur am Zielbeleg der Löschampel: ob das Löschen mit „Vorgänger entsperren“ etwas entsperren würde.
+    /// </summary>
+    public bool KannVorgaengerEntsperren { get; set; }
 }
