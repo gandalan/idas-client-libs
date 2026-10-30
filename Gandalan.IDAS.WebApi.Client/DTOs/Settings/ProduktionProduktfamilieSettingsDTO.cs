@@ -13,4 +13,5 @@ public class ProduktionProduktfamilieSettingsDTO
     public bool FederkraftErhoeht { get; set; }
     public bool IndividuelleSeitenarretierung { get; set; }
     public int? HoeheFuerSeitenarretierung { get; set; }
+    public int? WinkellaschenKorrekturMass { get; set; }
 }
