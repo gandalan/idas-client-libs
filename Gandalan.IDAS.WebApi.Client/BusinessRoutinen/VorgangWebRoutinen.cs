@@ -90,4 +90,11 @@ public class VorgangWebRoutinen : WebRoutinenBase
 
     public async Task<VorgangDTO> GetVorgangForFunctionAsync(Guid vorgangGuid, long mandantId)
         => await GetAsync<VorgangDTO>($"GetVorgangForFunction?id={vorgangGuid}&mandantID={mandantId}");
+
+    /// <summary>
+    /// Übernimmt die Daten der Position in die angegebenen Vorgänger und Nachfolger (Positionsampel PositionChange zeigt sie)
+    /// und liefert den gespeicherten Vorgang. 409 bei ausgeschalteter Einstellung, roter Ampel oder Ziel außerhalb der Kette.
+    /// </summary>
+    public async Task<VorgangDTO> PositionDatenUebernehmenAsync(Guid vorgangGuid, Guid belegPositionGuid, List<Guid> zielBelegPositionGuids)
+        => await PostAsync<VorgangDTO>($"Vorgang/PositionDatenUebernehmen/{vorgangGuid}/{belegPositionGuid}", zielBelegPositionGuids);
 }
