@@ -386,6 +386,7 @@
  * @property {string} Name - Zulässige Werte: "Saldo", "StandardSaldo", "Warenwert", "Mehrwertsteuer", "Gesamtbetrag", "Endbetrag", "Farbe"
  * @property {string} SaldenStatus - Zulässige Werte: "Unbekannt", "ManuelleEingabe", "AutoEingabe", "AufAnfrage"
  * @property {boolean} IstInaktiv
+ * @property {boolean} IstManuellUebersteuert - Die Salde wurde im Vorgang trotz Transportkostenbefreiung manuell aktiviert und wird von der automatischen Befreiungsregel nicht mehr verändert.
  * @property {string} Tag - In diesem Tag können belibige interne Informationen als String gespeichert werden.
  * @property {number} Rabatt - Rabatt, der in der Salde verrechnet wurde
  * @property {string} TemplateText - TemplateText mit z.B. Platzhalter aus der Standardsalde der benötigt wird um beim ändern einer Salde den Text neu zu generieren.

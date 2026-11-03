@@ -1,7 +1,18 @@
+// Kopie aus NeherApp3 (frontend/src/neherApp3Types.js) — hier nicht bearbeiten.
+// Änderungen dort; übernommen per NeherApp3-Pipeline (Stage SyncWeblibsTypes)
+// bzw. lokal mit dem NeherApp3-Skript `npm run sync:weblibs-types` in NeherApp3/frontend.
+
 /**
- * NeherApp3 root type definitions — the master reference for the shell's host
- * API. Maintained by hand; `scripts/generate-dts.mjs` reads these typedefs and
- * emits them into `index.d.ts`.
+ * NeherApp3 host API types (`globalThis.neherapp3`).
+ *
+ * Master: NeherApp3, `frontend/src/neherApp3Types.js`, next to the
+ * implementation. `@gandalan/weblibs` carries a copy as `api/neherApp3Types.js`,
+ * kept in sync by NeherApp3's `SyncWeblibsTypes` pipeline stage (locally: the
+ * NeherApp3 script `npm run sync:weblibs-types` in `NeherApp3/frontend`); the
+ * weblibs' `scripts/generate-dts.mjs` emits the typedefs into `index.d.ts`.
+ *
+ * Types of the weblibs themselves are referenced only through the aliases
+ * below; the sync rewrites them to the weblibs-internal paths.
  */
 
 /** @typedef {import("./fluentApi.js").FluentApi} FluentApi */
@@ -13,49 +24,10 @@
  */
 
 /**
- * @typedef {Object} ArtikelstammEintrag
- * @property {string} [KatalogArtikelGuid]
- * @property {string} [KatalogNummer]
- * @property {string} [Katalognummer]
- * @property {string} [Nummer]
- */
-
-/**
- * @typedef {Object} Variante
- * @property {string} [VarianteGuid]
- * @property {string} [Name]
- * @property {string} [Kuerzel]
- */
-
-/**
- * @typedef {Object} Werteliste
- * @property {string} [WerteListeGuid]
- * @property {string} [Name]
- */
-
-/**
- * @typedef {Object} NeherApp3ArtikelstammCache
- * @property {() => Promise<ArtikelstammEintrag[]>} getArtikelStamm
- * @property {() => Promise<Object[]>} getWarenGruppen
- * @property {(guid: string) => Promise<ArtikelstammEintrag | undefined>} getArtikelByGuid
- * @property {(nummer: string) => Promise<ArtikelstammEintrag | undefined>} getArtikelByKatalognummer
- */
-
-/**
- * @typedef {Object} NeherApp3ErfassungCache
- * @property {() => Promise<Variante[]>} getVarianten
- * @property {(variantenNameOderKuerzel: string) => Promise<Variante | undefined>} getVariante
- * @property {() => Promise<Werteliste[]>} getWertelisten
- * @property {(name: string) => Promise<Werteliste | undefined>} getWerteliste
- * @property {() => Promise<Object[]>} getScripts
- * @property {(v: Variante) => void} createUIMachine
- */
-
-/**
  * @typedef {Object} NeherApp3Props
- * @property {import("./fluentApi.js").FluentApi} api
- * @property {import("./fluentAuthManager.js").FluentAuthManager} [authManager]
- * @property {import("./idasFluentApi.js").IDASFluentApi} idas
+ * @property {FluentApi} api
+ * @property {FluentAuthManager} [authManager]
+ * @property {IDASFluentApi} idas
  * @property {string} [mainCssPath]
  */
 
@@ -64,12 +36,13 @@
  * @property {string} [id] - Unique identifier for the menu item (auto-generated if not provided)
  * @property {boolean} [selected] - Indicates if the menu item is currently selected (managed by the menu system)
  * @property {string} [icon] - URL to an icon
- * @property {boolean} [iconAdaptive] - If true, the icon adapts to the active theme (e.g. inverted in dark mode via the host's `icon-adaptive` styling).
+ * @property {boolean} [iconAdaptive] - Whether the icon adapts to the active theme (monochrome icons are inverted in dark mode via the host's `icon-adaptive` styling). Default `true`; set `false` for coloured/branded icons that must stay unchanged.
  * @property {string | null} [url] - Relative URL to use for routes
  * @property {string} [text] - Display text (ignored for separator items)
  * @property {string | null} [parent] - Parent menu item (optional). If not set, the item will be added to the top level menu.
  * @property {boolean} [hidden] - If true, the menu item will not be displayed
  * @property {boolean} [separator] - If true, renders as a non-interactive divider between items (text/icon/url are ignored). Use `parent` to place the separator inside a sub-menu.
+ * @property {boolean} [heading] - If true, renders `text` as a non-interactive group heading inside a sub-menu (ALL CAPS, bold, extra space above; icon/url are ignored). Requires `parent`; ignored on the top level. `text` is translated like any other entry.
  * @property {string} [i18nNamespace] - Catalog in which `text` is translated. Set automatically to the registering module's name; only pass it explicitly for items added outside `setup`. See `NeherApp3I18n`.
  */
 
@@ -78,25 +51,26 @@
  */
 
 /**
+ * What `mount` receives: the setup context plus the route's hash parameters as
+ * strings (`#my-module/key:value` → `props.key === "value"`). A parameter that
+ * is not in the URL is `undefined`.
+ * @typedef {NeherApp3SetupContext & { [param: string]: string | undefined }} NeherApp3MountProps
+ */
+
+/**
  * @typedef {Object} NeherApp3Module
  * @property {string} moduleName
  * @property {(context: NeherApp3SetupContext) => void | Promise<void>} [setup]
- * @property {(node: HTMLElement, props: NeherApp3SetupContext) => void | function} [mount] - Must return an optional unmount function
+ * @property {(node: HTMLElement, props: NeherApp3MountProps) => void | function} [mount] - Must return an optional unmount function. `props` is the setup context plus the route's hash parameters (see `NeherApp3MountProps`). `node` sits inside the shell's content area, a size container named `content` whose width depends on the navigation layout (sidebars vs. menu flyout), not only on the viewport: lay out with container queries (`@container content (…)`, Tailwind `@3xl/content:`), not viewport breakpoints.
  * @property {string} [embedUrl]
  * @property {string[]} [extraCSS]
- * @property {boolean} [useShadowDom] - If true, the app will be embedded in a shadow DOM. This is required for CSS isolation.
+ * @property {boolean} [useShadowDom] - If true, the app will be embedded in a shadow DOM. This is required for CSS isolation. The module then ships all of its styles itself — including **both** themes (`neher`, `neher-dark`), because the shell mirrors `data-theme` onto the module's root inside the shadow root (see `NeherApp3Theme`). Shell-wide base rules do not reach the shadow root either — e.g. the `option` colours that keep native `<select>` popups readable in dark mode.
  */
 
 /**
  * @typedef {Object} NeherApp3ApiCollection
- * @property {import("./idasFluentApi.js").IDASFluentApi} [idas]
- * @property {import("./fluentApi.js").FluentApi} [hostingEnvironment]
- */
-
-/**
- * @typedef {Object} NeherApp3CacheCollection
- * @property {NeherApp3ArtikelstammCache} artikelstamm
- * @property {NeherApp3ErfassungCache} erfassung
+ * @property {IDASFluentApi} [idas]
+ * @property {FluentApi} [hostingEnvironment]
  */
 
 /**
@@ -104,9 +78,9 @@
  * @typedef {Object} NeherMessage
  * @property {string} id - Unique message id (`crypto.randomUUID`).
  * @property {string} type - Message kind, e.g. `"artikel.selected"`.
- * @property {string | null} to - Target module name (directed) or `null` (broadcast).
- * @property {string | null} from - Sender module name (stamped by the endpoint) or `null`.
- * @property {any} payload - Arbitrary payload.
+ * @property {string | null} to - Target: module name, a server address (`user:…`, `app:…`, `bot:…`) or `null` (broadcast).
+ * @property {string | null} from - Sender, always stamped: the module name locally; from the server `user:<guid>/app:<module>`, `bot:<name>`, `service/app:<module>` (an app backend sending with an IDAS ServiceToken) or `system`.
+ * @property {any} payload - JSON-serializable payload.
  * @property {number} ts - Timestamp (`Date.now`).
  */
 
@@ -126,13 +100,7 @@
 /**
  * Options for `send`/`broadcast`.
  * @typedef {Object} SendOptions
- * @property {string} [from] - Sender module name (bus-level `send`/`broadcast` only; set automatically via an endpoint).
  * @property {boolean} [retain] - Keep this `(to, type)` as a last value; subscribers that register later receive it immediately. Default `false`.
- * @property {boolean} [requireRecipient] - If nobody received it, call `onUndeliverable` instead of silently dropping. Default `false`.
- * @property {boolean} [deliverWhenAvailable] - If nobody is listening, buffer the directed message and deliver it when the target registers. Default `false`.
- * @property {boolean} [echo] - For broadcast: also deliver to the sender itself. Default `false`.
- * @property {number} [ttlMs] - Lifetime for buffered messages. Default `30000`.
- * @property {(message: NeherMessage) => void} [onUndeliverable] - Callback invoked with the envelope when `requireRecipient` and no recipient.
  */
 
 /**
@@ -140,7 +108,6 @@
  * @typedef {Object} Delivery
  * @property {boolean} delivered - At least one recipient was reached.
  * @property {number} recipients - Number of distinct modules delivered to.
- * @property {boolean} queued - Buffered for a later recipient.
  */
 
 /**
@@ -149,8 +116,8 @@
  * @typedef {Object} Endpoint
  * @property {string} name - The module name of this endpoint.
  * @property {(type: TypePattern, handler: MessageHandler) => (() => void)} on - Subscribe; returns an unsubscribe function.
- * @property {(to: string, type: string, payload?: any, options?: SendOptions) => Delivery} send - Directed message (`from` is stamped automatically).
- * @property {(type: string, payload?: any, options?: SendOptions) => Delivery} broadcast - Broadcast (`from` is stamped automatically).
+ * @property {(to: string, type: string, payload?: any, options?: SendOptions) => Delivery} send - Directed message (`from` is stamped automatically). `to` is a module name, or `user:…`/`app:…`/`bot:…` for delivery via the server (`delivered` then means "handed to the server"; replies arrive as local broadcasts).
+ * @property {(type: string, payload?: any, options?: SendOptions) => Delivery} broadcast - Broadcast to all other endpoints (`from` is stamped automatically; the sender does not receive its own broadcast).
  * @property {() => void} dispose - Remove all subscriptions created through this handle.
  */
 
@@ -163,12 +130,8 @@
  * `{ locale: string }` (sent with `retain: true`, so late subscribers receive
  * the current language as well).
  * @typedef {Object} NeherApp3Messages
- * @property {(moduleName: string) => Endpoint} register - Register a module as a reachable endpoint.
- * @property {(to: string, type: string, payload?: any, options?: SendOptions) => Delivery} send - Directed message (`from` via `options.from`).
- * @property {(type: string, payload?: any, options?: SendOptions) => Delivery} broadcast - Broadcast to all subscribers (`from` via `options.from`).
+ * @property {(moduleName: string) => Endpoint} register - Register a module as an endpoint; all sending goes through it.
  * @property {(moduleName: string) => boolean} isReachable - Does the module have at least one live handler?
- * @property {(moduleName: string) => boolean} isKnown - Is the module registered (loaded via `addApp`)?
- * @property {string[]} reachable - Reactive list of all currently reachable module names.
  */
 
 /**
@@ -269,6 +232,129 @@
  */
 
 /**
+ * Settings handle of a single namespace — what
+ * `neherapp3.settings.register("my-module")` returns.
+ * @typedef {Object} NeherApp3SettingsHandle
+ * @property {string} namespace - The bound namespace (lower case).
+ * @property {(key: string, fallback?: any) => any} get - Value of a setting, or `fallback`. Reactive in the shell's Svelte runtime only; a module with its own Svelte reads once and keeps the value in `$state`.
+ * @property {(key: string, value: unknown) => void} set - Store a value: applied locally at once, sent to the server coalesced.
+ * @property {(key: string) => void} remove - Drop a setting; the user is back to its default.
+ * @property {() => Record<string, unknown>} all - All settings of this namespace.
+ * @property {() => Promise<void>} flush - Write pending changes now. Call before a reload.
+ */
+
+/**
+ * User settings, exposed at `neherapp3.settings`.
+ *
+ * The store is the **database**, not `localStorage`: inside the i3 WebView
+ * `localStorage` is ephemeral and would lose every setting on each start. A
+ * setting is addressed by namespace and key, both lower case; `shell` belongs
+ * to the framework, every module uses its own namespace — the same one it uses
+ * for `i18n.register`. Values are arbitrary JSON.
+ *
+ * Reads are reactive. Writes are applied locally at once and sent to the
+ * server after a short coalescing delay, so call `flush()` before a reload.
+ * @typedef {Object} NeherApp3Settings
+ * @property {string} scope - Namespace of the framework (`"shell"`).
+ * @property {boolean} loaded - `true` once the values from the database have arrived.
+ * @property {(namespace: string) => NeherApp3SettingsHandle} register - Settings handle bound to a module's namespace.
+ * @property {(scope: string, key: string, fallback?: any) => any} get - Value of a setting, or `fallback`. Reactive.
+ * @property {(scope: string, key: string, value: unknown) => void} set - Store a value.
+ * @property {(scope: string, key: string) => void} remove - Drop a setting.
+ * @property {(scope: string) => Record<string, unknown>} all - All settings of one namespace.
+ * @property {() => Promise<void>} flush - Write pending changes now. Call before a reload.
+ */
+
+/**
+ * The profile of *another* user, as returned by `profile.byEmail` and friends.
+ *
+ * Identity comes from the platform's user table — whoever has signed in here at
+ * least once; the remaining fields are filled in only where that user curated
+ * them.
+ * @typedef {Object} NeherApp3PublicProfile
+ * @property {string} userId - The user's `benutzerGuid`.
+ * @property {string} userName - Login name.
+ * @property {string} email - E-mail address.
+ * @property {string | null} displayName - Self-chosen name shown in the interface.
+ * @property {string | null} initials - Self-chosen initials, up to 3 characters.
+ * @property {string | null} jobTitle - Job title / function.
+ * @property {string | null} department - Department.
+ * @property {string | null} location - Site / plant.
+ * @property {string | null} mobile - Mobile number.
+ * @property {string | null} avatar - The avatar as a data URL, or `null` when none is stored.
+ * @property {string | null} avatarUpdatedAt - When the avatar was last uploaded.
+ */
+
+/**
+ * The signed-in user, exposed at `neherapp3.profile`.
+ *
+ * Two sources in one place: identity comes from the IDAS token (user id, login
+ * name, e-mail, roles, rights), the remaining fields from the platform's own
+ * profile table — above all the avatar, which IDAS does not carry.
+ *
+ * Read-only and reactive: the local fields arrive shortly after start and are
+ * edited in the framework's settings, not by a module. The same object carries
+ * the lookup of *other* users' profiles (`byEmail`, `byEmails`, `byUserId`) —
+ * the way to put a name and a face next to a user id in a list.
+ * @typedef {Object} NeherApp3Profile
+ * @property {string} userId - `benutzerGuid` from the token.
+ * @property {string} userName - Login name (`id` claim).
+ * @property {string} email - E-mail address from the token.
+ * @property {string[]} roles - Roles from the token.
+ * @property {string[]} rights - Rights from the token.
+ * @property {string} displayName - Best available name: the self-chosen one, otherwise the token's.
+ * @property {string} initials - Up to 3 characters: self-chosen, otherwise derived from the name.
+ * @property {string | null} avatar - The avatar as a data URL, or `null` when none is stored.
+ * @property {string | null} jobTitle - Job title / function.
+ * @property {string | null} department - Department.
+ * @property {string | null} location - Site / plant.
+ * @property {string | null} mobile - Mobile number (IDAS carries only one phone number).
+ * @property {boolean} loaded - `true` once the local profile has been fetched.
+ * @property {() => Promise<void>} reload - Fetch the local profile again.
+ * @property {(email: string) => Promise<NeherApp3PublicProfile | null>} byEmail - The profile of another user by e-mail address; `null` when this platform does not know them. Calls made close together are coalesced into one request and cached for the session.
+ * @property {(emails: string[]) => Promise<NeherApp3PublicProfile[]>} byEmails - The profiles of several users; unknown addresses are absent from the result.
+ * @property {(userId: string) => Promise<NeherApp3PublicProfile | null>} byUserId - The profile of another user by their `benutzerGuid`.
+ * @property {() => void} clearCache - Discard the cached profiles, so the next lookup asks again.
+ */
+
+/**
+ * Theme handle, exposed at `neherapp3.theme`.
+ *
+ * The shell writes the resolved theme name to `data-theme` on `<html>`, so
+ * anything in the light DOM follows it by inheritance. **Inside a Shadow DOM
+ * module it does not**: an attribute selector never crosses the shadow
+ * boundary, and the module's own `:host` rules override the inherited custom
+ * properties — a module built with the shell's daisyUI setup would stay light
+ * forever. The shell therefore mirrors `data-theme` onto the module's root
+ * element inside the shadow root and keeps it in sync; a module only needs to
+ * ship both themes (`neher`, `neher-dark`) in its stylesheet.
+ *
+ * `subscribe` is for consumers without Svelte reactivity (and for reacting to
+ * a switch, e.g. to repaint a canvas or reload a themed asset).
+ * @typedef {Object} NeherApp3Theme
+ * @property {NeherApp3ThemeName} current - Active, resolved theme name (reactive).
+ * @property {NeherApp3ThemePreference} preference - Stored choice, including `"system"` (reactive).
+ * @property {boolean} isDark - Shorthand for `current === "neher-dark"` (reactive).
+ * @property {(preference: NeherApp3ThemePreference) => void} set - Store a preference and apply it.
+ * @property {() => void} toggle - Switch light/dark as an explicit choice (replaces `"system"`).
+ * @property {(listener: (theme: NeherApp3ThemeName) => void) => (() => void)} subscribe - Listen for theme changes; called immediately with the current theme, returns an unsubscribe function.
+ * @property {"neher"} LIGHT - Theme name of the light mode.
+ * @property {"neher-dark"} DARK - Theme name of the dark mode.
+ * @property {"system"} SYSTEM - Preference "follow the operating system".
+ */
+
+/**
+ * Resolved theme name — the value of the `data-theme` attribute.
+ * @typedef {"neher" | "neher-dark"} NeherApp3ThemeName
+ */
+
+/**
+ * Stored theme choice: a theme name, or `"system"` to follow
+ * `prefers-color-scheme` live.
+ * @typedef {NeherApp3ThemeName | "system"} NeherApp3ThemePreference
+ */
+
+/**
  * @typedef {Object} NeherApp3
  * @property {(menuItem: NeherApp3MenuItem) => void} addMenuItem - Adds a menu item. If an item with the same `id` already exists it is replaced.
  * @property {(id: string, patch: Partial<NeherApp3MenuItem>) => boolean} updateMenuItem - Updates properties of an existing menu item by `id`. Only keys present in `patch` are changed; the `id` is preserved. Returns `true` if the item existed. Relative icon URLs are resolved against the module's base URL.
@@ -276,10 +362,12 @@
  * @property {(appModule: NeherApp3Module | string) => Promise<void>} addApp
  * @property {(message: string, type?: NeherApp3NotifyType, cb?: function) => void} notify - Shows a notification. Type defaults to 0 (info). Callback is optional.
  * @property {NeherApp3ApiCollection} api
- * @property {NeherApp3CacheCollection} cache
  * @property {NeherApp3Messages} messages - In-realm message bus for module-to-module communication.
  * @property {NeherApp3I18n} i18n - Localization: register a module's translation catalog, translate, switch language, sort language-aware.
  * @property {Localize} localize - Shorthand for `i18n.localize` (namespace `shell`): a function for strings, a `use:` action for elements.
+ * @property {NeherApp3Settings} settings - Per-user settings, stored in the database (not `localStorage`).
+ * @property {NeherApp3Profile} profile - The signed-in user: identity from the IDAS token plus the platform's own profile fields (avatar, job title, …).
+ * @property {NeherApp3Theme} theme - Light/dark mode: the active theme, the stored preference, and a subscription for theme changes.
  * @property {boolean} isEmbedded - Indicates if the app is embedded inside i3
  */
 

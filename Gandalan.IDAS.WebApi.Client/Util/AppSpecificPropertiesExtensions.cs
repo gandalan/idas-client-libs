@@ -1,3 +1,4 @@
+using System;
 using Gandalan.IDAS.WebApi.Client.Util;
 
 namespace Gandalan.IDAS.WebApi.Util;
@@ -128,6 +129,12 @@ public static class AppSpecificPropertiesExtensions
     /// <param name="value">value to write</param>
     public static void SetProperty<T>(this IDTOWithApplicationSpecificProperties dto, string subObjectName, string key, T value)
     {
+        if (dto == null)
+        {
+            throw new ArgumentNullException(nameof(dto),
+                $"SetProperty('{subObjectName}', '{key}') wurde auf einem null-DTO aufgerufen.");
+        }
+
         var properties = dto.ApplicationSpecificProperties;
 
         if (properties == null)

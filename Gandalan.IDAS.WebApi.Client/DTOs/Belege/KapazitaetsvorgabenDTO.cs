@@ -398,7 +398,6 @@ public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
             else
             {
                 Add(new Kapazitaetsvorgabe { GroupName = "Spannrahmen", Label = "SP3", Produktgruppe = ["SP3"], IstBasisregel = true, Order = Count, Zeitvorgabe = 25 });
-                
             }
             //Sonstiges
             TryAddProduktGruppeToExisitng("Metallgewebe (nicht bei Lichtschächten)", "SP3", "SP2");
@@ -407,6 +406,7 @@ public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
             TryAddProduktGruppeToExisitng("Vorbiegen", "SP3", "SP2");
             TryAddProduktGruppeToExisitng("Sprosse (im Spannrahmen)", "SP3", "SP2");
         }
+
         if (Version < 7)
         {
             Version = 7;
@@ -421,7 +421,8 @@ public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
                 Zeitvorgabe = 9,
                 Mehrfachregel = true,
                 Order = Count
-            }); Add(new Kapazitaetsvorgabe
+            });
+            Add(new Kapazitaetsvorgabe
             {
                 GroupName = "Sonstiges",
                 Label = "Profilfahnenanpassung < 19 mm",
@@ -432,15 +433,85 @@ public class KapazitaetsvorgabenDTO : ObservableCollection<Kapazitaetsvorgabe>
                 Order = Count
             });
         }
+
+        if (Version < 8)
+        {
+            Version = 8;
+            //#16255
+            TryUpdate(
+                new Kapazitaetsvorgabe
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Fußbedienmulde",
+                    Produktgruppe = ["ST3", "ST4"],
+                    Artikelliste = ["103518", "134852"],
+                    Etikettentext = ["SpSoB", "Fb_"],
+                    Zeitvorgabe = 10,
+                },
+                new Kapazitaetsvorgabe
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Fußbedienmulde",
+                    Produktgruppe = ["ST3", "ST4"],
+                    Artikelliste = ["103518", "134852"],
+                    Etikettentext = ["Fb_"],
+                    Zeitvorgabe = 5,
+                }
+            );
+
+            //#16253
+            TryUpdate(
+                new Kapazitaetsvorgabe
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Standflügelarretierung",
+                    Produktgruppe = ["PF2", "PT2"],
+                    Artikelliste = ["133470"],
+                    Etikettentext = ["ExV_"],
+                    Zeitvorgabe = 12,
+                },
+                new Kapazitaetsvorgabe
+                {
+                    GroupName = "Sonstiges",
+                    Label = "Standflügelarretierung",
+                    Produktgruppe = ["PF2", "PT2"],
+                    Artikelliste = ["133472"],
+                    Etikettentext = ["ExV_"],
+                    Zeitvorgabe = 12
+                }
+            );
+        }
+    }
+
+
+    public void TryUpdate(Kapazitaetsvorgabe oldValue, Kapazitaetsvorgabe newValue)
+    {
+        var existing = this.FirstOrDefault(g => g.IsEqualTo(oldValue));
+        if (existing == null)
+        {
+            return;
+        }
+
+        existing.GroupName = newValue.GroupName;
+        existing.Label = newValue.Label;
+        existing.FarbArt = newValue.FarbArt;
+        existing.Zeitvorgabe = newValue.Zeitvorgabe;
+        existing.Gewicht = newValue.Gewicht;
+        existing.IstBasisregel = newValue.IstBasisregel;
+        existing.Mehrfachregel = newValue.Mehrfachregel;
+        existing.Produktgruppe = newValue.Produktgruppe;
+        existing.Artikelliste = newValue.Artikelliste;
+        existing.Bearbeitungen = newValue.Bearbeitungen;
+        existing.Etikettentext = newValue.Etikettentext;
     }
 
     private bool TryAddProduktGruppeToExisitng(string label, string produktgruppe, string afterThisValue = null)
     {
         var result = this.FirstOrDefault(g => g.Label == label);
         if(result == null) return false;
-        
+
         if (result.Produktgruppe.Contains(produktgruppe)) return true;
-        
+
         var order = -1;
         if (afterThisValue != null)
         {
@@ -474,6 +545,23 @@ public class Kapazitaetsvorgabe : INotifyPropertyChanged
     public bool Mehrfachregel { get; set; }
 
     public int Order { get; set; }
+
+    public bool IsEqualTo(Kapazitaetsvorgabe other) =>
+        this.GroupName == other.GroupName &&
+        this.Label == other.Label &&
+        this.FarbArt == other.FarbArt &&
+        this.Zeitvorgabe == other.Zeitvorgabe &&
+        this.Gewicht == other.Gewicht &&
+        this.IstBasisregel == other.IstBasisregel &&
+        this.Mehrfachregel == other.Mehrfachregel &&
+        (this.Produktgruppe == other.Produktgruppe ||
+         (this.Produktgruppe != null && other.Produktgruppe != null && this.Produktgruppe.SequenceEqual(other.Produktgruppe))) &&
+        (this.Artikelliste == other.Artikelliste ||
+         (this.Artikelliste != null && other.Artikelliste != null && this.Artikelliste.SequenceEqual(other.Artikelliste))) &&
+        (this.Bearbeitungen == other.Bearbeitungen ||
+         (this.Bearbeitungen != null && other.Bearbeitungen != null && this.Bearbeitungen.SequenceEqual(other.Bearbeitungen))) &&
+        (this.Etikettentext == other.Etikettentext ||
+         (this.Etikettentext != null && other.Etikettentext != null && this.Etikettentext.SequenceEqual(other.Etikettentext)));
 }
 
 /// <summary>

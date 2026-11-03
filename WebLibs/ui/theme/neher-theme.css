@@ -1,0 +1,244 @@
+/* Gandalan-Theme für Tailwind 4 + daisyUI 5: bindet die Tokens (neher-tokens.css, reines CSS)
+   ein und legt den Feinschliff aus m3 auf die daisyUI-Klassen. Die App braucht tailwindcss
+   und daisyui als eigene Abhängigkeiten; gebaut wird im Zielprojekt.
+     @import "tailwindcss";
+     @import "@gandalan/weblibs/ui/theme/neher-theme.css";
+   Überschreibbare Variablen: siehe neher-tokens.css. */
+@import "./neher-tokens.css";
+
+/* eingebaute daisyUI-Themes aus: Farben und Maße kommen nur aus den Tokens */
+@plugin "daisyui" {
+  themes: false;
+}
+
+@layer base {
+  html {
+    font-size: 16px;
+  }
+  /* NeherApp3: Mount-Knoten der Shell im Shadow Root, damit h-full der App greift */
+  #shadow-mount {
+    height: 100%;
+  }
+  /* alle Größen sind rem: die Grundschrift skaliert die ganze Oberfläche */
+  html[data-theme="i3"] {
+    font-size: 14px;
+  }
+  body {
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    user-select: none;
+  }
+  /* Inhalte, die man kopieren will, bleiben markierbar */
+  input, textarea, pre, .selectable {
+    user-select: text;
+  }
+}
+
+/* Komponenten-Feinschliff aus m3 (colors_and_type.css), bewusst ungelayert,
+   damit er daisyUIs @layer-Styles schlägt. */
+.btn:not(.btn-xs):not(.btn-sm):not(.btn-lg):not(.btn-xl),
+.table:not(.table-xs):not(.table-sm):not(.table-lg),
+.input:not(.input-xs):not(.input-sm):not(.input-lg):not(.input-xl),
+.select:not(.select-xs):not(.select-sm):not(.select-lg):not(.select-xl),
+.textarea:not(.textarea-xs):not(.textarea-sm):not(.textarea-lg):not(.textarea-xl) {
+  font-size: 1rem;
+}
+.card:not(.card-xs):not(.card-sm):not(.card-lg):not(.card-xl) > .card-body {
+  --card-fs: 1rem;
+}
+.btn {
+  font-weight: 500;
+}
+
+.btn.btn-ghost {
+  text-decoration: underline;
+  text-underline-offset: 0.1875rem;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in oklch, currentColor 35%, transparent);
+}
+.btn.btn-ghost:hover {
+  text-decoration-color: currentColor;
+}
+
+@media (hover: hover) {
+  .table tbody tr:hover {
+    background-color: var(--color-base-200);
+  }
+  .table.table-zebra tbody tr:hover {
+    background-color: var(--color-base-300);
+  }
+}
+
+.table > thead tr {
+  background-color: var(--color-neutral);
+}
+.table > thead th {
+  color: var(--color-neutral-content);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+label:has(:is(.checkbox, .radio, .toggle):not(:disabled)) {
+  cursor: pointer;
+}
+
+.select:not([multiple]) {
+  background-image: conic-gradient(from -45deg at 50% 100%, currentColor 0 90deg, #0000 90deg);
+  background-size: 8px 4px;
+  background-position: calc(100% - 14px) calc(50% + 1px);
+  background-repeat: no-repeat;
+}
+
+:is(.input, .select, .textarea):is(:focus, :focus-within) {
+  outline-color: var(--color-gray-700, oklch(37.3% 0.034 259.733));
+  outline-offset: 0;
+}
+:is(.radio, .checkbox):focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+.tabs-border {
+  border-bottom: 1px solid var(--color-base-300);
+}
+.tabs-border > .tab {
+  gap: 0.5rem;
+  padding-inline: 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-base-content);
+  white-space: nowrap;
+}
+/* wenig Platz (Handy, schmales Modul): Reiter kompakter; Bezug ist der nächste Container */
+@container (width < 28rem) {
+  .tabs-border > .tab {
+    gap: 0.25rem;
+    padding-inline: 0.5rem;
+    font-size: 0.875rem;
+  }
+}
+.tabs-border > .tab:hover {
+  background-color: var(--color-base-200);
+}
+.tabs-border > .tab:is(.tab-active, [aria-selected="true"]) {
+  color: var(--color-secondary);
+}
+.tabs-border > .tab::before {
+  left: 0;
+  width: 100%;
+  border-radius: 0;
+}
+.tabs-border > .tab:is(.tab-active, [aria-selected="true"])::before {
+  /* daisyUI zeichnet den Balken in currentColor mit höherer Spezifität */
+  border-color: var(--color-action) !important;
+  background-color: var(--color-action) !important;
+}
+
+/* Mindestgröße 14 px: daisyUI setzt diese auf 0.75rem */
+.fieldset, .fieldset-legend, .validator-hint, .btn-xs, .chat-header, .chat-footer {
+  font-size: 0.875rem;
+}
+
+.menu {
+  --menu-active-bg: color-mix(in oklab, var(--color-primary) 30%, var(--color-base-100));
+  --menu-active-fg: var(--color-base-content);
+  font-size: 1rem;
+}
+[data-theme="neher-dark"] .menu {
+  --menu-active-bg: oklch(from var(--color-primary) 46% calc(c * 0.7) h);
+}
+
+/* native <select>-Popups im Dark Mode lesbar; im Shadow DOM greift die Regel der Shell nicht */
+option, optgroup {
+  background-color: var(--color-base-100);
+  color: var(--color-base-content);
+}
+
+/* i3 nach dem Entwurf. Steht am Ende, damit es den m3-Feinschliff überschreibt. */
+[data-theme="i3"] h1 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Abschnittstitel: klein, grau, Versalien */
+[data-theme="i3"] .card-title {
+  font-size: 0.93rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--i3-gedaempft);
+}
+
+/* Tabellen: heller Kopf mit kleinen grauen Versalien, weiße Zeilen mit feiner Linie, kein Zebra */
+[data-theme="i3"] .table > thead tr {
+  background-color: var(--i3-flaeche-hell);
+}
+[data-theme="i3"] .table > thead th {
+  color: var(--i3-gedaempft);
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+[data-theme="i3"] .table tbody tr {
+  background-color: var(--color-base-100);
+}
+@media (hover: hover) {
+  [data-theme="i3"] .table tbody tr:hover {
+    background-color: var(--i3-flaeche-hell);
+  }
+}
+[data-theme="i3"] .shadow-md {
+  box-shadow: none;
+}
+
+/* Buttons: weiß mit grauem Rand; Hauptaktion grün */
+[data-theme="i3"] .btn:not(.btn-primary, .btn-secondary, .btn-neutral, .btn-error, .btn-ghost, .btn-link) {
+  background-color: var(--color-base-100);
+  border-color: var(--i3-feldrand);
+  color: var(--color-base-content);
+}
+[data-theme="i3"] .btn:not(.btn-primary, .btn-secondary, .btn-neutral, .btn-error, .btn-ghost, .btn-link):not(:disabled):hover {
+  background-color: var(--i3-flaeche-hell);
+}
+
+/* Felder und Fokus */
+[data-theme="i3"] :is(.input, .select, .textarea) {
+  border-color: var(--i3-feldrand);
+}
+[data-theme="i3"] :is(.input, .select, .textarea):is(:focus, :focus-within),
+[data-theme="i3"] :is(button, a):focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+[data-theme="i3"] .link {
+  color: #3f7417;
+}
+[data-theme="i3"] .link:hover {
+  color: #2c5310;
+}
+
+/* Reiter: aktiv dunkel und fett mit grünem Strich, sonst grau; Zähler als Pillen */
+[data-theme="i3"] .tabs-border > .tab {
+  color: var(--i3-gedaempft);
+  font-weight: 500;
+}
+[data-theme="i3"] .tabs-border > .tab:is(.tab-active, [aria-selected="true"]) {
+  color: var(--color-base-content);
+  font-weight: 600;
+}
+[data-theme="i3"] .tab .badge {
+  border: 0;
+  background-color: #eef0ec;
+  color: #3d453a;
+  font-weight: 600;
+}
+[data-theme="i3"] .tab:is(.tab-active, [aria-selected="true"]) .badge {
+  background-color: #e6f0dc;
+  color: #2c5310;
+}
+
+/* Pillen statt eckiger Badges */
+[data-theme="i3"] .badge {
+  border-radius: 999px;
+}

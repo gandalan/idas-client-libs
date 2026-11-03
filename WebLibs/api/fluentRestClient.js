@@ -18,20 +18,83 @@
  * Error thrown for non-ok HTTP responses. Carries the status code so callers
  * can react to specific statuses (e.g. the automatic 401 retry in fluentApi)
  * without parsing the message.
+ *
+ * `body` holds the raw response body (if it could be read) and `detail` the
+ * best-effort human-readable reason extracted from it: for a JSON body the
+ * first of `ExceptionMessage` / `Message` / `error` / `title` / `detail`
+ * (IDAS WebApi and ASP.NET Core ProblemDetails conventions), for a plain-text
+ * body the text itself, for HTML or an unreadable body `null`. UI code should
+ * show `detail` to the user and log `message` (method, url, status).
+ *
+ * Use {@link RestError.fromResponse} to build one from a fetch response; the
+ * constructor alone cannot read the body (it is asynchronous).
  */
 export class RestError extends Error {
     /**
      * @param {string} method - HTTP method of the failed request.
      * @param {string} url - Full URL of the failed request.
      * @param {Response} res - The non-ok fetch response.
+     * @param {string|null} [body=null] - Raw response body, if read.
      */
-    constructor(method, url, res) {
+    constructor(method, url, res, body = null) {
         super(`${method} ${url} failed: ${res.status} ${res.statusText}`);
         this.name = "RestError";
         this.method = method;
         this.url = url;
         this.status = res.status;
         this.statusText = res.statusText;
+        /** @type {string|null} */
+        this.body = body;
+        /** @type {string|null} */
+        this.detail = RestError.extractDetail(body, res.headers.get("content-type"));
+    }
+
+    /**
+     * Builds a RestError with the response body read (never throws: an
+     * unreadable body just leaves `body`/`detail` at `null`).
+     * @param {string} method
+     * @param {string} url
+     * @param {Response} res
+     * @returns {Promise<RestError>}
+     */
+    static async fromResponse(method, url, res) {
+        let body = null;
+        try {
+            body = await res.text();
+        } catch {
+            // body already consumed or stream failed – keep null
+        }
+        return new RestError(method, url, res, body);
+    }
+
+    /**
+     * Extracts a human-readable reason from an error body.
+     * @param {string|null} body
+     * @param {string|null} contentType
+     * @returns {string|null}
+     */
+    static extractDetail(body, contentType) {
+        if (!body) return null;
+        const text = body.trim();
+        if (!text) return null;
+        const looksHtml = /^<!doctype html|^<html/i.test(text) || (contentType ?? "").includes("text/html");
+        if (looksHtml) return null;
+        if (text.startsWith("{") || text.startsWith("[")) {
+            try {
+                const json = JSON.parse(text);
+                if (typeof json === "string") return json;
+                if (json && typeof json === "object" && !Array.isArray(json)) {
+                    for (const key of ["ExceptionMessage", "exceptionMessage", "Message", "message", "error", "Error", "detail", "title"]) {
+                        const value = json[key];
+                        if (typeof value === "string" && value.trim()) return value.trim();
+                    }
+                }
+                return null;
+            } catch {
+                return null;
+            }
+        }
+        return text.length <= 500 ? text : null;
     }
 }
 
@@ -92,7 +155,7 @@ export function restClient() {
                 return skipResponseParsing ? res : await this._parseReponse(res); 
             }
 
-            throw new RestError("GET", finalUrl, res);
+            throw await RestError.fromResponse("GET", finalUrl, res);
         },
 
         /**
@@ -112,7 +175,7 @@ export function restClient() {
                 return skipResponseParsing ? res : await this._parseReponse(res);
             }
 
-            throw new RestError("PUT", finalUrl, res);
+            throw await RestError.fromResponse("PUT", finalUrl, res);
         },
 
         /**
@@ -143,7 +206,7 @@ export function restClient() {
                 return skipResponseParsing ? res : await this._parseReponse(res);
             }
 
-            throw new RestError("POST", finalUrl, res);
+            throw await RestError.fromResponse("POST", finalUrl, res);
         },
 
         /**
@@ -166,7 +229,7 @@ export function restClient() {
                 return skipResponseParsing ? res : await this._parseReponse(res);
             }
 
-            throw new RestError("DELETE", finalUrl, res);
+            throw await RestError.fromResponse("DELETE", finalUrl, res);
         },
 
         _createHeaders(contentType) {

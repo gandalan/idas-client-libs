@@ -1,0 +1,156 @@
+/* Gandalan Design-Tokens als reines CSS: Themes neher, neher-dark, i3.
+   Ohne Tailwind und daisyUI nutzbar (var(--color-primary) …); die Namen sind die von daisyUI,
+   damit neher-theme.css sie direkt verwenden kann.
+   Theme wählt die App über data-theme (in NeherApp3 setzt es die Shell); ohne gilt neher.
+   neher/neher-dark: Werte aus m3 (frontend/src/app.css). i3: fügt sich in den WPF-Client ein.
+
+   Einbinden:  @import "@gandalan/weblibs/ui/theme/neher-tokens.css";
+   Überschreiben: die App setzt die Variable NACH dem Import, z. B.
+     [data-theme="neher"] { --color-primary: #5a9a1f; }
+     [data-theme="i3"] { --font-sans: "Segoe UI", sans-serif; }
+   Vorgesehen dafür:
+     Farben   --color-{base-100|base-200|base-300|base-content}
+              --color-{primary|secondary|accent|neutral|info|success|warning|error}[-content]
+              --color-action (aktiver Reiter, Markenakzent)
+     Schrift  --font-sans, --font-mono
+     Formen   --radius-{selector|field|box}, --size-{selector|field}, --border, --depth
+     nur i3   --i3-gedaempft, --i3-feldrand, --i3-flaeche-hell
+
+   Selektor ist [data-theme], nicht :root/:host: im Shadow DOM von NeherApp3 setzt die Shell
+   data-theme auf den Mount-Knoten, :host gehört der Shell. */
+
+:where(:root), [data-theme="neher"] {
+  color-scheme: light;
+
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(96% 0 0);
+  --color-base-300: oklch(90% 0 0);
+  --color-base-content: oklch(20% 0 0);
+
+  --color-primary: #76b82a;
+  --color-primary-content: oklch(20% 0 0);
+  --color-secondary: #185e89;
+  --color-secondary-content: #ffffff;
+  --color-accent: #76b82a;
+  --color-accent-content: #ffffff;
+
+  --color-neutral: oklch(20% 0 0);
+  --color-neutral-content: #ffffff;
+
+  --color-info: oklch(70% 0.15 220);
+  --color-info-content: #ffffff;
+  --color-success: oklch(65% 0.2 140);
+  --color-success-content: #ffffff;
+  --color-warning: oklch(80% 0.18 85);
+  --color-warning-content: oklch(20% 0 0);
+  --color-error: oklch(65% 0.25 25);
+  --color-error-content: #ffffff;
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.65rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+
+  --color-action: #76b82a;
+  --font-sans: "Roboto", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+[data-theme="neher-dark"] {
+  color-scheme: dark;
+
+  --color-base-100: oklch(24% 0 0);
+  --color-base-200: oklch(19% 0 0);
+  --color-base-300: oklch(34% 0 0);
+  --color-base-content: oklch(93% 0 0);
+
+  --color-primary: #76b82a;
+  --color-primary-content: oklch(18% 0 0);
+  --color-secondary: oklch(65% 0.13 245);
+  --color-secondary-content: oklch(18% 0 0);
+  --color-accent: #76b82a;
+  --color-accent-content: oklch(18% 0 0);
+
+  --color-neutral: oklch(70% 0 0);
+  --color-neutral-content: oklch(18% 0 0);
+
+  --color-info: oklch(72% 0.15 220);
+  --color-info-content: oklch(18% 0 0);
+  --color-success: oklch(70% 0.18 140);
+  --color-success-content: oklch(18% 0 0);
+  --color-warning: oklch(80% 0.18 85);
+  --color-warning-content: oklch(20% 0 0);
+  --color-error: oklch(68% 0.22 25);
+  --color-error-content: oklch(18% 0 0);
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.65rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+
+  --color-action: #76b82a;
+  --font-sans: "Roboto", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* i3: Entwurf „Feedback-Detail – Redesign“ (Claude Design, mit Philipp Reif abgestimmt):
+   ruhige Grau-Grün-Fläche, weiße Karten, dunkleres Grün #4E8A1E (Kontrast), Segoe UI 14 px */
+[data-theme="i3"] {
+  color-scheme: light;
+
+  --color-base-100: #ffffff;
+  --color-base-200: #f4f5f2;
+  --color-base-300: #e3e6e0;
+  --color-base-content: #1c211b;
+
+  --color-primary: #4e8a1e;
+  --color-primary-content: #ffffff;
+  --color-secondary: #4e8a1e;
+  --color-secondary-content: #ffffff;
+  --color-accent: #4e8a1e;
+  --color-accent-content: #ffffff;
+
+  --color-neutral: #1c211b;
+  --color-neutral-content: #ffffff;
+
+  --color-info: #2f6fa3;
+  --color-info-content: #ffffff;
+  --color-success: #4e8a1e;
+  --color-success-content: #ffffff;
+  --color-warning: #c98a00;
+  --color-warning-content: #23281f;
+  --color-error: #b42318;
+  --color-error-content: #ffffff;
+
+  /* px statt rem: Maße aus dem Entwurf (Felder 8 px, Karten 12 px rund, Buttons 40 px hoch) */
+  --radius-selector: 6px;
+  --radius-field: 8px;
+  --radius-box: 12px;
+
+  --size-selector: 4px;
+  --size-field: 4px;
+
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+
+  --color-action: #76b82a;
+  --font-sans: "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --i3-gedaempft: #5b6458;
+  --i3-feldrand: #d5d9d1;
+  --i3-flaeche-hell: #f6f7f4;
+}

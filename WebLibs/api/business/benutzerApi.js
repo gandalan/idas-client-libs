@@ -61,7 +61,8 @@ export function createBenutzerApi(fluentApi) {
          */
         passwortReset: async (benutzerName) => {
             const encodedName = encodeURIComponent(benutzerName);
-            return await fluentApi.get(`PasswortReset?email=${encodedName}`);
+            // anonymous endpoint (forgotten password): must work without a session
+            return await fluentApi.get(`PasswortReset?email=${encodedName}`, false);
         },
 
         /**

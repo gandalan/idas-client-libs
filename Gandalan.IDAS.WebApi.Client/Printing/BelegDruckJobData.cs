@@ -26,6 +26,7 @@ public class BelegDruckJobData : IBelegPrintJobData
     public string DefaultPrinter { get; set; }
     public int Copies { get; set; }
     public Guid VorgangGuid { get; set; }
+    [Obsolete("PrintV3 (In-Process-IronPdf) ist entfernt; der Server wertet das Flag nicht mehr aus.")]
     public bool UseIronPdfRenderer { get; set; }
     public bool UseIronPdfEngineRenderer { get; set; }
 }

@@ -81,6 +81,7 @@ public class WebRoutinenBase
             _originalSettings = settings;
             Settings = new WebApiSettings();
             Settings.CopyToThis(settings);
+            Settings.ForceLegacyApi = settings.ForceLegacyApi;
             if (settings is IJwtWebApiConfig jc)
             {
                 IsJwt = true;
@@ -161,7 +162,7 @@ public class WebRoutinenBase
             config.AdditionalHeaders.Add("X-Gdl-InstallationId", Settings.InstallationId.ToString());
         }
 
-        config.NewApiOptInUrls = Settings.NewApiOptInUrls;
+        config.ForceLegacyApi = Settings.ForceLegacyApi;
 
         var restRoutinen = new RESTRoutinen(config);
         restRoutinen.UpdatePerRequestHeaders(BuildAuthHeaders());
@@ -295,6 +296,11 @@ public class WebRoutinenBase
             if (!string.IsNullOrEmpty(apiException.OperationId))
             {
                 TryAdd("OperationId", apiException.OperationId);
+            }
+
+            if (!string.IsNullOrEmpty(apiException.GatewayBackend))
+            {
+                TryAdd("GatewayBackend", apiException.GatewayBackend);
             }
 
             if (apiException.ProblemDetails != null)
@@ -759,6 +765,7 @@ public class WebRoutinenBase
             {
                 loginConfig = new JwtWebApiSettings();
                 loginConfig.CopyToThis(Settings);
+                loginConfig.ForceLegacyApi = Settings.ForceLegacyApi;
                 loginConfig.Url = Settings.IDASUrl;
             }
 
@@ -920,6 +927,7 @@ public class WebRoutinenBase
         var apiException = TranslateExceptionCore(ex, payload);
 
         SetOperationId(apiException, ex);
+        SetGatewayBackend(apiException, ex);
 
         return apiException;
     }
@@ -941,6 +949,18 @@ public class WebRoutinenBase
                 ApiHeaderNames.OperationIdProblemDetailsExtension, out var operationIdFromBody) == true)
         {
             apiException.OperationId = operationIdFromBody?.ToString();
+        }
+    }
+
+    /// <summary>
+    /// Übernimmt die Backend-Kennung, die der <c>ErrorEnrichmentHandler</c> aus dem Response-Header
+    /// nach <c>ex.Data</c> gelegt hat. Anders als bei der Operation-Id gibt es keinen Fallback im Body.
+    /// </summary>
+    private static void SetGatewayBackend(ApiException apiException, HttpRequestException ex)
+    {
+        if (ex.Data.Contains("GatewayBackend"))
+        {
+            apiException.GatewayBackend = ex.Data["GatewayBackend"]?.ToString();
         }
     }
 

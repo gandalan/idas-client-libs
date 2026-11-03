@@ -16,4 +16,12 @@ public static class ApiHeaderNames
     /// Name der ProblemDetails-Extension, unter der das Backend dieselbe Operation-Id im Body mitgibt.
     /// </summary>
     public const string OperationIdProblemDetailsExtension = "operationId";
+
+    /// <summary>
+    /// Vom YARP-Gateway auf JEDER Antwort gesetzt (<c>new</c> oder <c>legacy</c>) und damit die einzige
+    /// verlässliche Auskunft darüber, welches Backend geantwortet hat: der Client kann es nicht wissen,
+    /// weil das Gateway seinen <c>X-Gateway-Cluster</c>-Header entfernt haben kann.
+    /// Landet über <see cref="Gandalan.IDAS.Web.ApiException.GatewayBackend"/> im Fehlerbericht.
+    /// </summary>
+    public const string GatewayBackend = "X-Gateway-Backend";
 }

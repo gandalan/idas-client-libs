@@ -21,7 +21,10 @@ const dtoRootMarkerEnd = "// END GENERATED ROOT DTO TYPEDEFS";
 const businessRootMarkerStart = "// BEGIN GENERATED ROOT BUSINESS TYPEDEFS";
 const businessRootMarkerEnd = "// END GENERATED ROOT BUSINESS TYPEDEFS";
 
-const rootValueExportStatements = [];
+const rootValueExportStatements = [
+    "export const AUTH_REFRESHED_EVENT: \"idas-auth-refreshed\";",
+    "export const AUTH_EXPIRED_EVENT: \"idas-auth-expired\";"
+];
 
 const rootFunctionDeclarationStatements = [
     "export function createApi(): FluentApi;",
@@ -32,7 +35,8 @@ const rootFunctionDeclarationStatements = [
     "export function fluentIdasAuthManager(appToken: string, authBaseUrl: string): FluentAuthManager;",
     "export function fetchEnvConfig(envConfig?: string): Promise<EnvironmentConfig>;",
     "export function restClient(): FluentRESTClient;",
-    "export class RestError extends Error { method: string; url: string; status: number; statusText: string; constructor(method: string, url: string, res: Response); }"
+    "export class AuthError extends Error { code: string; sessionEnded: boolean; status: number | undefined; constructor(code: string, sessionEnded: boolean, message?: string, status?: number, cause?: unknown); }",
+    "export class RestError extends Error { method: string; url: string; status: number; statusText: string; body: string | null; detail: string | null; constructor(method: string, url: string, res: Response, body?: string | null); static fromResponse(method: string, url: string, res: Response): Promise<RestError>; static extractDetail(body: string | null, contentType: string | null): string | null; }"
 ];
 
 const simpleImportTypePattern = /^import\((?:"|').+(?:"|')\)\.[A-Za-z0-9_$]+$/;
@@ -79,6 +83,34 @@ function normalizeJSDocBlock(block) {
         .map((line) => line.replace(/^\s*\*\s?/, ""))
         .join("\n")
         .trim();
+}
+
+function extractLeadingDescription(normalizedBlock) {
+    const lines = [];
+
+    for (const line of normalizedBlock.split("\n")) {
+        if (line.trimStart().startsWith("@")) {
+            break;
+        }
+
+        lines.push(line);
+    }
+
+    return lines.join("\n").trim();
+}
+
+function renderDocComment(description, indent = "") {
+    if (!description) {
+        return [];
+    }
+
+    const lines = description.replace(/\*\//g, "*\\/").split("\n");
+
+    if (lines.length === 1) {
+        return [`${indent}/** ${lines[0]} */`];
+    }
+
+    return [`${indent}/**`, ...lines.map((line) => `${indent} *${line ? ` ${line}` : ""}`), `${indent} */`];
 }
 
 function skipQuotedString(source, startIndex, quoteCharacter) {
@@ -479,6 +511,7 @@ function parseObjectLiteralProperties(objectSource, scopeTypeMap) {
         properties.push({
             name: propertyName,
             optional,
+            description: jsDocBlock ? extractLeadingDescription(normalizeJSDocBlock(jsDocBlock)) : "",
             typeExpression
         });
 
@@ -715,12 +748,21 @@ function parseNameToken(remainder) {
 
 function extractPropertyEntries(normalizedBlock) {
     const properties = [];
+    let currentProperty = null;
 
     for (const line of normalizedBlock.split("\n")) {
         if (!line.includes("@property")) {
+            // Continuation lines belong to the description of the preceding @property.
+            if (currentProperty && line.trim() && !line.trimStart().startsWith("@")) {
+                currentProperty.description = `${currentProperty.description}\n${line.trim()}`.trim();
+            } else if (line.trimStart().startsWith("@")) {
+                currentProperty = null;
+            }
+
             continue;
         }
 
+        currentProperty = null;
         const parsedTag = parseTagWithType(line, "property");
 
         if (!parsedTag) {
@@ -733,12 +775,13 @@ function extractPropertyEntries(normalizedBlock) {
             continue;
         }
 
-        properties.push({
+        currentProperty = {
             name: parsedName.name,
             optional: parsedName.optional,
             description: parsedName.description,
             typeExpression: parsedTag.typeExpression
-        });
+        };
+        properties.push(currentProperty);
     }
 
     return properties;
@@ -834,6 +877,7 @@ function extractTypedefEntry(normalizedBlock) {
     return {
         kind: typeExpression === "Object" && properties.length > 0 ? "object" : "typedef",
         name: nameMatch[1],
+        description: extractLeadingDescription(normalizedBlock),
         typeExpression,
         properties
     };
@@ -849,6 +893,7 @@ function extractCallbackEntry(normalizedBlock) {
     return {
         kind: "callback",
         name: callbackMatch[1],
+        description: extractLeadingDescription(normalizedBlock),
         typeExpression: null,
         params: extractParamEntries(normalizedBlock),
         returns: extractReturnsEntry(normalizedBlock)?.typeExpression ?? "void"
@@ -892,7 +937,7 @@ function extractPublicTypeEntries(source, filePath) {
                     const inferredObjectEntry = inferReturnTypeObjectEntry(source, filePath, typedefEntry.name, inferredCreateApiName);
 
                     if (inferredObjectEntry) {
-                        entries.push(inferredObjectEntry);
+                        entries.push({ ...inferredObjectEntry, description: typedefEntry.description });
                         continue;
                     }
                 }
@@ -1030,10 +1075,13 @@ function transformTypeExpressionForDts(typeExpression, availableTypeNames) {
 }
 
 function renderTypeEntryAsDts(entry, availableTypeNames) {
+    const docLines = renderDocComment(entry.description);
+
     if (entry.kind === "object") {
-        const lines = [`export type ${entry.name} = {`];
+        const lines = [...docLines, `export type ${entry.name} = {`];
 
         for (const property of entry.properties) {
+            lines.push(...renderDocComment(property.description, "    "));
             lines.push(`    ${property.name}${property.optional ? "?" : ""}: ${transformTypeExpressionForDts(property.typeExpression, availableTypeNames)};`);
         }
 
@@ -1043,10 +1091,10 @@ function renderTypeEntryAsDts(entry, availableTypeNames) {
 
     if (entry.kind === "callback") {
         const params = entry.params.map((param) => `${param.name}${param.optional ? "?" : ""}: ${transformTypeExpressionForDts(param.typeExpression, availableTypeNames)}`).join(", ");
-        return [`export type ${entry.name} = (${params}) => ${transformTypeExpressionForDts(entry.returns, availableTypeNames)};`, ""];
+        return [...docLines, `export type ${entry.name} = (${params}) => ${transformTypeExpressionForDts(entry.returns, availableTypeNames)};`, ""];
     }
 
-    return [`export type ${entry.name} = ${transformTypeExpressionForDts(entry.typeExpression, availableTypeNames)};`, ""];
+    return [...docLines, `export type ${entry.name} = ${transformTypeExpressionForDts(entry.typeExpression, availableTypeNames)};`, ""];
 }
 
 function buildTypeExportMap(typeEntries) {
