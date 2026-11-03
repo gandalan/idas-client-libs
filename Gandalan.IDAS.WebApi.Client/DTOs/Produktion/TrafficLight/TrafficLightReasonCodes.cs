@@ -15,4 +15,5 @@ public static class TrafficLightReasonCodes
     public const string BelegArtNotDeletable = "BelegArtNotDeletable";
     public const string StornoActive = "StornoActive";
     public const string VorgangArchived = "VorgangArchived";
+    public const string Cancelled = "Cancelled";
 }
