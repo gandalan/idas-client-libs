@@ -342,8 +342,6 @@ export type AvApi = {
     saveSaegeDatenHistorieBulk: (dtos: SaegeDatenHistorieDTO[]) => Promise<void>;
     /** Get all material processing methods */
     getAllMaterialBearbeitungsMethoden: () => Promise<MaterialBearbeitungsMethodeDTO[]>;
-    /** Save material processing method */
-    saveMaterialBearbeitungsMethode: (dto: MaterialBearbeitungsMethodeDTO) => Promise<void>;
     material: { serieBerechnen: (serieGuid: string) => Promise<void>; getForSerie: (serieGuid: string) => Promise<MaterialbedarfDTO[]>; getOffenerBedarfV2: (serieGuid: string, filterCsvExportedMaterial?: boolean) => Promise<MaterialbedarfDTO[]>; getOffenerBedarf: (serieGuid: string) => Promise<MaterialbedarfDTO[]>; resetForSerie: (serieGuid: string) => Promise<void>; berechnenForFunction: (serieGuid: string, mandantId: number) => Promise<string[]>; resetFromAvPosForFunction: (avPosGuid: string, mandantId: number) => Promise<string[]>; addOrUpdate: (dto: MaterialbedarfDTO) => Promise<SerienMaterialEditDTO>; delete: (materialbedarfGuid: string) => Promise<void> };
 };
 
