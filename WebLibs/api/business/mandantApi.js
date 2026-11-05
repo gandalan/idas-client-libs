@@ -55,12 +55,6 @@ export function createMandantApi(fluentApi) {
             setStatusByKunde: (data) => fluentApi.put("AppMandant", data),
 
             /**
-             * Get mandanten
-             * @returns {Promise<MandantDTO[]>}
-             */
-            getAll: () => fluentApi.get("AppMandant/"),
-
-            /**
              * Get users by customer
              * @param {string} kundeGuid
              * @returns {Promise<BenutzerDTO[]>}

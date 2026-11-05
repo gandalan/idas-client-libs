@@ -2587,7 +2587,7 @@ export type MandantApi = {
     /** Create mandant */
     anlegen: (mandant: MandantDTO) => Promise<MandantDTO>;
     admin: { addAdminRechte: (email: string) => Promise<void> };
-    app: { getStatusByKunde: (kundeGuid: string) => Promise<AppActivationStatusDTO>; setStatusByKunde: (data: AppActivationStatusDTO) => Promise<AppActivationStatusDTO>; getAll: () => Promise<MandantDTO[]>; getBenutzerByKunde: (kundeGuid: string) => Promise<BenutzerDTO[]>; createOrUpdateBenutzer: (kundeGuid: string, data: BenutzerDTO, pwSenden?: boolean, passwort?: string) => Promise<BenutzerDTO>; deleteBenutzer: (kundeGuid: string, data: BenutzerDTO) => Promise<void>; aktiviere: (adminEmail: string) => Promise<void> };
+    app: { getStatusByKunde: (kundeGuid: string) => Promise<AppActivationStatusDTO>; setStatusByKunde: (data: AppActivationStatusDTO) => Promise<AppActivationStatusDTO>; getBenutzerByKunde: (kundeGuid: string) => Promise<BenutzerDTO[]>; createOrUpdateBenutzer: (kundeGuid: string, data: BenutzerDTO, pwSenden?: boolean, passwort?: string) => Promise<BenutzerDTO>; deleteBenutzer: (kundeGuid: string, data: BenutzerDTO) => Promise<void>; aktiviere: (adminEmail: string) => Promise<void> };
 };
 
 export type MandantDTO = {

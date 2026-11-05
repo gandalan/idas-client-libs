@@ -24,11 +24,6 @@ public class AppWebRoutinen : WebRoutinenBase
         return await PutAsync<AppActivationStatusDTO>("AppMandant", data);
     }
 
-    public async Task<List<MandantDTO>> GetMandantenAsync()
-    {
-        return await GetAsync<List<MandantDTO>>("AppMandant/");
-    }
-
     public async Task<List<BenutzerDTO>> GetBenutzerByKundeAsync(Guid kundeGuid)
     {
         return await GetAsync<List<BenutzerDTO>>($"AppBenutzer/{kundeGuid}");
