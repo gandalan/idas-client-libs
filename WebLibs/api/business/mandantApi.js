@@ -27,14 +27,6 @@ export function createMandantApi(fluentApi) {
          */
         anlegen: (mandant) => fluentApi.put("Mandanten", mandant),
 
-        /**
-         * Load mandanten with filter
-         * @param {string} filter
-         * @returns {Promise<MandantDTO[]>}
-         */
-        ladenMitFilter: (filter) =>
-            fluentApi.get(`Mandanten?filter=${encodeURIComponent(filter)}`),
-
         // MandantenAdminWebRoutinen
         admin: {
             /**

@@ -2598,8 +2598,6 @@ export type MandantApi = {
     abgleichen: (list: MandantDTO[]) => Promise<MandantDTO[]>;
     /** Create mandant */
     anlegen: (mandant: MandantDTO) => Promise<MandantDTO>;
-    /** Load mandanten with filter */
-    ladenMitFilter: (filter: string) => Promise<MandantDTO[]>;
     admin: { addAdminRechte: (email: string) => Promise<void> };
     app: { getStatusByKunde: (kundeGuid: string) => Promise<AppActivationStatusDTO>; setStatusByKunde: (data: AppActivationStatusDTO) => Promise<AppActivationStatusDTO>; getAll: () => Promise<MandantDTO[]>; getBenutzerByKunde: (kundeGuid: string) => Promise<BenutzerDTO[]>; createOrUpdateBenutzer: (kundeGuid: string, data: BenutzerDTO, pwSenden?: boolean, passwort?: string) => Promise<BenutzerDTO>; deleteBenutzer: (kundeGuid: string, data: BenutzerDTO) => Promise<void>; aktiviere: (adminEmail: string) => Promise<void> };
 };
