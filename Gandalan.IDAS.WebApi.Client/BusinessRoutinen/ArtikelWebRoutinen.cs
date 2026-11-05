@@ -34,9 +34,4 @@ public class ArtikelWebRoutinen : WebRoutinenBase
     {
         return await PutAsync<KatalogArtikelDTO>($"Artikel/{artikel.KatalogArtikelGuid}", artikel);
     }
-
-    public async Task DeleteArtikelAsync(KatalogArtikelDTO artikel)
-    {
-        await DeleteAsync($"Artikel/{artikel.KatalogArtikelGuid}");
-    }
 }

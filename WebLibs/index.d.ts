@@ -172,8 +172,6 @@ export type ArtikelApi = {
     getAll: (changedSince?: Date) => Promise<WarenGruppeDTO[]>;
     /** Save article */
     saveArtikel: (artikel: KatalogArtikelDTO) => Promise<KatalogArtikelDTO>;
-    /** Delete article */
-    deleteArtikel: (artikel: KatalogArtikelDTO) => Promise<void>;
     /** Get all article individual data */
     getAllIndiDaten: (changedSince?: Date) => Promise<KatalogArtikelIndiDatenDTO[]>;
     /** Save article individual data */

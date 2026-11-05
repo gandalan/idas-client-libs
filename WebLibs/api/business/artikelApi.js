@@ -39,13 +39,6 @@ export function createArtikelApi(fluentApi) {
          */
         saveArtikel: (artikel) => fluentApi.put(`Artikel/${artikel.KatalogArtikelGuid}`, artikel),
 
-        /**
-         * Delete article
-         * @param {KatalogArtikelDTO} artikel
-         * @returns {Promise<void>}
-         */
-        deleteArtikel: (artikel) => fluentApi.delete(`Artikel/${artikel.KatalogArtikelGuid}`),
-
         // ArtikelIndiDatenWebRoutinen
         /**
          * Get all article individual data
