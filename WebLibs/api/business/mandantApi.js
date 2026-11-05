@@ -38,32 +38,6 @@ export function createMandantApi(fluentApi) {
         // MandantenAdminWebRoutinen
         admin: {
             /**
-             * Load mandanten with filter (admin)
-             * @param {string} filter
-             * @param {boolean} onlyHaendler
-             * @param {boolean} onlyProduzenten
-             * @returns {Promise<MandantDTO[]>}
-             */
-            ladenMitFilter: (filter, onlyHaendler, onlyProduzenten) =>
-                fluentApi.get(`MandantenAdmin?filter=${encodeURIComponent(filter || "")}&onlyHaendler=${onlyHaendler}&onlyProduzenten=${onlyProduzenten}`),
-
-            /**
-             * Load mandant by GUID (admin)
-             * @param {string} guid
-             * @returns {Promise<MandantDTO>}
-             */
-            laden: (guid) => fluentApi.get(`MandantenAdmin?guid=${guid}`),
-
-            /**
-             * Move mandant
-             * @param {string} mandantGuid
-             * @param {string} zielMandantGuid
-             * @returns {Promise<void>}
-             */
-            umziehen: (mandantGuid, zielMandantGuid) =>
-                fluentApi.put("MandantenAdmin", [mandantGuid, zielMandantGuid]),
-
-            /**
              * Add admin rights
              * @param {string} email
              * @returns {Promise<void>}
