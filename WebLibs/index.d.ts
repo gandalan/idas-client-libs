@@ -133,7 +133,6 @@ export type AnpassungApi = {
     delete: (anpassungGuid: string) => Promise<void>;
     /** Run adjustment web job */
     runWebJob: () => Promise<void>;
-    vorlage: { getAll: () => Promise<AnpassungVorlageDTO[]>; get: (guid: string) => Promise<AnpassungVorlageDTO>; save: (dto: AnpassungVorlageDTO) => Promise<void>; delete: (guid: string) => Promise<void> };
 };
 
 export type AnpassungDTO = {
@@ -146,17 +145,6 @@ export type AnpassungDTO = {
     Content: string;
     WarengruppeGuid: string;
     ArtikelGuid: string;
-    Version: number;
-    /** ISO date string */
-    ChangedDate: string;
-};
-
-export type AnpassungVorlageDTO = {
-    AnpassungVorlageGuid: string;
-    Art: string;
-    Name: string;
-    Beschreibung: string;
-    Content: string;
     Version: number;
     /** ISO date string */
     ChangedDate: string;

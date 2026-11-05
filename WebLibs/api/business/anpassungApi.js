@@ -18,17 +18,6 @@
  */
 
 /**
- * @typedef {Object} AnpassungVorlageDTO
- * @property {string} AnpassungVorlageGuid
- * @property {string} Art
- * @property {string} Name
- * @property {string} Beschreibung
- * @property {string} Content
- * @property {number} Version
- * @property {string} ChangedDate - ISO date string
- */
-
-/**
  * Anpassung API - Customization and adjustment management
  * @param {FluentApi} fluentApi
  */
@@ -61,35 +50,6 @@ export function createAnpassungApi(fluentApi) {
          */
         runWebJob: () => fluentApi.post("Anpassungen/WebJob", ""),
 
-        // AnpassungVorlagenWebRoutinen
-        vorlage: {
-            /**
-             * Get all adjustment templates
-             * @returns {Promise<AnpassungVorlageDTO[]>}
-             */
-            getAll: () => fluentApi.get("AnpassungVorlagen"),
-
-            /**
-             * Get adjustment template by GUID
-             * @param {string} guid
-             * @returns {Promise<AnpassungVorlageDTO>}
-             */
-            get: (guid) => fluentApi.get(`AnpassungVorlagen/${guid}`),
-
-            /**
-             * Save adjustment template
-             * @param {AnpassungVorlageDTO} dto
-             * @returns {Promise<void>}
-             */
-            save: (dto) => fluentApi.put(`AnpassungVorlagen/${dto.AnpassungVorlageGuid ?? dto.anpassungVorlageGuid ?? ""}`, dto),
-
-            /**
-             * Delete adjustment template
-             * @param {string} guid
-             * @returns {Promise<void>}
-             */
-            delete: (guid) => fluentApi.delete(`AnpassungVorlagen/${guid}`),
-        },
     };
 }
 
