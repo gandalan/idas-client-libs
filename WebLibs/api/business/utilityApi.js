@@ -128,39 +128,6 @@ export function createUtilityApi(fluentApi) {
      */
         getMaterialBestellungen: () => fluentApi.get("MaterialBestellungen"),
 
-        // NewsletterWebRoutinen
-        /**
-     * Request newsletter subscription by GUID
-     * @param {string} guid
-     * @returns {Promise<void>}
-     */
-        requestNewsletterByGuid: (guid) =>
-            fluentApi.post(`Newsletter/?id=${guid}&eintragen=true`, null),
-
-        /**
-     * Request newsletter subscription by email
-     * @param {string} mail
-     * @returns {Promise<void>}
-     */
-        requestNewsletterByMail: (mail) =>
-            fluentApi.post(`Newsletter/?mail=${encodeURIComponent(mail)}&eintragen=true`, null),
-
-        /**
-     * Unsubscribe newsletter by email
-     * @param {string} mail
-     * @returns {Promise<void>}
-     */
-        deleteNewsletterByMail: (mail) =>
-            fluentApi.post(`Newsletter/?mail=${encodeURIComponent(mail)}&eintragen=false`, null),
-
-        /**
-     * Unsubscribe newsletter by GUID
-     * @param {string} guid
-     * @returns {Promise<void>}
-     */
-        deleteNewsletterByGuid: (guid) =>
-            fluentApi.post(`Newsletter/?id=${guid}&eintragen=false`, null),
-
         // BackupWebRoutinen
         /**
      * Get vorgang GUIDs for backup
@@ -265,18 +232,6 @@ export function createUtilityApi(fluentApi) {
             const produzent = fluentApi.settings?.authToken?.mandant?.produzentMandantGuid;
             if (!mandant) return Promise.resolve([]);
             return fluentApi.get(`Nachrichten?mandantGuid=${mandant}&produzentGuid=${produzent}`);
-        },
-
-        // AppWebRoutinen - Helper method that doesn't exist in mandantApi.js
-        /**
-     * Get single user by customer and email
-     * @param {string} kundeGuid
-     * @param {string} email
-     * @returns {Promise<BenutzerDTO | undefined>}
-     */
-        getOneBenutzerByKunde: async (kundeGuid, email) => {
-            const list = await fluentApi.get(`AppBenutzer/${kundeGuid}`);
-            return list.find(x => x.emailAdresse === email);
         },
     };
 }

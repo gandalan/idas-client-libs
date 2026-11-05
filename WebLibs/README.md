@@ -128,6 +128,16 @@ export default { moduleName: "mein-modul", setup({ neherapp3 }) { /* ... */ } };
 - Die Beschreibungen erscheinen in `index.d.ts` als Doku-Kommentare
 - Ausfuehrliche Doku zur Host-API: `docs/MODULE.md` in NeherApp3
 
+### Breaking Changes in 3.0
+Version 3.0 entfernt Wrapper ohne Aufrufer in den eigenen Repos (App-Token-Härtung, ADO #17626). Die CI hebt die Version beim Veröffentlichen um einen Patch an, die erste 3.x-Version auf npm ist daher 3.0.1.
+- `idas.mandant` entfällt komplett (`abgleichen`, `anlegen`, `ladenMitFilter`, `admin.*`, `app.*`)
+- `idas.utility`: `getOneBenutzerByKunde`, `requestNewsletterByGuid`, `requestNewsletterByMail`, `deleteNewsletterByMail`, `deleteNewsletterByGuid`
+- `idas.benutzer.getRollenAll`
+- `idas.artikel`: `saveArtikel`, `deleteArtikel`, `getBenutzerVarianten`, `resetCacheVariantenListen`
+- `idas.auth`: `authenticateForFunction`, `removeExpiredTokens`
+- `idas.anpassung`: `delete`, `runWebJob`, `vorlage.*`
+- `idas.ui.saveUiEingabeFeldInfo`, `idas.av.saveMaterialBearbeitungsMethode`
+
 ### Wichtige Hinweise
 - `idasFluentApi(...)` fuer IDAS-Business-Routinen verwenden
 - `fluentApi(...)` fuer generische REST-Endpunkte verwenden

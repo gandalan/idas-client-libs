@@ -5,7 +5,6 @@
 /**
  * @typedef {import('../dtos/index.js').BenutzerDTO} BenutzerDTO
  * @typedef {import('../dtos/index.js').PasswortAendernDTO} PasswortAendernDTO
- * @typedef {import('../dtos/index.js').RolleDTO} RolleDTO
  */
 
 /**
@@ -80,14 +79,6 @@ export function createBenutzerApi(fluentApi) {
          */
         sicSyncWebJob: async () => {
             return await fluentApi.post("Benutzer/SICSyncWebJob", null);
-        },
-
-        /**
-         * Get all roles
-         * @returns {Promise<RolleDTO[]>} List of all roles
-         */
-        getRollenAll: async () => {
-            return await fluentApi.get("Rollen");
         }
     };
 }

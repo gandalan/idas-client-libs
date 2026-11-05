@@ -36,20 +36,6 @@ export function createAnpassungApi(fluentApi) {
          * @returns {Promise<void>}
          */
         save: (dto) => fluentApi.put(`Anpassungen/${dto.AnpassungGuid ?? dto.anpassungGuid ?? ""}`, dto),
-
-        /**
-         * Delete adjustment
-         * @param {string} anpassungGuid
-         * @returns {Promise<void>}
-         */
-        delete: (anpassungGuid) => fluentApi.delete(`Anpassungen/${anpassungGuid}`),
-
-        /**
-         * Run adjustment web job
-         * @returns {Promise<void>}
-         */
-        runWebJob: () => fluentApi.post("Anpassungen/WebJob", ""),
-
     };
 }
 

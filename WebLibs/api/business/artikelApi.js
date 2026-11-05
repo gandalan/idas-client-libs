@@ -32,13 +32,6 @@ export function createArtikelApi(fluentApi) {
             return fluentApi.get(url);
         },
 
-        /**
-         * Save article
-         * @param {KatalogArtikelDTO} artikel
-         * @returns {Promise<KatalogArtikelDTO>}
-         */
-        saveArtikel: (artikel) => fluentApi.put(`Artikel/${artikel.KatalogArtikelGuid}`, artikel),
-
         // ArtikelIndiDatenWebRoutinen
         /**
          * Get all article individual data
@@ -244,23 +237,6 @@ export function createArtikelApi(fluentApi) {
          * @returns {Promise<BelegDTO>}
          */
         berechneSonderfarben: (belegGuid) => fluentApi.post(`BelegSonderfarben?bguid=${belegGuid}`, null),
-
-        // BenutzerVariantenWebRoutinen
-        /**
-         * Get user variants
-         * @param {string} benutzerGuid
-         * @param {boolean} mitSperrliste
-         * @returns {Promise<VarianteDTO[]>}
-         */
-        getBenutzerVarianten: (benutzerGuid, mitSperrliste) =>
-            fluentApi.get(`BenutzerVarianten?id=${benutzerGuid}&mitSperrliste=${mitSperrliste}`),
-
-        // ResetCacheVariantenListenWebRoutinen
-        /**
-         * Reset variant list cache
-         * @returns {Promise<void>}
-         */
-        resetCacheVariantenListen: () => fluentApi.put("ResetCacheVariantenListen", null),
     };
 }
 
