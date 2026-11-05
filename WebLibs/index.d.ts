@@ -4019,8 +4019,6 @@ export type UiApi = {
     deleteUiScript: (guid: string) => Promise<void>;
     /** Get all UI field info */
     getAllUiFeldInfo: () => Promise<UIEingabeFeldInfoDTO[]>;
-    /** Save UI field info */
-    saveUiEingabeFeldInfo: (uiEingabeFeldInfo: UIEingabeFeldInfoDTO) => Promise<UIEingabeFeldInfoDTO>;
     /** Get all tag info */
     getAllTagInfo: (changedSince?: Date) => Promise<TagInfoDTO[]>;
     /** Get tag info suggestions */
