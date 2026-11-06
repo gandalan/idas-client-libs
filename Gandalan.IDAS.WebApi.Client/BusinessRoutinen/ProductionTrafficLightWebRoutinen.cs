@@ -11,10 +11,11 @@ public class ProductionTrafficLightWebRoutinen : WebRoutinenBase
     public ProductionTrafficLightWebRoutinen(IWebApiConfig settings) : base(settings) { }
 
     /// <summary>
-    /// Die Belege der angefragten Position stehen vorn.
+    /// Die Belege der angefragten Position stehen vorn. Mit <paramref name="loeschen"/> sind bei aktivem Storno Positionen in
+    /// Produktionsbelegen Rot, sie werden storniert statt gelöscht.
     /// </summary>
-    public async Task<List<BelegTrafficLightDTO>> GetForPositionChangeAsync(Guid vorgangGuid, Guid belegPositionGuid)
-        => await GetAsync<List<BelegTrafficLightDTO>>($"ProductionTrafficLight/PositionChange/{vorgangGuid}/{belegPositionGuid}");
+    public async Task<List<BelegTrafficLightDTO>> GetForPositionChangeAsync(Guid vorgangGuid, Guid belegPositionGuid, bool loeschen = false)
+        => await GetAsync<List<BelegTrafficLightDTO>>($"ProductionTrafficLight/PositionChange/{vorgangGuid}/{belegPositionGuid}{(loeschen ? "?loeschen=true" : "")}");
 
     /// <summary>
     /// Der Beleg, der gelöscht werden soll, steht an erster Stelle, auch ohne Positionen. Nur sein Status entscheidet, ob er
