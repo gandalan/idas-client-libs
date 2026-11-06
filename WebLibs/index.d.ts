@@ -129,11 +129,6 @@ export type AnpassungApi = {
     getAll: () => Promise<AnpassungDTO[]>;
     /** Save adjustment */
     save: (dto: AnpassungDTO) => Promise<void>;
-    /** Delete adjustment */
-    delete: (anpassungGuid: string) => Promise<void>;
-    /** Run adjustment web job */
-    runWebJob: () => Promise<void>;
-    vorlage: { getAll: () => Promise<AnpassungVorlageDTO[]>; get: (guid: string) => Promise<AnpassungVorlageDTO>; save: (dto: AnpassungVorlageDTO) => Promise<void>; delete: (guid: string) => Promise<void> };
 };
 
 export type AnpassungDTO = {
@@ -146,17 +141,6 @@ export type AnpassungDTO = {
     Content: string;
     WarengruppeGuid: string;
     ArtikelGuid: string;
-    Version: number;
-    /** ISO date string */
-    ChangedDate: string;
-};
-
-export type AnpassungVorlageDTO = {
-    AnpassungVorlageGuid: string;
-    Art: string;
-    Name: string;
-    Beschreibung: string;
-    Content: string;
     Version: number;
     /** ISO date string */
     ChangedDate: string;
@@ -182,10 +166,6 @@ export type AppActivationStatusDTO = {
 export type ArtikelApi = {
     /** Get all articles */
     getAll: (changedSince?: Date) => Promise<WarenGruppeDTO[]>;
-    /** Save article */
-    saveArtikel: (artikel: KatalogArtikelDTO) => Promise<KatalogArtikelDTO>;
-    /** Delete article */
-    deleteArtikel: (artikel: KatalogArtikelDTO) => Promise<void>;
     /** Get all article individual data */
     getAllIndiDaten: (changedSince?: Date) => Promise<KatalogArtikelIndiDatenDTO[]>;
     /** Save article individual data */
@@ -236,10 +216,6 @@ export type ArtikelApi = {
     saveSchnitt: (dto: SchnittDTO) => Promise<void>;
     /** Calculate special colors for beleg */
     berechneSonderfarben: (belegGuid: string) => Promise<BelegDTO>;
-    /** Get user variants */
-    getBenutzerVarianten: (benutzerGuid: string, mitSperrliste: boolean) => Promise<VarianteDTO[]>;
-    /** Reset variant list cache */
-    resetCacheVariantenListen: () => Promise<void>;
 };
 
 export type ArtosStartSettingsDTO = {
@@ -258,14 +234,10 @@ export type AufpreisAnpassungDTO = {
 export type AuthApi = {
     /** Authenticate */
     authenticate: (dto: LoginDTO) => Promise<string>;
-    /** Authenticate for function */
-    authenticateForFunction: (email: string) => Promise<string>;
     /** Refresh token */
     refreshToken: (token: string) => Promise<string>;
     /** Create service token */
     createServiceToken: (dto?: CreateServiceTokenRequestDTO) => Promise<string>;
-    /** Remove expired tokens */
-    removeExpiredTokens: () => Promise<void>;
     /** Get external app auth token */
     getFremdAppAuthToken: (fremdApp: string) => Promise<UserAuthTokenDTO>;
 };
@@ -356,8 +328,6 @@ export type AvApi = {
     saveSaegeDatenHistorieBulk: (dtos: SaegeDatenHistorieDTO[]) => Promise<void>;
     /** Get all material processing methods */
     getAllMaterialBearbeitungsMethoden: () => Promise<MaterialBearbeitungsMethodeDTO[]>;
-    /** Save material processing method */
-    saveMaterialBearbeitungsMethode: (dto: MaterialBearbeitungsMethodeDTO) => Promise<void>;
     material: { serieBerechnen: (serieGuid: string) => Promise<void>; getForSerie: (serieGuid: string) => Promise<MaterialbedarfDTO[]>; getOffenerBedarfV2: (serieGuid: string, filterCsvExportedMaterial?: boolean) => Promise<MaterialbedarfDTO[]>; getOffenerBedarf: (serieGuid: string) => Promise<MaterialbedarfDTO[]>; resetForSerie: (serieGuid: string) => Promise<void>; berechnenForFunction: (serieGuid: string, mandantId: number) => Promise<string[]>; resetFromAvPosForFunction: (avPosGuid: string, mandantId: number) => Promise<string[]>; addOrUpdate: (dto: MaterialbedarfDTO) => Promise<SerienMaterialEditDTO>; delete: (materialbedarfGuid: string) => Promise<void> };
 };
 
@@ -1043,8 +1013,6 @@ export type BenutzerApi = {
     passwortAendern: (passwortAendernData: PasswortAendernDTO) => Promise<any>;
     /** Trigger SIC sync web job */
     sicSyncWebJob: () => Promise<any>;
-    /** Get all roles */
-    getRollenAll: () => Promise<RolleDTO[]>;
 };
 
 export type BenutzerDTO = {
@@ -1787,7 +1755,6 @@ export type IDASFluentApi = FluentApi & {
   farbe: FarbeApi;
   lager: LagerApi;
   lieferung: LieferungApi;
-  mandant: MandantApi;
   print: PrintApi;
   historie: HistorieApi;
   system: SystemApi;
@@ -2591,17 +2558,6 @@ export type MandantAndBelegPosGuidDTO = {
     MandantId: number;
     /** UUID */
     BelegPositionGuid: string;
-};
-
-export type MandantApi = {
-    /** Sync mandanten list */
-    abgleichen: (list: MandantDTO[]) => Promise<MandantDTO[]>;
-    /** Create mandant */
-    anlegen: (mandant: MandantDTO) => Promise<MandantDTO>;
-    /** Load mandanten with filter */
-    ladenMitFilter: (filter: string) => Promise<MandantDTO[]>;
-    admin: { ladenMitFilter: (filter: string, onlyHaendler: boolean, onlyProduzenten: boolean) => Promise<MandantDTO[]>; laden: (guid: string) => Promise<MandantDTO>; umziehen: (mandantGuid: string, zielMandantGuid: string) => Promise<void>; addAdminRechte: (email: string) => Promise<void> };
-    app: { getStatusByKunde: (kundeGuid: string) => Promise<AppActivationStatusDTO>; setStatusByKunde: (data: AppActivationStatusDTO) => Promise<AppActivationStatusDTO>; getAll: () => Promise<MandantDTO[]>; getBenutzerByKunde: (kundeGuid: string) => Promise<BenutzerDTO[]>; createOrUpdateBenutzer: (kundeGuid: string, data: BenutzerDTO, pwSenden?: boolean, passwort?: string) => Promise<BenutzerDTO>; deleteBenutzer: (kundeGuid: string, data: BenutzerDTO) => Promise<void>; aktiviere: (adminEmail: string) => Promise<void> };
 };
 
 export type MandantDTO = {
@@ -4033,8 +3989,6 @@ export type UiApi = {
     deleteUiScript: (guid: string) => Promise<void>;
     /** Get all UI field info */
     getAllUiFeldInfo: () => Promise<UIEingabeFeldInfoDTO[]>;
-    /** Save UI field info */
-    saveUiEingabeFeldInfo: (uiEingabeFeldInfo: UIEingabeFeldInfoDTO) => Promise<UIEingabeFeldInfoDTO>;
     /** Get all tag info */
     getAllTagInfo: (changedSince?: Date) => Promise<TagInfoDTO[]>;
     /** Get tag info suggestions */
@@ -4227,14 +4181,6 @@ export type UtilityApi = {
     getMaterialBestellungenByJahr: (jahr: number) => Promise<BaseListItemDTO[]>;
     /** Get all material orders */
     getMaterialBestellungen: () => Promise<BaseListItemDTO[]>;
-    /** Request newsletter subscription by GUID */
-    requestNewsletterByGuid: (guid: string) => Promise<void>;
-    /** Request newsletter subscription by email */
-    requestNewsletterByMail: (mail: string) => Promise<void>;
-    /** Unsubscribe newsletter by email */
-    deleteNewsletterByMail: (mail: string) => Promise<void>;
-    /** Unsubscribe newsletter by GUID */
-    deleteNewsletterByGuid: (guid: string) => Promise<void>;
     /** Get vorgang GUIDs for backup */
     getBackupVorgangGuids: (email: string, year?: number, onlyBills?: boolean) => Promise<string[]>;
     /** Get vorgang for backup */
@@ -4255,8 +4201,6 @@ export type UtilityApi = {
     getGsqlBeleg: (belegGuid: string) => Promise<string>;
     /** Get all notifications */
     getAllNotifications: () => Promise<NachrichtenDTO[]>;
-    /** Get single user by customer and email */
-    getOneBenutzerByKunde: (kundeGuid: string, email: string) => Promise<BenutzerDTO | undefined>;
 };
 
 export type VarianteDTO = {

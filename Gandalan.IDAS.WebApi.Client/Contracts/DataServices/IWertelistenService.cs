@@ -8,6 +8,5 @@ public interface IWertelistenService
 {
     Task<WerteListeDTO[]> GetAllAsync();
     Task<WerteListeDTO> LoadAsync(Guid guid);
-    Task SaveAsync(WerteListeDTO liste);
     Task<WerteListeDTO> GetWerteliste(string werteListeName);
 }

@@ -12,7 +12,4 @@ public class MaterialBearbeitungenWebRoutinen : WebRoutinenBase
 
     public async Task<MaterialBearbeitungsMethodeDTO[]> GetAllAsync()
         => await GetAsync<MaterialBearbeitungsMethodeDTO[]>("MaterialBearbeitungsMethoden");
-
-    public async Task SaveMethodeAsync(MaterialBearbeitungsMethodeDTO dto)
-        => await PutAsync("MaterialBearbeitungsMethoden", dto);
 }

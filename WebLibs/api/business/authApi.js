@@ -20,14 +20,6 @@ export function createAuthApi(fluentApi) {
         authenticate: (dto) => fluentApi.post("LoginJwt/Authenticate", dto, false),
 
         /**
-         * Authenticate for function
-         * @param {string} email
-         * @returns {Promise<string>}
-         */
-        authenticateForFunction: (email) =>
-            fluentApi.post(`LoginJwt/AuthenticateForFunction/?email=${encodeURIComponent(email)}`, null),
-
-        /**
          * Refresh token
          * @param {string} token
          * @returns {Promise<string>}
@@ -43,12 +35,6 @@ export function createAuthApi(fluentApi) {
         createServiceToken: (dto) => fluentApi.post("LoginJwt/CreateServiceToken", dto),
 
         // AuthTokenWebRoutinen
-        /**
-         * Remove expired tokens
-         * @returns {Promise<void>}
-         */
-        removeExpiredTokens: () =>
-            fluentApi.post("AuthToken/RemoveExpiredTokens", null),
 
         /**
          * Get external app auth token
