@@ -2920,6 +2920,8 @@ export type NeherApp3MenuItem = {
     separator?: boolean;
     /** If true, renders `text` as a non-interactive group heading inside a sub-menu (ALL CAPS, bold, extra space above; icon/url are ignored). Requires `parent`; ignored on the top level. `text` is translated like any other entry. */
     heading?: boolean;
+    /** Top level only: start the item under "Weitere Apps" (the overflow popout) instead of in the main navigation — for modules that are rarely needed. Users can move it either way; their choice wins. Give the item a fixed `id` so that choice can be stored. */
+    overflow?: boolean;
     /** Catalog in which `text` is translated. Set automatically to the registering module's name; only pass it explicitly for items added outside `setup`. See `NeherApp3I18n`. */
     i18nNamespace?: string;
 };
