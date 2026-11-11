@@ -17,14 +17,14 @@ public class DataFileWebRoutinen : WebRoutinenBase
     }
 
     public async Task<byte[]> GetFileAsync(string filename)
-        => await GetDataAsync($"DataFile/?filename={filename}");
+        => await GetDataAsync($"DataFile/?filename={Uri.EscapeDataString(filename)}");
 
     public async Task<FileInfoDTO[]> GetFileListAsync(string directory = "/")
         => await GetAsync<FileInfoDTO[]>($"DataFile/?subdir={Uri.EscapeDataString(directory)}");
 
     public async Task SaveFileAsync(string fileName, byte[] data)
-        => await PutDataAsync($"DataFile/?filename={fileName}", data);
+        => await PutDataAsync($"DataFile/?filename={Uri.EscapeDataString(fileName)}", data);
 
     public async Task DeleteFileAsync(string filename)
-        => await DeleteAsync($"DataFile/?filename={filename}");
+        => await DeleteAsync($"DataFile/?filename={Uri.EscapeDataString(filename)}");
 }
