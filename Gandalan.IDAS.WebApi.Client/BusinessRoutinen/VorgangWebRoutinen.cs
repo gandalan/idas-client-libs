@@ -90,4 +90,36 @@ public class VorgangWebRoutinen : WebRoutinenBase
 
     public async Task<VorgangDTO> GetVorgangForFunctionAsync(Guid vorgangGuid, long mandantId)
         => await GetAsync<VorgangDTO>($"GetVorgangForFunction?id={vorgangGuid}&mandantID={mandantId}");
+
+    /// <summary>
+    /// Übernimmt die Daten der Position in die angegebenen Vorgänger, Nachfolger und Geschwister (Positionsampel PositionChange
+    /// zeigt sie) und liefert den gespeicherten Vorgang. Preise übernimmt sie nicht, der Listenpreis der Ziele wird 0; der Aufrufer
+    /// rechnet sie neu. 409 mit Begründung, wenn die Übernahme abgelehnt wird (etwa Einstellung aus, Vorgang archiviert, rote Ampel,
+    /// kein Ziel oder Ziel außerhalb der Kette), 403 bei einem fremden Vorgang.
+    /// </summary>
+    public async Task<VorgangDTO> PositionDatenUebernehmenAsync(Guid vorgangGuid, Guid belegPositionGuid, List<Guid> zielBelegPositionGuids)
+        => await PostAsync<VorgangDTO>($"Vorgang/PositionDatenUebernehmen/{vorgangGuid}/{belegPositionGuid}", zielBelegPositionGuids);
+
+    /// <summary>
+    /// Kopiert eine neu erfasste Position ohne Vorgänger und Nachfolger in bestehende oder neue Belege, oder mit StattBelegPositionGuid
+    /// anstelle nicht änderbarer Positionen in neue Belege derselben Art, verkettet die Kopien und liefert den gespeicherten Vorgang.
+    /// <paramref name="mitPlatzhaltern"/> gilt nur, wenn dabei ein neuer Produktionsbeleg entsteht. 409 mit Begründung, wenn die
+    /// Übernahme abgelehnt wird (etwa Einstellung aus, Vorgang archiviert, Position schon verkettet oder Ziel unzulässig), 403 bei
+    /// einem fremden Vorgang. 500, wenn die Kopien gespeichert sind, die Produktionsfreigabe für den neuen Produktionsbeleg aber einen
+    /// Fehler meldet. In einen bestehenden Produktionsbeleg gibt die Quelle wie bei der Freigabe ihre Reservierung ab; die geplante
+    /// Serie übernimmt die Kopie nur mit <paramref name="serieUebernehmen"/>.
+    /// </summary>
+    public async Task<VorgangDTO> PositionInBelegeUebernehmenAsync(Guid vorgangGuid, Guid belegPositionGuid, List<PositionUebernahmeZielDTO> ziele, bool mitPlatzhaltern,
+        bool serieUebernehmen)
+        => await PostAsync<VorgangDTO>(
+            $"Vorgang/PositionInBelegeUebernehmen/{vorgangGuid}/{belegPositionGuid}?mitPlatzhaltern={mitPlatzhaltern}&serieUebernehmen={serieUebernehmen}", ziele);
+
+    /// <summary>
+    /// Bewertet die Ziele für <see cref="PositionInBelegeUebernehmenAsync"/> einzeln, damit ein Dialog nicht anbietet, was die
+    /// Übernahme ablehnt (Felder siehe <see cref="PositionUebernahmeBewertungDTO"/>). 409 mit Begründung, wenn die Prüfung abgelehnt
+    /// wird (etwa Einstellung aus oder Vorgang archiviert), 403 bei einem fremden Vorgang. Gedacht für die Kopien einer neu erfassten
+    /// Position; ein Ziel mit StattBelegPositionGuid gilt hier als unzulässig.
+    /// </summary>
+    public async Task<PositionUebernahmeBewertungDTO> PositionInBelegeUebernehmenPruefenAsync(Guid vorgangGuid, Guid belegPositionGuid, List<PositionUebernahmeZielDTO> ziele)
+        => await PostAsync<PositionUebernahmeBewertungDTO>($"Vorgang/PositionInBelegeUebernehmenPruefen/{vorgangGuid}/{belegPositionGuid}", ziele);
 }
