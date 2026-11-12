@@ -1220,11 +1220,11 @@ export type Endpoint = {
     /** The module name of this endpoint. */
     name: string;
     /** Subscribe; returns an unsubscribe function. */
-    on: (type: TypePattern, handler: MessageHandler) => (() => void);
+    on: (subject: SubjectPattern, handler: MessageHandler) => (() => void);
     /** Directed message (`from` is stamped automatically). `to` is a module name, or `user:…`/`app:…`/`bot:…` for delivery via the server (`delivered` then means "handed to the server"; replies arrive as local broadcasts). */
-    send: (to: string, type: string, payload?: any, options?: SendOptions) => Delivery;
+    send: (to: string, subject: string, payload?: any, options?: SendOptions) => Delivery;
     /** Broadcast to all other endpoints (`from` is stamped automatically; the sender does not receive its own broadcast). */
-    broadcast: (type: string, payload?: any, options?: SendOptions) => Delivery;
+    broadcast: (subject: string, payload?: any, options?: SendOptions) => Delivery;
     /** Remove all subscriptions created through this handle. */
     dispose: () => void;
 };
@@ -2960,6 +2960,17 @@ export type NeherApp3Module = {
  */
 export type NeherApp3MountProps = NeherApp3SetupContext & { [param: string]: string | undefined };
 
+/**
+ * Payload of the `shell.notify` subject: the shell shows it as a toast.
+ * Send it locally to `"shell"` (or as broadcast), from a server to `user:<guid|mail>`.
+ */
+export type NeherApp3NotifyPayload = {
+    /** Plain text (no HTML, not translated by the shell), cut at 500 characters. */
+    text: string;
+    /** Default `info` (disappears after 5 s); `warning`/`alert` stay until clicked. */
+    level?: "info" | "warning" | "alert";
+};
+
 export type NeherApp3NotifyType = 0 | 1 | 2;
 
 /**
@@ -3153,8 +3164,8 @@ export type NeherApp3ThemePreference = NeherApp3ThemeName | "system";
 export type NeherMessage = {
     /** Unique message id (`crypto.randomUUID`). */
     id: string;
-    /** Message kind, e.g. `"artikel.selected"`. */
-    type: string;
+    /** Message subject, e.g. `"artikel.selected"`. */
+    subject: string;
     /** Target: module name, a server address (`user:…`, `app:…`, `bot:…`) or `null` (broadcast). */
     to: string | null;
     /** Sender, always stamped: the module name locally; from the server `user:<guid>/app:<module>`, `bot:<name>`, `service/app:<module>` (an app backend sending with an IDAS ServiceToken) or `system`. */
@@ -3790,7 +3801,7 @@ export type SchnittoptimierungsOptionen = ('Keine'|'Lieferdatum'|'Serie'|'FarbeO
 
 /** Options for `send`/`broadcast`. */
 export type SendOptions = {
-    /** Keep this `(to, type)` as a last value; subscribers that register later receive it immediately. Default `false`. */
+    /** Keep this `(to, subject)` as a last value; subscribers that register later receive it immediately. Default `false`. */
     retain?: boolean;
 };
 
@@ -3950,6 +3961,12 @@ export type SonderwuenscheDTO = {
     Wert: string;
 };
 
+/**
+ * Subscription subject pattern: exact (`"a.b"`), prefix glob (`"a.*"`), all (`"*"`)
+ * or a list of patterns.
+ */
+export type SubjectPattern = string | string[];
+
 export type SystemApi = {
     /** Get changes for type */
     getChanges: (typeName: string, changedSince: Date) => Promise<ChangeDTO[]>;
@@ -4009,12 +4026,6 @@ export type TranslationCatalogs = Record<string, TranslationTable>;
 
 /** A translation table: key (the German source text) -> translation. */
 export type TranslationTable = Record<string, string>;
-
-/**
- * Subscription type pattern: exact (`"a.b"`), prefix glob (`"a.*"`), all (`"*"`)
- * or a list of patterns.
- */
-export type TypePattern = string | string[];
 
 export type UiApi = {
     /** Get all UI definitions */

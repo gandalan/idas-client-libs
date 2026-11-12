@@ -75,10 +75,18 @@
  */
 
 /**
+ * Payload of the `shell.notify` subject: the shell shows it as a toast.
+ * Send it locally to `"shell"` (or as broadcast), from a server to `user:<guid|mail>`.
+ * @typedef {Object} NeherApp3NotifyPayload
+ * @property {string} text - Plain text (no HTML, not translated by the shell), cut at 500 characters.
+ * @property {"info" | "warning" | "alert"} [level] - Default `info` (disappears after 5 s); `warning`/`alert` stay until clicked.
+ */
+
+/**
  * A single message envelope delivered to handlers.
  * @typedef {Object} NeherMessage
  * @property {string} id - Unique message id (`crypto.randomUUID`).
- * @property {string} type - Message kind, e.g. `"artikel.selected"`.
+ * @property {string} subject - Message subject, e.g. `"artikel.selected"`.
  * @property {string | null} to - Target: module name, a server address (`user:…`, `app:…`, `bot:…`) or `null` (broadcast).
  * @property {string | null} from - Sender, always stamped: the module name locally; from the server `user:<guid>/app:<module>`, `bot:<name>`, `service/app:<module>` (an app backend sending with an IDAS ServiceToken) or `system`.
  * @property {any} payload - JSON-serializable payload.
@@ -93,15 +101,15 @@
  */
 
 /**
- * Subscription type pattern: exact (`"a.b"`), prefix glob (`"a.*"`), all (`"*"`)
+ * Subscription subject pattern: exact (`"a.b"`), prefix glob (`"a.*"`), all (`"*"`)
  * or a list of patterns.
- * @typedef {string | string[]} TypePattern
+ * @typedef {string | string[]} SubjectPattern
  */
 
 /**
  * Options for `send`/`broadcast`.
  * @typedef {Object} SendOptions
- * @property {boolean} [retain] - Keep this `(to, type)` as a last value; subscribers that register later receive it immediately. Default `false`.
+ * @property {boolean} [retain] - Keep this `(to, subject)` as a last value; subscribers that register later receive it immediately. Default `false`.
  */
 
 /**
@@ -116,9 +124,9 @@
  * idempotent; each handle's `dispose` only removes subscriptions made through it.
  * @typedef {Object} Endpoint
  * @property {string} name - The module name of this endpoint.
- * @property {(type: TypePattern, handler: MessageHandler) => (() => void)} on - Subscribe; returns an unsubscribe function.
- * @property {(to: string, type: string, payload?: any, options?: SendOptions) => Delivery} send - Directed message (`from` is stamped automatically). `to` is a module name, or `user:…`/`app:…`/`bot:…` for delivery via the server (`delivered` then means "handed to the server"; replies arrive as local broadcasts).
- * @property {(type: string, payload?: any, options?: SendOptions) => Delivery} broadcast - Broadcast to all other endpoints (`from` is stamped automatically; the sender does not receive its own broadcast).
+ * @property {(subject: SubjectPattern, handler: MessageHandler) => (() => void)} on - Subscribe; returns an unsubscribe function.
+ * @property {(to: string, subject: string, payload?: any, options?: SendOptions) => Delivery} send - Directed message (`from` is stamped automatically). `to` is a module name, or `user:…`/`app:…`/`bot:…` for delivery via the server (`delivered` then means "handed to the server"; replies arrive as local broadcasts).
+ * @property {(subject: string, payload?: any, options?: SendOptions) => Delivery} broadcast - Broadcast to all other endpoints (`from` is stamped automatically; the sender does not receive its own broadcast).
  * @property {() => void} dispose - Remove all subscriptions created through this handle.
  */
 
