@@ -20,7 +20,7 @@
 /** @typedef {import("./fluentAuthManager.js").FluentAuthManager} FluentAuthManager */
 
 /**
- * @typedef {0 | 1 | 2} NeherApp3NotifyType
+ * @typedef {0 | 1 | 2 | 3} NeherApp3NotifyType
  */
 
 /**
@@ -79,7 +79,7 @@
  * Send it locally to `"shell"` (or as broadcast), from a server to `user:<guid|mail>`.
  * @typedef {Object} NeherApp3NotifyPayload
  * @property {string} text - Plain text (no HTML, not translated by the shell), cut at 500 characters.
- * @property {"info" | "warning" | "alert"} [level] - Default `info` (disappears after 5 s); `warning`/`alert` stay until clicked.
+ * @property {"info" | "success" | "warning" | "alert"} [level] - Default `info`; `info`/`success` disappear after 5 s, `warning`/`alert` stay until clicked.
  */
 
 /**
@@ -369,7 +369,7 @@
  * @property {(id: string, patch: Partial<NeherApp3MenuItem>) => boolean} updateMenuItem - Updates properties of an existing menu item by `id`. Only keys present in `patch` are changed; the `id` is preserved. Returns `true` if the item existed. Relative icon URLs are resolved against the module's base URL.
  * @property {(id: string) => boolean} removeMenuItem - Removes the menu item with the given `id`. Returns `true` if an item was removed.
  * @property {(appModule: NeherApp3Module | string) => Promise<void>} addApp
- * @property {(message: string, type?: NeherApp3NotifyType, cb?: function) => void} notify - Shows a notification. Type defaults to 0 (info). Callback is optional.
+ * @property {(message: string, type?: NeherApp3NotifyType, cb?: function) => void} notify - Shows a notification: 0 info, 1 warning, 2 error, 3 success (default 0). Info and success disappear after 5 s. Callback (on click) is optional.
  * @property {NeherApp3ApiCollection} api
  * @property {NeherApp3Messages} messages - In-realm message bus for module-to-module communication.
  * @property {NeherApp3I18n} i18n - Localization: register a module's translation catalog, translate, switch language, sort language-aware.

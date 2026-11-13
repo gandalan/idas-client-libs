@@ -2816,7 +2816,7 @@ export type NeherApp3 = {
     /** Removes the menu item with the given `id`. Returns `true` if an item was removed. */
     removeMenuItem: (id: string) => boolean;
     addApp: (appModule: NeherApp3Module | string) => Promise<void>;
-    /** Shows a notification. Type defaults to 0 (info). Callback is optional. */
+    /** Shows a notification: 0 info, 1 warning, 2 error, 3 success (default 0). Info and success disappear after 5 s. Callback (on click) is optional. */
     notify: (message: string, type?: NeherApp3NotifyType, cb?: Function) => void;
     api: NeherApp3ApiCollection;
     /** In-realm message bus for module-to-module communication. */
@@ -2967,11 +2967,11 @@ export type NeherApp3MountProps = NeherApp3SetupContext & { [param: string]: str
 export type NeherApp3NotifyPayload = {
     /** Plain text (no HTML, not translated by the shell), cut at 500 characters. */
     text: string;
-    /** Default `info` (disappears after 5 s); `warning`/`alert` stay until clicked. */
-    level?: "info" | "warning" | "alert";
+    /** Default `info`; `info`/`success` disappear after 5 s, `warning`/`alert` stay until clicked. */
+    level?: "info" | "success" | "warning" | "alert";
 };
 
-export type NeherApp3NotifyType = 0 | 1 | 2;
+export type NeherApp3NotifyType = 0 | 1 | 2 | 3;
 
 /**
  * The signed-in user, exposed at `neherapp3.profile`.
