@@ -35,7 +35,7 @@ public static class Permissions
     public const string Anwendungstester = "Anwendungstester";
     public const string IntegrityCheckToolUser = "IntegrityCheckToolUser";
     public const string NeherApp3Dev = "NeherApp3-Dev";
-    public const string C3DiffUse = "c3diff:use";
+    public const string C3DiffUse = "c3diff.use";
 }
 
 /// <summary>
