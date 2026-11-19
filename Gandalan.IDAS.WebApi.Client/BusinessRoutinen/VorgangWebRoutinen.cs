@@ -93,7 +93,7 @@ public class VorgangWebRoutinen : WebRoutinenBase
 
     /// <summary>
     /// Übernimmt die Daten der Position in die angegebenen Vorgänger, Nachfolger und Geschwister (Positionsampel PositionChange
-    /// zeigt sie) und liefert den gespeicherten Vorgang. Preise übernimmt sie nicht, der Listenpreis der Ziele wird 0; der Aufrufer
+    /// zeigt sie) und liefert den gespeicherten Vorgang. Übernommen werden Produkt und Preise; der Listenpreis der Ziele wird 0, der Aufrufer
     /// rechnet sie neu. 409 mit Begründung, wenn die Übernahme abgelehnt wird (etwa Einstellung aus, Vorgang archiviert, rote Ampel,
     /// kein Ziel oder Ziel außerhalb der Kette), 403 bei einem fremden Vorgang.
     /// </summary>

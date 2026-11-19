@@ -16,4 +16,5 @@ public static class TrafficLightReasonCodes
     public const string StornoActive = "StornoActive";
     public const string VorgangArchived = "VorgangArchived";
     public const string Cancelled = "Cancelled";
+    public const string RenumbersFollowing = "RenumbersFollowing";
 }

@@ -30,4 +30,10 @@ public class PositionUebernahmeBewertungDTO
     /// <c>BelegDTO.BelegArt</c>.
     /// </summary>
     public string FreigabeBelegArt { get; set; }
+
+    /// <summary>
+    /// Warnung, wenn die übergebenen Ziele zusammen die AB-Position an der Produktionsfreigabe vorbeiführen: AB mit Lieferschein oder
+    /// Rechnung, aber ohne Produktionsbeleg, oder eine Position in einer schon freigegebenen AB ohne Produktionsbeleg. Sonst <c>null</c>.
+    /// </summary>
+    public string FreigabeHinweis { get; set; }
 }
