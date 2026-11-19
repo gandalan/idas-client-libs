@@ -36,6 +36,8 @@ public static class Permissions
     public const string IntegrityCheckToolUser = "IntegrityCheckToolUser";
     public const string NeherApp3Dev = "NeherApp3-Dev";
     public const string C3DiffUse = "c3diff.use";
+    public const string AuthServerUserAdmin = "AuthServer.UserAdmin";
+    public const string P3Admin = "P3.Admin";
 }
 
 /// <summary>
@@ -55,6 +57,6 @@ public static class PermissionExtensions
     /// <returns><see langword="true"/>, wenn das <see cref="BenutzerDTO"/> über die angegebene Berechtigung verfügt, andernfalls <see langword="false"/>.</returns>
     public static bool HasPermission(this BenutzerDTO benutzer, string permission)
     {
-        return benutzer?.Rollen?.Any(r => r.Berechtigungen?.Any(b => b.Code.Equals(permission, StringComparison.OrdinalIgnoreCase)) ?? false) ?? false;
+        return benutzer?.Rollen?.Any(r => r.Berechtigungen?.Any(b => string.Equals(b.Code, permission, StringComparison.OrdinalIgnoreCase)) ?? false) ?? false;
     }
 }
