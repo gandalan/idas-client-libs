@@ -32,18 +32,19 @@
   --color-secondary: #185e89;
   --color-secondary-content: #ffffff;
   --color-accent: #76b82a;
-  --color-accent-content: #ffffff;
+  --color-accent-content: oklch(20% 0 0);
 
   --color-neutral: oklch(20% 0 0);
   --color-neutral-content: #ffffff;
 
-  --color-info: oklch(70% 0.15 220);
+  /* Status-Farben hell: weiße Schrift erreicht 4,5:1 (DesignGuide, 25.11.2026). */
+  --color-info: oklch(52% 0.15 220);
   --color-info-content: #ffffff;
-  --color-success: oklch(65% 0.2 140);
+  --color-success: oklch(52% 0.2 140);
   --color-success-content: #ffffff;
   --color-warning: oklch(80% 0.18 85);
   --color-warning-content: oklch(20% 0 0);
-  --color-error: oklch(65% 0.25 25);
+  --color-error: oklch(58% 0.22 25);
   --color-error-content: #ffffff;
 
   --radius-selector: 0.5rem;
