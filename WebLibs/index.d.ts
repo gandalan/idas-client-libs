@@ -4021,6 +4021,14 @@ export type TemplateDTO = {
     Benutzer: string;
 };
 
+export type TooltipOptions = {
+    text: string;
+    placement?: 'top' | 'bottom';
+    maxWidth?: string;
+    openDelay?: number;
+    closeDelay?: number;
+};
+
 /** Translation tables by BCP-47 language code, e.g. `{ en: { "Bestand": "Stock" } }`. */
 export type TranslationCatalogs = Record<string, TranslationTable>;
 
