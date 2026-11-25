@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.Linq;
 
 using Gandalan.IDAS.WebApi.Client.Constants;
+using Gandalan.IDAS.WebApi.Util;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
@@ -124,7 +125,7 @@ public class BelegDruckDTO
         }
 
         if (_vorgangDto.ApplicationSpecificProperties.TryGetValue("settings", out var settings) &&
-            settings.TryGetValue("Kontrollkuerzel", out var kontrollkuerzel))
+            settings.TryGetValue(AppPropertyKeys.Vorgang.KONTROLLKUERZEL, out var kontrollkuerzel))
         {
             return kontrollkuerzel as string;
         }
