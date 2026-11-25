@@ -25,6 +25,18 @@
     "jwt-decode": "^4.0.0",
     "validator": "^13.15.35"
   },
+  "peerDependencies": {
+    "@lucide/svelte": "^1.0.0",
+    "svelte": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@lucide/svelte": {
+      "optional": true
+    },
+    "svelte": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@babel/core": "^8.0.1",
     "@babel/eslint-parser": "^8.0.1",
