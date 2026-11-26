@@ -20,7 +20,7 @@
 /** @typedef {import("./fluentAuthManager.js").FluentAuthManager} FluentAuthManager */
 
 /**
- * @typedef {0 | 1 | 2} NeherApp3NotifyType
+ * @typedef {0 | 1 | 2 | 3} NeherApp3NotifyType
  */
 
 /**
@@ -43,6 +43,7 @@
  * @property {boolean} [hidden] - If true, the menu item will not be displayed
  * @property {boolean} [separator] - If true, renders as a non-interactive divider between items (text/icon/url are ignored). Use `parent` to place the separator inside a sub-menu.
  * @property {boolean} [heading] - If true, renders `text` as a non-interactive group heading inside a sub-menu (ALL CAPS, bold, extra space above; icon/url are ignored). Requires `parent`; ignored on the top level. `text` is translated like any other entry.
+ * @property {boolean} [overflow] - Top level only: start the item under "Weitere Apps" (the overflow popout) instead of in the main navigation — for modules that are rarely needed. Users can move it either way; their choice wins. Give the item a fixed `id` so that choice can be stored.
  * @property {string} [i18nNamespace] - Catalog in which `text` is translated. Set automatically to the registering module's name; only pass it explicitly for items added outside `setup`. See `NeherApp3I18n`.
  */
 
@@ -74,10 +75,18 @@
  */
 
 /**
+ * Payload of the `shell.notify` subject: the shell shows it as a toast.
+ * Send it locally to `"shell"` (or as broadcast), from a server to `user:<guid|mail>`.
+ * @typedef {Object} NeherApp3NotifyPayload
+ * @property {string} text - Plain text (no HTML, not translated by the shell), cut at 500 characters.
+ * @property {"info" | "success" | "warning" | "alert"} [level] - Default `info`; `info`/`success` disappear after 5 s, `warning`/`alert` stay until clicked.
+ */
+
+/**
  * A single message envelope delivered to handlers.
  * @typedef {Object} NeherMessage
  * @property {string} id - Unique message id (`crypto.randomUUID`).
- * @property {string} type - Message kind, e.g. `"artikel.selected"`.
+ * @property {string} subject - Message subject, e.g. `"artikel.selected"`.
  * @property {string | null} to - Target: module name, a server address (`user:…`, `app:…`, `bot:…`) or `null` (broadcast).
  * @property {string | null} from - Sender, always stamped: the module name locally; from the server `user:<guid>/app:<module>`, `bot:<name>`, `service/app:<module>` (an app backend sending with an IDAS ServiceToken) or `system`.
  * @property {any} payload - JSON-serializable payload.
@@ -92,15 +101,15 @@
  */
 
 /**
- * Subscription type pattern: exact (`"a.b"`), prefix glob (`"a.*"`), all (`"*"`)
+ * Subscription subject pattern: exact (`"a.b"`), prefix glob (`"a.*"`), all (`"*"`)
  * or a list of patterns.
- * @typedef {string | string[]} TypePattern
+ * @typedef {string | string[]} SubjectPattern
  */
 
 /**
  * Options for `send`/`broadcast`.
  * @typedef {Object} SendOptions
- * @property {boolean} [retain] - Keep this `(to, type)` as a last value; subscribers that register later receive it immediately. Default `false`.
+ * @property {boolean} [retain] - Keep this `(to, subject)` as a last value; subscribers that register later receive it immediately. Default `false`.
  */
 
 /**
@@ -115,9 +124,9 @@
  * idempotent; each handle's `dispose` only removes subscriptions made through it.
  * @typedef {Object} Endpoint
  * @property {string} name - The module name of this endpoint.
- * @property {(type: TypePattern, handler: MessageHandler) => (() => void)} on - Subscribe; returns an unsubscribe function.
- * @property {(to: string, type: string, payload?: any, options?: SendOptions) => Delivery} send - Directed message (`from` is stamped automatically). `to` is a module name, or `user:…`/`app:…`/`bot:…` for delivery via the server (`delivered` then means "handed to the server"; replies arrive as local broadcasts).
- * @property {(type: string, payload?: any, options?: SendOptions) => Delivery} broadcast - Broadcast to all other endpoints (`from` is stamped automatically; the sender does not receive its own broadcast).
+ * @property {(subject: SubjectPattern, handler: MessageHandler) => (() => void)} on - Subscribe; returns an unsubscribe function.
+ * @property {(to: string, subject: string, payload?: any, options?: SendOptions) => Delivery} send - Directed message (`from` is stamped automatically). `to` is a module name, or `user:…`/`app:…`/`bot:…` for delivery via the server (`delivered` then means "handed to the server"; replies arrive as local broadcasts).
+ * @property {(subject: string, payload?: any, options?: SendOptions) => Delivery} broadcast - Broadcast to all other endpoints (`from` is stamped automatically; the sender does not receive its own broadcast).
  * @property {() => void} dispose - Remove all subscriptions created through this handle.
  */
 
@@ -360,7 +369,7 @@
  * @property {(id: string, patch: Partial<NeherApp3MenuItem>) => boolean} updateMenuItem - Updates properties of an existing menu item by `id`. Only keys present in `patch` are changed; the `id` is preserved. Returns `true` if the item existed. Relative icon URLs are resolved against the module's base URL.
  * @property {(id: string) => boolean} removeMenuItem - Removes the menu item with the given `id`. Returns `true` if an item was removed.
  * @property {(appModule: NeherApp3Module | string) => Promise<void>} addApp
- * @property {(message: string, type?: NeherApp3NotifyType, cb?: function) => void} notify - Shows a notification. Type defaults to 0 (info). Callback is optional.
+ * @property {(message: string, type?: NeherApp3NotifyType, cb?: function) => void} notify - Shows a notification: 0 info, 1 warning, 2 error, 3 success (default 0). Info and success disappear after 5 s. Callback (on click) is optional.
  * @property {NeherApp3ApiCollection} api
  * @property {NeherApp3Messages} messages - In-realm message bus for module-to-module communication.
  * @property {NeherApp3I18n} i18n - Localization: register a module's translation catalog, translate, switch language, sort language-aware.

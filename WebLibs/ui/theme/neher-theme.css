@@ -242,3 +242,136 @@ option, optgroup {
 [data-theme="i3"] .badge {
   border-radius: 999px;
 }
+
+/* ------------------------------------------------------------------------
+   Gemeinsame Basisregeln der NeherApp3-Module (#653, Master-Stand m3).
+   Bewusst ungelayert (schlagen daisyUIs @layer-Styles) und ohne Präfix: im
+   Shadow DOM eines Moduls wirkt das Stylesheet ohnehin nur auf das Modul.
+   ------------------------------------------------------------------------ */
+
+/* Kompakt (< 48rem, gemessen am Container `content` der Shell): Ansichten
+   wachsen mit ihrem Inhalt, die Seite scrollt als Ganzes. Mit fester Höhe
+   blieben `position: sticky`-Elemente (ActionBar) am Ende der sichtbaren
+   Höhe hängen statt am Ende des Inhalts. */
+@layer base {
+  @container content (width < 48rem) {
+    #shadow-mount {
+      height: auto;
+    }
+  }
+}
+
+/* Checkboxen in Tabellenköpfen („alle markieren"): der Kopf ist
+   neutral/neutral-content, daisyUI färbt die Checkbox aber aus base-content —
+   im hellen Theme dieselbe Farbe wie neutral, also unsichtbar. */
+thead .checkbox {
+  --input-color: var(--color-neutral-content);
+  color: var(--color-neutral);
+}
+
+/* Eigene Dropdown-Trigger (<button class="select …">, MultiSelect): am
+   Inhaltsrahmen abschneiden, damit langer Text nicht über den Pfeil läuft;
+   Kinder dürfen schrumpfen, damit .truncate greift. */
+button.select {
+  overflow: clip;
+  overflow-clip-margin: content-box;
+}
+button.select > * {
+  min-width: 0;
+}
+
+/* Popover-Blase (lib/popover): kein Fokus-Ring am Eingabefeld im Overlay.
+   Tastaturbedienung (Fokus, Escape, Enter) bleibt unverändert. */
+.popover-bubble :is(.input, .select, .textarea):is(:focus, :focus-within, :focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Text-Anker für Tooltips mit weiterführender Info: gepunktet unterstrichen
+   (Hinweis), im Unterschied zur durchgezogenen Linie der Ghost-Knöpfe (Aktion). */
+.tooltip-hint {
+  cursor: help;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.1875rem;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in oklch, currentColor 35%, transparent);
+}
+.tooltip-hint:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Touch-Bedienung: kompakte Bedienelemente (-sm/-xs) bei grobem Zeiger auf
+   Fingergröße anheben. Anker ist die Eingabeart, nicht die Breite; die
+   Schriftgröße bleibt. */
+@media (pointer: coarse) {
+  .checkbox-sm,
+  .radio-sm[type="radio"],
+  .toggle-sm[type="checkbox"],
+  .toggle-sm:has([type="checkbox"]) {
+    --size: calc(var(--size-selector, 0.25rem) * 6);
+  }
+  .btn-xs {
+    --size: calc(var(--size-field, 0.25rem) * 8);
+  }
+  .btn-sm {
+    --size: calc(var(--size-field, 0.25rem) * 10);
+  }
+  .select-sm {
+    --sl-size-mul: 10;
+  }
+  .input-sm {
+    --in-size-mul: 10;
+  }
+}
+
+/* Aktive Filter: Felder einer FilterBar, deren Wert vom Standard abweicht,
+   bekommen einen Rahmen in `error`. Die Klasse `filter-aktiv` sitzt am
+   Steuerelement, an einem div um ein eingebettetes Feld, am label eines
+   Hakens/Schalters oder an einer join-Knopfgruppe. */
+.filter-aktiv:is(.input, .select),
+div.filter-aktiv > * > .input,
+div.filter-aktiv > .input {
+  --input-color: var(--color-error);
+}
+label.filter-aktiv:has(.checkbox, .toggle),
+.join.filter-aktiv {
+  outline: var(--border) solid var(--color-error);
+  outline-offset: 2px;
+  border-radius: var(--radius-field);
+}
+
+/* Drawer (SidePanel), DesignGuide „Erfassen und Bearbeiten": beginnt unter
+   der Titelleiste der Shell (--shell-titlebar-height erbt bis ins Shadow
+   DOM). Breit (ab 40rem) rechts bündig, 35rem breit, 16 px Abstand oben und
+   unten, links gerundet; schmal als Blatt von unten, höchstens 80 % hoch.
+   Maße und Rundungen setzt SidePanel.svelte per Klassen, hier Lage und
+   Bewegung. Der Schleier liegt auf dem <dialog>. */
+.modal.side-panel {
+  top: var(--shell-titlebar-height, 0px);
+  height: auto;
+}
+.modal.side-panel > .modal-box {
+  height: 100%;
+  max-height: 100%;
+}
+.modal.side-panel[open] > .modal-box {
+  transition: translate 0.3s ease-out;
+}
+@starting-style {
+  .modal.side-panel[open] > .modal-box {
+    translate: 0 100%;
+  }
+}
+@media (width >= 40rem) {
+  @starting-style {
+    .modal.side-panel[open] > .modal-box {
+      translate: 100% 0;
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .modal.side-panel[open] > .modal-box {
+    transition: none;
+  }
+}

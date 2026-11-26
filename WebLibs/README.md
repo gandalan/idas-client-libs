@@ -114,6 +114,40 @@ Zentrales Theme mit den Themes `neher`, `neher-dark` und `i3` als rohes CSS; geb
 
 - Das Theme waehlt die App ueber `data-theme` (`neher`, `neher-dark`, `i3`); ohne Attribut gilt `neher`. In NeherApp3 setzt die Shell `data-theme` auch im Shadow DOM.
 - Die ueberschreibbaren Variablen stehen im Kopf von `neher-tokens.css`.
+- `neher-theme.css` enthaelt auch die gemeinsamen Basisregeln der Module: Drawer (`side-panel`), Markierung aktiver Filter (`filter-aktiv`), Tooltip-Anker (`tooltip-hint`), Touch-Groessen, Checkbox im Tabellenkopf, Popover.
+
+### UI-Bausteine fuer NeherApp3-Module (`ui`)
+Gemeinsame Bausteine (Master-Stand m3, #653), ausgeliefert als **Svelte-Quellen**: das Projekt kompiliert sie selbst (eigenes Svelte 5, Shadow DOM, Tailwind erkennt die Klassen). Voraussetzung: `svelte` 5 und `@lucide/svelte` 1 als eigene Abhaengigkeiten.
+
+| Baustein | Zweck |
+| --- | --- |
+| `SidePanel`, `PanelPage` | Drawer fuer Erfassen/Bearbeiten (DesignGuide) |
+| `PageHeader` | Seitenkopf mit Titel, Meta, Aktionen, Filter; Kontext `PAGE_HEADER_WITHOUT_TITLE` fuer Reiter-Ansichten |
+| `FilterBar`, `MultiSelect`, `Autocomplete` | Filterleiste (kompakt als Modal) und Auswahlfelder |
+| `DataTable`, `SortableTh`, `SortDialog`, `ActionBar` | Tabelle mit festem Kopf, Sortierung, Aktionsleiste darunter |
+| `Tabs` | Reiter ueber Hash-Routen, auch zweistufig |
+| `EditDialog`, `ConfirmDialog`, `LoadingOverlay` | Dialoge und Ladeanzeige |
+| `Tooltip`, `tooltip`, `Popover` | Tooltip (Action/Komponente) und Popover im Shadow DOM |
+| `notifyInfo`/`notifySuccess`/`notifyWarning`/`notifyError` | Meldungen ueber `neherapp3.notify` |
+| `observeMountNode`, `isCompact` | Breitenstufe (< 48rem) am Mount-Knoten |
+| `onOutsidePointerDown`, `autoDropDirection`, `keepHighlightVisible` | Hilfen fuer Dropdowns |
+
+```js
+import { SidePanel, DataTable, observeMountNode, setModuleLocalize } from "@gandalan/weblibs/ui";
+
+// im mount() des Moduls:
+observeMountNode(domNode);            // Breitenstufe fuer isCompact()
+setModuleLocalize(i18n.localize);     // eigene Texte (Titel, Labels) im Namensraum des Moduls uebersetzen
+```
+
+```css
+@import "tailwindcss";
+@import "@gandalan/weblibs/ui/theme/neher-theme.css";
+@source "../node_modules/@gandalan/weblibs/ui";
+```
+
+- Texte: Die Bausteine bringen ihren Katalog mit und melden ihn als Namensraum `weblibs-ui` bei der Shell an. Texte, die das Modul hereinreicht, sind deutscher Quelltext und werden mit der per `setModuleLocalize` angemeldeten Funktion uebersetzt; ohne Anmeldung greift der Katalog der Shell.
+- Breitenstufen messen den Container `content` der Shell (`@max-3xl/content:` usw.); ohne `observeMountNode` gilt immer „breit".
 
 ### NeherApp3-Typen
 Die Typen der NeherApp3-Host-API (`NeherApp3`, `NeherApp3Module`, `NeherMessage`, `NeherApp3I18n`, `NeherApp3Settings`, `NeherApp3Profile`, `NeherApp3Theme`, ...) stehen in `api/neherApp3Types.js` und sind ueber den Paket-Root importierbar:

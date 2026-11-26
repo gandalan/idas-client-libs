@@ -12,6 +12,23 @@ import { AUTH_EXPIRED_EVENT, AUTH_REFRESHED_EVENT, dispatchAuthEvent } from "./a
  */
 
 /**
+ * Checks whether a JWT claim contains the code, ignoring case. A claim with a single value is a string,
+ * not an array; comparing it with String.includes would match substrings.
+ *
+ * @param {string|string[]|undefined} claim
+ * @param {string} code
+ * @returns {boolean}
+ */
+export function containsCode(claim, code) {
+    if (typeof code !== "string" || code === "") {
+        return false;
+    }
+    const values = Array.isArray(claim) ? claim : (claim ? [claim] : []);
+    const wanted = code.toLowerCase();
+    return values.some(value => typeof value === "string" && value.toLowerCase() === wanted);
+}
+
+/**
  * @typedef {Object} FluentAuthManager
  * @property {string} appToken - The application token.
  * @property {string} authUrl - The authentication URL.
@@ -526,21 +543,21 @@ export function createAuthManager() {
         },
 
         /**
-         * check if the user has the specific right
+         * check if the user has the specific right (case-insensitive, IDAS delivers the codes in any case)
          * @param {string} code
          * @returns {boolean}
          */
         hasRight(code) {
-            return (session.userInfo?.rights || []).includes(code);
+            return containsCode(session.userInfo?.rights, code);
         },
 
         /**
-         * check if the user has the specific role
+         * check if the user has the specific role (case-insensitive)
          * @param {string} code
          * @returns {boolean}
          */
         hasRole(code) {
-            return (session.userInfo?.role || []).includes(code);
+            return containsCode(session.userInfo?.role, code);
         },
 
         /**

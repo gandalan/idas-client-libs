@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Security.Claims;
 
 namespace Gandalan.IDAS.WebApi.DTO;
 
@@ -35,7 +36,9 @@ public static class Permissions
     public const string Anwendungstester = "Anwendungstester";
     public const string IntegrityCheckToolUser = "IntegrityCheckToolUser";
     public const string NeherApp3Dev = "NeherApp3-Dev";
-    public const string C3DiffUse = "c3diff:use";
+    public const string C3DiffUse = "c3diff.use";
+    public const string AuthServerUserAdmin = "AuthServer.UserAdmin";
+    public const string P3Admin = "P3.Admin";
 }
 
 /// <summary>
@@ -55,6 +58,31 @@ public static class PermissionExtensions
     /// <returns><see langword="true"/>, wenn das <see cref="BenutzerDTO"/> über die angegebene Berechtigung verfügt, andernfalls <see langword="false"/>.</returns>
     public static bool HasPermission(this BenutzerDTO benutzer, string permission)
     {
-        return benutzer?.Rollen?.Any(r => r.Berechtigungen?.Any(b => b.Code.Equals(permission, StringComparison.OrdinalIgnoreCase)) ?? false) ?? false;
+        return benutzer?.Rollen?.Any(r => r.Berechtigungen?.Any(b => string.Equals(b.Code, permission, StringComparison.OrdinalIgnoreCase)) ?? false) ?? false;
+    }
+
+    /// <summary>
+    /// Claim des IDAS-Tokens mit den Rechten der Anmeldung, je Recht ein Claim (wie <c>JwtTokenService.ClaimRights</c>).
+    /// </summary>
+    public const string RightsClaim = "rights";
+
+    /// <summary>
+    /// Ermittelt, ob die Anmeldung (Claims eines IDAS-Tokens) über die angegebene Berechtigung verfügt; Groß-/Kleinschreibung
+    /// egal, denn IDAS liefert die Codes nicht einheitlich.
+    /// </summary>
+    /// <param name="user">Angemeldeter Benutzer, z. B. <c>HttpContext.User</c>.</param>
+    /// <param name="permission">Die zu prüfende Berechtigung.</param>
+    /// <returns><see langword="true"/>, wenn ein Claim <see cref="RightsClaim"/> die Berechtigung enthält, andernfalls <see langword="false"/>.</returns>
+    public static bool HasPermission(this ClaimsPrincipal user, string permission)
+    {
+        return user?.FindAll(RightsClaim).Any(c => string.Equals(c.Value, permission, StringComparison.OrdinalIgnoreCase)) ?? false;
+    }
+
+    /// <summary>
+    /// Ermittelt, ob die Anmeldung mindestens eine der angegebenen Berechtigungen hat (siehe <see cref="HasPermission(ClaimsPrincipal, string)"/>).
+    /// </summary>
+    public static bool HasAnyPermission(this ClaimsPrincipal user, params string[] permissions)
+    {
+        return permissions?.Any(user.HasPermission) ?? false;
     }
 }

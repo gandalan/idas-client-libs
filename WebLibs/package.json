@@ -1,6 +1,6 @@
 {
   "name": "@gandalan/weblibs",
-  "version": "3.0.0",
+  "version": "2.0.33",
   "description": "WebLibs for Gandalan JS/TS projects",
   "keywords": [
     "gandalan"
@@ -24,6 +24,18 @@
     "@mdi/js": "^7.4.47",
     "jwt-decode": "^4.0.0",
     "validator": "^13.15.35"
+  },
+  "peerDependencies": {
+    "@lucide/svelte": "^1.0.0",
+    "svelte": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@lucide/svelte": {
+      "optional": true
+    },
+    "svelte": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@babel/core": "^8.0.1",

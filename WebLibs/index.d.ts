@@ -1188,11 +1188,11 @@ export type Endpoint = {
     /** The module name of this endpoint. */
     name: string;
     /** Subscribe; returns an unsubscribe function. */
-    on: (type: TypePattern, handler: MessageHandler) => (() => void);
+    on: (subject: SubjectPattern, handler: MessageHandler) => (() => void);
     /** Directed message (`from` is stamped automatically). `to` is a module name, or `user:…`/`app:…`/`bot:…` for delivery via the server (`delivered` then means "handed to the server"; replies arrive as local broadcasts). */
-    send: (to: string, type: string, payload?: any, options?: SendOptions) => Delivery;
+    send: (to: string, subject: string, payload?: any, options?: SendOptions) => Delivery;
     /** Broadcast to all other endpoints (`from` is stamped automatically; the sender does not receive its own broadcast). */
-    broadcast: (type: string, payload?: any, options?: SendOptions) => Delivery;
+    broadcast: (subject: string, payload?: any, options?: SendOptions) => Delivery;
     /** Remove all subscriptions created through this handle. */
     dispose: () => void;
 };
@@ -2772,7 +2772,7 @@ export type NeherApp3 = {
     /** Removes the menu item with the given `id`. Returns `true` if an item was removed. */
     removeMenuItem: (id: string) => boolean;
     addApp: (appModule: NeherApp3Module | string) => Promise<void>;
-    /** Shows a notification. Type defaults to 0 (info). Callback is optional. */
+    /** Shows a notification: 0 info, 1 warning, 2 error, 3 success (default 0). Info and success disappear after 5 s. Callback (on click) is optional. */
     notify: (message: string, type?: NeherApp3NotifyType, cb?: Function) => void;
     api: NeherApp3ApiCollection;
     /** In-realm message bus for module-to-module communication. */
@@ -2876,6 +2876,8 @@ export type NeherApp3MenuItem = {
     separator?: boolean;
     /** If true, renders `text` as a non-interactive group heading inside a sub-menu (ALL CAPS, bold, extra space above; icon/url are ignored). Requires `parent`; ignored on the top level. `text` is translated like any other entry. */
     heading?: boolean;
+    /** Top level only: start the item under "Weitere Apps" (the overflow popout) instead of in the main navigation — for modules that are rarely needed. Users can move it either way; their choice wins. Give the item a fixed `id` so that choice can be stored. */
+    overflow?: boolean;
     /** Catalog in which `text` is translated. Set automatically to the registering module's name; only pass it explicitly for items added outside `setup`. See `NeherApp3I18n`. */
     i18nNamespace?: string;
 };
@@ -2914,7 +2916,18 @@ export type NeherApp3Module = {
  */
 export type NeherApp3MountProps = NeherApp3SetupContext & { [param: string]: string | undefined };
 
-export type NeherApp3NotifyType = 0 | 1 | 2;
+/**
+ * Payload of the `shell.notify` subject: the shell shows it as a toast.
+ * Send it locally to `"shell"` (or as broadcast), from a server to `user:<guid|mail>`.
+ */
+export type NeherApp3NotifyPayload = {
+    /** Plain text (no HTML, not translated by the shell), cut at 500 characters. */
+    text: string;
+    /** Default `info`; `info`/`success` disappear after 5 s, `warning`/`alert` stay until clicked. */
+    level?: "info" | "success" | "warning" | "alert";
+};
+
+export type NeherApp3NotifyType = 0 | 1 | 2 | 3;
 
 /**
  * The signed-in user, exposed at `neherapp3.profile`.
@@ -3107,8 +3120,8 @@ export type NeherApp3ThemePreference = NeherApp3ThemeName | "system";
 export type NeherMessage = {
     /** Unique message id (`crypto.randomUUID`). */
     id: string;
-    /** Message kind, e.g. `"artikel.selected"`. */
-    type: string;
+    /** Message subject, e.g. `"artikel.selected"`. */
+    subject: string;
     /** Target: module name, a server address (`user:…`, `app:…`, `bot:…`) or `null` (broadcast). */
     to: string | null;
     /** Sender, always stamped: the module name locally; from the server `user:<guid>/app:<module>`, `bot:<name>`, `service/app:<module>` (an app backend sending with an IDAS ServiceToken) or `system`. */
@@ -3744,7 +3757,7 @@ export type SchnittoptimierungsOptionen = ('Keine'|'Lieferdatum'|'Serie'|'FarbeO
 
 /** Options for `send`/`broadcast`. */
 export type SendOptions = {
-    /** Keep this `(to, type)` as a last value; subscribers that register later receive it immediately. Default `false`. */
+    /** Keep this `(to, subject)` as a last value; subscribers that register later receive it immediately. Default `false`. */
     retain?: boolean;
 };
 
@@ -3904,6 +3917,12 @@ export type SonderwuenscheDTO = {
     Wert: string;
 };
 
+/**
+ * Subscription subject pattern: exact (`"a.b"`), prefix glob (`"a.*"`), all (`"*"`)
+ * or a list of patterns.
+ */
+export type SubjectPattern = string | string[];
+
 export type SystemApi = {
     /** Get changes for type */
     getChanges: (typeName: string, changedSince: Date) => Promise<ChangeDTO[]>;
@@ -3958,17 +3977,19 @@ export type TemplateDTO = {
     Benutzer: string;
 };
 
+export type TooltipOptions = {
+    text: string;
+    placement?: 'top' | 'bottom';
+    maxWidth?: string;
+    openDelay?: number;
+    closeDelay?: number;
+};
+
 /** Translation tables by BCP-47 language code, e.g. `{ en: { "Bestand": "Stock" } }`. */
 export type TranslationCatalogs = Record<string, TranslationTable>;
 
 /** A translation table: key (the German source text) -> translation. */
 export type TranslationTable = Record<string, string>;
-
-/**
- * Subscription type pattern: exact (`"a.b"`), prefix glob (`"a.*"`), all (`"*"`)
- * or a list of patterns.
- */
-export type TypePattern = string | string[];
 
 export type UiApi = {
     /** Get all UI definitions */

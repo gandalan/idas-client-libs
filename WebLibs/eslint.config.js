@@ -33,6 +33,17 @@ export default [
         },
     },
     {
+        // Svelte-5-Runes in Modulen der UI-Bausteine (*.svelte.js)
+        files: ["**/*.svelte.js"],
+        languageOptions: {
+            globals: {
+                $state: "readonly",
+                $derived: "readonly",
+                $effect: "readonly",
+            },
+        },
+    },
+    {
         rules: {
             "yoda": "warn",
             eqeqeq: ["warn", "smart"],

@@ -35,10 +35,11 @@ public class BenutzerDTO : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler PropertyChanged;
 
-    public bool HatBerechtigung(string code)
-    {
-        return Rollen.Any(r => r.Berechtigungen.Any(b => b.Code == code));
-    }
+    /// <summary>
+    /// Prüft ohne Beachtung der Groß-/Kleinschreibung, ob der Benutzer die Berechtigung <paramref name="code"/> hat.
+    /// </summary>
+    [Obsolete("PermissionExtensions.HasPermission mit einer Konstante aus Permissions verwenden.")]
+    public bool HatBerechtigung(string code) => this.HasPermission(code);
 
     public void RemoveRolle(string rollenName)
     {
