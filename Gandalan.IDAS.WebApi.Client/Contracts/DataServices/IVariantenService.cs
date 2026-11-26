@@ -8,7 +8,6 @@ public interface IVariantenService
 {
     Task<VarianteDTO[]> GetAllAsync();
     Task<VarianteDTO> LoadAsync(Guid guid);
-    Task SaveAsync(VarianteDTO variante);
     Task<ProduktFamilieDTO> GetProduktFamilie(Guid guid);
     Task<ProduktGruppeDTO[]> GetAllProduktGruppenAsync();
     Task<ProduktGruppeDTO> GetProduktGruppe(Guid guid);

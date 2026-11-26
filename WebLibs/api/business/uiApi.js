@@ -78,14 +78,6 @@ export function createUiApi(fluentApi) {
      */
         getAllUiFeldInfo: () => fluentApi.get("UIEingabeFeldInfo"),
 
-        /**
-     * Save UI field info
-     * @param {UIEingabeFeldInfoDTO} uiEingabeFeldInfo
-     * @returns {Promise<UIEingabeFeldInfoDTO>}
-     */
-        saveUiEingabeFeldInfo: (uiEingabeFeldInfo) =>
-            fluentApi.put(`UIEingabeFeldInfo/${uiEingabeFeldInfo.UIEingabeFeldGuid}`, uiEingabeFeldInfo),
-
         // TagInfoWebRoutinen
         /**
      * Get all tag info

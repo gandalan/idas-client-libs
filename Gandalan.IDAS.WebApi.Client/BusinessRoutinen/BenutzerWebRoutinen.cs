@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.DTO;
@@ -17,9 +16,6 @@ public class BenutzerWebRoutinen : WebRoutinenBase
 
     public async Task<BenutzerDTO> GetBenutzerAsync(Guid benutzer, bool mitRollenUndRechten = true)
         => await GetAsync<BenutzerDTO>($"Benutzer?id={benutzer}&mitRollenUndRechten={mitRollenUndRechten}");
-
-    public async Task SaveBenutzerAsync(List<BenutzerDTO> list)
-        => await Task.Run(() => list.ForEach(async cb => await SaveBenutzerAsync(cb)));
 
     public async Task SaveBenutzerAsync(BenutzerDTO benutzer)
         => await PutAsync("Benutzer", benutzer);

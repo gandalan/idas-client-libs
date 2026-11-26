@@ -391,14 +391,6 @@ export function createAvApi(fluentApi) {
         getAllMaterialBearbeitungsMethoden: () =>
             fluentApi.get("MaterialBearbeitungsMethoden"),
 
-        /**
-         * Save material processing method
-         * @param {MaterialBearbeitungsMethodeDTO} dto
-         * @returns {Promise<void>}
-         */
-        saveMaterialBearbeitungsMethode: (dto) =>
-            fluentApi.put("MaterialBearbeitungsMethoden", dto),
-
         // SerienMaterialBerechnenWebRoutinen
         material: {
             /**

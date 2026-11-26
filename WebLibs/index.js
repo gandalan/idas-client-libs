@@ -246,7 +246,6 @@ export * from "./ui/index.js";
 /** @typedef {import("./api/business/index.js").LagerApi} LagerApi */
 /** @typedef {import("./api/business/index.js").LieferungApi} LieferungApi */
 /** @typedef {import("./api/business/index.js").MailApi} MailApi */
-/** @typedef {import("./api/business/index.js").MandantApi} MandantApi */
 /** @typedef {import("./api/business/index.js").MaterialApi} MaterialApi */
 /** @typedef {import("./api/business/index.js").PrintApi} PrintApi */
 /** @typedef {import("./api/business/index.js").ProduktionApi} ProduktionApi */

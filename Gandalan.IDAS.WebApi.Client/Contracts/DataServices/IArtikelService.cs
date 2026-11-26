@@ -8,7 +8,6 @@ public interface IArtikelService
 {
     Task<KatalogArtikelDTO[]> GetAllAsync();
     Task<WarenGruppeDTO[]> GetAllWarenGruppenAsync();
-    Task<string> SaveArtikelAsync(KatalogArtikelDTO artikel);
     Task<KatalogArtikelDTO> LoadArtikelAsync(Guid guid);
     Task<KatalogArtikelDTO> LoadArtikelAsync(string artikelNummer);
 }

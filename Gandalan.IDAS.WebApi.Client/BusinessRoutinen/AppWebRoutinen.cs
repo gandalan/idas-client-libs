@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Gandalan.IDAS.Client.Contracts.Contracts;
 using Gandalan.IDAS.WebApi.Client.DTOs.Benutzer;
@@ -24,36 +23,10 @@ public class AppWebRoutinen : WebRoutinenBase
         return await PutAsync<AppActivationStatusDTO>("AppMandant", data);
     }
 
-    public async Task<List<MandantDTO>> GetMandantenAsync()
-    {
-        return await GetAsync<List<MandantDTO>>("AppMandant/");
-    }
-
     public async Task<List<BenutzerDTO>> GetBenutzerByKundeAsync(Guid kundeGuid)
     {
         return await GetAsync<List<BenutzerDTO>>($"AppBenutzer/{kundeGuid}");
     }
-
-    public async Task<BenutzerDTO> GetOneBenutzerByKundeAsync(Guid kundeGuid, string email)
-    {
-        var templist = await GetAsync<List<BenutzerDTO>>($"AppBenutzer/{kundeGuid}");
-        return templist.FirstOrDefault(x => x.EmailAdresse == email);
-    }
-
-    public async Task<MandantDTO> CreateOrUpdateMandantAsync(MandantDTO data)
-    {
-        return await PutAsync<MandantDTO>("Mandanten", data);
-    }
-
-    [Obsolete("Use CreateOrUpdateBenutzerByKundeAsync(AppBenutzerRequestDTO) instead")]
-    public async Task<BenutzerDTO> CreateOrUpdateBenutzerByKundeAsync(Guid kundeGuid, BenutzerDTO data, bool pwSenden = false, string passwort = "") =>
-        await CreateOrUpdateBenutzerByKundeAsync(new AppBenutzerRequestDTO
-        {
-            BenutzerData = data,
-            KundeGuid = kundeGuid,
-            Passwort = passwort,
-            PasswortSenden = pwSenden
-        });
 
     public async Task<BenutzerDTO> CreateOrUpdateBenutzerByKundeAsync(AppBenutzerRequestDTO data)
     {

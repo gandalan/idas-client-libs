@@ -18,7 +18,6 @@ import { createAvApi } from "./business/avApi";
 import { createFarbeApi } from "./business/farbeApi";
 import { createLagerApi } from "./business/lagerApi";
 import { createLieferungApi } from "./business/lieferungApi";
-import { createMandantApi } from "./business/mandantApi";
 import { createPrintApi } from "./business/printApi";
 import { createHistorieApi } from "./business/historieApi";
 import { createSystemApi } from "./business/systemApi";
@@ -47,7 +46,6 @@ import { createAuthApi } from "./business/authApi";
  * @typedef {import("./business/farbeApi.js").FarbeApi} FarbeApi
  * @typedef {import("./business/lagerApi.js").LagerApi} LagerApi
  * @typedef {import("./business/lieferungApi.js").LieferungApi} LieferungApi
- * @typedef {import("./business/mandantApi.js").MandantApi} MandantApi
  * @typedef {import("./business/printApi.js").PrintApi} PrintApi
  * @typedef {import("./business/historieApi.js").HistorieApi} HistorieApi
  * @typedef {import("./business/systemApi.js").SystemApi} SystemApi
@@ -78,7 +76,6 @@ import { createAuthApi } from "./business/authApi";
  *   farbe: FarbeApi;
  *   lager: LagerApi;
  *   lieferung: LieferungApi;
- *   mandant: MandantApi;
  *   print: PrintApi;
  *   historie: HistorieApi;
  *   system: SystemApi;
@@ -108,7 +105,6 @@ import { createAuthApi } from "./business/authApi";
  * - farbe: Color management business routines
  * - lager: Warehouse/inventory management business routines
  * - lieferung: Delivery/shipping management business routines
- * - mandant: Tenant/client management business routines
  * - print: Printing management business routines
  * - historie: History tracking business routines
  * - system: System information business routines
@@ -332,17 +328,6 @@ export function createIDASApi() {
                 this._lieferungApi = createLieferungApi(this);
             }
             return this._lieferungApi;
-        },
-        configurable: true,
-        enumerable: true
-    });
-
-    Object.defineProperty(api, "mandant", {
-        get() {
-            if (!this._mandantApi) {
-                this._mandantApi = createMandantApi(this);
-            }
-            return this._mandantApi;
         },
         configurable: true,
         enumerable: true

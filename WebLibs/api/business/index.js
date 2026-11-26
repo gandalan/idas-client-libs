@@ -18,7 +18,6 @@ export { createKontaktApi } from "./kontaktApi.js";
 export { createLagerApi } from "./lagerApi.js";
 export { createLieferungApi } from "./lieferungApi.js";
 export { createMailApi } from "./mailApi.js";
-export { createMandantApi } from "./mandantApi.js";
 export { createMaterialApi } from "./materialApi.js";
 export { createPrintApi } from "./printApi.js";
 export { createProduktionApi } from "./produktionApi.js";
@@ -47,7 +46,6 @@ export { createVorgangApi } from "./vorgangApi.js";
 /** @typedef {import("./lagerApi.js").LagerApi} LagerApi */
 /** @typedef {import("./lieferungApi.js").LieferungApi} LieferungApi */
 /** @typedef {import("./mailApi.js").MailApi} MailApi */
-/** @typedef {import("./mandantApi.js").MandantApi} MandantApi */
 /** @typedef {import("./materialApi.js").MaterialApi} MaterialApi */
 /** @typedef {import("./printApi.js").PrintApi} PrintApi */
 /** @typedef {import("./produktionApi.js").ProduktionApi} ProduktionApi */
