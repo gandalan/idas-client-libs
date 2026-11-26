@@ -5,7 +5,7 @@
 
     /**
      * Eine Seite im SidePanel (#18053, aus dem IDASUserManager): Kopf, Inhalt,
-     * Fuß. `onback`: Unterseite mit Pfeil zurück zur Hauptansicht.
+     * Fuß. `onback`: Unterseite mit „Zurück“ zur Hauptansicht, in eigener Zeile über dem Kopf.
      * `scroll=false`: der Inhalt regelt das Scrollen selbst. Schmal füllt das
      * Blatt den ganzen Bildschirm und scrollt samt Kopf, sonst bleibt für den
      * Inhalt kaum Platz; der Fuß bleibt stehen. `pinned`: auch schmal bleibt
@@ -28,19 +28,7 @@
     const mobile = $derived(pinned ? "" : "max-sm:flex-[1_0_auto] max-sm:overflow-visible");
 </script>
 
-<div class="flex items-start gap-3 border-b border-base-300 px-5 py-4 shrink-0">
-    {#if onback}
-        <button
-            type="button"
-            class="btn btn-ghost btn-square btn-sm -ml-2"
-            aria-label="Zurück"
-            use:localize
-            data-i18n="aria-label"
-            onclick={onback}
-            disabled={busy}
-        ><ArrowLeft size="20" /></button>
-    {/if}
-    <div class="flex-1 min-w-0">{@render header()}</div>
+{#snippet closeButton()}
     {#if onclose}
         <button
             type="button"
@@ -61,6 +49,28 @@
                 disabled={busy}
             ><X size="20" /></button>
         </form>
+    {/if}
+{/snippet}
+
+<!-- Unterseite: Zurück und Schließen in einer eigenen Zeile über dem Kopf, damit Titel, Kopf und Inhalt in einer Flucht
+     bleiben (DesignGuide „Erfassen und Bearbeiten“; früher rückte der Pfeil den ganzen Kopf ein) -->
+<div class="flex flex-col gap-1 border-b border-base-300 px-5 py-4 shrink-0">
+    {#if onback}
+        <div class="flex items-center justify-between -mt-1">
+            <button
+                type="button"
+                class="btn btn-ghost btn-sm -ml-3 gap-1"
+                onclick={onback}
+                disabled={busy}
+            ><ArrowLeft size="16" /><span use:localize>Zurück</span></button>
+            {@render closeButton()}
+        </div>
+        <div class="min-w-0">{@render header()}</div>
+    {:else}
+        <div class="flex items-start gap-3">
+            <div class="flex-1 min-w-0">{@render header()}</div>
+            {@render closeButton()}
+        </div>
     {/if}
 </div>
 <div class="flex-1 min-h-0 px-5 {mobile} {scroll ? 'overflow-y-auto pb-4' : 'flex flex-col overflow-hidden'}">
