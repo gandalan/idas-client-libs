@@ -116,11 +116,12 @@
   --color-base-300: #e3e6e0;
   --color-base-content: #1c211b;
 
-  --color-primary: #4e8a1e;
+  /* Grün eine Stufe dunkler als der Entwurf (#4e8a1e, 4,2:1): weiße Schrift darauf ≥ 4,5:1 (4,8:1), DesignGuide „Kontrast“ */
+  --color-primary: #47801b;
   --color-primary-content: #ffffff;
-  --color-secondary: #4e8a1e;
+  --color-secondary: #47801b;
   --color-secondary-content: #ffffff;
-  --color-accent: #4e8a1e;
+  --color-accent: #47801b;
   --color-accent-content: #ffffff;
 
   --color-neutral: #1c211b;
@@ -128,7 +129,7 @@
 
   --color-info: #2f6fa3;
   --color-info-content: #ffffff;
-  --color-success: #4e8a1e;
+  --color-success: #47801b;
   --color-success-content: #ffffff;
   --color-warning: #c98a00;
   --color-warning-content: #23281f;

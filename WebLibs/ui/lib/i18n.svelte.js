@@ -35,10 +35,11 @@ function getEndpoint() {
     const shell = shellI18n();
     if (!shell?.register) return null;
     endpoint = shell.register(UI_I18N_NAMESPACE, { en, "de-x-du": du });
+    // Nur der Rückruf schreibt den Spiegel: getEndpoint() läuft oft beim ersten Rendern (uiLocale() in einem $derived),
+    // dort wäre ein Schreiben auf $state ein state_unsafe_mutation. Bis zum ersten Wechsel gilt shell.locale (uiLocale)
     shell.onLocaleChange?.((/** @type {string} */ code) => {
         locale = code;
     });
-    locale = shell.locale ?? "de";
     return endpoint;
 }
 
@@ -103,7 +104,8 @@ export function moduleLocalize(arg, params) {
 // kompiliert, hat ggf. ein eigenes Svelte-Runtime und kann den $state der
 // Shell nicht reaktiv lesen. `use:uiLocalize` folgt dem Sprachwechsel von
 // selbst; für `$derived` und Aufrufe im Markup gibt es diesen Spiegel.
-let locale = $state("de");
+/** @type {string | null} null: noch kein Wechsel, es gilt die Sprache der Shell */
+let locale = $state(null);
 
 /**
  * Aktuelle Sprache, reaktiv.
@@ -111,7 +113,7 @@ let locale = $state("de");
  */
 export function uiLocale() {
     getEndpoint();
-    return locale;
+    return locale ?? shellI18n()?.locale ?? "de";
 }
 
 /**
